@@ -249,13 +249,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		function add_user_menu_bubble() 
 		{
 	  		global $wpdb;
-			$pend_count = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = 'woocommerce_offer' AND post_status = 'publish' " ) );
+            $args = array(
+                'post_type' => 'woocommerce_offer',
+                'post_status' => 'publish'
+            );
+			$pend_count = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = %s AND post_status = %d", $args ) );
 			global $submenu;
-			foreach($submenu[woocommerce] as $key => $value)
+			foreach($submenu['woocommerce'] as $key => $value)
 			{
-				if ( $submenu[woocommerce][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
-					$submenu[woocommerce][$key][0] = 'Offers';
-					$submenu[woocommerce][$key][0] .= " <span id='woocommerce-offers-count' class='awaiting-mod update-plugins count-$pend_count'><span class='pending-count'>" . $pend_count . '</span></span>';
+				if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
+					$submenu['woocommerce'][$key][0] = 'Offers';
+					$submenu['woocommerce'][$key][0] .= " <span id='woocommerce-offers-count' class='awaiting-mod update-plugins count-$pend_count'><span class='pending-count'>" . $pend_count . '</span></span>';
 				}
 			}
 		}
@@ -275,12 +279,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			$offers_manage_link_href = admin_url( 'edit.php?post_type=woocommerce_offer');
 			$offers_settings_link_href = admin_url( 'options-general.php?page=offers-for-woocommerce');
 			global $submenu;
-			foreach($submenu[woocommerce] as $key => $value)
+			foreach($submenu['woocommerce'] as $key => $value)
 			{
-				if ( $submenu[woocommerce][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
+				if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
 					// Add child submenu html
 					//$submenu[woocommerce][$key][0] .= " <ul id='woocommerce-offer-admin-submenu' class=''><li class=''></li><li class=''> - Child Link Test</li><li class=''> - Child Link Test 2</li></ul>";
-					$submenu[woocommerce][$key][0] .= "<script type='text/javascript'>
+					$submenu['woocommerce'][$key][0] .= "<script type='text/javascript'>
 					jQuery(window).load(function($){
 						//jQuery('#woocommerce-offer-admin-submenu').parent('li').addClass('wp-has-submenu').addClass('wp-not-current-submenu').addClass('menu-top');
 						jQuery('#woocommerce-offers-count').parent('a').after('<ul id=\'woocommerce-offer-admin-submenu\' class=\'\'><li class=\'woocommerce-offer-admin-submenu-item\'><a href=\'".$offers_manage_link_href."\'>&nbsp;&#8211;&nbsp;Manage Offers</a></li><li class=\'woocommerce-offer-admin-submenu-item\'><a id=\'woocommerce-offers-settings-link\' class=\'woocommerce-offer-submenu-link\' href=\'".$offers_settings_link_href."\'>&nbsp;&#8211;&nbsp;Offers Settings</a></li></ul>');
