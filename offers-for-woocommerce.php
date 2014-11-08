@@ -1,29 +1,17 @@
 <?php
 /**
- * Offers for WooCommerce
- *
- * @TODO:	// Description of plugin here
- *
- * @package   Angelleye_Offers_For_Woocommerce
- * @author    AngellEYE <andrew@angelleye.com>
- * @license   GPL-2.0+
- * @link      http://angelleye.com
- * @copyright 2014 AngellEYE
- *
  * @wordpress-plugin
  * Plugin Name:       Offers for WooCommerce
- * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce-plugin/
- * Description:       Offers for WooCommerce // INSERT DESCRIPTION HERE
+ * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce
+ * Description:       Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily.
  * Version:           0.1.0
  * Author:            Angell EYE
- * Author URI:        http://www.angelleye.com
- * Text Domain:       offers-for-woocommerce
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path:       /languages
+ * Author URI:        http://www.angelleye.com/
+ * License:           GNU General Public License v3.0
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
+ * Domain Path:       /i18n/languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
- * Offers-For-Woocommerce: v0.1.0
- */
+ *
 
 /**
  * Abort if called directly
