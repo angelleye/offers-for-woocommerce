@@ -1,0 +1,179 @@
+/* This stylesheet is used to style the admin option form of the plugin. */
+
+body.wp-admin.settings_page_angelleye-offers-for-woocommerce #wpbody-content .wrap h2:first-child:before { font-family:WooCommerce!important;content:"\e03d"; font-size:2.0em!important}
+
+/*.type-woocommerce_offer.status-accepted-offer td, 
+.type-woocommerce_offer.status-accepted-offer th {
+    background-color: #FF0000;
+}*/
+
+.type-woocommerce_offer td,
+.type-woocommerce_offer th {
+	box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1) inset;
+}
+
+.type-woocommerce_offer td,
+.type-woocommerce_offer th {
+  background-color: #FFF!important;
+}
+
+.type-woocommerce_offer.status-declined-offer:hover td,
+.type-woocommerce_offer.status-declined-offer:hover th {
+  background-color: #F4F4F4!important;
+}
+
+.type-woocommerce_offer.status-publish:hover td,
+.type-woocommerce_offer.status-publish:hover th {
+  background-color: #fef7f1!important;
+}
+
+.type-woocommerce_offer.status-accepted-offer:hover td,
+.type-woocommerce_offer.status-accepted-offer:hover th {
+  background-color: #f7fcfe!important;
+}
+
+.type-woocommerce_offer.status-completed-offer:hover td,
+.type-woocommerce_offer.status-completed-offer:hover th {
+  background-color: #F5FFEC!important;
+}
+
+
+#woocommerce-offers-settings-link { color:#BBBBBB; }
+#favorite-actions {display:none;}
+.add-new-h2 { display:none; }
+.woocommerce-offer-post-status-grid-icon-div { 
+-moz-transform: translateX(0px) translateY(3px);
+-webkit-transform: translateX(0px) translateY(3px);
+-o-transform: translateX(0px) translateY(3px);
+-ms-transform: translateX(0px) translateY(3px);
+transform: translateX(0px) translateY(3px);
+}
+
+.woocommerce-offer-post-status-grid-icon-div { padding-bottom:10px!important; box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1) inset!important; margin-bottom:0px!important; }
+tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-grid-icon-div { box-shadow:none!important; }
+
+i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
+i.woocommerce-offer-post-status-grid-icon.pending, i.woocommerce-offer-post-status-grid-icon.pending:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
+i.woocommerce-offer-post-status-grid-icon.accepted, i.woocommerce-offer-post-status-grid-icon.accepted:hover { background-color:transparent!important; color:#0074A2!important; border:1px solid #0074A2!important; }
+i.woocommerce-offer-post-status-grid-icon.completed, i.woocommerce-offer-post-status-grid-icon.completed:hover { background-color:transparent!important; color:#52A200!important; border:1px solid #52A200!important; }
+i.woocommerce-offer-post-status-grid-icon.declined, i.woocommerce-offer-post-status-grid-icon.declined:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777!important; }
+i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status-grid-icon.trash:hover { background-color:transparent!important; color:#FCFCFC!important; border:1px solid #FCFCFC!important; }
+
+.woocommerce-offer-post-status-grid-icon-div { font-size:12px!important; line-height:22px!important; opacity:0; }
+.woocommerce-offer-post-status-grid-icon-div:before {
+	content: 'Status: ';
+}
+.type-woocommerce_offer.status-publish td, .type-woocommerce_offer.status-publish th { background-color: #FEF7F1; }
+.type-woocommerce_offer.status-publish th.check-column { border-left: 4px solid #D54E21; }
+.type-woocommerce_offer.status-accepted-offer th.check-column { border-left: 4px solid #0074A2; }	
+.type-woocommerce_offer.status-completed-offer th.check-column { border-left: 4px solid #52A200; }	
+.type-woocommerce_offer.status-declined-offer th.check-column { border-left: 4px solid #333333; }
+
+
+#adminmenu #menu-posts-woocommerce_offer .menu-icon-woocommerce_offer div.wp-menu-image:before { content: "\f110"; }
+
+#woocommerce-offer-admin-submenu .woocommerce-offer-admin-submenu-item .woocommerce-offer-submenu-link { font-weight:normal; color:#BBB; }
+#woocommerce-offers-settings-link { color:#BBBBBB; }
+
+#adminmenu .wp-submenu li.current #woocommerce-offer-admin-submenu li { background:#444; }
+
+#adminmenu .wp-submenu li.current #woocommerce-offers-settings-link,
+#adminmenu .wp-submenu li.current #woocommerce-offers-settings-link:focus, 
+#adminmenu #woocommerce-offers-settings-link.wp-has-current-submenu:focus {
+	color:#BBB;
+	font-weight:normal;
+}
+#adminmenu .wp-submenu li.current #woocommerce-offers-settings-link:hover {
+	color:#2ea2cc;
+	font-weight:normal;
+}
+
+.woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link {
+	color:#0074A2;
+	opacity:.65;
+}
+.woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link span {
+	line-height:auto;
+	margin-top:5px;
+	font-size:16px;
+	color:#0074A2;
+}
+.woocommerce-offer-view-details-link:hover {
+	color:#0074A2!important;
+}
+
+
+.type-woocommerce_offer:hover .woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link {
+	opacity:1; 
+}
+.type-woocommerce_offer:hover .woocommerce-offer-post-status-grid-icon-div {
+	opacity:1;	
+}
+
+body.wp-admin.post-type-woocommerce_offer .row-actions { padding-top:3px!important; }
+body.wp-admin.post-type-woocommerce_offer .row-actions span { word-wrap:normal!important; }
+body.wp-admin.post-type-woocommerce_offer .row-actions span a { border:1px solid #CCC; padding:4px 7px; margin-left:0px!important; line-height:35px; background:#F7F7F7; box-shadow: 0px 1px 0px #FFF inset, 0px 1px 0px rgba(0, 0, 0, 0.08); border-radius:3px!important; word-wrap:normal!important; }
+body.wp-admin.post-type-woocommerce_offer .row-actions span:hover a { background:#FFF; color:auto; border-color:#999!important; }
+/*body.wp-admin.post-type-woocommerce_offer .wrap ul li.all span.count { display:none!important; }*/
+
+#woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-inputs { padding-top:5px;
+    font: left; }
+#woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-radio-wrap { margin-bottom:0px; margin-top:6px; }
+@media (min-width: 481px){
+    #woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-radio-wrap { float:left!important; margin-right:10px; }
+}
+#woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-radio-wrap input { line-height: 50px; margin-right:0px; }
+#woocommerce-offer-status-metabox-panel div.woocommerce-offer-edit-submit-btn-wrap {
+    height: auto; float:right; position:relative; margin-top:14px!important; margin-bottom:0px!important; }
+
+body.wp-admin.post-type-woocommerce_offer .column-title {
+		word-wrap:normal!important; 
+	}
+
+@media screen and (max-width:960px){
+	tr th.column-offer_actions {
+		display:none!important;
+	}
+	tr td.column-offer_actions {
+		display:none!important;
+	}
+	body.wp-admin.post-type-woocommerce_offer .row-actions,
+	.woocommerce-offer-post-status-grid-icon-div,
+	.woocommerce-offer-list-actions-wrap { opacity:1!important; display:block!important; visibility:visible!important; }
+}
+
+@media screen and (max-width:782px){
+	body.wp-admin.post-type-woocommerce_offer table tr td.column-title {
+		width:100%!important; 
+	}
+	tr th.column-offer_amount,
+	tr th.column-offer_price_per,
+	tr th.column-offer_quantity,
+	tr th.column-offer_actions {
+		display:none!important;
+	}
+	tr td.column-offer_amount,
+	tr td.column-offer_price_per,
+	tr td.column-offer_quantity,
+	tr td.column-offer_actions {
+		display:none!important;
+	}
+}
+
+#angelleye-woocommerce-offer-meta-comments { height:auto!important; max-height: 500px; overflow: auto; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry { float: left; width:99.3%; margin:8px 0px 0px 0px; background:#D7CAD2; border-radius: 3px; line-height: 1.4em; font-size: 13px; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry:hover { background:#DDD; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner { padding:10px; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-date { float:left; padding:4px 8px; margin:0px 10px 4px 0px; border-radius: 3px; background:#EFEFEF; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-content { float:left; padding:4px 0px 4px 0px; margin-bottom:10px; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-content span { font-weight:bold!important; }
+
+#section_id_offer_addnote .woocommerce-offer-edit-addnote-inputs #angelleye-woocommerce-offers-ajax-addnote-text { width:100%; margin-bottom:6px; }
+#section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .private-note-checkbox-wrap { float:left; margin-right:10px; line-height: 28px; }
+#section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .private-note-checkbox-wrap #angelleye-woocommerce-offers-ajax-addnote-admin-only { float:left!important; margin-top:7px; margin-right:3px; width:auto!important; }
+#section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .addnote-btn-wrap { float:none; text-align:right; }
+#section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .addnote-btn-wrap button { float:none;  }
+
+#woocommerce-offer-status-metabox-panel { margin-top:20px; }
+
+.angelleye-clearfix { clear:both; }
