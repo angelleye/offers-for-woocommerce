@@ -445,6 +445,8 @@ class Angelleye_Offers_For_Woocommerce {
             {
 				// set postmeta original vars
                 $formData['orig_offer_name'] = (isset($_POST['offer_name'])) ? $_POST['offer_name'] : '';
+                $formData['orig_offer_company_name'] = (isset($_POST['offer_company_name'])) ? $_POST['offer_company_name'] : '';
+                $formData['orig_offer_phone'] = (isset($_POST['offer_phone'])) ? $_POST['offer_phone'] : '';
                 $formData['orig_offer_email'] = (isset($_POST['offer_email'])) ? $_POST['offer_email'] : '';
                 $formData['orig_offer_product_id'] = (isset($_POST['offer_product_id'])) ? $_POST['offer_product_id'] : '';
                 $formData['orig_offer_variation_id'] = (isset($_POST['offer_variation_id'])) ? $_POST['offer_variation_id'] : '';
@@ -454,6 +456,8 @@ class Angelleye_Offers_For_Woocommerce {
 				
 				// set postmeta vars
                 $formData['offer_name'] = $formData['orig_offer_name'];
+                $formData['offer_company_name'] = $formData['orig_offer_company_name'];
+                $formData['offer_phone'] = $formData['orig_offer_phone'];
                 $formData['offer_email'] = $formData['orig_offer_email'];
                 $formData['offer_product_id'] = $formData['orig_offer_product_id'];
                 $formData['offer_variation_id'] = $formData['orig_offer_variation_id'];

@@ -54,7 +54,15 @@
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" id="woocommerce-make-offer-form-label">Your Name</label>
-                <br /><input type="text" id="offer-name" name="offer_name" required="required" value="<?php echo ($offer_name) ? $offer_name : ''; ?>" />
+                <br /><input type="text" id="offer-name" name="offer_name" required="required" value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
+            </div>
+            <div class="woocommerce-make-offer-form-section">
+                <label for="offer-name" id="woocommerce-make-offer-form-label">Company Name</label>
+                <br /><input type="text" id="offer-company-name" name="offer_company_name" value="<?php echo (isset($offer_company_name)) ? $offer_company_name: ''; ?>" />
+            </div>
+            <div class="woocommerce-make-offer-form-section">
+                <label for="offer-name" id="woocommerce-make-offer-form-label">Phone Number</label>
+                <br /><input type="text" id="offer-phone" name="offer_phone" value="<?php echo (isset($offer_phone)) ? $offer_phone: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="woocommerce-make-offer-form-email">Your Email Address</label>
