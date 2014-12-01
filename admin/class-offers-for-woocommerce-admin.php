@@ -286,6 +286,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_action( 'wp_ajax_addOfferNote', array( $this, 'addOfferNoteCallback') );
 
+        /*
+         * Filter - Add email class to WooCommerce for 'Accepted Offer'
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_email_classes', array( $this, 'add_accepted_offer_email' ) );
+
 	} // END - construct
 	
 	
@@ -1038,14 +1044,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			return;
 		}
 
+        // Verify that the nonce is valid
+        if(!wp_verify_nonce($_POST['woocommerce_offer_status_metabox_noncename'], 'woocommerce_offer'.$post_id))
+        {
+            return;
+        }
+
         // Check the user's permissions
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
         {
-            if (!current_user_can('edit_page', $post_id))
+            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'manage_woocommerce'))
             {
                 return;
             }
         }
+
+        /*
+         * OK, its safe for us to save the data now
+         */
 
         // Get current data for Offer after saved
         $post_data = get_post($post_id);
@@ -1073,28 +1089,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         );
         wp_insert_comment($data);
 
-		// Verify that the nonce is valid
-		if(!wp_verify_nonce($_POST['woocommerce_offer_status_metabox_noncename'], 'woocommerce_offer_status_metabox'))
-		{
+        // Accept Offer
+        if($_POST['post_status'] == 'accepted-offer' && $_POST['post_previous_status'] != 'accepted-offer')
+        {
+            // Email customer accepted email template
 
-			return;
-		}
+            // Create WooCommerce order with status 'pending payment'
 
-		/*
-		 * OK, its safe for us to save the data now
-		 */
+        }
 
-		// Make sure that it is set
-		if (!isset($_POST['myplugin_new_field']))
-		{
-			return;
-		}
-	
-		// Sanitize user input
-		$my_data = sanitize_text_field($_POST['myplugin_new_field']);
-	
-		// Update the meta field in the database
-		update_post_meta($post_id, '_my_meta_value_key', $my_data);
 	}
 
 	/**
@@ -1729,4 +1732,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
     }
 
+    /**
+     *  Add a custom email to the list of emails WooCommerce should load
+     *
+     * @since 0.1
+     * @param array $email_classes available email classes
+     * @return array filtered available email classes
+     */
+    public function add_accepted_offer_email( $email_classes ) {
+
+        // include our custom email class
+        require( 'includes/class-wc-accepted-offer-email.php' );
+
+        // add the email class to the list of email classes that WooCommerce loads
+        $email_classes['WC_Accepted_Offer_Email'] = new WC_Accepted_Offer_Email();
+
+        return $email_classes;
+    }
 }
