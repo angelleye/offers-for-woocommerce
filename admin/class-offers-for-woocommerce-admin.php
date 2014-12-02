@@ -458,7 +458,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			3  => __( 'Offer Details deleted.', 'angelleye_offers_for_woocommerce' ),
 			4  => __( 'Offer updated.', 'angelleye_offers_for_woocommerce' ),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Book restored to revision from %s', 'angelleye_offers_for_woocommerce' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Offer restored to revision from %s', 'angelleye_offers_for_woocommerce' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 			6  => __( 'Offer set as Pending Status.', 'angelleye_offers_for_woocommerce' ),
 			7  => __( 'Offer saved.', 'angelleye_offers_for_woocommerce' ),
 			8  => __( 'Offer submitted.', 'angelleye_offers_for_woocommerce' ),
@@ -1092,12 +1092,47 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // Accept Offer
         if($_POST['post_status'] == 'accepted-offer' && $_POST['post_previous_status'] != 'accepted-offer')
         {
-            // Email customer accepted email template
+            /**
+             * Email customer accepted email template
+             * @since   0.1.0
+             */
+            // set recipient email
+            $recipient = get_post_meta($post_id, 'offer_email', true);
+            $offer_id = $post_id;
 
-            // Create WooCommerce order with status 'pending payment'
+            $product_id = get_post_meta($post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            $product = new WC_Product($product_id);
 
+            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            $product_total = ($product_qty * $product_price_per);
+
+            $offer_args = array(
+                'recipient' => $recipient,
+                'offer_id' => $offer_id,
+                'product_id' => $product_id,
+                'variant_id' => $variant_id,
+                'product' => $product->post,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_total' => $product_total
+            );
+
+            // the email we want to send
+            $email_class = 'WC_Accepted_Offer_Email';
+
+            // load the WooCommerce Emails
+            $wc_emails = new WC_Emails();
+            $emails = $wc_emails->get_emails();
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->trigger($offer_args);
+
+            echo $new_email->get_content();
+            exit;
         }
-
 	}
 
 	/**

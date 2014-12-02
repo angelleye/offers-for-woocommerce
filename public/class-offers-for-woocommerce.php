@@ -73,8 +73,7 @@ class Angelleye_Offers_For_Woocommerce {
 		 * Define custom functionality *
 		 *******************************
 		 */							
-		 
-		 
+
 		/**
 		 * Init - New Offer Form Submit
 		 * @since	0.1.0
@@ -92,10 +91,8 @@ class Angelleye_Offers_For_Woocommerce {
 		
 		/* Add "Make Offer" product tab on product single view */
 		add_filter( 'woocommerce_product_tabs', array( &$this, 'angelleye_ofwc_add_custom_woocommerce_product_tab' ) );
-		
 	}
-	
-	
+
 	/**
 	 * Add extra div wrap before add to cart button
 	 *

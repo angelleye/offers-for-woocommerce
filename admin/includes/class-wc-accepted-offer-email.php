@@ -1,12 +1,16 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+if ( ! class_exists( 'WC_Accepted_Offer_Email' ) ) :
 
 /**
  * A custom Accepted Offer WooCommerce Email class
  *
  * @since 0.1.0
- * @extends \WC_Email
+ * @extends WC_Email
  */
 class WC_Accepted_Offer_Email extends WC_Email {
     /**
@@ -15,6 +19,12 @@ class WC_Accepted_Offer_Email extends WC_Email {
      * @since 0.1.0
      */
     public function __construct() {
+        /**
+         * Call $plugin_slug from public plugin class
+         * @since	0.1.0
+         */
+        $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
+        $this->plugin_slug = $plugin->get_plugin_slug();
 
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_accepted_offer';
@@ -30,18 +40,17 @@ class WC_Accepted_Offer_Email extends WC_Email {
         $this->subject = 'Accepted Offer';
 
         // these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
-        $this->template_html  = 'emails/admin-new-order.php';
-        $this->template_plain = 'emails/plain/admin-new-order.php';
+        $this->template_html  = 'woocommerce-offer-accepted.php';
+        $this->template_html_path = plugin_dir_path(__FILE__). 'emails/';
 
-        // Trigger on new paid orders
-        add_action( 'woocommerce_order_status_pending', array( $this, 'trigger' ) );
+        $this->template_plain = 'woocommerce-offer-accepted.php';
+        $this->template_plain_path = plugin_dir_path(__FILE__). 'emails/plain/';
 
         // Call parent constructor to load any other defaults not explicity defined here
         parent::__construct();
 
-        // if none was entered, just use the WP admin email as a fallback
-        if ( ! $this->recipient )
-            $this->recipient = get_option( 'admin_email' );
+        // Set the recipient
+        $this->recipient = $this->get_option( 'recipient' );
     }
 
     /**
@@ -50,31 +59,10 @@ class WC_Accepted_Offer_Email extends WC_Email {
      * @since 0.1.0
      * @param int $order_id
      */
-    public function trigger( $order_id ) {
+    public function trigger( $offer_args ) {
 
-        // bail if no order ID is present
-        if ( ! $order_id )
-            return;
-
-        // setup order object
-        $this->object = new WC_Order( $order_id );
-
-        // bail if shipping method is not expedited
-        if ( ! in_array( $this->object->get_shipping_method(), array( 'Three Day Shipping', 'Next Day Shipping' ) ) )
-            return;
-
-        // this sets the recipient to the settings defined below in init_form_fields()
-        $this->recipient = $this->get_option( 'recipient' );
-
-        // replace variables in the subject/headings
-        $this->find[] = '{order_date}';
-        $this->replace[] = date_i18n( woocommerce_date_format(), strtotime( $this->object->order_date ) );
-
-        $this->find[] = '{order_number}';
-        $this->replace[] = $this->object->get_order_number();
-
-        if ( ! $this->is_enabled() || ! $this->get_recipient() )
-            return;
+        $this->recipient = $offer_args['recipient'];
+        $this->offer_args = $offer_args;
 
         // woohoo, send the email!
         $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
@@ -88,13 +76,17 @@ class WC_Accepted_Offer_Email extends WC_Email {
      */
     public function get_content_html() {
         ob_start();
-        woocommerce_get_template( $this->template_html, array(
-            'order'         => $this->object,
-            'email_heading' => $this->get_heading()
-        ) );
+        wc_get_template( $this->template_html, array(
+            'offer_args'         => $this->offer_args,
+            'email_heading' => $this->get_heading(),
+            'sent_to_admin'    => false,
+            'plain_text'    => false
+            ),
+            '',
+            $this->template_html_path
+        );
         return ob_get_clean();
     }
-
 
     /**
      * get_content_plain function.
@@ -104,10 +96,15 @@ class WC_Accepted_Offer_Email extends WC_Email {
      */
     public function get_content_plain() {
         ob_start();
-        woocommerce_get_template( $this->template_plain, array(
-            'order'         => $this->object,
-            'email_heading' => $this->get_heading()
-        ) );
+        wc_get_template( $this->template_plain, array(
+            'offer_args'         => $this->offer_args,
+            'email_heading' => $this->get_heading(),
+            'sent_to_admin'    => false,
+            'plain_text'    => true
+            ),
+            '',
+            $this->template_plain_path
+        );
         return ob_get_clean();
     }
 
@@ -124,13 +121,6 @@ class WC_Accepted_Offer_Email extends WC_Email {
                 'type'    => 'checkbox',
                 'label'   => 'Enable this email notification',
                 'default' => 'yes'
-            ),
-            'recipient'  => array(
-                'title'       => 'Recipient(s)',
-                'type'        => 'text',
-                'description' => sprintf( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', esc_attr( get_option( 'admin_email' ) ) ),
-                'placeholder' => '',
-                'default'     => ''
             ),
             'subject'    => array(
                 'title'       => 'Subject',
@@ -160,5 +150,6 @@ class WC_Accepted_Offer_Email extends WC_Email {
             )
         );
     }
-
 } // end \WC_Accepted_Offer_Email class
+
+endif;
