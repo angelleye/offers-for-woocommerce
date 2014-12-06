@@ -23,12 +23,13 @@
         </ul>
     </div>
     <div class="angelleye-woocommerce-col-1-3">
-        <h5>Orignal Offer Data</h5>
+        <h5>Include notes/comments</h5>
+        <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class=""></textarea>
     </div>
     <div class="angelleye-woocommerce-col-1-3">
-        <h5>Orignal Offer Data</h5>
+        <h5>Actions</h5>
+        <a class="angelleye_woocommerce_offers_status_btn" id="angelleye-woocommerce-offers-status-btn-accept-offer">Mark Accepted</a>
     </div>
-
 
 </div>
 <?php } ?>

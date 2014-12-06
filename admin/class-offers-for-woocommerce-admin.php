@@ -879,7 +879,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 __( 'Offer Activity Log', 'angelleye_offers_for_woocommerce' ),
                 array( &$this, 'add_meta_box_offer_comments_callback' ),
                 $screen,
-                'side','low'
+                'side','default'
             );
         }
     }
@@ -988,7 +988,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				__( 'Offer Status', 'angelleye_offers_for_woocommerce' ),
 				array( &$this, 'woocommerce_offer_status_metabox_callback' ),
 				$screen,
-				'normal','low'
+				'side','high'
 			);
 		}
 	}
@@ -1069,28 +1069,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
         $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
 
-        // Insert WP comment
-        $comment_text = "<span>Offer Updated</span>";
-        $comment_text.= " - Status: ".$post_status_text;
-
-        $data = array(
-            'comment_post_ID' => $post_id,
-            'comment_author' => 'admin',
-            'comment_author_email' => '',
-            'comment_author_url' => '',
-            'comment_content' => $comment_text,
-            'comment_type' => '',
-            'comment_parent' => 0,
-            'user_id' => get_current_user_id(),
-            'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-            'comment_agent' => '',
-            'comment_date' => date("Y-m-d H:i:s", time()),
-            'comment_approved' => 1,
-        );
-        wp_insert_comment($data);
+        // set update notes
+        $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
 
         // Accept Offer
-        if($_POST['post_status'] == 'accepted-offer' && $_POST['post_previous_status'] != 'accepted-offer')
+        if($post_data->post_status == 'accepted-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] == 'accepted-offer')
         {
             /**
              * Email customer accepted email template
@@ -1116,7 +1099,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product' => $product->post,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
-                'product_total' => $product_total
+                'product_total' => $product_total,
+                'offer_notes' => $offer_notes
             );
 
             // the email we want to send
@@ -1129,10 +1113,33 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->trigger($offer_args);
-
-            echo $new_email->get_content();
-            exit;
         }
+
+        // Insert WP comment
+        $comment_text = "<span>Updated - Status: </span>";
+        $comment_text.= $post_status_text;
+
+        // include update notes
+        if(isset($offer_notes) && $offer_notes != '')
+        {
+            $comment_text.= '</br>'. nl2br($offer_notes);
+        }
+
+        $data = array(
+            'comment_post_ID' => $post_id,
+            'comment_author' => 'admin',
+            'comment_author_email' => '',
+            'comment_author_url' => '',
+            'comment_content' => $comment_text,
+            'comment_type' => '',
+            'comment_parent' => 0,
+            'user_id' => get_current_user_id(),
+            'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+            'comment_agent' => '',
+            'comment_date' => date("Y-m-d H:i:s", time()),
+            'comment_approved' => 1,
+        );
+        wp_insert_comment($data);
 	}
 
 	/**
