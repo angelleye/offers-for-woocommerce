@@ -91,14 +91,41 @@ class Angelleye_Offers_For_Woocommerce {
 		
 		/* Add "Make Offer" product tab on product single view */
 		add_filter( 'woocommerce_product_tabs', array( &$this, 'angelleye_ofwc_add_custom_woocommerce_product_tab' ) );
-	}
+
+        /* Add query vars for api endpoint
+         * Used for add offer to cart
+         * @since   0.1.0
+         */
+        add_filter('query_vars', array($this, 'add_query_vars'), 0);
+
+        /* Add api endpoint listener
+         * Used for add offer to cart
+         * @since   0.1.0
+         */
+        add_action('parse_request', array($this, 'sniff_api_requests'), 0);
+
+        /**
+         * Sets qty and price on any offer items in cart
+         * @param $cart_object
+         * @since   0.1.0
+         */
+        add_action( 'woocommerce_before_calculate_totals', array($this, 'my_woocommerce_before_calculate_totals' ) );
+
+        //add_filter( 'woocommerce_add_to_cart_validation', array($this, 'so_validate_add_cart_item' ), 10, 5 );
+
+        //add_filter( 'woocommerce_add_cart_item_data', array($this, 'add_cart_item_custom_data_vase' ), 10, 2 );
+        //add_filter( 'woocommerce_get_cart_item_from_session', array($this, 'get_cart_items_from_session' ), 1, 3 );
+
+        //add_filter( 'woocommerce_add_cart_item_data', array($this, 'add_cart_item_custom_data_vase' ), 10, 2 );
+        add_filter( 'woocommerce_get_cart_item_from_session', array($this, 'get_cart_items_from_session' ), 1, 3 );
+    }
 
 	/**
 	 * Add extra div wrap before add to cart button
 	 *
 	 * @since	0.1.0
 	 */
-	function angelleye_ofwc_before_add_to_cart_button()
+	public function angelleye_ofwc_before_add_to_cart_button()
 	{
 		global $post;
 		$custom_tab_options_offers = array(
@@ -116,7 +143,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @since	0.1.0
 	 */
-	function angelleye_ofwc_after_add_to_cart_button()
+	public function angelleye_ofwc_after_add_to_cart_button()
 	{
 		global $post;
 		$custom_tab_options_offers = array(
@@ -151,7 +178,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @since	0.1.0
 	 */
-	function angelleye_ofwc_after_show_loop_item($post)
+	public function angelleye_ofwc_after_show_loop_item($post)
 	{
 		global $post;
 		$custom_tab_options_offers = array(
@@ -186,7 +213,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @since	0.1.0
 	 */
-	function angelleye_ofwc_add_custom_woocommerce_product_tab($tabs)
+	public function angelleye_ofwc_add_custom_woocommerce_product_tab($tabs)
 	{
 		global $post;
 		$custom_tab_options_offers = array(
@@ -216,7 +243,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @since	0.1.0
 	 */
-	function angelleye_ofwc_display_custom_woocommerce_product_tab_content()
+	public function angelleye_ofwc_display_custom_woocommerce_product_tab_content()
 	{
 		// get options for button display
 		$button_display_options = get_option('offers_for_woocommerce_options_display');
@@ -618,5 +645,223 @@ class Angelleye_Offers_For_Woocommerce {
                 exit;
             }
 		}
-	}	
+	}
+
+    /**
+     * Add public query vars for API requests
+     * @param array $vars List of current public query vars
+     * @return array $vars
+     */
+    public function add_query_vars($vars){
+        $vars[] = '__aewcoapi';
+        $vars[] = 'woocommerce-offer-id';
+        return $vars;
+    }
+
+    /**
+     * Sniff Api Requests
+     * This is where we hijack all API requests
+     * @return die if API request
+     */
+    public function sniff_api_requests(){
+        global $wp;
+        if(isset($wp->query_vars['__aewcoapi'])){
+            $this->handle_request();
+        }
+    }
+
+    /** Handle API Requests
+     * @return void
+     */
+    protected function handle_request(){
+        global $wp;
+        $pid = (isset($wp->query_vars['woocommerce-offer-id'])) ? $wp->query_vars['woocommerce-offer-id'] : '' ;
+        if($pid == '' || !is_numeric($pid))
+        {
+            $this->send_api_response( __( 'Missing or Invalid Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+        }
+        else
+        {
+            // Lookup Offer - Make sure valid 'accepted-offer' status
+            $offer = get_post($pid);
+
+            // Invalid Offer Id
+            if(!$offer || $offer == '')
+            {
+                $this->send_api_response( __( 'Invalid or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+            }
+            else
+            {
+                // Get offer meta
+                $offer_meta = get_post_meta( $offer->ID, '', true );
+
+                // Error - Offer Not Accepted
+                if($offer->post_status != 'accepted-offer')
+                {
+                    $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+
+                }
+
+                // Define product id
+                $product_id = (isset($offer_meta['orig_offer_product_id'][0]) && is_numeric( $offer_meta['orig_offer_product_id'][0] ) ) ? $offer_meta['orig_offer_product_id'][0] : '';
+
+                // Error - Missing Product Id on the offer meta
+                if($product_id == '' || !is_numeric( $product_id ))
+                {
+                    $this->send_api_response( __( 'Error adding offer - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+                }
+
+                // Lookup Product
+                $product = new WC_Product($product_id);
+
+                // Error - Invalid Product
+                if(!isset($product->post) || $product->post->ID == '' || !is_numeric( $product_id ))
+                {
+                    $this->send_api_response( __( 'Error adding offer - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+                }
+
+                // Add offer to cart
+                if($this->add_offer_to_cart( $offer, $offer_meta ) )
+                {
+                    $this->send_api_response( __( 'Successfully added Offer to cart', 'angelleye_offers_for_woocommerce' ), json_decode($pid));
+                }
+            }
+        }
+    }
+
+    /**
+     * Add offer to cart
+     * @since   0.1.0
+     */
+    protected function add_offer_to_cart($offer = array(), $offer_meta = array() )
+    {
+        if ( ! is_admin() )
+        {
+            global $woocommerce;
+
+            $quantity = $offer_meta['offer_quantity'][0];
+            $product_id = $offer_meta['orig_offer_product_id'][0];
+            $product_variation_id = $offer_meta['orig_offer_variation_id'][0];
+            $product_variation_data = array('');
+
+            $product_meta['woocommerce_offer_id'] = $offer->ID;
+            $product_meta['woocommerce_offer_quantity'] = $offer_meta['offer_quantity'][0];
+            $product_meta['woocommerce_offer_price_per'] = $offer_meta['offer_price_per'][0];
+
+            $found = false;
+
+            foreach($woocommerce->cart->get_cart() as $cart_item)
+            {
+                // check if offer id already in cart
+                if(isset($cart_item['woocommerce_offer_id']) && $cart_item['woocommerce_offer_id'] == $offer->ID)
+                {
+                    $found = true;
+                    $this->send_api_response( __( 'Offer already added to cart', 'angelleye_offers_for_woocommerce' ) );
+                }
+            }
+
+            if(!$found)
+            {
+                $item_id = $woocommerce->cart->add_to_cart( $product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta );
+            }
+
+            if(isset($item_id))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** API Response Handler
+     */
+    public function send_api_response($msg, $pid = '')
+    {
+        global $woocommerce;
+        $response['message'] = $msg;
+        $response['type'] = 'error';
+        if($pid)
+        {
+            $response['pid'] = $pid;
+            $response['type'] = 'success';
+            //wp_redirect($woocommerce->cart->get_cart_url(), 200 );
+        }
+
+        wc_add_notice( sprintf(
+            '<a href="%s" class="button wc-forward">%s</a> %s',
+            $woocommerce->cart->get_cart_url(),
+            __( 'View Cart', 'woocommerce' ),
+            $response['message']
+            ), $response['type'] );
+
+
+        /*header('content-type: application/json; charset=utf-8');
+        echo json_encode($response)."\n";
+        exit;*/
+    }
+
+    /**
+     * Sets qty and price on any offer items in cart
+     * @param $cart_object
+     * @since   0.1.0
+     */
+    public function my_woocommerce_before_calculate_totals( $cart_object )
+    {
+        global $woocommerce;
+
+        foreach ( $cart_object->cart_contents as $key => $value ) {
+            if ( isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                $value['data']->set_price($value['woocommerce_offer_price_per']);
+            }
+
+            if ( isset($value['woocommerce_offer_quantity']) && $value['woocommerce_offer_quantity'] != '') {
+                $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+            }
+            /*
+            // If your target product is a variation
+            if ( $value['variation_id'] == $target_product_id ) {
+                $value['data']->price = $custom_price;
+            }
+            */
+        }
+
+        //echo '<pre>';
+        //print_r($cart_object);
+        //echo '</pre>';
+
+
+    }
+
+    function so_validate_add_cart_item( $passed, $product_id, $quantity, $variation_id = '', $variations= '' ) {
+
+        // do your validation, if not met switch $passed to false
+        if ( 1 == 1 ){
+            $passed = false;
+            wc_add_notice( __( 'You can not do that', 'textdomain' ), 'error' );
+        }
+
+        $passed = false;
+        wc_add_notice( __( 'You can not do that', 'textdomain' ), 'error' );
+
+        return $passed;
+
+    }
+
+    //Get it from the session and add it to the cart variable
+    function get_cart_items_from_session( $item, $values, $key ) {
+        if ( array_key_exists( 'woocommerce_offer_id', $values ) )
+        {
+            $item[ 'woocommerce_offer_id' ] = $values['woocommerce_offer_id'];
+        }
+        if ( array_key_exists( 'woocommerce_offer_quantity', $values ) )
+        {
+            $item[ 'woocommerce_offer_quantity' ] = $values['woocommerce_offer_quantity'];
+        }
+        if ( array_key_exists( 'woocommerce_offer_price_per', $values ) )
+        {
+            $item[ 'woocommerce_offer_price_per' ] = $values['woocommerce_offer_price_per'];
+        }
+        return $item;
+    }
+
 }
