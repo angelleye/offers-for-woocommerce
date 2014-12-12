@@ -65,7 +65,7 @@ class WC_Accepted_Offer_Email extends WC_Email {
         $this->offer_args = $offer_args;
 
         // woohoo, send the email!
-        $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+        $this->send( $this->recipient, $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
     }
 
     /**
