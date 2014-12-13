@@ -32,7 +32,18 @@
 <div id="tab_custom_ofwc_offer_tab_inner" class="tab_custom_ofwc_offer_tab_inner_content">
     <fieldset>
     	<div class="make-offer-form-intro">
-            <h2><?php echo ($button_display_options['display_setting_custom_make_offer_btn_text']) ? $button_display_options['display_setting_custom_make_offer_btn_text'] : 'Make Offer'; ?></h2>
+            <h2>
+                <?php
+                if(isset($button_display_option['display_setting_custom_make_offer_btn_text']) && !empty($button_display_option['display_setting_custom_make_offer_btn_text']))
+                {
+                    echo $button_display_options['display_setting_custom_make_offer_btn_text'];
+                }
+                else
+                {
+                    echo 'Make Offer';
+                }
+                ?>
+            </h2>
             <div class="make-offer-form-intro-text">To make an offer please complete the form below:</div>
         </div>
         <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="on">
