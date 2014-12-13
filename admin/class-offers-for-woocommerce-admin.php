@@ -1113,13 +1113,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		{
 			add_option('offers_for_woocommerce_options_general');
 		}
-		/**
-		 * Add option - 'Email Settings'
-		 */		 
-		if(false == get_option('offers_for_woocommerce_options_email'))	// If the plugin options don't exist, create them.
-		{
-			add_option('offers_for_woocommerce_options_email');
-		}
+
 		/**
 		 * Add option - 'Display Settings'
 		 */
@@ -1136,15 +1130,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			'offers_for_woocommerce_options_general', // Option name
 			'' // Validate
 		);
-		
-		/**
-		 * Register setting - 'Email Settings'
-		 */
-		register_setting(
-			'offers_for_woocommerce_options_email', // Option group
-			'offers_for_woocommerce_options_email', // Option name
-			'' // Validate
-		);		
 
 		/**
 		 * Register setting - 'Display Settings'
@@ -1251,81 +1236,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
 			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_color', 'input_required'=>FALSE)
-		);
-		
-		
-		/**
-		 * Add section - 'Email Settings - General Email Settings'
-		 */
-		add_settings_section(
-			'email_settings', // ID
-			'', // Title
-			array( &$this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
-			'offers_for_woocommerce_email_settings' // Page
-		);
-		
-		/**
-		 * Add field - 'Email Settings' - 'email_setting_notifications_from_email'
-		 * Notifications From Email
-		 */
-		add_settings_field(
-			'email_setting_notifications_from_email', // ID
-			'Notifications From Email', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
-			'offers_for_woocommerce_email_settings', // Page
-			'email_settings', // Section
-			array('option_name'=>'offers_for_woocommerce_options_email', 'input_label'=>'email_setting_notifications_from_email', 'input_required'=>FALSE)
-		);
-		
-		/**
-		 * Add field - 'Email Settings' - 'email_setting_notifications_from_name'
-		 * Notifications From Name
-		 */
-		add_settings_field(
-			'email_setting_notifications_from_name', // ID
-			'Notifications From Name', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
-			'offers_for_woocommerce_email_settings', // Page
-			'email_settings', // Section
-			array('option_name'=>'offers_for_woocommerce_options_email', 'input_label'=>'email_setting_notifications_from_name', 'input_required'=>FALSE)
-		);
-
-        //////////////
-
-        /**
-         * Add section - 'Email Settings - Admin Notification'
-         */
-        add_settings_section(
-            'email_settings_admin_notification', // ID
-            '', // Title
-            array( &$this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
-            'offers_for_woocommerce_email_settings_new_offer' // Page
-        );
-
-        /**
-         * Add field - 'Email Settings' - 'email_setting_new_offer_active'
-         * Enable Emails out to admin on new offer submit
-         */
-        add_settings_field(
-            'email_setting_new_offer_active', // ID
-            'Enable New Offer Admin Notification', // Title
-            array( &$this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
-            'offers_for_woocommerce_email_settings_new_offer', // Page
-            'email_settings_new_offer', // Section
-            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'email_setting_new_offer_active', 'input_required'=>FALSE)
-        );
-
-		/**
-		 * Add field - 'Email Settings' - 'email_setting_admin_notifications_email'
-		 * Admin Notifications Email
-		 */
-		add_settings_field(
-			'email_setting_admin_notifications_email', // ID
-			'Admin Notifications Email', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
-			'offers_for_woocommerce_email_settings_new_offer', // Page
-			'email_settings_new_offer', // Section
-			array('option_name'=>'offers_for_woocommerce_options_email', 'input_label'=>'email_setting_admin_notifications_email', 'input_required'=>FALSE)
 		);
 
 	} // END - angelleye_ofwc_intialize_options
@@ -1436,12 +1346,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			});
 		';
 		echo '</script>';
-		
 	}
-	
-	
-	
-		
 	
 	/**
 	 * Return an instance of this class
@@ -1568,10 +1473,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			$links
 		);
 	}
-	
-	
-	
-	
 	
 	/**
      * Sanitize each setting field as needed
