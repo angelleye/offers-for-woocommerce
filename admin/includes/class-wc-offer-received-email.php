@@ -4,15 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Accepted_Offer_Email' ) ) :
+if ( ! class_exists( 'WC_Offer_Received_Email' ) ) :
 
 /**
- * A custom Accepted Offer WooCommerce Email class
+ * A custom Offer Received WooCommerce Email class
  *
  * @since 0.1.0
  * @extends WC_Email
  */
-class WC_Accepted_Offer_Email extends WC_Email {
+class WC_Offer_Received_Email extends WC_Email {
     /**
      * Set email defaults
      *
@@ -27,23 +27,23 @@ class WC_Accepted_Offer_Email extends WC_Email {
         $this->plugin_slug = $plugin->get_plugin_slug();
 
         // set ID, this simply needs to be a unique name
-        $this->id = 'wc_accepted_offer';
+        $this->id = 'wc_offer_received';
 
         // this is the title in WooCommerce Email settings
-        $this->title = 'Accepted offer';
+        $this->title = 'Offer received';
 
         // this is the description in WooCommerce email settings
-        $this->description = 'Accepted Offer Notification emails are sent when a customer offer is approved by the store admin';
+        $this->description = 'Offer received notification emails are sent to a customer when a customer submits offer';
 
         // these are the default heading and subject lines that can be overridden using the settings
-        $this->heading = 'Accepted Offer';
-        $this->subject = 'Accepted Offer';
+        $this->heading = 'Offer Received';
+        $this->subject = 'Offer Received';
 
         // these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
-        $this->template_html  = 'woocommerce-offer-accepted.php';
+        $this->template_html  = 'woocommerce-offer-received.php';
         $this->template_html_path = plugin_dir_path(__FILE__). 'emails/';
 
-        $this->template_plain = 'woocommerce-offer-accepted.php';
+        $this->template_plain = 'woocommerce-offer-received.php';
         $this->template_plain_path = plugin_dir_path(__FILE__). 'emails/plain/';
 
         // Call parent constructor to load any other defaults not explicity defined here

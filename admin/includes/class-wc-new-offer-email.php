@@ -4,15 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_Accepted_Offer_Email' ) ) :
+if ( ! class_exists( 'WC_New_Offer_Email' ) ) :
 
 /**
- * A custom Accepted Offer WooCommerce Email class
+ * A custom New Offer WooCommerce Email class
  *
  * @since 0.1.0
  * @extends WC_Email
  */
-class WC_Accepted_Offer_Email extends WC_Email {
+class WC_New_Offer_Email extends WC_Email {
     /**
      * Set email defaults
      *
@@ -27,30 +27,30 @@ class WC_Accepted_Offer_Email extends WC_Email {
         $this->plugin_slug = $plugin->get_plugin_slug();
 
         // set ID, this simply needs to be a unique name
-        $this->id = 'wc_accepted_offer';
+        $this->id = 'wc_new_offer';
 
         // this is the title in WooCommerce Email settings
-        $this->title = 'Accepted offer';
+        $this->title = 'New offer';
 
         // this is the description in WooCommerce email settings
-        $this->description = 'Accepted Offer Notification emails are sent when a customer offer is approved by the store admin';
+        $this->description = 'New Offer Notification emails are sent to the admin when customer submits offer';
 
         // these are the default heading and subject lines that can be overridden using the settings
-        $this->heading = 'Accepted Offer';
-        $this->subject = 'Accepted Offer';
+        $this->heading = 'New Offer';
+        $this->subject = 'New Offer';
 
         // these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
-        $this->template_html  = 'woocommerce-offer-accepted.php';
+        $this->template_html  = 'woocommerce-new-offer.php';
         $this->template_html_path = plugin_dir_path(__FILE__). 'emails/';
 
-        $this->template_plain = 'woocommerce-offer-accepted.php';
+        $this->template_plain = 'woocommerce-new-offer.php';
         $this->template_plain_path = plugin_dir_path(__FILE__). 'emails/plain/';
 
         // Call parent constructor to load any other defaults not explicity defined here
         parent::__construct();
 
         // Set the recipient
-        $this->recipient = $this->get_option( 'recipient' );
+        $this->recipient = $this->get_option( 'admin_email' );
     }
 
     /**
@@ -121,6 +121,13 @@ class WC_Accepted_Offer_Email extends WC_Email {
                 'type'    => 'checkbox',
                 'label'   => 'Enable this email notification',
                 'default' => 'yes'
+            ),
+            'recipient'    => array(
+                'title'       => 'Recipient(s)',
+                'type'        => 'text',
+                'description' => sprintf( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', esc_attr( get_option('admin_email') ) ),
+                'placeholder' => '',
+                'default'     => ''
             ),
             'subject'    => array(
                 'title'       => 'Subject',
