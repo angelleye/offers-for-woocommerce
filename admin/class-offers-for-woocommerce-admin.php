@@ -1117,6 +1117,51 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_email->trigger($offer_args);
         }
 
+        // Decline Offer
+        if($post_data->post_status == 'declined-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'declined-offer')
+        {
+            /**
+             * Email customer declined email template
+             * @since   0.1.0
+             */
+            // set recipient email
+            $recipient = get_post_meta($post_id, 'offer_email', true);
+            $offer_id = $post_id;
+
+            $product_id = get_post_meta($post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            $product = new WC_Product($product_id);
+
+            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            $product_total = ($product_qty * $product_price_per);
+
+            $offer_args = array(
+                'recipient' => $recipient,
+                'offer_id' => $offer_id,
+                'product_id' => $product_id,
+                'product_url' => get_permalink($product_id),
+                'variant_id' => $variant_id,
+                'product' => $product->post,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_total' => $product_total,
+                'offer_notes' => $offer_notes
+            );
+
+            // the email we want to send
+            $email_class = 'WC_Declined_Offer_Email';
+
+            // load the WooCommerce Emails
+            $wc_emails = new WC_Emails();
+            $emails = $wc_emails->get_emails();
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->recipient = $recipient;
+            $new_email->trigger($offer_args);
+        }
+
         // Insert WP comment
         $comment_text = "<span>Updated - Status: </span>";
         $comment_text.= $post_status_text;
@@ -1695,15 +1740,89 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
             global $wpdb; // this is how you get access to the database
-            $targetPostID = $_POST["targetID"];
+            $post_id = $_POST["targetID"];
             $table = "wp_posts";
             $data_array = array('post_status' => 'declined-offer');
-            $where = array('ID' => $targetPostID);
+            $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            $whatever = intval( $_POST['whatever'] );
-            $whatever += 10;
-            echo $whatever;
+            // Get current data for Offer after saved
+            $post_data = get_post($post_id);
+            // Filter Post Status Label
+            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
+            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+
+            // set update notes
+            $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
+
+            /**
+             * Email customer declined email template
+             * @since   0.1.0
+             */
+            // set recipient email
+            $recipient = get_post_meta($post_id, 'offer_email', true);
+            $offer_id = $post_id;
+
+            $product_id = get_post_meta($post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            $product = new WC_Product($product_id);
+
+            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            $product_total = ($product_qty * $product_price_per);
+
+            $offer_args = array(
+                'recipient' => $recipient,
+                'offer_id' => $offer_id,
+                'product_id' => $product_id,
+                'product_url' => get_permalink($product_id),
+                'variant_id' => $variant_id,
+                'product' => $product->post,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_total' => $product_total,
+                'offer_notes' => $offer_notes
+            );
+
+            // the email we want to send
+            $email_class = 'WC_Declined_Offer_Email';
+
+            // load the WooCommerce Emails
+            $wc_emails = new WC_Emails();
+            $emails = $wc_emails->get_emails();
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->recipient = $recipient;
+            $new_email->trigger($offer_args);
+
+            // Insert WP comment
+            $comment_text = "<span>Updated - Status: </span>";
+            $comment_text.= $post_status_text;
+
+            // include update notes
+            if(isset($offer_notes) && $offer_notes != '')
+            {
+                $comment_text.= '</br>'. nl2br($offer_notes);
+            }
+
+            $data = array(
+                'comment_post_ID' => $post_id,
+                'comment_author' => 'admin',
+                'comment_author_email' => '',
+                'comment_author_url' => '',
+                'comment_content' => $comment_text,
+                'comment_type' => '',
+                'comment_parent' => 0,
+                'user_id' => get_current_user_id(),
+                'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                'comment_agent' => '',
+                'comment_date' => date("Y-m-d H:i:s", time()),
+                'comment_approved' => 1,
+            );
+            wp_insert_comment($data);
+
+
             die(); // this is required to return a proper result
         }
     }
