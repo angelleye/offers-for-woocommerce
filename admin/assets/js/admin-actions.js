@@ -60,6 +60,7 @@
 
                     // post it
                     $.post(ajaxurl, data, function(response) {
+
                         if($('tr.post-'+targetID+'.type-woocommerce_offer').hasClass('status-publish'))
                         {
                             var previousPendingCountBubbleValue = $('#woocommerce-offers-count .pending-count').html();

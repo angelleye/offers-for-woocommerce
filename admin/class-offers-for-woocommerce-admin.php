@@ -1645,7 +1645,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
-            $table = "wp_posts";
+            $table = $wpdb->prefix . "posts";
             $data_array = array('post_status' => 'accepted-offer');
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
@@ -1741,7 +1741,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
-            $table = "wp_posts";
+            $table = $wpdb->prefix . "posts";
             $data_array = array('post_status' => 'declined-offer');
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
