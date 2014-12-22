@@ -556,28 +556,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		//if ( $screen->id == 'edit-comments' )
 		add_filter( 'comments_clauses', array( &$this, 'angelleye_ofwc_exclude_cpt_from_comments_clauses' ) );
 	}
-	
-	
-	/**
-	 * Add Meta Boxes
-	 *
-	 * @since	0.1.0
-	 */
-	/*function add_woocommerce_offer_metaboxes() {
-		add_meta_box('woocommerce_offers_status', 'Offer Status', 'woocommerce_offers_status', 'woocommerce_offer', 'side', 'default');
-	}*/
-	
-	
+
 	/**
 	 * Set custom columns on CPT edit list view
 	 * @since	0.1.0
 	 */
 	public function set_woocommerce_offer_columns($columns) 
 	{
-		unset($columns['author']);
-		unset($columns['comments']);
-		
-		//unset($columns['woocommerce_offer_status']);
+        $columns['offer_name'] = __( 'Name', 'angelleye_offers_for_woocommerce' );
 		$columns['offer_amount'] = __( 'Amount', 'angelleye_offers_for_woocommerce' );
 		$columns['offer_price_per'] = __( 'Price Per', 'angelleye_offers_for_woocommerce' );
 		$columns['offer_quantity'] = __( 'Quantity', 'angelleye_offers_for_woocommerce' );			
@@ -591,8 +577,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function get_woocommerce_offer_column( $column, $post_id ) 
 	{
-		switch ( $column ) {	
-			case 'offer_quantity' :
+		switch ( $column ) {
+            case 'offer_name' :
+                $val = get_post_meta( $post_id , 'offer_name' , true );
+                echo $val;
+                break;
+
+            case 'offer_quantity' :
                 $val = get_post_meta( $post_id , 'offer_quantity' , true );
                 $val = ($val != '') ? $val : '0';
                 echo number_format($val, 2);
@@ -623,27 +614,32 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function woocommerce_offer_sortable_columns( $columns ) 
 	{
+        $columns['offer_name'] = 'offer_name';
 		$columns['offer_price_per'] = 'offer_price_per';
 		$columns['offer_quantity'] = 'offer_quantity'; 
 		$columns['offer_amount'] = 'offer_amount';
 		return $columns;
 	}
 	
-	
 	/*
 	 * ADMIN COLUMN - SORTING - ORDERBY
 	 * http://scribu.net/wordpress/custom-sortable-columns.html#comment-4732
 	 */
 	public function woocommerce_offers_list_orderby( $vars ) {
-		if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount') ) ) 
-		{
-			$vars = array_merge( $vars, array(
-			'meta_key' => $vars['orderby'],
-			'orderby' => 'meta_value_num' ) );
-		}
+        if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount') ) )
+        {
+            $vars = array_merge( $vars, array(
+                'meta_key' => $vars['orderby'],
+                'orderby' => 'meta_value_num' ) );
+        }
+        if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_name') ) )
+        {
+            $vars = array_merge( $vars, array(
+                'meta_key' => $vars['orderby'],
+                'orderby' => 'meta_value' ) );
+        }
 		return $vars;
 	}
-	
 	
 	/*
 	 * ADD TO QUERY - PULL IN all except 'trash' when viewing 'all' list
