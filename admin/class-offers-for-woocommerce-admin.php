@@ -615,6 +615,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function woocommerce_offer_sortable_columns( $columns ) 
 	{
         $columns['offer_name'] = 'offer_name';
+        $columns['offer_email'] = 'offer_email';
 		$columns['offer_price_per'] = 'offer_price_per';
 		$columns['offer_quantity'] = 'offer_quantity'; 
 		$columns['offer_amount'] = 'offer_amount';
@@ -632,7 +633,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'meta_key' => $vars['orderby'],
                 'orderby' => 'meta_value_num' ) );
         }
-        if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_name') ) )
+        if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_name') || ($vars['orderby'] == 'offer_email') ) )
         {
             $vars = array_merge( $vars, array(
                 'meta_key' => $vars['orderby'],

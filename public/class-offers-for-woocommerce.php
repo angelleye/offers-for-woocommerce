@@ -494,7 +494,7 @@ class Angelleye_Offers_For_Woocommerce {
 				$newPostData['post_date_gmt'] = gmdate("Y-m-d H:i:s", time());
                 $newPostData['post_type'] = 'woocommerce_offer';
                 $newPostData['post_status'] = 'publish';
-                $newPostData['post_title'] = 'Offer - '. $formData['offer_email'];
+                $newPostData['post_title'] = $formData['offer_email'];
 
                 // check for parent post id
                 $parent_post_id = (isset($_POST['parent_offer_id'])) ? $_POST['parent_offer_id'] : '';
