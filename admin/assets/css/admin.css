@@ -116,19 +116,26 @@ body.wp-admin.post-type-woocommerce_offer .row-actions span a { border:1px solid
 body.wp-admin.post-type-woocommerce_offer .row-actions span:hover a { background:#FFF; color:auto; border-color:#999!important; }
 /*body.wp-admin.post-type-woocommerce_offer .wrap ul li.all span.count { display:none!important; }*/
 
-#woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-inputs { padding-top:5px;
-    font: left; }
-#woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-radio-wrap { margin-bottom:0px; margin-top:6px; }
-@media (min-width: 481px){
-    #woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-radio-wrap { float:left!important; margin-right:10px; }
+.woocommerce-offer-edit-status-inputs { padding-top:5px;
+    float: left;
 }
-#woocommerce-offer-status-metabox-panel .woocommerce-offer-edit-status-radio-wrap input { line-height: 50px; margin-right:0px; }
-#woocommerce-offer-status-metabox-panel div.woocommerce-offer-edit-submit-btn-wrap {
-    height: auto; float:right; position:relative; margin-top:14px!important; margin-bottom:0px!important; }
+
+.woocommerce-offer-edit-status-radio-wrap { margin-bottom:0px; margin-top:6px; }
+@media (min-width: 481px){
+    #woocommerce-offer-summary-metabox-panel .woocommerce-offer-edit-status-radio-wrap { float:left!important; margin-right:10px; }
+}
+.woocommerce-offer-edit-status-radio-wrap input { line-height: 50px; margin-right:0px; }
+
+.woocommerce-offer-edit-submit-btn-wrap {
+    height: auto;
+    position:relative;
+    margin-top:14px!important;
+    margin-bottom:20px!important;
+}
 
 body.wp-admin.post-type-woocommerce_offer .column-title {
-		word-wrap:normal!important; 
-	}
+    word-wrap:normal!important;
+}
 
 @media screen and (max-width:960px){
 	tr th.column-offer_actions {
@@ -174,6 +181,51 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .addnote-btn-wrap { float:none; text-align:right; }
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .addnote-btn-wrap button { float:none;  }
 
-/*#woocommerce-offer-status-metabox-panel { margin-top:20px; }*/
+#angelleye-woocommerce-offer-meta-summary {
+    height: auto !important;
+}
 
-.angelleye-clearfix { clear:both; }
+#angelleye_woocommerce_offer_status_notes {
+    height:100px!important;
+    margin-bottom:10px;!important;
+}
+#angelleye-offer-edit-actions {
+    margin:0px!important;
+    padding:0px!important;
+}
+
+#angelleye-offer-edit-actions li {
+    list-style: none!important;
+    padding:0px!important;
+    text-align: left;
+    margin: 0px 0px 4px 0px!important;
+}
+
+#angelleye-offer-edit-actions li a.current-offer-status {
+    font-style:italic;
+}
+
+.angelleye-clearfix {
+    clear: both;
+}
+
+.angelleye-col-1-3 {
+    position: relative;
+    display: block;
+    width: 33%!important;
+    float: left;
+    height: auto!important;
+}
+
+.angelleye-col-container {
+    position: relative;
+    width:90%;
+    padding-right: 10%;
+}
+
+.angelleye-col-container h5 {
+    font-size: 14px !important;
+    line-height: 30px !important;
+    margin:0px 0px 6px 0px;
+    border-bottom: 1px solid #CCC;
+}

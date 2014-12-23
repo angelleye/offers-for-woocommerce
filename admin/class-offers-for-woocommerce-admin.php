@@ -167,15 +167,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * XXX
          * @since	0.1.0
          */
-        add_action( 'add_meta_boxes', array( &$this, 'add_meta_box_offer_summary' ), 10, 2 );
+        add_action( 'add_meta_boxes', array( $this, 'add_meta_box_offer_summary' ), 10, 2 );
 
-        /**
-		 * XXX
-		 * @since	0.1.0
-		 */
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_box_offer_status' ), 10, 1 );
-
-        /**
+       /**
          * XXX
          * @since	0.1.0
          */
@@ -186,7 +180,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since	0.1.0
          */
         add_action( 'add_meta_boxes', array( &$this, 'add_meta_box_offer_addnote' ), 10, 2 );
-
 		
 		/**
 		 * XXX
@@ -200,15 +193,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_action('admin_init', array( &$this, 'angelleye_ofwc_intialize_options' ) );
 		
-		
-		
-		
 		/**
 		 * Action - Admin Menu - Add the 'pending offer' count bubble
 		 * @since	0.1.0
 		 */
 		add_action( 'admin_menu', array( &$this, 'add_user_menu_bubble' ) );
-		
 		
 		/**
 		 * Action - Add 'pending offer(s)' count to wp dashboard 'at a glance' widget
@@ -327,7 +316,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				'show_in_menu' => 'woocommerce',
 				'menu_position' => '',
 				'show_in_admin_bar' => false,
-				'supports' => array( 'woocommerce-offer-status-metabox-panel','section_id_offer_addnote','section_id_offer_summary','section_id_offer_comments' ),
+				'supports' => array( 'section_id_offer_comments', 'section_id_offer_summary', 'section_id_offer_addnote' ),
 				//'capability_type' => 'post',
 				//'capabilities' => array( 'create_posts' => false,),	// Removes support for the "Add New" function
 				'taxonomies' => array(''),
@@ -356,8 +345,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			}
 		}
 	}
-	
-	
 	
 	/**
 	 * Callback Action - Admin Menu - Add child submenu items for the woocommerce->offers submenu
@@ -406,7 +393,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				<li class="custom_tab_offers_for_woocommerce"><a href="#custom_tab_data_offers_for_woocommerce"><?php _e('Offers', 'angelleye_offers_for_woocommerce'); ?></a></li>
 		<?php
 	}
-	
 	
 	/**
 	 * Callback Action - Add custom tab options in WooCommerce product tabs
@@ -931,6 +917,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         $postmeta = get_post_meta($post->ID);
 
+        // Add an nonce field so we can check for it later.
+        wp_nonce_field( 'woocommerce_offer_summary_metabox', 'woocommerce_offer_summary_metabox_noncename' );
+
+        /*
+         * Use get_post_meta() to retrieve an existing value
+         * from the database and use the value for the form.
+         */
+        $current_status_value = get_post_status( $post->ID);
+
+        /*
+         * Set default
+         */
+        if (!$current_status_value)
+        {
+            $current_status_value = 'publish';
+        }
+
+
         /*
 		 * Output html for Offer Comments loop
 		 */
@@ -971,54 +975,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 	
 	/**
-	 * Action - Add meta box - "Offer Status"
-	 * @since	0.1.0
-	 * @NOTE:	Adds meta box to the side column on the edit detail view for our CPT
-	 */
-	public function add_meta_box_offer_status() 
-	{
-		$screens = array('woocommerce_offer');
-		foreach($screens as $screen)
-		{
-			add_meta_box(
-				'woocommerce-offer-status-metabox-panel',
-				__( 'Offer Status', 'angelleye_offers_for_woocommerce' ),
-				array( &$this, 'woocommerce_offer_status_metabox_callback' ),
-				$screen,
-				'normal','default'
-			);
-		}
-	}
-	
-	/**
-	 * Callback - Action - Add meta box - "Offer Status"
-	 * Output hmtl for "Offer Status" meta box
-	 * @since	0.1.0
-	 * @param WP_Post $post The object for the current post/page
-	 */
-	public function woocommerce_offer_status_metabox_callback( $post ) 
-	{
-		// Add an nonce field so we can check for it later.
-		wp_nonce_field( 'woocommerce_offer_status_metabox', 'woocommerce_offer_status_metabox_noncename' );
-		
-		/*
-		 * Use get_post_meta() to retrieve an existing value
-		 * from the database and use the value for the form.
-		 */
-		$current_status_value = get_post_status( $post->ID);
-		
-		/*
-		 * Set default
-		 */
-		if (!$current_status_value) $current_status_value = 'publish';
-		
-		/*
-		 * Output html form parts
-		 */
-		include_once('views/meta-panel-status.php');
-	}
-	
-	/**
 	 * When the post is saved, saves our custom data
 	 * @since	0.1.0
 	 * @param int $post_id The ID of the post being saved
@@ -1036,13 +992,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		}
 
 		// Check if our nonce is set
-		if(!isset($_POST['woocommerce_offer_status_metabox_noncename']))
+		if(!isset($_POST['woocommerce_offer_summary_metabox_noncename']))
 		{
 			return;
 		}
 
         // Verify that the nonce is valid
-        if(!wp_verify_nonce($_POST['woocommerce_offer_status_metabox_noncename'], 'woocommerce_offer'.$post_id))
+        if(!wp_verify_nonce($_POST['woocommerce_offer_summary_metabox_noncename'], 'woocommerce_offer'.$post_id))
         {
             return;
         }

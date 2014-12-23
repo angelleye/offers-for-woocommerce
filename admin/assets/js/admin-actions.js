@@ -98,6 +98,15 @@
                 }
             });
 
+            // Toggle Offer Edit fields per status btn clicked
+            $('#angelleye-woocommerce-offers-status-btn-accept-offer').click(function()
+            {
+               if($(this).attr('disabled'))
+               {
+                   alert('is down!');
+               }
+            });
+
             // AJAX - Add Offer Note
             $('#angelleye-woocommerce-offers-ajax-addnote-btn').click(function()
             {
