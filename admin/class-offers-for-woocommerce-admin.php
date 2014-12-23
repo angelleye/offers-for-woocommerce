@@ -120,14 +120,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		if (is_admin()) {
 			add_filter('post_row_actions', array( &$this, 'remove_quick_edit' ), 10, 2 );
 		}
-		
-		/**
-		 * XXX
-		 * @since	0.1.0
-		 */
-		add_action( 'init', array( &$this, 'my_custom_post_status_accepted' ), 10, 2 );
-		
-		/**
+
+        /**
+         * XXX
+         * @since	0.1.0
+         */
+        add_action( 'init', array( &$this, 'my_custom_post_status_accepted' ), 10, 2 );
+
+        /**
+         * XXX
+         * @since	0.1.0
+         */
+        add_action( 'init', array( &$this, 'my_custom_post_status_countered' ), 10, 2 );
+
+        /**
 		 * XXX
 		 * @since	0.1.0
 		 */
@@ -642,7 +648,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		{
 			if( is_admin() && $query->is_main_query() ) 
 			{
-				$query->set('post_status', array( 'publish','accepted-offer','declined-offer','completed-offer' ) );								
+				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','declined-offer','completed-offer' ) );
 				if ( !$arg_orderby)
 				{
 					$query->set('orderby', 'post_date');
@@ -665,12 +671,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			unset($actions['edit']);
 			unset($actions['view']);
 			//unset($actions['trash']);
-			
-			if($post->post_status == 'accepted-offer')
-			{
-				$actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
-				$actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
-			}
+
+            if($post->post_status == 'accepted-offer')
+            {
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
+            }
+            if($post->post_status == 'countered-offer')
+            {
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
+            }
 			elseif($post->post_status == 'declined-offer')
 			{
 				$actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
@@ -691,23 +702,40 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		}
 		return $actions;
 	}
-	
-	/**
-	 * Register custom post status type -- Accepted Offer
-	 * @since	0.1.0
-	 */
-	public function my_custom_post_status_accepted() 
-	{
-		$args = array(
-			'label'                     => _x( 'accepted-offer', 'Accepted Offer', 'angelleye_offers_for_woocommerce' ),
-			'label_count'               => _n_noop( 'Accepted (%s)',  'Accepted (%s)', 'angelleye_offers_for_woocommerce' ), 
-			'public'                    => true,
-			'show_in_admin_all_list'    => true,
-			'show_in_admin_status_list' => true,
-			'exclude_from_search'       => false,
-		);
-		register_post_status( 'accepted-offer', $args );
-	}
+
+    /**
+     * Register custom post status type -- Accepted Offer
+     * @since	0.1.0
+     */
+    public function my_custom_post_status_accepted()
+    {
+        $args = array(
+            'label'                     => _x( 'accepted-offer', 'Accepted Offer', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'Accepted (%s)',  'Accepted (%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'accepted-offer', $args );
+    }
+
+    /**
+     * Register custom post status type -- Countered Offer
+     * @since	0.1.0
+     */
+    public function my_custom_post_status_countered()
+    {
+        $args = array(
+            'label'                     => _x( 'countered-offer', 'Countered Offer', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'Countered (%s)',  'Countered (%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'countered-offer', $args );
+    }
 	
 	/**
 	 * Register custom post status type -- Declined Offer
@@ -759,19 +787,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			{
 				$complete = ' selected=selected';
 				$label = "<span id='post-status-display'> Accepted Offer</span>";
-			} 
-			elseif($post->post_status == 'completed-offer')
-			{
-				$complete = ' selected=selected';
-				$label = "<span id='post-status-display'> Completed Offer</span>";
 			}
+            elseif($post->post_status == 'countered-offer')
+            {
+                $complete = ' selected=selected';
+                $label = "<span id='post-status-display'> Countered Offer</span>";
+            }
+            elseif($post->post_status == 'completed-offer')
+            {
+                $complete = ' selected=selected';
+                $label = "<span id='post-status-display'> Completed Offer</span>";
+            }
 			elseif($post->post_status == 'declined-offer')
 			{
 				$complete = ' selected=selected';
 				$label = "<span id='post-status-display'> Declined Offer</span>";
 			}
 			
-			if($post->post_status == 'accepted-offer' || $post->post_status == 'completed-offer' || $post->post_status == 'declined-offer')
+			if($post->post_status == 'accepted-offer' || $post->post_status == 'countered-offer' || $post->post_status == 'completed-offer' || $post->post_status == 'declined-offer')
 			{
 				echo '<script>jQuery(document).ready(function($){
 				$("select#post_status").append("<option value='.$post->post_status.'-offer '.$complete.'>'.ucfirst($post->post_status).'</option>");
@@ -792,9 +825,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		$screen = get_current_screen();
 		if ( $screen->post_type == 'woocommerce_offer' ) 
 		{
-			if($post->post_status == 'accepted-offer'){
-			   return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
-			}
+            if($post->post_status == 'accepted-offer'){
+                return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
+            }
+            elseif($post->post_status == 'countered-offer'){
+                return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
+            }
 			elseif($post->post_status == 'publish'){
 			   return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon pending" title="Offer Status: Pending">Pending</i></div>');
 			}

@@ -65,7 +65,8 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 }
 .type-woocommerce_offer.status-publish td, .type-woocommerce_offer.status-publish th { background-color: #FEF7F1; }
 .type-woocommerce_offer.status-publish th.check-column { border-left: 4px solid #D54E21; }
-.type-woocommerce_offer.status-accepted-offer th.check-column { border-left: 4px solid #0074A2; }	
+.type-woocommerce_offer.status-accepted-offer th.check-column { border-left: 4px solid #0074A2; }
+.type-woocommerce_offer.status-countered-offer th.check-column { border-left: 4px solid #ffcc00; }
 .type-woocommerce_offer.status-completed-offer th.check-column { border-left: 4px solid #52A200; }	
 .type-woocommerce_offer.status-declined-offer th.check-column { border-left: 4px solid #333333; }
 
