@@ -7,8 +7,8 @@
 		$(document).ready(function() {	
 			/* Hide Count for 'All' list */
 			//$("li.all").find("span.count").remove(); // not needed, CSS took care of it
-			
-			// AJAX - Update Offer Status - Accepted Offer
+
+            // AJAX - Update Offer Status - Accepted Offer
 			$('.woocommerce-offer-post-action-link.woocommerce-offer-post-action-link-accept').click(function(){
 				var targetID = $(this).attr('data-target');
 				var data = {
@@ -98,45 +98,6 @@
                 }
             });
 
-            // Toggle Offer Edit fields per status btn clicked
-            $('#angelleye-woocommerce-offers-status-btn-accept-offer').click(function()
-            {
-               if(!$(this).attr('disabled'))
-               {
-                   $('.angelleye_woocommerce_offers_status_btn input').removeAttr('disabled');
-                   $(this).attr('disabled');
-                   return false;
-               }
-            });
-
-            // AJAX - Add Offer Note
-            $('#angelleye-woocommerce-offers-ajax-addnote-btn').click(function()
-            {
-                var targetID = $(this).attr('data-target');
-                var noteContent = $('#angelleye-woocommerce-offers-ajax-addnote-text').val();
-                var data = {
-                    'action': 'addOfferNote',
-                    'targetID': targetID,
-                    'noteContent': noteContent
-                };
-
-                // post it
-                $.post(ajaxurl, data, function(response) {
-                    if ( 'failed' !== response )
-                    {
-                        var redirectUrl = response;
-                        top.location.replace(redirectUrl);
-                        return true;
-                    }
-                    else
-                    {
-                        alert('add note failed');
-                        return false;
-                    }
-                });
-                /*End Post*/
-            });
-			
 			// AJAX - Update Offer Status - Trash Offer
 			$('body.edit-php.post-type-woocommerce_offer .submitdelete').click(function(){
 				
