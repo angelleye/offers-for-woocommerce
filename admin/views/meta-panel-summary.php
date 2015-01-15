@@ -29,11 +29,11 @@
             <div class="angelleye-col-container">
                 <h5>Counter Offer Values</h5>
                 <div class="offer-counter-offer-values-wrap">
-                    <label  for="offer-quantity">Quantity</label>
+                    <label for="offer-quantity">Quantity</label>
                     <input type="text" class="offer-counter-value-input" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" />
-                    <label  for="offer-quantity">Price Per</label>
+                    <label for="offer-price-per">Price Per</label>
                     <input type="text" class="offer-counter-value-input" required="required" name="offer_price_per" id="offer-price-per" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" />
-                    <label  for="offer-quantity">Total</label>
+                    <label for="offer-total">Total</label>
                     <input type="text" class="offer-counter-value-input" required="required" name="offer_amount" id="offer-total" value="<?php echo (isset($postmeta['offer_amount'][0])) ? $postmeta['offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
                 </div>
             </div>

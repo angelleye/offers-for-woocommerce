@@ -505,13 +505,13 @@ class Angelleye_Offers_For_Woocommerce {
                 $comments = (isset($_POST['offer_notes']) && $_POST['offer_notes'] != '') ? strip_tags(nl2br($_POST['offer_notes']), '<br><p>') : '';
 
                 // If has parent offer id - valid post id, post_type woocommerce_offer, post_status of pending offer or accepted offer
-                if(isset($parent_post_id) && $parent_post_id != '' && $parent_post_status && ($parent_post_status == 'publish' || $parent_post_status == 'accepted-offer' ) && $post_parent_type == 'woocommerce_offer')
+                if( $parent_post_id != '' && isset($parent_post_status) && $parent_post_status == 'countered-offer' && $post_parent_type == 'woocommerce_offer')
                 {
                     $parent_post = array(
                         'ID'           => $parent_post_id,
                         'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                         'post_modified_gmt' => gmdate("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                        'post_status' => 'publish'
+                        'post_status' => 'countered-offer'
                     );
 
                     // Update the parent post into the database
@@ -535,11 +535,11 @@ class Angelleye_Offers_For_Woocommerce {
                     }
 
                     // Insert WP comment
-                    $comment_text = "<span>Buyer Submitted Counter Offer</span>";
+                    $comment_text = '<span>Buyer Submitted Counter Offer</span>';
 
                     $data = array(
                         'comment_post_ID' => $parent_post_id,
-                        'comment_author' => $formData['offer_name'],
+                        'comment_author' => 'admin',
                         'comment_author_email' => $formData['offer_email'],
                         'comment_author_url' => '',
                         'comment_content' => $comment_text,
