@@ -1105,6 +1105,51 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_email->trigger($offer_args);
         }
 
+        // Counter Offer
+        if($post_data->post_status == 'counter-offer')
+        {
+            /**
+             * Email customer countered email template
+             * @since   0.1.0
+             */
+            // set recipient email
+            $recipient = get_post_meta($post_id, 'offer_email', true);
+            $offer_id = $post_id;
+
+            $product_id = get_post_meta($post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            $product = new WC_Product($product_id);
+
+            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            $product_total = ($product_qty * $product_price_per);
+
+            $offer_args = array(
+                'recipient' => $recipient,
+                'offer_id' => $offer_id,
+                'product_id' => $product_id,
+                'product_url' => get_permalink($product_id),
+                'variant_id' => $variant_id,
+                'product' => $product->post,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_total' => $product_total,
+                'offer_notes' => $offer_notes
+            );
+
+            // the email we want to send
+            $email_class = 'WC_Countered_Offer_Email';
+
+            // load the WooCommerce Emails
+            $wc_emails = new WC_Emails();
+            $emails = $wc_emails->get_emails();
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->recipient = $recipient;
+            $new_email->trigger($offer_args);
+        }
+
         // Decline Offer
         if($post_data->post_status == 'declined-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'declined-offer')
         {

@@ -47,7 +47,7 @@
             <div class="make-offer-form-intro-text">To make an offer please complete the form below:</div>
         </div>
         <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="on">
-            <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo ($parent_offer_id) ? $parent_offer_id : ''; ?>">
+            <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
 
             <div class="woocommerce-make-offer-form-section">
             	<div class="woocommerce-make-offer-form-part-left">
