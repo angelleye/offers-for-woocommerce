@@ -249,9 +249,9 @@ class Angelleye_Offers_For_Woocommerce {
 		$button_display_options = get_option('offers_for_woocommerce_options_display');
 
         // set parent offer id if found in get var
-        $parent_offer_id = (isset($_GET['pid']) && $_GET['pid'] != '') ? $_GET['pid'] : '';
-        $offer_name = (isset($_GET['name']) && $_GET['name'] != '') ? $_GET['name'] : '';
-        $offer_email = (isset($_GET['email']) && $_GET['email'] != '') ? $_GET['email'] : '';
+        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
+        $offer_name = (isset($_GET['offer-name']) && $_GET['offer-name'] != '') ? $_GET['offer-name'] : '';
+        $offer_email = (isset($_GET['offer-email']) && $_GET['offer-email'] != '') ? $_GET['offer-email'] : '';
 		
 		// Set html content for output
 		include_once( 'views/public.php' );	
@@ -682,11 +682,14 @@ class Angelleye_Offers_For_Woocommerce {
         }
         else
         {
-            // Lookup Offer - Make sure valid 'accepted-offer' status
+            /**
+             * Lookup Offer
+             * - Make sure valid 'accepted-offer' or 'countered-offer' status
+             */
             $offer = get_post($pid);
 
             // Invalid Offer Id
-            if(!$offer || $offer == '')
+            if($offer == '')
             {
                 $this->send_api_response( __( 'Invalid or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
             }
@@ -695,11 +698,10 @@ class Angelleye_Offers_For_Woocommerce {
                 // Get offer meta
                 $offer_meta = get_post_meta( $offer->ID, '', true );
 
-                // Error - Offer Not Accepted
-                if($offer->post_status != 'accepted-offer')
+                // Error - Offer Not Accepted/Countered
+                if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer')
                 {
                     $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
-
                 }
 
                 // Define product id
@@ -708,7 +710,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // Error - Missing Product Id on the offer meta
                 if($product_id == '' || !is_numeric( $product_id ))
                 {
-                    $this->send_api_response( __( 'Error adding offer - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+                    $this->send_api_response( __( 'Error - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
                 }
 
                 // Lookup Product
@@ -717,7 +719,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // Error - Invalid Product
                 if(!isset($product->post) || $product->post->ID == '' || !is_numeric( $product_id ))
                 {
-                    $this->send_api_response( __( 'Error adding offer - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+                    $this->send_api_response( __( 'Error - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
                 }
 
                 // Add offer to cart
