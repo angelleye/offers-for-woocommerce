@@ -1108,6 +1108,18 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // Counter Offer
         if($post_data->post_status == 'countered-offer')
         {
+            // set updated offer values
+            $offer_quantity = (isset($_POST['offer_quantity']) && $_POST['offer_quantity'] != '') ? $_POST['offer_quantity'] : '';
+            $offer_price_per = (isset($_POST['offer_price_per']) && $_POST['offer_price_per'] != '') ? number_format($_POST['offer_price_per'], 2) : '';
+            $offer_total = number_format(round($offer_quantity * $offer_price_per), 2);
+
+            /**
+             * Update Counter Offer post meta values
+             */
+            update_post_meta( $post_id, 'offer_quantity', $offer_quantity );
+            update_post_meta( $post_id, 'offer_price_per', $offer_price_per );
+            update_post_meta( $post_id, 'offer_amount', $offer_total );
+
             /**
              * Email customer countered email template
              * @since   0.1.0
@@ -1125,7 +1137,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_qty = get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = ($product_qty * $product_price_per);
+            $product_total = get_post_meta($post_id, 'offer_amount', true);
 
             $offer_args = array(
                 'recipient' => $recipient,
