@@ -1106,7 +1106,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         // Counter Offer
-        if($post_data->post_status == 'counter-offer')
+        if($post_data->post_status == 'countered-offer')
         {
             /**
              * Email customer countered email template
@@ -1115,6 +1115,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+
+            $offer_name = get_post_meta($post_id, 'offer_name', true);;
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
@@ -1126,6 +1129,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
                 'product_id' => $product_id,
                 'product_url' => get_permalink($product_id),
@@ -1533,10 +1538,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		{
 			// load color picker			
 			$this->my_enqueue_colour_picker();
-			
+
 			// admin scripts
 			wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
-			
+
 			// Admin footer scripts
 			wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-footer-scripts', plugins_url( 'assets/js/admin-footer-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );			
 		}
@@ -1553,8 +1558,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         if ( "woocommerce_offer" == $screen->id && is_admin() )
         {
-            // Admin actions
-            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-actions', plugins_url( 'assets/js/admin-actions.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+            // autoNumeric js
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url( '../public/assets/js/autoNumeric-1-9-24.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // admin scripts
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
         }
 	}
 
