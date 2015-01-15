@@ -101,9 +101,11 @@
             // Toggle Offer Edit fields per status btn clicked
             $('#angelleye-woocommerce-offers-status-btn-accept-offer').click(function()
             {
-               if($(this).attr('disabled'))
+               if(!$(this).attr('disabled'))
                {
-                   alert('is down!');
+                   $('.angelleye_woocommerce_offers_status_btn input').removeAttr('disabled');
+                   $(this).attr('disabled');
+                   return false;
                }
             });
 

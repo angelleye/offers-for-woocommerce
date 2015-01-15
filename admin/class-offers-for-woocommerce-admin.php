@@ -965,11 +965,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /*
          * Set default
          */
-        if (!$current_status_value)
+        if (!isset($current_status_value))
         {
             $current_status_value = 'publish';
         }
-
 
         /*
 		 * Output html for Offer Comments loop
