@@ -476,7 +476,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $formData['orig_offer_variation_id'] = (isset($_POST['offer_variation_id'])) ? $_POST['offer_variation_id'] : '';
 				$formData['orig_offer_quantity'] = (isset($_POST['offer_quantity'])) ? $_POST['offer_quantity'] : '0';
                 $formData['orig_offer_price_per'] = (isset($_POST['offer_price_each'])) ? $_POST['offer_price_each'] : '0';
-				$formData['orig_offer_amount'] = ($formData['orig_offer_quantity'] * $formData['orig_offer_price_per']);
+				$formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per']), 2, ".", "");
 				
 				// set postmeta vars
                 $formData['offer_name'] = $formData['orig_offer_name'];
