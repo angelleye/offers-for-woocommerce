@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
 
-    <?php printf( __( '<p><strong>We have accepted your offer on %s.</strong><br />To pay for this order please use the following link:</p> %s', 'woocommerce' ), get_bloginfo( 'name' ), '<a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="'.$offer_args['product_url'].'?__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'"><span style="border-bottom:1px dotted #666; ">' . __( 'Click to Pay', 'offers-for-woocommerce' ) . '</span></a>' ); ?>
+    <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. $offer_args['offer_notes']; } ?>
 
     <h2><?php echo __( 'Offer ID:', 'woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
 
@@ -36,7 +36,5 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
             </tr>
         </tfoot>
     </table>
-
-    <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. $offer_args['offer_notes']; } ?>
 
 <?php do_action( 'woocommerce_email_footer' ); ?>

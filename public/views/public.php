@@ -34,20 +34,27 @@
     	<div class="make-offer-form-intro">
             <h2>
                 <?php
-                if(isset($button_display_option['display_setting_custom_make_offer_btn_text']) && !empty($button_display_option['display_setting_custom_make_offer_btn_text']))
+                if(isset($parent_offer_id) && $parent_offer_id != '')
                 {
-                    echo $button_display_options['display_setting_custom_make_offer_btn_text'];
+                    echo 'Make Counter Offer';
                 }
                 else
                 {
-                    echo 'Make Offer';
+                    if(isset($button_display_option['display_setting_custom_make_offer_btn_text']) && !empty($button_display_option['display_setting_custom_make_offer_btn_text']))
+                    {
+                        echo $button_display_options['display_setting_custom_make_offer_btn_text'];
+                    }
+                    else
+                    {
+                        echo 'Make Offer';
+                    }
                 }
                 ?>
             </h2>
-            <div class="make-offer-form-intro-text">To make an offer please complete the form below:</div>
+            <div class="make-offer-form-intro-text">To make <?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? 'a counter ' : 'an '; ?>offer please complete the form below:</div>
         </div>
         <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="on">
-            <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo ($parent_offer_id) ? $parent_offer_id : ''; ?>">
+            <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
 
             <div class="woocommerce-make-offer-form-section">
             	<div class="woocommerce-make-offer-form-part-left">
@@ -77,7 +84,7 @@
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="woocommerce-make-offer-form-email">Your Email Address</label>
-                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" value="<?php echo ($offer_email) ? $offer_email: ''; ?>" />
+                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-notes">Offer Notes (optional)</label>
