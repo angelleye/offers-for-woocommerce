@@ -561,7 +561,7 @@ class Angelleye_Offers_For_Woocommerce {
                         'user_id' => '',
                         'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                         'comment_agent' => '',
-                        'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                        'comment_date' => date("Y-m-d H:i:s", time(get_post_time('U', true)) ),
                         'comment_approved' => 1,
                     );
                     wp_insert_comment($data);
@@ -637,7 +637,6 @@ class Angelleye_Offers_For_Woocommerce {
                  * Email admin 'New offer' email template
                  * @since   0.1.0
                  */
-
                 // set recipient email
                 $recipient = get_option( 'admin_email' );
                 $offer_id = $parent_post_id;
@@ -647,7 +646,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                 $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
                 $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
-                $product = new WC_Product($parent_post_id);
+                $product = new WC_Product($product_id);
 
                 $product_qty = get_post_meta($parent_post_id, 'offer_quantity', true);
                 $product_price_per = get_post_meta($parent_post_id, 'offer_price_per', true);
