@@ -29,10 +29,20 @@
             {
                 var targetID = $(this).attr('data-target');
                 var noteContent = $('#angelleye-woocommerce-offers-ajax-addnote-text').val();
+                if( $('#angelleye-woocommerce-offers-ajax-addnote-admin-only').is(':checked') )
+                {
+                    var noteAdminOnly = $('#angelleye-woocommerce-offers-ajax-addnote-admin-only').val();
+                }
+                else
+                {
+                    var noteAdminOnly = '';
+                }
+
                 var data = {
                     'action': 'addOfferNote',
                     'targetID': targetID,
-                    'noteContent': noteContent
+                    'noteContent': noteContent,
+                    'noteAdminOnly': noteAdminOnly
                 };
 
                 // post it
