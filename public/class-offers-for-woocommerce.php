@@ -118,6 +118,13 @@ class Angelleye_Offers_For_Woocommerce {
 
         //add_filter( 'woocommerce_add_cart_item_data', array($this, 'add_cart_item_custom_data_vase' ), 10, 2 );
         add_filter( 'woocommerce_get_cart_item_from_session', array($this, 'get_cart_items_from_session' ), 1, 3 );
+
+        /*
+         * Filter - Add email class to WooCommerce for 'Accepted Offer'
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_email_classes' ) );
+
     }
 
 	/**
@@ -535,12 +542,18 @@ class Angelleye_Offers_For_Woocommerce {
                     }
 
                     // Insert WP comment
-                    $comment_text = '<span>Buyer Submitted Counter Offer</span>';
+                    $comment_text = "<span>Buyer Submitted Counter Offer</span>";
+
+                    if($comments != '')
+                    {
+                        // Insert WP comment
+                        $comment_text.= $comments;
+                    }
 
                     $data = array(
                         'comment_post_ID' => $parent_post_id,
-                        'comment_author' => 'admin',
-                        'comment_author_email' => $formData['offer_email'],
+                        'comment_author' => '',
+                        'comment_author_email' => '',
                         'comment_author_url' => '',
                         'comment_content' => $comment_text,
                         'comment_type' => '',
@@ -548,7 +561,7 @@ class Angelleye_Offers_For_Woocommerce {
                         'user_id' => '',
                         'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                         'comment_agent' => '',
-                        'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                        'comment_date' => date("Y-m-d H:i:s", time(get_post_time('U', true)) ),
                         'comment_approved' => 1,
                     );
                     wp_insert_comment($data);
@@ -587,7 +600,13 @@ class Angelleye_Offers_For_Woocommerce {
                         }
 
                         // Insert WP comment
-                        $comment_text = "Created New Offer";
+                        $comment_text = "<span>Created New Offer</span>";
+
+                        if($comments != '')
+                        {
+                            // Insert WP comment
+                            $comment_text.= '<br />' . $comments;
+                        }
 
                         $data = array(
                             'comment_post_ID' => $parent_post_id,
@@ -613,31 +632,65 @@ class Angelleye_Offers_For_Woocommerce {
                     }
                 }
 
-                // Insert buyer comment
-                if($comments != '')
-                {
-                    // Insert WP comment
-                    $comment_text = "<span>Buyer Note: </span>".$comments;
-
-                    $data = array(
-                        'comment_post_ID' => $parent_post_id,
-                        'comment_author' => '',
-                        'comment_author_email' => '',
-                        'comment_author_url' => '',
-                        'comment_content' => $comment_text,
-                        'comment_type' => '',
-                        'comment_parent' => 0,
-                        'user_id' => '',
-                        'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-                        'comment_agent' => '',
-                        'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                        'comment_approved' => 1,
-                    );
-                    wp_insert_comment($data);
-                }
-
                 // Email Out - admin email notification of new offer
+                /**
+                 * Email admin 'New offer' email template
+                 * @since   0.1.0
+                 */
+                // set recipient email
+                $recipient = get_option( 'admin_email' );
+                $offer_id = $parent_post_id;
 
+                $offer_name = get_post_meta($parent_post_id, 'offer_name', true);;
+                $offer_email = $recipient;
+
+                $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
+                $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
+                $product = new WC_Product($product_id);
+
+                $product_qty = get_post_meta($parent_post_id, 'offer_quantity', true);
+                $product_price_per = get_post_meta($parent_post_id, 'offer_price_per', true);
+                $product_total = get_post_meta($parent_post_id, 'offer_amount', true);
+
+                $offer_args = array(
+                    'recipient' => $recipient,
+                    'offer_email' => $offer_email,
+                    'offer_name' => $offer_name,
+                    'offer_id' => $offer_id,
+                    'product_id' => $product_id,
+                    'product_url' => get_permalink($product_id),
+                    'variant_id' => $variant_id,
+                    'product' => $product->post,
+                    'product_qty' => $product_qty,
+                    'product_price_per' => $product_price_per,
+                    'product_total' => $product_total,
+                    'offer_notes' => $comments
+                );
+
+                // the email we want to send
+                $email_class = 'WC_New_Offer_Email';
+
+                // load the WooCommerce Emails
+                $wc_emails = new WC_Emails();
+                $emails = $wc_emails->get_emails();
+
+                // select the email we want & trigger it to send
+                $new_email = $emails[$email_class];
+                $new_email->recipient = $recipient;
+                $new_email->trigger($offer_args);
+
+                /**
+                 * Send buyer 'offer received' email notification
+                 */
+                // the email we want to send
+                $email_class = 'WC_Offer_Received_Email';
+                // set recipient
+                $recipient = $offer_email;
+                $offer_args['recipient'] = $recipient;
+                // select the email we want & trigger it to send
+                $new_email = $emails[$email_class];
+                $new_email->recipient = $recipient;
+                $new_email->trigger($offer_args);
 
                 // Success
                 sleep(1);
@@ -872,6 +925,26 @@ class Angelleye_Offers_For_Woocommerce {
             $item[ 'woocommerce_offer_price_per' ] = $values['woocommerce_offer_price_per'];
         }
         return $item;
+    }
+
+    /**
+     *  Add a custom email to the list of emails WooCommerce should load
+     *
+     * @since 0.1
+     * @param array $email_classes available email classes
+     * @return array filtered available email classes
+     */
+    public function add_woocommerce_email_classes( $email_classes ) {
+
+        // include our custom email classes
+        require( 'includes/class-wc-new-offer-email.php' );
+        require( 'includes/class-wc-offer-received-email.php' );
+
+        // add the email class to the list of email classes that WooCommerce loads
+        $email_classes['WC_New_Offer_Email'] = new WC_New_Offer_Email();
+        $email_classes['WC_Offer_Received_Email'] = new WC_Offer_Received_Email();
+
+        return $email_classes;
     }
 
 }
