@@ -1889,12 +1889,18 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
             $targetPostID = $_POST["targetID"];
+            $adminOnlyNote = (isset($_POST["noteAdminOnly"]) && $_POST["noteAdminOnly"] != '') ? '1' : '';
+            $noteContent = $_POST['noteContent'];
 
             $current_user = wp_get_current_user();
 
             // Insert WP comment
             $comment_text = "<span>Offer Note:</span>";
-            $comment_text.= " ".$_POST['noteContent'];
+            if($adminOnlyNote == '1')
+            {
+                $comment_text.= " (admin only)";
+            }
+            $comment_text.= "<br .>".$noteContent;
 
             $data = array(
                 'comment_post_ID' => $targetPostID,
@@ -1907,11 +1913,57 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'user_id' => get_current_user_id(),
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
-                'comment_date' => date("Y-m-d H:i:s", time()),
+                'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
             if( wp_insert_comment($data) )
             {
+
+                if($adminOnlyNote != '1')
+                {
+                    // Email buyer the offer note (not private admin note)
+                    /**
+                     * Offer note email template
+                     * @since   0.1.0
+                     */
+                    // set recipient email
+                    $offer_id = $targetPostID;
+                    $recipient = get_post_meta($offer_id, 'offer_email', true);
+
+                    $product_id = get_post_meta($offer_id, 'offer_product_id', true);
+                    $variant_id = get_post_meta($offer_id, 'offer_variation_id', true);
+                    $product = new WC_Product($product_id);
+
+                    $product_qty = get_post_meta($offer_id, 'offer_quantity', true);
+                    $product_price_per = get_post_meta($offer_id, 'offer_price_per', true);
+                    $product_total = ($product_qty * $product_price_per);
+
+                    $offer_args = array(
+                        'recipient' => $recipient,
+                        'offer_id' => $offer_id,
+                        'product_id' => $product_id,
+                        'product_url' => get_permalink($product_id),
+                        'variant_id' => $variant_id,
+                        'product' => $product->post,
+                        'product_qty' => $product_qty,
+                        'product_price_per' => $product_price_per,
+                        'product_total' => $product_total,
+                        'offer_notes' => $noteContent
+                    );
+
+                    // the email we want to send
+                    $email_class = 'WC_Offer_Note_Email';
+
+                    // load the WooCommerce Emails
+                    $wc_emails = new WC_Emails();
+                    $emails = $wc_emails->get_emails();
+
+                    // select the email we want & trigger it to send
+                    $new_email = $emails[$email_class];
+                    $new_email->recipient = $recipient;
+                    $new_email->trigger($offer_args);
+                }
+
                 $redirect_url = admin_url('post.php?post='.$targetPostID.'&action=edit&noheader=true&message=11');
                 echo $redirect_url;
             }
