@@ -675,6 +675,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     protected function handle_request(){
         global $wp;
+        $request_error = false;
         $pid = (isset($wp->query_vars['woocommerce-offer-id'])) ? $wp->query_vars['woocommerce-offer-id'] : '' ;
         if($pid == '' || !is_numeric($pid))
         {
@@ -701,6 +702,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // Error - Offer Not Accepted/Countered
                 if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer')
                 {
+                    $request_error = true;
                     $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
                 }
 
@@ -710,6 +712,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // Error - Missing Product Id on the offer meta
                 if($product_id == '' || !is_numeric( $product_id ))
                 {
+                    $request_error = true;
                     $this->send_api_response( __( 'Error - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
                 }
 
@@ -719,13 +722,18 @@ class Angelleye_Offers_For_Woocommerce {
                 // Error - Invalid Product
                 if(!isset($product->post) || $product->post->ID == '' || !is_numeric( $product_id ))
                 {
+                    $request_error = true;
                     $this->send_api_response( __( 'Error - Product Not Found; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
                 }
 
-                // Add offer to cart
-                if($this->add_offer_to_cart( $offer, $offer_meta ) )
+                if(!$request_error)
                 {
-                    $this->send_api_response( __( 'Successfully added Offer to cart', 'angelleye_offers_for_woocommerce' ), json_decode($pid));
+                    // Add offer to cart
+                    if($this->add_offer_to_cart( $offer, $offer_meta ) )
+                    {
+                        $request_error = true;
+                        $this->send_api_response( __( 'Successfully added Offer to cart', 'angelleye_offers_for_woocommerce' ), json_decode($pid));
+                    }
                 }
             }
         }
@@ -758,7 +766,12 @@ class Angelleye_Offers_For_Woocommerce {
                 if(isset($cart_item['woocommerce_offer_id']) && $cart_item['woocommerce_offer_id'] == $offer->ID)
                 {
                     $found = true;
-                    $this->send_api_response( __( 'Offer already added to cart', 'angelleye_offers_for_woocommerce' ) );
+                    $message = sprintf(
+                        '<a href="%s" class="button wc-forward">%s</a> %s',
+                        $woocommerce->cart->get_cart_url(),
+                        __( 'View Cart', 'woocommerce' ),
+                        __( 'Offer already added to cart', 'angelleye_offers_for_woocommerce' ) );
+                    $this->send_api_response( $message );
                 }
             }
 
@@ -789,12 +802,7 @@ class Angelleye_Offers_For_Woocommerce {
             //wp_redirect($woocommerce->cart->get_cart_url(), 200 );
         }
 
-        wc_add_notice( sprintf(
-            '<a href="%s" class="button wc-forward">%s</a> %s',
-            $woocommerce->cart->get_cart_url(),
-            __( 'View Cart', 'woocommerce' ),
-            $response['message']
-            ), $response['type'] );
+        wc_add_notice( $response['message'], $response['type'] );
 
 
         /*header('content-type: application/json; charset=utf-8');
