@@ -1716,7 +1716,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
             $table = $wpdb->prefix . "posts";
-            $data_array = array('post_status' => 'accepted-offer');
+            $data_array = array(
+                'post_status' => 'accepted-offer',
+                'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1 ))
+            );
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
@@ -1791,7 +1795,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'user_id' => get_current_user_id(),
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
-                'comment_date' => date("Y-m-d H:i:s", time()),
+                'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
             wp_insert_comment($data);
@@ -1812,7 +1816,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
             $table = $wpdb->prefix . "posts";
-            $data_array = array('post_status' => 'declined-offer');
+            $data_array = array(
+                'post_status' => 'declined-offer',
+                'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1 ))
+            );
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
@@ -1887,7 +1895,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'user_id' => get_current_user_id(),
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
-                'comment_date' => date("Y-m-d H:i:s", time()),
+                'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
             wp_insert_comment($data);
