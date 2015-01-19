@@ -1250,7 +1250,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'user_id' => get_current_user_id(),
             'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
             'comment_agent' => '',
-            'comment_date' => date("Y-m-d H:i:s", time()),
+            'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
             'comment_approved' => 1,
         );
         wp_insert_comment($data);
