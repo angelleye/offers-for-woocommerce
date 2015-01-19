@@ -871,28 +871,39 @@ class Angelleye_Offers_For_Woocommerce {
     public function my_woocommerce_before_calculate_totals( $cart_object )
     {
         global $woocommerce;
+        $showerror = false;
+        // updating cart with posted values
+        if(isset($_POST['cart']))
+        {
+            // loop cart contents to find offers
+            foreach ($cart_object->cart_contents as $key => $value)
+            {
+                // if offer item found
+                if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '')
+                {
 
-        foreach ( $cart_object->cart_contents as $key => $value ) {
-            if ( isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
-                $value['data']->set_price($value['woocommerce_offer_price_per']);
+                    if (array_key_exists($key, $_POST['cart']))
+                    {
+                        // post values match with item that is an offer
+                        // check if values match original meta VALUES
+                        if ($value['woocommerce_offer_quantity'] != $_POST['cart'][$key]['qty']) {
+
+                            $showerror = true;
+                            $value['data']->set_price($value['woocommerce_offer_price_per']);
+                            $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                        }
+                    }
+                }
             }
 
-            if ( isset($value['woocommerce_offer_quantity']) && $value['woocommerce_offer_quantity'] != '') {
-                $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+            // add error notice
+            if ($showerror)
+            {
+                $message_type = 'error';
+                $message = __('Offer quantity cannot be modified', 'angelleye_offers_for_woocommerce');
+                wc_add_notice($message, $message_type);
             }
-            /*
-            // If your target product is a variation
-            if ( $value['variation_id'] == $target_product_id ) {
-                $value['data']->price = $custom_price;
-            }
-            */
         }
-
-        //echo '<pre>';
-        //print_r($cart_object);
-        //echo '</pre>';
-
-
     }
 
     function so_validate_add_cart_item( $passed, $product_id, $quantity, $variation_id = '', $variations= '' ) {
