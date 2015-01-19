@@ -784,7 +784,6 @@ class Angelleye_Offers_For_Woocommerce {
                     // Add offer to cart
                     if($this->add_offer_to_cart( $offer, $offer_meta ) )
                     {
-                        $request_error = true;
                         $this->send_api_response( __( 'Successfully added Offer to cart', 'angelleye_offers_for_woocommerce' ), json_decode($pid));
                     }
                 }
@@ -852,11 +851,12 @@ class Angelleye_Offers_For_Woocommerce {
         {
             $response['pid'] = $pid;
             $response['type'] = 'success';
-            //wp_redirect($woocommerce->cart->get_cart_url(), 200 );
+            wc_add_notice( $response['message'], $response['type'] );
+            wp_safe_redirect($woocommerce->cart->get_cart_url() );
+            exit;
         }
 
         wc_add_notice( $response['message'], $response['type'] );
-
 
         /*header('content-type: application/json; charset=utf-8');
         echo json_encode($response)."\n";
