@@ -17,6 +17,18 @@
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-4 angelleye-col-m-1-2">
             <div class="angelleye-col-container">
+                <h5>Buyer Data</h5>
+                <ul class="offer-buyer-meta-values-wrap">
+                    <li>Name: <?php echo (isset($postmeta['offer_name'][0])) ? $postmeta['offer_name'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li>Email: <?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li>Phone: <?php echo (isset($postmeta['offer_phone'][0])) ? $postmeta['offer_phone'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li>Company: <?php echo (isset($postmeta['offer_company_name'][0])) ? $postmeta['offer_company_name'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                </ul>
+            </div>
+        </div>
+        <div class="angelleye-clearfix"></div>
+        <div class="angelleye-col-1-4 angelleye-col-m-1-2">
+            <div class="angelleye-col-container">
                 <h5>Original Data</h5>
                 <ul class="offer-original-meta-values-wrap">
                     <li>Original Offer Qty: <?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
