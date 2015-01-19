@@ -170,7 +170,7 @@
 			
 			if(offerProductId != '')
 			{
-				// disable submit button
+                // disable submit button
 				$( offerForm ).find( ':submit' ).attr( 'disabled','disabled' );
 				
 				// hide error divs
