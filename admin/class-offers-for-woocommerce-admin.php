@@ -970,6 +970,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $current_status_value = 'publish';
         }
 
+        // Lookup product data
+        $product_id = $postmeta['offer_product_id'][0];
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product($product_id);
+
+        $_product_sku = $_product->get_sku();
+        $_product_permalink = $_product->get_permalink();
+        $_product_regular_price = $_product->get_regular_price();
+        $_product_sale_price = $_product->get_sale_price();
+        $_product_stock = $_product->get_total_stock();
+        $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity']);
+        $_product_formatted_name = $_product->get_formatted_name();
+        $_product_image = $_product->get_image( 'shop_thumbnail');
+
+        // set error message if product not found...
+
         /*
 		 * Output html for Offer Comments loop
 		 */
