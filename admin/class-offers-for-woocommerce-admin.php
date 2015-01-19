@@ -578,19 +578,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             case 'offer_quantity' :
                 $val = get_post_meta( $post_id , 'offer_quantity' , true );
                 $val = ($val != '') ? $val : '0';
-                echo number_format($val, 2);
+                echo get_woocommerce_currency_symbol().number_format($val, 2);
 			break;
 				
 			case 'offer_price_per' :
                 $val = get_post_meta( $post_id , 'offer_price_per' , true );
                 $val = ($val != '') ? $val : '0';
-				echo number_format($val, 2);
+				echo get_woocommerce_currency_symbol().number_format($val, 2);
 			break;
 
 			case 'offer_amount' :
                 $val = get_post_meta( $post_id , 'offer_amount' , true );
                 $val = ($val != '') ? $val : '0';
-                echo number_format($val, 2);
+                echo get_woocommerce_currency_symbol().number_format($val, 2);
             break;
 			
 			case 'offer_actions' :
