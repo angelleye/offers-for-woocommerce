@@ -113,10 +113,6 @@ class Angelleye_Offers_For_Woocommerce {
 
         //add_filter( 'woocommerce_add_to_cart_validation', array($this, 'so_validate_add_cart_item' ), 10, 5 );
 
-        //add_filter( 'woocommerce_add_cart_item_data', array($this, 'add_cart_item_custom_data_vase' ), 10, 2 );
-        //add_filter( 'woocommerce_get_cart_item_from_session', array($this, 'get_cart_items_from_session' ), 1, 3 );
-
-        //add_filter( 'woocommerce_add_cart_item_data', array($this, 'add_cart_item_custom_data_vase' ), 10, 2 );
         add_filter( 'woocommerce_get_cart_item_from_session', array($this, 'get_cart_items_from_session' ), 1, 3 );
 
         /*
@@ -164,7 +160,7 @@ class Angelleye_Offers_For_Woocommerce {
 			
 			$button_title = (isset($button_display_options['display_setting_custom_make_offer_btn_text']) && $button_display_options['display_setting_custom_make_offer_btn_text'] != '') ? $button_display_options['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', 'angelleye_offers_for_woocommerce' );
 			
-			$custom_styles_override = 'style="';
+			$custom_styles_override = '';
 			if(isset($button_display_options['display_setting_custom_make_offer_btn_text_color']) && $button_display_options['display_setting_custom_make_offer_btn_text_color'] != '')
 			{
 				$custom_styles_override.= 'color:'.$button_display_options['display_setting_custom_make_offer_btn_text_color'].'!important;';
@@ -173,9 +169,8 @@ class Angelleye_Offers_For_Woocommerce {
 			{
 				$custom_styles_override.= ' background:'.$button_display_options['display_setting_custom_make_offer_btn_color'].'!important; border-color:'.$button_display_options['display_setting_custom_make_offer_btn_color'].'!important;';
 			}
-			$custom_styles_override.= '"';
-			
-			echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-single-product button alt" '.$custom_styles_override.'>'.$button_title.'</button></div>';
+
+			echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-single-product button alt" style="'.$custom_styles_override.'">'.$button_title.'</button></div>';
 			echo '</div>';
 		}
 	}
@@ -892,25 +887,31 @@ class Angelleye_Offers_For_Woocommerce {
     public function my_woocommerce_before_calculate_totals( $cart_object )
     {
         global $woocommerce;
+
+        // loop cart contents to find offers -- force price to offer price per
+        foreach ($cart_object->cart_contents as $key => $value) {
+            // if offer item found
+            if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                $value['data']->set_price($value['woocommerce_offer_price_per']);
+            }
+        }
+
         $showerror = false;
         // updating cart with posted values
         if(isset($_POST['cart']))
         {
-            // loop cart contents to find offers
+            // loop cart contents to find offers -- force quantity to offer quantity
             foreach ($cart_object->cart_contents as $key => $value)
             {
                 // if offer item found
                 if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '')
                 {
-
                     if (array_key_exists($key, $_POST['cart']))
                     {
                         // post values match with item that is an offer
                         // check if values match original meta VALUES
                         if ($value['woocommerce_offer_quantity'] != $_POST['cart'][$key]['qty']) {
-
                             $showerror = true;
-                            $value['data']->set_price($value['woocommerce_offer_price_per']);
                             $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
                         }
                     }
