@@ -211,7 +211,7 @@ class Angelleye_Offers_For_Woocommerce {
 			}
 			$custom_styles_override.= '"';
 				
-			echo '<a href="'.get_permalink($post->ID).'" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-catalog button alt" '.$custom_styles_override.'>'.$button_title.'</a>';
+			echo '<a href="'.get_permalink($post->ID).'?aewcobtn=1" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-catalog button alt" '.$custom_styles_override.'>'.$button_title.'</a>';
 		}
 	}
 	
@@ -784,7 +784,6 @@ class Angelleye_Offers_For_Woocommerce {
                     // Add offer to cart
                     if($this->add_offer_to_cart( $offer, $offer_meta ) )
                     {
-                        $request_error = true;
                         $this->send_api_response( __( 'Successfully added Offer to cart', 'angelleye_offers_for_woocommerce' ), json_decode($pid));
                     }
                 }
@@ -852,11 +851,12 @@ class Angelleye_Offers_For_Woocommerce {
         {
             $response['pid'] = $pid;
             $response['type'] = 'success';
-            //wp_redirect($woocommerce->cart->get_cart_url(), 200 );
+            wc_add_notice( $response['message'], $response['type'] );
+            wp_safe_redirect($woocommerce->cart->get_cart_url() );
+            exit;
         }
 
         wc_add_notice( $response['message'], $response['type'] );
-
 
         /*header('content-type: application/json; charset=utf-8');
         echo json_encode($response)."\n";
@@ -871,28 +871,39 @@ class Angelleye_Offers_For_Woocommerce {
     public function my_woocommerce_before_calculate_totals( $cart_object )
     {
         global $woocommerce;
+        $showerror = false;
+        // updating cart with posted values
+        if(isset($_POST['cart']))
+        {
+            // loop cart contents to find offers
+            foreach ($cart_object->cart_contents as $key => $value)
+            {
+                // if offer item found
+                if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '')
+                {
 
-        foreach ( $cart_object->cart_contents as $key => $value ) {
-            if ( isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
-                $value['data']->set_price($value['woocommerce_offer_price_per']);
+                    if (array_key_exists($key, $_POST['cart']))
+                    {
+                        // post values match with item that is an offer
+                        // check if values match original meta VALUES
+                        if ($value['woocommerce_offer_quantity'] != $_POST['cart'][$key]['qty']) {
+
+                            $showerror = true;
+                            $value['data']->set_price($value['woocommerce_offer_price_per']);
+                            $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                        }
+                    }
+                }
             }
 
-            if ( isset($value['woocommerce_offer_quantity']) && $value['woocommerce_offer_quantity'] != '') {
-                $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+            // add error notice
+            if ($showerror)
+            {
+                $message_type = 'error';
+                $message = __('Offer quantity cannot be modified', 'angelleye_offers_for_woocommerce');
+                wc_add_notice($message, $message_type);
             }
-            /*
-            // If your target product is a variation
-            if ( $value['variation_id'] == $target_product_id ) {
-                $value['data']->price = $custom_price;
-            }
-            */
         }
-
-        //echo '<pre>';
-        //print_r($cart_object);
-        //echo '</pre>';
-
-
     }
 
     function so_validate_add_cart_item( $passed, $product_id, $quantity, $variation_id = '', $variations= '' ) {

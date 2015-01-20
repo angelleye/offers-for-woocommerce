@@ -246,6 +246,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     float: left;
     height: auto!important;
     padding:0!important;
+    margin:0!important;
     border:none!important;
 }
 
@@ -281,8 +282,12 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 
 .angelleye-col-container {
     position: relative;
-    width:90%;
+    width:90%!important;
     padding-right: 10%;
+}
+
+.angelleye-col-1-2 .angelleye-col-container {
+    width:95%!important;
 }
 
 .angelleye-col-container h5 {
@@ -302,7 +307,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#ededed',GradientType=0 );
 }
 
-@media (max-width: 1024px) {
+@media (min-width:581px) and (max-width: 1024px) {
     .angelleye-col-m-1-1 {
         position: relative;
         display: block;
@@ -315,6 +320,25 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 
     .angelleye-col-m-1-2 {
         width:50%!important;
+    }
+    .angelleye-col-1-2 .angelleye-col-container {
+        width:90%!important;
+    }
+}
+
+@media (max-width: 580px) {
+    .angelleye-col-m-1-2 {
+        width:50%!important;
+    }
+    .angelleye-col-1-2.angelleye-col-s-1-1 {
+        position: relative;
+        display: block;
+        width: 100%!important;
+        float: left;
+        height: auto!important;
+        padding:0!important;
+        border:none!important;
+        margin:0!important;
     }
 }
 
@@ -355,4 +379,29 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     border-bottom:1px solid #e5e5e5!important;
     margin: 0 0 4px 0;
     box-shadow:none!important;
+}
+
+.offer-product-meta-image-wrap {
+    float: left;
+    width:90px;
+    margin:5px 15px 0px 0px!important;
+}
+
+.offer-product-meta-values-wrap {
+    float: left;
+    clear:after;
+}
+.offer-product-meta-values-wrap li span,
+.offer-buyer-meta-values-wrap li span {
+    font-weight: bold;
+    padding-right:3px;
+}
+.offer-product-meta-values-wrap li a span {
+    font-weight: normal!important;
+}
+
+.offer-product-meta-values-wrap li span.out-of-stock-offer {
+    color:#FF0000;
+    font-weight: bold;
+    font-style:italic;
 }

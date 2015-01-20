@@ -578,19 +578,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             case 'offer_quantity' :
                 $val = get_post_meta( $post_id , 'offer_quantity' , true );
                 $val = ($val != '') ? $val : '0';
-                echo number_format($val, 2);
+                echo get_woocommerce_currency_symbol().number_format($val, 2);
 			break;
 				
 			case 'offer_price_per' :
                 $val = get_post_meta( $post_id , 'offer_price_per' , true );
                 $val = ($val != '') ? $val : '0';
-				echo number_format($val, 2);
+				echo get_woocommerce_currency_symbol().number_format($val, 2);
 			break;
 
 			case 'offer_amount' :
                 $val = get_post_meta( $post_id , 'offer_amount' , true );
                 $val = ($val != '') ? $val : '0';
-                echo number_format($val, 2);
+                echo get_woocommerce_currency_symbol().number_format($val, 2);
             break;
 			
 			case 'offer_actions' :
@@ -970,6 +970,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $current_status_value = 'publish';
         }
 
+        // Lookup product data
+        $product_id = $postmeta['offer_product_id'][0];
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product($product_id);
+
+        $_product_sku = $_product->get_sku();
+        $_product_permalink = $_product->get_permalink();
+        $_product_regular_price = $_product->get_regular_price();
+        $_product_sale_price = $_product->get_sale_price();
+        $_product_stock = $_product->get_total_stock();
+        $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity']);
+        $_product_formatted_name = $_product->get_formatted_name();
+        $_product_image = $_product->get_image( 'shop_thumbnail');
+
+        // set error message if product not found...
+
         /*
 		 * Output html for Offer Comments loop
 		 */
@@ -1233,7 +1250,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'user_id' => get_current_user_id(),
             'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
             'comment_agent' => '',
-            'comment_date' => date("Y-m-d H:i:s", time()),
+            'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
             'comment_approved' => 1,
         );
         wp_insert_comment($data);
@@ -1699,7 +1716,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
             $table = $wpdb->prefix . "posts";
-            $data_array = array('post_status' => 'accepted-offer');
+            $data_array = array(
+                'post_status' => 'accepted-offer',
+                'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1 ))
+            );
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
@@ -1774,7 +1795,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'user_id' => get_current_user_id(),
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
-                'comment_date' => date("Y-m-d H:i:s", time()),
+                'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
             wp_insert_comment($data);
@@ -1795,7 +1816,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
             $table = $wpdb->prefix . "posts";
-            $data_array = array('post_status' => 'declined-offer');
+            $data_array = array(
+                'post_status' => 'declined-offer',
+                'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1 ))
+            );
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
@@ -1870,7 +1895,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'user_id' => get_current_user_id(),
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
-                'comment_date' => date("Y-m-d H:i:s", time()),
+                'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
             wp_insert_comment($data);
