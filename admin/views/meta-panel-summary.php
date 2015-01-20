@@ -15,7 +15,46 @@
 <?php if( isset($postmeta) ){ ?>
 <div id="angelleye-woocommerce-offer-meta-summary">
     <div class="angelleye-col-m-1-1">
-        <div class="angelleye-col-1-4 angelleye-col-m-1-2">
+        <div class="angelleye-col-1-2 angelleye-col-s-1-1">
+            <div class="angelleye-col-container">
+                <h5>Product Data</h5>
+                <?php
+                if(!isset($_product)) {
+                    echo __('Product not found', 'angelleye_offers_for_woocommerce');
+                } else { ?>
+
+                    <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="Click to view product"><?php echo $_product_image; ?></a></ul>
+                    <ul class="offer-product-meta-values-wrap">
+                        <li><span>Product: </span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="Click to view product">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->post->ID.'&action=edit" title="Click to edit product"><span>('.$_product->post->ID.')</span></a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <li><span>Regular Price: </span><?php echo (isset($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format($_product_regular_price, 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <?php if($_product_sale_price) { ?>
+                            <li><span>Sale Price: </span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format($_product_sale_price, 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <?php } ?>
+                        <?php if($_product_stock) { ?>
+                            <li><span>Stock: </span><?php echo (isset($_product_stock)) ? $_product_stock : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <? } ?>
+                        <?php if(!$_product_in_stock) { ?>
+                            <li><span class="out-of-stock-offer"><?php echo __('Out of Stock', 'angelleye_offers_for_woocommerce' ); ?></span></li>
+                        <? } ?>
+                    </ul>
+                <? } ?>
+            </div>
+        </div>
+        <div class="angelleye-col-1-2 angelleye-col-s-1-1">
+            <div class="angelleye-col-container">
+                <h5>Buyer Data</h5>
+                <ul class="offer-buyer-meta-values-wrap">
+                    <li><span>Name: </span><?php echo (isset($postmeta['offer_name'][0])) ? $postmeta['offer_name'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li><span>Email: </span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li><span>Phone: </span><?php echo (isset($postmeta['offer_phone'][0])) ? $postmeta['offer_phone'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li><span>Company: </span><?php echo (isset($postmeta['offer_company_name'][0])) ? $postmeta['offer_company_name'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                </ul>
+            </div>
+        </div>
+        <div class="angelleye-clearfix"></div>
+    </div>
+    <div class="angelleye-col-m-1-1">
+        <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Original Data</h5>
                 <ul class="offer-original-meta-values-wrap">
@@ -25,9 +64,9 @@
                 </ul>
             </div>
         </div>
-        <div class="angelleye-col-1-4 angelleye-col-m-1-2">
+        <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5>Counter Offer Values</h5>
+                <h5>Counter Values</h5>
                 <div class="offer-counter-offer-values-wrap">
                     <label for="offer-quantity">Quantity</label>
                     <input type="text" class="offer-counter-value-input" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" />
@@ -40,13 +79,13 @@
         </div>
     </div>
     <div class="angelleye-col-m-1-1">
-        <div class="angelleye-col-1-4 angelleye-col-m-1-2">
+        <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5>Include Buyer Note</h5>
+                <h5>Buyer Note</h5>
                 <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class=""></textarea>
             </div>
         </div>
-        <div class="angelleye-col-1-4 angelleye-col-m-1-2">
+        <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Status</h5>
                 <div class="offer-post-status-input-wrap">

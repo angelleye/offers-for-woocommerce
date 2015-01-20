@@ -77,3 +77,7 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
 
 #adminmenu #menu-posts-woocommerce_offer .menu-icon-woocommerce_offer div.wp-menu-image:before { content: "\f110"; }
 #woocommerce-product-data ul.wc-tabs li.custom_tab_offers_for_woocommerce a:before, .woocommerce ul.wc-tabs li.custom_tab_offers_for_woocommerce a:before { content: "\e03a"; }
+
+.quantity.angelleye-woocommerce-quantity-input-disabled input.qty { border-right:1px solid #C8BFC6!important; border-radius: 2px!important; }
+.quantity.angelleye-woocommerce-quantity-input-disabled input.plus,
+.quantity.angelleye-woocommerce-quantity-input-disabled input.minus { display:none!important; }
