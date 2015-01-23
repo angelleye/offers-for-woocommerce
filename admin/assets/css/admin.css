@@ -411,3 +411,48 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 }
 
 .notice.error.angelleye-admin-notice-filterby-author { border-left-color: #000!important; }
+
+#angelleye-offer-buyer-stats-toggle {
+    text-decoration: none;
+    float: right;
+    position: relative;
+    font-size:12px;
+
+    position: relative;
+    float: right;
+    font-size:11px;
+    line-height: 16px;
+    vertical-align: middle;
+    font-weight: 600;
+    border-radius: 10px;
+    z-index: 26!important;
+    padding: 2px 2px 2px 8px;
+    margin:1px 0 0 0;
+    background-color: #FFFFFF;
+    color: #444;
+}
+#angelleye-offer-buyer-stats-counter .total-offers-count {
+    position: relative;
+    float: right;
+    font-size:11px;
+    vertical-align: middle;
+    font-weight: 600;
+    border-radius: 10px;
+    z-index: 26!important;
+    margin:0 0 0 6px;
+    padding:0 4px;
+    background-color: #45BBE6;
+    color: #FFFFFF;
+}
+
+#angelleye-offer-buyer-history { display: none; }
+#angelleye-offer-buyer-stats-close {
+    float: right;
+    position: relative;
+    font-size: 11px;
+}
+#offer-buyer-history th { text-align:left; padding-right:6px; }
+#offer-buyer-history td div { width: auto; text-align: left; }
+#offer-buyer-history td div .angelleye-view-buyer-offer-history { float: right;
+    position: relative; margin-left:6px; }
+#offer-buyer-history td div .angelleye-view-buyer-offer-history.no-offer-history { color:#888; text-decoration: none; cursor: default; }
