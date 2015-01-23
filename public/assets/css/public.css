@@ -12,6 +12,7 @@
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message { display:none; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message_2 { display:none; }
+.woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message_custom { display:none; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message_success { display:none; }
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_inner { display:block; }
@@ -60,6 +61,8 @@
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section label { float:none; position:relative; padding:6px 0px; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input { float:none; padding:8px 10px; width:80%; max-width:384px; }
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='text']:disabled,
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='email']:disabled{ border:none!important; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section textarea { width:auto; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-email { max-width:384px; width:100%; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-total { border-top:none; border-right:none; border-left:none; padding:9px 11px 8px 11px; background:none; }

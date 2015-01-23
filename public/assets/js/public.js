@@ -4,7 +4,6 @@
 		// Public-facing JavaScript
 				
 		$(document).ready(function(){
-
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
                 var split = val.split("=", 2);
@@ -14,10 +13,14 @@
                 angelleyeOpenMakeOfferForm();
             }
 
-			$(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
+            $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
                 angelleyeOpenMakeOfferForm();
-			});
+            });
 
+            $(".tab_custom_ofwc_offer_tab a").on('click', function()
+            {
+                angelleyeOpenMakeOfferForm();
+            });
 		});
 
         function angelleyeOpenMakeOfferForm(){
@@ -31,9 +34,8 @@
             var targetTab = $(".tab_custom_ofwc_offer_tab");
             $('html, body').animate({
                 scrollTop: $(targetTab).offset().top - '100'
-            }, 'slow');
-
-            return true;
+            }, 'fast');
+            return false;
         }
 		
 		$(window).load(function(){
@@ -89,8 +91,11 @@
 					aForm: false
 				}
 			);
-			
-			$('#woocommerce-make-offer-form').find( ':submit' ).attr('value', 'Submit Offer');
+
+            var offerSubmitBtnDefaultVal = $('#woocommerce-make-offer-form').find( ':submit' ).attr('data-orig-val');
+            if( offerSubmitBtnDefaultVal == '')
+                offerSubmitBtnDefaultVal = 'Submit Offer';
+			$('#woocommerce-make-offer-form').find( ':submit' ).attr('value', offerSubmitBtnDefaultVal);
 			$('#woocommerce-make-offer-form').find( ':submit' ).removeAttr( 'disabled','disabled' );
 		});
 		
@@ -123,6 +128,7 @@
 		
 		// Submit offer form		
 		$('#woocommerce-make-offer-form').submit(function(){
+            $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 			
 			if($('#woocommerce-make-offer-form-price-each').autoNumeric('get') == '0.00')
 			{
@@ -152,15 +158,20 @@
 				);
 				return false;
 			}
-			
-			var offerProductId = '';
+
+            var parentOfferId = $("input[name='parent_offer_id']").val();
+            var parentOfferUid = $("input[name='parent_offer_uid']").val();
+
+            var offerProductId = '';
 			var offerVariationId = '';
 			var offerProductId = $("input[name='add-to-cart']").val();
-            var parentOfferId = $("input[name='parent_offer_id']").val();
 			var offerVariationId = $("input[name='variation_id']").val();
 			
 			var offerName = $("input[name='offer_name']").val();
-			var offerEmail = $("input[name='offer_email']").val();
+            var offerEmail = $("input[name='offer_email']").val();
+            var offerPhone = $("input[name='offer_phone']").val();
+            var offerCompanyName = $("input[name='offer_company_name']").val();
+
 			var offerNotes = $("#angelleye-offer-notes").val();
 			
 			var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
@@ -175,19 +186,23 @@
 				
 				// hide error divs
 				$('#tab_custom_ofwc_offer_tab_alt_message_2').hide();
+                $('#tab_custom_ofwc_offer_tab_alt_message_custom').hide();
 				
 				// show loader image
 				$('#offer-submit-loader').show();
 				
 				var formData = {};
-					formData['offer_name'] = offerName;
-					formData['offer_email'] = offerEmail;
-					formData['offer_quantity'] = offerQuantity;
-					formData['offer_price_each'] = offerPriceEach;
-					formData['offer_product_id'] = offerProductId;
-					formData['offer_variation_id'] = offerVariationId;
-                    formData['parent_offer_id'] = parentOfferId;
-                    formData['offer_notes'] = offerNotes;
+                formData['offer_name'] = offerName;
+                formData['offer_email'] = offerEmail;
+                formData['offer_phone'] = offerPhone;
+                formData['offer_company_name'] = offerCompanyName;
+                formData['offer_quantity'] = offerQuantity;
+                formData['offer_price_each'] = offerPriceEach;
+                formData['offer_product_id'] = offerProductId;
+                formData['offer_variation_id'] = offerVariationId;
+                formData['parent_offer_id'] = parentOfferId;
+                formData['parent_offer_uid'] = parentOfferUid;
+                formData['offer_notes'] = offerNotes;
 				
 				// ajax submit offer
 				var ajaxtarget = '?woocommerceoffer_post=1';
@@ -209,18 +224,29 @@
 					if(request.statusText == 'OK'){
 						
 						var myObject = JSON.parse(request.responseText);
-						
-						var responseStatus = myObject['statusmsg'];
-			
-						if(responseStatus == 'failed')
-						{
-							//console.log('failed');
-							// Hide loader image
-							$('#offer-submit-loader').hide();
-							// Show error message DIV														
-							$('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
-							$( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );						
-						}
+
+                        var responseStatus = myObject['statusmsg'];
+                        var responseStatusDetail = myObject['statusmsgDetail'];
+
+                        if(responseStatus == 'failed')
+                        {
+                            //console.log('failed');
+                            // Hide loader image
+                            $('#offer-submit-loader').hide();
+                            // Show error message DIV
+                            $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
+                            $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                        }
+                        else if(responseStatus == 'failed-custom')
+                        {
+                            //console.log('failed-custom-msg');
+                            // Hide loader image
+                            $('#offer-submit-loader').hide();
+                            // Show error message DIV
+                            $('#tab_custom_ofwc_offer_tab_alt_message_custom ul #alt-message-custom').html("<strong>Error: </strong>"+responseStatusDetail);
+                            $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
+                            $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                        }
 						else
 						{
 							// SUCCESS

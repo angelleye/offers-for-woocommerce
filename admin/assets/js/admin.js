@@ -84,6 +84,12 @@
         $('#offer-price-per').keyup(function() {
             updateTotal();
         });
+
+        // toggle buyer offer history panel
+        $('.angelleye-offer-buyer-stats-toggle').click(function(){
+            $('#angelleye-offer-buyer-history').slideToggle('800');
+            return false;
+        });
 	});
 
 }(jQuery));
