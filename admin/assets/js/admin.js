@@ -87,7 +87,7 @@
 
         // toggle buyer offer history panel
         $('.angelleye-offer-buyer-stats-toggle').click(function(){
-            $('#angelleye-offer-buyer-history').toggle('fast');
+            $('#angelleye-offer-buyer-history').slideToggle('800');
             return false;
         });
 	});

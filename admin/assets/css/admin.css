@@ -446,6 +446,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 }
 
 #angelleye-offer-buyer-history { display: none; }
+#angelleye-offer-buyer-history h5 { margin-top:0!important; }
 #angelleye-offer-buyer-stats-close {
     float: right;
     position: relative;

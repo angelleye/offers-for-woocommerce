@@ -59,9 +59,7 @@
             <div class="angelleye-col-container" id="angelleye-offer-buyer-history">
                 <?php if( $author_data ) { ?>
                 <h5>Offer History
-                    <?php if( $author_data ) { ?>
-                        <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', 'angelleye_offers_for_woocommerce');?>"><?php echo __('Close', 'angelleye_offers_for_woocommerce');?></a>
-                    <?php } ?>
+                    <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', 'angelleye_offers_for_woocommerce');?>"><?php echo __('close', 'angelleye_offers_for_woocommerce');?></a>
                 </h5>
                 <ul class="offer-buyer-history-values-wrap">
                     <table id="offer-buyer-history">
