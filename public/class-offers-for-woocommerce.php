@@ -519,6 +519,15 @@ class Angelleye_Offers_For_Woocommerce {
                 $formData['offer_price_per'] = $formData['orig_offer_price_per'];
                 $formData['offer_amount'] = $formData['orig_offer_amount'];
                 $formData['offer_uid'] = $formData['orig_offer_uid'];
+
+                // if not logged in, check for matching wp user by email
+                // set author_data
+                $author_data = ( !is_user_logged_in() ) ? get_user_by( 'email', $formData['offer_email'] ) : false;
+
+                if($author_data)
+                {
+                    $newPostData['post_author'] = $author_data->ID;
+                }
 				
 				// set post vars
                 $newPostData['post_date'] = date("Y-m-d H:i:s", current_time('timestamp', 0 ) );
@@ -556,6 +565,11 @@ class Angelleye_Offers_For_Woocommerce {
                         'post_modified_gmt' => gmdate("Y-m-d H:i:s", current_time('timestamp', 0 )),
                         'post_status' => 'countered-offer'
                     );
+
+                    if($author_data)
+                    {
+                        $parent_post['post_author'] = $newPostData['post_author'];
+                    }
 
                     // Update the parent post into the database
                     wp_update_post( $parent_post);
