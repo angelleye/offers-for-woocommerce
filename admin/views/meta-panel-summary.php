@@ -42,13 +42,49 @@
         </div>
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5>Buyer Data</h5>
+                <h5>
+                    Buyer Data
+                    <?php if( $author_data ) { ?>
+                        <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', 'angelleye_offers_for_woocommerce');?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Offer History', 'angelleye_offers_for_woocommerce'). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
+                    <?php } ?>
+                </h5>
                 <ul class="offer-buyer-meta-values-wrap">
                     <li><span>Name: </span><?php echo (isset($postmeta['offer_name'][0])) ? $postmeta['offer_name'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                     <li><span>Email: </span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                     <li><span>Phone: </span><?php echo (isset($postmeta['offer_phone'][0])) ? $postmeta['offer_phone'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                     <li><span>Company: </span><?php echo (isset($postmeta['offer_company_name'][0])) ? $postmeta['offer_company_name'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                 </ul>
+            </div>
+
+            <div class="angelleye-col-container" id="angelleye-offer-buyer-history">
+                <?php if( $author_data ) { ?>
+                <h5>Offer History
+                    <?php if( $author_data ) { ?>
+                        <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', 'angelleye_offers_for_woocommerce');?>"><?php echo __('Close', 'angelleye_offers_for_woocommerce');?></a>
+                    <?php } ?>
+                </h5>
+                <ul class="offer-buyer-history-values-wrap">
+                    <table id="offer-buyer-history">
+                        <?php foreach($author_data->offer_counts as $key => $count) { ?>
+                            <?php if(strtolower($key) != 'all') { ?>
+                        <tr>
+                            <th><?php echo ucfirst($key) .': '; ?></th>
+                            <td><div>
+                                <?php echo '<span>'. $count .'</span>';?>
+                                <?php if($count > 0) {
+                                    $post_status_part = ($key == 'pending') ? 'publish' : $key .'-offer';
+                                echo '<a href="edit.php?author=' . $post->post_author . '&post_type=woocommerce_offer&post_status='. $post_status_part .'" class="angelleye-view-buyer-offer-history">view</a>';
+                                } else {
+                                    echo '<a href="javascript:;" class="angelleye-view-buyer-offer-history no-offer-history">view</a>';
+                                }?>
+                                </div>
+                            </td>
+                        </tr>
+                            <?php } ?>
+                        <?php } ?>
+                    </table>
+                </ul>
+                <?php } ?>
             </div>
         </div>
         <div class="angelleye-clearfix"></div>

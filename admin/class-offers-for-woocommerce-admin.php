@@ -138,13 +138,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * @since	0.1.0
 		 */
 		add_action( 'init', array( &$this, 'my_custom_post_status_completed' ), 10, 2 );
-		
-		/**
-		 * XXX
-		 * @since	0.1.0
-		 */
-		add_action( 'init', array(&$this, 'my_custom_post_status_declined' ), 10, 2 );
-		
+
+        /**
+         * XXX
+         * @since	0.1.0
+         */
+        add_action( 'init', array(&$this, 'my_custom_post_status_declined' ), 10, 2 );
+
 		/**
 		 * XXX
 		 * @since	0.1.0
@@ -210,11 +210,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * @since	0.1.0
 		 */
 		add_action( 'dashboard_glance_items', array( &$this, 'my_add_cpt_to_dashboard' ) );
-		
-		/**
-		 * END - custom funtions
-		 */
-		 
+
 		 /**
 		 * Action - Admin Menu - Add child submenu items for the woocommerce->offers submenu
 		 * @since	0.1.0
@@ -286,6 +282,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since   0.1.0
          */
         add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_email_classes' ) );
+
+        /**
+         * XXX
+         * @since	0.1.0
+         */
+        add_action( 'admin_notices', array( $this, 'aeofwc_admin_notices' ) );
+
+        /**
+         * END - custom functions
+         */
 
 	} // END - construct
 	
@@ -999,6 +1005,46 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $_product_image = $_product->get_image( 'shop_thumbnail');
 
         // set error message if product not found...
+
+        // set author_data
+        $author_data = get_userdata($post->post_author);
+
+        // set author offer counts
+        $author_counts = array();
+        if($author_data)
+        {
+            // count offers by author id
+            global $wpdb;
+
+            $post_type = 'woocommerce_offer';
+
+            $args = array($post_type,'trash', $post->post_author);
+            $count_all = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status != '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'publish', $post->post_author);
+            $count_pending = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'accepted-offer', $post->post_author);
+            $count_accepted = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'countered-offer', $post->post_author);
+            $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'declined-offer', $post->post_author);
+            $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'completed-offer', $post->post_author);
+            $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
+            $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
+            $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
+            $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
+            $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
+            $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
+
+            $author_data->offer_counts = $author_counts;
+        }
 
         /*
 		 * Output html for Offer Comments loop
@@ -2036,6 +2082,31 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $email_classes['WC_Offer_Note_Email'] = new WC_Offer_Note_Email();
 
         return $email_classes;
+    }
+
+    /**
+     * Add WP Notices
+     * @since   0.1.0
+     */
+    public function aeofwc_admin_notices(){
+
+        $screen = get_current_screen();
+
+        // if filtering Offers edit page by 'author'
+        if ( "edit-woocommerce_offer" == $screen->id && is_admin() ) {
+            $author_id = (isset($_GET['author']) && is_numeric($_GET['author'])) ? $_GET['author'] : '';
+            if($author_id)
+            {
+                $author_data = get_userdata($author_id);
+                // not valid user id
+                if(!$author_data) return;
+
+                echo '<div class="notice error angelleye-admin-notice-filterby-author">';
+                echo '<p>'. __('Currently filtered by user', 'angelleye_offers_for_woocommerce'). ' <strong>"' . $author_data->user_login . '"</strong> <a href="edit.php?post_type=woocommerce_offer">Click here to reset filter</a></p>';
+                echo '</div>';
+            }
+        }
+        return;
     }
 
 }
