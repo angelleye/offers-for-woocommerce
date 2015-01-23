@@ -27,14 +27,26 @@
 <div id="tab_custom_ofwc_offer_tab_alt_message_2" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error">
         <li><strong>Error: </strong>There was an error sending your offer, please try again. If this problem persists, please contact us.</li>
-    </ul>        
+    </ul>
 </div>
+<div id="tab_custom_ofwc_offer_tab_alt_message_custom" class="tab_custom_ofwc_offer_tab_inner_content">
+    <ul class="woocommerce-error">
+        <li id="alt-message-custom"></li>
+    </ul>
+</div>
+<?php if($parent_offer_error && $parent_offer_error_message) { ?>
+<div id="tab_custom_ofwc_offer_tab_alt_message_3" class="tab_custom_ofwc_offer_tab_inner_content tab_custom_ofwc_offer_tab_alt_message_2">
+    <ul class="woocommerce-error">
+        <li><strong>Error: </strong><?php echo $parent_offer_error_message;?></li>
+    </ul>
+</div>
+<? } ?>
 <div id="tab_custom_ofwc_offer_tab_inner" class="tab_custom_ofwc_offer_tab_inner_content">
     <fieldset>
     	<div class="make-offer-form-intro">
             <h2>
-                <?php
-                if(isset($parent_offer_id) && $parent_offer_id != '')
+                <?php $is_counter_offer = (isset($parent_offer_id) && $parent_offer_id != '') ? true : false; ?>
+                <?php if($is_counter_offer)
                 {
                     echo 'Make Counter Offer';
                 }
@@ -51,11 +63,13 @@
                 }
                 ?>
             </h2>
-            <div class="make-offer-form-intro-text">To make <?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? 'a counter ' : 'an '; ?>offer please complete the form below:</div>
+            <div class="make-offer-form-intro-text">To make <?php echo ($is_counter_offer) ? 'a counter ' : 'an '; ?>offer please complete the form below:</div>
         </div>
-        <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="on">
+        <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="off">
+            <?php if($is_counter_offer) {?>
             <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
-
+            <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">
+            <? } ?>
             <div class="woocommerce-make-offer-form-section">
             	<div class="woocommerce-make-offer-form-part-left">
                     <label for="woocommerce-make-offer-form-quantity">Quantity</label>
@@ -72,26 +86,26 @@
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" id="woocommerce-make-offer-form-label">Your Name</label>
-                <br /><input type="text" id="offer-name" name="offer_name" required="required" value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
+                <br /><input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" id="woocommerce-make-offer-form-label">Company Name</label>
-                <br /><input type="text" id="offer-company-name" name="offer_company_name" value="<?php echo (isset($offer_company_name)) ? $offer_company_name: ''; ?>" />
+                <br /><input type="text" id="offer-company-name" name="offer_company_name" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_company_name)) ? $offer_company_name: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" id="woocommerce-make-offer-form-label">Phone Number</label>
-                <br /><input type="text" id="offer-phone" name="offer_phone" value="<?php echo (isset($offer_phone)) ? $offer_phone: ''; ?>" />
+                <br /><input type="text" id="offer-phone" name="offer_phone" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_phone)) ? $offer_phone: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="woocommerce-make-offer-form-email">Your Email Address</label>
-                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
+                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-notes">Offer Notes (optional)</label>
                 <br /><textarea name="offer_notes" id="angelleye-offer-notes" /></textarea>
             </div>
             <div class="woocommerce-make-offer-form-section woocommerce-make-offer-form-section-submit">
-                <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" value="Submit Offer" />
+                <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="Submit <?php echo ($is_counter_offer) ? ' Counter ' : ''; ?>Offer" value="Submit <?php echo ($is_counter_offer) ? ' Counter ' : ''; ?>Offer" />
                 <div class="offer-submit-loader" id="offer-submit-loader">Please wait...</div>
             </div>
         </form>
