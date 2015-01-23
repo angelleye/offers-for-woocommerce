@@ -668,12 +668,10 @@ class Angelleye_Offers_For_Woocommerce {
                     }
                 }
 
-                // Email Out - admin email notification of new offer
                 /**
-                 * Email admin 'New offer' email template
+                 * Email Out - admin email notification of new or countered offer
                  * @since   0.1.0
                  */
-                // set recipient email
                 $recipient = get_option( 'admin_email' );
                 $offer_id = $parent_post_id;
 
@@ -707,14 +705,27 @@ class Angelleye_Offers_For_Woocommerce {
                     'offer_notes' => $comments
                 );
 
-                $offer_args['is_counter_offer'] = false;
                 if($is_counter_offer)
                 {
                     $offer_args['is_counter_offer'] = true;
-                }
 
-                // the email we want to send
-                $email_class = 'WC_New_Offer_Email';
+                    /**
+                     * send admin 'New counter offer' email template
+                     */
+                    // the email we want to send
+                    $email_class = 'WC_New_Counter_Offer_Email';
+
+                }
+                else
+                {
+                    $offer_args['is_counter_offer'] = false;
+
+                    /**
+                     * send admin 'New offer' email template
+                     */
+                    // the email we want to send
+                    $email_class = 'WC_New_Offer_Email';
+                }
 
                 // load the WooCommerce Emails
                 $wc_emails = new WC_Emails();
@@ -914,6 +925,7 @@ class Angelleye_Offers_For_Woocommerce {
         global $woocommerce;
         $response['message'] = $msg;
         $response['type'] = 'error';
+
         if($pid)
         {
             $response['pid'] = $pid;
@@ -924,10 +936,6 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         wc_add_notice( $response['message'], $response['type'] );
-
-        /*header('content-type: application/json; charset=utf-8');
-        echo json_encode($response)."\n";
-        exit;*/
     }
 
     /**
@@ -991,7 +999,6 @@ class Angelleye_Offers_For_Woocommerce {
         wc_add_notice( __( 'You can not do that', 'textdomain' ), 'error' );
 
         return $passed;
-
     }
 
     //Get it from the session and add it to the cart variable
@@ -1022,13 +1029,14 @@ class Angelleye_Offers_For_Woocommerce {
 
         // include our custom email classes
         require( 'includes/class-wc-new-offer-email.php' );
+        require( 'includes/class-wc-new-counter-offer-email.php' );
         require( 'includes/class-wc-offer-received-email.php' );
 
         // add the email class to the list of email classes that WooCommerce loads
         $email_classes['WC_New_Offer_Email'] = new WC_New_Offer_Email();
+        $email_classes['WC_New_Counter_Offer_Email'] = new WC_New_Counter_Offer_Email();
         $email_classes['WC_Offer_Received_Email'] = new WC_Offer_Received_Email();
 
         return $email_classes;
     }
-
 }

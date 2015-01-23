@@ -4,7 +4,6 @@
 		// Public-facing JavaScript
 				
 		$(document).ready(function(){
-
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
                 var split = val.split("=", 2);
@@ -14,10 +13,14 @@
                 angelleyeOpenMakeOfferForm();
             }
 
-			$(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
+            $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
                 angelleyeOpenMakeOfferForm();
-			});
+            });
 
+            $(".tab_custom_ofwc_offer_tab a").on('click', function()
+            {
+                angelleyeOpenMakeOfferForm();
+            });
 		});
 
         function angelleyeOpenMakeOfferForm(){
@@ -31,9 +34,8 @@
             var targetTab = $(".tab_custom_ofwc_offer_tab");
             $('html, body').animate({
                 scrollTop: $(targetTab).offset().top - '100'
-            }, 'slow');
-
-            return true;
+            }, 'fast');
+            return false;
         }
 		
 		$(window).load(function(){
