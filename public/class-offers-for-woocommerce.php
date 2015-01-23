@@ -506,8 +506,10 @@ class Angelleye_Offers_For_Woocommerce {
                 // set offer comments
                 $comments = (isset($_POST['offer_notes']) && $_POST['offer_notes'] != '') ? strip_tags(nl2br($_POST['offer_notes']), '<br><p>') : '';
 
-                // If has parent offer id - valid post id, post_type woocommerce_offer, post_status of pending offer or accepted offer
-                if( $parent_post_id != '' && isset($parent_post_status) && $parent_post_status == 'countered-offer' && $post_parent_type == 'woocommerce_offer')
+                // If has parent offer id - valid post id, post_type woocommerce_offer, post_status of pending offer or accepted offer, then it is a counter from the buyer
+                $is_counter_offer = ( $parent_post_id != '' && isset($parent_post_status) && $parent_post_status == 'countered-offer' && $post_parent_type == 'woocommerce_offer') ? true : false;
+
+                if($is_counter_offer)
                 {
                     $parent_post = array(
                         'ID'           => $parent_post_id,
@@ -665,6 +667,12 @@ class Angelleye_Offers_For_Woocommerce {
                     'product_total' => $product_total,
                     'offer_notes' => $comments
                 );
+
+                $offer_args['is_counter_offer'] = false;
+                if($is_counter_offer)
+                {
+                    $offer_args['is_counter_offer'] = true;
+                }
 
                 // the email we want to send
                 $email_class = 'WC_New_Offer_Email';
