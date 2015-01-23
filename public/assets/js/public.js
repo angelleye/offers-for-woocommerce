@@ -160,7 +160,10 @@
 			var offerVariationId = $("input[name='variation_id']").val();
 			
 			var offerName = $("input[name='offer_name']").val();
-			var offerEmail = $("input[name='offer_email']").val();
+            var offerEmail = $("input[name='offer_email']").val();
+            var offerPhone = $("input[name='offer_phone']").val();
+            var offerCompanyName = $("input[name='offer_company_name']").val();
+
 			var offerNotes = $("#angelleye-offer-notes").val();
 			
 			var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
@@ -180,14 +183,16 @@
 				$('#offer-submit-loader').show();
 				
 				var formData = {};
-					formData['offer_name'] = offerName;
-					formData['offer_email'] = offerEmail;
-					formData['offer_quantity'] = offerQuantity;
-					formData['offer_price_each'] = offerPriceEach;
-					formData['offer_product_id'] = offerProductId;
-					formData['offer_variation_id'] = offerVariationId;
-                    formData['parent_offer_id'] = parentOfferId;
-                    formData['offer_notes'] = offerNotes;
+                formData['offer_name'] = offerName;
+                formData['offer_email'] = offerEmail;
+                formData['offer_phone'] = offerPhone;
+                formData['offer_company_name'] = offerCompanyName;
+                formData['offer_quantity'] = offerQuantity;
+                formData['offer_price_each'] = offerPriceEach;
+                formData['offer_product_id'] = offerProductId;
+                formData['offer_variation_id'] = offerVariationId;
+                formData['parent_offer_id'] = parentOfferId;
+                formData['offer_notes'] = offerNotes;
 				
 				// ajax submit offer
 				var ajaxtarget = '?woocommerceoffer_post=1';
