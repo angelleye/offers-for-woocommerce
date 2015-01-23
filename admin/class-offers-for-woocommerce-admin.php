@@ -1157,7 +1157,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
-
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);;
             $offer_name = get_post_meta($post_id, 'offer_name', true);;
             $offer_email = $recipient;
 
@@ -1174,6 +1174,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'offer_email' => $offer_email,
                 'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
                 'product_url' => get_permalink($product_id),
                 'variant_id' => $variant_id,

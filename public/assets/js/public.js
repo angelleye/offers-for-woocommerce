@@ -89,8 +89,11 @@
 					aForm: false
 				}
 			);
-			
-			$('#woocommerce-make-offer-form').find( ':submit' ).attr('value', 'Submit Offer');
+
+            var offerSubmitBtnDefaultVal = $('#woocommerce-make-offer-form').find( ':submit' ).attr('data-orig-val');
+            if( offerSubmitBtnDefaultVal == '')
+                offerSubmitBtnDefaultVal = 'Submit Offer';
+			$('#woocommerce-make-offer-form').find( ':submit' ).attr('value', offerSubmitBtnDefaultVal);
 			$('#woocommerce-make-offer-form').find( ':submit' ).removeAttr( 'disabled','disabled' );
 		});
 		
@@ -123,6 +126,7 @@
 		
 		// Submit offer form		
 		$('#woocommerce-make-offer-form').submit(function(){
+            $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 			
 			if($('#woocommerce-make-offer-form-price-each').autoNumeric('get') == '0.00')
 			{
@@ -152,11 +156,13 @@
 				);
 				return false;
 			}
-			
-			var offerProductId = '';
+
+            var parentOfferId = $("input[name='parent_offer_id']").val();
+            var parentOfferUid = $("input[name='parent_offer_uid']").val();
+
+            var offerProductId = '';
 			var offerVariationId = '';
 			var offerProductId = $("input[name='add-to-cart']").val();
-            var parentOfferId = $("input[name='parent_offer_id']").val();
 			var offerVariationId = $("input[name='variation_id']").val();
 			
 			var offerName = $("input[name='offer_name']").val();
@@ -178,6 +184,7 @@
 				
 				// hide error divs
 				$('#tab_custom_ofwc_offer_tab_alt_message_2').hide();
+                $('#tab_custom_ofwc_offer_tab_alt_message_custom').hide();
 				
 				// show loader image
 				$('#offer-submit-loader').show();
@@ -192,6 +199,7 @@
                 formData['offer_product_id'] = offerProductId;
                 formData['offer_variation_id'] = offerVariationId;
                 formData['parent_offer_id'] = parentOfferId;
+                formData['parent_offer_uid'] = parentOfferUid;
                 formData['offer_notes'] = offerNotes;
 				
 				// ajax submit offer
@@ -214,18 +222,29 @@
 					if(request.statusText == 'OK'){
 						
 						var myObject = JSON.parse(request.responseText);
-						
-						var responseStatus = myObject['statusmsg'];
-			
-						if(responseStatus == 'failed')
-						{
-							//console.log('failed');
-							// Hide loader image
-							$('#offer-submit-loader').hide();
-							// Show error message DIV														
-							$('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
-							$( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );						
-						}
+
+                        var responseStatus = myObject['statusmsg'];
+                        var responseStatusDetail = myObject['statusmsgDetail'];
+
+                        if(responseStatus == 'failed')
+                        {
+                            //console.log('failed');
+                            // Hide loader image
+                            $('#offer-submit-loader').hide();
+                            // Show error message DIV
+                            $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
+                            $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                        }
+                        else if(responseStatus == 'failed-custom')
+                        {
+                            //console.log('failed-custom-msg');
+                            // Hide loader image
+                            $('#offer-submit-loader').hide();
+                            // Show error message DIV
+                            $('#tab_custom_ofwc_offer_tab_alt_message_custom ul #alt-message-custom').html("<strong>Error: </strong>"+responseStatusDetail);
+                            $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
+                            $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                        }
 						else
 						{
 							// SUCCESS
