@@ -409,3 +409,5 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     font-weight: bold;
     font-style:italic;
 }
+
+.notice.error.angelleye-admin-notice-filterby-author { border-left-color: #000!important; }
