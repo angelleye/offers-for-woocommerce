@@ -636,7 +636,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $recipient = get_option( 'admin_email' );
                 $offer_id = $parent_post_id;
 
-                $offer_name = get_post_meta($parent_post_id, 'offer_name', true);;
+                $offer_name = get_post_meta($parent_post_id, 'offer_name', true);
+                $offer_phone = get_post_meta($parent_post_id, 'offer_phone', true);
+                $offer_company_name = get_post_meta($parent_post_id, 'offer_company_name', true);
                 $offer_email = $recipient;
 
                 $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
@@ -651,6 +653,8 @@ class Angelleye_Offers_For_Woocommerce {
                     'recipient' => $recipient,
                     'offer_email' => $offer_email,
                     'offer_name' => $offer_name,
+                    'offer_phone' => $offer_phone,
+                    'offer_company_name' => $offer_company_name,
                     'offer_id' => $offer_id,
                     'product_id' => $product_id,
                     'product_url' => get_permalink($product_id),
