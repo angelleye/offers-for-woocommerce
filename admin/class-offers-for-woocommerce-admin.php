@@ -1006,6 +1006,42 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         // set error message if product not found...
 
+        // set author_data
+        $author_data = get_userdata($post->post_author);
+
+        // set author offer counts
+        $author_counts = array();
+        if($author_data)
+        {
+            // count offers by author id
+            global $wpdb;
+
+            $post_type = 'woocommerce_offer';
+
+            $args = array($post_type,'trash', $post->post_author);
+            $count_all = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status != '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'accepted-offer', $post->post_author);
+            $count_accepted = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'countered-offer', $post->post_author);
+            $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'declined-offer', $post->post_author);
+            $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $args = array($post_type,'completed-offer', $post->post_author);
+            $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+            $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
+            $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
+            $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
+            $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
+            $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
+
+            $author_data->offer_counts = $author_counts;
+        }
+
         /*
 		 * Output html for Offer Comments loop
 		 */
