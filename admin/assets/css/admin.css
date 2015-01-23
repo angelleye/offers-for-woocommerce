@@ -34,9 +34,13 @@ body.wp-admin.settings_page_angelleye-offers-for-woocommerce #wpbody-content .wr
 
 .type-woocommerce_offer.status-completed-offer:hover td,
 .type-woocommerce_offer.status-completed-offer:hover th {
-  background-color: #F5FFEC!important;
+    background-color: #F5FFEC!important;
 }
 
+.type-woocommerce_offer.status-countered-offer:hover td,
+.type-woocommerce_offer.status-countered-offer:hover th {
+    background-color: #FFFCF0!important;
+}
 
 #woocommerce-offers-settings-link { color:#BBBBBB; }
 #favorite-actions {display:none;}
