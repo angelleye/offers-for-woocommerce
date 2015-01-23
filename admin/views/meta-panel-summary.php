@@ -45,7 +45,7 @@
                 <h5>
                     Buyer Data
                     <?php if( $author_data ) { ?>
-                        <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', 'angelleye_offers_for_woocommerce');?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Offer History', 'angelleye_offers_for_woocommerce'). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
+                        <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', 'angelleye_offers_for_woocommerce');?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', 'angelleye_offers_for_woocommerce'). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
                     <?php } ?>
                 </h5>
                 <ul class="offer-buyer-meta-values-wrap">
@@ -58,7 +58,7 @@
 
             <div class="angelleye-col-container" id="angelleye-offer-buyer-history">
                 <?php if( $author_data ) { ?>
-                <h5>Offer History
+                <h5>Buyer Offer History
                     <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', 'angelleye_offers_for_woocommerce');?>"><?php echo __('close', 'angelleye_offers_for_woocommerce');?></a>
                 </h5>
                 <ul class="offer-buyer-history-values-wrap">
