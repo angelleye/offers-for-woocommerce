@@ -203,7 +203,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-inputs #angelleye-woocommerce-offers-ajax-addnote-text { width:100%; margin-bottom:6px; }
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .private-note-checkbox-wrap { float:left; margin-right:10px; line-height: 28px; }
-#section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .private-note-checkbox-wrap #angelleye-woocommerce-offers-ajax-addnote-admin-only { float:left!important; margin-top:7px; margin-right:3px; width:auto!important; }
+#section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .private-note-checkbox-wrap #angelleye-woocommerce-offers-ajax-addnote-send-to-buyer { float:left!important; margin-top:7px; margin-right:3px; width:auto!important; }
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .addnote-btn-wrap { float:none; text-align:right; }
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-btn-wrap .addnote-btn-wrap button { float:none;  }
 
