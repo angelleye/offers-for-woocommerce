@@ -635,10 +635,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             // order by date default
             $vars = array_merge( $vars, array(
-                'orderby' => 'post_modified',
+                'orderby' => 'post_date',
                 'order' => 'desc' ) );
         }
         else {
+            if (isset($vars['orderby']) && (($vars['orderby'] == 'date') ))
+            {
+                $vars['orderby'] = 'post_date';
+            }
             if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount'))) {
                 $vars = array_merge($vars, array(
                     'meta_key' => $vars['orderby'],
