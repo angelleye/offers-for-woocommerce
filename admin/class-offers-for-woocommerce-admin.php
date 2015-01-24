@@ -416,23 +416,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		global $post;
         $post_meta_offers_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true);
 
-        if($post_meta_offers_enabled == '')
-        {
-            $custom_tab_options_offers_checked = 'yes';
-        }
-        elseif($post_meta_offers_enabled == 'yes')
-        {
-            $custom_tab_options_offers_checked = 'yes';
-        }
-        else
-        {
-            $custom_tab_options_offers_checked = 'no';
-        }
+        $field_value = 'yes';
+        $field_callback = ($post_meta_offers_enabled) ? $post_meta_offers_enabled : 'no';
+
 		?>
 		<div id="custom_tab_data_offers_for_woocommerce" class="panel woocommerce_options_panel">
 			<div class="options_group">
 				<p class="form-field">                    
-					<?php woocommerce_wp_checkbox( array('value' => 'yes', 'cbvalue' => $custom_tab_options_offers_checked, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', 'angelleye_offers_for_woocommerce'), 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', 'angelleye_offers_for_woocommerce') ) ); ?>
+					<?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', 'angelleye_offers_for_woocommerce'), 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', 'angelleye_offers_for_woocommerce') ) ); ?>
 				</p>                    
 			</div>                
 		</div>
