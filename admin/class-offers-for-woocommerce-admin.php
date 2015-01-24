@@ -961,6 +961,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function add_meta_box_offer_summary_callback( $post )
     {
+        global $post;
         $postmeta = get_post_meta($post->ID);
 
         // Add an nonce field so we can check for it later.
@@ -991,7 +992,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $_product_regular_price = $_product->get_regular_price();
         $_product_sale_price = $_product->get_sale_price();
         $_product_stock = $_product->get_total_stock();
-        $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity']);
+        $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+        $_product_backorders_allowed = $_product->backorders_allowed();
+        $_product_backorders_require_notification = $_product->backorders_require_notification();
         $_product_formatted_name = $_product->get_formatted_name();
         $_product_image = $_product->get_image( 'shop_thumbnail');
 
