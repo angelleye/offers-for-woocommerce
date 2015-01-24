@@ -146,15 +146,16 @@ class Angelleye_Offers_For_Woocommerce {
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
             $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
 
-            if( (is_product() && !$button_global_onoff_product) || (is_front_page() && !$button_global_onoff_frontpage) || (!is_front_page() && !$button_global_onoff_catalog) )
+            if( (is_product() && !$button_global_onoff_product) || (is_front_page() && !$button_global_onoff_frontpage) || (!is_front_page() && !is_product() && !$button_global_onoff_catalog) )
             {
                 //echo '<div class="angelleye-offers-clearfix"></div></div></div>';
-                return;
             }
-
-			echo '<div class="offers-for-woocommerce-make-offer-button-cleared"></div>
-			<div class="offers-for-woocommerce-add-to-cart-wrap"><div>';
-
+            else
+            {
+                echo 'BUST';
+                echo '<div class="offers-for-woocommerce-make-offer-button-cleared"></div>
+                <div class="offers-for-woocommerce-add-to-cart-wrap"><div>';
+            }
 		}
 	}
 	
@@ -182,27 +183,27 @@ class Angelleye_Offers_For_Woocommerce {
             if( is_product() && !$button_global_onoff_product )
             {
                 //echo '<div class="angelleye-offers-clearfix"></div></div></div>';
-                return;
             }
-
-            // get offers options - display
-            $button_options_display = get_option('offers_for_woocommerce_options_display');
-			
-			$button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', 'angelleye_offers_for_woocommerce' );
-			
-			$custom_styles_override = '';
-            if($button_options_display)
+            else
             {
-                if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
-                    $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . '!important;';
-                }
-                if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
-                    $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important;';
-                }
-            }
+                // get offers options - display
+                $button_options_display = get_option('offers_for_woocommerce_options_display');
 
-			echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-single-product button alt" style="'.$custom_styles_override.'">'.$button_title.'</button></div>';
-			echo '</div>';
+                $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'angelleye_offers_for_woocommerce');
+
+                $custom_styles_override = '';
+                if ($button_options_display) {
+                    if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
+                        $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . '!important;';
+                    }
+                    if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
+                        $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important;';
+                    }
+                }
+
+                echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                echo '</div>';
+            }
 		}
 	}
 	
@@ -230,28 +231,29 @@ class Angelleye_Offers_For_Woocommerce {
 
             if( (is_front_page() && !$button_global_onoff_frontpage) || (!is_front_page() && !$button_global_onoff_catalog) )
             {
-                //echo '<div class="angelleye-offers-clearfix"></div></div></div>';
                 return;
             }
+            else
+            {
+                // get offers options - display
+                $button_options_display = get_option('offers_for_woocommerce_options_display');
 
-            // get offers options - display
-            $button_options_display = get_option('offers_for_woocommerce_options_display');
+                $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', 'angelleye_offers_for_woocommerce' );
 
-            $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', 'angelleye_offers_for_woocommerce' );
+                $custom_styles_override = 'style="';
+                if(isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '')
+                {
 
-			$custom_styles_override = 'style="';
-			if(isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '')
-			{
-	
-				$custom_styles_override.= 'color:'.$button_options_display['display_setting_custom_make_offer_btn_text_color'].'!important;';
-			}
-			if(isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '')
-			{
-				$custom_styles_override.= ' background:'.$button_options_display['display_setting_custom_make_offer_btn_color'].'!important; border-color:'.$button_options_display['display_setting_custom_make_offer_btn_color'].'!important;';
-			}
-			$custom_styles_override.= '"';
-				
-			echo '<a href="'.get_permalink($post->ID).'?aewcobtn=1" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-catalog button alt" '.$custom_styles_override.'>'.$button_title.'</a>';
+                    $custom_styles_override.= 'color:'.$button_options_display['display_setting_custom_make_offer_btn_text_color'].'!important;';
+                }
+                if(isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '')
+                {
+                    $custom_styles_override.= ' background:'.$button_options_display['display_setting_custom_make_offer_btn_color'].'!important; border-color:'.$button_options_display['display_setting_custom_make_offer_btn_color'].'!important;';
+                }
+                $custom_styles_override.= '"';
+
+                echo '<a href="'.get_permalink($post->ID).'?aewcobtn=1" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-catalog button alt" '.$custom_styles_override.'>'.$button_title.'</a>';
+            }
 		}
 	}
 	
@@ -280,20 +282,22 @@ class Angelleye_Offers_For_Woocommerce {
             {
                 return $tabs;
             }
+            else
+            {
+                // get offers options - display
+                $button_options_display = get_option('offers_for_woocommerce_options_display');
 
-            // get offers options - display
-            $button_options_display = get_option('offers_for_woocommerce_options_display');
+                $tab_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', 'angelleye_offers_for_woocommerce' );
 
-            $tab_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', 'angelleye_offers_for_woocommerce' );
+                // Add new tab "Make Offer"
+                $tabs['tab_custom_ofwc_offer'] = array(
+                    'title' => $tab_title,
+                    'priority' => 50,
+                    'callback' => array( $this, 'angelleye_ofwc_display_custom_woocommerce_product_tab_content' ) );
 
-			// Add new tab "Make Offer"
-			$tabs['tab_custom_ofwc_offer'] = array(
-				'title' => $tab_title,
-				'priority' => 50,
-				'callback' => array( $this, 'angelleye_ofwc_display_custom_woocommerce_product_tab_content' ) );
-	
-			// Set priority of the new tab to 20 -- second place
-			$tabs['tab_custom_ofwc_offer']['priority'] = 20;
+                // Set priority of the new tab to 20 -- second place
+                $tabs['tab_custom_ofwc_offer']['priority'] = 20;
+            }
 		}
 		return $tabs;
 	}
