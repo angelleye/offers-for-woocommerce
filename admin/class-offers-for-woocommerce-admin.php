@@ -1965,18 +1965,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
             $targetPostID = $_POST["targetID"];
-            $adminOnlyNote = (isset($_POST["noteAdminOnly"]) && $_POST["noteAdminOnly"] != '') ? '1' : '';
+            $noteSendToBuyer = (isset($_POST["noteSendToBuyer"]) && $_POST["noteSendToBuyer"] != '') ? '1' : '';
             $noteContent = $_POST['noteContent'];
 
             $current_user = wp_get_current_user();
 
             // Insert WP comment
             $comment_text = "<span>Offer Note:</span>";
-            if($adminOnlyNote == '1')
+            if($noteSendToBuyer != '1')
             {
                 $comment_text.= " (admin only)";
             }
-            $comment_text.= "<br .>".$noteContent;
+            else
+            {
+                $comment_text.= " (sent to buyer)";
+            }
+            $comment_text.= "<br />" .$noteContent;
 
             $data = array(
                 'comment_post_ID' => $targetPostID,
@@ -1995,7 +1999,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if( wp_insert_comment($data) )
             {
 
-                if($adminOnlyNote != '1')
+                if($noteSendToBuyer == '1')
                 {
                     // Email buyer the offer note (not private admin note)
                     /**

@@ -29,20 +29,27 @@
             {
                 var targetID = $(this).attr('data-target');
                 var noteContent = $('#angelleye-woocommerce-offers-ajax-addnote-text').val();
-                if( $('#angelleye-woocommerce-offers-ajax-addnote-admin-only').is(':checked') )
+
+                if(noteContent.length < 3)
                 {
-                    var noteAdminOnly = $('#angelleye-woocommerce-offers-ajax-addnote-admin-only').val();
+                    alert('Your note is not long enough!');
+                    return false;
+                }
+
+                if( $('#angelleye-woocommerce-offers-ajax-addnote-send-to-buyer').is(':checked') )
+                {
+                    var noteSendToBuyer = $('#angelleye-woocommerce-offers-ajax-addnote-send-to-buyer').val();
                 }
                 else
                 {
-                    var noteAdminOnly = '';
+                    var noteSendToBuyer = '';
                 }
 
                 var data = {
                     'action': 'addOfferNote',
                     'targetID': targetID,
                     'noteContent': noteContent,
-                    'noteAdminOnly': noteAdminOnly
+                    'noteSendToBuyer': noteSendToBuyer
                 };
 
                 // post it
