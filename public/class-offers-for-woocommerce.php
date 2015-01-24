@@ -579,7 +579,7 @@ class Angelleye_Offers_For_Woocommerce {
                     exit;
                 }
                 // check for valid offer price (not zero)
-                if( ($formData['orig_offer_price_per'] == '' || $formData['orig_offer_price_per'] == 0) )
+                if( ($formData['orig_offer_price_per'] == '' || $formData['orig_offer_price_per'] == 0 || $formData['orig_offer_price_per'] == "0.00") )
                 {
                     echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __( 'Please enter a positive value for \'Offer Amount\'', 'angelleye_offers_for_woocommerce' ) ));
                     exit;
