@@ -150,13 +150,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * @since	0.1.0
 		 */
 		add_action('admin_footer-post.php', array(&$this, 'jc_append_post_status_list' ) );
-		
+
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
 		add_filter( 'display_post_states', array( &$this, 'jc_display_archive_state' ) );
-		
+
 		/**
 		 * XXX
 		 * @since	0.1.0
@@ -842,32 +842,44 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		global $post;
 		$arg = get_query_var( 'post_status' );
 		$screen = get_current_screen();
-		if ( $screen->post_type == 'woocommerce_offer' ) 
+
+		if ( $screen->post_type == 'woocommerce_offer' )
 		{
             if($post->post_status == 'accepted-offer'){
-                return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
             }
             elseif($post->post_status == 'countered-offer'){
-                return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
             }
 			elseif($post->post_status == 'publish'){
-			   return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon pending" title="Offer Status: Pending">Pending</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon pending" title="Offer Status: Pending">Pending</i></div>');
 			}
 			elseif($post->post_status == 'trash'){
-			   return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon trash" title="Offer Status: Trashed">Trashed</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon trash" title="Offer Status: Trashed">Trashed</i></div>');
 			}
 			elseif($post->post_status == 'completed-offer'){
-			   return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon completed" title="Offer Status: Completed">Completed</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon completed" title="Offer Status: Completed">Completed</i></div>');
 			}
 			elseif($post->post_status == 'declined-offer'){
-			   return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon declined" title="Offer Status: Declined">Declined</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon declined" title="Offer Status: Declined">Declined</i></div>');
 			}
 			else
 			{
-			  return array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon" title="Offer Status: '.ucwords($post->post_status).'">'.ucwords($post->post_status).'</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon" title="Offer Status: '.ucwords($post->post_status).'">'.ucwords($post->post_status).'</i></div>');
 			}
+
+            if ( ! empty( $states ) ) {
+                $state_count = count( $states );
+                $i = 0;
+                echo '';
+                foreach ( $states as $state ) {
+                    ++$i;
+                    ( $i == $state_count ) ? $sep = '' : $sep = ', ';
+                    echo "<span class='post-state'>$state$sep</span>";
+                }
+            }
+            return;
 		}
-		return $states;
 	}
 	
 	/**
@@ -878,8 +890,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	{
 		if ( $screen->post_type == 'woocommerce_offer') 
 		{
-			add_filter('gettext',  array( &$this, 'my_get_translated_text_publish' ) );
-			add_filter('ngettext', array( &$this, 'my_get_translated_text_publish' ) );
+			add_filter('gettext',  array( $this, 'my_get_translated_text_publish' ) );
+			add_filter('ngettext', array( $this, 'my_get_translated_text_publish' ) );
 		}
 	}
 	
