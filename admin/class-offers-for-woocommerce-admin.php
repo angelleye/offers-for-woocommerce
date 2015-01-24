@@ -628,18 +628,27 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * ADMIN COLUMN - SORTING - ORDERBY
 	 * http://scribu.net/wordpress/custom-sortable-columns.html#comment-4732
 	 */
-	public function woocommerce_offers_list_orderby( $vars ) {
-        if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount') ) )
+	public function woocommerce_offers_list_orderby( $vars )
+    {
+        // check for orderby var
+        if ( !isset( $vars['orderby']) )
         {
+            // order by date default
             $vars = array_merge( $vars, array(
-                'meta_key' => $vars['orderby'],
-                'orderby' => 'meta_value_num' ) );
+                'orderby' => 'post_modified',
+                'order' => 'desc' ) );
         }
-        if ( isset( $vars['orderby'] ) && ( ($vars['orderby'] == 'offer_name') || ($vars['orderby'] == 'offer_email') ) )
-        {
-            $vars = array_merge( $vars, array(
-                'meta_key' => $vars['orderby'],
-                'orderby' => 'meta_value' ) );
+        else {
+            if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount'))) {
+                $vars = array_merge($vars, array(
+                    'meta_key' => $vars['orderby'],
+                    'orderby' => 'meta_value_num'));
+            }
+            if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_name') || ($vars['orderby'] == 'offer_email'))) {
+                $vars = array_merge($vars, array(
+                    'meta_key' => $vars['orderby'],
+                    'orderby' => 'meta_value'));
+            }
         }
 		return $vars;
 	}
