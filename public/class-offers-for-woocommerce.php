@@ -152,7 +152,6 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                echo 'BUST';
                 echo '<div class="offers-for-woocommerce-make-offer-button-cleared"></div>
                 <div class="offers-for-woocommerce-add-to-cart-wrap"><div>';
             }
