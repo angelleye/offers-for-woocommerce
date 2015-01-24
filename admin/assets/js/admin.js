@@ -6,7 +6,8 @@
 		// Place your administration-specific JavaScript here
         $(document).ready(function(){
             $('#offer-quantity').autoNumeric('init',
-                {vMin: '0',
+                {
+                    vMin: '0',
                     mDec: '0',
                     lZero: 'deny',
                     aForm: false}
@@ -17,12 +18,50 @@
                     mDec: '2',
                     aSign: '',
                     //wEmpty: 'sign',
-                    lZero: 'keep',
+                    lZero: 'allow',
                     aForm: false
                 }
             );
 
             updateTotal();
+
+            // Submit post
+            $('body.wp-admin.post-php.post-type-woocommerce_offer #post').submit(function()
+            {
+                var offerCheckMinValuesPassed = true;
+
+                if ($('#offer-price-per').autoNumeric('get') == '0') {
+                    $('#offer-price-per').autoNumeric('set', '');
+                    $('#offer-price-per').autoNumeric('update',
+                        {
+                            mDec: '2',
+                            aSign: '',
+                            //wEmpty: 'sign',
+                            lZero: 'allow',
+                            aForm: false
+                        }
+                    );
+                    offerCheckMinValuesPassed = false;
+                }
+
+                if ($('#offer-quantity').autoNumeric('get') == '0') {
+                    $('#offer-quantity').autoNumeric('set', '');
+                    $('#offer-quantity').autoNumeric('update',
+                        {
+                            vMin: '0',
+                            mDec: '0',
+                            lZero: 'deny',
+                            aForm: false
+                        }
+                    );
+                    offerCheckMinValuesPassed = false;
+                }
+
+                if( offerCheckMinValuesPassed === false )
+                {
+                    return false;
+                }
+            });
 
             // AJAX - Add Offer Note
             $('#angelleye-woocommerce-offers-ajax-addnote-btn').click(function()

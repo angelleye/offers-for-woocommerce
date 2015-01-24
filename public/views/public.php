@@ -77,12 +77,19 @@
                 </div>
                 <div class="woocommerce-make-offer-form-part-left">
                 	<label for="woocommerce-make-offer-form-price-each">Price Each</label>
-	                <br /><input type="text" name="offer_price_each" id="woocommerce-make-offer-form-price-each" pattern="([0-9]|\$|,|.)+" data-a-sign="$" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" />
+                    <br />
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <input type="text" name="offer_price_each" id="woocommerce-make-offer-form-price-each" pattern="([0-9]|\$|,|.)+" data-a-sign="$" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" />
+                    </div>
                 </div>
                 <div class="woocommerce-make-offer-form-part-left">
                 	<label for="woocommerce-make-offer-form-total">Total Offer Amount</label>
-	                <br /><input type="text" name="offer_total" id="woocommerce-make-offer-form-total" disabled="disabled" />
-                </div>
+	                <br />
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <input type="text" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
+                    </div>
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" id="woocommerce-make-offer-form-label">Your Name</label>
