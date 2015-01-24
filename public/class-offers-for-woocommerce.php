@@ -568,7 +568,23 @@ class Angelleye_Offers_For_Woocommerce {
 				$formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per']), 2, ".", "");
                 $formData['orig_offer_uid'] = uniqid('aewco-');;
                 $formData['parent_offer_uid'] = (isset($_POST['parent_offer_uid'])) ? $_POST['parent_offer_uid'] : '';
-				
+
+                /**
+                 * Check minimum quantity and minimum price
+                 */
+                // check for valid offer quantity (not zero)
+                if( ($formData['orig_offer_quantity'] == '' || $formData['orig_offer_quantity'] == 0) )
+                {
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __( 'Please enter a positive value for \'Offer Quantity\'', 'angelleye_offers_for_woocommerce' ) ));
+                    exit;
+                }
+                // check for valid offer price (not zero)
+                if( ($formData['orig_offer_price_per'] == '' || $formData['orig_offer_price_per'] == 0) )
+                {
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __( 'Please enter a positive value for \'Offer Amount\'', 'angelleye_offers_for_woocommerce' ) ));
+                    exit;
+                }
+
 				// set postmeta vars
                 $formData['offer_name'] = $formData['orig_offer_name'];
                 $formData['offer_company_name'] = $formData['orig_offer_company_name'];
