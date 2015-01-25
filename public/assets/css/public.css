@@ -64,7 +64,7 @@
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='text']:disabled,
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='email']:disabled{ border:none!important; }
-.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section textarea { width:auto; }
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section textarea { width:auto; resize: none!important; }
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-price-each { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-email { max-width:384px; width:100%; }
