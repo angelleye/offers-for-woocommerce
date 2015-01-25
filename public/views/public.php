@@ -109,7 +109,7 @@
             </div>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-notes">Offer Notes (optional)</label>
-                <br /><textarea name="offer_notes" id="angelleye-offer-notes" /></textarea>
+                <br /><textarea name="offer_notes" id="angelleye-offer-notes" rows="4" /></textarea>
             </div>
             <div class="woocommerce-make-offer-form-section woocommerce-make-offer-form-section-submit">
                 <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="Submit <?php echo ($is_counter_offer) ? ' Counter ' : ''; ?>Offer" value="Submit <?php echo ($is_counter_offer) ? ' Counter ' : ''; ?>Offer" />
