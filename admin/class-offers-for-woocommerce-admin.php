@@ -988,6 +988,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         global $post;
         $postmeta = get_post_meta($post->ID);
+        $currency_symbol = get_woocommerce_currency_symbol();
 
         // Add an nonce field so we can check for it later.
         wp_nonce_field( 'woocommerce_offer_summary_metabox', 'woocommerce_offer_summary_metabox_noncename' );
