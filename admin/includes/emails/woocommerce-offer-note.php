@@ -23,17 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
         </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><?php echo $offer_args['product']->post_title;?></td>
-                <td><?php echo $offer_args['product_qty'];?></td>
-                <td><?php echo $offer_args['product_price_per'];?></td>
-            </tr>
+        <tr>
+            <td><?php echo $offer_args['product']->post_title;?></td>
+            <td><?php echo $offer_args['product_qty']; ?></td>
+            <td><?php echo get_woocommerce_currency_symbol() . ' ' . $offer_args['product_price_per']; ?></td>
+        </tr>
         </tbody>
         <tfoot>
-            <tr>
-                <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee;"><?php echo 'Subtotal'; ?></th>
-                <td style="text-align:left; border: 1px solid #eee; <?php if ( $i == 1 ) echo 'border-top-width: 4px;'; ?>"><?php echo $offer_args['product_total']; ?></td>
-            </tr>
+        <tr>
+            <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee;"><?php echo 'Subtotal'; ?></th>
+            <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . $offer_args['product_total']; ?></td>
+        </tr>
         </tfoot>
     </table>
 
