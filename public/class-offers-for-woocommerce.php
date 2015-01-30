@@ -121,6 +121,17 @@ class Angelleye_Offers_For_Woocommerce {
          */
         add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_email_classes' ) );
 
+        /**
+         * Action - woocommerce_add_order_item_meta
+         * @since   0.1.0
+         */
+        add_action( 'woocommerce_add_order_item_meta', array( $this, 'ae_ofwc_woocommerce_add_order_item_meta' ), 1, 3 );
+
+        /**
+         * Action - woocommerce_checkout_order_processed
+         * @since   0.1.0
+         */
+        add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ), 1, 2 );
     }
 
 	/**
@@ -1112,4 +1123,46 @@ class Angelleye_Offers_For_Woocommerce {
 
         return $email_classes;
     }
+
+    /**
+     * Action - woocommerce_add_order_item_meta
+     * Adds order item meta 'offer id'
+     * @since   0.1.0
+     */
+    public function ae_ofwc_woocommerce_add_order_item_meta( $item_id, $values, $cart_item_key )
+    {
+        // Check for offer id
+        $item_offer_id = $values['woocommerce_offer_id'];
+
+        if( $item_offer_id )
+        {
+            // Add order item meta
+            if ( function_exists('woocommerce_add_order_item_meta') ) {
+                woocommerce_add_order_item_meta($item_id, 'Offer ID', $item_offer_id );
+            }
+        }
+    }
+
+    /**
+     * Action - woocommerce_checkout_order_processed
+     * Adds offer postmeta  'Order ID'
+     * @since   0.1.0
+     */
+    public function ae_ofwc_woocommerce_checkout_order_processed( $order_id, $posted )
+    {
+        echo '<pre>';
+        print_r($posted);
+        exit;
+
+        // Check for offer id
+        $item_offer_id = $values['Offer ID'];
+
+        if( $item_offer_id )
+        {
+            // Add postmeta 'offer_order_id' to offer
+            add_post_meta($item_offer_id, 'offer_order_id', $order_id );
+        }
+    }
+
+
 }
