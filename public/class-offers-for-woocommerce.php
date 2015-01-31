@@ -137,13 +137,13 @@ class Angelleye_Offers_For_Woocommerce {
          * Filter - woocommerce_cart_item_name
          * @since   0.1.0
          */
-        add_filter( 'woocommerce_cart_item_name', array( $this, 'ae_ofwc_render_meta_on_cart_item'), 1, 3 );
+        add_filter( 'woocommerce_cart_item_name', array( $this, 'ae_ofwc_woocommerce_cart_item_name'), 1, 3 );
 
         /**
          * Filter - Adds Offer ID on checkout order review section
          * @since   0.1.0
          */
-        add_filter( 'woocommerce_checkout_cart_item_quantity', array( $this, 'ae_ofwc_render_meta_on_checkout_order_review_item'), 1, 3 );
+        add_filter( 'woocommerce_checkout_cart_item_quantity', array( $this, 'ae_ofwc_woocommerce_checkout_cart_item_quantity'), 1, 3 );
     }
 
 	/**
@@ -1138,7 +1138,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     /**
      * Action - woocommerce_add_order_item_meta
-     * Adds order item meta 'Offer_ID'
+     * Adds order item meta 'Offer ID'
      * @since   0.1.0
      */
     public function ae_ofwc_woocommerce_add_order_item_meta( $item_id, $values, $cart_item_key )
@@ -1150,14 +1150,14 @@ class Angelleye_Offers_For_Woocommerce {
         {
             // Add order item meta
             if ( function_exists('woocommerce_add_order_item_meta') ) {
-                woocommerce_add_order_item_meta($item_id, 'Offer_ID', $item_offer_id );
+                woocommerce_add_order_item_meta($item_id, 'Offer ID', $item_offer_id );
             }
         }
     }
 
     /**
      * Action - woocommerce_checkout_order_processed
-     * Adds offer postmeta  'Order_ID'
+     * Adds offer postmeta  'offer_order_id'
      * @since   0.1.0
      */
     public function ae_ofwc_woocommerce_checkout_order_processed( $order_id, $posted )
@@ -1172,11 +1172,11 @@ class Angelleye_Offers_For_Woocommerce {
         // Check for offer id
         foreach( $order_items as $key => $value )
         {
-            $item_offer_id = $order->get_item_meta( $key, 'Offer_ID', true );
+            $item_offer_id = $order->get_item_meta( $key, 'Offer ID', true );
 
             /**
              * Update offer
-             * Add postmeta value for this order id
+             * Add postmeta value 'offer_order_id' for this order id
              * Set offer post status to 'completed-offer'
              */
             if( $item_offer_id )
@@ -1225,7 +1225,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @param null $cart_item
      * @param null $cart_item_key
      */
-    public function ae_ofwc_render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null )
+    public function ae_ofwc_woocommerce_cart_item_name( $title = null, $cart_item = null, $cart_item_key = null )
     {
         if( $cart_item_key && is_cart() ) {
             if( $cart_item['woocommerce_offer_id'] )
@@ -1248,7 +1248,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @param null $cart_item
      * @param null $cart_item_key
      */
-    public function ae_ofwc_render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null )
+    public function ae_ofwc_woocommerce_checkout_cart_item_quantity( $quantity = null, $cart_item = null, $cart_item_key = null )
     {
         if( $cart_item['woocommerce_offer_id'] )
         {
