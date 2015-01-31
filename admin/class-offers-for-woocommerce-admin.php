@@ -134,6 +134,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'init', array( &$this, 'my_custom_post_status_countered' ), 10, 2 );
 
         /**
+         * XXX
+         * @since	0.1.0
+         */
+        add_action( 'init', array( &$this, 'my_custom_post_status_buyer_countered' ), 10, 2 );
+
+        /**
 		 * XXX
 		 * @since	0.1.0
 		 */
@@ -671,7 +677,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		{
 			if( is_admin() && $query->is_main_query() ) 
 			{
-				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','declined-offer','completed-offer' ) );
+				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','buyer-countered-offer','declined-offer','completed-offer' ) );
 				if ( !$arg_orderby)
 				{
 					$query->set('orderby', 'post_date');
@@ -716,7 +722,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			elseif($post->post_status == 'trash')
 			{				
 			}
-			elseif($post->post_status == 'publish')
+			elseif($post->post_status == 'publish' || $post->post_status == 'buyer-countered-offer')
 			{
 				$actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Make&nbsp;Counter&nbsp;Offer') . '</a>';				
 				$actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="Set Offer Status to Accepted" id="woocommerce-offer-post-action-link-accept-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Accept') . '</a>';
@@ -758,6 +764,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'exclude_from_search'       => false,
         );
         register_post_status( 'countered-offer', $args );
+    }
+
+    /**
+     * Register custom post status type -- Buyer Countered Offer
+     * @since	0.1.0
+     */
+    public function my_custom_post_status_buyer_countered()
+    {
+        $args = array(
+            'label'                     => _x( 'buyer-countered-offer', 'Buyer Countered Offer', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'Buyer Countered (%s)',  'Buyer Countered (%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'buyer-countered-offer', $args );
     }
 	
 	/**
@@ -816,6 +839,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $complete = ' selected=selected';
                 $label = "<span id='post-status-display'> Countered Offer</span>";
             }
+            elseif($post->post_status == 'buyer-countered-offer')
+            {
+                $complete = ' selected=selected';
+                $label = "<span id='post-status-display'> Buyer Countered Offer</span>";
+            }
             elseif($post->post_status == 'completed-offer')
             {
                 $complete = ' selected=selected';
@@ -827,7 +855,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				$label = "<span id='post-status-display'> Declined Offer</span>";
 			}
 			
-			if($post->post_status == 'accepted-offer' || $post->post_status == 'countered-offer' || $post->post_status == 'completed-offer' || $post->post_status == 'declined-offer')
+			if($post->post_status == 'accepted-offer' || $post->post_status == 'countered-offer' || $post->post_status == 'buyer-countered-offer' || $post->post_status == 'completed-offer' || $post->post_status == 'declined-offer')
 			{
 				echo '<script>jQuery(document).ready(function($){
 				$("select#post_status").append("<option value='.$post->post_status.'-offer '.$complete.'>'.ucfirst($post->post_status).'</option>");
@@ -853,6 +881,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
             }
             elseif($post->post_status == 'countered-offer'){
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
+            }
+            elseif($post->post_status == 'buyer-countered-offer'){
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
             }
 			elseif($post->post_status == 'publish'){
@@ -1076,6 +1107,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $args = array($post_type,'countered-offer', $post->post_author);
                 $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
 
+                $args = array($post_type,'buyer-countered-offer', $post->post_author);
+                $count_buyer_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
                 $args = array($post_type,'declined-offer', $post->post_author);
                 $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
 
@@ -1086,6 +1120,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
                 $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
                 $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
+                $author_counts['buyer_countered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
                 $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
                 $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
 
