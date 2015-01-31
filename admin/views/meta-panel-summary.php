@@ -122,17 +122,29 @@
                 <div class="offer-counter-offer-values-wrap">
                     <label for="offer-quantity">Quantity</label>
                     <div>
-                        <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : ''; ?>" />
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_buyer_counter_quantity'][0])) ? $postmeta['offer_buyer_counter_quantity'][0] : ''; ?>" />
+                        <?php } else { ?>
+                            <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : ''; ?>" />
+                        <?php } ?>
                     </div>
                     <label for="offer-price-per">Price Per</label>
                     <div class="angelleye-input-group">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
-                        <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" />
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_buyer_counter_price_per'][0])) ? $postmeta['offer_buyer_counter_price_per'][0] : ''; ?>" />
+                        <?php } else { ?>
+                            <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" />
+                        <?php } ?>
                     </div>
                     <label for="offer-total">Total</label>
                     <div class="angelleye-input-group">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
-                        <input type="text" name="offer_amount" id="offer-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" value="<?php echo (isset($postmeta['offer_amount'][0])) ? $postmeta['offer_amount'][0] : ''; ?>" disabled="disabled" />
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" name="offer_amount" id="offer-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" value="<?php echo (isset($postmeta['offer_buyer_counter_amount'][0])) ? $postmeta['offer_buyer_counter_amount'][0] : ''; ?>" disabled="disabled" />
+                        <?php } else { ?>
+                            <input type="text" name="offer_amount" id="offer-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" value="<?php echo (isset($postmeta['offer_amount'][0])) ? $postmeta['offer_amount'][0] : ''; ?>" disabled="disabled" />
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -151,7 +163,7 @@
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
                         <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
-                            <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyer-countered-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
+                            <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
                             <option value="">- Select status</option>
                             <? } ?>
                             <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>

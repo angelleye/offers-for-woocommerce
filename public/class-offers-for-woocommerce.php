@@ -668,9 +668,9 @@ class Angelleye_Offers_For_Woocommerce {
 
                     $formDataUpdated = array();
 
-                    $formDataUpdated['offer_quantity'] = $formData['offer_quantity'];
-                    $formDataUpdated['offer_price_per'] = $formData['offer_price_per'];
-                    $formDataUpdated['offer_amount'] = $formData['offer_amount'];
+                    $formDataUpdated['offer_buyer_counter_quantity'] = $formData['offer_quantity'];
+                    $formDataUpdated['offer_buyer_counter_price_per'] = $formData['offer_price_per'];
+                    $formDataUpdated['offer_buyer_counter_amount'] = $formData['offer_amount'];
 
                     // Insert new Post Meta Values
                     foreach($formDataUpdated as $k => $v)

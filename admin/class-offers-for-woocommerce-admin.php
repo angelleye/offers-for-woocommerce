@@ -585,6 +585,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function get_woocommerce_offer_column( $column, $post_id ) 
 	{
+        $post_status = get_post_status( $post_id );
+
 		switch ( $column ) {
             case 'offer_name' :
                 $val = get_post_meta( $post_id , 'offer_name' , true );
@@ -592,19 +594,40 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 break;
 
             case 'offer_quantity' :
-                $val = get_post_meta( $post_id , 'offer_quantity' , true );
+                if( $post_status == 'buyercountered-offer' )
+                {
+                    $val = get_post_meta( $post_id , 'offer_buyer_counter_quantity' , true );
+                }
+                else
+                {
+                    $val = get_post_meta( $post_id , 'offer_quantity' , true );
+                }
                 $val = ($val != '') ? $val : '0';
                 echo number_format($val, 0);
 			break;
 				
 			case 'offer_price_per' :
-                $val = get_post_meta( $post_id , 'offer_price_per' , true );
+                if( $post_status == 'buyercountered-offer' )
+                {
+                    $val = get_post_meta( $post_id , 'offer_buyer_counter_price_per' , true );
+                }
+                else
+                {
+                    $val = get_post_meta( $post_id , 'offer_price_per' , true );
+                }
                 $val = ($val != '') ? $val : '0';
 				echo get_woocommerce_currency_symbol().number_format($val, 2);
 			break;
 
 			case 'offer_amount' :
-                $val = get_post_meta( $post_id , 'offer_amount' , true );
+                if( $post_status == 'buyercountered-offer' )
+                {
+                    $val = get_post_meta( $post_id , 'offer_buyer_counter_amount' , true );
+                }
+                else
+                {
+                    $val = get_post_meta( $post_id , 'offer_amount' , true );
+                }
                 $val = ($val != '') ? $val : '0';
                 echo get_woocommerce_currency_symbol().number_format($val, 2);
             break;
@@ -881,10 +904,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
             }
             elseif($post->post_status == 'countered-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon countered" title="Offer Status: Countered">Countered</i></div>');
             }
             elseif($post->post_status == 'buyercountered-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Countered">Countered</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon buyercountered" title="Offer Status: Buyer Countered">Buyer Countered</i></div>');
             }
 			elseif($post->post_status == 'publish'){
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon pending" title="Offer Status: Pending">Pending</i></div>');
