@@ -987,89 +987,116 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function add_meta_box_offer_summary_callback( $post )
     {
         global $post;
-        $postmeta = get_post_meta($post->ID);
-        $currency_symbol = get_woocommerce_currency_symbol();
 
-        // Add an nonce field so we can check for it later.
-        wp_nonce_field( 'woocommerce_offer_summary_metabox', 'woocommerce_offer_summary_metabox_noncename' );
-
-        /*
-         * Use get_post_meta() to retrieve an existing value
-         * from the database and use the value for the form.
-         */
-        $current_status_value = get_post_status( $post->ID);
-
-        /*
-         * Set default
-         */
-        if (!isset($current_status_value))
+        if($post->ID)
         {
-            $current_status_value = 'publish';
+            $postmeta = get_post_meta($post->ID);
+            $currency_symbol = get_woocommerce_currency_symbol();
+
+            // Add an nonce field so we can check for it later.
+            wp_nonce_field( 'woocommerce_offer_summary_metabox', 'woocommerce_offer_summary_metabox_noncename' );
+
+            /*
+             * Use get_post_meta() to retrieve an existing value
+             * from the database and use the value for the form.
+             */
+            $current_status_value = get_post_status( $post->ID);
+
+            /*
+             * Set default
+             */
+            if (!isset($current_status_value))
+            {
+                $current_status_value = 'publish';
+            }
+
+            // Lookup product data
+            $product_id = $postmeta['offer_product_id'][0];
+
+            $_pf = new WC_Product_Factory();
+            $_product = $_pf->get_product($product_id);
+
+            $_product_sku = $_product->get_sku();
+            $_product_permalink = $_product->get_permalink();
+            $_product_regular_price = $_product->get_regular_price();
+            $_product_sale_price = $_product->get_sale_price();
+            $_product_stock = $_product->get_total_stock();
+            $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+            $_product_backorders_allowed = $_product->backorders_allowed();
+            $_product_backorders_require_notification = $_product->backorders_require_notification();
+            $_product_formatted_name = $_product->get_formatted_name();
+            $_product_image = $_product->get_image( 'shop_thumbnail');
+
+            // set error message if product not found...
+
+            // Check for 'offer_order_id'
+            if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
+            {
+                $order_id = $postmeta['offer_order_id'][0];
+
+                // Set order meta data array
+                $offer_order_meta = array();
+                $offer_order_meta['Order ID'] = '<a href="post.php?post='. $order_id . '&action=edit">' . '#' . $order_id . '</a>';
+
+                // Get Order
+                $order = new WC_Order( $order_id );
+                if($order->post)
+                {
+                    $offer_order_meta['Order Date'] = $order->post->post_date;
+                    $offer_order_meta['Order Status'] = ucwords($order->get_status() );
+                }
+                else
+                {
+                    $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'angelleye_offers_for_woocommerce') . '</small>';
+                }
+            }
+
+
+            // set author_data
+            $author_data = get_userdata($post->post_author);
+
+            // set author offer counts
+            $author_counts = array();
+            if($author_data)
+            {
+                // count offers by author id
+                global $wpdb;
+
+                $post_type = 'woocommerce_offer';
+
+                $args = array($post_type,'trash', $post->post_author);
+                $count_all = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status != '%s' AND post_author = '%s'", $args ) );
+
+                $args = array($post_type,'publish', $post->post_author);
+                $count_pending = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                $args = array($post_type,'accepted-offer', $post->post_author);
+                $count_accepted = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                $args = array($post_type,'countered-offer', $post->post_author);
+                $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                $args = array($post_type,'declined-offer', $post->post_author);
+                $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                $args = array($post_type,'completed-offer', $post->post_author);
+                $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
+                $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
+                $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
+                $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
+                $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
+                $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
+
+                $author_data->offer_counts = $author_counts;
+            }
+
+            /*
+             * Output html for Offer Comments loop
+             */
+            include_once('views/meta-panel-summary.php');
         }
-
-        // Lookup product data
-        $product_id = $postmeta['offer_product_id'][0];
-
-        $_pf = new WC_Product_Factory();
-        $_product = $_pf->get_product($product_id);
-
-        $_product_sku = $_product->get_sku();
-        $_product_permalink = $_product->get_permalink();
-        $_product_regular_price = $_product->get_regular_price();
-        $_product_sale_price = $_product->get_sale_price();
-        $_product_stock = $_product->get_total_stock();
-        $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
-        $_product_backorders_allowed = $_product->backorders_allowed();
-        $_product_backorders_require_notification = $_product->backorders_require_notification();
-        $_product_formatted_name = $_product->get_formatted_name();
-        $_product_image = $_product->get_image( 'shop_thumbnail');
-
-        // set error message if product not found...
-
-        // set author_data
-        $author_data = get_userdata($post->post_author);
-
-        // set author offer counts
-        $author_counts = array();
-        if($author_data)
-        {
-            // count offers by author id
-            global $wpdb;
-
-            $post_type = 'woocommerce_offer';
-
-            $args = array($post_type,'trash', $post->post_author);
-            $count_all = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status != '%s' AND post_author = '%s'", $args ) );
-
-            $args = array($post_type,'publish', $post->post_author);
-            $count_pending = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
-
-            $args = array($post_type,'accepted-offer', $post->post_author);
-            $count_accepted = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
-
-            $args = array($post_type,'countered-offer', $post->post_author);
-            $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
-
-            $args = array($post_type,'declined-offer', $post->post_author);
-            $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
-
-            $args = array($post_type,'completed-offer', $post->post_author);
-            $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
-
-            $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
-            $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
-            $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
-            $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
-            $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
-            $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
-
-            $author_data->offer_counts = $author_counts;
-        }
-
-        /*
-		 * Output html for Offer Comments loop
-		 */
-        include_once('views/meta-panel-summary.php');
     }
 
     /**
@@ -2119,5 +2146,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         return;
     }
+
+//woocommerce_order_items_table
+
 
 }

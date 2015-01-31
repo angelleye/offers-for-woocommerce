@@ -148,9 +148,7 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Status</h5>
-                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
-
-                <?php } else { ?>
+                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
                         <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
                             <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyer-countered-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
@@ -175,6 +173,18 @@
                     <div class="angelleye-clearfix"></div>
                 </div>
 
+                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
+                <div class="offer-order-meta">
+                    <h5>Related Orders</h5>
+                    <?php if( isset( $offer_order_meta ) ) { ?>
+                    <dl class="">
+                        <?php foreach( $offer_order_meta as $key => $metavalue ) { ?>
+                            <?php echo '<dt class="">'. $key . ': ' . $metavalue .'</dt>'; ?>
+                        <?php }?>
+                    </dl>
+                    <?php } ?>
+                </div>
+                <?php } ?>
                 <div class="angelleye-clearfix"></div>
 
             </div>

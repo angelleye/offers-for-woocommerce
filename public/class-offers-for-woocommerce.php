@@ -1138,7 +1138,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     /**
      * Action - woocommerce_add_order_item_meta
-     * Adds order item meta 'offer id'
+     * Adds order item meta 'Offer_ID'
      * @since   0.1.0
      */
     public function ae_ofwc_woocommerce_add_order_item_meta( $item_id, $values, $cart_item_key )
@@ -1150,14 +1150,14 @@ class Angelleye_Offers_For_Woocommerce {
         {
             // Add order item meta
             if ( function_exists('woocommerce_add_order_item_meta') ) {
-                woocommerce_add_order_item_meta($item_id, 'Offer ID', $item_offer_id );
+                woocommerce_add_order_item_meta($item_id, 'Offer_ID', $item_offer_id );
             }
         }
     }
 
     /**
      * Action - woocommerce_checkout_order_processed
-     * Adds offer postmeta  'Order ID'
+     * Adds offer postmeta  'Order_ID'
      * @since   0.1.0
      */
     public function ae_ofwc_woocommerce_checkout_order_processed( $order_id, $posted )
@@ -1172,7 +1172,7 @@ class Angelleye_Offers_For_Woocommerce {
         // Check for offer id
         foreach( $order_items as $key => $value )
         {
-            $item_offer_id = $order->get_item_meta( $key, 'Offer ID', true );
+            $item_offer_id = $order->get_item_meta( $key, 'Offer_ID', true );
 
             /**
              * Update offer
@@ -1181,14 +1181,40 @@ class Angelleye_Offers_For_Woocommerce {
              */
             if( $item_offer_id )
             {
-                // Update offer post
-                $offer = array();
-                $offer['ID'] = $item_offer_id;
-                $offer['post_status'] = 'completed-offer';
-                wp_update_post( $offer );
+                // Update offer post args
+                $offer_data = array();
+                $offer_data['ID'] = $item_offer_id;
+                $offer_data['post_status'] = 'completed-offer';
 
-                // Add 'offer_order_id' postmeta to offer post
-                add_post_meta( $item_offer_id, 'offer_order_id', $order_id, true );
+                // Update offer
+                $offer_id = wp_update_post( $offer_data );
+
+                // Check for offer post id
+                if( $offer_id != 0 )
+                {
+                    // Add 'offer_order_id' postmeta to offer post
+                    add_post_meta( $item_offer_id, 'offer_order_id', $order_id, true );
+
+                    // Insert WP comment on related 'offer'
+                    $comment_text = "<span>Updated - Status:</span> Completed";
+                    $comment_text.= '<p>' . __('Related Order', 'angelleye_offers_for_woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
+
+                    $comment_data = array(
+                        'comment_post_ID' => $item_offer_id,
+                        'comment_author' => 'admin',
+                        'comment_author_email' => '',
+                        'comment_author_url' => '',
+                        'comment_content' => $comment_text,
+                        'comment_type' => '',
+                        'comment_parent' => 0,
+                        'user_id' => 1,
+                        'comment_author_IP' => '127.0.0.1',
+                        'comment_agent' => '',
+                        'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
+                        'comment_approved' => 1,
+                    );
+                    wp_insert_comment( $comment_data );
+                }
             }
         }
     }
@@ -1227,7 +1253,7 @@ class Angelleye_Offers_For_Woocommerce {
         if( $cart_item['woocommerce_offer_id'] )
         {
             echo $quantity . '<dl class="">
-				 <dt class="">Offer ID : '. $cart_item['woocommerce_offer_id'] .'</dt>
+				 <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
 			  </dl>';
         } else {
             echo $quantity;
