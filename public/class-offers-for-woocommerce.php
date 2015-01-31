@@ -329,11 +329,11 @@ class Angelleye_Offers_For_Woocommerce {
             if( (isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || (!$parent_post_offer_uid) || ($parent_offer_uid == '') || ($parent_post_offer_uid != $parent_offer_uid) )
             {
                 // If buyer already submitted 'buyer counter'
-                if( $parent_post_status == 'buyer-countered-offer' )
+                if( $parent_post_status == 'buyercountered-offer' )
                 {
                     $parent_offer_id = '';
                     $parent_offer_error = true;
-                    $parent_offer_error_message = __('You can not submit another counter offer at this time; Counter offer is currently being reviewed.', 'angelleye_offers_for_woocommerce');
+                    $parent_offer_error_message = __('You can not submit another counter offer at this time; Counter offer is currently being reviewed. You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce');
                 }
                 else
                 {
@@ -358,9 +358,9 @@ class Angelleye_Offers_For_Woocommerce {
         $currency_symbol = get_woocommerce_currency_symbol();
 
 		// Set html content for output
-		include_once( 'views/public.php' );	
+		include_once( 'views/public.php' );
 	}
-	
+
 	/**
 	 * Return the plugin slug.
 	 *
@@ -368,7 +368,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @return    Plugin slug variable
 	 */
-	public function get_plugin_slug() 
+	public function get_plugin_slug()
 	{
 		return $this->plugin_slug;
 	}
@@ -380,7 +380,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @return    object    A single instance of this class
 	 */
-	public static function get_instance() 
+	public static function get_instance()
 	{
 		// If the single instance hasn't been set, set it now
 		if ( null == self::$instance ) {
@@ -399,23 +399,23 @@ class Angelleye_Offers_For_Woocommerce {
 	 *                                       WPMU is disabled or plugin is
 	 *                                       activated on an individual blog
 	 */
-	public static function activate( $network_wide ) 
+	public static function activate( $network_wide )
 	{
-		if ( function_exists( 'is_multisite' ) && is_multisite()) 
+		if ( function_exists( 'is_multisite' ) && is_multisite())
 		{
-			if ( $network_wide ) 
+			if ( $network_wide )
 			{
 				// Get all blog ids
 				$blog_ids = self::get_blog_ids();
-				
+
 				foreach ($blog_ids as $blog_id)
 				{
 					switch_to_blog($blog_id);
 					self::single_activate();
 				}
-				
+
 				restore_current_blog();
-			} 
+			}
 			else
 			{
 				self::single_activate();
@@ -446,13 +446,13 @@ class Angelleye_Offers_For_Woocommerce {
 			{
 				// Get all blog ids
 				$blog_ids = self::get_blog_ids();
-				
-				foreach ($blog_ids as $blog_id) 
+
+				foreach ($blog_ids as $blog_id)
 				{
 					switch_to_blog($blog_id);
 					self::single_deactivate();
 				}
-				
+
 				restore_current_blog();
 			}
 			else
@@ -466,7 +466,7 @@ class Angelleye_Offers_For_Woocommerce {
 		}
 		flush_rewrite_rules();
 	}
-	
+
 	/**
 	 * Fired when a new site is activated with a WPMU environment
 	 *
@@ -480,12 +480,12 @@ class Angelleye_Offers_For_Woocommerce {
 		{
 			return;
 		}
-		
+
 		switch_to_blog( $blog_id );
 		self::single_activate();
 		restore_current_blog();
 	}
-	
+
 	/**
 	 * Get all blog ids of blogs in the current network that are:
 	 * - not archived
@@ -499,7 +499,7 @@ class Angelleye_Offers_For_Woocommerce {
 	private static function get_blog_ids()
 	{
 		global $wpdb;
-		
+
 		// get an array of blog ids
 		$sql = "SELECT blog_id FROM $wpdb->blogs
 			WHERE archived = '0' AND spam = '0'
@@ -550,7 +550,7 @@ class Angelleye_Offers_For_Woocommerce {
 	{
 		wp_enqueue_style( $this->plugin_slug . '-plugin-styles', plugins_url( 'assets/css/public.css', __FILE__ ), array(), self::VERSION );
 	}
-	
+
 	/**
 	 * Register and enqueues public-facing JavaScript files
 	 *
@@ -559,9 +559,9 @@ class Angelleye_Offers_For_Woocommerce {
 	public function enqueue_scripts()
 	{
 		wp_enqueue_script( $this->plugin_slug . '-plugin-script', plugins_url( 'assets/js/public.js', __FILE__ ), array( 'jquery' ), self::VERSION );
-		wp_enqueue_script( $this->plugin_slug . '-plugin-script-jquery-auto-numeric-1-9-24', plugins_url( 'assets/js/autoNumeric-1-9-24.js', __FILE__ ), self::VERSION);		
+		wp_enqueue_script( $this->plugin_slug . '-plugin-script-jquery-auto-numeric-1-9-24', plugins_url( 'assets/js/autoNumeric-1-9-24.js', __FILE__ ), self::VERSION);
 	}
-	
+
 	public function new_offer_form_submit()
 	{
 		if(!is_admin())
@@ -620,7 +620,7 @@ class Angelleye_Offers_For_Woocommerce {
                 {
                     $newPostData['post_author'] = $author_data->ID;
                 }
-				
+
 				// set post vars
                 $newPostData['post_date'] = date("Y-m-d H:i:s", current_time('timestamp', 0 ) );
 				$newPostData['post_date_gmt'] = gmdate("Y-m-d H:i:s", time());
@@ -655,7 +655,7 @@ class Angelleye_Offers_For_Woocommerce {
                         'ID'           => $parent_post_id,
                         'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                         'post_modified_gmt' => gmdate("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                        'post_status' => 'countered-offer'
+                        'post_status' => 'buyercountered-offer'
                     );
 
                     if($author_data)
@@ -916,7 +916,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $offer_meta = get_post_meta( $offer->ID, '', true );
 
                 // Error - Offer Not Accepted/Countered
-                if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyer-countered-offer')
+                if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer')
                 {
                     $request_error = true;
                     $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
