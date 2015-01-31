@@ -1150,19 +1150,24 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ae_ofwc_woocommerce_checkout_order_processed( $order_id, $posted )
     {
-        echo '<pre>';
-        print_r($posted);
-        exit;
+        global $woocommerce;
+
+        // Get Order
+        $order = new WC_Order( $order_id );
+        // Get order items
+        $order_items = $order->get_items();
 
         // Check for offer id
-        $item_offer_id = $values['Offer ID'];
-
-        if( $item_offer_id )
+        foreach( $order_items as $key => $value )
         {
-            // Add postmeta 'offer_order_id' to offer
-            add_post_meta($item_offer_id, 'offer_order_id', $order_id );
+            $item_offer_id = $order->get_item_meta( $key, 'Offer ID', true );
+
+            // Update offer - add postmeta value for this order id
+            if( $item_offer_id )
+            {
+                add_post_meta( $item_offer_id, 'offer_order_id', $order_id, true );
+            }
         }
     }
-
 
 }
