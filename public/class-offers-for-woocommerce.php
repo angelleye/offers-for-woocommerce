@@ -138,6 +138,12 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_filter( 'woocommerce_cart_item_name', array( $this, 'ae_ofwc_render_meta_on_cart_item'), 1, 3 );
+
+        /**
+         * Filter - Adds Offer ID on checkout order review section
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_checkout_cart_item_quantity', array( $this, 'ae_ofwc_render_meta_on_checkout_order_review_item'), 1, 3 );
     }
 
 	/**
@@ -1188,8 +1194,7 @@ class Angelleye_Offers_For_Woocommerce {
             if( $cart_item['woocommerce_offer_id'] )
             {
                 echo $title. '<dl class="">
-                    <dt class="">Offer ID : </dt>
-                    <dd class=""><p>'. $cart_item['woocommerce_offer_id'] .'</p></dd>
+                    <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
                     </dl>';
             } else {
                 echo $title;
@@ -1197,6 +1202,24 @@ class Angelleye_Offers_For_Woocommerce {
         }
         else {
             echo $title;
+        }
+    }
+
+    /**
+     * Filter - Adds Offer ID on checkout order review section
+     * @param null $quantity
+     * @param null $cart_item
+     * @param null $cart_item_key
+     */
+    public function ae_ofwc_render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null )
+    {
+        if( $cart_item['woocommerce_offer_id'] )
+        {
+            echo $quantity . '<dl class="">
+				 <dt class="">Offer ID : '. $cart_item['woocommerce_offer_id'] .'</dt>
+			  </dl>';
+        } else {
+            echo $quantity;
         }
     }
 
