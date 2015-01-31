@@ -916,7 +916,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $offer_meta = get_post_meta( $offer->ID, '', true );
 
                 // Error - Offer Not Accepted/Countered
-                if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer')
+                if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyer-countered-offer')
                 {
                     $request_error = true;
                     $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
