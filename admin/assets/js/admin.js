@@ -10,7 +10,7 @@
                     vMin: '0',
                     mDec: '0',
                     lZero: 'deny',
-                    aForm: false}
+                    aForm: true}
             );
 
             $('#offer-price-per').autoNumeric('init',
@@ -19,7 +19,7 @@
                     aSign: '',
                     //wEmpty: 'sign',
                     lZero: 'allow',
-                    aForm: false
+                    aForm: true
                 }
             );
 
@@ -38,7 +38,7 @@
                             aSign: '',
                             //wEmpty: 'sign',
                             lZero: 'allow',
-                            aForm: false
+                            aForm: true
                         }
                     );
                     offerCheckMinValuesPassed = false;
@@ -51,7 +51,7 @@
                             vMin: '0',
                             mDec: '0',
                             lZero: 'deny',
-                            aForm: false
+                            aForm: true
                         }
                     );
                     offerCheckMinValuesPassed = false;
