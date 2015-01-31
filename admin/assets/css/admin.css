@@ -140,6 +140,12 @@ body.wp-admin.post-type-woocommerce_offer .row-actions span:hover a { background
     width:99%!important;
 }
 
+#angelleye-woocommerce-offer-meta-summary .woocommerce-offer-edit-submit-btn-wrap input.button-completed-offer {
+    background:#52A200!important;
+    color:#FFF!important;
+    text-shadow: none!important;
+}
+
 body.wp-admin.post-type-woocommerce_offer .column-title {
     word-wrap:normal!important;
 }

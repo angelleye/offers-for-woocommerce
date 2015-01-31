@@ -148,25 +148,43 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Status</h5>
-                <div class="offer-post-status-input-wrap">
-                    <select name="post_status" autocomplete="off" required="required">
-                        <?php if ( (isset($current_status_value) && $current_status_value == 'publish') || ( !isset($current_status_value) ) ) { ?>
-                        <option value="">- Select status</option>
-                        <? } ?>
-                        <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>
-                        <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
-                        <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
-                        <option value="completed-offer" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo 'selected="selected"'; ?>>Completed Offer</option>
-                    </select>
-                </div>
+                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
+                    <div class="offer-post-status-input-wrap">
+                        <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
+                            <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyer-countered-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
+                            <option value="">- Select status</option>
+                            <? } ?>
+                            <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>
+                            <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
+                            <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
+                            <option value="completed-offer" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo 'selected="selected"'; ?>>Completed Offer</option>
+                        </select>
+                    </div>
+                <?php } ?>
                 <input type="hidden" name="woocommerce_offer_summary_metabox_noncename" id="woocommerce_offer_summary_metabox_noncename" value="<?php echo wp_create_nonce( 'woocommerce_offer'.$post->ID ); ?>" />
                 <input type="hidden" name="post_previous_status" id="post_previous_status" value="<?php echo (isset($current_status_value)) ? $current_status_value : ''; ?>">
 
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
+                    <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
+                    <input name="submit" id="submit" class="button button-completed-offer" value="<?php echo __('Completed Offer', 'angelleye-offers-for-woocommerce'); ?>" type="submit" disabled="disabled">
+                    <?php } else { ?>
                     <input name="submit" id="submit" class="button button-primary" value="Update" type="submit">
+                    <?php } ?>
                     <div class="angelleye-clearfix"></div>
                 </div>
 
+                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
+                <div class="offer-order-meta">
+                    <h5>Related Orders</h5>
+                    <?php if( isset( $offer_order_meta ) ) { ?>
+                    <dl class="">
+                        <?php foreach( $offer_order_meta as $key => $metavalue ) { ?>
+                            <?php echo '<dt class="">'. $key . ': ' . $metavalue .'</dt>'; ?>
+                        <?php }?>
+                    </dl>
+                    <?php } ?>
+                </div>
+                <?php } ?>
                 <div class="angelleye-clearfix"></div>
 
             </div>
