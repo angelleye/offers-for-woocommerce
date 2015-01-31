@@ -132,6 +132,12 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ), 1, 2 );
+
+        /**
+         * Filter - woocommerce_cart_item_name
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_cart_item_name', array( $this, 'ae_ofwc_render_meta_on_cart_item'), 1, 3 );
     }
 
 	/**
@@ -1167,6 +1173,30 @@ class Angelleye_Offers_For_Woocommerce {
             {
                 add_post_meta( $item_offer_id, 'offer_order_id', $order_id, true );
             }
+        }
+    }
+
+    /**
+     * Filter - Adds Offer ID on cart item display
+     * @param null $title
+     * @param null $cart_item
+     * @param null $cart_item_key
+     */
+    public function ae_ofwc_render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null )
+    {
+        if( $cart_item_key && is_cart() ) {
+            if( $cart_item['woocommerce_offer_id'] )
+            {
+                echo $title. '<dl class="">
+                    <dt class="">Offer ID : </dt>
+                    <dd class=""><p>'. $cart_item['woocommerce_offer_id'] .'</p></dd>
+                    </dl>';
+            } else {
+                echo $title;
+            }
+        }
+        else {
+            echo $title;
         }
     }
 
