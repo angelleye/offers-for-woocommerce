@@ -1174,9 +1174,20 @@ class Angelleye_Offers_For_Woocommerce {
         {
             $item_offer_id = $order->get_item_meta( $key, 'Offer ID', true );
 
-            // Update offer - add postmeta value for this order id
+            /**
+             * Update offer
+             * Add postmeta value for this order id
+             * Set offer post status to 'completed-offer'
+             */
             if( $item_offer_id )
             {
+                // Update offer post
+                $offer = array();
+                $offer['ID'] = $item_offer_id;
+                $offer['post_status'] = 'completed-offer';
+                wp_update_post( $offer );
+
+                // Add 'offer_order_id' postmeta to offer post
                 add_post_meta( $item_offer_id, 'offer_order_id', $order_id, true );
             }
         }
