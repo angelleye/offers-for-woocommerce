@@ -328,9 +328,19 @@ class Angelleye_Offers_For_Woocommerce {
             // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
             if( (isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || (!$parent_post_offer_uid) || ($parent_offer_uid == '') || ($parent_post_offer_uid != $parent_offer_uid) )
             {
-                $parent_offer_id = '';
-                $parent_offer_error = true;
-                $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'angelleye_offers_for_woocommerce');
+                // If buyer already submitted 'buyer counter'
+                if( $parent_post_status == 'buyer-countered-offer' )
+                {
+                    $parent_offer_id = '';
+                    $parent_offer_error = true;
+                    $parent_offer_error_message = __('You can not submit another counter offer at this time; Counter offer is currently being reviewed.', 'angelleye_offers_for_woocommerce');
+                }
+                else
+                {
+                    $parent_offer_id = '';
+                    $parent_offer_error = true;
+                    $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'angelleye_offers_for_woocommerce');
+                }
             }
             else
             {
