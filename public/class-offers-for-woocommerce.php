@@ -121,6 +121,29 @@ class Angelleye_Offers_For_Woocommerce {
          */
         add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_email_classes' ) );
 
+        /**
+         * Action - woocommerce_add_order_item_meta
+         * @since   0.1.0
+         */
+        add_action( 'woocommerce_add_order_item_meta', array( $this, 'ae_ofwc_woocommerce_add_order_item_meta' ), 1, 3 );
+
+        /**
+         * Action - woocommerce_checkout_order_processed
+         * @since   0.1.0
+         */
+        add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ), 1, 2 );
+
+        /**
+         * Filter - woocommerce_cart_item_name
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_cart_item_name', array( $this, 'ae_ofwc_render_meta_on_cart_item'), 1, 3 );
+
+        /**
+         * Filter - Adds Offer ID on checkout order review section
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_checkout_cart_item_quantity', array( $this, 'ae_ofwc_render_meta_on_checkout_order_review_item'), 1, 3 );
     }
 
 	/**
@@ -1112,4 +1135,103 @@ class Angelleye_Offers_For_Woocommerce {
 
         return $email_classes;
     }
+
+    /**
+     * Action - woocommerce_add_order_item_meta
+     * Adds order item meta 'offer id'
+     * @since   0.1.0
+     */
+    public function ae_ofwc_woocommerce_add_order_item_meta( $item_id, $values, $cart_item_key )
+    {
+        // Check for offer id
+        $item_offer_id = $values['woocommerce_offer_id'];
+
+        if( $item_offer_id )
+        {
+            // Add order item meta
+            if ( function_exists('woocommerce_add_order_item_meta') ) {
+                woocommerce_add_order_item_meta($item_id, 'Offer ID', $item_offer_id );
+            }
+        }
+    }
+
+    /**
+     * Action - woocommerce_checkout_order_processed
+     * Adds offer postmeta  'Order ID'
+     * @since   0.1.0
+     */
+    public function ae_ofwc_woocommerce_checkout_order_processed( $order_id, $posted )
+    {
+        global $woocommerce;
+
+        // Get Order
+        $order = new WC_Order( $order_id );
+        // Get order items
+        $order_items = $order->get_items();
+
+        // Check for offer id
+        foreach( $order_items as $key => $value )
+        {
+            $item_offer_id = $order->get_item_meta( $key, 'Offer ID', true );
+
+            /**
+             * Update offer
+             * Add postmeta value for this order id
+             * Set offer post status to 'completed-offer'
+             */
+            if( $item_offer_id )
+            {
+                // Update offer post
+                $offer = array();
+                $offer['ID'] = $item_offer_id;
+                $offer['post_status'] = 'completed-offer';
+                wp_update_post( $offer );
+
+                // Add 'offer_order_id' postmeta to offer post
+                add_post_meta( $item_offer_id, 'offer_order_id', $order_id, true );
+            }
+        }
+    }
+
+    /**
+     * Filter - Adds Offer ID on cart item display
+     * @param null $title
+     * @param null $cart_item
+     * @param null $cart_item_key
+     */
+    public function ae_ofwc_render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null )
+    {
+        if( $cart_item_key && is_cart() ) {
+            if( $cart_item['woocommerce_offer_id'] )
+            {
+                echo $title. '<dl class="">
+                    <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
+                    </dl>';
+            } else {
+                echo $title;
+            }
+        }
+        else {
+            echo $title;
+        }
+    }
+
+    /**
+     * Filter - Adds Offer ID on checkout order review section
+     * @param null $quantity
+     * @param null $cart_item
+     * @param null $cart_item_key
+     */
+    public function ae_ofwc_render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null )
+    {
+        if( $cart_item['woocommerce_offer_id'] )
+        {
+            echo $quantity . '<dl class="">
+				 <dt class="">Offer ID : '. $cart_item['woocommerce_offer_id'] .'</dt>
+			  </dl>';
+        } else {
+            echo $quantity;
+        }
+    }
+
 }
