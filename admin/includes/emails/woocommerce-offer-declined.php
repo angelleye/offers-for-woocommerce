@@ -27,14 +27,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     <tbody>
     <tr>
         <td><?php echo $offer_args['product']->post_title;?></td>
-        <td><?php echo $offer_args['product_qty']; ?></td>
-        <td><?php echo get_woocommerce_currency_symbol() . ' ' . $offer_args['product_price_per']; ?></td>
+        <td><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
+        <td><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2 ); ?></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
         <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee;"><?php echo 'Subtotal'; ?></th>
-        <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . $offer_args['product_total']; ?></td>
+        <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2 ); ?></td>
     </tr>
     </tfoot>
 </table>
