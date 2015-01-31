@@ -1066,22 +1066,44 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Lookup product data
             $product_id = $postmeta['offer_product_id'][0];
+            $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
 
             $_pf = new WC_Product_Factory();
             $_product = $_pf->get_product($product_id);
 
-            $_product_sku = $_product->get_sku();
-            $_product_permalink = $_product->get_permalink();
-            $_product_regular_price = $_product->get_regular_price();
-            $_product_sale_price = $_product->get_sale_price();
-            $_product_stock = $_product->get_total_stock();
-            $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
-            $_product_backorders_allowed = $_product->backorders_allowed();
-            $_product_backorders_require_notification = $_product->backorders_require_notification();
-            $_product_formatted_name = $_product->get_formatted_name();
-            $_product_image = $_product->get_image( 'shop_thumbnail');
+            if( $product_variant_id )
+            {
+                $_pf_variant = new WC_Product_Factory();
+                $_product_variant = $_pf_variant->get_product($product_variant_id);
+                $_product_variant_managing_stock = ( $_product_variant->managing_stock() == 'parent' ) ? true : false;
 
-            // set error message if product not found...
+                $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
+                $_product_permalink = $_product_variant->get_permalink();
+                $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
+                $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
+
+                $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
+                $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
+                $_product_backorders_require_notification = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_require_notification() : $_product->backorders_require_notification();
+                $_product_formatted_name = $_product_variant->get_formatted_name();
+                $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
+            }
+            else
+            {
+                $_product_sku = $_product->get_sku();
+                $_product_permalink = $_product->get_permalink();
+                $_product_regular_price = $_product->get_regular_price();
+                $_product_sale_price = $_product->get_sale_price();
+                $_product_stock = $_product->get_total_stock();
+                $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                $_product_backorders_allowed = $_product->backorders_allowed();
+                $_product_backorders_require_notification = $_product->backorders_require_notification();
+                $_product_formatted_name = $_product->get_formatted_name();
+                $_product_image = $_product->get_image( 'shop_thumbnail');
+
+                // set error message if product not found...
+            }
 
             // Check for 'offer_order_id'
             if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
