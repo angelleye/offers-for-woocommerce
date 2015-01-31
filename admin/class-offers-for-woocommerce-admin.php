@@ -1232,8 +1232,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if($post_data->post_status == 'countered-offer')
         {
             // set updated offer values
-            $offer_quantity = (isset($_POST['offer_quantity']) && $_POST['offer_quantity'] != '') ? $_POST['offer_quantity'] : '';
-            $offer_price_per = (isset($_POST['offer_price_per']) && $_POST['offer_price_per'] != '') ? number_format($_POST['offer_price_per'], 2) : '';
+            $offer_quantity = (isset($_POST['offer_quantity']) && $_POST['offer_quantity'] != '') ? str_replace(",","", $_POST['offer_quantity']) : '';
+            $offer_price_per = (isset($_POST['offer_price_per']) && $_POST['offer_price_per'] != '') ? str_replace(",","", $_POST['offer_price_per']) : '';
             $offer_total = number_format(round($offer_quantity * $offer_price_per), 2, ".", "");
 
             /**
