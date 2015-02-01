@@ -30,11 +30,29 @@
                         <?php if($_product_sale_price) { ?>
                             <li><span>Sale Price: </span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format($_product_sale_price, 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                         <?php } ?>
-                        <?php if($_product_stock) { ?>
-                            <li><span>Stock: </span><?php echo (isset($_product_stock)) ? $_product_stock : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <?php if(isset($_product_stock) && $_product_stock == 0) { ?>
+                            <li>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '') ? $_product_stock : '0'; ?>
+                                <?php if($_product_backorders_allowed) { ?>
+                                    <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
+                                <? } ?>
+                            </li>
+                        <?php } else { ?>
+                            <li>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '') ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
+                                <?php if($_product_backorders_allowed) { ?>
+                                    <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
+                                <? } ?>
+                            </li>
                         <? } ?>
-                        <?php if(!$_product_in_stock) { ?>
-                            <li><span class="out-of-stock-offer"><?php echo __('Out of Stock', 'angelleye_offers_for_woocommerce' ); ?></span></li>
+                        <?php if( !$_product_in_stock && (!$_product_stock || $_product_stock == '') ) { ?>
+                            <li>
+                                <span class="out-of-stock-offer"><?php echo __('Out of Stock', 'angelleye_offers_for_woocommerce' ); ?></span>
+                            </li>
+                        <? } elseif( !$_product_in_stock && $_product_stock ) { ?>
+                            <li>
+                                <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'angelleye_offers_for_woocommerce' ); ?></span>
+                            </li>
                         <? } ?>
                     </ul>
                 <? } ?>
@@ -103,11 +121,31 @@
                 <h5>Counter Values</h5>
                 <div class="offer-counter-offer-values-wrap">
                     <label for="offer-quantity">Quantity</label>
-                    <input type="text" class="offer-counter-value-input" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" />
+                    <div>
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_buyer_counter_quantity'][0])) ? $postmeta['offer_buyer_counter_quantity'][0] : ''; ?>" />
+                        <?php } else { ?>
+                            <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : ''; ?>" />
+                        <?php } ?>
+                    </div>
                     <label for="offer-price-per">Price Per</label>
-                    <input type="text" class="offer-counter-value-input" required="required" name="offer_price_per" id="offer-price-per" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" />
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_buyer_counter_price_per'][0])) ? $postmeta['offer_buyer_counter_price_per'][0] : ''; ?>" />
+                        <?php } else { ?>
+                            <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" />
+                        <?php } ?>
+                    </div>
                     <label for="offer-total">Total</label>
-                    <input type="text" class="offer-counter-value-input" required="required" name="offer_amount" id="offer-total" value="<?php echo (isset($postmeta['offer_amount'][0])) ? $postmeta['offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" name="offer_amount" id="offer-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" value="<?php echo (isset($postmeta['offer_buyer_counter_amount'][0])) ? $postmeta['offer_buyer_counter_amount'][0] : ''; ?>" disabled="disabled" />
+                        <?php } else { ?>
+                            <input type="text" name="offer_amount" id="offer-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" value="<?php echo (isset($postmeta['offer_amount'][0])) ? $postmeta['offer_amount'][0] : ''; ?>" disabled="disabled" />
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,25 +160,43 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Status</h5>
-                <div class="offer-post-status-input-wrap">
-                    <select name="post_status" autocomplete="off" required="required">
-                        <?php if ( (isset($current_status_value) && $current_status_value == 'publish') || ( !isset($current_status_value) ) ) { ?>
-                        <option value="">- Select status</option>
-                        <? } ?>
-                        <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>
-                        <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
-                        <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
-                        <option value="completed-offer" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo 'selected="selected"'; ?>>Completed Offer</option>
-                    </select>
-                </div>
+                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
+                    <div class="offer-post-status-input-wrap">
+                        <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
+                            <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
+                            <option value="">- Select status</option>
+                            <? } ?>
+                            <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>
+                            <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
+                            <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
+                            <option value="completed-offer" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo 'selected="selected"'; ?>>Completed Offer</option>
+                        </select>
+                    </div>
+                <?php } ?>
                 <input type="hidden" name="woocommerce_offer_summary_metabox_noncename" id="woocommerce_offer_summary_metabox_noncename" value="<?php echo wp_create_nonce( 'woocommerce_offer'.$post->ID ); ?>" />
                 <input type="hidden" name="post_previous_status" id="post_previous_status" value="<?php echo (isset($current_status_value)) ? $current_status_value : ''; ?>">
 
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
+                    <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
+                    <input name="submit" id="submit" class="button button-completed-offer" value="<?php echo __('Completed Offer', 'angelleye-offers-for-woocommerce'); ?>" type="submit" disabled="disabled">
+                    <?php } else { ?>
                     <input name="submit" id="submit" class="button button-primary" value="Update" type="submit">
+                    <?php } ?>
                     <div class="angelleye-clearfix"></div>
                 </div>
 
+                <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
+                <div class="offer-order-meta">
+                    <h5>Related Orders</h5>
+                    <?php if( isset( $offer_order_meta ) ) { ?>
+                    <dl class="">
+                        <?php foreach( $offer_order_meta as $key => $metavalue ) { ?>
+                            <?php echo '<dt class="">'. $key . ': ' . $metavalue .'</dt>'; ?>
+                        <?php }?>
+                    </dl>
+                    <?php } ?>
+                </div>
+                <?php } ?>
                 <div class="angelleye-clearfix"></div>
 
             </div>

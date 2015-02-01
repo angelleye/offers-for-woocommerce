@@ -6,10 +6,11 @@
 		// Place your administration-specific JavaScript here
         $(document).ready(function(){
             $('#offer-quantity').autoNumeric('init',
-                {vMin: '0',
+                {
+                    vMin: '0',
                     mDec: '0',
                     lZero: 'deny',
-                    aForm: false}
+                    aForm: true}
             );
 
             $('#offer-price-per').autoNumeric('init',
@@ -17,32 +18,77 @@
                     mDec: '2',
                     aSign: '',
                     //wEmpty: 'sign',
-                    lZero: 'keep',
-                    aForm: false
+                    lZero: 'allow',
+                    aForm: true
                 }
             );
 
             updateTotal();
+
+            // Submit post
+            $('body.wp-admin.post-php.post-type-woocommerce_offer #post').submit(function()
+            {
+                var offerCheckMinValuesPassed = true;
+
+                if ($('#offer-price-per').autoNumeric('get') == '0') {
+                    $('#offer-price-per').autoNumeric('set', '');
+                    $('#offer-price-per').autoNumeric('update',
+                        {
+                            mDec: '2',
+                            aSign: '',
+                            //wEmpty: 'sign',
+                            lZero: 'allow',
+                            aForm: true
+                        }
+                    );
+                    offerCheckMinValuesPassed = false;
+                }
+
+                if ($('#offer-quantity').autoNumeric('get') == '0') {
+                    $('#offer-quantity').autoNumeric('set', '');
+                    $('#offer-quantity').autoNumeric('update',
+                        {
+                            vMin: '0',
+                            mDec: '0',
+                            lZero: 'deny',
+                            aForm: true
+                        }
+                    );
+                    offerCheckMinValuesPassed = false;
+                }
+
+                if( offerCheckMinValuesPassed === false )
+                {
+                    return false;
+                }
+            });
 
             // AJAX - Add Offer Note
             $('#angelleye-woocommerce-offers-ajax-addnote-btn').click(function()
             {
                 var targetID = $(this).attr('data-target');
                 var noteContent = $('#angelleye-woocommerce-offers-ajax-addnote-text').val();
-                if( $('#angelleye-woocommerce-offers-ajax-addnote-admin-only').is(':checked') )
+
+                if(noteContent.length < 3)
                 {
-                    var noteAdminOnly = $('#angelleye-woocommerce-offers-ajax-addnote-admin-only').val();
+                    alert('Your note is not long enough!');
+                    return false;
+                }
+
+                if( $('#angelleye-woocommerce-offers-ajax-addnote-send-to-buyer').is(':checked') )
+                {
+                    var noteSendToBuyer = $('#angelleye-woocommerce-offers-ajax-addnote-send-to-buyer').val();
                 }
                 else
                 {
-                    var noteAdminOnly = '';
+                    var noteSendToBuyer = '';
                 }
 
                 var data = {
                     'action': 'addOfferNote',
                     'targetID': targetID,
                     'noteContent': noteContent,
-                    'noteAdminOnly': noteAdminOnly
+                    'noteSendToBuyer': noteSendToBuyer
                 };
 
                 // post it
