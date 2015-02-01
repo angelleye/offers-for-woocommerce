@@ -1238,7 +1238,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function ae_ofwc_woocommerce_cart_item_name( $title = null, $cart_item = null, $cart_item_key = null )
     {
         if( $cart_item_key && is_cart() ) {
-            if( $cart_item['woocommerce_offer_id'] )
+            if( isset( $cart_item['woocommerce_offer_id'] ) )
             {
                 echo $title. '<dl class="">
                     <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
@@ -1260,7 +1260,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ae_ofwc_woocommerce_checkout_cart_item_quantity( $quantity = null, $cart_item = null, $cart_item_key = null )
     {
-        if( $cart_item['woocommerce_offer_id'] )
+        if( isset( $cart_item['woocommerce_offer_id'] ) )
         {
             echo $quantity . '<dl class="">
 				 <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
