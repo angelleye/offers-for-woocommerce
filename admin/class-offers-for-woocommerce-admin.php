@@ -1066,22 +1066,44 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Lookup product data
             $product_id = $postmeta['offer_product_id'][0];
+            $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
 
             $_pf = new WC_Product_Factory();
             $_product = $_pf->get_product($product_id);
 
-            $_product_sku = $_product->get_sku();
-            $_product_permalink = $_product->get_permalink();
-            $_product_regular_price = $_product->get_regular_price();
-            $_product_sale_price = $_product->get_sale_price();
-            $_product_stock = $_product->get_total_stock();
-            $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
-            $_product_backorders_allowed = $_product->backorders_allowed();
-            $_product_backorders_require_notification = $_product->backorders_require_notification();
-            $_product_formatted_name = $_product->get_formatted_name();
-            $_product_image = $_product->get_image( 'shop_thumbnail');
+            if( $product_variant_id )
+            {
+                $_pf_variant = new WC_Product_Factory();
+                $_product_variant = $_pf_variant->get_product($product_variant_id);
+                $_product_variant_managing_stock = ( $_product_variant->managing_stock() == 'parent' ) ? true : false;
 
-            // set error message if product not found...
+                $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
+                $_product_permalink = $_product_variant->get_permalink();
+                $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
+                $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
+
+                $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
+                $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
+                $_product_backorders_require_notification = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_require_notification() : $_product->backorders_require_notification();
+                $_product_formatted_name = $_product_variant->get_formatted_name();
+                $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
+            }
+            else
+            {
+                $_product_sku = $_product->get_sku();
+                $_product_permalink = $_product->get_permalink();
+                $_product_regular_price = $_product->get_regular_price();
+                $_product_sale_price = $_product->get_sale_price();
+                $_product_stock = $_product->get_total_stock();
+                $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                $_product_backorders_allowed = $_product->backorders_allowed();
+                $_product_backorders_require_notification = $_product->backorders_require_notification();
+                $_product_formatted_name = $_product->get_formatted_name();
+                $_product_image = $_product->get_image( 'shop_thumbnail');
+
+                // set error message if product not found...
+            }
 
             // Check for 'offer_order_id'
             if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
@@ -1254,24 +1276,48 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Accepted_Offer_Email';
@@ -1314,7 +1360,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
             $product_qty = get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
@@ -1327,14 +1374,31 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'offer_id' => $offer_id,
                 'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Countered_Offer_Email';
@@ -1362,24 +1426,48 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Declined_Offer_Email';
