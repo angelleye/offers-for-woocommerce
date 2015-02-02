@@ -68,7 +68,7 @@ i.woocommerce-offer-post-status-grid-icon.countered, i.woocommerce-offer-post-st
 i.woocommerce-offer-post-status-grid-icon.buyercountered, i.woocommerce-offer-post-status-grid-icon.buyercountered:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777777!important; }
 i.woocommerce-offer-post-status-grid-icon.completed, i.woocommerce-offer-post-status-grid-icon.completed:hover { background-color:transparent!important; color:#52A200!important; border:1px solid #52A200!important; }
 i.woocommerce-offer-post-status-grid-icon.declined, i.woocommerce-offer-post-status-grid-icon.declined:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777!important; }
-i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status-grid-icon.trash:hover { background-color:transparent!important; color:#FCFCFC!important; border:1px solid #FCFCFC!important; }
+i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status-grid-icon.trash:hover { background-color:transparent!important; color:#777!important; border:1px solid #777!important; }
 
 .woocommerce-offer-post-status-grid-icon-div { font-size:12px!important; line-height:22px!important; opacity:0; }
 .woocommerce-offer-post-status-grid-icon-div:before {
@@ -79,8 +79,9 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 .type-woocommerce_offer.status-accepted-offer th.check-column { border-left: 4px solid #0074A2; }
 .type-woocommerce_offer.status-countered-offer th.check-column { border-left: 4px solid #ffcc00; }
 .type-woocommerce_offer.status-buyercountered-offer th.check-column { border-left: 4px solid #999; }
-.type-woocommerce_offer.status-completed-offer th.check-column { border-left: 4px solid #52A200; }	
+.type-woocommerce_offer.status-completed-offer th.check-column { border-left: 4px solid #52A200; }
 .type-woocommerce_offer.status-declined-offer th.check-column { border-left: 4px solid #333333; }
+.type-woocommerce_offer.status-trash th.check-column { border-left: 4px solid #333333; }
 
 
 #adminmenu #menu-posts-woocommerce_offer .menu-icon-woocommerce_offer div.wp-menu-image:before { content: "\f110"; }
