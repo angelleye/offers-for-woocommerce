@@ -122,28 +122,10 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_email_classes', array( $this, 'add_woocommerce_email_classes' ) );
 
         /**
-         * Action - woocommerce_add_order_item_meta
-         * @since   0.1.0
-         */
-        add_action( 'woocommerce_add_order_item_meta', array( $this, 'ae_ofwc_woocommerce_add_order_item_meta' ), 1, 3 );
-
-        /**
          * Action - woocommerce_checkout_order_processed
          * @since   0.1.0
          */
         add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ), 1, 2 );
-
-        /**
-         * Filter - woocommerce_cart_item_name
-         * @since   0.1.0
-         */
-        add_filter( 'woocommerce_cart_item_name', array( $this, 'ae_ofwc_woocommerce_cart_item_name'), 1, 3 );
-
-        /**
-         * Filter - Adds Offer ID on checkout order review section
-         * @since   0.1.0
-         */
-        add_filter( 'woocommerce_checkout_cart_item_quantity', array( $this, 'ae_ofwc_woocommerce_checkout_cart_item_quantity'), 1, 3 );
     }
 
 	/**
@@ -811,6 +793,23 @@ class Angelleye_Offers_For_Woocommerce {
                     'offer_notes' => $comments
                 );
 
+                if( $variant_id )
+                {
+                    if ( $product->get_sku() ) {
+                        $identifier = $product->get_sku();
+                    } else {
+                        $identifier = '#' . $product->variation_id;
+                    }
+
+                    $attributes = $product->get_variation_attributes();
+                    $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                    $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+                }
+                else
+                {
+                    $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                }
+
                 if($is_counter_offer)
                 {
                     $offer_args['is_counter_offer'] = true;
@@ -988,7 +987,20 @@ class Angelleye_Offers_For_Woocommerce {
             $quantity = $offer_meta['offer_quantity'][0];
             $product_id = $offer_meta['orig_offer_product_id'][0];
             $product_variation_id = $offer_meta['orig_offer_variation_id'][0];
-            $product_variation_data = array('');
+
+            $_pf = new WC_Product_Factory();
+
+            $_pf = new WC_Product_Factory;
+            $_product = ( $product_variation_id ) ? $_pf->get_product( $product_variation_id ) : $_pf->get_product( $product_id );
+            $_product_stock = $_product->get_total_stock();
+
+            // lookup product meta by id or variant id
+            if( $product_variation_id )
+            {
+                $product_variation_data = $_product->get_variation_attributes();
+            }
+
+            $product_variation_data['Offer ID'] = $offer->ID;
 
             $product_meta['woocommerce_offer_id'] = $offer->ID;
             $product_meta['woocommerce_offer_quantity'] = $offer_meta['offer_quantity'][0];
@@ -1147,25 +1159,6 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Action - woocommerce_add_order_item_meta
-     * Adds order item meta 'Offer ID'
-     * @since   0.1.0
-     */
-    public function ae_ofwc_woocommerce_add_order_item_meta( $item_id, $values, $cart_item_key )
-    {
-        // Check for offer id
-        $item_offer_id = $values['woocommerce_offer_id'];
-
-        if( $item_offer_id )
-        {
-            // Add order item meta
-            if ( function_exists('woocommerce_add_order_item_meta') ) {
-                woocommerce_add_order_item_meta($item_id, 'Offer ID', $item_offer_id );
-            }
-        }
-    }
-
-    /**
      * Action - woocommerce_checkout_order_processed
      * Adds offer postmeta  'offer_order_id'
      * @since   0.1.0
@@ -1226,47 +1219,6 @@ class Angelleye_Offers_For_Woocommerce {
                     wp_insert_comment( $comment_data );
                 }
             }
-        }
-    }
-
-    /**
-     * Filter - Adds Offer ID on cart item display
-     * @param null $title
-     * @param null $cart_item
-     * @param null $cart_item_key
-     */
-    public function ae_ofwc_woocommerce_cart_item_name( $title = null, $cart_item = null, $cart_item_key = null )
-    {
-        if( $cart_item_key && is_cart() ) {
-            if( isset( $cart_item['woocommerce_offer_id'] ) )
-            {
-                echo $title. '<dl class="">
-                    <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
-                    </dl>';
-            } else {
-                echo $title;
-            }
-        }
-        else {
-            echo $title;
-        }
-    }
-
-    /**
-     * Filter - Adds Offer ID on checkout order review section
-     * @param null $quantity
-     * @param null $cart_item
-     * @param null $cart_item_key
-     */
-    public function ae_ofwc_woocommerce_checkout_cart_item_quantity( $quantity = null, $cart_item = null, $cart_item_key = null )
-    {
-        if( isset( $cart_item['woocommerce_offer_id'] ) )
-        {
-            echo $quantity . '<dl class="">
-				 <dt class="">Offer ID: '. $cart_item['woocommerce_offer_id'] .'</dt>
-			  </dl>';
-        } else {
-            echo $quantity;
         }
     }
 

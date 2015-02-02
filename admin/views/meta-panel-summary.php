@@ -26,6 +26,9 @@
                     <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="Click to view product"><?php echo $_product_image; ?></a></ul>
                     <ul class="offer-product-meta-values-wrap">
                         <li><span>Product: </span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="Click to view product">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->post->ID.'&action=edit" title="Click to edit product"><span>('.$_product->post->ID.')</span></a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <?php if( $_product_attributes ) { ?>
+                            <li><span>Attributes: </span><?php echo ucwords( implode( ", ", $_product_attributes ) ); ?></li>
+                        <?php } ?>
                         <li><span>Regular Price: </span><?php echo (isset($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                         <?php if($_product_sale_price) { ?>
                             <li><span>Sale Price: </span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
