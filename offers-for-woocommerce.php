@@ -88,7 +88,7 @@ function woocommerce_quantity_input( $args = array(), $product = null, $echo = t
     if ( $echo ) {
         echo ob_get_clean();
     } else {
-        return ob_get_clean();
+        echo ob_get_clean();
     }
 }
 
@@ -130,7 +130,7 @@ add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_in
  *
  * @since	0.1.0
  */
-if(is_admin() )
+if( is_admin() )
 {
 	require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
 	add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
