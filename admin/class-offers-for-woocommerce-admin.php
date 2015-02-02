@@ -1079,6 +1079,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                 $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
                 $_product_permalink = $_product_variant->get_permalink();
+                $_product_attributes = $_product_variant->get_variation_attributes();
                 $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
                 $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
 
@@ -1092,6 +1093,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             else
             {
                 $_product_sku = $_product->get_sku();
+                $_product_attributes = $_product->get_attributes();
                 $_product_permalink = $_product->get_permalink();
                 $_product_regular_price = $_product->get_regular_price();
                 $_product_sale_price = $_product->get_sale_price();
@@ -1126,7 +1128,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'angelleye_offers_for_woocommerce') . '</small>';
                 }
             }
-
 
             // set author_data
             $author_data = get_userdata($post->post_author);
