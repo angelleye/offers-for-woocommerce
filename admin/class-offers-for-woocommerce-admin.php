@@ -302,6 +302,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_filter( 'contextual_help', array( $this, 'ae_ofwc_contextual_help'), 10, 3 );
 
         /**
+         * Check for WooCommerce plugin
+         * Adds nag message to admin notice
+         * @since   0.1.0
+         */
+        add_action( 'admin_init', array( $this, 'ae_ofwc_check_woocommerce_nag_notice_ignore' ) );
+        add_action('admin_init', array( $this, 'ae_ofwc_check_woocommerce_available' ) );
+
+        /**
          * END - custom functions
          */
 
@@ -2334,5 +2342,68 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         return $contextual_help;
     }
 
+    /*
+     * Check WooCommerce is available
+     * @since   0.1.0
+     */
+    public function ae_ofwc_check_woocommerce_available()
+    {
+        if (is_admin()) {
+
+            global $current_user;
+            $user_id = $current_user->ID;
+
+            if (!function_exists('is_plugin_active_for_network')) {
+                require_once(ABSPATH . '/wp-admin/includes/plugin.php');
+            }
+
+            if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && !is_plugin_active_for_network('woocommerce/woocommerce.php'))
+            {
+                if ( in_array('offers-for-woocommerce/offers-for-woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) || is_plugin_active_for_network('offers-for-woocommerce/offers-for-woocommerce.php')) {
+
+                    // deactivate offers for woocommerce plugin
+                    deactivate_plugins(plugin_dir_path(realpath(dirname(__FILE__))) . $this->plugin_slug . '.php');
+
+                    // remove hide nag msg
+                    //delete_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01');
+
+                    // redirect
+                    //wp_redirect('plugins.php');
+                }
+                add_action( 'admin_notices', array( $this, 'ae_ofwc_admin_notice_woocommerce_mia' ) );
+            }
+            else
+            {
+                // remove hide nag msg
+                delete_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01');
+            }
+        }
+    }
+
+    public function ae_ofwc_admin_notice_woocommerce_mia()
+    {
+        global $current_user ;
+        $user_id = $current_user->ID;
+
+        // Check that the user hasn't already clicked to ignore the message
+        if ( ! get_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01') ) {
+            printf('<div class="updated"> <p> %s  | <a href="%2$s">Hide Notice</a></p> </div>', __('<strong>Offers for WooCommerce has been deactivated; WooCommerce is required.</strong><br />Please make sure that WooCommerce is installed and activated before activating Offers for WooCommerce.', 'angelleye_offers_for_woocommerce'), '?angelleye_offers_for_woocommerce_ignore_01=0');
+        }
+    }
+
+    /**
+     * Add ignore nag message for admin notices
+     * @since   0.1.0
+     */
+    public function ae_ofwc_check_woocommerce_nag_notice_ignore()
+    {
+        global $current_user;
+        $user_id = $current_user->ID;
+
+        /* If user clicks to ignore the notice, add that to their user meta */
+        if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_01']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_01'] ) {
+            add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01', 'true');
+        }
+    }
 
 }
