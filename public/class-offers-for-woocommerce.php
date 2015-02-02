@@ -111,8 +111,10 @@ class Angelleye_Offers_For_Woocommerce {
          */
         add_action( 'woocommerce_before_calculate_totals', array( $this, 'my_woocommerce_before_calculate_totals' ) );
 
-        //add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'so_validate_add_cart_item' ), 10, 5 );
-
+        /*
+         * Filter - get_cart_items_from_session
+         * @since   0.1.0
+         */
         add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_items_from_session' ), 1, 3 );
 
         /*
@@ -1105,21 +1107,13 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    function so_validate_add_cart_item( $passed, $product_id, $quantity, $variation_id = '', $variations= '' ) {
-
-        // do your validation, if not met switch $passed to false
-        if ( 1 == 1 ){
-            $passed = false;
-            wc_add_notice( __( 'You can not do that', 'textdomain' ), 'error' );
-        }
-
-        $passed = false;
-        wc_add_notice( __( 'You can not do that', 'textdomain' ), 'error' );
-
-        return $passed;
-    }
-
-    //Get it from the session and add it to the cart variable
+    /**
+     * Set cart items extra meta from session data
+     * @param $item
+     * @param $values
+     * @param $key
+     * @return mixed
+     */
     function get_cart_items_from_session( $item, $values, $key ) {
         if ( array_key_exists( 'woocommerce_offer_id', $values ) )
         {
