@@ -1968,6 +1968,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
+
+            // Get current data for Offer prior to save
+            $post_data = get_post($post_id);
+
             $table = $wpdb->prefix . "posts";
             $data_array = array(
                 'post_status' => 'accepted-offer',
@@ -1977,8 +1981,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            // Get current data for Offer after saved
-            $post_data = get_post($post_id);
             // Filter Post Status Label
             $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
             $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
@@ -2008,6 +2010,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
@@ -2095,6 +2105,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
+
+            // Get current data for Offer prior to save
+            $post_data = get_post($post_id);
+
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
             $table = $wpdb->prefix . "posts";
             $data_array = array(
                 'post_status' => 'declined-offer',
@@ -2104,8 +2121,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            // Get current data for Offer after saved
-            $post_data = get_post($post_id);
             // Filter Post Status Label
             $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
             $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
@@ -2129,12 +2144,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $_pf = new WC_Product_Factory;
             $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-            // if buyercountered-offer previous then use buyer counter values
-            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
-
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
