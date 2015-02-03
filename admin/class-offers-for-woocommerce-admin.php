@@ -1998,8 +1998,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $wpdb->update( $table, $data_array, $where );
 
             // Filter Post Status Label
-            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
-            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+            $post_status_text = 'Accepted';
 
             // set update notes
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -2138,8 +2137,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $wpdb->update( $table, $data_array, $where );
 
             // Filter Post Status Label
-            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
-            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+            $post_status_text = 'Declined';
 
             // set update notes
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
