@@ -1283,6 +1283,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
@@ -1364,8 +1367,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
-            $offer_uid = get_post_meta($post_id, 'offer_uid', true);;
-            $offer_name = get_post_meta($post_id, 'offer_name', true);;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
             $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
@@ -1965,6 +1968,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
+
+            // Get current data for Offer prior to save
+            $post_data = get_post($post_id);
+
             $table = $wpdb->prefix . "posts";
             $data_array = array(
                 'post_status' => 'accepted-offer',
@@ -1974,8 +1981,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            // Get current data for Offer after saved
-            $post_data = get_post($post_id);
             // Filter Post Status Label
             $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
             $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
@@ -1990,27 +1995,62 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Accepted_Offer_Email';
@@ -2065,6 +2105,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
+
+            // Get current data for Offer prior to save
+            $post_data = get_post($post_id);
+
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
             $table = $wpdb->prefix . "posts";
             $data_array = array(
                 'post_status' => 'declined-offer',
@@ -2074,8 +2121,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            // Get current data for Offer after saved
-            $post_data = get_post($post_id);
             // Filter Post Status Label
             $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
             $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
@@ -2090,27 +2135,59 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Declined_Offer_Email';
@@ -2163,9 +2240,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
-            $targetPostID = $_POST["targetID"];
+            $post_id = $_POST["targetID"];
+            // Get current data for Offer
+            $post_data = get_post($post_id);
+            // Filter Post Status Label
+            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
+            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+
             $noteSendToBuyer = (isset($_POST["noteSendToBuyer"]) && $_POST["noteSendToBuyer"] != '') ? '1' : '';
-            $noteContent = $_POST['noteContent'];
+            $offer_notes = $_POST['noteContent'];
 
             $current_user = wp_get_current_user();
 
@@ -2179,10 +2262,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 $comment_text.= " (sent to buyer)";
             }
-            $comment_text.= "<br />" .$noteContent;
+            $comment_text.= "<br />" .$offer_notes;
 
             $data = array(
-                'comment_post_ID' => $targetPostID,
+                'comment_post_ID' => $post_id,
                 'comment_author' => $current_user->user_login,
                 'comment_author_email' => $current_user->user_email,
                 'comment_author_url' => '',
@@ -2206,32 +2289,59 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                      * @since   0.1.0
                      */
                     // set recipient email
-                    $offer_id = $targetPostID;
-                    $recipient = get_post_meta($offer_id, 'offer_email', true);
+                    $recipient = get_post_meta($post_id, 'offer_email', true);
+                    $offer_id = $post_id;
+                    $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+                    $offer_name = get_post_meta($post_id, 'offer_name', true);
+                    $offer_email = $recipient;
 
-                    $product_id = get_post_meta($offer_id, 'offer_product_id', true);
-                    $variant_id = get_post_meta($offer_id, 'offer_variation_id', true);
-                    $product = new WC_Product($product_id);
+                    $product_id = get_post_meta($post_id, 'offer_product_id', true);
+                    $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+                    $_pf = new WC_Product_Factory;
+                    $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-                    $product_qty = get_post_meta($offer_id, 'offer_quantity', true);
-                    $product_price_per = get_post_meta($offer_id, 'offer_price_per', true);
+                    // if buyercountered-offer previous then use buyer counter values
+                    $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
+                    $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+                    $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
                     $product_total = ($product_qty * $product_price_per);
 
                     $offer_args = array(
                         'recipient' => $recipient,
+                        'offer_email' => $offer_email,
+                        'offer_name' => $offer_name,
                         'offer_id' => $offer_id,
+                        'offer_uid' => $offer_uid,
                         'product_id' => $product_id,
-                        'product_url' => get_permalink($product_id),
+                        'product_url' => $product->get_permalink(),
                         'variant_id' => $variant_id,
-                        'product' => $product->post,
+                        'product' => $product,
                         'product_qty' => $product_qty,
                         'product_price_per' => $product_price_per,
                         'product_total' => $product_total,
-                        'offer_notes' => $noteContent
+                        'offer_notes' => $offer_notes
                     );
 
+                    if( $variant_id )
+                    {
+                        if ( $product->get_sku() ) {
+                            $identifier = $product->get_sku();
+                        } else {
+                            $identifier = '#' . $product->variation_id;
+                        }
+
+                        $attributes = $product->get_variation_attributes();
+                        $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                        $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+                    }
+                    else
+                    {
+                        $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                    }
+
                     // the email we want to send
-                    $email_class = 'WC_Offer_Note_Email';
+                    $email_class = 'WC_Declined_Offer_Email';
 
                     // load the WooCommerce Emails
                     $wc_emails = new WC_Emails();
@@ -2243,7 +2353,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $new_email->trigger($offer_args);
                 }
 
-                $redirect_url = admin_url('post.php?post='.$targetPostID.'&action=edit&noheader=true&message=11');
+                $redirect_url = admin_url('post.php?post='.$post_id.'&action=edit&noheader=true&message=11');
                 echo $redirect_url;
             }
             else
