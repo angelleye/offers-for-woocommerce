@@ -772,11 +772,12 @@ class Angelleye_Offers_For_Woocommerce {
 
                 $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
                 $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
-                $product = new WC_Product($product_id);
+                $_pf = new WC_Product_Factory;
+                $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
 
-                $product_qty = get_post_meta($parent_post_id, 'offer_quantity', true);
-                $product_price_per = get_post_meta($parent_post_id, 'offer_price_per', true);
-                $product_total = get_post_meta($parent_post_id, 'offer_amount', true);
+                $product_qty = $formData['offer_quantity'];
+                $product_price_per = $formData['offer_price_per'];
+                $product_total = $formData['offer_amount'];
 
                 $offer_args = array(
                     'recipient' => $recipient,
