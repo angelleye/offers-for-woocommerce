@@ -773,7 +773,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
                 $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
                 $_pf = new WC_Product_Factory;
-                $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $variant_id );
+                $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
                 $product_qty = $formData['offer_quantity'];
                 $product_price_per = $formData['offer_price_per'];
@@ -789,7 +789,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'product_id' => $product_id,
                     'product_url' => get_permalink($product_id),
                     'variant_id' => $variant_id,
-                    'product' => $product->post,
+                    'product' => $product,
                     'product_qty' => $product_qty,
                     'product_price_per' => $product_price_per,
                     'product_total' => $product_total,
