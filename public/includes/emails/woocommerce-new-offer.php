@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     </thead>
     <tbody>
     <tr>
-        <td><?php echo $offer_args['product_title_formatted']; ?></td>
+        <td><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
         <td><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
         <td><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2 ); ?></td>
     </tr>
@@ -38,10 +38,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 </table>
 
 <h4>Offer Contact Details:</h4>
-<?php echo (isset($offer_args['offer_name']) && $offer_args['offer_name'] != '') ? '<strong>Name: </strong>'.$offer_args['offer_name'] : ''; ?>
-<?php echo (isset($offer_args['offer_company_name']) && $offer_args['offer_company_name'] != '') ? '<br /><strong>Company Name: </strong>'.$offer_args['offer_company_name'] : ''; ?>
-<?php echo (isset($offer_args['offer_email']) && $offer_args['offer_email'] != '') ? '<br /><strong>Email: </strong>'.$offer_args['offer_email'] : ''; ?>
-<?php echo (isset($offer_args['offer_phone']) && $offer_args['offer_phone'] != '') ? '<br /><strong>Phone: </strong>'.$offer_args['offer_phone'] : ''; ?>
+<?php echo (isset($offer_args['offer_name']) && $offer_args['offer_name'] != '') ? '<strong>Name: </strong>'.stripslashes($offer_args['offer_name']) : ''; ?>
+<?php echo (isset($offer_args['offer_company_name']) && $offer_args['offer_company_name'] != '') ? '<br /><strong>Company Name: </strong>'.stripslashes($offer_args['offer_company_name']) : ''; ?>
+<?php echo (isset($offer_args['offer_email']) && $offer_args['offer_email'] != '') ? '<br /><strong>Email: </strong>'.stripslashes($offer_args['offer_email']) : ''; ?>
+<?php echo (isset($offer_args['offer_phone']) && $offer_args['offer_phone'] != '') ? '<br /><strong>Phone: </strong>'.stripslashes($offer_args['offer_phone']) : ''; ?>
 
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 

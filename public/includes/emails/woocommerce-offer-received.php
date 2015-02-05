@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     </thead>
     <tbody>
     <tr>
-        <td><?php echo $offer_args['product_title_formatted']; ?></td>
+        <td><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
         <td><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
         <td><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2 ); ?></td>
     </tr>
