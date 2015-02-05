@@ -1011,18 +1011,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         global $wpdb;
 
-        /*$args = array(
-            'meta_key'   => 'angelleye_woocommerce_offer_id',
-            'meta_value' => $post->ID
-        );
-
-        $offer_comments_query = new WP_Comment_Query( $args );
-        $offer_comments = $offer_comments_query->comments;
-
-        echo '<pre>';
-        print_r($offer_comments_query);
-        exit;*/
-
         $query = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' ORDER BY wp_comments.comment_date desc", $post->ID );
         $offer_comments = $wpdb->get_results($query);
 
@@ -1185,7 +1173,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
                 $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
                 $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
-                $author_counts['buyer_countered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
+                $author_counts['buyercountered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
                 $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
                 $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
 
