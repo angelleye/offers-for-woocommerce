@@ -2437,7 +2437,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     function ae_ofwc_contextual_help( $contextual_help, $screen_id, $screen ) {
 
         // Only add to certain screen(s). The add_help_tab function for screen was introduced in WordPress 3.3.
-        if ( "edit-woocommerce_offer" == $screen->id || ! method_exists( $screen, 'add_help_tab' ) )
+        if ( "edit-woocommerce_offer" != $screen->id || ! method_exists( $screen, 'add_help_tab' ) )
             return $contextual_help;
 
         $screen->add_help_tab( array(
