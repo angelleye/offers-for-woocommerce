@@ -64,6 +64,11 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
             $this->recipient = $offer_args['recipient'];
             $this->offer_args = $offer_args;
 
+            if ( ! $this->is_enabled() || ! $this->recipient )
+            {
+                return;
+            }
+
             // woohoo, send the email!
             $this->send( $this->recipient, $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
         }
