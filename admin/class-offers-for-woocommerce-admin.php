@@ -599,7 +599,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		switch ( $column ) {
             case 'offer_name' :
                 $val = get_post_meta( $post_id , 'offer_name' , true );
-                echo $val;
+                echo stripslashes($val);
                 break;
 
             case 'offer_quantity' :
