@@ -677,8 +677,8 @@ class Angelleye_Offers_For_Woocommerce {
                     }
 
                     $data = array(
-                        'comment_post_ID' => $parent_post_id,
-                        'comment_author' => '',
+                        'comment_post_ID' => '',
+                        'comment_author' => 'admin',
                         'comment_author_email' => '',
                         'comment_author_url' => '',
                         'comment_content' => $comment_text,
@@ -690,7 +690,13 @@ class Angelleye_Offers_For_Woocommerce {
                         'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                         'comment_approved' => 1,
                     );
-                    wp_insert_comment($data);
+                    $new_comment_id = wp_insert_comment( $data );
+
+                    // insert comment meta
+                    if( $new_comment_id )
+                    {
+                        add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $parent_post_id, true );
+                    }
                 }
                 else
                 {
@@ -735,7 +741,7 @@ class Angelleye_Offers_For_Woocommerce {
                         }
 
                         $data = array(
-                            'comment_post_ID' => $parent_post_id,
+                            'comment_post_ID' => '',
                             'comment_author' => 'admin',
                             'comment_author_email' => '',
                             'comment_author_url' => '',
@@ -748,7 +754,13 @@ class Angelleye_Offers_For_Woocommerce {
                             'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                             'comment_approved' => 1,
                         );
-                        wp_insert_comment($data);
+                        $new_comment_id = wp_insert_comment( $data );
+
+                        // insert comment meta
+                        if( $new_comment_id )
+                        {
+                            add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $parent_post_id, true );
+                        }
                     }
                     else
                     {
@@ -1198,7 +1210,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $comment_text.= '<p>' . __('Related Order', 'angelleye_offers_for_woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
 
                     $comment_data = array(
-                        'comment_post_ID' => $item_offer_id,
+                        'comment_post_ID' => '',
                         'comment_author' => 'admin',
                         'comment_author_email' => '',
                         'comment_author_url' => '',
@@ -1211,7 +1223,13 @@ class Angelleye_Offers_For_Woocommerce {
                         'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                         'comment_approved' => 1,
                     );
-                    wp_insert_comment( $comment_data );
+                    $new_comment_id = wp_insert_comment( $comment_data );
+
+                    // insert comment meta
+                    if( $new_comment_id )
+                    {
+                        add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true );
+                    }
                 }
             }
         }
