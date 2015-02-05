@@ -2358,7 +2358,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
 
                     // the email we want to send
-                    $email_class = 'WC_Declined_Offer_Email';
+                    $email_class = 'WC_Offer_Note_Email';
 
                     // load the WooCommerce Emails
                     $wc_emails = new WC_Emails();
