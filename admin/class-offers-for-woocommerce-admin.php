@@ -1011,7 +1011,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         global $wpdb;
 
-        $query = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' ORDER BY wp_comments.comment_date desc", $post->ID );
+        $query = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' ORDER BY comment_date desc", $post->ID );
         $offer_comments = $wpdb->get_results($query);
 
         /*
