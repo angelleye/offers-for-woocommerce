@@ -1538,7 +1538,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
             'comment_approved' => 1,
         );
-        wp_insert_comment($data);
+        $new_comment_id = wp_insert_comment( $data );
+
+        // insert comment meta
+        if( $new_comment_id )
+        {
+            add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+        }
 	}
 
 	/**
@@ -2106,7 +2112,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
-            wp_insert_comment($data);
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
 
 
             die(); // this is required to return a proper result
@@ -2242,7 +2254,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
-            wp_insert_comment($data);
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
 
 
             die(); // this is required to return a proper result
@@ -2295,7 +2313,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
-            if( wp_insert_comment($data) )
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
+
+            if( $new_comment_id )
             {
 
                 if($noteSendToBuyer == '1')
