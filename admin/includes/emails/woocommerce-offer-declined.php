@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php printf( __( '<p><strong>We have declined your offer on %s.</strong></p>'), get_bloginfo( 'name' ) ); ?>
 
-<?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<strong>'. __( 'Offer Notes: ', 'offers-for-woocommerce' ) .'</strong>'. $offer_args['offer_notes']; } ?>
+<?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<strong>'. __( 'Offer Notes: ', 'offers-for-woocommerce' ) .'</strong>'. stripslashes($offer_args['offer_notes']); } ?>
 
 <h2><?php echo __( 'Offer ID:', 'woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
 
