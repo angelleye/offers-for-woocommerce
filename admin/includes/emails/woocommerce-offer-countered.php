@@ -39,6 +39,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     </tfoot>
 </table>
 
-<?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Counter Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. $offer_args['offer_notes']; } ?>
+<?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Counter Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
 <?php do_action( 'woocommerce_email_footer' ); ?>
