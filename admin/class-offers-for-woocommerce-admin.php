@@ -1009,13 +1009,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function add_meta_box_offer_comments_callback( $post )
     {
-        global $wpdb;
+        $args = array(
+            'meta_key'   => 'angelleye_woocommerce_offer_id',
+            'meta_value' => $post->ID
+        );
 
-        $order_by = "comment_date";
-        $order = "desc";
+        $offer_comments_query = new WP_Comment_Query( $args );
+        $offer_comments = $offer_comments_query->comments;
 
-        $query = $wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '%d' ORDER BY comment_date desc", $post->ID );
-        $offer_comments = $wpdb->get_results($query);
         /*
 		 * Output html for Offer Comments loop
 		 */
@@ -1538,7 +1539,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
             'comment_approved' => 1,
         );
-        wp_insert_comment($data);
+        $new_comment_id = wp_insert_comment( $data );
+
+        // insert comment meta
+        if( $new_comment_id )
+        {
+            add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+        }
 	}
 
 	/**
@@ -2106,7 +2113,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
-            wp_insert_comment($data);
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
 
 
             die(); // this is required to return a proper result
@@ -2242,7 +2255,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
-            wp_insert_comment($data);
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
 
 
             die(); // this is required to return a proper result
@@ -2295,7 +2314,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                 'comment_approved' => 1,
             );
-            if( wp_insert_comment($data) )
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
+
+            if( $new_comment_id )
             {
 
                 if($noteSendToBuyer == '1')
