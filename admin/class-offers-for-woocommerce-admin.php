@@ -1009,13 +1009,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function add_meta_box_offer_comments_callback( $post )
     {
-        $args = array(
+        global $wpdb;
+
+        /*$args = array(
             'meta_key'   => 'angelleye_woocommerce_offer_id',
             'meta_value' => $post->ID
         );
 
         $offer_comments_query = new WP_Comment_Query( $args );
         $offer_comments = $offer_comments_query->comments;
+
+        echo '<pre>';
+        print_r($offer_comments_query);
+        exit;*/
+
+        $query = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' ORDER BY wp_comments.comment_date desc", $post->ID );
+        $offer_comments = $wpdb->get_results($query);
 
         /*
 		 * Output html for Offer Comments loop
@@ -1526,7 +1535,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         $data = array(
-            'comment_post_ID' => $post_id,
+            'comment_post_ID' => '',
             'comment_author' => 'admin',
             'comment_author_email' => '',
             'comment_author_url' => '',
@@ -2100,7 +2109,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
 
             $data = array(
-                'comment_post_ID' => $post_id,
+                'comment_post_ID' => '',
                 'comment_author' => 'admin',
                 'comment_author_email' => '',
                 'comment_author_url' => '',
@@ -2242,7 +2251,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
 
             $data = array(
-                'comment_post_ID' => $post_id,
+                'comment_post_ID' => '',
                 'comment_author' => 'admin',
                 'comment_author_email' => '',
                 'comment_author_url' => '',
@@ -2301,7 +2310,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $comment_text.= "<br />" .$offer_notes;
 
             $data = array(
-                'comment_post_ID' => $post_id,
+                'comment_post_ID' => '',
                 'comment_author' => $current_user->user_login,
                 'comment_author_email' => $current_user->user_email,
                 'comment_author_url' => '',
