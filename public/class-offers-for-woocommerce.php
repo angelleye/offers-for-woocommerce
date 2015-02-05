@@ -1223,7 +1223,7 @@ class Angelleye_Offers_For_Woocommerce {
                         'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
                         'comment_approved' => 1,
                     );
-                    $new_comment_id = wp_insert_comment( $data );
+                    $new_comment_id = wp_insert_comment( $comment_data );
 
                     // insert comment meta
                     if( $new_comment_id )
