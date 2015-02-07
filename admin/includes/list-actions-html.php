@@ -10,7 +10,6 @@
  * @author    AngellEYE <andrew@angelleye.com>
  * @license   GPL-2.0+
  * @link      http://www.angelleye.com
- * @copyright 2014 AngellEYE
  */
 ?>
 <div class="woocommerce-offer-list-actions-wrap">
