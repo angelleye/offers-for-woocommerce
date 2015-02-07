@@ -21,7 +21,14 @@ Provide the ability for customers to submit offers for items in a WooCommerce st
  * Email notifications for new offers, accepted offers, counter offers, and declined offers, adjustment through WooCommerce email settings.
  * Manage offers in your WordPress / WooCommerce control panel just like you do your orders!
 
+= Beta =
+
+Offers for WooCommerce is currently in a public Beta release mode.  We have tested the basic functionality of the plugin in-house, but are seeking users to try it out and provide general feedback.
+
+We are actively working to resolve [issues for our 1.0 final release](https://github.com/angelleye/offers-for-woocommerce/milestones/1.0%20Final%20Release), and hope to have it released soon.
+
 = Get Involved =
+
 Developers can contribute to the source code on the [Offers for WooCommerce GitHub repository](https://github.com/angelleye/offers-for-woocommerce).
 
 == Installation ==
@@ -44,3 +51,27 @@ In the search field type Offers for WooCommerce and click Search Plugins. Once y
 = Updating =
 
 Automatic updates should work great for you.  As always, though, we recommend backing up your site prior to making any updates just to be sure nothing goes wrong.
+
+== Screenshots ==
+
+1. Make an Offer button displayed on product details page.
+2. Make an Offer tab on product details with a form to submit offer details.
+3. Manage Offers list view from the WordPress admin panel (WooCommerce -> Offers)
+4. Manage Offer details page where you can accept an offer, decline an offer, or submit a counter-offer.
+
+== Frequently Asked Questions ==
+
+= Why would I want to allow buyers to submit offers? =
+
+* If you allow your buyers to submit an offer to you, this opens a direct line of communication with an interested buyer.
+* Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
+
+== Changelog ==
+
+= 0.1.0 - 02/08/2015 =
+* Initial Beta release.
+
+== Upgrade Notice ==
+
+= 0.1.0 =
+This is a public Beta release!  We have tested core functionality in-house and are confident in this plugin, but we still have more work to do before a final 1.0 release.  We appreciate any feedback we can get!
