@@ -2,7 +2,7 @@
 
 .offers-for-woocommerce-add-to-cart-wrap { position:relative; margin-left:3px;  }
 
-.offers-for-woocommerce-make-offer-button-catalog { margin: 7px 0px!important; }
+.offers-for-woocommerce-make-offer-button-catalog { margin: 0 0 7px 0!important; }
 .offers-for-woocommerce-make-offer-button-single-product { float:left; margin: 7px 0px!important; }
 .angelleye-offers-clearfix { clear:both!important; height:1px!important; }
 
@@ -12,6 +12,7 @@
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message { display:none; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message_2 { display:none; }
+.woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message_custom { display:none; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_alt_message_success { display:none; }
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer #tab_custom_ofwc_offer_tab_inner { display:block; }
@@ -60,9 +61,14 @@
 
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section label { float:none; position:relative; padding:6px 0px; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input { float:none; padding:8px 10px; width:80%; max-width:384px; }
-.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section textarea { width:auto; }
+
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='text']:disabled,
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='email']:disabled{ border:none!important; }
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section textarea { width:auto; resize: none!important; }
+
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-price-each { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-email { max-width:384px; width:100%; }
-.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-total { border-top:none; border-right:none; border-left:none; padding:9px 11px 8px 11px; background:none; }
+.woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-total {  border:1px solid #CCC!important; border-left:none!important; border-top-width:1px!important; background:#FFFFFF!important; cursor: not-allowed; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #angelleye-offer-notes { width:95%; }
 #woocommerce-make-offer-form-submit-button { float:left; margin-right:20px; margin-top:1px; width:auto!important; }
 .woocommerce-tabs #tab-tab_custom_ofwc_offer div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section.woocommerce-make-offer-form-section-submit .offer-submit-loader { display:none; float:left; height:32px; width:auto; line-height:33px; padding-left:45px; font-style:italic; background:url('../images/offer-submit-loader.png') left center no-repeat; }
@@ -77,3 +83,77 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
 
 #adminmenu #menu-posts-woocommerce_offer .menu-icon-woocommerce_offer div.wp-menu-image:before { content: "\f110"; }
 #woocommerce-product-data ul.wc-tabs li.custom_tab_offers_for_woocommerce a:before, .woocommerce ul.wc-tabs li.custom_tab_offers_for_woocommerce a:before { content: "\e03a"; }
+
+.quantity.angelleye-woocommerce-quantity-input-disabled input.qty { border-right:1px solid #C8BFC6!important; border-radius: 2px!important; }
+.quantity.angelleye-woocommerce-quantity-input-disabled input.plus,
+.quantity.angelleye-woocommerce-quantity-input-disabled input.minus { display:none!important; }
+
+.angelleye-input-group-addon, .angelleye-input-group-btn, .angelleye-input-group .form-control
+{
+    display: table-cell;
+}
+.angelleye-input-group-addon, .angelleye-input-group-btn
+{
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.angelleye-input-group-addon
+{
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555555;
+    text-align: center;
+    background-color: #eeeeee;
+    border-top-width: 1px;
+    border-right-width-value: 1px;
+    border-bottom-width: 1px;
+    border-left-width-value: 1px;
+    border-top-style: solid;
+    border-right-style-value: solid;
+    border-bottom-style: solid;
+    border-left-style-value: solid;
+    border-top-color: #cccccc;
+    border-right-color-value: #cccccc;
+    border-bottom-color: #cccccc;
+    border-left-color-value: #cccccc;
+    border-image-source: none;
+    border-image-slice: 100% 100% 100% 100%;
+    border-image-width: 1 1 1 1;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: stretch stretch;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.angelleye-input-group .form-control:first-child, .angelleye-input-group-addon:first-child, .angelleye-input-group-btn:first-child > .btn, .angelleye-input-group-btn:first-child > .dropdown-toggle, .angelleye-input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle)
+{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.angelleye-input-group-addon:first-child
+{
+    border-right-width-value: 0px;
+    border-right-style-value: none;
+}
+.angelleye-input-group
+{
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.angelleye-input-group-addon, .angelleye-input-group-btn, .angelleye-input-group .form-control
+{
+    /*display: table-cell;*/
+}
+.angelleye-input-group .form-control:last-child, .angelleye-input-group-addon:last-child, .angelleye-input-group-btn:last-child > .btn, .angelleye-input-group-btn:last-child > .dropdown-toggle, .angelleye-input-group-btn:first-child > .btn:not(:first-child)
+{
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
