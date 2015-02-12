@@ -7,7 +7,6 @@
  * @author    AngellEYE <andrew@angelleye.com>
  * @license	  GPL-2.0+
  * @link      http://www.angelleye.com
- * @copyright 2014 AngellEYE
  */
 
 // If uninstall not called from WordPress, then exit

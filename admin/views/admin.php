@@ -10,7 +10,6 @@
  * @author    AngellEYE <andrew@angelleye.com>
  * @license   GPL-2.0+
  * @link      http://www.angelleye.com
- * @copyright 2014 AngellEYE
  */
 ?>
 <?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general_settings';?>
