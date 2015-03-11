@@ -154,12 +154,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action('admin_footer-post.php', array($this, 'jc_append_post_status_list' ) );
-
-		/**
-		 * XXX
-		 * @since	0.1.0
-		 */
 		add_filter( 'display_post_states', array( $this, 'jc_display_archive_state' ) );
 
 		/**
@@ -847,55 +841,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		);
 		register_post_status( 'completed-offer', $args );
 	}
-	
-	/**
-	 * Append custom post status types on edit detail view
-	 * @since	0.1.0
-	 * @NOTE:	This uses jQuery to push display of current post status and adds it to the select input on save form #select#post_status input
-	 */	 
-	public function jc_append_post_status_list() 
-	{
-		global $post;
-		$complete = '';
-		$label = '';
-		if($post->post_type == 'woocommerce_offer')
-		{
-			if($post->post_status == 'accepted-offer')
-			{
-				$complete = ' selected=selected';
-				$label = "<span id='post-status-display'> Accepted Offer</span>";
-			}
-            elseif($post->post_status == 'countered-offer')
-            {
-                $complete = ' selected=selected';
-                $label = "<span id='post-status-display'> Countered Offer</span>";
-            }
-            elseif($post->post_status == 'buyercountered-offer')
-            {
-                $complete = ' selected=selected';
-                $label = "<span id='post-status-display'> Buyer Countered Offer</span>";
-            }
-            elseif($post->post_status == 'completed-offer')
-            {
-                $complete = ' selected=selected';
-                $label = "<span id='post-status-display'> Completed Offer</span>";
-            }
-			elseif($post->post_status == 'declined-offer')
-			{
-				$complete = ' selected=selected';
-				$label = "<span id='post-status-display'> Declined Offer</span>";
-			}
-			
-			if($post->post_status == 'accepted-offer' || $post->post_status == 'countered-offer' || $post->post_status == 'buyercountered-offer' || $post->post_status == 'completed-offer' || $post->post_status == 'declined-offer')
-			{
-				echo '<script>jQuery(document).ready(function($){
-				$("select#post_status").append("<option value='.$post->post_status.'-offer '.$complete.'>'.ucfirst($post->post_status).'</option>");
-				$(".misc-pub-section label").append("'.$label.'");
-				});</script>';
-			  }
-		 }
-	}
-	
+
 	/**
 	 * Filter - Display post status values on edit list view with customized html elements
 	 * @since	0.1.0
