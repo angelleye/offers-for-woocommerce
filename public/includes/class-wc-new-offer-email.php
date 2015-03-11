@@ -50,7 +50,7 @@ class WC_New_Offer_Email extends WC_Email {
         parent::__construct();
 
         // Set the recipient
-        $this->recipient = $this->get_option( 'admin_email' );
+        $this->recipient = $this->get_option( 'recipient' );
     }
 
     /**
@@ -61,10 +61,9 @@ class WC_New_Offer_Email extends WC_Email {
      */
     public function trigger( $offer_args ) {
 
-        $this->recipient = $offer_args['recipient'];
         $this->offer_args = $offer_args;
 
-        if ( ! $this->is_enabled() || ! $this->recipient )
+        if ( ! $this->is_enabled() )
         {
             return;
         }
