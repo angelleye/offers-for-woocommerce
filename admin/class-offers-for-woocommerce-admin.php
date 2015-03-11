@@ -1533,7 +1533,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
             'comment_agent' => '',
             'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-            'comment_approved' => 1,
+            'comment_approved' => 'post-trashed',
         );
         $new_comment_id = wp_insert_comment( $data );
 
@@ -2107,7 +2107,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                'comment_approved' => 1,
+                'comment_approved' => 'post-trashed',
             );
             $new_comment_id = wp_insert_comment( $data );
 
@@ -2249,7 +2249,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                'comment_approved' => 1,
+                'comment_approved' => 'post-trashed',
             );
             $new_comment_id = wp_insert_comment( $data );
 
@@ -2308,7 +2308,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                'comment_approved' => 1,
+                'comment_approved' => 'post-trashed',
             );
             $new_comment_id = wp_insert_comment( $data );
 
