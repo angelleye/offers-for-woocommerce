@@ -1638,12 +1638,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * Enable Make Offer button on home page
          */
         add_settings_field(
-            'display_setting_enable_make_offer_form_lightbox', // ID
+            'display_setting_make_offer_form_display_type', // ID
             'Make Offer form display type', // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
             'offers_for_woocommerce_display_settings', // Page
             'display_settings', // Section
-            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_enable_make_offer_form_lightbox', 'input_required'=>FALSE,
+            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_form_display_type', 'input_required'=>FALSE,
                 'options'=> array(
                     array('option_label' => 'Product Tabs (default display)', 'option_value' => 'tabs'),
                     array('option_label' => 'Lightbox', 'option_value' => 'lightbox')
