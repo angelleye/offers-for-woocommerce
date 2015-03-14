@@ -141,11 +141,15 @@ class Angelleye_Offers_For_Woocommerce {
 			'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
 		);
 
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' )
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
         {
             // get global on/off settings for offer button
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
@@ -175,8 +179,12 @@ class Angelleye_Offers_For_Woocommerce {
 			'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
 		);
 
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+
 		// if post has offers button enabled
-		if ( $custom_tab_options_offers['enabled'] == 'yes' )
+		if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -267,8 +275,12 @@ class Angelleye_Offers_For_Woocommerce {
             'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
         );
 
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' )
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
