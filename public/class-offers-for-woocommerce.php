@@ -884,6 +884,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function add_query_vars($vars){
         $vars[] = '__aewcoapi';
         $vars[] = 'woocommerce-offer-id';
+        $vars[] = 'woocommerce-offer-uid';
         return $vars;
     }
 
@@ -918,10 +919,18 @@ class Angelleye_Offers_For_Woocommerce {
              */
             $offer = get_post($pid);
 
+            // check for parent offer unique id
+            $offer_uid = get_post_meta( $offer->ID, 'orig_offer_uid', true);
+
             // Invalid Offer Id
             if($offer == '')
             {
                 $this->send_api_response( __( 'Invalid or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+            }
+            // check for valid uid match
+            elseif( ( $offer_uid != $wp->query_vars['woocommerce-offer-uid']) )
+            {
+                $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
             }
             else
             {
