@@ -853,6 +853,28 @@ class Angelleye_Offers_For_Woocommerce {
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
+
+                if($is_counter_offer)
+                {
+                    // define email template/path (html)
+                    $new_email->template_html = 'woocommerce-new-counter-offer.php';
+                    $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+
+                    // define email template/path (plain)
+                    $new_email->template_plain = 'woocommerce-new-counter-offer.php';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain';
+                }
+                else
+                {
+                    // define email template/path (html)
+                    $new_email->template_html = 'woocommerce-new-offer.php';
+                    $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+
+                    // define email template/path (plain)
+                    $new_email->template_plain = 'woocommerce-new-offer.php';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain';
+                }
+
                 $new_email->trigger($offer_args);
 
                 /**
@@ -866,6 +888,15 @@ class Angelleye_Offers_For_Woocommerce {
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
+
+                // define email template/path (html)
+                $new_email->template_html  = 'woocommerce-offer-received.php';
+                $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+                // define email template/path (plain)
+                $new_email->template_plain  = 'woocommerce-offer-received.php';
+                $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
                 $new_email->trigger($offer_args);
 
                 // Success
