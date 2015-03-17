@@ -779,13 +779,12 @@ class Angelleye_Offers_For_Woocommerce {
                  * Email Out - admin email notification of new or countered offer
                  * @since   0.1.0
                  */
-                $recipient = get_option( 'admin_email' );
                 $offer_id = $parent_post_id;
 
                 $offer_name = get_post_meta($parent_post_id, 'offer_name', true);
                 $offer_phone = get_post_meta($parent_post_id, 'offer_phone', true);
                 $offer_company_name = get_post_meta($parent_post_id, 'offer_company_name', true);
-                $offer_email = $recipient;
+                $offer_email = get_post_meta($parent_post_id, 'offer_email', true);
 
                 $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
                 $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
@@ -797,7 +796,6 @@ class Angelleye_Offers_For_Woocommerce {
                 $product_total = $formData['offer_amount'];
 
                 $offer_args = array(
-                    'recipient' => $recipient,
                     'offer_email' => $offer_email,
                     'offer_name' => $offer_name,
                     'offer_phone' => $offer_phone,
@@ -858,7 +856,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
-                $new_email->recipient = $recipient;
+                $new_email->recipient = $new_email->get_option('recipient');
                 $new_email->trigger($offer_args);
 
                 /**
@@ -868,7 +866,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $email_class = 'WC_Offer_Received_Email';
                 // set recipient
                 $recipient = $offer_email;
-                $offer_args['recipient'] = $recipient;
+                $offer_args['recipient'] = $offer_email;
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
