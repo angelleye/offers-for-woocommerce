@@ -1583,6 +1583,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			array( $this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
 			'offers_for_woocommerce_display_settings' // Page
 		);
+
+        /**
+         * Add field - 'Display Settings' - 'display_setting_enable_make_offer_form_lightbox'
+         * Enable Make Offer button on home page
+         */
+        add_settings_field(
+            'display_setting_make_offer_form_display_type', // ID
+            'Make Offer form display type', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
+            'offers_for_woocommerce_display_settings', // Page
+            'display_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_form_display_type', 'input_required'=>FALSE,
+                'options'=> array(
+                    array('option_label' => 'Product Tabs (default display)', 'option_value' => 'tabs'),
+                    array('option_label' => 'Lightbox', 'option_value' => 'lightbox')
+                ))
+        );
 		
 		/**
 		 * Add field - 'Display Settings' - 'display_setting_custom_make_offer_btn_text'
@@ -1667,22 +1684,50 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             isset( $options[$field_label] ) ? esc_attr( $options[$field_label]) : ''
         );
 	}
-	
-	/**
-	 * Callback - Options Page - Output a 'Checkbox' input field for options page form
-	 * @since	0.1.0
-	 * @param	$args - Params to define 'option_name','input_label'
-	 */
-	public function offers_for_woocommerce_options_page_output_input_checkbox($args) 
-	{
-		$options = get_option($args['option_name']);
-		$field_label = $args['input_label'];
-		$field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
-		$is_checked = (isset($options[$field_label])) ? $options[$field_label] : '0';
-		print(
-			'<input '. $field_required. ' type="checkbox" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="1" ' . checked(1, $is_checked, false) . '/>'
+
+    /**
+     * Callback - Options Page - Output a 'Checkbox' input field for options page form
+     * @since	0.1.0
+     * @param	$args - Params to define 'option_name','input_label'
+     */
+    public function offers_for_woocommerce_options_page_output_input_checkbox($args)
+    {
+        $options = get_option($args['option_name']);
+        $field_label = $args['input_label'];
+        $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
+        $is_checked = (isset($options[$field_label])) ? $options[$field_label] : '0';
+        print(
+            '<input '. $field_required. ' type="checkbox" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="1" ' . checked(1, $is_checked, false) . '/>'
         );
-	}
+    }
+
+    /**
+     * Callback - Options Page - Output a 'Select' input field for options page form
+     * @since	0.1.0
+     * @param	$args - Params to define 'option_name','input_label','input_required,'options'
+     */
+    public function offers_for_woocommerce_options_page_output_input_select($args)
+    {
+        $options = get_option($args['option_name']);
+        $field_label = $args['input_label'];
+        $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
+
+        print(
+            '<select '. $field_required. ' id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']"/>'
+        );
+        foreach( $args['options'] as $option )
+        {
+            $is_selected = (isset($options[$field_label]) && $options[$field_label] == $option['option_value']) ? 'selected="selected"' : '';
+            print(
+                '<option value="'. $option['option_value'] . '" '. $is_selected .'>'. $option['option_label'] . '</option>'
+            );
+        }
+
+        print(
+            '</select>'
+        );
+
+    }
 	
 	/**
 	 * Callback - Options Page - Output a 'colorpicker' input field for options page form
