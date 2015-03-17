@@ -1298,6 +1298,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-accepted.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-accepted.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
             $new_email->trigger($offer_args);
         }
 
@@ -1379,6 +1388,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-countered.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-countered.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
             $new_email->trigger($offer_args);
         }
 
@@ -1459,6 +1477,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-declined.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-declined.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
             $new_email->trigger($offer_args);
         }
 
@@ -2091,6 +2118,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-accepted.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-accepted.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
             $new_email->trigger($offer_args);
 
             // Insert WP comment
@@ -2233,6 +2269,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-declined.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-declined.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
             $new_email->trigger($offer_args);
 
             // Insert WP comment
@@ -2398,6 +2443,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     // select the email we want & trigger it to send
                     $new_email = $emails[$email_class];
                     $new_email->recipient = $recipient;
+
+                    // define email template/path (html)
+                    $new_email->template_html  = 'woocommerce-offer-note.php';
+                    $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+                    // define email template/path (plain)
+                    $new_email->template_plain  = 'woocommerce-offer-note.php';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+
                     $new_email->trigger($offer_args);
                 }
 
