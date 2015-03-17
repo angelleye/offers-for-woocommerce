@@ -225,7 +225,7 @@ class Angelleye_Offers_For_Woocommerce {
             {
                 $is_lightbox = ($button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
                 $lightbox_class = ($button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-                echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '. $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
                 echo '</div>';
             }
 		}
