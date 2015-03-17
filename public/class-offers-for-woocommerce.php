@@ -127,6 +127,12 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ), 1, 2 );
+
+        /**
+         * Filter - ae_paypal_standard_additional_parameters
+         * @since   0.1.0
+         */
+        add_filter( 'woocommerce_paypal_args', array($this,'ae_paypal_standard_additional_parameters'));
     }
 
 	/**
@@ -1232,6 +1238,16 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+    }
+
+    /**
+     * Filter - ae_paypal_standard_additional_parameters
+     * @since   0.1.0
+     */
+    public function ae_paypal_standard_additional_parameters($paypal_args)
+    {
+        $paypal_args['bn'] = 'AngellEYE_SP_WooCommerce';
+        return $paypal_args;
     }
 
 }
