@@ -143,6 +143,13 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_action( 'woocommerce_before_checkout_process', array( $this, 'ae_ofwc_woocommerce_before_checkout_process' ) );
+
+        /**
+         * Filter - woocommerce_quantity_input_args
+         * @since   0.1.0
+         */
+        add_filter('woocommerce_quantity_input_args', array( $this, 'aeofwc_woocommerce_quantity_input_args' ) );
+
     }
 
 	/**
@@ -1378,5 +1385,36 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+    }
+
+    /**
+     * Filter - woocommerce_quantity_input_args
+     * @since   0.1.0
+     */
+    public function aeofwc_woocommerce_quantity_input_args( $args = array(), $product = null, $echo = true )
+    {
+        global $woocommerce;
+
+        $cart_object = $woocommerce->cart->get_cart();
+        $is_offer = false;
+
+        if($cart_object) {
+            // If product is found in cart with offer id, then set min/max values to the offer quantity
+            // loop cart contents to find offers -- force quantity to offer quantity
+            foreach ($cart_object as $key => $value) {
+                // if offer item found
+                if (isset($value['woocommerce_offer_quantity']) && $value['woocommerce_offer_quantity'] != '')
+                {
+                    $is_offer = true;
+                    $args['input_value'] = $value['woocommerce_offer_quantity'];
+                    $args['min_value'] = $value['woocommerce_offer_quantity'];
+                    $args['max_value'] = $value['woocommerce_offer_quantity'];
+                    $args['step'] = '0';
+
+                    return $args;
+                }
+            }
+        }
+        return $args;
     }
 }
