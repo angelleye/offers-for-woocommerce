@@ -136,6 +136,13 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_filter( 'woocommerce_paypal_args', array($this,'ae_paypal_standard_additional_parameters'));
+
+        /**
+         * Action - woocommerce_before_checkout_process
+         * Checks for valid offer before checkout process
+         * @since   0.1.0
+         */
+        add_action( 'woocommerce_before_checkout_process', array( $this, 'ae_ofwc_woocommerce_before_checkout_process' ) );
     }
 
 	/**
@@ -1294,4 +1301,41 @@ class Angelleye_Offers_For_Woocommerce {
         return $paypal_args;
     }
 
+    /**
+     * Action - woocommerce_before_checkout_process
+     * Checks for valid offer before checkout process
+     * @since   0.1.0
+     */
+    public function ae_ofwc_woocommerce_before_checkout_process()
+    {
+        global $woocommerce;
+        foreach( $woocommerce->cart->get_cart() as $cart_item )
+        {
+            // check if offer id already in cart
+            if(isset($cart_item['woocommerce_offer_id']))
+            {
+                $pid = $cart_item['woocommerce_offer_id'];
+
+                /**
+                 * Lookup Offer
+                 * - Make sure valid 'accepted-offer' or 'countered-offer' status
+                 */
+                $offer = get_post($pid);
+
+                // Invalid Offer Id
+                if ($offer == '') {
+                    $this->send_api_response(__('Invalid or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce'), '1');
+                } else {
+                    // Get offer meta
+                    $offer_meta = get_post_meta($offer->ID, '', true);
+
+                    // Error - Offer Not Accepted/Countered
+                    if ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
+                        $request_error = true;
+                        $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce'), '0');
+                    }
+                }
+            }
+        }
+    }
 }
