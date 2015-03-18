@@ -54,10 +54,10 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
          */
         public function trigger( $offer_args ) {
 
-            $this->recipient = $offer_args['recipient'];
             $this->offer_args = $offer_args;
+            $this->recipient = $this->get_option( 'recipient' );
 
-            if ( ! $this->is_enabled() || ! $this->recipient )
+            if ( ! $this->is_enabled() )
             {
                 return;
             }
