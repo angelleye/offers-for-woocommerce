@@ -55,6 +55,7 @@ class WC_New_Offer_Email extends WC_Email {
     public function trigger( $offer_args ) {
 
         $this->offer_args = $offer_args;
+        $this->recipient = $this->get_option( 'recipient' );
 
         if ( ! $this->is_enabled() )
         {

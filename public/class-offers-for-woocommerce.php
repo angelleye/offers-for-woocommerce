@@ -916,8 +916,6 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
-                $new_email->recipient = $new_email->get_option('recipient');
-                $new_email->recipient = $recipient;
 
                 if($is_counter_offer)
                 {
@@ -927,7 +925,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                     // define email template/path (plain)
                     $new_email->template_plain = 'woocommerce-new-counter-offer.php';
-                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
                 }
                 else
                 {
@@ -937,7 +935,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                     // define email template/path (plain)
                     $new_email->template_plain = 'woocommerce-new-offer.php';
-                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
                 }
 
                 $new_email->trigger($offer_args);
@@ -960,12 +958,11 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // define email template/path (plain)
                 $new_email->template_plain  = 'woocommerce-offer-received.php';
-                $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+                $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
                 $new_email->trigger($offer_args);
 
                 // Success
-                sleep(1);
                 echo json_encode(array("statusmsg" => 'success'));
                 exit;
             }
