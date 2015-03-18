@@ -1064,6 +1064,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 // set error message if product not found...
             }
 
+            /**
+             * Check to 'consider inventory' of product stock compared to offer quantities
+             * @since   0.1.0
+             */
+
+            if( ( !$_product_in_stock)  )
+            {
+                $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', 'angelleye_offers_for_woocommerce');
+            }
+
             // Check for 'offer_order_id'
             if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
             {

@@ -519,3 +519,22 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap input[type='text']:disabled,
 body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap #original-offer-price-per { border:1px solid #CCC!important; border-top-width: 1px!important; color:inherit!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap #original-offer-total {  border:1px solid #CCC!important; border-top-width:1px!important; background:#FFFFFF!important; cursor: not-allowed!important; }
+
+#angelleye-woocommerce-offer-meta-summary-notice-msg {
+    background:none!important;
+    color:#444;
+    padding:0px;
+    width:97.5%;
+    margin:0 0 10px 0;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #DD3D36;
+}
+#angelleye-woocommerce-offer-meta-summary-notice-msg .aeofwc-notice-msg-inner {
+    padding:5px 10px!important;
+    margin:10px 0;
+    font-size: 13px;
+    line-height: 1.4em;
+    color:#444;
+}
+
+.angelleye-hidden { display: none; }

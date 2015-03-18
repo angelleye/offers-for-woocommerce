@@ -56,6 +56,8 @@
                                 <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'angelleye_offers_for_woocommerce' ); ?></span>
                             </li>
                         <? } ?>
+                        <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
+                        <input id="offer-backorders-allowed" type="hidden" value="<?php echo ( $_product_backorders_allowed ) ? 'true' : 'false';?>">
                     </ul>
                 <? } ?>
             </div>
@@ -186,6 +188,11 @@
                 <?php } ?>
                 <input type="hidden" name="woocommerce_offer_summary_metabox_noncename" id="woocommerce_offer_summary_metabox_noncename" value="<?php echo wp_create_nonce( 'woocommerce_offer'.$post->ID ); ?>" />
                 <input type="hidden" name="post_previous_status" id="post_previous_status" value="<?php echo (isset($current_status_value)) ? $current_status_value : ''; ?>">
+
+                <?php $show_notice_msg = ( isset($offer_inventory_msg) && $offer_inventory_msg != '') ? TRUE : FALSE; ?>
+                <div id="angelleye-woocommerce-offer-meta-summary-notice-msg" <?php echo (!$show_notice_msg) ? ' class="angelleye-hidden"' : '';?>">
+                    <div class="aeofwc-notice-msg-inner"><?php echo ($show_notice_msg) ? $offer_inventory_msg : '';?></div>
+                </div>
 
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
                     <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
