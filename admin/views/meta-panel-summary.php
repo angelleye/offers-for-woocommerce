@@ -111,11 +111,20 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Original Data</h5>
-                <ul class="offer-original-meta-values-wrap">
-                    <li>Original Offer Qty: <?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li>Original Offer Price/Per: <?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li>Original Offer Amount: <?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                </ul>
+                <div class="offer-original-meta-values-wrap">
+                    <label for="original-offer-quantity">Orig. Quantity</label>
+                    <div>
+                        <input type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    </div>
+                    <label for="original-offer-price-per">Orig. Price Per</label>
+                    <div>
+                        <input type="text" id="original-offer-amount" value="<?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    </div>
+                    <label for="original-offer-price-per">Orig. Amount</label>
+                    <div>
+                        <input type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    </div>
+                </div>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
