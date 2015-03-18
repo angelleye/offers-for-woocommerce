@@ -1317,7 +1317,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // define email template/path (plain)
             $new_email->template_plain  = 'woocommerce-offer-accepted.php';
-            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
             $new_email->trigger($offer_args);
         }
@@ -1407,7 +1407,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // define email template/path (plain)
             $new_email->template_plain  = 'woocommerce-offer-countered.php';
-            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
             $new_email->trigger($offer_args);
         }
@@ -1496,7 +1496,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // define email template/path (plain)
             $new_email->template_plain  = 'woocommerce-offer-declined.php';
-            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
             $new_email->trigger($offer_args);
         }
@@ -2137,7 +2137,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // define email template/path (plain)
             $new_email->template_plain  = 'woocommerce-offer-accepted.php';
-            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
             $new_email->trigger($offer_args);
 
@@ -2288,7 +2288,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // define email template/path (plain)
             $new_email->template_plain  = 'woocommerce-offer-declined.php';
-            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
             $new_email->trigger($offer_args);
 
@@ -2462,7 +2462,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                     // define email template/path (plain)
                     $new_email->template_plain  = 'woocommerce-offer-note.php';
-                    $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
 
                     $new_email->trigger($offer_args);
                 }
