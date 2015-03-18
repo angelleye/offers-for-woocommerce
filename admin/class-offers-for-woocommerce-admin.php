@@ -1040,6 +1040,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
                 $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
 
+                $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
                 $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
                 $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                 $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
@@ -1054,6 +1055,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $_product_permalink = $_product->get_permalink();
                 $_product_regular_price = $_product->get_regular_price();
                 $_product_sale_price = $_product->get_sale_price();
+                $_product_managing_stock = $_product->managing_stock();
                 $_product_stock = $_product->get_total_stock();
                 $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                 $_product_backorders_allowed = $_product->backorders_allowed();
