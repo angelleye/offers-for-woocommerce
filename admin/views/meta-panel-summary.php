@@ -32,16 +32,16 @@
                         <?php if($_product_sale_price) { ?>
                             <li><span>Sale Price: </span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                         <?php } ?>
-                        <?php if(isset($_product_stock) && $_product_stock == 0) { ?>
+                        <?php if(isset($_product_stock) && $_product_stock == 0  && $_product_managing_stock ) { ?>
                             <li>
-                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '') ? $_product_stock : '0'; ?>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' ) ? $_product_stock : '0'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
                                     <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
                                 <? } ?>
                             </li>
                         <?php } else { ?>
                             <li>
-                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '') ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' && $_product_managing_stock ) ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
                                     <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
                                 <? } ?>
