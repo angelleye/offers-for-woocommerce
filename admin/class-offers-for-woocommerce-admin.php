@@ -1639,6 +1639,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array('option_label' => 'Lightbox', 'option_value' => 'lightbox')
                 ))
         );
+
+        /**
+         * Add field - 'Display Settings' - 'display_setting_make_offer_button_position_single'
+         * Make Offer Button position
+         */
+        add_settings_field(
+            'display_setting_make_offer_button_position_single', // ID
+            'Make Offer button position', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
+            'offers_for_woocommerce_display_settings', // Page
+            'display_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_button_position_single', 'input_required'=>FALSE,
+                'options'=> array(
+                    array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
+                    array('option_label' => 'Before product summary', 'option_value' => 'before_summary')
+                ))
+        );
 		
 		/**
 		 * Add field - 'Display Settings' - 'display_setting_custom_make_offer_btn_text'

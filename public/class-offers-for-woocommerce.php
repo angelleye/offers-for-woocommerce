@@ -84,7 +84,10 @@ class Angelleye_Offers_For_Woocommerce {
 		
 		/* Add "Make Offer" button code parts - After add to cart */
 		add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'angelleye_ofwc_after_add_to_cart_button' ) );
-		
+
+        /* Add "Make Offer" button code parts - Before single product summary */
+        add_action( 'woocommerce_before_single_product_summary', array( $this, 'angelleye_ofwc_woocommerce_before_single_product_summary' ) );
+
 		/* Add "Make Offer" button code parts - After shop loop item */
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'angelleye_ofwc_after_show_loop_item' ), 99, 2 );
 
@@ -164,6 +167,9 @@ class Angelleye_Offers_For_Woocommerce {
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
+        // get offers options - display
+        $button_options_display = get_option('offers_for_woocommerce_options_display');
+
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
         {
@@ -177,8 +183,15 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                echo '<div class="offers-for-woocommerce-make-offer-button-cleared"></div>
-                <div class="offers-for-woocommerce-add-to-cart-wrap"><div>';
+                if( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] == 'before_summary')
+                {
+                    // do not return button if alternate button position
+                }
+                else
+                {
+                    echo '<div class="offers-for-woocommerce-make-offer-button-cleared"></div>
+                    <div class="offers-for-woocommerce-add-to-cart-wrap"><div>';
+                }
             }
 		}
 	}
@@ -223,13 +236,68 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
-                $lightbox_class = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-                echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '. $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
-                echo '</div>';
+                if( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] == 'before_summary')
+                {
+                    // do not return button if alternate button position
+                }
+                else {
+                    $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
+                    $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
+                    echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                    echo '</div>';
+                }
             }
 		}
 	}
+
+    /**
+     * Add Make Offer button before single product summary
+     *
+     * @since	0.1.0
+     */
+    public function angelleye_ofwc_woocommerce_before_single_product_summary()
+    {
+        global $post;
+        $custom_tab_options_offers = array(
+            'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
+        );
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+
+        // if post has offers button enabled
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
+        {
+            // get offers options - display
+            $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+            $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'angelleye_offers_for_woocommerce');
+
+            $custom_styles_override = '';
+            if ($button_options_display) {
+                if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
+                    $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . '!important;';
+                }
+                if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
+                    $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important;';
+                }
+            }
+
+            if( (is_front_page() && !$button_global_onoff_frontpage) || (!is_front_page() && !is_product() && !$button_global_onoff_catalog) )
+            {
+                //
+            }
+            else
+            {
+                if( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] == 'before_summary')
+                {
+                    $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
+                    echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                }
+            }
+        }
+    }
 	
 	/**
 	 * Callback - Add Make Offer button after add to cart button on Catalog view
@@ -327,7 +395,7 @@ class Angelleye_Offers_For_Woocommerce {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
 
-            if($button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox')
+            if( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox')
             {
                 return $tabs;
             }
