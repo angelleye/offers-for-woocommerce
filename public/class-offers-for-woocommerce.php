@@ -85,8 +85,8 @@ class Angelleye_Offers_For_Woocommerce {
 		/* Add "Make Offer" button code parts - After add to cart */
 		add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'angelleye_ofwc_after_add_to_cart_button' ) );
 
-        /* Add "Make Offer" button code parts - Before single product summary */
-        add_action( 'woocommerce_before_single_product_summary', array( $this, 'angelleye_ofwc_woocommerce_before_single_product_summary' ) );
+        /* Add "Make Offer" button code parts - Before single product short description */
+        add_filter( 'woocommerce_short_description', array( $this, 'angelleye_ofwc_woocommerce_short_description' ) );
 
 		/* Add "Make Offer" button code parts - After shop loop item */
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'angelleye_ofwc_after_show_loop_item' ), 99, 2 );
@@ -251,12 +251,13 @@ class Angelleye_Offers_For_Woocommerce {
 	}
 
     /**
-     * Add Make Offer button before single product summary
+     * Add Make Offer button before single product short description
      *
      * @since	0.1.0
      */
-    public function angelleye_ofwc_woocommerce_before_single_product_summary()
+    public function angelleye_ofwc_woocommerce_short_description($short_description)
     {
+        $returnstring = $short_description;
         global $post;
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
@@ -290,13 +291,17 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
+
                 if( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] == 'before_summary')
                 {
                     $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-                    echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                    $returnstring = '<div class=""><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                    $returnstring.= '<div class="angelleye-offers-clearfix"></div>';
+                    $returnstring.= $short_description;
                 }
             }
         }
+        return $returnstring;
     }
 	
 	/**
