@@ -89,17 +89,18 @@
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                         <input type="text" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
                     </div>
+                 </div>
             </div>
             <div class="woocommerce-make-offer-form-section">
-                <label for="offer-name" id="woocommerce-make-offer-form-label">Your Name</label>
+                <label for="offer-name" class="woocommerce-make-offer-form-label">Your Name</label>
                 <br /><input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
-                <label for="offer-name" id="woocommerce-make-offer-form-label">Company Name</label>
+                <label for="offer-name" class="woocommerce-make-offer-form-label">Company Name</label>
                 <br /><input type="text" id="offer-company-name" name="offer_company_name" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_company_name)) ? $offer_company_name: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
-                <label for="offer-name" id="woocommerce-make-offer-form-label">Phone Number</label>
+                <label for="offer-name" class="woocommerce-make-offer-form-label">Phone Number</label>
                 <br /><input type="text" id="offer-phone" name="offer_phone" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_phone)) ? $offer_phone: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
@@ -107,8 +108,8 @@
                 <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
             </div>
             <div class="woocommerce-make-offer-form-section">
-                <label for="offer-notes">Offer Notes (optional)</label>
-                <br /><textarea name="offer_notes" id="angelleye-offer-notes" rows="4" /></textarea>
+                <label for="angelleye-offer-notes">Offer Notes (optional)</label>
+                <br /><textarea name="offer_notes" id="angelleye-offer-notes" rows="4"></textarea>
             </div>
             <div class="woocommerce-make-offer-form-section woocommerce-make-offer-form-section-submit">
                 <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="Submit <?php echo ($is_counter_offer) ? ' Counter ' : ''; ?>Offer" value="Submit <?php echo ($is_counter_offer) ? ' Counter ' : ''; ?>Offer" />
