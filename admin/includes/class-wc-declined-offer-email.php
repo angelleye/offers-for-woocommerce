@@ -39,13 +39,6 @@ class WC_Declined_Offer_Email extends WC_Email {
         $this->heading = 'Declined Offer';
         $this->subject = 'Declined Offer';
 
-        // these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
-        $this->template_html  = 'woocommerce-offer-declined.php';
-        $this->template_html_path = plugin_dir_path(__FILE__). 'emails/';
-
-        $this->template_plain = 'woocommerce-offer-declined.php';
-        $this->template_plain_path = plugin_dir_path(__FILE__). 'emails/plain/';
-
         // Call parent constructor to load any other defaults not explicity defined here
         parent::__construct();
 

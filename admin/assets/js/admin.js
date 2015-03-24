@@ -119,6 +119,20 @@
                 var theTotal = (input1 * input2);
                 $('#offer-total').val( parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString() );
             }
+
+            // show notice if offer quantity exceeds stock and backorders not allowed
+            var maxStockAvailable = $('#offer-max-stock-available').val();
+            var backordersAllowed = $('#offer-backorders-allowed').val();
+            if( backordersAllowed !== 'true' )
+            {
+                if ( parseInt(maxStockAvailable) < parseInt(input1) ) {
+                    $('#angelleye-woocommerce-offer-meta-summary-notice-msg').show();
+                }
+                else
+                {
+                    $('#angelleye-woocommerce-offer-meta-summary-notice-msg').hide();
+                }
+            }
         };
 
         // offer quantity input keyup

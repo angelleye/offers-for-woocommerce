@@ -32,16 +32,16 @@
                         <?php if($_product_sale_price) { ?>
                             <li><span>Sale Price: </span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
                         <?php } ?>
-                        <?php if(isset($_product_stock) && $_product_stock == 0) { ?>
+                        <?php if(isset($_product_stock) && $_product_stock == 0  && $_product_managing_stock ) { ?>
                             <li>
-                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '') ? $_product_stock : '0'; ?>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' ) ? $_product_stock : '0'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
                                     <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
                                 <? } ?>
                             </li>
                         <?php } else { ?>
                             <li>
-                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '') ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' && $_product_managing_stock ) ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
                                     <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
                                 <? } ?>
@@ -56,6 +56,8 @@
                                 <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'angelleye_offers_for_woocommerce' ); ?></span>
                             </li>
                         <? } ?>
+                        <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
+                        <input id="offer-backorders-allowed" type="hidden" value="<?php echo ( $_product_backorders_allowed ) ? 'true' : 'false';?>">
                     </ul>
                 <? } ?>
             </div>
@@ -111,11 +113,20 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Original Data</h5>
-                <ul class="offer-original-meta-values-wrap">
-                    <li>Original Offer Qty: <?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li>Original Offer Price/Per: <?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li>Original Offer Amount: <?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                </ul>
+                <div class="offer-original-meta-values-wrap">
+                    <label for="original-offer-quantity">Orig. Quantity</label>
+                    <div>
+                        <input type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    </div>
+                    <label for="original-offer-price-per">Orig. Price Per</label>
+                    <div>
+                        <input type="text" id="original-offer-amount" value="<?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    </div>
+                    <label for="original-offer-price-per">Orig. Amount</label>
+                    <div>
+                        <input type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                    </div>
+                </div>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
@@ -177,6 +188,11 @@
                 <?php } ?>
                 <input type="hidden" name="woocommerce_offer_summary_metabox_noncename" id="woocommerce_offer_summary_metabox_noncename" value="<?php echo wp_create_nonce( 'woocommerce_offer'.$post->ID ); ?>" />
                 <input type="hidden" name="post_previous_status" id="post_previous_status" value="<?php echo (isset($current_status_value)) ? $current_status_value : ''; ?>">
+
+                <?php $show_notice_msg = ( isset($offer_inventory_msg) && $offer_inventory_msg != '') ? TRUE : FALSE; ?>
+                <div id="angelleye-woocommerce-offer-meta-summary-notice-msg" <?php echo (!$show_notice_msg) ? ' class="angelleye-hidden"' : '';?>">
+                    <div class="aeofwc-notice-msg-inner"><?php echo ($show_notice_msg) ? $offer_inventory_msg : '';?></div>
+                </div>
 
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
                     <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>

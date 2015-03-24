@@ -1,6 +1,6 @@
 <?php
 /**
- * Customer Offer Accepted email
+ * Customer Offer Note email
  *
  * @since	0.1.0
  * @package admin/includes/emails

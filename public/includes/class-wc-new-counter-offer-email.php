@@ -39,13 +39,6 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
             $this->heading = 'New Counter Offer';
             $this->subject = 'New Counter Offer';
 
-            // these define the locations of the templates that this email should use, we'll just use the new order template since this email is similar
-            $this->template_html  = 'woocommerce-new-counter-offer.php';
-            $this->template_html_path = plugin_dir_path(__FILE__). 'emails/';
-
-            $this->template_plain = 'woocommerce-new-counter-offer.php';
-            $this->template_plain_path = plugin_dir_path(__FILE__). 'emails/plain/';
-
             // Call parent constructor to load any other defaults not explicity defined here
             parent::__construct();
 
@@ -61,10 +54,10 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
          */
         public function trigger( $offer_args ) {
 
-            $this->recipient = $offer_args['recipient'];
             $this->offer_args = $offer_args;
+            $this->recipient = $this->get_option( 'recipient' );
 
-            if ( ! $this->is_enabled() || ! $this->recipient )
+            if ( ! $this->is_enabled() )
             {
                 return;
             }

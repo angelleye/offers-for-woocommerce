@@ -1,6 +1,6 @@
 <?php
 /**
- * Customer Offer Accepted email (plain text)
+ * Customer Offer Declined email (plain text)
  *
  * @since	0.1.0
  * @package admin/includes/emails/plain
@@ -10,24 +10,24 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 echo $email_heading . "\n\n";
 
-echo sprintf(__('<p><strong>We have declined your offer on %s.</strong></p>'), get_bloginfo('name')) . "\n\n";
+$link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
+echo sprintf( __( 'We have declined your offer on %s.', 'angelleye_offers_for_woocommerce' ), get_bloginfo( 'name' ) ) . "\n\n";
 
-if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
-{
-    echo "<strong>". __( 'Offer Notes: ', 'offers-for-woocommerce' ) ."</strong>". $offer_args['offer_notes'] . "\n\n";
-}
-
-echo "****************************************************\n\n";
+echo "****************************************************\n";
 
 echo sprintf( __( 'Offer ID: %s', 'angelleye_offers_for_woocommerce'), $offer_args['offer_id'] ) . "\n";
 
 echo "\n";
 
-echo "Product: " . $offer_args['product']->post_title . "\n";
-echo "Quantity: " . $offer_args['product_qty'] . "\n";
-echo "Price Per: " . $offer_args['product_price_per'] . "\n";
-echo "Subtotal: " . $offer_args['product_total'] . "\n";
+echo __( 'Product', 'woocommerce' ) . ': ' . stripslashes($offer_args['product_title_formatted']) . "\n";
+echo __( 'Quantity', 'woocommerce' ) . ': ' . number_format( $offer_args['product_qty'], 0 ) . "\n";
+echo __( 'Price', 'woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2 ) . "\n";
+echo 'Subtotal' . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2 );
+
+if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
+{
+    echo "\n\n" . __( 'Offer Notes: ', 'angelleye_offers_for_woocommerce' ) . $offer_args['offer_notes'];
+}
 
 echo "\n****************************************************\n\n";
-
 echo apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) );

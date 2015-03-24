@@ -1,6 +1,6 @@
 <?php
 /**
- * Customer Offer Accepted email
+ * Customer Offer Countered email
  *
  * @since	0.1.0
  * @package admin/includes/emails
@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
 <?php printf( '<strong>We have provided you with a counter offer on %s.</strong><br />', get_bloginfo( 'name' ) ) ;?>
-<p>To pay for this order please use the following link: <a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'];?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Pay', 'offers-for-woocommerce' ); ?></span></a>
-<p>To make a counter offer use the following link: <a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'] ;?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo 'aewcobtn=1&offer-pid='.$offer_args['offer_id']. '&offer-uid=' .$offer_args['offer_uid']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Counter', 'offers-for-woocommerce' ); ?></span></a>
+<p>To pay for this order please use the following link: <a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'];?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Pay', 'angelleye_offers_for_woocommerce' ); ?></span></a>
+<p>To make a counter offer use the following link: <a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'] ;?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo 'aewcobtn=1&offer-pid='.$offer_args['offer_id']. '&offer-uid=' .$offer_args['offer_uid']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Counter', 'angelleye_offers_for_woocommerce' ); ?></span></a>
 </p>
 
-<h2><?php echo __( 'Offer ID:', 'woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
+<h2><?php echo __( 'Offer ID:', 'angelleye_offers_for_woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
 
 <table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
     <thead>
@@ -39,6 +39,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     </tfoot>
 </table>
 
-<?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Counter Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
+<?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Counter Offer Notes:', 'angelleye_offers_for_woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
 <?php do_action( 'woocommerce_email_footer' ); ?>
