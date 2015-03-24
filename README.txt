@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -61,6 +61,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
 
 == Changelog ==
+
+= 1.0.1 - 03/24/2015 =
+* Fix - Adds system admin as default email when no receivers are set.
+* Fix - Resolves HTML5 validation errors with output.
 
 = 1.0.0 - 03/24/2015 =
 * Tweak - Disable offer button for external / free products.
