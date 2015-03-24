@@ -57,6 +57,11 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
             $this->offer_args = $offer_args;
             $this->recipient = $this->get_option( 'recipient' );
 
+            if( !$this->recipient )
+            {
+                $this->recipient = get_option('admin_email');
+            }
+
             if ( ! $this->is_enabled() )
             {
                 return;
