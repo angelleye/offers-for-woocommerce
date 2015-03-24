@@ -19,7 +19,7 @@ Provide the ability for customers to submit offers for items in a WooCommerce st
  * Adds a "Make an Offer" button to products.
  * Provides a form for potential buyers to enter offer details and submit the offer.
  * Email notifications for new offers, accepted offers, counter offers, and declined offers, adjustment through WooCommerce email settings.
- * Manage offers in your WordPress / WooCommerce control panel just like you do your orders!
+ * Manage offers in your WordPress / WooCommerce control panel the same way you manage your orders!
 
 = Get Involved =
 
@@ -71,7 +71,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Fix - Resolves issue with plain text emails and eliminates "file was not found" error.
 * Fix - Resolves an issue causing the CC of email addresses for offer notifications to fail.
 * Fix - Various bug fixes, CSS, and jQuery adjustments.
-* Fix - Resolves conflict with the WooThemes Wishlist plugin.
+* Fix - Resolves conflict with the WooThemes WishList plugin.
 * Feature - Display currency symbol using WooCommerce setting.
 * Feature - Adds a complete uninstaller.
 * Feature - Adds an option to use embed the offer form in a tab on the product page or within a lightbox window.
