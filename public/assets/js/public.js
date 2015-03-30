@@ -10,8 +10,15 @@
                 get[split[0]] = split[1];
             });
 
-            if(get["aewcobtn"] && ( !$("div.woocommerce-message").length > 0 ) ){
-                angelleyeOpenMakeOfferForm();
+            if(get["aewcobtn"] && !( $("div.woocommerce-message").length > 0 ) ){
+                if( !$(".woocommerce-error:first").hasClass('aeofwc-woocommerce-error') )
+                {
+                    // do nothing
+                }
+                else
+                {
+                    angelleyeOpenMakeOfferForm();
+                }
             }
 
             $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){

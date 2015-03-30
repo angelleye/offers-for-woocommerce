@@ -14,7 +14,7 @@
 
 <!-- This file is used to markup the public facing aspect of the plugin. -->
 <div id="tab_custom_ofwc_offer_tab_alt_message" class="tab_custom_ofwc_offer_tab_inner_content">
-    <ul class="woocommerce-error">
+    <ul class="woocommerce-error aeofwc-woocommerce-error">
         <li><strong>Selection Required: </strong>Select product options above before making new offer.</li>
     </ul>        
 </div>
@@ -24,18 +24,18 @@
     </ul>        
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_2" class="tab_custom_ofwc_offer_tab_inner_content">
-    <ul class="woocommerce-error">
+    <ul class="woocommerce-error aeofwc-woocommerce-error">
         <li><strong>Error: </strong>There was an error sending your offer, please try again. If this problem persists, please contact us.</li>
     </ul>
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_custom" class="tab_custom_ofwc_offer_tab_inner_content">
-    <ul class="woocommerce-error">
+    <ul class="woocommerce-error aeofwc-woocommerce-error">
         <li id="alt-message-custom"></li>
     </ul>
 </div>
 <?php if($parent_offer_error && $parent_offer_error_message) { ?>
 <div id="tab_custom_ofwc_offer_tab_alt_message_3" class="tab_custom_ofwc_offer_tab_inner_content tab_custom_ofwc_offer_tab_alt_message_2">
-    <ul class="woocommerce-error">
+    <ul class="woocommerce-error aeofwc-woocommerce-error">
         <li><strong>Error: </strong><?php echo $parent_offer_error_message;?></li>
     </ul>
 </div>
