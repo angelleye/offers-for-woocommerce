@@ -9,7 +9,8 @@
                 var split = val.split("=", 2);
                 get[split[0]] = split[1];
             });
-            if(get["aewcobtn"]){
+
+            if(get["aewcobtn"] && ( !$("div.woocommerce-message").length > 0 ) ){
                 angelleyeOpenMakeOfferForm();
             }
 
