@@ -70,10 +70,14 @@
             <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">
             <? } ?>
             <div class="woocommerce-make-offer-form-section">
+                <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
+                    <input type="hidden" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" value="1" />
+                <?php } else { ?>
             	<div class="woocommerce-make-offer-form-part-left">
                     <label for="woocommerce-make-offer-form-quantity">Quantity</label>
                     <br /><input type="text" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" />
                 </div>
+                <?php } ?>
                 <div class="woocommerce-make-offer-form-part-left">
                 	<label for="woocommerce-make-offer-form-price-each">Price Each</label>
                     <br />
@@ -83,12 +87,16 @@
                     </div>
                 </div>
                 <div class="woocommerce-make-offer-form-part-left">
-                	<label for="woocommerce-make-offer-form-total">Total Offer Amount</label>
+                    <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
+                        <input type="hidden" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
+                    <?php } else { ?>
+                    <label for="woocommerce-make-offer-form-total">Total Offer Amount</label>
 	                <br />
                     <div class="angelleye-input-group">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                         <input type="text" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
                     </div>
+                    <?php } ?>
                  </div>
             </div>
             <div class="woocommerce-make-offer-form-section">

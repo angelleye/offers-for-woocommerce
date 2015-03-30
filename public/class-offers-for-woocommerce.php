@@ -353,6 +353,12 @@ class Angelleye_Offers_For_Woocommerce {
 	 */
 	public function angelleye_ofwc_display_custom_woocommerce_product_tab_content()
 	{
+        global $post;
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_sold_individually = $_product->is_sold_individually();
+
         // set parent offer id if found in get var
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
         $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? $_GET['offer-uid'] : '';
