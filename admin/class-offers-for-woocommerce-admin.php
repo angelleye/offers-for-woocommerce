@@ -258,6 +258,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_action('pre_get_posts', array( $this, 'my_pre_get_posts' ) );
 
+        /**
+         * Join posts and postmeta tables
+         * @since   1.0.1
+         */
+        add_filter('posts_join', array( $this, 'aeofwc_search_join' ) );
+
+        /**
+         * Modify the search query with posts_where
+         * @since   1.0.1
+         */
+        add_filter( 'posts_where', array( $this, 'aeofwc_search_where' ) );
+
+        /**
+         * Prevent duplicates
+         * @since   1.0.1
+         */
+        add_filter( 'posts_distinct', array( $this, 'aeofwc_search_distinct' ) );
+
         /*
          * Action - Ajax 'approve offer' from manage list
          * @since	0.1.0
@@ -716,6 +734,50 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			}						
 		}		
 	}
+
+    /**
+     * Join posts and postmeta tables
+     * @since   1.0.1
+     */
+    function aeofwc_search_join( $join ) {
+        global $wpdb;
+
+        if ( is_search() ) {
+            $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
+        }
+
+        return $join;
+    }
+
+    /**
+     * Modify the search query with posts_where
+     * @since   1.0.1
+     */
+    function aeofwc_search_where( $where ) {
+        global $pagenow, $wpdb;
+
+        if ( is_search() ) {
+            $where = preg_replace(
+                "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+        }
+
+        return $where;
+    }
+
+    /**
+     * Prevent duplicates
+     * @since   1.0.1
+     */
+    function aeofwc_search_distinct( $where ) {
+        global $wpdb;
+
+        if ( is_search() ) {
+            return "DISTINCT";
+        }
+
+        return $where;
+    }
 	
 	/**
 	 * Filter the "quick edit" action links for CPT edit list view
