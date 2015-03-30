@@ -353,6 +353,12 @@ class Angelleye_Offers_For_Woocommerce {
 	 */
 	public function angelleye_ofwc_display_custom_woocommerce_product_tab_content()
 	{
+        global $post;
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_sold_individually = $_product->is_sold_individually();
+
         // set parent offer id if found in get var
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
         $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? $_GET['offer-uid'] : '';
@@ -468,6 +474,14 @@ class Angelleye_Offers_For_Woocommerce {
 			self::single_activate();
 		}
 		flush_rewrite_rules();
+
+        /**
+         * Log activation in Angell EYE database via web service.
+         */
+        $log_url = $_SERVER['HTTP_HOST'];
+        $log_plugin_id = 3;
+        $log_activation_status = 1;
+        wp_remote_request('http://www.angelleye.com/web-services/wordpress/update-plugin-status.php?url=' . $log_url . '&plugin_id=' . $log_plugin_id . '&activation_status=' . $log_activation_status);
 	}
 
 	/**
@@ -507,6 +521,14 @@ class Angelleye_Offers_For_Woocommerce {
 			self::single_deactivate();
 		}
 		flush_rewrite_rules();
+
+        /**
+         * Log deactivation in Angell EYE database via web service.
+         */
+        $log_url = $_SERVER['HTTP_HOST'];
+        $log_plugin_id = 3;
+        $log_activation_status = 0;
+        wp_remote_request('http://www.angelleye.com/web-services/wordpress/update-plugin-status.php?url='.$log_url.'&plugin_id='.$log_plugin_id.'&activation_status='.$log_activation_status);
 	}
 
 	/**

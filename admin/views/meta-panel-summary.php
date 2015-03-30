@@ -203,6 +203,10 @@
                     <div class="angelleye-clearfix"></div>
                 </div>
 
+            <div id="aeofwc-delete-action">
+                <a class="submitdelete deletion" href="<?php echo get_delete_post_link( $post->ID );?>">Move to Trash</a>
+            </div>
+
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
                 <div class="offer-order-meta">
                     <h5>Related Orders</h5>
@@ -216,7 +220,6 @@
                 </div>
                 <?php } ?>
                 <div class="angelleye-clearfix"></div>
-
             </div>
             <div class="angelleye-clearfix"></div>
         </div>
