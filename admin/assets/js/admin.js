@@ -150,6 +150,15 @@
             $('#angelleye-offer-buyer-history').slideToggle('800');
             return false;
         });
+
+        // Move to Trash confirmation
+        $('#aeofwc-delete-action .deletion').click(function(){
+
+            if(!confirm('are you sure?'))
+            {
+                return false;
+            }
+        });
 	});
 
 }(jQuery));
