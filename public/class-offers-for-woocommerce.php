@@ -373,6 +373,8 @@ class Angelleye_Offers_For_Woocommerce {
             $post_parent_type = get_post_type($parent_offer_id);
             $parent_post_offer_uid = get_post_meta($parent_offer_id, 'offer_uid', true);
 
+            $final_offer = get_post_meta($parent_offer_id, 'offer_final_offer', true );
+
             // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
             if( (isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || (!$parent_post_offer_uid) || ($parent_offer_uid == '') || ($parent_post_offer_uid != $parent_offer_uid) )
             {
@@ -389,6 +391,13 @@ class Angelleye_Offers_For_Woocommerce {
                     $parent_offer_error = true;
                     $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'angelleye_offers_for_woocommerce');
                 }
+            }
+            // If offer counter was set to 'final offer'
+            elseif( $final_offer == '1' )
+            {
+                $parent_offer_id = '';
+                $parent_offer_error = true;
+                $parent_offer_error_message = __('You can not submit a counter offer at this time; Counter offer is a final offer. You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce');
             }
             else
             {

@@ -1316,6 +1316,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * OK, its safe for us to save the data now
          */
 
+        // Save 'final offer' post meta
+        $offer_final_offer = (isset($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
+        update_post_meta( $post_id, 'offer_final_offer', $offer_final_offer );
+
         // Get current data for Offer after saved
         $post_data = get_post($post_id);
         // Filter Post Status Label
@@ -1551,7 +1555,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
-                'offer_notes' => $offer_notes
+                'offer_notes' => $offer_notes,
+                'final_offer' => $offer_final_offer
             );
 
             if( $variant_id )

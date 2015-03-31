@@ -550,3 +550,6 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 #aeofwc-delete-action { text-align:right; }
 #aeofwc-delete-action .deletion { color:#A00; text-decoration: none; }
 #aeofwc-delete-action .deletion:hover { color:#FF0000; }
+
+.woocommerce-offer-final-offer-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-final-offer-wrap label { float:left; margin-right:8px; }
