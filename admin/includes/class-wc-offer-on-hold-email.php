@@ -9,19 +9,19 @@ if ( ! class_exists( 'WC_Offer_On_Hold_Email' ) ) :
     /**
      * A custom Offer On Hold WooCommerce Email class
      *
-     * @since 0.1.0
+     * @since 1.0.1
      * @extends WC_Email
      */
     class WC_Offer_On_Hold_Email extends WC_Email {
         /**
          * Set email defaults
          *
-         * @since 0.1.0
+         * @since 1.0.1
          */
         public function __construct() {
             /**
              * Call $plugin_slug from public plugin class
-             * @since	0.1.0
+             * @since	1.0.1
              */
             $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
             $this->plugin_slug = $plugin->get_plugin_slug();
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WC_Offer_On_Hold_Email' ) ) :
         /**
          * Determine if the email should actually be sent and setup email merge variables
          *
-         * @since 0.1.0
+         * @since 1.0.1
          * @param int $order_id
          */
         public function trigger( $offer_args ) {
@@ -69,7 +69,7 @@ if ( ! class_exists( 'WC_Offer_On_Hold_Email' ) ) :
         /**
          * get_content_html function.
          *
-         * @since 0.1.0
+         * @since 1.0.1
          * @return string
          */
         public function get_content_html() {
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WC_Offer_On_Hold_Email' ) ) :
         /**
          * get_content_plain function.
          *
-         * @since 0.1.0
+         * @since 1.0.1
          * @return string
          */
         public function get_content_plain() {
@@ -109,7 +109,7 @@ if ( ! class_exists( 'WC_Offer_On_Hold_Email' ) ) :
         /**
          * Initialize Settings Form Fields
          *
-         * @since 0.1.0
+         * @since 1.0.1
          */
         public function init_form_fields() {
 
