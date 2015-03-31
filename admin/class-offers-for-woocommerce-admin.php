@@ -1407,6 +1407,95 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_email->trigger($offer_args);
         }
 
+        // Offer On Hold
+        if($post_data->post_status == 'on-hold-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'on-hold-offer')
+        {
+            /**
+             * Email customer offer on hold email template
+             * @since   1.0.1
+             */
+            // set recipient email
+            $recipient = get_post_meta($post_id, 'offer_email', true);
+            $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
+
+            $product_id = get_post_meta($post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
+            $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
+
+            $offer_args = array(
+                'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
+                'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
+                'product_id' => $product_id,
+                'product_url' => $product->get_permalink(),
+                'variant_id' => $variant_id,
+                'product' => $product,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_total' => $product_total,
+                'offer_notes' => $offer_notes
+            );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
+
+            // the email we want to send
+            $email_class = 'WC_Offer_On_Hold_Email';
+
+            // load the WooCommerce Emails
+            $wc_emails = new WC_Emails();
+            $emails = $wc_emails->get_emails();
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-on-hold.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-on-hold.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
+            $new_email->trigger($offer_args);
+        }
+
         // Counter Offer
         if($post_data->post_status == 'countered-offer')
         {
