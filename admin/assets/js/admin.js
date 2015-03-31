@@ -5,6 +5,13 @@
 
 		// Place your administration-specific JavaScript here
         $(document).ready(function(){
+
+            /**
+             * Init datepicker for offer expiration date
+             * @since   1.0.1
+             */
+            $('.datepicker').datepicker();
+
             $('#offer-quantity').autoNumeric('init',
                 {
                     vMin: '0',

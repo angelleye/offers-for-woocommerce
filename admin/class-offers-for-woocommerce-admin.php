@@ -2041,7 +2041,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if ( ("edit-woocommerce_offer" == $screen->id || "woocommerce_offer" == $screen->id || $this->plugin_screen_hook_suffix == $screen->id) )
         {
             // Bootstrap styles for modal
-            wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/bootstrap-custom.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-boostrap-custom', plugins_url( 'assets/css/bootstrap-custom.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // jQuery styles
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-ui', plugins_url( 'assets/css/jquery-ui.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-ui-structure', plugins_url( 'assets/css/jquery-ui.structure.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-ui-theme', plugins_url( 'assets/css/jquery-ui.theme.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+
             // admin styles
             wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
         }
@@ -2089,6 +2095,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         if ( "woocommerce_offer" == $screen->id && is_admin() )
         {
+            // Jquery datepicker.js
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-datepicker', plugins_url( 'assets/js/jquery-ui.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+
             // autoNumeric js
             wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url( '../public/assets/js/autoNumeric-1-9-24.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
