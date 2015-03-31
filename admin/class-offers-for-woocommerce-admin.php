@@ -2553,12 +2553,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         require( 'includes/class-wc-accepted-offer-email.php' );
         require( 'includes/class-wc-declined-offer-email.php' );
         require( 'includes/class-wc-countered-offer-email.php' );
+        require( 'includes/class-wc-offer-on-hold-email.php' );
         require( 'includes/class-wc-offer-note-email.php' );
 
         // add the email class to the list of email classes that WooCommerce loads
         $email_classes['WC_Accepted_Offer_Email'] = new WC_Accepted_Offer_Email();
         $email_classes['WC_Declined_Offer_Email'] = new WC_Declined_Offer_Email();
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
+        $email_classes['WC_Offer_On_Hold_Email'] = new WC_Offer_On_Hold_Email();
         $email_classes['WC_Offer_Note_Email'] = new WC_Offer_Note_Email();
 
         return $email_classes;
