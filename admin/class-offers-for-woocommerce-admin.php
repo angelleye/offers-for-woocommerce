@@ -133,6 +133,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'init', array( $this, 'my_custom_post_status_countered' ), 10, 2 );
 
         /**
+         * Adds post_status 'on-hold-offer'
+         * @since	1.0.1
+         */
+        add_action( 'init', array( $this, 'my_custom_post_status_on_hold' ), 10, 2 );
+
+        /**
          * XXX
          * @since	0.1.0
          */
@@ -856,6 +862,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'exclude_from_search'       => false,
         );
         register_post_status( 'countered-offer', $args );
+    }
+
+    /**
+     * Register custom post status type -- Offer On Hold
+     * @since	1.0.1
+     */
+    public function my_custom_post_status_on_hold()
+    {
+        $args = array(
+            'label'                     => _x( 'on-hold-offer', 'On Hold', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'On Hold (%s)',  'On Hold (%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'on-hold-offer', $args );
     }
 
     /**
