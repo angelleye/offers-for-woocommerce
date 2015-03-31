@@ -9,7 +9,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
-    <p><strong><?php __( 'Your offer has been placed on hold.', 'angelleye_offers_for_woocommerce' ); ?></strong></p>
+    <p><strong><?php _e( 'Your offer has been placed on hold.', 'angelleye_offers_for_woocommerce' ); ?></strong></p>
 
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'angelleye_offers_for_woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
