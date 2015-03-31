@@ -183,6 +183,7 @@
                             <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
                             <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
                             <option value="completed-offer" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo 'selected="selected"'; ?>>Completed Offer</option>
+                            <option value="on-hold-offer" <?php if (isset($current_status_value) && $current_status_value == 'on-hold-offer') echo 'selected="selected"'; ?>>On Hold</option>
                         </select>
                     </div>
                 <?php } ?>
