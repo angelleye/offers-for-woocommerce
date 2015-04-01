@@ -333,6 +333,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_init', array( $this, 'ae_ofwc_check_woocommerce_available' ) );
 
         /**
+         * Action - Bulk action - Enable/Disable Offers on WooCommerce products
+         * @since   1.0.1
+         */
+        add_action('admin_footer-edit.php', array( $this, 'custom_bulk_admin_footer' ) );
+
+        /**
+         * Action - Bulk action - Process Enable/Disable Offers on WooCommerce products
+         * @since   1.0.1
+         */
+        add_action('load-edit.php', array( $this, 'custom_bulk_action' ) );
+
+        /**
+         * Action - Show admin notice for bulk action Enable/Disable Offers on WooCommerce products
+         * @since   1.0.1
+         */
+        add_action('admin_notices', array( $this, 'custom_bulk_admin_notices' ) );
+
+        /**
          * END - custom functions
          */
 
@@ -2908,6 +2926,93 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /* If user clicks to ignore the notice, add that to their user meta */
         if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_01']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_01'] ) {
             add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01', 'true');
+        }
+    }
+
+    /**
+     * Action - Bulk action - Enable/Disable Offers on WooCommerce products
+     * @since   1.0.1
+     */
+    public function custom_bulk_admin_footer() {
+
+        global $post_type;
+
+        if($post_type == 'product') {
+            ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers')?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers')?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers')?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers')?>').appendTo("select[name='action2']");
+                });
+            </script>
+        <?php
+        }
+    }
+
+    /**
+     * Action - Bulk action - Process Enable/Disable Offers on WooCommerce products
+     * @since   1.0.1
+     */
+    public function custom_bulk_action() {
+
+        $wp_list_table = _get_list_table('WP_Posts_List_Table');
+        $action = $wp_list_table->current_action();
+
+        $post_ids = (isset($_REQUEST['post']) ) ? $_REQUEST['post'] : FALSE;
+
+        if($post_ids) {
+            switch ($action) {
+                case 'enable_offers':
+                    $updated_count = 0;
+
+                    foreach ($post_ids as $post_id) {
+                        // update post
+                        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', 'yes');
+                        $updated_count++;
+                    }
+                    // build the redirect url
+                    $sendback = add_query_arg(array('enabled_offers' => $updated_count, 'ids' => join(',', $post_ids)), 'edit.php?post_type=product');
+
+                    break;
+                case 'disable_offers':
+                    $updated_count = 0;
+
+                    foreach ($post_ids as $post_id) {
+                        // update post
+                        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', 'no');
+                        $updated_count++;
+                    }
+                    // build the redirect url
+                    $sendback = add_query_arg(array('disabled_offers' => $updated_count, 'ids' => join(',', $post_ids)), 'edit.php?post_type=product');
+
+                    break;
+                default:
+                    return;
+            }
+
+            wp_redirect($sendback);
+            exit();
+        }
+    }
+
+    /**
+     * Action - Show admin notice for bulk action Enable/Disable Offers on WooCommerce products
+     * @since   1.0.1
+     */
+    public function custom_bulk_admin_notices()
+    {
+        global $post_type, $pagenow;
+
+        if($pagenow == 'edit.php' && $post_type == 'product' && isset($_REQUEST['enabled_offers']) && (int) $_REQUEST['enabled_offers'] && ($_REQUEST['enabled_offers'] > 0)) {
+            $message = sprintf( __( 'Offers enabled for %s products.', 'angelleye_offers_for_woocommerce' ), number_format_i18n( $_REQUEST['enabled_offers'] ) );
+            echo '<div class="updated"><p>'.$message.'</p></div>';
+        }
+
+        if($pagenow == 'edit.php' && $post_type == 'product' && isset($_REQUEST['disabled_offers']) && (int) $_REQUEST['disabled_offers'] && ($_REQUEST['disabled_offers'] > 0)) {
+            $message = sprintf( __( 'Offers disabled for %s products.', 'angelleye_offers_for_woocommerce' ), number_format_i18n( $_REQUEST['disabled_offers'] ) );
+            echo '<div class="updated"><p>'.$message.'</p></div>';
         }
     }
 
