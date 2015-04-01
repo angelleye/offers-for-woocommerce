@@ -333,12 +333,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_init', array( $this, 'ae_ofwc_check_woocommerce_available' ) );
 
         /**
-         * Auto-Expire offers with expire date past
-         * @since   1.0.1
-         */
-        add_action('init', array( $this, 'angelleye_ofwc_auto_expire_offers' ), 1 );
-
-        /**
          * END - custom functions
          */
 
@@ -743,7 +737,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		{
 			if( is_admin() && $query->is_main_query() ) 
 			{
-				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','buyercountered-offer','declined-offer','completed-offer','on-hold-offer','expired-offer' ) );
+				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','buyercountered-offer','declined-offer','completed-offer','on-hold-offer' ) );
 				if ( !$arg_orderby)
 				{
 					$query->set('orderby', 'post_date');
@@ -911,7 +905,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'label'                     => _x( 'expired-offer', 'Expired', 'angelleye_offers_for_woocommerce' ),
             'label_count'               => _n_noop( 'Expired (%s)',  'Expired(%s)', 'angelleye_offers_for_woocommerce' ),
             'public'                    => true,
-            'show_in_admin_all_list'    => true,
+            'show_in_admin_all_list'    => false,
             'show_in_admin_status_list' => true,
             'exclude_from_search'       => false,
         );
@@ -1038,6 +1032,34 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			add_filter('gettext',  array( $this, 'my_get_translated_text_publish' ) );
 			add_filter('ngettext', array( $this, 'my_get_translated_text_publish' ) );
 		}
+
+        /**
+         * Auto-Expire offers with expire date past
+         * @since   1.0.1
+         */
+        if ( "edit-woocommerce_offer" == $screen->id )
+        {
+            global $wpdb;
+
+            $target_now_date = date("Y-m-d H:i:s", time());
+
+            $expired_offers = $wpdb->get_results($wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE `meta_key` = '%s' AND `meta_value` <> ''", 'offer_expiration_date'), 'ARRAY_A');
+            if (($expired_offers) && !empty($expired_offers))
+            {
+                foreach ($expired_offers as $v)
+                {
+                    $offer_expire_date_formatted = date("Y-m-d 00:00:00", strtotime($v['meta_value']));
+                    if( $offer_expire_date_formatted <= $target_now_date )
+                    {
+                        $target_post = array(
+                            'ID' => $v['post_id'],
+                            'post_status' => 'expired-offer'
+                        );
+                        wp_update_post($target_post);
+                    }
+                }
+            }
+        }
 	}
 	
 	/**
@@ -2867,30 +2889,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /* If user clicks to ignore the notice, add that to their user meta */
         if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_01']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_01'] ) {
             add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01', 'true');
-        }
-    }
-
-    /**
-     * Auto-Expire offers with expire date past
-     * @since   1.0.1
-     */
-    public function angelleye_ofwc_auto_expire_offers()
-    {
-        global $wpdb;
-
-        $targets_expired = array();
-
-        $expired_offers = $wpdb->get_results( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE `meta_key` = '%s' AND `meta_value` <> '' AND `meta_value` < NOW() ", 'offer_expiration_date' ), 'ARRAY_N');
-        if( ($expired_offers) && !empty($expired_offers) )
-        {
-            foreach($expired_offers as $v)
-            {
-                $target_post = array(
-                    'ID'           => $v[0],
-                    'post_status'   => 'expired-offer'
-                );
-                wp_update_post( $target_post );
-            }
         }
     }
 
