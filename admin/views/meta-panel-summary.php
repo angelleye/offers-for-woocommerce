@@ -198,13 +198,8 @@
                 </div>
 
                 <div class="woocommerce-offer-expiration-wrap">
-                    <div>
-                        <label for="offer-expiration-date">Offer Expires</label>
-                    </div>
-                    <div>
-                        <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("Y-m-d", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>">
-                    </div>
-                    <div class="angelleye-offers-clearfix"></div>
+                    <label for="offer-expiration-date">Offer Expires</label>
+                    <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("Y-m-d", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>">
                 </div>
 
                 <?php $show_notice_msg = ( isset($offer_inventory_msg) && $offer_inventory_msg != '') ? TRUE : FALSE; ?>

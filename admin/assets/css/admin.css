@@ -553,7 +553,28 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 
 .woocommerce-offer-final-offer-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
 .woocommerce-offer-final-offer-wrap label { float:left; margin-right:8px; }
+.woocommerce-offer-final-offer-wrap input { margin-top:-2px; }
 
-.woocommerce-offer-expiration-wrap { margin:10px 0; background:#f0f0f0; padding:6px; position: relative; }
-.woocommerce-offer-expiration-wrap div:first-child { margin-bottom:4px; }
-.woocommerce-offer-expiration-wrap input { width:97.5%!important; }
+.woocommerce-offer-expiration-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-expiration-wrap label { float:left; margin:5px 8px 3px 0; }
+
+.woocommerce-offer-expiration-wrap input { width: 90px; margin:0!important; }
+
+@media screen and (max-width:782px){
+    .woocommerce-offer-final-offer-wrap label { margin-top:3px; }
+    .woocommerce-offer-final-offer-wrap input {
+        /* larger-sized Checkboxes */
+        -ms-transform: scale(1.15); /* IE */
+        -moz-transform: scale(1.15); /* FF */
+        -webkit-transform: scale(1.15); /* Safari and Chrome */
+        -o-transform: scale(1.15); /* Opera */
+        padding: 5px;
+        margin:0;
+    }
+    .woocommerce-offer-final-offer-wrap label,
+    .woocommerce-offer-expiration-wrap label {
+        font-size:14px;
+    }
+    .woocommerce-offer-expiration-wrap label { margin-top:10px; }
+    .woocommerce-offer-expiration-wrap input { width: 110px; margin:0!important; }
+}
