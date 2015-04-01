@@ -88,7 +88,7 @@
                         <?php foreach($author_data->offer_counts as $key => $count) { ?>
                             <?php if(strtolower($key) != 'all') { ?>
                         <tr>
-                            <th><?php echo ucfirst($key) .': '; ?></th>
+                            <th><?php echo ucwords(str_replace('buyercountered', 'Buyer-Countered', str_replace('_', ' ', $key)) ) .': '; ?></th>
                             <td><div>
                                 <?php echo '<span>'. $count .'</span>';?>
                                 <?php if($count > 0) {
@@ -167,7 +167,7 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Buyer Note</h5>
-                <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class=""></textarea>
+                <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class="" autocomplete="off"></textarea>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
@@ -176,18 +176,31 @@
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
                         <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
-                            <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
+                            <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' || $current_status_value == 'expired-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
                             <option value="">- Select status</option>
                             <? } ?>
                             <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>
                             <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
                             <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
                             <option value="completed-offer" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo 'selected="selected"'; ?>>Completed Offer</option>
+                            <option value="on-hold-offer" <?php if (isset($current_status_value) && $current_status_value == 'on-hold-offer') echo 'selected="selected"'; ?>>On Hold</option>
                         </select>
                     </div>
                 <?php } ?>
                 <input type="hidden" name="woocommerce_offer_summary_metabox_noncename" id="woocommerce_offer_summary_metabox_noncename" value="<?php echo wp_create_nonce( 'woocommerce_offer'.$post->ID ); ?>" />
                 <input type="hidden" name="post_previous_status" id="post_previous_status" value="<?php echo (isset($current_status_value)) ? $current_status_value : ''; ?>">
+
+                <div class="woocommerce-offer-final-offer-wrap">
+                    <label for="offer-final-offer">Final Offer</label>
+                    <div>
+                        <input type="checkbox" name="offer_final_offer" id="offer-final-offer" value="1" <?php echo(isset($postmeta['offer_final_offer'][0]) && $postmeta['offer_final_offer'][0] == '1') ? 'checked="checked"' : ''?> autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="woocommerce-offer-expiration-wrap">
+                    <label for="offer-expiration-date">Offer Expires</label>
+                    <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("m/d/Y", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>" autocomplete="off">
+                </div>
 
                 <?php $show_notice_msg = ( isset($offer_inventory_msg) && $offer_inventory_msg != '') ? TRUE : FALSE; ?>
                 <div id="angelleye-woocommerce-offer-meta-summary-notice-msg" <?php echo (!$show_notice_msg) ? ' class="angelleye-hidden"' : '';?>">
@@ -203,6 +216,10 @@
                     <div class="angelleye-clearfix"></div>
                 </div>
 
+            <div id="aeofwc-delete-action">
+                <a class="submitdelete deletion" href="<?php echo get_delete_post_link( $post->ID );?>">Move to Trash</a>
+            </div>
+
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
                 <div class="offer-order-meta">
                     <h5>Related Orders</h5>
@@ -216,7 +233,6 @@
                 </div>
                 <?php } ?>
                 <div class="angelleye-clearfix"></div>
-
             </div>
             <div class="angelleye-clearfix"></div>
         </div>

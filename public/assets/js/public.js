@@ -9,8 +9,16 @@
                 var split = val.split("=", 2);
                 get[split[0]] = split[1];
             });
-            if(get["aewcobtn"]){
-                angelleyeOpenMakeOfferForm();
+
+            if(get["aewcobtn"] && !( $("div.woocommerce-message").length > 0 ) ){
+                if( !$(".woocommerce-error:first").hasClass('aeofwc-woocommerce-error') )
+                {
+                    // do nothing
+                }
+                else
+                {
+                    angelleyeOpenMakeOfferForm();
+                }
             }
 
             $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
@@ -251,7 +259,14 @@
                     $("#lightbox_custom_ofwc_offer_form_close_btn").show();
                 }
 
-                $("#woocommerce-make-offer-form-quantity").focus();
+                if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
+                {
+                    $("#woocommerce-make-offer-form-price-each").focus();
+                }
+                else
+                {
+                    $("#woocommerce-make-offer-form-quantity").focus();
+                }
             }
             else
             {
@@ -260,7 +275,14 @@
                 $(".woocommerce-tabs div.panel").css("display", "none");
                 $(".woocommerce-tabs div#tab-tab_custom_ofwc_offer").css("display", "block");
 
-                $("#woocommerce-make-offer-form-quantity").focus();
+                if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
+                {
+                    $("#woocommerce-make-offer-form-price-each").focus();
+                }
+                else
+                {
+                    $("#woocommerce-make-offer-form-quantity").focus();
+                }
 
                 var targetTab = $(".tab_custom_ofwc_offer_tab");
                 $('html, body').animate({

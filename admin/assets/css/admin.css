@@ -24,7 +24,12 @@
 
 .type-woocommerce_offer.status-publish:hover td,
 .type-woocommerce_offer.status-publish:hover th {
-  background-color: #fef7f1!important;
+    background-color: #fef7f1!important;
+}
+
+.type-woocommerce_offer.status-on-hold-offer:hover td,
+.type-woocommerce_offer.status-on-hold-offer:hover th {
+    background-color: #fef7f1!important;
 }
 
 .type-woocommerce_offer.status-accepted-offer:hover td,
@@ -64,6 +69,7 @@ tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-
 i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
 i.woocommerce-offer-post-status-grid-icon.pending, i.woocommerce-offer-post-status-grid-icon.pending:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
 i.woocommerce-offer-post-status-grid-icon.accepted, i.woocommerce-offer-post-status-grid-icon.accepted:hover { background-color:transparent!important; color:#0074A2!important; border:1px solid #0074A2!important; }
+i.woocommerce-offer-post-status-grid-icon.on-hold, i.woocommerce-offer-post-status-grid-icon.on-hold:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
 i.woocommerce-offer-post-status-grid-icon.countered, i.woocommerce-offer-post-status-grid-icon.countered:hover { background-color:transparent!important; color:#777!important; border:1px solid #ffcc00!important; }
 i.woocommerce-offer-post-status-grid-icon.buyercountered, i.woocommerce-offer-post-status-grid-icon.buyercountered:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777777!important; }
 i.woocommerce-offer-post-status-grid-icon.completed, i.woocommerce-offer-post-status-grid-icon.completed:hover { background-color:transparent!important; color:#52A200!important; border:1px solid #52A200!important; }
@@ -76,6 +82,8 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 }
 .type-woocommerce_offer.status-publish td, .type-woocommerce_offer.status-publish th { background-color: #FEF7F1; }
 .type-woocommerce_offer.status-publish th.check-column { border-left: 4px solid #D54E21; }
+.type-woocommerce_offer.status-on-hold-offer td, .type-woocommerce_offer.status-on-hold-offer th { background-color: #FEF7F1; }
+.type-woocommerce_offer.status-on-hold-offer th.check-column { border-left: 4px solid #D54E21; }
 .type-woocommerce_offer.status-accepted-offer th.check-column { border-left: 4px solid #0074A2; }
 .type-woocommerce_offer.status-countered-offer th.check-column { border-left: 4px solid #ffcc00; }
 .type-woocommerce_offer.status-buyercountered-offer th.check-column { border-left: 4px solid #999; }
@@ -538,3 +546,35 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 }
 
 .angelleye-hidden { display: none; }
+
+#aeofwc-delete-action { text-align:right; }
+#aeofwc-delete-action .deletion { color:#A00; text-decoration: none; }
+#aeofwc-delete-action .deletion:hover { color:#FF0000; }
+
+.woocommerce-offer-final-offer-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-final-offer-wrap label { float:left; margin-right:8px; }
+.woocommerce-offer-final-offer-wrap input { margin-top:-2px; }
+
+.woocommerce-offer-expiration-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-expiration-wrap label { float:left; margin:5px 8px 3px 0; }
+
+.woocommerce-offer-expiration-wrap input { width: 90px; margin:0!important; }
+
+@media screen and (max-width:782px){
+    .woocommerce-offer-final-offer-wrap label { margin-top:3px; }
+    .woocommerce-offer-final-offer-wrap input {
+        /* larger-sized Checkboxes */
+        -ms-transform: scale(1.15); /* IE */
+        -moz-transform: scale(1.15); /* FF */
+        -webkit-transform: scale(1.15); /* Safari and Chrome */
+        -o-transform: scale(1.15); /* Opera */
+        padding: 5px;
+        margin:0;
+    }
+    .woocommerce-offer-final-offer-wrap label,
+    .woocommerce-offer-expiration-wrap label {
+        font-size:14px;
+    }
+    .woocommerce-offer-expiration-wrap label { margin-top:10px; }
+    .woocommerce-offer-expiration-wrap input { width: 110px; margin:0!important; }
+}

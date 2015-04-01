@@ -23,7 +23,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '0.1.0';
+	const VERSION = '1.0.1';
 
 	/**
 	 *
@@ -426,6 +426,12 @@ class Angelleye_Offers_For_Woocommerce {
 	 */
 	public function angelleye_ofwc_display_custom_woocommerce_product_tab_content()
 	{
+        global $post;
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $is_sold_individually = $_product->is_sold_individually();
+
         // set parent offer id if found in get var
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
         $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? $_GET['offer-uid'] : '';
@@ -439,6 +445,10 @@ class Angelleye_Offers_For_Woocommerce {
             $parent_post_status = get_post_status($parent_offer_id);
             $post_parent_type = get_post_type($parent_offer_id);
             $parent_post_offer_uid = get_post_meta($parent_offer_id, 'offer_uid', true);
+
+            $final_offer = get_post_meta($parent_offer_id, 'offer_final_offer', true );
+            $expiration_date = get_post_meta($parent_offer_id, 'offer_expiration_date', true );
+            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 0:0:0", strtotime($expiration_date)) : FALSE;
 
             // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
             if( (isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || (!$parent_post_offer_uid) || ($parent_offer_uid == '') || ($parent_post_offer_uid != $parent_offer_uid) )
@@ -456,6 +466,21 @@ class Angelleye_Offers_For_Woocommerce {
                     $parent_offer_error = true;
                     $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'angelleye_offers_for_woocommerce');
                 }
+            }
+            // If offer counter was set to 'final offer'
+            elseif( $final_offer == '1' )
+            {
+                $parent_offer_id = '';
+                $parent_offer_error = true;
+                $parent_offer_error_message = __('You can not submit a counter offer at this time; Counter offer is a final offer. You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce');
+            }
+
+            // If offer counter 'offer_expiration_date' is past
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted < (date("Y-m-d H:i:s", time())) ) )
+            {
+                $parent_offer_id = '';
+                $parent_offer_error = true;
+                $parent_offer_error_message = __('Counter offer has expired; You can not submit a counter offer at this time. You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce');
             }
             else
             {
@@ -541,6 +566,14 @@ class Angelleye_Offers_For_Woocommerce {
 			self::single_activate();
 		}
 		flush_rewrite_rules();
+
+        /**
+         * Log activation in Angell EYE database via web service.
+         */
+        $log_url = $_SERVER['HTTP_HOST'];
+        $log_plugin_id = 3;
+        $log_activation_status = 1;
+        wp_remote_request('http://www.angelleye.com/web-services/wordpress/update-plugin-status.php?url=' . $log_url . '&plugin_id=' . $log_plugin_id . '&activation_status=' . $log_activation_status);
 	}
 
 	/**
@@ -580,6 +613,14 @@ class Angelleye_Offers_For_Woocommerce {
 			self::single_deactivate();
 		}
 		flush_rewrite_rules();
+
+        /**
+         * Log deactivation in Angell EYE database via web service.
+         */
+        $log_url = $_SERVER['HTTP_HOST'];
+        $log_plugin_id = 3;
+        $log_activation_status = 0;
+        wp_remote_request('http://www.angelleye.com/web-services/wordpress/update-plugin-status.php?url='.$log_url.'&plugin_id='.$log_plugin_id.'&activation_status='.$log_activation_status);
 	}
 
 	/**
@@ -1081,6 +1122,10 @@ class Angelleye_Offers_For_Woocommerce {
             // check for parent offer unique id
             $offer_uid = get_post_meta( $offer->ID, 'orig_offer_uid', true);
 
+            // check offer expiration date
+            $expiration_date = get_post_meta($offer->ID, 'offer_expiration_date', true );
+            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 0:0:0", strtotime($expiration_date)) : FALSE;
+
             // Invalid Offer Id
             if($offer == '')
             {
@@ -1091,13 +1136,25 @@ class Angelleye_Offers_For_Woocommerce {
             {
                 $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
             }
+            // If offer counter 'offer_expiration_date' is past
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted < (date("Y-m-d H:i:s", time())) ) )
+            {
+                $request_error = true;
+                $this->send_api_response( __( 'Counter offer has expired; You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce' ) );
+            }
             else
             {
                 // Get offer meta
                 $offer_meta = get_post_meta( $offer->ID, '', true );
 
+                // Error - Offer On Hold
+                if($offer->post_status == 'on-hold-offer')
+                {
+                    $request_error = true;
+                    $this->send_api_response( __( 'Offer is currently On Hold; We will notify you when offer status is updated.', 'angelleye_offers_for_woocommerce' ) );
+                }
                 // Error - Offer Not Accepted/Countered
-                if($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer')
+                elseif($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer')
                 {
                     $request_error = true;
                     $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
