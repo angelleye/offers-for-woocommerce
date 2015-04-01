@@ -139,6 +139,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'init', array( $this, 'my_custom_post_status_on_hold' ), 10, 2 );
 
         /**
+         * Adds post_status 'expired-offer'
+         * @since	1.0.1
+         */
+        add_action( 'init', array( $this, 'my_custom_post_status_expired' ), 10, 2 );
+
+        /**
          * XXX
          * @since	0.1.0
          */
@@ -883,6 +889,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'exclude_from_search'       => false,
         );
         register_post_status( 'on-hold-offer', $args );
+    }
+
+    /**
+     * Register custom post status type -- Offer Expired
+     * @since	1.0.1
+     */
+    public function my_custom_post_status_expired()
+    {
+        $args = array(
+            'label'                     => _x( 'expired-offer', 'Expired', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'Expired (%s)',  'Expired(%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'expired-offer', $args );
     }
 
     /**
