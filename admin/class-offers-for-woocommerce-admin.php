@@ -327,10 +327,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /**
          * Check for WooCommerce plugin
          * Adds nag message to admin notice
-         * @since   0.1.0
+         * @since   1.0.1
          */
         add_action( 'admin_init', array( $this, 'ae_ofwc_check_woocommerce_nag_notice_ignore' ) );
         add_action('admin_init', array( $this, 'ae_ofwc_check_woocommerce_available' ) );
+
+        /**
+         * Auto-Expire offers with expire date past
+         * @since   1.0.1
+         */
+        add_action('init', array( $this, 'angelleye_ofwc_auto_expire_offers' ), 1 );
 
         /**
          * END - custom functions
@@ -2861,6 +2867,30 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /* If user clicks to ignore the notice, add that to their user meta */
         if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_01']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_01'] ) {
             add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01', 'true');
+        }
+    }
+
+    /**
+     * Auto-Expire offers with expire date past
+     * @since   1.0.1
+     */
+    public function angelleye_ofwc_auto_expire_offers()
+    {
+        global $wpdb;
+
+        $targets_expired = array();
+
+        $expired_offers = $wpdb->get_results( $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE `meta_key` = '%s' AND `meta_value` <> '' AND `meta_value` < NOW() ", 'offer_expiration_date' ), 'ARRAY_N');
+        if( ($expired_offers) && !empty($expired_offers) )
+        {
+            foreach($expired_offers as $v)
+            {
+                $target_post = array(
+                    'ID'           => $v[0],
+                    'post_status'   => 'expired-offer'
+                );
+                wp_update_post( $target_post );
+            }
         }
     }
 
