@@ -1069,11 +1069,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $offer_expire_date_formatted = date("Y-m-d 00:00:00", strtotime($v['meta_value']));
                     if( $offer_expire_date_formatted <= $target_now_date )
                     {
-                        $target_post = array(
-                            'ID' => $v['post_id'],
-                            'post_status' => 'expired-offer'
-                        );
-                        wp_update_post($target_post);
+                        $post_status = get_post_status( $v['post_id']);
+                        if( $post_status && $post_status != 'trash' ) {
+                            $target_post = array(
+                                'ID' => $v['post_id'],
+                                'post_status' => 'expired-offer'
+                            );
+                            wp_update_post($target_post);
+                        }
                     }
                 }
             }
