@@ -38,7 +38,7 @@
 
                 // before add to cart (after single_variation)
                 if(makeOfferBtnPosition == 'before_add') {
-                    $('.product .summary .single_variation').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>" + makeOfferBtnhtml + "");
+                    $('#offers-for-woocommerce-add-to-cart-wrap div:first').before("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>" + makeOfferBtnhtml + "");
                 }
             }
 
