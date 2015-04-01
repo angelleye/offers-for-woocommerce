@@ -88,7 +88,7 @@
                         <?php foreach($author_data->offer_counts as $key => $count) { ?>
                             <?php if(strtolower($key) != 'all') { ?>
                         <tr>
-                            <th><?php echo ucfirst(str_replace('buyercountered', 'Buyer-Countered', $key) ) .': '; ?></th>
+                            <th><?php echo ucwords(str_replace('buyercountered', 'Buyer-Countered', str_replace('_', ' ', $key)) ) .': '; ?></th>
                             <td><div>
                                 <?php echo '<span>'. $count .'</span>';?>
                                 <?php if($count > 0) {

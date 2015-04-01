@@ -1223,6 +1223,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $args = array($post_type,'completed-offer', $post->post_author);
                 $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
 
+                $args = array($post_type,'on-hold-offer', $post->post_author);
+                $count_on_hold = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
                 $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
                 $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
                 $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
@@ -1230,6 +1233,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $author_counts['buyercountered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
                 $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
                 $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
+                $author_counts['on_hold'] = apply_filters( 'get_usernumposts', $count_on_hold, $post->post_author );
 
                 $author_data->offer_counts = $author_counts;
             }
