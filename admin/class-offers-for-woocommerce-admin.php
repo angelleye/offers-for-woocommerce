@@ -1909,7 +1909,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_button_position_single', 'input_required'=>FALSE,
                 'options'=> array(
                     array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
-                    array('option_label' => 'Before product summary', 'option_value' => 'before_summary')
+                    array('option_label' => 'Before add to cart button', 'option_value' => 'before_add'),
+                    array('option_label' => 'After product price', 'option_value' => 'after_price'),
+                    array('option_label' => 'After product tabs', 'option_value' => 'after_tabs')
                 ))
         );
 		

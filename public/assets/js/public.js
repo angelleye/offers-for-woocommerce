@@ -21,6 +21,27 @@
                 }
             }
 
+            var makeOfferBtnPosition = $('#offers-for-woocommerce-add-to-cart-wrap').attr('data-ofwc-position');
+            if(makeOfferBtnPosition !== '' && makeOfferBtnPosition !== 'default')
+            {
+                var makeOfferBtnhtml = $('.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap').html();
+
+                // after price
+                if(makeOfferBtnPosition == 'after_price') {
+                    $('.product .summary .price:first').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>"+ makeOfferBtnhtml +"");
+                }
+
+                // after product tabs
+                if(makeOfferBtnPosition == 'after_tabs') {
+                    $('.product .woocommerce-tabs').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>"+ makeOfferBtnhtml +"");
+                }
+
+                // before add to cart (after single_variation)
+                if(makeOfferBtnPosition == 'before_add') {
+                    $('.product .summary .single_variation').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>" + makeOfferBtnhtml + "");
+                }
+            }
+
             $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
                 angelleyeOpenMakeOfferForm();
             });
