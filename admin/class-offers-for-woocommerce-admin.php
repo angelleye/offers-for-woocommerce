@@ -1320,6 +1320,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offer_final_offer = (isset($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
         update_post_meta( $post_id, 'offer_final_offer', $offer_final_offer );
 
+        // Save 'offer_expiration_date' post meta
+        $offer_expiration_date = (isset($_POST['offer_expiration_date']) && $_POST['offer_expiration_date'] != '') ? $_POST['offer_expiration_date'] : '';
+        update_post_meta( $post_id, 'offer_expiration_date', $offer_expiration_date );
+
         // Get current data for Offer after saved
         $post_data = get_post($post_id);
         // Filter Post Status Label

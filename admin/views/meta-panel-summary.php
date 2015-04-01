@@ -167,7 +167,7 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>Buyer Note</h5>
-                <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class=""></textarea>
+                <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class="" autocomplete="off"></textarea>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
@@ -193,13 +193,13 @@
                 <div class="woocommerce-offer-final-offer-wrap">
                     <label for="offer-final-offer">Final Offer</label>
                     <div>
-                        <input type="checkbox" name="offer_final_offer" id="offer-final-offer" value="1" <?php echo(isset($postmeta['offer_final_offer'][0]) && $postmeta['offer_final_offer'][0] == '1') ? 'checked="checked"' : ''?>>
+                        <input type="checkbox" name="offer_final_offer" id="offer-final-offer" value="1" <?php echo(isset($postmeta['offer_final_offer'][0]) && $postmeta['offer_final_offer'][0] == '1') ? 'checked="checked"' : ''?> autocomplete="off">
                     </div>
                 </div>
 
                 <div class="woocommerce-offer-expiration-wrap">
                     <label for="offer-expiration-date">Offer Expires</label>
-                    <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("Y-m-d", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>">
+                    <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("m/d/Y", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>" autocomplete="off">
                 </div>
 
                 <?php $show_notice_msg = ( isset($offer_inventory_msg) && $offer_inventory_msg != '') ? TRUE : FALSE; ?>
