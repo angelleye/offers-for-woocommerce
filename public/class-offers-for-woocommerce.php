@@ -374,6 +374,8 @@ class Angelleye_Offers_For_Woocommerce {
             $parent_post_offer_uid = get_post_meta($parent_offer_id, 'offer_uid', true);
 
             $final_offer = get_post_meta($parent_offer_id, 'offer_final_offer', true );
+            $expiration_date = get_post_meta($parent_offer_id, 'offer_expiration_date', true );
+            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 0:0:0", strtotime($expiration_date)) : FALSE;
 
             // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
             if( (isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || (!$parent_post_offer_uid) || ($parent_offer_uid == '') || ($parent_post_offer_uid != $parent_offer_uid) )
@@ -398,6 +400,14 @@ class Angelleye_Offers_For_Woocommerce {
                 $parent_offer_id = '';
                 $parent_offer_error = true;
                 $parent_offer_error_message = __('You can not submit a counter offer at this time; Counter offer is a final offer. You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce');
+            }
+
+            // If offer counter 'offer_expiration_date' is past
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted < (date("Y-m-d H:i:s", time())) ) )
+            {
+                $parent_offer_id = '';
+                $parent_offer_error = true;
+                $parent_offer_error_message = __('Counter offer has expired; You can not submit a counter offer at this time. You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce');
             }
             else
             {
@@ -1039,6 +1049,10 @@ class Angelleye_Offers_For_Woocommerce {
             // check for parent offer unique id
             $offer_uid = get_post_meta( $offer->ID, 'orig_offer_uid', true);
 
+            // check offer expiration date
+            $expiration_date = get_post_meta($offer->ID, 'offer_expiration_date', true );
+            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 0:0:0", strtotime($expiration_date)) : FALSE;
+
             // Invalid Offer Id
             if($offer == '')
             {
@@ -1048,6 +1062,12 @@ class Angelleye_Offers_For_Woocommerce {
             elseif( ( $offer_uid != $wp->query_vars['woocommerce-offer-uid']) )
             {
                 $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
+            }
+            // If offer counter 'offer_expiration_date' is past
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted < (date("Y-m-d H:i:s", time())) ) )
+            {
+                $request_error = true;
+                $this->send_api_response( __( 'Counter offer has expired; You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce' ) );
             }
             else
             {
