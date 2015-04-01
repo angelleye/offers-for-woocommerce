@@ -84,7 +84,7 @@ class Angelleye_Offers_For_Woocommerce {
 		
 		/* Add "Make Offer" button code parts - After add to cart */
 		add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'angelleye_ofwc_after_add_to_cart_button' ) );
-		
+
 		/* Add "Make Offer" button code parts - After shop loop item */
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'angelleye_ofwc_after_show_loop_item' ), 99, 2 );
 
@@ -164,6 +164,9 @@ class Angelleye_Offers_For_Woocommerce {
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
+        // get offers options - display
+        $button_options_display = get_option('offers_for_woocommerce_options_display');
+
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
         {
@@ -177,8 +180,12 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                echo '<div class="offers-for-woocommerce-make-offer-button-cleared"></div>
-                <div class="offers-for-woocommerce-add-to-cart-wrap"><div>';
+                // adds hidden class if position is not default
+                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
+                $customclass = ( $hiddenclass == 'angelleye-ofwc-hidden' ) ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
+
+                echo '<div class="offers-for-woocommerce-make-offer-button-cleared '.$hiddenclass.'"></div>
+                <div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap" data-ofwc-position="'.$customclass.'"><div>';
             }
 		}
 	}
@@ -223,14 +230,19 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
-                $lightbox_class = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-                echo '<div class="angelleye-offers-clearfix"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '. $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                // adds hidden class if position is not default
+                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
+                $customclass = ( $hiddenclass == 'angelleye-ofwc-hidden' ) ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
+
+                $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
+                $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
+
+                echo '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap '.$hiddenclass.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
                 echo '</div>';
             }
 		}
 	}
-	
+
 	/**
 	 * Callback - Add Make Offer button after add to cart button on Catalog view
 	 *
@@ -327,7 +339,7 @@ class Angelleye_Offers_For_Woocommerce {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
 
-            if($button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox')
+            if( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox')
             {
                 return $tabs;
             }
