@@ -37,29 +37,29 @@
                                 <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' ) ? $_product_stock : '0'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
                                     <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
-                                <? } ?>
+                                <?php } ?>
                             </li>
                         <?php } else { ?>
                             <li>
                                 <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' && $_product_managing_stock ) ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
                                     <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
-                                <? } ?>
+                                <?php } ?>
                             </li>
-                        <? } ?>
+                        <?php } ?>
                         <?php if( !$_product_in_stock && (!$_product_stock || $_product_stock == '') ) { ?>
                             <li>
                                 <span class="out-of-stock-offer"><?php echo __('Out of Stock', 'angelleye_offers_for_woocommerce' ); ?></span>
                             </li>
-                        <? } elseif( !$_product_in_stock && $_product_stock ) { ?>
+                        <?php } elseif( !$_product_in_stock && $_product_stock ) { ?>
                             <li>
                                 <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'angelleye_offers_for_woocommerce' ); ?></span>
                             </li>
-                        <? } ?>
+                        <?php } ?>
                         <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
                         <input id="offer-backorders-allowed" type="hidden" value="<?php echo ( $_product_backorders_allowed ) ? 'true' : 'false';?>">
                     </ul>
-                <? } ?>
+                <?php } ?>
             </div>
         </div>
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
@@ -178,7 +178,7 @@
                         <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
                             <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' || $current_status_value == 'expired-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
                             <option value="">- Select status</option>
-                            <? } ?>
+                            <?php } ?>
                             <option value="accepted-offer" <?php if (isset($current_status_value) && $current_status_value == 'accepted-offer') echo 'selected="selected"'; ?>>Accepted Offer</option>
                             <option value="countered-offer" <?php if (isset($current_status_value) && $current_status_value == 'countered-offer') echo 'selected="selected"'; ?>>Countered Offer</option>
                             <option value="declined-offer" <?php if (isset($current_status_value) && $current_status_value == 'declined-offer') echo 'selected="selected"'; ?>>Declined Offer</option>
