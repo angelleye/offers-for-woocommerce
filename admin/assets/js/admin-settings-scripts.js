@@ -37,17 +37,26 @@
                     if(  $(this).val() == 'price_greater' || $(this).val() == 'price_less' )
                     {
                         $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').show();
+                        $('#ofwc-bulk-action-target-where-price-value').attr('required', 'required');
+
                         $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').hide();
+                        $('#ofwc-bulk-action-target-where-stock-value').removeAttr('required');
                     }
                     else if(  $(this).val() == 'stock_greater' || $(this).val() == 'stock_less' )
                     {
                         $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').hide();
+                        $('#ofwc-bulk-action-target-where-price-value').removeAttr('required');
+
                         $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').show();
+                        $('#ofwc-bulk-action-target-where-stock-value').attr('required', 'required');
                     }
                     else
                     {
                         $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').hide();
+                        $('#ofwc-bulk-action-target-where-price-value').removeAttr('required');
+
                         $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').hide();
+                        $('#ofwc-bulk-action-target-where-stock-value').removeAttr('required');
                     }
                 }
             });

@@ -87,8 +87,6 @@
                         {
                             foreach($product_cats as $cat)
                             {
-                                echo 'test';
-
                                 echo '<option value="'.$cat->cat_ID.'">'.$cat->cat_name.'</option>';
                             }
                         }
