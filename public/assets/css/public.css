@@ -206,3 +206,6 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
 }
+
+.angelleye-ofwc-hidden { display: none; }
+.ofwc-no-float { float: none!important; height:50px; margin-left:0px; }
