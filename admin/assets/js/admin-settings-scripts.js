@@ -26,13 +26,31 @@
                     $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').show();
                     $('#ofwc-bulk-action-target-where-category').attr('required', 'required');
 
+                    $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').hide();
                     $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').hide();
                     $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').hide();
+                    $('#ofwc-bulk-action-target-where-product-type').removeAttr('required');
+                    $('#ofwc-bulk-action-target-where-price-value').removeAttr('required');
+                    $('#ofwc-bulk-action-target-where-stock-value').removeAttr('required');
+                }
+                else if(  $(this).val() == 'product_type' )
+                {
+                    $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').show();
+                    $('#ofwc-bulk-action-target-where-product-type').attr('required', 'required');
+
+                    $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').hide();
+                    $('#ofwc-bulk-action-target-where-category').removeAttr('required');
+                    $('#ofwc-bulk-action-target-where-price-value').removeAttr('required');
+                    $('#ofwc-bulk-action-target-where-stock-value').removeAttr('required');
                 }
                 else
                 {
                     $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').hide();
                     $('#ofwc-bulk-action-target-where-category').removeAttr('required');
+                    $('#ofwc-bulk-action-target-where-product-type').removeAttr('required');
 
                     if(  $(this).val() == 'price_greater' || $(this).val() == 'price_less' )
                     {

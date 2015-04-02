@@ -45,7 +45,7 @@
             <div>Select options below and click process button to perform bulk action:</div>
 
             <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
-                <label for="ofwc-bulk-action-type">Action type</label>
+                <label for="ofwc-bulk-action-type">Action</label>
                 <div>
                     <select name="ofwc_bulk_action_type" id="ofwc-bulk-action-type" required="required">
                         <option value="">- Select option</option>
@@ -55,11 +55,12 @@
                 </div>
             </div>
             <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-type">
-                <label for="ofwc-bulk-action-target-type">Target type</label>
+                <label for="ofwc-bulk-action-target-type">Target</label>
                 <div>
                     <select name="ofwc_bulk_action_target_type" id="ofwc-bulk-action-target-type" required="required">
                         <option value="">- Select option</option>
                         <option value="all">All products</option>
+                        <option value="featured">Featured products</option>
                         <option value="where">Where...</option>
                     </select>
                 </div>
@@ -69,16 +70,17 @@
                 <div>
                     <select name="ofwc_bulk_action_target_where_type" id="ofwc-bulk-action-target-where-type">
                         <option value="">- Select option</option>
-                        <option value="category">In Category...</option>
-                        <option value="price_greater">Price is greater than...</option>
-                        <option value="price_less">Price is less than...</option>
-                        <option value="stock_greater">Stock is greater than...</option>
-                        <option value="stock_less">Stock is less than...</option>
+                        <option value="category">Category...</option>
+                        <option value="product_type">Product type...</option>
+                        <option value="price_greater">Price greater than...</option>
+                        <option value="price_less">Price less than...</option>
+                        <option value="stock_greater">Stock greater than...</option>
+                        <option value="stock_less">Stock less than...</option>
                     </select>
                 </div>
             </div>
             <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-category angelleye-hidden">
-                <label for="ofwc-bulk-action-target-where-category">Categories</label>
+                <label for="ofwc-bulk-action-target-where-category">Category</label>
                 <div>
                     <select name="ofwc_bulk_action_target_where_category" id="ofwc-bulk-action-target-where-category">
                         <option value="">- Select option</option>
@@ -91,6 +93,19 @@
                             }
                         }
                         ?>
+                    </select>
+                </div>
+            </div>
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-product-type angelleye-hidden">
+                <label for="ofwc-bulk-action-target-where-product-type">Product Type</label>
+                <div>
+                    <select name="ofwc_bulk_action_target_where_product_type" id="ofwc-bulk-action-target-where-product-type">
+                        <option value="">- Select option</option>
+                        <option value="single">Single</option>
+                        <option value="variable">Variable</option>
+                        <option value="grouped">Grouped</option>
+                        <option value="single-subscription">Single Subscription</option>
+                        <option value="variable-subscription">Variable Subscription</option>
                     </select>
                 </div>
             </div>
