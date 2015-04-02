@@ -578,3 +578,14 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
     .woocommerce-offer-expiration-wrap label { margin-top:10px; }
     .woocommerce-offer-expiration-wrap input { width: 110px; margin:0!important; }
 }
+
+/* Bulk action sections */
+.angelleye-offers-tools-wrap { background:#FFF; margin:10px 0; padding:0 20px 10px 20px; border-left:4px solid #ffcc00; }
+.angelleye-offers-tools-wrap h3 { padding-top:15px; margin-bottom:5px; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section { float: left; margin:10px 10px 10px 0; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section:last-child { border:none!important; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section label { font-weight: bold; margin:0 0 0 4px!important; line-height: 24px; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section select {  }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section input { width:110px; }
+
+.angelleye-offers-clearfix { clear: both!important; }
