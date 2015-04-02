@@ -82,7 +82,17 @@
                 <div>
                     <select name="ofwc_bulk_action_target_where_category" id="ofwc-bulk-action-target-where-category">
                         <option value="">- Select option</option>
-                        <option value="">CATS GO HERE</option>
+                        <?php
+                        if($product_cats)
+                        {
+                            foreach($product_cats as $cat)
+                            {
+                                echo 'test';
+
+                                echo '<option value="'.$cat->cat_ID.'">'.$cat->cat_name.'</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
