@@ -1333,7 +1333,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $author_data->offer_counts = $author_counts;
             }
 
-            /*
+            /**
              * Output html for Offer Comments loop
              */
             include_once('views/meta-panel-summary.php');
@@ -2211,11 +2211,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			// load color picker			
 			$this->my_enqueue_colour_picker();
 
-			// admin scripts
-			wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
-
 			// Admin footer scripts
-			wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-footer-scripts', plugins_url( 'assets/js/admin-footer-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );			
+			wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-footer-scripts', plugins_url( 'assets/js/admin-footer-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // Admin settings scripts
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-settings-scripts', plugins_url( 'assets/js/admin-settings-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 		}
         if ( "edit-woocommerce_offer" == $screen->id && is_admin() )
         {
@@ -2268,6 +2268,28 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function display_plugin_admin_page() 
 	{
+
+        // WooCommerce product categories
+        $taxonomy     = 'product_cat';
+        $orderby      = 'name';
+        $show_count   = 0;      // 1 for yes, 0 for no
+        $pad_counts   = 0;      // 1 for yes, 0 for no
+        $hierarchical = 1;      // 1 for yes, 0 for no
+        $title        = '';
+        $empty        = 0;
+
+        $args = array(
+            'taxonomy'     => $taxonomy,
+            'orderby'      => $orderby,
+            'show_count'   => $show_count,
+            'pad_counts'   => $pad_counts,
+            'hierarchical' => $hierarchical,
+            'title_li'     => $title,
+            'hide_empty'   => $empty
+        );
+
+        $product_cats = get_categories( $args );
+
 		include_once( 'views/admin.php' );
 	}
 	

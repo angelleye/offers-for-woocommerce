@@ -35,6 +35,7 @@
     ?>
         </form>
     <?php } elseif( $active_tab == 'tools' ) { ?>
+        <form method="post" action="" id="woocommerce_offers_options_form" autocomplete="off">
         <p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
         </p>
@@ -43,27 +44,27 @@
             <h3>Bulk enable/disable offers for products</h3>
             <div>Select options below and click process button to perform bulk action:</div>
 
-            <div class="angelleye-offers-tools-bulk-action-section">
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
                 <label for="ofwc-bulk-action-type">Action type</label>
                 <div>
-                    <select name="ofwc_bulk_action_type" id="ofwc-bulk-action-type">
+                    <select name="ofwc_bulk_action_type" id="ofwc-bulk-action-type" required="required">
                         <option value="">- Select option</option>
                         <option value="enable">Enable Offers</option>
                         <option value="disable">Disable Offers</option>
                     </select>
                 </div>
             </div>
-            <div class="angelleye-offers-tools-bulk-action-section">
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-type">
                 <label for="ofwc-bulk-action-target-type">Target type</label>
                 <div>
-                    <select name="ofwc_bulk_action_target_type" id="ofwc-bulk-action-target-type">
+                    <select name="ofwc_bulk_action_target_type" id="ofwc-bulk-action-target-type" required="required">
                         <option value="">- Select option</option>
                         <option value="all">All products</option>
                         <option value="where">Where...</option>
                     </select>
                 </div>
             </div>
-            <div class="angelleye-offers-tools-bulk-action-section">
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-type angelleye-hidden">
                 <label for="ofwc-bulk-action-target-where-type">Where</label>
                 <div>
                     <select name="ofwc_bulk_action_target_where_type" id="ofwc-bulk-action-target-where-type">
@@ -76,25 +77,44 @@
                     </select>
                 </div>
             </div>
-            <div class="angelleye-offers-tools-bulk-action-section">
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-category angelleye-hidden">
                 <label for="ofwc-bulk-action-target-where-category">Categories</label>
                 <div>
                     <select name="ofwc_bulk_action_target_where_category" id="ofwc-bulk-action-target-where-category">
                         <option value="">- Select option</option>
-                        <option value="all">All categories</option>
-                        <option value="">CATS GO HERE</option>
+                        <?php
+                        if($product_cats)
+                        {
+                            foreach($product_cats as $cat)
+                            {
+                                echo '<option value="'.$cat->cat_ID.'">'.$cat->cat_name.'</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
-            <div class="angelleye-offers-tools-bulk-action-section">
-                <label for="ofwc-bulk-action-target-where-value"></label>
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-price-value angelleye-hidden">
+                <label for="ofwc-bulk-action-target-where-price-value"></label>
                 <div>
-                    <input type="text" name="ofwc_bulk_action_target_where_value" id="ofwc-bulk-action-target-where-value" value="0">
+                    <input type="text" name="ofwc_bulk_action_target_where_price_value" id="ofwc-bulk-action-target-where-price-value">
+                </div>
+            </div>
+            <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-stock-value angelleye-hidden">
+                <label for="ofwc-bulk-action-target-where-stock-value"></label>
+                <div>
+                    <input type="text" name="ofwc_bulk_action_target_where_stock_value" id="ofwc-bulk-action-target-where-stock-value">
+                </div>
+            </div>
+            <div class="angelleye-offers-tools-bulk-action-section">
+                <label for="ofwc-bulk-action-target-where-stock-value"></label>
+                <div>
+                    <button class="button button-primary" id="bulk-enable-tool-submit" name="bulk_enable_tool_submit">Process</button>
                 </div>
             </div>
             <div class="angelleye-offers-clearfix"></div>
         </div>
-
+        </form>
 
     <?php } else { ?>
         <form method="post" action="options.php" id="woocommerce_offers_options_form">
