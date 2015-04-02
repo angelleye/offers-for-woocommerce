@@ -39,7 +39,7 @@
         <li><strong>Error: </strong><?php echo $parent_offer_error_message;?></li>
     </ul>
 </div>
-<? } ?>
+<?php } ?>
 <div id="tab_custom_ofwc_offer_tab_inner" class="tab_custom_ofwc_offer_tab_inner_content">
     <fieldset>
     	<div class="make-offer-form-intro">
@@ -68,7 +68,7 @@
             <?php if($is_counter_offer) {?>
             <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
             <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">
-            <? } ?>
+            <?php } ?>
             <div class="woocommerce-make-offer-form-section">
                 <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
                     <input type="hidden" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" value="1" />
