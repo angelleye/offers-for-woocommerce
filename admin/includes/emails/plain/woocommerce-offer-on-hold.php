@@ -1,14 +1,17 @@
 <?php
 /**
- * Customer Offer Note email (plain text)
+ * Customer Offer On Hold email (plain text)
  *
- * @since	0.1.0
+ * @since   1.0.1
  * @package admin/includes/emails/plain
  * @author  AngellEYE <andrew@angelleye.com>
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 echo $email_heading . "\n\n";
+
+echo __( 'Your offer has been placed on hold.', 'angelleye_offers_for_woocommerce' );
+echo "\n\n";
 
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {

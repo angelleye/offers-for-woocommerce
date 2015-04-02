@@ -4,65 +4,60 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
+if ( ! class_exists( 'WC_Offer_On_Hold_Email' ) ) :
 
     /**
-     * A custom New Counter Offer WooCommerce Email class
+     * A custom Offer On Hold WooCommerce Email class
      *
-     * @since 0.1.0
+     * @since 1.0.1
      * @extends WC_Email
      */
-    class WC_New_Counter_Offer_Email extends WC_Email {
+    class WC_Offer_On_Hold_Email extends WC_Email {
         /**
          * Set email defaults
          *
-         * @since 0.1.0
+         * @since 1.0.1
          */
         public function __construct() {
             /**
              * Call $plugin_slug from public plugin class
-             * @since	0.1.0
+             * @since	1.0.1
              */
             $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
             $this->plugin_slug = $plugin->get_plugin_slug();
 
             // set ID, this simply needs to be a unique name
-            $this->id = 'wc_new_counter_offer';
+            $this->id = 'wc_offer_on_hold';
 
             // this is the title in WooCommerce Email settings
-            $this->title = 'New counter offer';
+            $this->title = 'Offer On Hold';
 
             // this is the description in WooCommerce email settings
-            $this->description = 'New Counter Offer Notification emails are sent to the admin when customer submits a counter offer';
+            $this->description = 'Offer On Hold Notification emails are sent when a customer offer is placed on hold by the store admin';
 
             // these are the default heading and subject lines that can be overridden using the settings
-            $this->heading = 'New Counter Offer';
-            $this->subject = 'New Counter Offer';
+            $this->heading = 'Offer On Hold';
+            $this->subject = 'Offer On Hold';
 
             // Call parent constructor to load any other defaults not explicity defined here
             parent::__construct();
 
             // Set the recipient
-            $this->recipient = $this->get_option( 'admin_email' );
+            $this->recipient = $this->get_option( 'recipient' );
         }
 
         /**
          * Determine if the email should actually be sent and setup email merge variables
          *
-         * @since 0.1.0
+         * @since 1.0.1
          * @param int $order_id
          */
         public function trigger( $offer_args ) {
 
+            $this->recipient = $offer_args['recipient'];
             $this->offer_args = $offer_args;
-            $this->recipient = $this->get_option( 'recipient' );
 
-            if( !$this->recipient )
-            {
-                $this->recipient = get_option('admin_email');
-            }
-
-            if ( ! $this->is_enabled() )
+            if ( ! $this->is_enabled() || ! $this->recipient )
             {
                 return;
             }
@@ -74,7 +69,7 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
         /**
          * get_content_html function.
          *
-         * @since 0.1.0
+         * @since 1.0.1
          * @return string
          */
         public function get_content_html() {
@@ -94,7 +89,7 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
         /**
          * get_content_plain function.
          *
-         * @since 0.1.0
+         * @since 1.0.1
          * @return string
          */
         public function get_content_plain() {
@@ -114,7 +109,7 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
         /**
          * Initialize Settings Form Fields
          *
-         * @since 0.1.0
+         * @since 1.0.1
          */
         public function init_form_fields() {
 
@@ -124,13 +119,6 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
                     'type'    => 'checkbox',
                     'label'   => 'Enable this email notification',
                     'default' => 'yes'
-                ),
-                'recipient'    => array(
-                    'title'       => 'Recipient(s)',
-                    'type'        => 'text',
-                    'description' => sprintf( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', esc_attr( get_option('admin_email') ) ),
-                    'placeholder' => '',
-                    'default'     => ''
                 ),
                 'subject'    => array(
                     'title'       => 'Subject',
@@ -160,6 +148,6 @@ if ( ! class_exists( 'WC_New_Counter_Offer_Email' ) ) :
                 )
             );
         }
-    } // end \WC_New_Counter_Offer_Email class
+    } // end \WC_Offer_On_Hold Email class
 
 endif;

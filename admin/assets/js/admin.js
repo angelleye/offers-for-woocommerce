@@ -5,6 +5,13 @@
 
 		// Place your administration-specific JavaScript here
         $(document).ready(function(){
+
+            /**
+             * Init datepicker for offer expiration date
+             * @since   1.0.1
+             */
+            $('.datepicker').datepicker();
+
             $('#offer-quantity').autoNumeric('init',
                 {
                     vMin: '0',
@@ -119,6 +126,20 @@
                 var theTotal = (input1 * input2);
                 $('#offer-total').val( parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString() );
             }
+
+            // show notice if offer quantity exceeds stock and backorders not allowed
+            var maxStockAvailable = $('#offer-max-stock-available').val();
+            var backordersAllowed = $('#offer-backorders-allowed').val();
+            if( backordersAllowed !== 'true' )
+            {
+                if ( parseInt(maxStockAvailable) < parseInt(input1) ) {
+                    $('#angelleye-woocommerce-offer-meta-summary-notice-msg').show();
+                }
+                else
+                {
+                    $('#angelleye-woocommerce-offer-meta-summary-notice-msg').hide();
+                }
+            }
         };
 
         // offer quantity input keyup
@@ -135,6 +156,15 @@
         $('.angelleye-offer-buyer-stats-toggle').click(function(){
             $('#angelleye-offer-buyer-history').slideToggle('800');
             return false;
+        });
+
+        // Move to Trash confirmation
+        $('#aeofwc-delete-action .deletion').click(function(){
+
+            if(!confirm('are you sure?'))
+            {
+                return false;
+            }
         });
 	});
 

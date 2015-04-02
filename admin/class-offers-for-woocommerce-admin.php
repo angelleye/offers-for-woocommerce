@@ -6,7 +6,6 @@
  * @author    AngellEYE <andrew@angelleye.com>
  * @license   GPL-2.0+
  * @link      http://www.angelleye.com
- * @copyright 2014 AngellEYE
  */
 
 /**
@@ -54,15 +53,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
 		// Load admin style sheet and JavaScript.
-		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
 		// Add the options page and menu item.
-		add_action( 'admin_menu', array( &$this, 'add_plugin_admin_menu' ) );		
+		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
-		add_filter( 'plugin_action_links_' . $plugin_basename, array( &$this, 'ofwc_add_plugin_action_links' ) );
+		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'ofwc_add_plugin_action_links' ) );
 		
 		/**
 		 *******************************
@@ -75,105 +74,111 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 *
 		 * @since	0.1.0
 		 */
-		add_action('init', array( &$this, 'angelleye_ofwc_add_post_type_woocommerce_offer' ) );
+		add_action('init', array( $this, 'angelleye_ofwc_add_post_type_woocommerce_offer' ) );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_filter('manage_woocommerce_offer_posts_columns' , array( &$this, 'set_woocommerce_offer_columns' ) );
+		add_filter('manage_woocommerce_offer_posts_columns' , array( $this, 'set_woocommerce_offer_columns' ) );
 
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action( 'manage_woocommerce_offer_posts_custom_column' , array( &$this, 'get_woocommerce_offer_column' ), 2, 10 );
+		add_action( 'manage_woocommerce_offer_posts_custom_column' , array( $this, 'get_woocommerce_offer_column' ), 2, 10 );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_filter( 'manage_edit-woocommerce_offer_sortable_columns', array( &$this, 'woocommerce_offer_sortable_columns' ) );
+		add_filter( 'manage_edit-woocommerce_offer_sortable_columns', array( $this, 'woocommerce_offer_sortable_columns' ) );
 				
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action( 'admin_init', array( &$this, 'remove_woocommerce_offer_meta_boxes' ) );
+		add_action( 'admin_init', array( $this, 'remove_woocommerce_offer_meta_boxes' ) );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action('admin_menu', array( &$this, 'my_remove_submenus' ) );
+		add_action('admin_menu', array( $this, 'my_remove_submenus' ) );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action( 'init', array( &$this, 'comments_exclude_lazy_hook' ), 0 );
+		add_action( 'init', array( $this, 'comments_exclude_lazy_hook' ), 0 );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		if (is_admin()) {
-			add_filter('post_row_actions', array( &$this, 'remove_quick_edit' ), 10, 2 );
-		}
+
+		add_filter('post_row_actions', array( $this, 'remove_quick_edit' ), 10, 2 );
+
 
         /**
          * XXX
          * @since	0.1.0
          */
-        add_action( 'init', array( &$this, 'my_custom_post_status_accepted' ), 10, 2 );
+        add_action( 'init', array( $this, 'my_custom_post_status_accepted' ), 10, 2 );
 
         /**
          * XXX
          * @since	0.1.0
          */
-        add_action( 'init', array( &$this, 'my_custom_post_status_countered' ), 10, 2 );
+        add_action( 'init', array( $this, 'my_custom_post_status_countered' ), 10, 2 );
+
+        /**
+         * Adds post_status 'on-hold-offer'
+         * @since	1.0.1
+         */
+        add_action( 'init', array( $this, 'my_custom_post_status_on_hold' ), 10, 2 );
+
+        /**
+         * Adds post_status 'expired-offer'
+         * @since	1.0.1
+         */
+        add_action( 'init', array( $this, 'my_custom_post_status_expired' ), 10, 2 );
 
         /**
          * XXX
          * @since	0.1.0
          */
-        add_action( 'init', array( &$this, 'my_custom_post_status_buyer_countered' ), 10, 2 );
+        add_action( 'init', array( $this, 'my_custom_post_status_buyer_countered' ), 10, 2 );
 
         /**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action( 'init', array( &$this, 'my_custom_post_status_completed' ), 10, 2 );
+		add_action( 'init', array( $this, 'my_custom_post_status_completed' ), 10, 2 );
 
         /**
          * XXX
          * @since	0.1.0
          */
-        add_action( 'init', array(&$this, 'my_custom_post_status_declined' ), 10, 2 );
+        add_action( 'init', array($this, 'my_custom_post_status_declined' ), 10, 2 );
 
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action('admin_footer-post.php', array(&$this, 'jc_append_post_status_list' ) );
+		add_filter( 'display_post_states', array( $this, 'jc_display_archive_state' ) );
 
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_filter( 'display_post_states', array( &$this, 'jc_display_archive_state' ) );
-
-		/**
-		 * XXX
-		 * @since	0.1.0
-		 */
-		add_action( 'current_screen', array( &$this, 'translate_published_post_label' ) , 10, 2 );
+		add_action( 'current_screen', array( $this, 'translate_published_post_label' ) , 10, 2 );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_filter( 'bulk_actions-edit-woocommerce_offer', array( &$this, 'my_custom_bulk_actions' ) );
+		add_filter( 'bulk_actions-edit-woocommerce_offer', array( $this, 'my_custom_bulk_actions' ) );
 
         /**
          * XXX
@@ -185,43 +190,43 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * XXX
          * @since	0.1.0
          */
-        add_action( 'add_meta_boxes', array( &$this, 'add_meta_box_offer_comments' ), 10, 2 );
+        add_action( 'add_meta_boxes', array( $this, 'add_meta_box_offer_comments' ), 10, 2 );
 
         /**
          * XXX
          * @since	0.1.0
          */
-        add_action( 'add_meta_boxes', array( &$this, 'add_meta_box_offer_addnote' ), 10, 2 );
+        add_action( 'add_meta_boxes', array( $this, 'add_meta_box_offer_addnote' ), 10, 2 );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action( 'save_post', array( &$this, 'myplugin_save_meta_box_data' ) );
+		add_action( 'save_post', array( $this, 'myplugin_save_meta_box_data' ) );
 		
 		/**
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action('admin_init', array( &$this, 'angelleye_ofwc_intialize_options' ) );
+		add_action('admin_init', array( $this, 'angelleye_ofwc_intialize_options' ) );
 		
 		/**
 		 * Action - Admin Menu - Add the 'pending offer' count bubble
 		 * @since	0.1.0
 		 */
-		add_action( 'admin_menu', array( &$this, 'add_user_menu_bubble' ) );
+		add_action( 'admin_menu', array( $this, 'add_user_menu_bubble' ) );
 		
 		/**
 		 * Action - Add 'pending offer(s)' count to wp dashboard 'at a glance' widget
 		 * @since	0.1.0
 		 */
-		add_action( 'dashboard_glance_items', array( &$this, 'my_add_cpt_to_dashboard' ) );
+		add_action( 'dashboard_glance_items', array( $this, 'my_add_cpt_to_dashboard' ) );
 
 		 /**
 		 * Action - Admin Menu - Add child submenu items for the woocommerce->offers submenu
 		 * @since	0.1.0
 		 */
-		add_action( 'admin_menu', array( &$this, 'add_offers_submenu_children' ) );
+		add_action( 'admin_menu', array( $this, 'add_offers_submenu_children' ) );
 		
 		/**
 		 * Process meta
@@ -229,19 +234,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * Processes the custom tab options when a post is saved
 		 * @since	0.1.0
 		 */
-		add_action('woocommerce_process_product_meta', array( &$this, 'process_product_meta_custom_tab' ), 10, 2 );
+		add_action('woocommerce_process_product_meta', array( $this, 'process_product_meta_custom_tab' ), 10, 2 );
 		
 		/**
 		 * Output WooCommerce Tab on product single
 		 * @since	0.1.0
 		 */
-		add_action('woocommerce_product_write_panel_tabs', array( &$this, 'custom_tab_options_tab_offers' ));
+		add_action('woocommerce_product_write_panel_tabs', array( $this, 'custom_tab_options_tab_offers' ));
 		
 		/*
 		 * Action - Add custom tab options in WooCommerce product tabs
 		 * @since	0.1.0
 		 */
-		add_action('woocommerce_product_write_panels', array( &$this, 'custom_tab_options_offers' ));
+		add_action('woocommerce_product_write_panels', array( $this, 'custom_tab_options_offers' ));
 		
 		/**
 		 * Override updated message for custom post type
@@ -251,19 +256,37 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * @return array Amended post update messages with new CPT update messages.
 		 * @since	0.1.0
 		 */
-		add_filter( 'post_updated_messages', array( &$this, 'my_custom_updated_messages' ) );
+		add_filter( 'post_updated_messages', array( $this, 'my_custom_updated_messages' ) );
 		
 		/*
 		 * ADMIN COLUMN - SORTING - ORDERBY
 		 * http://scribu.net/wordpress/custom-sortable-columns.html#comment-4732
 		 */
-		add_filter( 'request', array( &$this, 'woocommerce_offers_list_orderby' ) );
+		add_filter( 'request', array( $this, 'woocommerce_offers_list_orderby' ) );
 		
 		/*
 		 * ADD TO QUERY - PULL IN all except 'trash' when viewing 'all' list
 		 * @since	0.1.0
 		 */
-		add_action('pre_get_posts', array( &$this, 'my_pre_get_posts' ) );
+		add_action('pre_get_posts', array( $this, 'my_pre_get_posts' ) );
+
+        /**
+         * Join posts and postmeta tables
+         * @since   1.0.1
+         */
+        add_filter('posts_join', array( $this, 'aeofwc_search_join' ) );
+
+        /**
+         * Modify the search query with posts_where
+         * @since   1.0.1
+         */
+        add_filter( 'posts_where', array( $this, 'aeofwc_search_where' ) );
+
+        /**
+         * Prevent duplicates
+         * @since   1.0.1
+         */
+        add_filter( 'posts_distinct', array( $this, 'aeofwc_search_distinct' ) );
 
         /*
          * Action - Ajax 'approve offer' from manage list
@@ -294,6 +317,38 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since	0.1.0
          */
         add_action( 'admin_notices', array( $this, 'aeofwc_admin_notices' ) );
+
+        /**
+         * Adds help tab content for manage offer screen
+         * @since   0.1.0
+         */
+        add_filter( 'contextual_help', array( $this, 'ae_ofwc_contextual_help'), 10, 3 );
+
+        /**
+         * Check for WooCommerce plugin
+         * Adds nag message to admin notice
+         * @since   1.0.1
+         */
+        add_action( 'admin_init', array( $this, 'ae_ofwc_check_woocommerce_nag_notice_ignore' ) );
+        add_action('admin_init', array( $this, 'ae_ofwc_check_woocommerce_available' ) );
+
+        /**
+         * Action - Bulk action - Enable/Disable Offers on WooCommerce products
+         * @since   1.0.1
+         */
+        add_action('admin_footer-edit.php', array( $this, 'custom_bulk_admin_footer' ) );
+
+        /**
+         * Action - Bulk action - Process Enable/Disable Offers on WooCommerce products
+         * @since   1.0.1
+         */
+        add_action('load-edit.php', array( $this, 'custom_bulk_action' ) );
+
+        /**
+         * Action - Show admin notice for bulk action Enable/Disable Offers on WooCommerce products
+         * @since   1.0.1
+         */
+        add_action('admin_notices', array( $this, 'custom_bulk_admin_notices' ) );
 
         /**
          * END - custom functions
@@ -407,9 +462,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @since	0.1.0
 	 */
 	function custom_tab_options_tab_offers() {
-		?>
-				<li class="custom_tab_offers_for_woocommerce"><a href="#custom_tab_data_offers_for_woocommerce"><?php _e('Offers', 'angelleye_offers_for_woocommerce'); ?></a></li>
-		<?php
+        global $post;
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+        $class_hidden = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
+        print(
+            '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce '. $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce">' . __('Offers', 'angelleye_offers_for_woocommerce') . '</a></li>'
+        );
 	}
 	
 	/**
@@ -419,11 +479,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function custom_tab_options_offers() 
 	{
-		global $post;
+		global $post, $pagenow;
         $post_meta_offers_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true);
 
         $field_value = 'yes';
         $field_callback = ($post_meta_offers_enabled) ? $post_meta_offers_enabled : 'no';
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // if new post, then set default based on settings
+        if( $pagenow == 'post-new.php' && isset($button_options_general['general_setting_enable_offers_by_default']) )
+        {
+            if( $button_options_general['general_setting_enable_offers_by_default'] == '1' )
+            {
+                $field_callback = 'yes';
+            }
+        }
 
 		?>
 		<div id="custom_tab_data_offers_for_woocommerce" class="panel woocommerce_options_panel">
@@ -542,15 +614,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	{
 		global $wpdb;
 
-		//if ( ! $clauses['join'] )
 		$clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
 		
-		$args = array();
-
-		//if ( ! $wp_comment_query->query_vars['post_type' ] ) // only apply if post_type hasn't already been queried
 		$clauses['where'] .=
-
-        $wpdb->prepare(" AND $wpdb->posts.post_type != '%s'", 'woocommerce_offer');
+        $wpdb->prepare(" AND $wpdb->posts.post_type <> '%s'", 'woocommerce_offer');
 
 		return $clauses;
 	}
@@ -562,7 +629,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function comments_exclude_lazy_hook( $screen )
 	{
 		//if ( $screen->id == 'edit-comments' )
-		add_filter( 'comments_clauses', array( &$this, 'angelleye_ofwc_exclude_cpt_from_comments_clauses' ) );
+		add_filter( 'comments_clauses', array( $this, 'angelleye_ofwc_exclude_cpt_from_comments_clauses' ) );
 	}
 
 	/**
@@ -590,7 +657,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		switch ( $column ) {
             case 'offer_name' :
                 $val = get_post_meta( $post_id , 'offer_name' , true );
-                echo $val;
+                echo stripslashes($val);
                 break;
 
             case 'offer_quantity' :
@@ -700,7 +767,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		{
 			if( is_admin() && $query->is_main_query() ) 
 			{
-				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','buyercountered-offer','declined-offer','completed-offer' ) );
+				$query->set('post_status', array( 'publish','accepted-offer','countered-offer','buyercountered-offer','declined-offer','completed-offer','on-hold-offer' ) );
 				if ( !$arg_orderby)
 				{
 					$query->set('orderby', 'post_date');
@@ -709,6 +776,50 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			}						
 		}		
 	}
+
+    /**
+     * Join posts and postmeta tables
+     * @since   1.0.1
+     */
+    function aeofwc_search_join( $join ) {
+        global $wpdb;
+
+        if ( is_search() ) {
+            $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
+        }
+
+        return $join;
+    }
+
+    /**
+     * Modify the search query with posts_where
+     * @since   1.0.1
+     */
+    function aeofwc_search_where( $where ) {
+        global $pagenow, $wpdb;
+
+        if ( is_search() ) {
+            $where = preg_replace(
+                "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+        }
+
+        return $where;
+    }
+
+    /**
+     * Prevent duplicates
+     * @since   1.0.1
+     */
+    function aeofwc_search_distinct( $where ) {
+        global $wpdb;
+
+        if ( is_search() ) {
+            return "DISTINCT";
+        }
+
+        return $where;
+    }
 	
 	/**
 	 * Filter the "quick edit" action links for CPT edit list view
@@ -734,10 +845,18 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
                 $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
             }
-			elseif($post->post_status == 'declined-offer')
-			{
-				$actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
-			}
+            elseif($post->post_status == 'declined-offer')
+            {
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+            }
+            elseif($post->post_status == 'on-hold-offer')
+            {
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+            }
+            elseif($post->post_status == 'expired-offer')
+            {
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+            }
 			elseif($post->post_status == 'completed-offer')
 			{
 				unset($actions['trash']);
@@ -790,6 +909,40 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     /**
+     * Register custom post status type -- Offer On Hold
+     * @since	1.0.1
+     */
+    public function my_custom_post_status_on_hold()
+    {
+        $args = array(
+            'label'                     => _x( 'on-hold-offer', 'On Hold', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'On Hold (%s)',  'On Hold (%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'on-hold-offer', $args );
+    }
+
+    /**
+     * Register custom post status type -- Offer Expired
+     * @since	1.0.1
+     */
+    public function my_custom_post_status_expired()
+    {
+        $args = array(
+            'label'                     => _x( 'expired-offer', 'Expired', 'angelleye_offers_for_woocommerce' ),
+            'label_count'               => _n_noop( 'Expired (%s)',  'Expired(%s)', 'angelleye_offers_for_woocommerce' ),
+            'public'                    => true,
+            'show_in_admin_all_list'    => false,
+            'show_in_admin_status_list' => true,
+            'exclude_from_search'       => false,
+        );
+        register_post_status( 'expired-offer', $args );
+    }
+
+    /**
      * Register custom post status type -- Buyer Countered Offer
      * @since	0.1.0
      */
@@ -839,55 +992,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		);
 		register_post_status( 'completed-offer', $args );
 	}
-	
-	/**
-	 * Append custom post status types on edit detail view
-	 * @since	0.1.0
-	 * @NOTE:	This uses jQuery to push display of current post status and adds it to the select input on save form #select#post_status input
-	 */	 
-	public function jc_append_post_status_list() 
-	{
-		global $post;
-		$complete = '';
-		$label = '';
-		if($post->post_type == 'woocommerce_offer')
-		{
-			if($post->post_status == 'accepted-offer')
-			{
-				$complete = ' selected=selected';
-				$label = "<span id='post-status-display'> Accepted Offer</span>";
-			}
-            elseif($post->post_status == 'countered-offer')
-            {
-                $complete = ' selected=selected';
-                $label = "<span id='post-status-display'> Countered Offer</span>";
-            }
-            elseif($post->post_status == 'buyercountered-offer')
-            {
-                $complete = ' selected=selected';
-                $label = "<span id='post-status-display'> Buyer Countered Offer</span>";
-            }
-            elseif($post->post_status == 'completed-offer')
-            {
-                $complete = ' selected=selected';
-                $label = "<span id='post-status-display'> Completed Offer</span>";
-            }
-			elseif($post->post_status == 'declined-offer')
-			{
-				$complete = ' selected=selected';
-				$label = "<span id='post-status-display'> Declined Offer</span>";
-			}
-			
-			if($post->post_status == 'accepted-offer' || $post->post_status == 'countered-offer' || $post->post_status == 'buyercountered-offer' || $post->post_status == 'completed-offer' || $post->post_status == 'declined-offer')
-			{
-				echo '<script>jQuery(document).ready(function($){
-				$("select#post_status").append("<option value='.$post->post_status.'-offer '.$complete.'>'.ucfirst($post->post_status).'</option>");
-				$(".misc-pub-section label").append("'.$label.'");
-				});</script>';
-			  }
-		 }
-	}
-	
+
 	/**
 	 * Filter - Display post status values on edit list view with customized html elements
 	 * @since	0.1.0
@@ -918,9 +1023,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			elseif($post->post_status == 'completed-offer'){
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon completed" title="Offer Status: Completed">Completed</i></div>');
 			}
-			elseif($post->post_status == 'declined-offer'){
+            elseif($post->post_status == 'declined-offer'){
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon declined" title="Offer Status: Declined">Declined</i></div>');
-			}
+            }
+            elseif($post->post_status == 'on-hold-offer'){
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon on-hold" title="Offer Status: On Hold">On Hold</i></div>');
+            }
+            elseif($post->post_status == 'expired-offer'){
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon expired" title="Offer Status: Expired">Expired</i></div>');
+            }
 			else
 			{
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon" title="Offer Status: '.ucwords($post->post_status).'">'.ucwords($post->post_status).'</i></div>');
@@ -951,6 +1062,37 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			add_filter('gettext',  array( $this, 'my_get_translated_text_publish' ) );
 			add_filter('ngettext', array( $this, 'my_get_translated_text_publish' ) );
 		}
+
+        /**
+         * Auto-Expire offers with expire date past
+         * @since   1.0.1
+         */
+        if ( "edit-woocommerce_offer" == $screen->id )
+        {
+            global $wpdb;
+
+            $target_now_date = date("Y-m-d H:i:s", time());
+
+            $expired_offers = $wpdb->get_results($wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE `meta_key` = '%s' AND `meta_value` <> ''", 'offer_expiration_date'), 'ARRAY_A');
+            if (($expired_offers) && !empty($expired_offers))
+            {
+                foreach ($expired_offers as $v)
+                {
+                    $offer_expire_date_formatted = date("Y-m-d 00:00:00", strtotime($v['meta_value']));
+                    if( $offer_expire_date_formatted <= $target_now_date )
+                    {
+                        $post_status = get_post_status( $v['post_id']);
+                        if( $post_status && $post_status != 'trash' ) {
+                            $target_post = array(
+                                'ID' => $v['post_id'],
+                                'post_status' => 'expired-offer'
+                            );
+                            wp_update_post($target_post);
+                        }
+                    }
+                }
+            }
+        }
 	}
 	
 	/**
@@ -985,7 +1127,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             add_meta_box(
                 'section_id_offer_comments',
                 __( 'Offer Activity Log', 'angelleye_offers_for_woocommerce' ),
-                array( &$this, 'add_meta_box_offer_comments_callback' ),
+                array( $this, 'add_meta_box_offer_comments_callback' ),
                 $screen,
                 'side','default'
             );
@@ -1002,11 +1144,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         global $wpdb;
 
-        $order_by = "comment_date";
-        $order = "desc";
-
-        $query = $wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '%d' ORDER BY comment_date desc", $post->ID );
+        $query = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' ORDER BY comment_date desc", $post->ID );
         $offer_comments = $wpdb->get_results($query);
+
         /*
 		 * Output html for Offer Comments loop
 		 */
@@ -1066,22 +1206,58 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Lookup product data
             $product_id = $postmeta['offer_product_id'][0];
+            $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
 
             $_pf = new WC_Product_Factory();
             $_product = $_pf->get_product($product_id);
 
-            $_product_sku = $_product->get_sku();
-            $_product_permalink = $_product->get_permalink();
-            $_product_regular_price = $_product->get_regular_price();
-            $_product_sale_price = $_product->get_sale_price();
-            $_product_stock = $_product->get_total_stock();
-            $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
-            $_product_backorders_allowed = $_product->backorders_allowed();
-            $_product_backorders_require_notification = $_product->backorders_require_notification();
-            $_product_formatted_name = $_product->get_formatted_name();
-            $_product_image = $_product->get_image( 'shop_thumbnail');
+            if( $product_variant_id )
+            {
+                $_pf_variant = new WC_Product_Factory();
+                $_product_variant = $_pf_variant->get_product($product_variant_id);
+                $_product_variant_managing_stock = ( $_product_variant->managing_stock() == 'parent' ) ? true : false;
 
-            // set error message if product not found...
+                $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
+                $_product_permalink = $_product_variant->get_permalink();
+                $_product_attributes = $_product_variant->get_variation_attributes();
+                $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
+                $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
+
+                $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
+                $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
+                $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
+                $_product_backorders_require_notification = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_require_notification() : $_product->backorders_require_notification();
+                $_product_formatted_name = $_product_variant->get_formatted_name();
+                $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
+            }
+            else
+            {
+                $_product_sku = $_product->get_sku();
+                $_product_attributes = $_product->get_attributes();
+                $_product_permalink = $_product->get_permalink();
+                $_product_regular_price = $_product->get_regular_price();
+                $_product_sale_price = $_product->get_sale_price();
+                $_product_managing_stock = $_product->managing_stock();
+                $_product_stock = $_product->get_total_stock();
+                $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                $_product_backorders_allowed = $_product->backorders_allowed();
+                $_product_backorders_require_notification = $_product->backorders_require_notification();
+                $_product_formatted_name = $_product->get_formatted_name();
+                $_product_image = $_product->get_image( 'shop_thumbnail');
+
+                // set error message if product not found...
+            }
+
+            /**
+             * Check to 'consider inventory' of product stock compared to offer quantities
+             * @since   0.1.0
+             */
+
+            if( ( !$_product_in_stock)  )
+            {
+                $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', 'angelleye_offers_for_woocommerce');
+            }
 
             // Check for 'offer_order_id'
             if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
@@ -1104,7 +1280,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'angelleye_offers_for_woocommerce') . '</small>';
                 }
             }
-
 
             // set author_data
             $author_data = get_userdata($post->post_author);
@@ -1139,13 +1314,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $args = array($post_type,'completed-offer', $post->post_author);
                 $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
 
+                $args = array($post_type,'on-hold-offer', $post->post_author);
+                $count_on_hold = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                $args = array($post_type,'expired-offer', $post->post_author);
+                $count_expired = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
                 $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
                 $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
                 $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
                 $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
-                $author_counts['buyer_countered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
+                $author_counts['buyercountered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
                 $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
                 $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
+                $author_counts['on_hold'] = apply_filters( 'get_usernumposts', $count_on_hold, $post->post_author );
+                $author_counts['expired'] = apply_filters( 'get_usernumposts', $count_expired, $post->post_author );
 
                 $author_data->offer_counts = $author_counts;
             }
@@ -1169,7 +1352,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             add_meta_box(
                 'section_id_offer_addnote',
                 __( 'Add Offer Note', 'angelleye_offers_for_woocommerce' ),
-                array( &$this, 'add_meta_box_offer_addnote_callback' ),
+                array( $this, 'add_meta_box_offer_addnote_callback' ),
                 $screen,
                 'side','low'
             );
@@ -1232,6 +1415,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * OK, its safe for us to save the data now
          */
 
+        // Save 'final offer' post meta
+        $offer_final_offer = (isset($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
+        update_post_meta( $post_id, 'offer_final_offer', $offer_final_offer );
+
+        // Save 'offer_expiration_date' post meta
+        $offer_expiration_date = (isset($_POST['offer_expiration_date']) && $_POST['offer_expiration_date'] != '') ? $_POST['offer_expiration_date'] : '';
+        update_post_meta( $post_id, 'offer_expiration_date', $offer_expiration_date );
+
         // Get current data for Offer after saved
         $post_data = get_post($post_id);
         // Filter Post Status Label
@@ -1251,27 +1442,62 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Accepted_Offer_Email';
@@ -1283,6 +1509,104 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-accepted.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-accepted.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
+            $new_email->trigger($offer_args);
+        }
+
+        // Offer On Hold
+        if($post_data->post_status == 'on-hold-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'on-hold-offer')
+        {
+            /**
+             * Email customer offer on hold email template
+             * @since   1.0.1
+             */
+            // set recipient email
+            $recipient = get_post_meta($post_id, 'offer_email', true);
+            $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
+
+            $product_id = get_post_meta($post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
+            $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
+
+            $offer_args = array(
+                'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
+                'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
+                'product_id' => $product_id,
+                'product_url' => $product->get_permalink(),
+                'variant_id' => $variant_id,
+                'product' => $product,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_total' => $product_total,
+                'offer_notes' => $offer_notes
+            );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
+
+            // the email we want to send
+            $email_class = 'WC_Offer_On_Hold_Email';
+
+            // load the WooCommerce Emails
+            $wc_emails = new WC_Emails();
+            $emails = $wc_emails->get_emails();
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-on-hold.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-on-hold.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
             $new_email->trigger($offer_args);
         }
 
@@ -1308,13 +1632,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
-            $offer_uid = get_post_meta($post_id, 'offer_uid', true);;
-            $offer_name = get_post_meta($post_id, 'offer_name', true);;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
             $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
             $product_qty = get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
@@ -1327,14 +1652,32 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'offer_id' => $offer_id,
                 'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
-                'offer_notes' => $offer_notes
+                'offer_notes' => $offer_notes,
+                'final_offer' => $offer_final_offer
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Countered_Offer_Email';
@@ -1346,6 +1689,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-countered.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-countered.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
             $new_email->trigger($offer_args);
         }
 
@@ -1359,27 +1711,62 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Declined_Offer_Email';
@@ -1391,6 +1778,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-declined.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-declined.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
             $new_email->trigger($offer_args);
         }
 
@@ -1405,7 +1801,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         $data = array(
-            'comment_post_ID' => $post_id,
+            'comment_post_ID' => '',
             'comment_author' => 'admin',
             'comment_author_email' => '',
             'comment_author_url' => '',
@@ -1416,9 +1812,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
             'comment_agent' => '',
             'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-            'comment_approved' => 1,
+            'comment_approved' => 'post-trashed',
         );
-        wp_insert_comment($data);
+        $new_comment_id = wp_insert_comment( $data );
+
+        // insert comment meta
+        if( $new_comment_id )
+        {
+            add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+        }
 	}
 
 	/**
@@ -1470,7 +1872,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_section(
 			'general_settings', // ID
 			'', // Title
-			array( &$this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
+			array( $this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
 			'offers_for_woocommerce_general_settings' // Page
 		);
 		
@@ -1481,24 +1883,37 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_field(
 			'general_setting_enable_make_offer_btn_frontpage', // ID
 			'Enable Make Offer button on home page', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+			array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
 			'offers_for_woocommerce_general_settings', // Page
 			'general_settings', // Section 
 			array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_frontpage', 'input_required'=>FALSE)         
 		);
-		
-		/**
-		 * Add field - 'General Settings' - 'general_setting_enable_make_offer_btn_catalog'
-		 * Enable Make Offer button on shop page
-		 */
-		add_settings_field(
-			'general_setting_enable_make_offer_btn_catalog', // ID
-			'Enable Make Offer button on shop page', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
-			'offers_for_woocommerce_general_settings', // Page
-			'general_settings', // Section 
-			array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_catalog', 'input_required'=>FALSE)         
-		);
+
+        /**
+         * Add field - 'General Settings' - 'general_setting_enable_make_offer_btn_catalog'
+         * Enable Make Offer button on shop page
+         */
+        add_settings_field(
+            'general_setting_enable_make_offer_btn_catalog', // ID
+            'Enable Make Offer button on shop page', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_catalog', 'input_required'=>FALSE)
+        );
+
+        /**
+         * Add field - 'General Settings' - 'general_setting_enable_offers_by_default'
+         * Enable Make Offer button on new products by default
+         */
+        add_settings_field(
+            'general_setting_enable_offers_by_default', // ID
+            'Enable Make Offer button on new products by default', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_offers_by_default', 'input_required'=>FALSE)
+        );
 
 		/**
 		 * Add section - 'Display Settings'
@@ -1506,9 +1921,45 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_section(
 			'display_settings', // ID
 			'', // Title
-			array( &$this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
+			array( $this, 'offers_for_woocommerce_options_page_intro_text' ), // Callback page intro text
 			'offers_for_woocommerce_display_settings' // Page
 		);
+
+        /**
+         * Add field - 'Display Settings' - 'display_setting_enable_make_offer_form_lightbox'
+         * Enable Make Offer button on home page
+         */
+        add_settings_field(
+            'display_setting_make_offer_form_display_type', // ID
+            'Make Offer form display type', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
+            'offers_for_woocommerce_display_settings', // Page
+            'display_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_form_display_type', 'input_required'=>FALSE,
+                'options'=> array(
+                    array('option_label' => 'Product Tabs (default display)', 'option_value' => 'tabs'),
+                    array('option_label' => 'Lightbox', 'option_value' => 'lightbox')
+                ))
+        );
+
+        /**
+         * Add field - 'Display Settings' - 'display_setting_make_offer_button_position_single'
+         * Make Offer Button position
+         */
+        add_settings_field(
+            'display_setting_make_offer_button_position_single', // ID
+            'Make Offer button position', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
+            'offers_for_woocommerce_display_settings', // Page
+            'display_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_button_position_single', 'input_required'=>FALSE,
+                'options'=> array(
+                    array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
+                    array('option_label' => 'Before add to cart button', 'option_value' => 'before_add'),
+                    array('option_label' => 'After product price', 'option_value' => 'after_price'),
+                    array('option_label' => 'After product tabs', 'option_value' => 'after_tabs')
+                ))
+        );
 		
 		/**
 		 * Add field - 'Display Settings' - 'display_setting_custom_make_offer_btn_text'
@@ -1517,7 +1968,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_text', // ID
 			'Make Offer button text', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
+			array( $this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
 			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_text', 'input_required'=>FALSE)
@@ -1530,7 +1981,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_text_color', // ID
 			'Make Offer button text color', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
+			array( $this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
 			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_text_color', 'input_required'=>FALSE)
@@ -1543,7 +1994,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_color', // ID
 			'Make Offer button color', // Title 
-			array( &$this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
+			array( $this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
 			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_color', 'input_required'=>FALSE)
@@ -1593,22 +2044,50 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             isset( $options[$field_label] ) ? esc_attr( $options[$field_label]) : ''
         );
 	}
-	
-	/**
-	 * Callback - Options Page - Output a 'Checkbox' input field for options page form
-	 * @since	0.1.0
-	 * @param	$args - Params to define 'option_name','input_label'
-	 */
-	public function offers_for_woocommerce_options_page_output_input_checkbox($args) 
-	{
-		$options = get_option($args['option_name']);
-		$field_label = $args['input_label'];
-		$field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
-		$is_checked = (isset($options[$field_label])) ? $options[$field_label] : '0';
-		print(
-			'<input '. $field_required. ' type="checkbox" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="1" ' . checked(1, $is_checked, false) . '/>'
+
+    /**
+     * Callback - Options Page - Output a 'Checkbox' input field for options page form
+     * @since	0.1.0
+     * @param	$args - Params to define 'option_name','input_label'
+     */
+    public function offers_for_woocommerce_options_page_output_input_checkbox($args)
+    {
+        $options = get_option($args['option_name']);
+        $field_label = $args['input_label'];
+        $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
+        $is_checked = (isset($options[$field_label])) ? $options[$field_label] : '0';
+        print(
+            '<input '. $field_required. ' type="checkbox" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="1" ' . checked(1, $is_checked, false) . '/>'
         );
-	}
+    }
+
+    /**
+     * Callback - Options Page - Output a 'Select' input field for options page form
+     * @since	0.1.0
+     * @param	$args - Params to define 'option_name','input_label','input_required,'options'
+     */
+    public function offers_for_woocommerce_options_page_output_input_select($args)
+    {
+        $options = get_option($args['option_name']);
+        $field_label = $args['input_label'];
+        $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
+
+        print(
+            '<select '. $field_required. ' id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']"/>'
+        );
+        foreach( $args['options'] as $option )
+        {
+            $is_selected = (isset($options[$field_label]) && $options[$field_label] == $option['option_value']) ? 'selected="selected"' : '';
+            print(
+                '<option value="'. $option['option_value'] . '" '. $is_selected .'>'. $option['option_label'] . '</option>'
+            );
+        }
+
+        print(
+            '</select>'
+        );
+
+    }
 	
 	/**
 	 * Callback - Options Page - Output a 'colorpicker' input field for options page form
@@ -1693,14 +2172,26 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			return;
 		}
 		$screen = get_current_screen();
-		
-		if ( ("edit-woocommerce_offer" == $screen->id || "woocommerce_offer" == $screen->id || $this->plugin_screen_hook_suffix == $screen->id) ) 
-		{
-			// Bootstrap styles for modal
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'assets/css/bootstrap-custom.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
-			// admin styles
-			wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
-		}		
+
+        if ( ("edit-woocommerce_offer" == $screen->id || "woocommerce_offer" == $screen->id || $this->plugin_screen_hook_suffix == $screen->id) )
+        {
+            // Bootstrap styles for modal
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-boostrap-custom', plugins_url( 'assets/css/bootstrap-custom.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // jQuery styles
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-ui', plugins_url( 'assets/css/jquery-ui.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-ui-structure', plugins_url( 'assets/css/jquery-ui.structure.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-ui-theme', plugins_url( 'assets/css/jquery-ui.theme.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // admin styles
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+        }
+
+        if ( "product" == $screen->id && is_admin() )
+        {
+            // admin styles - edit product
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-edit-product-styles', plugins_url( 'assets/css/edit-product.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+        }
 	}
 
 	/**
@@ -1739,11 +2230,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         if ( "woocommerce_offer" == $screen->id && is_admin() )
         {
+            // Jquery datepicker.js
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-datepicker', plugins_url( 'assets/js/jquery-ui.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+
             // autoNumeric js
             wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url( '../public/assets/js/autoNumeric-1-9-24.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
             // admin scripts
             wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+        }
+
+        if ( "product" == $screen->id && is_admin() )
+        {
+            // admin scripts - edit product
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-script-edit-product', plugins_url( 'assets/js/edit-product.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
         }
 	}
 
@@ -1840,7 +2340,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * Callback - Action - Add 'pending offer(s)' count to wp dashboard 'at a glance' widget
 	 * @since	0.1.0
 	 */
-	public function my_add_cpt_to_dashboard()
+	public function my_add_cpt_to_dashboard( $glances )
 	{
 		$post_types = get_post_types( array( '_builtin' => false ), 'objects' );
 		foreach ( $post_types as $post_type ) {
@@ -1867,6 +2367,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
+
+            // Get current data for Offer prior to save
+            $post_data = get_post($post_id);
+
             $table = $wpdb->prefix . "posts";
             $data_array = array(
                 'post_status' => 'accepted-offer',
@@ -1876,11 +2380,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            // Get current data for Offer after saved
-            $post_data = get_post($post_id);
             // Filter Post Status Label
-            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
-            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+            $post_status_text = 'Accepted';
 
             // set update notes
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -1892,27 +2393,62 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Accepted_Offer_Email';
@@ -1924,6 +2460,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-accepted.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-accepted.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
             $new_email->trigger($offer_args);
 
             // Insert WP comment
@@ -1937,7 +2482,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
 
             $data = array(
-                'comment_post_ID' => $post_id,
+                'comment_post_ID' => '',
                 'comment_author' => 'admin',
                 'comment_author_email' => '',
                 'comment_author_url' => '',
@@ -1948,9 +2493,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                'comment_approved' => 1,
+                'comment_approved' => 'post-trashed',
             );
-            wp_insert_comment($data);
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
 
 
             die(); // this is required to return a proper result
@@ -1967,6 +2518,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
+
+            // Get current data for Offer prior to save
+            $post_data = get_post($post_id);
+
+            // if buyercountered-offer previous then use buyer counter values
+            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
             $table = $wpdb->prefix . "posts";
             $data_array = array(
                 'post_status' => 'declined-offer',
@@ -1976,11 +2534,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $where = array('ID' => $post_id);
             $wpdb->update( $table, $data_array, $where );
 
-            // Get current data for Offer after saved
-            $post_data = get_post($post_id);
             // Filter Post Status Label
-            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
-            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+            $post_status_text = 'Declined';
 
             // set update notes
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -1992,27 +2547,59 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set recipient email
             $recipient = get_post_meta($post_id, 'offer_email', true);
             $offer_id = $post_id;
+            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+            $offer_name = get_post_meta($post_id, 'offer_name', true);
+            $offer_email = $recipient;
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $product = new WC_Product($product_id);
+            $_pf = new WC_Product_Factory;
+            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
-            $product_qty = get_post_meta($post_id, 'offer_quantity', true);
-            $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
+            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+            $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = ($product_qty * $product_price_per);
+
+            // if buyercountered-offer status, update postmeta values for quantity,price,amount
+            if( $is_offer_buyer_countered_status )
+            {
+                update_post_meta( $post_id, 'offer_quantity', $product_qty );
+                update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+                update_post_meta( $post_id, 'offer_amount', $product_total );
+            }
 
             $offer_args = array(
                 'recipient' => $recipient,
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
                 'offer_id' => $offer_id,
+                'offer_uid' => $offer_uid,
                 'product_id' => $product_id,
-                'product_url' => get_permalink($product_id),
+                'product_url' => $product->get_permalink(),
                 'variant_id' => $variant_id,
-                'product' => $product->post,
+                'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
+
+            if( $variant_id )
+            {
+                if ( $product->get_sku() ) {
+                    $identifier = $product->get_sku();
+                } else {
+                    $identifier = '#' . $product->variation_id;
+                }
+
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+            }
+            else
+            {
+                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+            }
 
             // the email we want to send
             $email_class = 'WC_Declined_Offer_Email';
@@ -2024,6 +2611,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
+
+            // define email template/path (html)
+            $new_email->template_html  = 'woocommerce-offer-declined.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain  = 'woocommerce-offer-declined.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
             $new_email->trigger($offer_args);
 
             // Insert WP comment
@@ -2037,7 +2633,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
 
             $data = array(
-                'comment_post_ID' => $post_id,
+                'comment_post_ID' => '',
                 'comment_author' => 'admin',
                 'comment_author_email' => '',
                 'comment_author_url' => '',
@@ -2048,9 +2644,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                'comment_approved' => 1,
+                'comment_approved' => 'post-trashed',
             );
-            wp_insert_comment($data);
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
 
 
             die(); // this is required to return a proper result
@@ -2065,9 +2667,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
-            $targetPostID = $_POST["targetID"];
+            $post_id = $_POST["targetID"];
+            // Get current data for Offer
+            $post_data = get_post($post_id);
+            // Filter Post Status Label
+            $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
+            $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
+
             $noteSendToBuyer = (isset($_POST["noteSendToBuyer"]) && $_POST["noteSendToBuyer"] != '') ? '1' : '';
-            $noteContent = $_POST['noteContent'];
+            $offer_notes = $_POST['noteContent'];
 
             $current_user = wp_get_current_user();
 
@@ -2081,10 +2689,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 $comment_text.= " (sent to buyer)";
             }
-            $comment_text.= "<br />" .$noteContent;
+            $comment_text.= "<br />" .$offer_notes;
 
             $data = array(
-                'comment_post_ID' => $targetPostID,
+                'comment_post_ID' => '',
                 'comment_author' => $current_user->user_login,
                 'comment_author_email' => $current_user->user_email,
                 'comment_author_url' => '',
@@ -2095,9 +2703,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
                 'comment_agent' => '',
                 'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0 )),
-                'comment_approved' => 1,
+                'comment_approved' => 'post-trashed',
             );
-            if( wp_insert_comment($data) )
+            $new_comment_id = wp_insert_comment( $data );
+
+            // insert comment meta
+            if( $new_comment_id )
+            {
+                add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            }
+
+            if( $new_comment_id )
             {
 
                 if($noteSendToBuyer == '1')
@@ -2108,29 +2724,56 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                      * @since   0.1.0
                      */
                     // set recipient email
-                    $offer_id = $targetPostID;
-                    $recipient = get_post_meta($offer_id, 'offer_email', true);
+                    $recipient = get_post_meta($post_id, 'offer_email', true);
+                    $offer_id = $post_id;
+                    $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+                    $offer_name = get_post_meta($post_id, 'offer_name', true);
+                    $offer_email = $recipient;
 
-                    $product_id = get_post_meta($offer_id, 'offer_product_id', true);
-                    $variant_id = get_post_meta($offer_id, 'offer_variation_id', true);
-                    $product = new WC_Product($product_id);
+                    $product_id = get_post_meta($post_id, 'offer_product_id', true);
+                    $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+                    $_pf = new WC_Product_Factory;
+                    $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
 
-                    $product_qty = get_post_meta($offer_id, 'offer_quantity', true);
-                    $product_price_per = get_post_meta($offer_id, 'offer_price_per', true);
+                    // if buyercountered-offer previous then use buyer counter values
+                    $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+
+                    $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+                    $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
                     $product_total = ($product_qty * $product_price_per);
 
                     $offer_args = array(
                         'recipient' => $recipient,
+                        'offer_email' => $offer_email,
+                        'offer_name' => $offer_name,
                         'offer_id' => $offer_id,
+                        'offer_uid' => $offer_uid,
                         'product_id' => $product_id,
-                        'product_url' => get_permalink($product_id),
+                        'product_url' => $product->get_permalink(),
                         'variant_id' => $variant_id,
-                        'product' => $product->post,
+                        'product' => $product,
                         'product_qty' => $product_qty,
                         'product_price_per' => $product_price_per,
                         'product_total' => $product_total,
-                        'offer_notes' => $noteContent
+                        'offer_notes' => $offer_notes
                     );
+
+                    if( $variant_id )
+                    {
+                        if ( $product->get_sku() ) {
+                            $identifier = $product->get_sku();
+                        } else {
+                            $identifier = '#' . $product->variation_id;
+                        }
+
+                        $attributes = $product->get_variation_attributes();
+                        $extra_data = ' &ndash; ' . implode( ', ', $attributes );
+                        $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'woocommerce' ), $identifier, $product->get_title(), $extra_data );
+                    }
+                    else
+                    {
+                        $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                    }
 
                     // the email we want to send
                     $email_class = 'WC_Offer_Note_Email';
@@ -2142,10 +2785,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     // select the email we want & trigger it to send
                     $new_email = $emails[$email_class];
                     $new_email->recipient = $recipient;
+
+                    // define email template/path (html)
+                    $new_email->template_html  = 'woocommerce-offer-note.php';
+                    $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
+
+                    // define email template/path (plain)
+                    $new_email->template_plain  = 'woocommerce-offer-note.php';
+                    $new_email->template_plain_path = plugin_dir_path(__FILE__). 'includes/emails/plain/';
+
                     $new_email->trigger($offer_args);
                 }
 
-                $redirect_url = admin_url('post.php?post='.$targetPostID.'&action=edit&noheader=true&message=11');
+                $redirect_url = admin_url('post.php?post='.$post_id.'&action=edit&noheader=true&message=11');
                 echo $redirect_url;
             }
             else
@@ -2169,12 +2821,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         require( 'includes/class-wc-accepted-offer-email.php' );
         require( 'includes/class-wc-declined-offer-email.php' );
         require( 'includes/class-wc-countered-offer-email.php' );
+        require( 'includes/class-wc-offer-on-hold-email.php' );
         require( 'includes/class-wc-offer-note-email.php' );
 
         // add the email class to the list of email classes that WooCommerce loads
         $email_classes['WC_Accepted_Offer_Email'] = new WC_Accepted_Offer_Email();
         $email_classes['WC_Declined_Offer_Email'] = new WC_Declined_Offer_Email();
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
+        $email_classes['WC_Offer_On_Hold_Email'] = new WC_Offer_On_Hold_Email();
         $email_classes['WC_Offer_Note_Email'] = new WC_Offer_Note_Email();
 
         return $email_classes;
@@ -2205,7 +2859,189 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         return;
     }
 
-//woocommerce_order_items_table
+    /**
+     * Adds help tab content for manage offer screen
+     * @param $contextual_help
+     * @param $screen_id
+     * @param $screen
+     * @return mixed
+     */
+    function ae_ofwc_contextual_help( $contextual_help, $screen_id, $screen ) {
 
+        // Only add to certain screen(s). The add_help_tab function for screen was introduced in WordPress 3.3.
+        if ( "edit-woocommerce_offer" != $screen->id || ! method_exists( $screen, 'add_help_tab' ) )
+            return $contextual_help;
+
+        $screen->add_help_tab( array(
+            'id'      => 'angelleye-offers-for-woocommerce-overview-tab_01',
+            'title'   => __( 'Overview', 'angelleye_offers_for_woocommerce' ),
+            'content' => '<p>' . __( 'This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'angelleye_offers_for_woocommerce' ) . '</p>',
+        ));
+
+        $screen->add_help_tab( array(
+            'id'      => 'angelleye-offers-for-woocommerce-overview-tab_02',
+            'title'   => __( 'Help Tab', 'angelleye_offers_for_woocommerce' ),
+            'content' => '<p>' . __( 'This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'angelleye_offers_for_woocommerce' ) . '</p>',
+        ));
+
+        $screen->add_help_tab( array(
+            'id'      => 'angelleye-offers-for-woocommerce-overview-tab_03',
+            'title'   => __( 'Help Tab', 'angelleye_offers_for_woocommerce' ),
+            'content' => '<p>' . __( 'This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'angelleye_offers_for_woocommerce' ) . '</p>',
+        ));
+
+        return $contextual_help;
+    }
+
+    /*
+     * Check WooCommerce is available
+     * @since   0.1.0
+     */
+    public function ae_ofwc_check_woocommerce_available()
+    {
+        if (is_admin()) {
+
+            global $current_user;
+            $user_id = $current_user->ID;
+
+            if (!function_exists('is_plugin_active_for_network')) {
+                require_once(ABSPATH . '/wp-admin/includes/plugin.php');
+            }
+
+            if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && !is_plugin_active_for_network('woocommerce/woocommerce.php'))
+            {
+                if ( in_array('offers-for-woocommerce/offers-for-woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) || is_plugin_active_for_network('offers-for-woocommerce/offers-for-woocommerce.php')) {
+
+                    // deactivate offers for woocommerce plugin
+                    deactivate_plugins(plugin_dir_path(realpath(dirname(__FILE__))) . $this->plugin_slug . '.php');
+
+                    // remove hide nag msg
+                    //delete_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01');
+
+                    // redirect
+                    //wp_redirect('plugins.php');
+                }
+                add_action( 'admin_notices', array( $this, 'ae_ofwc_admin_notice_woocommerce_mia' ) );
+            }
+            else
+            {
+                // remove hide nag msg
+                delete_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01');
+            }
+        }
+    }
+
+    public function ae_ofwc_admin_notice_woocommerce_mia()
+    {
+        global $current_user ;
+        $user_id = $current_user->ID;
+
+        // Check that the user hasn't already clicked to ignore the message
+        if ( ! get_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01') ) {
+            printf('<div class="updated"> <p> %s  | <a href="%2$s">Hide Notice</a></p> </div>', __('<strong>Offers for WooCommerce has been deactivated; WooCommerce is required.</strong><br />Please make sure that WooCommerce is installed and activated before activating Offers for WooCommerce.', 'angelleye_offers_for_woocommerce'), '?angelleye_offers_for_woocommerce_ignore_01=0');
+        }
+    }
+
+    /**
+     * Add ignore nag message for admin notices
+     * @since   0.1.0
+     */
+    public function ae_ofwc_check_woocommerce_nag_notice_ignore()
+    {
+        global $current_user;
+        $user_id = $current_user->ID;
+
+        /* If user clicks to ignore the notice, add that to their user meta */
+        if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_01']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_01'] ) {
+            add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01', 'true');
+        }
+    }
+
+    /**
+     * Action - Bulk action - Enable/Disable Offers on WooCommerce products
+     * @since   1.0.1
+     */
+    public function custom_bulk_admin_footer() {
+
+        global $post_type;
+
+        if($post_type == 'product') {
+            ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers')?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers')?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers')?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers')?>').appendTo("select[name='action2']");
+                });
+            </script>
+        <?php
+        }
+    }
+
+    /**
+     * Action - Bulk action - Process Enable/Disable Offers on WooCommerce products
+     * @since   1.0.1
+     */
+    public function custom_bulk_action() {
+
+        $wp_list_table = _get_list_table('WP_Posts_List_Table');
+        $action = $wp_list_table->current_action();
+
+        $post_ids = (isset($_REQUEST['post']) ) ? $_REQUEST['post'] : FALSE;
+
+        if($post_ids) {
+            switch ($action) {
+                case 'enable_offers':
+                    $updated_count = 0;
+
+                    foreach ($post_ids as $post_id) {
+                        // update post
+                        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', 'yes');
+                        $updated_count++;
+                    }
+                    // build the redirect url
+                    $sendback = add_query_arg(array('enabled_offers' => $updated_count, 'ids' => join(',', $post_ids)), 'edit.php?post_type=product');
+
+                    break;
+                case 'disable_offers':
+                    $updated_count = 0;
+
+                    foreach ($post_ids as $post_id) {
+                        // update post
+                        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', 'no');
+                        $updated_count++;
+                    }
+                    // build the redirect url
+                    $sendback = add_query_arg(array('disabled_offers' => $updated_count, 'ids' => join(',', $post_ids)), 'edit.php?post_type=product');
+
+                    break;
+                default:
+                    return;
+            }
+
+            wp_redirect($sendback);
+            exit();
+        }
+    }
+
+    /**
+     * Action - Show admin notice for bulk action Enable/Disable Offers on WooCommerce products
+     * @since   1.0.1
+     */
+    public function custom_bulk_admin_notices()
+    {
+        global $post_type, $pagenow;
+
+        if($pagenow == 'edit.php' && $post_type == 'product' && isset($_REQUEST['enabled_offers']) && (int) $_REQUEST['enabled_offers'] && ($_REQUEST['enabled_offers'] > 0)) {
+            $message = sprintf( __( 'Offers enabled for %s products.', 'angelleye_offers_for_woocommerce' ), number_format_i18n( $_REQUEST['enabled_offers'] ) );
+            echo '<div class="updated"><p>'.$message.'</p></div>';
+        }
+
+        if($pagenow == 'edit.php' && $post_type == 'product' && isset($_REQUEST['disabled_offers']) && (int) $_REQUEST['disabled_offers'] && ($_REQUEST['disabled_offers'] > 0)) {
+            $message = sprintf( __( 'Offers disabled for %s products.', 'angelleye_offers_for_woocommerce' ), number_format_i18n( $_REQUEST['disabled_offers'] ) );
+            echo '<div class="updated"><p>'.$message.'</p></div>';
+        }
+    }
 
 }

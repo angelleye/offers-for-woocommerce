@@ -8,7 +8,6 @@
  * @author    AngellEYE <andrew@angelleye.com>
  * @license   GPL-2.0+
  * @link      http://www.angelleye.com
- * @copyright 2014 AngellEYE
  */
 ?>
 <form name="addOfferNoteForm" id="addOfferNoteForm" autocomplete="off" action="<?php echo admin_url('post.php?post='.$post->ID.'&noheader=true'); ?>" method="post">

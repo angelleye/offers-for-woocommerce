@@ -24,7 +24,12 @@
 
 .type-woocommerce_offer.status-publish:hover td,
 .type-woocommerce_offer.status-publish:hover th {
-  background-color: #fef7f1!important;
+    background-color: #fef7f1!important;
+}
+
+.type-woocommerce_offer.status-on-hold-offer:hover td,
+.type-woocommerce_offer.status-on-hold-offer:hover th {
+    background-color: #fef7f1!important;
 }
 
 .type-woocommerce_offer.status-accepted-offer:hover td,
@@ -64,11 +69,12 @@ tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-
 i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
 i.woocommerce-offer-post-status-grid-icon.pending, i.woocommerce-offer-post-status-grid-icon.pending:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
 i.woocommerce-offer-post-status-grid-icon.accepted, i.woocommerce-offer-post-status-grid-icon.accepted:hover { background-color:transparent!important; color:#0074A2!important; border:1px solid #0074A2!important; }
+i.woocommerce-offer-post-status-grid-icon.on-hold, i.woocommerce-offer-post-status-grid-icon.on-hold:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
 i.woocommerce-offer-post-status-grid-icon.countered, i.woocommerce-offer-post-status-grid-icon.countered:hover { background-color:transparent!important; color:#777!important; border:1px solid #ffcc00!important; }
 i.woocommerce-offer-post-status-grid-icon.buyercountered, i.woocommerce-offer-post-status-grid-icon.buyercountered:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777777!important; }
 i.woocommerce-offer-post-status-grid-icon.completed, i.woocommerce-offer-post-status-grid-icon.completed:hover { background-color:transparent!important; color:#52A200!important; border:1px solid #52A200!important; }
 i.woocommerce-offer-post-status-grid-icon.declined, i.woocommerce-offer-post-status-grid-icon.declined:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777!important; }
-i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status-grid-icon.trash:hover { background-color:transparent!important; color:#FCFCFC!important; border:1px solid #FCFCFC!important; }
+i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status-grid-icon.trash:hover { background-color:transparent!important; color:#777!important; border:1px solid #777!important; }
 
 .woocommerce-offer-post-status-grid-icon-div { font-size:12px!important; line-height:22px!important; opacity:0; }
 .woocommerce-offer-post-status-grid-icon-div:before {
@@ -76,11 +82,14 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 }
 .type-woocommerce_offer.status-publish td, .type-woocommerce_offer.status-publish th { background-color: #FEF7F1; }
 .type-woocommerce_offer.status-publish th.check-column { border-left: 4px solid #D54E21; }
+.type-woocommerce_offer.status-on-hold-offer td, .type-woocommerce_offer.status-on-hold-offer th { background-color: #FEF7F1; }
+.type-woocommerce_offer.status-on-hold-offer th.check-column { border-left: 4px solid #D54E21; }
 .type-woocommerce_offer.status-accepted-offer th.check-column { border-left: 4px solid #0074A2; }
 .type-woocommerce_offer.status-countered-offer th.check-column { border-left: 4px solid #ffcc00; }
 .type-woocommerce_offer.status-buyercountered-offer th.check-column { border-left: 4px solid #999; }
-.type-woocommerce_offer.status-completed-offer th.check-column { border-left: 4px solid #52A200; }	
+.type-woocommerce_offer.status-completed-offer th.check-column { border-left: 4px solid #52A200; }
 .type-woocommerce_offer.status-declined-offer th.check-column { border-left: 4px solid #333333; }
+.type-woocommerce_offer.status-trash th.check-column { border-left: 4px solid #333333; }
 
 
 #adminmenu #menu-posts-woocommerce_offer .menu-icon-woocommerce_offer div.wp-menu-image:before { content: "\f110"; }
@@ -360,14 +369,6 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     }
 }
 
-.offer-original-meta-values-wrap li {
-    line-height: 24px;
-    height: 24px;
-    padding: 0 0 0 7px;
-    border-bottom:1px solid #e5e5e5;
-    margin: 0 0 4px 0;
-}
-
 .offer-product-meta-image-wrap {
     float: left;
     width:90px;
@@ -517,5 +518,74 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label { padding-top:10px!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap input { width: 100%!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap input[type='text']:disabled,
-body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-price-per { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-price-per { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; color:inherit!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-total {  border:1px solid #CCC!important; border-left:none!important; border-top-width:1px!important; background:#FFFFFF!important; cursor: not-allowed!important; }
+
+body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap { margin-bottom:20px!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap label { padding-top:10px!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap input { width: 100%!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap input[type='text']:disabled,
+body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap #original-offer-price-per { border:1px solid #CCC!important; border-top-width: 1px!important; color:inherit!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap #original-offer-total {  border:1px solid #CCC!important; border-top-width:1px!important; background:#FFFFFF!important; cursor: not-allowed!important; }
+
+#angelleye-woocommerce-offer-meta-summary-notice-msg {
+    background:none!important;
+    color:#444;
+    padding:0px;
+    width:97.5%;
+    margin:0 0 10px 0;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #DD3D36;
+}
+#angelleye-woocommerce-offer-meta-summary-notice-msg .aeofwc-notice-msg-inner {
+    padding:5px 10px!important;
+    margin:10px 0;
+    font-size: 13px;
+    line-height: 1.4em;
+    color:#444;
+}
+
+.angelleye-hidden { display: none; }
+
+#aeofwc-delete-action { text-align:right; }
+#aeofwc-delete-action .deletion { color:#A00; text-decoration: none; }
+#aeofwc-delete-action .deletion:hover { color:#FF0000; }
+
+.woocommerce-offer-final-offer-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-final-offer-wrap label { float:left; margin-right:8px; }
+.woocommerce-offer-final-offer-wrap input { margin-top:-2px; }
+
+.woocommerce-offer-expiration-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-expiration-wrap label { float:left; margin:5px 8px 3px 0; }
+
+.woocommerce-offer-expiration-wrap input { width: 90px; margin:0!important; }
+
+@media screen and (max-width:782px){
+    .woocommerce-offer-final-offer-wrap label { margin-top:3px; }
+    .woocommerce-offer-final-offer-wrap input {
+        /* larger-sized Checkboxes */
+        -ms-transform: scale(1.15); /* IE */
+        -moz-transform: scale(1.15); /* FF */
+        -webkit-transform: scale(1.15); /* Safari and Chrome */
+        -o-transform: scale(1.15); /* Opera */
+        padding: 5px;
+        margin:0;
+    }
+    .woocommerce-offer-final-offer-wrap label,
+    .woocommerce-offer-expiration-wrap label {
+        font-size:14px;
+    }
+    .woocommerce-offer-expiration-wrap label { margin-top:10px; }
+    .woocommerce-offer-expiration-wrap input { width: 110px; margin:0!important; }
+}
+
+/* Bulk action sections */
+.angelleye-offers-tools-wrap { background:#FFF; margin:10px 0; padding:0 20px 10px 20px; border-left:4px solid #ffcc00; }
+.angelleye-offers-tools-wrap h3 { padding-top:15px; margin-bottom:5px; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section { float: left; margin:10px 10px 10px 0; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section:last-child { border:none!important; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section label { font-weight: bold; margin:0 0 0 4px!important; line-height: 24px; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section select {  }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section input { width:110px; }
+
+.angelleye-offers-clearfix { clear: both!important; }
