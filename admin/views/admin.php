@@ -21,23 +21,30 @@
     
     <h2 class="nav-tab-wrapper">
         <a href="?page=offers-for-woocommerce&tab=general_settings" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>">General Settings</a>
-        <a href="?page=offers-for-woocommerce&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>">Display Settings</a>        
+        <a href="?page=offers-for-woocommerce&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>">Display Settings</a>
+        <a href="?page=offers-for-woocommerce&tab=tools" class="nav-tab <?php echo $active_tab == 'tools' ? 'nav-tab-active' : ''; ?>">Tools</a>
     </h2>
 
     <form method="post" action="options.php" id="woocommerce_offers_options_form">
     	<?php
         if( $active_tab == 'display_settings' )
-		{
+        {
             settings_fields( 'offers_for_woocommerce_options_display' );
             do_settings_sections( 'offers_for_woocommerce_display_settings' );
-        } 
-		else 
+
+            submit_button();
+        }
+        elseif( $active_tab == 'tools' )
+        {
+            echo 'Bulk Action Form Placeholder';
+        }
+        else
 		{
             settings_fields( 'offers_for_woocommerce_options_general' );
             do_settings_sections( 'offers_for_woocommerce_general_settings' );
+
+            submit_button();
         } // end if/else
-         
-        submit_button();
 		?>
 </form>
 </div>
