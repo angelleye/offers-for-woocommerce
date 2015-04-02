@@ -1876,19 +1876,32 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			'general_settings', // Section 
 			array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_frontpage', 'input_required'=>FALSE)         
 		);
-		
-		/**
-		 * Add field - 'General Settings' - 'general_setting_enable_make_offer_btn_catalog'
-		 * Enable Make Offer button on shop page
-		 */
-		add_settings_field(
-			'general_setting_enable_make_offer_btn_catalog', // ID
-			'Enable Make Offer button on shop page', // Title 
-			array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
-			'offers_for_woocommerce_general_settings', // Page
-			'general_settings', // Section 
-			array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_catalog', 'input_required'=>FALSE)         
-		);
+
+        /**
+         * Add field - 'General Settings' - 'general_setting_enable_make_offer_btn_catalog'
+         * Enable Make Offer button on shop page
+         */
+        add_settings_field(
+            'general_setting_enable_make_offer_btn_catalog', // ID
+            'Enable Make Offer button on shop page', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_catalog', 'input_required'=>FALSE)
+        );
+
+        /**
+         * Add field - 'General Settings' - 'general_setting_enable_offers_by_default'
+         * Enable Make Offer button on new products by default
+         */
+        add_settings_field(
+            'general_setting_enable_offers_by_default', // ID
+            'Enable Make Offer button on new products by default', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_offers_by_default', 'input_required'=>FALSE)
+        );
 
 		/**
 		 * Add section - 'Display Settings'
