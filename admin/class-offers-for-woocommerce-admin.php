@@ -479,11 +479,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function custom_tab_options_offers() 
 	{
-		global $post;
+		global $post, $pagenow;
         $post_meta_offers_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true);
 
         $field_value = 'yes';
         $field_callback = ($post_meta_offers_enabled) ? $post_meta_offers_enabled : 'no';
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // if new post, then set default based on settings
+        if( $pagenow == 'post-new.php' && isset($button_options_general['general_setting_enable_offers_by_default']) )
+        {
+            if( $button_options_general['general_setting_enable_offers_by_default'] == '1' )
+            {
+                $field_callback = 'yes';
+            }
+        }
 
 		?>
 		<div id="custom_tab_data_offers_for_woocommerce" class="panel woocommerce_options_panel">
