@@ -81,9 +81,15 @@ class Angelleye_Offers_For_Woocommerce {
 		 
 		/* Add "Make Offer" button code parts - Before add to cart */
 		add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
-		
-		/* Add "Make Offer" button code parts - After add to cart */
-		add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'angelleye_ofwc_after_add_to_cart_button' ) );
+
+        /* Add "Make Offer" button code parts - After add to cart */
+        add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'angelleye_ofwc_after_add_to_cart_button' ) );
+
+        /**
+         * Filter - Add "Make Offer" button code parts - Filters stock html output
+         * @since	1.0.1
+         */
+        add_filter( 'woocommerce_stock_html', array( $this, 'angelleye_ofwc_woocommerce_stock_html' ) );
 
 		/* Add "Make Offer" button code parts - After shop loop item */
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'angelleye_ofwc_after_show_loop_item' ), 99, 2 );
@@ -189,25 +195,25 @@ class Angelleye_Offers_For_Woocommerce {
             }
 		}
 	}
-	
-	/**
-	 * Add Make Offer button after add to cart button
-	 *
-	 * @since	0.1.0
-	 */
-	public function angelleye_ofwc_after_add_to_cart_button()
-	{
-		global $post;
-		$custom_tab_options_offers = array(
-			'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
-		);
+
+    /**
+     * Add Make Offer button after add to cart button
+     *
+     * @since	0.1.0
+     */
+    public function angelleye_ofwc_after_add_to_cart_button()
+    {
+        global $post;
+        $custom_tab_options_offers = array(
+            'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
+        );
 
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
 
-		// if post has offers button enabled
-		if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
+        // if post has offers button enabled
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product )
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -240,8 +246,66 @@ class Angelleye_Offers_For_Woocommerce {
                 echo '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap '.$hiddenclass.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
                 echo '</div>';
             }
-		}
-	}
+        }
+    }
+
+    /**
+     * Filter - Add "Make Offer" button code parts - Filters stock html output
+     * @since	1.0.1
+     */
+    public function angelleye_ofwc_woocommerce_stock_html($availability_html)
+    {
+        global $post;
+        $custom_tab_options_offers = array(
+            'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
+        );
+
+        $_pf = new WC_Product_Factory();
+        $_product = $_pf->get_product( $post->ID );
+
+        $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
+
+        if(!$is_instock)
+        {
+            $is_external_product = (isset($_product->product_type) && $_product->product_type == 'external') ? TRUE : FALSE;
+
+            // if post has offers button enabled
+            if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product) {
+                // get offers options - display
+                $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+                $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'angelleye_offers_for_woocommerce');
+
+                $custom_styles_override = '';
+                if ($button_options_display) {
+                    if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
+                        $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . '!important;';
+                    }
+                    if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
+                        $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important;';
+                    }
+                }
+
+                if ( (is_front_page()) || (!is_front_page() && !is_product() ))
+                {
+                    // do nothing
+                }
+                else
+                {
+                    // adds hidden class if position is not default
+                    $hiddenclass = (isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
+                    $customclass = ($hiddenclass == 'angelleye-ofwc-hidden') ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
+
+                    $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
+                    $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
+
+                    $availability_html.= '<div class="angelleye-offers-clearfix ' . $hiddenclass . '"></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                    $availability_html.= '<div class="angelleye-offers-clearfix ' . $hiddenclass . '"></div>';
+                }
+            }
+        }
+        return $availability_html;
+    }
 
 	/**
 	 * Callback - Add Make Offer button after add to cart button on Catalog view
