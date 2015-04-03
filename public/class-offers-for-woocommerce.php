@@ -299,8 +299,11 @@ class Angelleye_Offers_For_Woocommerce {
                     $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
                     $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
 
-                    $availability_html.= '<div class="angelleye-offers-clearfix ' . $hiddenclass . '"></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
-                    $availability_html.= '<div class="angelleye-offers-clearfix ' . $hiddenclass . '"></div>';
+                    $availability_html.= '<div class="offers-for-woocommerce-make-offer-button-cleared '.$hiddenclass.'"></div>
+                    <div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap" data-ofwc-position="'.$customclass.'"><div>';
+                    $availability_html.= '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                    $availability_html.= '</div>';
+                    $availability_html.= '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div>';
                 }
             }
         }
