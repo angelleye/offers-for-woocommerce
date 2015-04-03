@@ -77,6 +77,8 @@
                         <option value="price_less">Price less than...</option>
                         <option value="stock_greater">Stock greater than...</option>
                         <option value="stock_less">Stock less than...</option>
+                        <option value="instock">In-stock</option>
+                        <option value="outofstock">Out-of-stock</option>
                         <option value="sold_individually">Sold individually</option>
                     </select>
                 </div>
