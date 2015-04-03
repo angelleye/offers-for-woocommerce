@@ -2847,6 +2847,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb;
 
             $errors = FALSE;
+            $products = FALSE;
             $product_ids = FALSE;
             $update_count = '0';
             $where_args = array(
@@ -2903,11 +2904,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $products = get_posts($where_args);
 
                 } // Where - By Price - greater than
-                elseif ($ofwc_bulk_action_target_where_type == 'price_greater' && $ofwc_bulk_action_target_where_price_value) {
+                elseif ($ofwc_bulk_action_target_where_type == 'price_greater') {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_regular_price',
-                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'value_num' => $ofwc_bulk_action_target_where_price_value,
                             'compare' => '>',
 			                'type' => 'NUMERIC'
                         )
@@ -2915,11 +2916,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $products = get_posts($where_args);
 
                 } // Where - By Price - less than
-                elseif ($ofwc_bulk_action_target_where_type == 'price_less' && $ofwc_bulk_action_target_where_price_value) {
+                elseif ($ofwc_bulk_action_target_where_type == 'price_less') {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_regular_price',
-                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'value_num' => $ofwc_bulk_action_target_where_price_value,
                             'compare' => '<',
                             'type' => 'NUMERIC'
                         )
@@ -2927,11 +2928,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $products = get_posts($where_args);
 
                 } // Where - By Stock - greater than
-                elseif ($ofwc_bulk_action_target_where_type == 'stock_greater' && $ofwc_bulk_action_target_where_stock_value) {
+                elseif ($ofwc_bulk_action_target_where_type == 'stock_greater') {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'value_num' => $ofwc_bulk_action_target_where_price_value,
                             'compare' => '>',
                             'type' => 'NUMERIC'
                         )
@@ -2939,11 +2940,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $products = get_posts($where_args);
 
                 } // Where - By Stock - less than
-                elseif ($ofwc_bulk_action_target_where_type == 'stock_less' && $ofwc_bulk_action_target_where_stock_value) {
+                elseif ($ofwc_bulk_action_target_where_type == 'stock_less') {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'value_num' => $ofwc_bulk_action_target_where_price_value,
                             'compare' => '<',
                             'type' => 'NUMERIC'
                         )
@@ -2989,17 +2990,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                             $update_count++;
                         }
                     }
-
-                    if($update_count == 0)
-                    {
-                        $update_count = 'zero';
-                    }
                 }
             }
 
             // return
             if( !$errors )
             {
+                if($update_count == 0)
+                {
+                    $update_count = 'zero';
+                }
+
                 $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$update_count);
                 echo $redirect_url;
             }
