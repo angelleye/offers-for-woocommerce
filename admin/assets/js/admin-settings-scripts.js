@@ -7,6 +7,16 @@
 
             // change target type -- toggle where input
             $('#ofwc-bulk-action-target-type').change(function(){
+
+                $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').hide();
+                $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').hide();
+                $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').hide();
+                $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').hide();
+                $('#ofwc-bulk-action-target-where-category').removeAttr('required');
+                $('#ofwc-bulk-action-target-where-product-type').removeAttr('required');
+                $('#ofwc-bulk-action-target-where-price-value').removeAttr('required');
+                $('#ofwc-bulk-action-target-where-stock-value').removeAttr('required');
+
                 if(  $(this).val() == 'where' )
                 {
                     $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-type').show();

@@ -2972,7 +2972,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if(count($products) < 1)
                 {
                     $errors = TRUE;
-                    $update_count = '0';
+                    $update_count = 'zero';
                     $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$update_count);
                     echo $redirect_url;
                 }
@@ -2988,6 +2988,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         {
                             $update_count++;
                         }
+                    }
+
+                    if($update_count == 0)
+                    {
+                        $update_count = 'zero';
                     }
                 }
             }
@@ -3052,6 +3057,27 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 echo '<div class="notice error angelleye-admin-notice-filterby-author">';
                 echo '<p>'. __('Currently filtered by user', 'angelleye_offers_for_woocommerce'). ' <strong>"' . $author_data->user_login . '"</strong> <a href="edit.php?post_type=woocommerce_offer">Click here to reset filter</a></p>';
                 echo '</div>';
+            }
+        }
+
+        if ( $this->plugin_screen_hook_suffix == $screen->id && is_admin() ) {
+
+            // Tools - Bulk enable/disable offers
+            $processed = (isset($_GET['processed']) ) ? $_GET['processed'] : FALSE;
+            if($processed)
+            {
+                if($processed == 'zero')
+                {
+                    echo '<div class="updated">';
+                    echo '<p>'. sprintf( __('Action completed; %s records processed.', 'angelleye_offers_for_woocommerce'), '0');
+                    echo '</div>';
+                }
+                else
+                {
+                    echo '<div class="updated">';
+                    echo '<p>'. sprintf( __('Action completed; %s records processed. ', 'angelleye_offers_for_woocommerce'), $processed);
+                    echo '</div>';
+                }
             }
         }
         return;
