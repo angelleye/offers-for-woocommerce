@@ -588,5 +588,10 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section select {  }
 .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section input { width:110px; }
 .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit { margin-top:1px; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.spinner { height:16px; width:16px; margin-top:5px; background-size: contain;  float: left; margin-right: 6px; }
+
+@media screen and (max-width:782px) {
+    .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.spinner { margin-top:2px; }
+}
 
 .angelleye-offers-clearfix { clear: both!important; }

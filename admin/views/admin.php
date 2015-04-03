@@ -35,14 +35,15 @@
     ?>
         </form>
     <?php } elseif( $active_tab == 'tools' ) { ?>
-        <form method="post" action="" id="woocommerce_offers_options_form" autocomplete="off">
+        <form id="woocommerce_offers_options_form_bulk_tool_enable_offers" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
         <p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
         </p>
         <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
             <h3>Bulk enable/disable offers for products</h3>
-            <div>Select options below and click process button to perform bulk action:</div>
+            <div>Select options below and click process button to perform bulk action.</div>
+            <div>Page will auto-redirect after action is complete.</div>
 
             <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
                 <label for="ofwc-bulk-action-type">Action</label>
@@ -76,6 +77,7 @@
                         <option value="price_less">Price less than...</option>
                         <option value="stock_greater">Stock greater than...</option>
                         <option value="stock_less">Stock less than...</option>
+                        <option value="sold_individually">Sold individually</option>
                     </select>
                 </div>
             </div>
@@ -89,7 +91,7 @@
                         {
                             foreach($product_cats as $cat)
                             {
-                                echo '<option value="'.$cat->cat_ID.'">'.$cat->cat_name.'</option>';
+                                echo '<option value="'.$cat->slug.'">'.$cat->cat_name.'</option>';
                             }
                         }
                         ?>
@@ -97,15 +99,14 @@
                 </div>
             </div>
             <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-target-where-product-type angelleye-hidden">
-                <label for="ofwc-bulk-action-target-where-product-type">Product Type</label>
+                <label for="ofwc-bulk-action-target-where-product-type">Product type</label>
                 <div>
                     <select name="ofwc_bulk_action_target_where_product_type" id="ofwc-bulk-action-target-where-product-type">
                         <option value="">- Select option</option>
-                        <option value="single">Single</option>
+                        <option value="simple">Simple</option>
                         <option value="variable">Variable</option>
                         <option value="grouped">Grouped</option>
-                        <option value="single-subscription">Single Subscription</option>
-                        <option value="variable-subscription">Variable Subscription</option>
+                        <option value="external">External</option>
                     </select>
                 </div>
             </div>

@@ -307,6 +307,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'wp_ajax_addOfferNote', array( $this, 'addOfferNoteCallback') );
 
         /*
+         * Action - Ajax 'bulk enable/disable tool' from offers settings/tools
+         * @since	0.1.0
+         */
+        add_action( 'wp_ajax_adminToolBulkEnableDisable', array( $this, 'adminToolBulkEnableDisableCallback') );
+
+        /*
          * Filter - Add email class to WooCommerce for 'Accepted Offer'
          * @since   0.1.0
          */
@@ -2825,6 +2831,176 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             else
             {
                 echo 'failed';
+            }
+            die(); // this is required to return a proper result
+        }
+    }
+
+    /*
+     * Action - Ajax 'bulk enable/disable tool' from offers settings/tools
+     * @since	0.1.0
+     */
+    public function adminToolBulkEnableDisableCallback()
+    {
+        if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
+        {
+            global $wpdb;
+
+            $errors = FALSE;
+            $product_ids = FALSE;
+            $update_count = '0';
+            $where_args = array(
+                'post_type' => array( 'product', 'product_variation' ),
+                'posts_per_page' => -1,
+                'post_status' => 'publish'
+                );
+            $where_args['meta_query'] = array(
+                array(
+                    'key' => '_visibility',
+                    'value' => array('catalog', 'visible'),
+                    'compare' => 'IN'
+                ));
+
+            $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
+            $ofwc_bulk_action_target_type = ( isset( $_POST["actionTargetType"] ) ) ? $_POST['actionTargetType'] : FALSE;
+            $ofwc_bulk_action_target_where_type = ( isset( $_POST["actionTargetWhereType"] ) ) ? $_POST['actionTargetWhereType'] : FALSE;
+            $ofwc_bulk_action_target_where_category = ( isset( $_POST["actionTargetWhereCategory"] ) ) ? $_POST['actionTargetWhereCategory'] : FALSE;
+            $ofwc_bulk_action_target_where_product_type = ( isset( $_POST["actionTargetWhereProductType"] ) ) ? $_POST['actionTargetWhereProductType'] : FALSE;
+            $ofwc_bulk_action_target_where_price_value = ( isset( $_POST["actionTargetWherePriceValue"] ) ) ? $_POST['actionTargetWherePriceValue'] : FALSE;
+            $ofwc_bulk_action_target_where_stock_value = ( isset( $_POST["actionTargetWhereStockValue"] ) ) ? $_POST['actionTargetWhereStockValue'] : FALSE;
+
+            if (!$ofwc_bulk_action_type || !$ofwc_bulk_action_target_type){
+                $errors = TRUE;
+            }
+
+            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'enable') ? 'yes' : 'no';
+
+            // All Products
+            if ($ofwc_bulk_action_target_type == 'all'){
+                $products = get_posts($where_args);
+            }
+            // Featured products
+            elseif ($ofwc_bulk_action_target_type == 'featured') {
+                array_push($where_args['meta_query'],
+                    array(
+                        'key' => '_featured',
+                        'value' => 'yes'
+                    )
+                );
+                $products = get_posts($where_args);
+            }
+            // Where
+            elseif( $ofwc_bulk_action_target_type == 'where' && $ofwc_bulk_action_target_where_type)
+            {
+                // Where - By Category
+                if ($ofwc_bulk_action_target_where_type == 'category' && $ofwc_bulk_action_target_where_category) {
+                    $where_args['product_cat'] = $ofwc_bulk_action_target_where_category;
+                    $products = get_posts($where_args);
+
+                } // Where - By Product type
+                elseif ($ofwc_bulk_action_target_where_type == 'product_type' && $ofwc_bulk_action_target_where_product_type) {
+                    $where_args['product_type'] = $ofwc_bulk_action_target_where_product_type;
+                    $products = get_posts($where_args);
+
+                } // Where - By Price - greater than
+                elseif ($ofwc_bulk_action_target_where_type == 'price_greater' && $ofwc_bulk_action_target_where_price_value) {
+                    array_push($where_args['meta_query'],
+                        array(
+                            'key' => '_regular_price',
+                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'compare' => '>',
+			                'type' => 'NUMERIC'
+                        )
+                    );
+                    $products = get_posts($where_args);
+
+                } // Where - By Price - less than
+                elseif ($ofwc_bulk_action_target_where_type == 'price_less' && $ofwc_bulk_action_target_where_price_value) {
+                    array_push($where_args['meta_query'],
+                        array(
+                            'key' => '_regular_price',
+                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'compare' => '<',
+                            'type' => 'NUMERIC'
+                        )
+                    );
+                    $products = get_posts($where_args);
+
+                } // Where - By Stock - greater than
+                elseif ($ofwc_bulk_action_target_where_type == 'stock_greater' && $ofwc_bulk_action_target_where_stock_value) {
+                    array_push($where_args['meta_query'],
+                        array(
+                            'key' => '_stock',
+                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'compare' => '>',
+                            'type' => 'NUMERIC'
+                        )
+                    );
+                    $products = get_posts($where_args);
+
+                } // Where - By Stock - less than
+                elseif ($ofwc_bulk_action_target_where_type == 'stock_less' && $ofwc_bulk_action_target_where_stock_value) {
+                    array_push($where_args['meta_query'],
+                        array(
+                            'key' => '_stock',
+                            'value' => $ofwc_bulk_action_target_where_price_value,
+                            'compare' => '<',
+                            'type' => 'NUMERIC'
+                        )
+                    );
+                    $products = get_posts($where_args);
+
+                } // Where - Sold Individually
+                elseif ($ofwc_bulk_action_target_where_type == 'sold_individually') {
+                    array_push($where_args['meta_query'],
+                        array(
+                            'key' => '_sold_individually',
+                            'value' => 'yes'
+                        )
+                    );
+                    $products = get_posts($where_args);
+                }
+            }
+            else
+            {
+                $errors = TRUE;
+            }
+
+            // Update posts
+            if(!$errors && $products)
+            {
+                if(count($products) < 1)
+                {
+                    $errors = TRUE;
+                    $update_count = '0';
+                    $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$update_count);
+                    echo $redirect_url;
+                }
+                else
+                {
+                    foreach($products as $target)
+                    {
+                        if(!update_post_meta($target->ID, 'offers_for_woocommerce_enabled', $ofwc_bulk_action_type ))
+                        {
+
+                        }
+                        else
+                        {
+                            $update_count++;
+                        }
+                    }
+                }
+            }
+
+            // return
+            if( !$errors )
+            {
+                $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$update_count);
+                echo $redirect_url;
+            }
+            else
+            {
+                //echo 'failed';
             }
             die(); // this is required to return a proper result
         }
