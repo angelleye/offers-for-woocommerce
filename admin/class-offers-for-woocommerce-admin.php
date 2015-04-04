@@ -2909,7 +2909,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_regular_price',
-                            'value' => number_format($ofwc_bulk_action_target_where_price_value, 2),
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
                             'compare' => '>',
 			                'type' => 'DECIMAL'
                         )
@@ -2921,7 +2921,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_regular_price',
-                            'value' => number_format($ofwc_bulk_action_target_where_price_value, 2),
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
                             'compare' => '<',
                             'type' => 'DECIMAL'
                         )
@@ -2938,8 +2938,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     );
                     array_push($where_args['meta_query'],
                         array(
-                            'key' => '_stock_status',
-                            'value' => $ofwc_bulk_action_target_where_stock_value,
+                            'key' => '_stock',
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
                             'compare' => '>',
                             'type' => 'NUMERIC'
                         )
@@ -2957,7 +2957,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => $ofwc_bulk_action_target_where_stock_value,
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
                             'compare' => '<',
                             'type' => 'NUMERIC'
                         )
