@@ -2911,7 +2911,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                             'key' => '_regular_price',
                             'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
                             'compare' => '>',
-			                'type' => 'DECIMAL'
+                            'type' => 'DECIMAL(10,2)'
                         )
                     );
                     $products = new WP_Query($where_args);
@@ -2923,7 +2923,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                             'key' => '_regular_price',
                             'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
                             'compare' => '<',
-                            'type' => 'DECIMAL'
+                            'type' => 'DECIMAL(10,2)'
                         )
                     );
                     $products = new WP_Query($where_args);
