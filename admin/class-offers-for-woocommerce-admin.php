@@ -2856,12 +2856,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_status' => 'publish',
                 'fields' => 'id=>parent',
                 );
-            $where_args['meta_query'] = array(
-                array(
-                    'key' => '_visibility',
-                    'value' => array('catalog', 'visible'),
-                    'compare' => 'IN'
-                ));
+            $where_args['meta_query'] = array();
 
             $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
             $ofwc_bulk_action_target_type = ( isset( $_POST["actionTargetType"] ) ) ? $_POST['actionTargetType'] : FALSE;
@@ -2908,10 +2903,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 elseif ($ofwc_bulk_action_target_where_type == 'price_greater') {
                     array_push($where_args['meta_query'],
                         array(
-                            'key' => '_regular_price',
-                            'value' => number_format($ofwc_bulk_action_target_where_price_value, 2),
+                            'key' => '_price',
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
                             'compare' => '>',
-			                'type' => 'DECIMAL'
+                            'type' => 'DECIMAL(10,2)'
                         )
                     );
                     $products = new WP_Query($where_args);
@@ -2920,10 +2915,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 elseif ($ofwc_bulk_action_target_where_type == 'price_less') {
                     array_push($where_args['meta_query'],
                         array(
-                            'key' => '_regular_price',
-                            'value' => number_format($ofwc_bulk_action_target_where_price_value, 2),
+                            'key' => '_price',
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
                             'compare' => '<',
-                            'type' => 'DECIMAL'
+                            'type' => 'DECIMAL(10,2)'
                         )
                     );
                     $products = new WP_Query($where_args);
@@ -2938,8 +2933,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     );
                     array_push($where_args['meta_query'],
                         array(
-                            'key' => '_stock_status',
-                            'value' => $ofwc_bulk_action_target_where_stock_value,
+                            'key' => '_stock',
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
                             'compare' => '>',
                             'type' => 'NUMERIC'
                         )
@@ -2957,7 +2952,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => $ofwc_bulk_action_target_where_stock_value,
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
                             'compare' => '<',
                             'type' => 'NUMERIC'
                         )
@@ -3015,7 +3010,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 {
                     foreach($products->posts as $target)
                     {
-                        if(!update_post_meta($target->ID, 'offers_for_woocommerce_enabled', $ofwc_bulk_action_type ))
+                        $target_product_id = ( $target->post_parent != '0' ) ? $target->post_parent : $target->ID;
+                        if(!update_post_meta($target_product_id, 'offers_for_woocommerce_enabled', $ofwc_bulk_action_type ))
                         {
 
                         }
