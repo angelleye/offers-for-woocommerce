@@ -123,12 +123,17 @@
                     if ( 'failed' !== response )
                     {
                         var redirectUrl = response;
+
+                        /** Debug **/
+                        //console.log(redirectUrl);
+                        //return false;
+
                         top.location.replace(redirectUrl);
                         return true;
                     }
                     else
                     {
-                        alert('add note failed');
+                        alert('Error updating records.');
                         return false;
                     }
                 });
