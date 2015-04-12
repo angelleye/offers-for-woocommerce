@@ -1084,7 +1084,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 foreach ($expired_offers as $v)
                 {
-                    $offer_expire_date_formatted = date("Y-m-d 00:00:00", strtotime($v['meta_value']));
+                    $offer_expire_date_formatted = date("Y-m-d 23:59:59", strtotime($v['meta_value']));
                     if( $offer_expire_date_formatted <= $target_now_date )
                     {
                         $post_status = get_post_status( $v['post_id']);
