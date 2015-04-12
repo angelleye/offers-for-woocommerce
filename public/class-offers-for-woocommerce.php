@@ -482,7 +482,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             // If offer counter 'offer_expiration_date' is past
-            elseif( ($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d 23:59:59", time())) ) )
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", time())) ) )
             {
                 $parent_offer_id = '';
                 $parent_offer_error = true;
