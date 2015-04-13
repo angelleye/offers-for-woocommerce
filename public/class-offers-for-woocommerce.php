@@ -23,7 +23,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.0.1';
+	const VERSION = '1.1';
 
 	/**
 	 *
@@ -454,7 +454,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             $final_offer = get_post_meta($parent_offer_id, 'offer_final_offer', true );
             $expiration_date = get_post_meta($parent_offer_id, 'offer_expiration_date', true );
-            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 0:0:0", strtotime($expiration_date)) : FALSE;
+            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 23:59:59", strtotime($expiration_date)) : FALSE;
 
             // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
             if( (isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || (!$parent_post_offer_uid) || ($parent_offer_uid == '') || ($parent_post_offer_uid != $parent_offer_uid) )
@@ -482,7 +482,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             // If offer counter 'offer_expiration_date' is past
-            elseif( ($expiration_date_formatted) && ($expiration_date_formatted < (date("Y-m-d H:i:s", time())) ) )
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", time())) ) )
             {
                 $parent_offer_id = '';
                 $parent_offer_error = true;
@@ -1130,7 +1130,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             // check offer expiration date
             $expiration_date = get_post_meta($offer->ID, 'offer_expiration_date', true );
-            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 0:0:0", strtotime($expiration_date)) : FALSE;
+            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 23:59:59", strtotime($expiration_date)) : FALSE;
 
             // Invalid Offer Id
             if($offer == '')
@@ -1143,10 +1143,10 @@ class Angelleye_Offers_For_Woocommerce {
                 $this->send_api_response( __( 'Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'angelleye_offers_for_woocommerce' ) );
             }
             // If offer counter 'offer_expiration_date' is past
-            elseif( ($expiration_date_formatted) && ($expiration_date_formatted < (date("Y-m-d H:i:s", time())) ) )
+            elseif( ($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", time())) ) )
             {
                 $request_error = true;
-                $this->send_api_response( __( 'Counter offer has expired; You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce' ) );
+                $this->send_api_response( __( 'Offer has expired; You can submit a new offer using the form below.', 'angelleye_offers_for_woocommerce' ) );
             }
             else
             {
