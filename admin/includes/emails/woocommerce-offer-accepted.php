@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php printf( __( '<p><strong>We have accepted your offer on %s.</strong><br />To pay for this order please use the following link:</p> %s', 'angelleye_offers_for_woocommerce' ), get_bloginfo( 'name' ), '<a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="'.$offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'].'"><span style="border-bottom:1px dotted #666; ">' . __( 'Click to Pay', 'offers-for-woocommerce' ) . '</span></a>' ); ?>
 
 <?php if($offer_args['offer_expiration_date']) {
-    printf( '<p><strong>'. __( 'Offer expires on: %s', 'angelleye_offers_for_woocommerce' ).'</strong></p>', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) );
+    printf( __( '<br><br>Offer expires on: %s', 'angelleye_offers_for_woocommerce' ), date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) );
 }?>
 
 <h2><?php echo __( 'Offer ID:', 'angelleye_offers_for_woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
