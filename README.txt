@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -61,6 +61,19 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
 
 == Changelog ==
+
+= 1.1.0 - 04/16/2015 =
+* Tweak - Adjusts offer search to return results from all offer detail data (not just the title).
+* Tweak - If a product is set to "sold individually" users will not be able to enter a QTY when submitting an offer.
+* Fix - Ensures the offer lightbox window will not be displayed when it should not be.
+* Fix - Resolves a bug in the counter offer emails.
+* Fix - Adjusts CSS to resolve issues with text floating on top of product image in the offer details screen.
+* Fix - Resolves a PHP error occurring in the WebHooks tab of WooCommerce settings.
+* Feature - Adds tools for bulk edit of products to enable/disable offers.
+* Feature - Adds an expiration date option to counter offers.
+* Feature - Adds a Final Offer option to counter offers.
+* Feature - Option to move the offer button on product pages to various locations on the page.
+* Feature - Adds the option to place an offer on hold.
 
 = 1.0.1 - 03/24/2015 =
 * Fix - Adds system admin as default email when no receivers are set.
