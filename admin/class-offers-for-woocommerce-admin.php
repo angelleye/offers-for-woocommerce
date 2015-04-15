@@ -1438,6 +1438,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // set update notes
         $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
 
+        // set offer expiration date
+        $offer_expire_date = get_post_meta($post_id, 'offer_expiration_date', true);
+
         // Accept Offer
         if($post_data->post_status == 'accepted-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'accepted-offer')
         {
@@ -1504,6 +1507,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 $offer_args['product_title_formatted'] = $product->get_formatted_name();
             }
+
+            $offer_args['offer_expiration_date'] = ($offer_expire_date) ? $offer_expire_date : FALSE;
 
             // the email we want to send
             $email_class = 'WC_Accepted_Offer_Email';
@@ -1684,6 +1689,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 $offer_args['product_title_formatted'] = $product->get_formatted_name();
             }
+
+            $offer_args['offer_expiration_date'] = ($offer_expire_date) ? $offer_expire_date : FALSE;
 
             // the email we want to send
             $email_class = 'WC_Countered_Offer_Email';
