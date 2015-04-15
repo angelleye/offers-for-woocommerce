@@ -375,6 +375,11 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     margin:5px 15px 0px 0px!important;
 }
 
+.offer-product-meta-image-wrap a img {
+    max-width: 90px!important;
+    max-height: 100px!important;
+}
+
 .offer-product-meta-values-wrap {
     float: left;
 }
