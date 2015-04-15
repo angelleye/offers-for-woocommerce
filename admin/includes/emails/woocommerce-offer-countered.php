@@ -15,11 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     echo '<br><br><strong>'. __( 'This is a final offer.', 'angelleye_offers_for_woocommerce' ) .'</strong>';
 } else { ?>
     <p>To make a counter offer use the following link: <a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'] ;?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo 'aewcobtn=1&offer-pid='.$offer_args['offer_id']. '&offer-uid=' .$offer_args['offer_uid']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Counter', 'angelleye_offers_for_woocommerce' ); ?></span></a>
-    </p>
 <?php } ?>
 
 <?php if($offer_args['offer_expiration_date']) {
-    printf( '<br><br>'. __( 'Offer expires on: %s', 'angelleye_offers_for_woocommerce' ), date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) );
+    printf( '<br><br><strong>'. __( 'Offer expires on: %s', 'angelleye_offers_for_woocommerce' ), date("m-d-Y", strtotime($offer_args['offer_expiration_date'])).'</strong>' );
 }?>
 
 <h2><?php echo __( 'Offer ID:', 'angelleye_offers_for_woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
