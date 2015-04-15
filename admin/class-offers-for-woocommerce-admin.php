@@ -834,7 +834,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function remove_quick_edit( $actions ) 
 	{
 		global $post;
-		if( $post->post_type == 'woocommerce_offer' ) 
+        if( $post && $post->post_type == 'woocommerce_offer' )
 		{			
 			unset($actions['inline hide-if-no-js']);
 			unset($actions['edit']);
