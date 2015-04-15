@@ -16,6 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     </p>
 <?php } ?>
 
+<?php if($offer_args['offer_expiration_date']) {
+    printf( '<p>'. __( 'Offer expires on: %s', 'angelleye_offers_for_woocommerce' ).'</p>', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) );
+}?>
+
 <h2><?php echo __( 'Offer ID:', 'angelleye_offers_for_woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
 
 <table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
