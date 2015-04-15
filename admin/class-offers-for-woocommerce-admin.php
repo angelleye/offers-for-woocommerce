@@ -1077,7 +1077,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb;
 
-            $target_now_date = date("Y-m-d H:i:s", time());
+            $target_now_date = date("Y-m-d H:i:s", current_time('timestamp', 0 ));
 
             $expired_offers = $wpdb->get_results($wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE `meta_key` = '%s' AND `meta_value` <> ''", 'offer_expiration_date'), 'ARRAY_A');
             if (($expired_offers) && !empty($expired_offers))
