@@ -132,12 +132,15 @@
             var backordersAllowed = $('#offer-backorders-allowed').val();
             if( backordersAllowed !== 'true' )
             {
-                if ( parseInt(maxStockAvailable) < parseInt(input1) ) {
-                    $('#angelleye-woocommerce-offer-meta-summary-notice-msg').show();
-                }
-                else
+                if(parseInt(maxStockAvailable) != '')
                 {
-                    $('#angelleye-woocommerce-offer-meta-summary-notice-msg').hide();
+                    if ( parseInt(maxStockAvailable) < parseInt(input1) ) {
+                        $('#angelleye-woocommerce-offer-meta-summary-notice-msg').show();
+                    }
+                    else
+                    {
+                        $('#angelleye-woocommerce-offer-meta-summary-notice-msg').hide();
+                    }
                 }
             }
         };

@@ -202,9 +202,9 @@
                     <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("m/d/Y", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>" autocomplete="off">
                 </div>
 
-                <?php $show_notice_msg = ( isset($offer_inventory_msg) && $offer_inventory_msg != '') ? TRUE : FALSE; ?>
+                <?php $show_notice_msg = ( isset($show_offer_inventory_msg) && $show_offer_inventory_msg ) ? TRUE : FALSE; ?>
                 <div id="angelleye-woocommerce-offer-meta-summary-notice-msg" <?php echo (!$show_notice_msg) ? ' class="angelleye-hidden"' : '';?>">
-                    <div class="aeofwc-notice-msg-inner"><?php echo ($show_notice_msg) ? $offer_inventory_msg : '';?></div>
+                    <div class="aeofwc-notice-msg-inner"><?php echo (isset($offer_inventory_msg)) ? $offer_inventory_msg : '';?></div>
                 </div>
 
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
