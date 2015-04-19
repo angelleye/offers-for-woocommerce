@@ -1957,11 +1957,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'display_setting_make_offer_form_display_type', // ID
-            'Make Offer form display type', // Title
+            'Form Display Type', // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
             'offers_for_woocommerce_display_settings', // Page
             'display_settings', // Section
-            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_form_display_type', 'input_required'=>FALSE,
+            array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_make_offer_form_display_type',
+                'input_required'=>FALSE,
+                'description' => __('Depending on your theme, you may wish to display the offer form on a tab within the product page or in a lightbox window on top of the product page.', $this->plugin_slug),
                 'options'=> array(
                     array('option_label' => 'Product Tabs (default display)', 'option_value' => 'tabs'),
                     array('option_label' => 'Lightbox', 'option_value' => 'lightbox')
@@ -1974,11 +1978,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'display_setting_make_offer_button_position_single', // ID
-            'Make Offer button position', // Title
+            'Button Position', // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
             'offers_for_woocommerce_display_settings', // Page
             'display_settings', // Section
-            array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_make_offer_button_position_single', 'input_required'=>FALSE,
+            array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_make_offer_button_position_single',
+                'input_required'=>FALSE,
+                'description' => __('Use this setting to adjust the location of the \'Make Offer\' button on your product detail page.', $this->plugin_slug),
                 'options'=> array(
                     array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
                     array('option_label' => 'Before add to cart button', 'option_value' => 'before_add'),
@@ -1993,11 +2001,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_text', // ID
-			'Make Offer button text', // Title 
+			'Button Text', // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
-			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_text', 'input_required'=>FALSE)
+			array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_custom_make_offer_btn_text',
+                'input_required'=>FALSE,
+                'description' => __('Set the text you would like to be displayed in the offer button.', $this->plugin_slug),
+            )
 		);
 		
 		/**
@@ -2006,24 +2019,34 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_text_color', // ID
-			'Make Offer button text color', // Title 
+			'Button Text Color', // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
-			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_text_color', 'input_required'=>FALSE)
+			array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_custom_make_offer_btn_text_color',
+                'input_required'=>FALSE,
+                'description' => __('Use the color-picker to choose the font color for the text on your offer buttons.', $this->plugin_slug),
+            )
 		);
-		
+
 		/**
 		 * Add field - 'Display Settings' - 'display_setting_custom_make_offer_btn_color'
 		 * Make Offer Button Text Color
 		 */
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_color', // ID
-			'Make Offer button color', // Title 
+			'Button Color', // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
-			array('option_name'=>'offers_for_woocommerce_options_display', 'input_label'=>'display_setting_custom_make_offer_btn_color', 'input_required'=>FALSE)
+			array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_custom_make_offer_btn_color',
+                'input_required'=>FALSE,
+                'description' => __('Use the color-picker to choose the background color for your offer buttons.', $this->plugin_slug),
+            )
 		);
 
 	} // END - angelleye_ofwc_intialize_options
@@ -2063,12 +2086,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function offers_for_woocommerce_options_page_output_input_text($args) 
 	{
 		$options = get_option($args['option_name']);
+        $description = isset($args['description']) ? $args['description'] : '';
 		$field_label = $args['input_label'];
 		$field_required = ($args['input_required']) ? ' required="required" ' : '';
 		printf(
             '<input ' .$field_required. ' type="text" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="%s" />',
             isset( $options[$field_label] ) ? esc_attr( $options[$field_label]) : ''
         );
+
+        echo '<div class="angelleye-settings-description">' . $description . '</div>';
 	}
 
     /**
@@ -2096,6 +2122,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function offers_for_woocommerce_options_page_output_input_select($args)
     {
         $options = get_option($args['option_name']);
+        $description = isset($args['description']) ? $args['description'] : '';
         $field_label = $args['input_label'];
         $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
 
@@ -2114,6 +2141,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             '</select>'
         );
 
+        echo '<div class="angelleye-settings-description">' . $description . '</div>';
+
     }
 	
 	/**
@@ -2124,6 +2153,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function offers_for_woocommerce_options_page_output_input_colorpicker($args) 
 	{
 		$options = get_option($args['option_name']);
+        $description = isset($args['description']) ? $args['description'] : '';
 		$field_label = $args['input_label'];
 		$field_required = ($args['input_required']) ? ' required="required" ' : '';
 		
@@ -2163,6 +2193,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			});
 		';
 		echo '</script>';
+
+        echo '<div class="angelleye-settings-description">' . $description . '</div>';
 	}
 	
 	/**
