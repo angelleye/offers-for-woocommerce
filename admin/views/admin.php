@@ -36,14 +36,13 @@
         </form>
     <?php } elseif( $active_tab == 'tools' ) { ?>
         <form id="woocommerce_offers_options_form_bulk_tool_enable_offers" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
-        <p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
+        <!--<p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
-        </p>
+        </p>-->
         <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
-            <h3>Bulk enable/disable offers for products</h3>
-            <div>Select options below and click process button to perform bulk action.</div>
-            <div>Page will auto-redirect after action is complete.</div>
+            <h3>Bulk Edit Tool for Products</h3>
+            <div>Select from the options below to enable / disable offers on multiple products at once.</div>
 
             <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
                 <label for="ofwc-bulk-action-type">Action</label>
