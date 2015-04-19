@@ -1893,11 +1893,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'general_setting_enable_make_offer_btn_frontpage', // ID
-			'Enable Make Offer button on home page', // Title 
+			'Show on Home Page', // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
 			'offers_for_woocommerce_general_settings', // Page
 			'general_settings', // Section 
-			array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_frontpage', 'input_required'=>FALSE)         
+			array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_enable_make_offer_btn_frontpage',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to display offer buttons for products on your home page.', $this->plugin_slug),
+            )
 		);
 
         /**
@@ -1906,11 +1911,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_enable_make_offer_btn_catalog', // ID
-            'Enable Make Offer button on shop page', // Title
+            'Show on Shop Page', // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
-            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_make_offer_btn_catalog', 'input_required'=>FALSE)
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_enable_make_offer_btn_catalog',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to display offer buttons for products on your shop page.', $this->plugin_slug),
+            )
         );
 
         /**
@@ -1919,11 +1929,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_enable_offers_by_default', // ID
-            'Enable Make Offer button on new products by default', // Title
+            'Enable Offers by Default', // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
-            array('option_name'=>'offers_for_woocommerce_options_general', 'input_label'=>'general_setting_enable_offers_by_default', 'input_required'=>FALSE)
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_enable_offers_by_default',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to automatically enable offers on all new products by default.', $this->plugin_slug),
+            )
         );
 
 		/**
@@ -2064,11 +2079,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function offers_for_woocommerce_options_page_output_input_checkbox($args)
     {
         $options = get_option($args['option_name']);
+        $description = isset($args['description']) ? $args['description'] : '';
         $field_label = $args['input_label'];
         $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
         $is_checked = (isset($options[$field_label])) ? $options[$field_label] : '0';
         print(
-            '<input '. $field_required. ' type="checkbox" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="1" ' . checked(1, $is_checked, false) . '/>'
+            '<input '. $field_required. ' type="checkbox" id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']" value="1" ' . checked(1, $is_checked, false) . '/>&nbsp;' . $description
         );
     }
 
