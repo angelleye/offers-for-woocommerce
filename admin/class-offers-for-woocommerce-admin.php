@@ -788,9 +788,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since   1.0.1
      */
     function aeofwc_search_join( $join ) {
-        global $wpdb;
+        global $wpdb, $screen;
 
-        if ( is_search() ) {
+        $screen = get_current_screen();
+
+        if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
             $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
         }
 
@@ -804,7 +806,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     function aeofwc_search_where( $where ) {
         global $pagenow, $wpdb;
 
-        if ( is_search() ) {
+        $screen = get_current_screen();
+
+        if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
             $where = preg_replace(
                 "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
                 "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
@@ -820,7 +824,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     function aeofwc_search_distinct( $where ) {
         global $wpdb;
 
-        if ( is_search() ) {
+        $screen = get_current_screen();
+
+        if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
             return "DISTINCT";
         }
 
