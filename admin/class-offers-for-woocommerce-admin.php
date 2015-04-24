@@ -788,11 +788,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since   1.0.1
      */
     function aeofwc_search_join( $join ) {
-        global $wpdb, $screen;
+        global $wpdb, $screen, $wp;
 
         $screen = get_current_screen();
 
         if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
+
+            $found_blank_s = (isset($_GET['s']) && isset($_GET['orderby'])) ? TRUE : FALSE;
+            if($found_blank_s)
+            {
+                $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+                $redirect_url = str_replace("&s=&", "&", $current_url);
+                wp_redirect($redirect_url);
+            }
             $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
         }
 
