@@ -437,6 +437,14 @@ class Angelleye_Offers_For_Woocommerce {
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
         $is_sold_individually = $_product->is_sold_individually();
+        $is_backorders_allowed = $_product->backorders_allowed();
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
+
+        $stock_quantity = $_product->get_stock_quantity();
+        $new_offer_quantity_limit = (!$is_backorders_allowed && $stock_quantity && $stock_quantity > 0 && $global_limit_quantity_to_stock) ? $stock_quantity : '';
 
         // set parent offer id if found in get var
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';

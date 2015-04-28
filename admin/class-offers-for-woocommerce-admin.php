@@ -1955,6 +1955,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             )
         );
 
+        /**
+         * Add field - 'General Settings' - 'general_setting_limit_offer_quantity_by_stock'
+         * Limit Offer Quantity on products with limited stock and no backorders
+         */
+        add_settings_field(
+            'general_setting_limit_offer_quantity_by_stock', // ID
+            'Limit Offer Quantity at Product Stock Quantity', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_limit_offer_quantity_by_stock',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to limit offer quantity at stock quantity on products not allowing backorders.', $this->plugin_slug),
+            )
+        );
+
 		/**
 		 * Add section - 'Display Settings'
 		 */

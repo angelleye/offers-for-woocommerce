@@ -75,7 +75,7 @@
                 <?php } else { ?>
             	<div class="woocommerce-make-offer-form-part-left">
                     <label for="woocommerce-make-offer-form-quantity">Quantity</label>
-                    <br /><input type="text" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" />
+                    <br /><input type="text" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" <?php echo ($new_offer_quantity_limit) ? ' data-v-max="'.$new_offer_quantity_limit.'"' : '';?> required="required" />
                 </div>
                 <?php } ?>
                 <div class="woocommerce-make-offer-form-part-left">
