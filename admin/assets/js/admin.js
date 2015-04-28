@@ -10,7 +10,11 @@
              * Init datepicker for offer expiration date
              * @since   1.0.1
              */
-            $('.datepicker').datepicker();
+
+            var currentDate = new Date();
+            $('.datepicker').datepicker({
+                minDate: currentDate
+            });
 
             $('#offer-quantity').autoNumeric('init',
                 {
@@ -29,6 +33,26 @@
                     aForm: true
                 }
             );
+
+            var currentExpireDate = $('#offer-expiration-date').val();
+            var formattedDate = new Date(currentExpireDate);
+            var d = formattedDate.getDate();
+            var m =  formattedDate.getMonth();
+            m += 1;  // JavaScript months are 0-11
+            var y = formattedDate.getFullYear();
+            var formattedExpireDate = y + "-" + m + "-" + d;
+
+            var formattedTodayDate = new Date(currentDate);
+            var d = formattedTodayDate.getDate();
+            var m =  formattedTodayDate.getMonth();
+            m += 1;  // JavaScript months are 0-11
+            var y = formattedTodayDate.getFullYear();
+            var formattedTodayDate = y + "-" + m + "-" + d;
+
+            if(formattedExpireDate < formattedTodayDate)
+            {
+                $('#angelleye-woocommerce-offer-meta-summary-expire-notice-msg').show();
+            }
 
             updateTotal();
 
