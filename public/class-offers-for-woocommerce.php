@@ -85,13 +85,7 @@ class Angelleye_Offers_For_Woocommerce {
         /* Add "Make Offer" button code parts - After add to cart */
         add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'angelleye_ofwc_after_add_to_cart_button' ) );
 
-        /**
-         * Filter - Add "Make Offer" button code parts - Filters stock html output
-         * @since	1.0.1
-         */
-        add_filter( 'woocommerce_stock_html', array( $this, 'angelleye_ofwc_woocommerce_stock_html' ) );
-
-		/* Add "Make Offer" button code parts - After shop loop item */
+        /* Add "Make Offer" button code parts - After shop loop item */
 		add_action( 'woocommerce_after_shop_loop_item', array( $this, 'angelleye_ofwc_after_show_loop_item' ), 99, 2 );
 
         /* Add "Lighbox Make Offer Form" before single product content */
@@ -166,15 +160,7 @@ class Angelleye_Offers_For_Woocommerce {
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
-
-        $is_backorders_allowed = $_product->backorders_allowed();
-        $stock_quantity = $_product->get_stock_quantity();
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-        $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
-
-        $out_of_stock = (!$is_backorders_allowed && $stock_quantity < 1 && $global_limit_quantity_to_stock) ? TRUE : FALSE;
+        $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
@@ -183,7 +169,7 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && !$out_of_stock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
         {
             // get global on/off settings for offer button
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
@@ -220,18 +206,10 @@ class Angelleye_Offers_For_Woocommerce {
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
-
-        $is_backorders_allowed = $_product->backorders_allowed();
-        $stock_quantity = $_product->get_stock_quantity();
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-        $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
-
-        $out_of_stock = (!$is_backorders_allowed && $stock_quantity < 1 && $global_limit_quantity_to_stock) ? TRUE : FALSE;
+        $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && !$out_of_stock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -267,76 +245,6 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    /**
-     * Filter - Add "Make Offer" button code parts - Filters stock html output
-     * @since	1.0.1
-     */
-    public function angelleye_ofwc_woocommerce_stock_html($availability_html)
-    {
-        global $post;
-        $custom_tab_options_offers = array(
-            'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
-        );
-
-        $_pf = new WC_Product_Factory();
-        $_product = $_pf->get_product( $post->ID );
-
-        $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
-
-        if(!$is_instock)
-        {
-            $is_external_product = (isset($_product->product_type) && $_product->product_type == 'external') ? TRUE : FALSE;
-
-            $is_backorders_allowed = $_product->backorders_allowed();
-            $stock_quantity = $_product->get_stock_quantity();
-
-            // get offers options - general
-            $button_options_general = get_option('offers_for_woocommerce_options_general');
-            $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
-
-            $out_of_stock = (!$is_backorders_allowed && $stock_quantity < 1 && $global_limit_quantity_to_stock) ? TRUE : FALSE;
-
-            // if post has offers button enabled
-            if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && !$out_of_stock) {
-                // get offers options - display
-                $button_options_display = get_option('offers_for_woocommerce_options_display');
-
-                $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'angelleye_offers_for_woocommerce');
-
-                $custom_styles_override = '';
-                if ($button_options_display) {
-                    if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
-                        $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . '!important;';
-                    }
-                    if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
-                        $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important;';
-                    }
-                }
-
-                if ( (is_front_page()) || (!is_front_page() && !is_product() ))
-                {
-                    // do nothing
-                }
-                else
-                {
-                    // adds hidden class if position is not default
-                    $hiddenclass = (isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
-                    $customclass = ($hiddenclass == 'angelleye-ofwc-hidden') ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
-
-                    $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
-                    $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-
-                    $availability_html.= '<div class="offers-for-woocommerce-make-offer-button-cleared '.$hiddenclass.'"></div>
-                    <div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap" data-ofwc-position="'.$customclass.'"><div>';
-                    $availability_html.= '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
-                    $availability_html.= '</div>';
-                    $availability_html.= '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div>';
-                }
-            }
-        }
-        return $availability_html;
-    }
-
 	/**
 	 * Callback - Add Make Offer button after add to cart button on Catalog view
 	 *
@@ -352,21 +260,13 @@ class Angelleye_Offers_For_Woocommerce {
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
-
-        $is_backorders_allowed = $_product->backorders_allowed();
-        $stock_quantity = $_product->get_stock_quantity();
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-        $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
-
-        $out_of_stock = (!$is_backorders_allowed && $stock_quantity < 1 && $global_limit_quantity_to_stock) ? TRUE : FALSE;
+        $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && !$out_of_stock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
         {
             // get global on/off settings for offer button - frontpage and catalog
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
@@ -435,18 +335,10 @@ class Angelleye_Offers_For_Woocommerce {
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
-
-        $is_backorders_allowed = $_product->backorders_allowed();
-        $stock_quantity = $_product->get_stock_quantity();
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-        $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
-
-        $out_of_stock = (!$is_backorders_allowed && $stock_quantity < 1 && $global_limit_quantity_to_stock) ? TRUE : FALSE;
+        $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && !$out_of_stock )
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
