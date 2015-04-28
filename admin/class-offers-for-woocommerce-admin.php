@@ -1020,7 +1020,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function jc_display_archive_state( $states ) 
 	{
 		global $post;
-		$arg = get_query_var( 'post_status' );
+
 		$screen = get_current_screen();
 
 		if ( $screen->post_type == 'woocommerce_offer' )
