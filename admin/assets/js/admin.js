@@ -30,6 +30,24 @@
                 }
             );
 
+            var currentPostStatus = $('#woocommerce_offer_post_status').val();
+            if(currentPostStatus !== 'countered-offer')
+            {
+                $('.woocommerce-offer-final-offer-wrap').hide();
+            }
+
+            $('#woocommerce_offer_post_status').change(function(){
+                if( $(this).val() == 'countered-offer')
+                {
+                    $('.woocommerce-offer-final-offer-wrap').fadeIn('fast');
+                }
+                else
+                {
+                    $('.woocommerce-offer-final-offer-wrap').slideUp();
+                }
+                return false;
+            });
+
             updateTotal();
 
             // Submit post
