@@ -593,10 +593,19 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section select {  }
 .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section input { width:110px; }
 .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit { margin-top:1px; }
-.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.spinner { height:16px; width:16px; margin-top:5px; background-size: contain;  float: left; margin-right: 6px; }
+.angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.ofwc-spinner {
+    height: 16px;
+    width: 16px;
+    margin-top: 5px;
+    float: left;
+    margin-right: 6px;
+    background: url('../images/spinner.gif') center center !important;
+    background-size: contain!important;
+}
+
 
 @media screen and (max-width:782px) {
-    .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.spinner { margin-top:2px; }
+    .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.ofwc-spinner { margin-top:2px; }
 }
 
 .angelleye-offers-clearfix { clear: both!important; }
