@@ -95,7 +95,7 @@
                 // show processing status
                 $('#bulk-enable-tool-submit').attr('disabled', 'disabled');
                 $('#bulk-enable-tool-submit').removeClass('button-primary');
-                $('#bulk-enable-tool-submit').html('<i class="spinner"></i> Processing, please wait...');
+                $('#bulk-enable-tool-submit').html('<i class="ofwc-spinner"></i> Processing, please wait...');
                 $('#bulk-enable-tool-submit i.spinner').show();
 
                 var actionType = $('#ofwc-bulk-action-type').val();
