@@ -207,6 +207,10 @@
                     <div class="aeofwc-notice-msg-inner"><?php echo (isset($offer_inventory_msg)) ? $offer_inventory_msg : '';?></div>
                 </div>
 
+                <div id="angelleye-woocommerce-offer-meta-summary-expire-notice-msg" class="angelleye-hidden">
+                    <div class="aeofwc-notice-msg-inner"><?php echo __('Expiration date has past', 'angelleye-offers-for-woocommerce'); ?></div>
+                </div>
+
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
                     <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
                     <input name="submit" id="submit" class="button button-completed-offer" value="<?php echo __('Completed Offer', 'angelleye-offers-for-woocommerce'); ?>" type="submit" disabled="disabled">
