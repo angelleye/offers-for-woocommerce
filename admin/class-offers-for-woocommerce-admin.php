@@ -815,6 +815,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     function aeofwc_search_where( $where ) {
         global $pagenow, $wpdb;
 
+        require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $screen = get_current_screen();
 
         if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
