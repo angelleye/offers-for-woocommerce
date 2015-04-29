@@ -1024,7 +1024,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
 		$screen = get_current_screen();
 
-		if ( $screen->post_type == 'woocommerce_offer' )
+		if (!empty($screen) && $screen->post_type == 'woocommerce_offer' )
 		{
             if($post->post_status == 'accepted-offer'){
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
