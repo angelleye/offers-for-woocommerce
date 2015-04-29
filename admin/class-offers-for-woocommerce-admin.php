@@ -798,6 +798,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if($found_blank_s)
             {
                 $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+                $current_url = esc_url_raw($current_url);
                 $redirect_url = str_replace("&s=&", "&", $current_url);
                 wp_redirect($redirect_url);
             }
@@ -3339,6 +3340,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
                     // build the redirect url
                     $sendback = add_query_arg(array('enabled_offers' => $updated_count, 'ids' => join(',', $post_ids)), 'edit.php?post_type=product');
+                    $sendback = esc_url_raw($sendback);
 
                     break;
                 case 'disable_offers':
@@ -3351,6 +3353,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
                     // build the redirect url
                     $sendback = add_query_arg(array('disabled_offers' => $updated_count, 'ids' => join(',', $post_ids)), 'edit.php?post_type=product');
+                    $sendback = esc_url_raw($sendback);
 
                     break;
                 default:
