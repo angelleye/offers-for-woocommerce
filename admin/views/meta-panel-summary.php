@@ -175,7 +175,7 @@
                 <h5>Status</h5>
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
-                        <select name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
+                        <select id="woocommerce_offer_post_status" name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
                             <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' || $current_status_value == 'expired-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
                             <option value="">- Select status</option>
                             <?php } ?>
