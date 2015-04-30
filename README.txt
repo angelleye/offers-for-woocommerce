@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.1.1
-Stable tag: 1.1.0
+Tested up to: 4.2.1
+Stable tag: 1.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,10 +16,11 @@ Adds the power of negotiation to your WooCommerce store.
 
 Provide the ability for customers to submit offers for items in a WooCommerce store.
 
- * Adds a "Make an Offer" button to products.
- * Provides a form for potential buyers to enter offer details and submit the offer.
- * Email notifications for new offers, accepted offers, counter offers, and declined offers, adjustment through WooCommerce email settings.
- * Manage offers in your WordPress / WooCommerce control panel the same way you manage your orders!
+ * Adds a “Make an Offer” button to products on your WooCommerce web store.
+ * Provides a “Make an Offer” form where users can enter the QTY and price for the item they’re interested in as well as their contact information.
+ * Email notifications for new offers, accepted offers, counter offers, and declined offers are sent to both the buyer and the site owner.
+ * Manage offers from your WordPress control panel through WooCommerce -> Offers just like you would with your WooCommerce orders.
+ * Options to enable/disable offers at the product level as well as options for handling inventory tracked items based on how the WooCommerce settings for back-orders are configured.
 
 = Get Involved =
 
@@ -61,6 +62,13 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
 
 == Changelog ==
+
+= 1.1.1 - 04.30.2015 =
+* Tweak - Adds option for handling available offer QTY based on WooCommerce inventory back-order settings.
+* Tweak - Hides the final offer option unless you are submitting a counter-offer.
+* Tweak - Adds validation to the expiration date so you cannot set a date in the past.
+* Fix - Various bug fixes to eliminate PHP notices and conflicts with other plugins.
+* Fix - Adjusts jQuery spinner icon to work with WordPress 4.2.
 
 = 1.1.0 - 04/16/2015 =
 * Tweak - Adjusts offer search to return results from all offer detail data (not just the title).
