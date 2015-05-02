@@ -3156,7 +3156,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * Add WP Notices
      * @since   0.1.0
      */
-    public function aeofwc_admin_notices(){
+    public function aeofwc_admin_notices()
+    {
+        global $current_user ;
+        $user_id = $current_user->ID;
 
         $screen = get_current_screen();
 
@@ -3195,6 +3198,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             }
         }
+
+        /**
+         * Detect other known plugins that might conflict; show warnings
+         */
+        if ( is_plugin_active( 'social-networks-auto-poster-facebook-twitter-g/NextScripts_SNAP.php' ) )
+        {
+            // Check that the user hasn't already clicked to ignore the message
+            if ( ! get_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_next_scripts_snap') ) {
+                $get_symbol = (strpos($_SERVER['REQUEST_URI'], "?")) ? "&" : "?";
+                echo '<div class="updated"> <p><strong>'. __('We notice you are running the "SNAP" Social Network Auto Poster plugin', $this->plugin_slug) .';</strong><br />'. __('Please make sure to uncheck the custom post type "woocommerce_offer" in the SNAP plugin settings', $this->plugin_slug) .' | <a href="'. $_SERVER['REQUEST_URI'] . $get_symbol . 'angelleye_offers_for_woocommerce_ignore_next_scripts_snap=0">Hide Notice</a></p> </div>';
+            }
+        }
+
         return;
     }
 
@@ -3293,6 +3309,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /* If user clicks to ignore the notice, add that to their user meta */
         if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_01']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_01'] ) {
             add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01', 'true');
+        }
+
+        /* If user clicks to ignore the notice, add that to their user meta */
+        if ( isset($_GET['angelleye_offers_for_woocommerce_ignore_next_scripts_snap']) && '0' == $_GET['angelleye_offers_for_woocommerce_ignore_next_scripts_snap'] ) {
+            add_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_next_scripts_snap', 'true');
         }
     }
 
