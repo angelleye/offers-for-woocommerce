@@ -3207,7 +3207,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // Check that the user hasn't already clicked to ignore the message
             if ( ! get_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_next_scripts_snap') ) {
                 $get_symbol = (strpos($_SERVER['REQUEST_URI'], "?")) ? "&" : "?";
-                echo '<div class="updated"> <p><strong>'. __('We notice you are running the "SNAP" Social Network Auto Poster plugin', $this->plugin_slug) .';</strong><br />'. __('Please make sure to uncheck the custom post type "woocommerce_offer" in the SNAP plugin settings', $this->plugin_slug) .' | <a href="'. $_SERVER['REQUEST_URI'] . $get_symbol . 'angelleye_offers_for_woocommerce_ignore_next_scripts_snap=0">Hide Notice</a></p> </div>';
+                echo '<div class="updated"> <p><strong>'. __('We notice you are running the NextScripts Social Networks Auto-Poster plugin.', $this->plugin_slug) .'</strong><br />'. __('Please make sure to exclude the custom post type "woocommerce_offer" in the {SNAP} Social Networks Auto-Poster settings in order to avoid conflicts with new offers.', $this->plugin_slug) .' | <a href="'. $_SERVER['REQUEST_URI'] . $get_symbol . 'angelleye_offers_for_woocommerce_ignore_next_scripts_snap=0">Hide Notice</a></p> </div>';
             }
         }
 
