@@ -824,11 +824,9 @@ class Angelleye_Offers_For_Woocommerce {
                 else
                 {
                     // Insert new Post
-                    if( wp_insert_post( $newPostData ) )
+                    $parent_post_id = wp_insert_post( $newPostData );
+                    if( $parent_post_id )
                     {
-                        // Set Parent ID for use later
-                        $parent_post_id = $wpdb->insert_id;
-
                         // Insert new Post Meta Values
                         foreach($formData as $k => $v)
                         {
