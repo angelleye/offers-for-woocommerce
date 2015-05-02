@@ -373,21 +373,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		register_post_type( 'woocommerce_offer',
 			array(
 				'labels' => array(
-					'name' => 'Manage Offers',
-					'singular_name' => 'WooCommerce Offer',
-					'add_new' => 'Add New',
-					'add_new_item' => 'Add New WooCommerce Offer',
-					'edit' => 'Manage',
-					'edit_item' => 'Manage WooCommerce Offer',
-					'new_item' => 'New WooCommerce Offer',
-					'view' => 'View',
-					'view_item' => 'View WooCommerce Offer',
-					'search_items' => 'Search WooCommerce Offers',
-					'not_found' => 'No WooCommerce Offers found',
-					'not_found_in_trash' => 'No WooCommerce Offers found in Trash',
-					'parent' => 'Parent WooCommerce Offer'
+					'name' => __('Manage Offers', $this->plugin_slug),
+					'singular_name' => __('WooCommerce Offer', $this->plugin_slug),
+					'add_new' => __('Add New', $this->plugin_slug),
+					'add_new_item' => __('Add New WooCommerce Offer', $this->plugin_slug),
+					'edit' => __('Manage', $this->plugin_slug),
+					'edit_item' => __('Manage WooCommerce Offer', $this->plugin_slug),
+					'new_item' => __('New WooCommerce Offer', $this->plugin_slug),
+					'view' => __('View', $this->plugin_slug),
+					'view_item' => __('View WooCommerce Offer', $this->plugin_slug),
+					'search_items' => __('Search WooCommerce Offers', $this->plugin_slug),
+					'not_found' => __('No WooCommerce Offers found', $this->plugin_slug),
+					'not_found_in_trash' => __('No WooCommerce Offers found in Trash', $this->plugin_slug),
+					'parent' => __('Parent WooCommerce Offer', $this->plugin_slug)
 				),
-				'description' => 'Offers for WooCommerce - Custom Post Type', 
+				'description' => 'Offers for WooCommerce - Custom Post Type',
 				'public' => true,
 				'publicly_queryable' => true,
 				'exclude_from_search' => true,            
@@ -539,22 +539,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	
 		$messages['woocommerce_offer'] = array(
 			0  => '', // Unused. Messages start at index 1.
-			1  => __( 'Offer updated.', 'angelleye_offers_for_woocommerce' ),
-			2  => __( 'Offer Details updated.', 'angelleye_offers_for_woocommerce' ),
-			3  => __( 'Offer Details deleted.', 'angelleye_offers_for_woocommerce' ),
-			4  => __( 'Offer updated.', 'angelleye_offers_for_woocommerce' ),
+			1  => __( 'Offer updated.',  $this->plugin_slug),
+			2  => __( 'Offer Details updated.',  $this->plugin_slug),
+			3  => __( 'Offer Details deleted.',  $this->plugin_slug),
+			4  => __( 'Offer updated.',  $this->plugin_slug),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Offer restored to revision from %s', 'angelleye_offers_for_woocommerce' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6  => __( 'Offer set as Pending Status.', 'angelleye_offers_for_woocommerce' ),
-			7  => __( 'Offer saved.', 'angelleye_offers_for_woocommerce' ),
-			8  => __( 'Offer submitted.', 'angelleye_offers_for_woocommerce' ),
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Offer restored to revision from %s',  $this->plugin_slug), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6  => __( 'Offer set as Pending Status.',  $this->plugin_slug),
+			7  => __( 'Offer saved.',  $this->plugin_slug),
+			8  => __( 'Offer submitted.',  $this->plugin_slug),
 			9  => sprintf(
-				__( 'Offer scheduled for: <strong>%1$s</strong>.', 'angelleye_offers_for_woocommerce' ),
+				__( 'Offer scheduled for: <strong>%1$s</strong>.',  $this->plugin_slug),
 				// translators: Publish box date format, see http://php.net/date
-				date_i18n( __( 'M j, Y @ G:i', 'angelleye_offers_for_woocommerce' ), strtotime( $post->post_date ) )
+				date_i18n( __( 'M j, Y @ G:i',  $this->plugin_slug), strtotime( $post->post_date ) )
 			),
-			10 => __( 'Offer draft updated.', 'angelleye_offers_for_woocommerce' ),
-            11 => __( 'Offer note added.', 'angelleye_offers_for_woocommerce' )
+			10 => __( 'Offer draft updated.',  $this->plugin_slug),
+            11 => __( 'Offer note added.',  $this->plugin_slug)
 		);
 	
 		return $messages;

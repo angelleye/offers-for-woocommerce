@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 echo $email_heading . "\n\n";
 
 $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
-echo sprintf( __( 'We have accepted your offer on %s. To pay for this order please use the following link: %s', 'angelleye_offers_for_woocommerce' ), get_bloginfo( 'name' ),  $offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'] ) . "\n\n";
+echo sprintf( __( 'We have accepted your offer on %s. To pay for this order please use the following link: %s', $this->plugin_slug ), get_bloginfo( 'name' ),  $offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'] ) . "\n\n";
 
 if($offer_args['offer_expiration_date'])
 {
