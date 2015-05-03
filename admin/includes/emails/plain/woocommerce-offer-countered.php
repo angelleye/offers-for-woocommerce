@@ -14,7 +14,7 @@ $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
 echo sprintf( __( 'We have provided you with a counter offer on %s.', 'angelleye_offers_for_woocommerce' ), get_bloginfo( 'name' ) ) . "\n\n";
 echo sprintf( __( 'To pay for this order please use the following link: %s.', 'angelleye_offers_for_woocommerce' ), $offer_args['product_url']. $link_insert .'__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'] );
 
-if($offer_args['offer_expiration_date'])
+if(isset($offer_args['offer_expiration_date']) && $offer_args['offer_expiration_date'])
 {
     echo sprintf( "\n\n". __( 'Offer expires on: %s', 'angelleye_offers_for_woocommerce' ).'</strong></p>', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) );
 }

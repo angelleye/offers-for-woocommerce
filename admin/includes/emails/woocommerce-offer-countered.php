@@ -17,7 +17,7 @@ To pay for this order please use the following link: <a style="background:#EFEFE
     <br><br>To make a counter offer use the following link: <a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'] ;?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo 'aewcobtn=1&offer-pid='.$offer_args['offer_id']. '&offer-uid=' .$offer_args['offer_uid']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Counter', 'angelleye_offers_for_woocommerce' ); ?></span></a>
 <?php } ?>
 
-<?php if($offer_args['offer_expiration_date']) {
+<?php if(isset($offer_args['offer_expiration_date']) && $offer_args['offer_expiration_date']) {
     printf( '<br><br><strong>'. __( 'Offer expires on: %s', 'angelleye_offers_for_woocommerce' ), date("m-d-Y", strtotime($offer_args['offer_expiration_date'])).'</strong>' );
 }?>
 
