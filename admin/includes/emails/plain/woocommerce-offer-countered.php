@@ -22,7 +22,7 @@ if($offer_args['offer_expiration_date'])
 if(isset($offer_args['final_offer']) && $offer_args['final_offer'] == '1') {
     echo "\n\n" . __( 'This is a final offer.', 'angelleye-offers-for-woocommerce' );
 } else {
-    echo sprintf( __('To make a counter offer use the following link:', 'angelleye-offers-for-woocommerce') .'%s', $offer_args['product_url'] . $link_insert . 'aewcobtn=1&offer-pid=' . $offer_args['offer_id'] . '&offer-uid=' . $offer_args['offer_uid']);
+    echo "\n\n" . sprintf( __('To make a counter offer use the following link:', 'angelleye-offers-for-woocommerce') .'%s', $offer_args['product_url'] . $link_insert . 'aewcobtn=1&offer-pid=' . $offer_args['offer_id'] . '&offer-uid=' . $offer_args['offer_uid']);
 }
 
 echo "\n\n****************************************************\n";
