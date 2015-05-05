@@ -432,7 +432,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	function add_offers_submenu_children() 
 	{
 		$offers_manage_link_href = admin_url( 'edit.php?post_type=woocommerce_offer');
-		$offers_settings_link_href = admin_url( 'options-general.php?page=offers-for-woocommerce');
+		$offers_settings_link_href = admin_url( 'options-general.php?page=' . $this->plugin_slug);
 		global $submenu;
 		foreach($submenu['woocommerce'] as $key => $value)
 		{
@@ -2390,10 +2390,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	{
 		return array_merge(
 			array(
-				'configure' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=offers-for-woocommerce' ), __( 'Configure', 'offers-for-woocommerce' ) ),
-				'docs'      => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://www.angelleye.com/category/docs/offers-for-woocommerce/?utm_source=offers_for_woocommerce&utm_medium=docs_link&utm_campaign=offers_for_woocommerce', __( 'Docs', 'offers-for-woocommerce' ) ),
-				'support'   => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/plugin/offers-for-woocommerce/', __( 'Support', 'offers-for-woocommerce' ) ),
-				'review'    => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/view/plugin-reviews/offers-for-woocommerce', __( 'Write a Review', 'offers-for-woocommerce' ) ),
+				'configure' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Configure', $this->plugin_slug ) ),
+				'docs'      => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://www.angelleye.com/category/docs/offers-for-woocommerce/?utm_source=offers_for_woocommerce&utm_medium=docs_link&utm_campaign=offers_for_woocommerce', __( 'Docs', $this->plugin_slug ) ),
+				'support'   => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/plugin/offers-for-woocommerce/', __( 'Support', $this->plugin_slug ) ),
+				'review'    => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/view/plugin-reviews/offers-for-woocommerce', __( 'Write a Review', $this->plugin_slug ) ),
 			),
 			$links
 		);
@@ -3086,7 +3086,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 {
                     $errors = TRUE;
                     $update_count = 'zero';
-                    $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$update_count);
+                    $redirect_url = admin_url('options-general.php?page=' . $this->plugin_slug . '&tab=tools&processed='.$update_count);
                     echo $redirect_url;
                 }
                 else
@@ -3114,7 +3114,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $update_count = 'zero';
                 }
 
-                $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$update_count);
+                $redirect_url = admin_url('options-general.php?page=' . $this->plugin_slug . '&tab=tools&processed='.$update_count);
                 echo $redirect_url;
             }
             else
