@@ -13,5 +13,5 @@
  */
 ?>
 <div class="woocommerce-offer-list-actions-wrap">
-	<a href="<?php if(isset($view_detail_link)) { echo $view_detail_link; } else { echo 'javascript:;'; } ?>" class="button woocommerce-offer-view-details-link"><span class="dashicons dashicons-visibility"></span> View Details</a>
+	<a href="<?php if(isset($view_detail_link)) { echo $view_detail_link; } else { echo 'javascript:;'; } ?>" class="button woocommerce-offer-view-details-link"><span class="dashicons dashicons-visibility"></span>&nbsp;<?php echo __('View Details', $this->plugin_slug); ?></a>
 </div>

@@ -28,6 +28,6 @@ if( isset($offer_comments) ){
     </div>
 <?php
 } else {
-    echo 'No Comments Found.';
+    echo __('No Comments Found.', $this->plugin_slug);
 }
 ?>
