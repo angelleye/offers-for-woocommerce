@@ -10,29 +10,29 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 echo $email_heading . "\n\n";
 
-echo sprintf( __( 'New Offer submitted on %s. To manage this counter offer please visit the following url: %s', 'angelleye_offers_for_woocommerce' ), get_bloginfo( 'name' ),  admin_url( 'post.php?post='. $offer_args['offer_id']  .'&action=edit' ) ) . "\n\n";
+echo sprintf( __('New Offer submitted on', 'angelleye-offers-for-woocommerce') . ' %s. ' . __('To manage this counter offer please visit the following url:', 'angelleye-offers-for-woocommerce') . ' %s', get_bloginfo( 'name' ),  admin_url( 'post.php?post='. $offer_args['offer_id']  .'&action=edit' ) ) . "\n\n";
 
 echo "****************************************************\n";
 
-echo sprintf( __( 'Offer ID: %s', 'angelleye_offers_for_woocommerce'), $offer_args['offer_id'] ) . "\n";
+echo sprintf( __( 'Offer ID:', 'angelleye-offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
 
 echo "\n";
 
 echo __( 'Product', 'woocommerce' ) . ': ' . stripslashes($offer_args['product_title_formatted']) . "\n";
 echo __( 'Quantity', 'woocommerce' ) . ': ' . number_format( $offer_args['product_qty'], 0 ) . "\n";
 echo __( 'Price', 'woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2 ) . "\n";
-echo 'Subtotal' . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2 );
+echo __( 'Subtotal', 'woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2 );
 echo "\n\n";
 
-echo "Offer Contact Details:";
-echo (isset($offer_args['offer_name']) && $offer_args['offer_name'] != '') ? "\n" . "Name: ".stripslashes($offer_args['offer_name']) : "";
-echo (isset($offer_args['offer_company_name']) && $offer_args['offer_company_name'] != '') ? "\n" . "Company Name: ".stripslashes($offer_args['offer_company_name']) : "";
-echo (isset($offer_args['offer_email']) && $offer_args['offer_email'] != '') ? "\n" . "Email: ".stripslashes($offer_args['offer_email']) : "";
-echo (isset($offer_args['offer_phone']) && $offer_args['offer_phone'] != '') ? "\n" . "Phone: ".stripslashes($offer_args['offer_phone']) : "";
+echo __('Offer Contact Details:', 'angelleye-offers-for-woocommerce');
+echo (isset($offer_args['offer_name']) && $offer_args['offer_name'] != '') ? "\n" . __('Name:', 'angelleye-offers-for-woocommerce') . " ".stripslashes($offer_args['offer_name']) : "";
+echo (isset($offer_args['offer_company_name']) && $offer_args['offer_company_name'] != '') ? "\n" . __('Company Name:', 'angelleye-offers-for-woocommerce') . " ".stripslashes($offer_args['offer_company_name']) : "";
+echo (isset($offer_args['offer_email']) && $offer_args['offer_email'] != '') ? "\n" . __('Email:', 'angelleye-offers-for-woocommerce') . " ".stripslashes($offer_args['offer_email']) : "";
+echo (isset($offer_args['offer_phone']) && $offer_args['offer_phone'] != '') ? "\n" . __('Phone:', 'angelleye-offers-for-woocommerce') . " ".stripslashes($offer_args['offer_phone']) : "";
 
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {
-    echo "\n\n" . __( 'Offer Notes: ', 'angelleye_offers_for_woocommerce' ) . $offer_args['offer_notes'];
+    echo "\n\n" . __( 'Offer Notes:', 'angelleye-offers-for-woocommerce' ) . ' ' . $offer_args['offer_notes'];
 }
 
 echo "\n****************************************************\n\n";

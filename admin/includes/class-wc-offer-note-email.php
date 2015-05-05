@@ -30,16 +30,16 @@ class WC_Offer_Note_Email extends WC_Email {
         $this->id = 'wc_offer_note';
 
         // this is the title in WooCommerce Email settings
-        $this->title = 'Offer note';
+        $this->title = __('Offer note', $this->plugin_slug);
 
         // this is the description in WooCommerce email settings
-        $this->description = 'Offer notes emails are sent to a customer by the store admin';
+        $this->description = __('Offer notes emails are sent to a customer by the store admin', $this->plugin_slug);
 
         // these are the default heading and subject lines that can be overridden using the settings
-        $this->heading = 'Offer Note';
-        $this->subject = 'Offer Note';
+        $this->heading = __('Offer Note', $this->plugin_slug);
+        $this->subject = __('Offer Note', $this->plugin_slug);
 
-        // Call parent constructor to load any other defaults not explicity defined here
+        // Call parent constructor to load any other defaults not explicitly defined here
         parent::__construct();
 
         // Set the recipient
@@ -50,7 +50,6 @@ class WC_Offer_Note_Email extends WC_Email {
      * Determine if the email should actually be sent and setup email merge variables
      *
      * @since 0.1.0
-     * @param int $order_id
      */
     public function trigger( $offer_args ) {
 
@@ -115,33 +114,33 @@ class WC_Offer_Note_Email extends WC_Email {
 
         $this->form_fields = array(
             'enabled'    => array(
-                'title'   => 'Enable/Disable',
+                'title'   => __('Enable/Disable', $this->plugin_slug),
                 'type'    => 'checkbox',
-                'label'   => 'Enable this email notification',
+                'label'   => __('Enable this email notification', $this->plugin_slug),
                 'default' => 'yes'
             ),
             'subject'    => array(
-                'title'       => 'Subject',
+                'title'       => __('Subject', $this->plugin_slug),
                 'type'        => 'text',
-                'description' => sprintf( 'This controls the email subject line. Leave blank to use the default subject: <code>%s</code>.', $this->subject ),
+                'description' => sprintf( __('This controls the email subject line. Leave blank to use the default subject:', $this->plugin_slug).' <code>%s</code>', $this->subject ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'heading'    => array(
-                'title'       => 'Email Heading',
+                'title'       => __('Email Heading', $this->plugin_slug),
                 'type'        => 'text',
-                'description' => sprintf( __( 'This controls the main heading contained within the email notification. Leave blank to use the default heading: <code>%s</code>.' ), $this->heading ),
+                'description' => sprintf( __('This controls the main heading contained within the email notification. Leave blank to use the default heading:', $this->plugin_slug).' <code>%s</code>', $this->heading ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'email_type' => array(
-                'title'       => 'Email type',
+                'title'       => __('Email type', $this->plugin_slug),
                 'type'        => 'select',
-                'description' => 'Choose which format of email to send.',
+                'description' => __('Choose which format of email to send.', $this->plugin_slug),
                 'default'     => 'html',
                 'class'       => 'email_type',
                 'options'     => array(
-                    'plain'     => 'Plain text',
+                    'plain'     => __('Plain text', $this->plugin_slug),
                     'html'      => 'HTML',
                     'multipart' => 'Multipart',
                 )

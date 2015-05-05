@@ -19,41 +19,41 @@
                 <h5>Product Data</h5>
                 <?php
                 if(!isset($_product)) {
-                    echo __('Product not found', 'angelleye_offers_for_woocommerce');
+                    echo __('Product not found', $this->plugin_slug);
                 } else { ?>
 
-                    <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="Click to view product"><?php echo $_product_image; ?></a></ul>
+                    <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="<?php echo __('Click to view product', $this->plugin_slug); ?>"><?php echo $_product_image; ?></a></ul>
                     <ul class="offer-product-meta-values-wrap">
-                        <li><span>Product: </span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="Click to view product">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->post->ID.'&action=edit" title="Click to edit product"><span>('.$_product->post->ID.')</span></a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <li><span><?php echo __('Product:', $this->plugin_slug);?>&nbsp;</span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="' . __('Click to view product', $this->plugin_slug) . '">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->post->ID.'&action=edit" title="' . __('Click to edit product', $this->plugin_slug) . '"><span>('.$_product->post->ID.')</span></a>' : __('Missing Meta Value', $this->plugin_slug); ?></li>
                         <?php if( $_product_attributes ) { ?>
-                            <li><span>Attributes: </span><?php echo ucwords( implode( ", ", $_product_attributes ) ); ?></li>
+                            <li><span><?php echo __('Attributes:', $this->plugin_slug);?>&nbsp;</span><?php echo ucwords( implode( ", ", $_product_attributes ) ); ?></li>
                         <?php } ?>
-                        <li><span>Regular Price: </span><?php echo (isset($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                        <li><span><?php echo __('Regular Price:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2) : __('Missing Meta Value', $this->plugin_slug); ?></li>
                         <?php if($_product_sale_price) { ?>
-                            <li><span>Sale Price: </span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                            <li><span><?php echo __('Sale Price:', $this->plugin_slug);?>&nbsp;</span><?php echo (isset($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2) : __('Missing Meta Value', $this->plugin_slug); ?></li>
                         <?php } ?>
                         <?php if(isset($_product_stock) && $_product_stock == 0  && $_product_managing_stock ) { ?>
                             <li>
-                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' ) ? $_product_stock : '0'; ?>
+                                <span><?php echo __('Stock:', $this->plugin_slug);?>&nbsp;</span><?php echo (isset($_product_stock) && $_product_stock != '' ) ? $_product_stock : '0'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
-                                    <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
+                                    <?php echo ' ('. __('can be backordered', $this->plugin_slug) . ')'; ?>
                                 <?php } ?>
                             </li>
                         <?php } else { ?>
                             <li>
-                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' && $_product_managing_stock ) ? $_product_stock : ' ('. __('not managed','angelleye_offers_for_woocommerce') . ')'; ?>
+                                <span>Stock: </span><?php echo (isset($_product_stock) && $_product_stock != '' && $_product_managing_stock ) ? $_product_stock : ' ('. __('not managed', $this->plugin_slug) . ')'; ?>
                                 <?php if($_product_backorders_allowed) { ?>
-                                    <?php echo ' ('. __('can be backordered', 'angelleye_offers_for_woocommerce') . ')'; ?>
+                                    <?php echo ' ('. __('can be backordered', $this->plugin_slug) . ')'; ?>
                                 <?php } ?>
                             </li>
                         <?php } ?>
                         <?php if( !$_product_in_stock && (!$_product_stock || $_product_stock == '') ) { ?>
                             <li>
-                                <span class="out-of-stock-offer"><?php echo __('Out of Stock', 'angelleye_offers_for_woocommerce' ); ?></span>
+                                <span class="out-of-stock-offer"><?php echo __('Out of Stock', $this->plugin_slug); ?></span>
                             </li>
                         <?php } elseif( !$_product_in_stock && $_product_stock ) { ?>
                             <li>
-                                <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'angelleye_offers_for_woocommerce' ); ?></span>
+                                <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', $this->plugin_slug); ?></span>
                             </li>
                         <?php } ?>
                         <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
@@ -65,23 +65,23 @@
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>
-                    Buyer Data
+                    <?php echo __('Buyer Data', $this->plugin_slug); ?>
                     <?php if( $author_data ) { ?>
-                        <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', 'angelleye_offers_for_woocommerce');?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', 'angelleye_offers_for_woocommerce'). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
+                        <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', $this->plugin_slug);?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', $this->plugin_slug). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
                     <?php } ?>
                 </h5>
                 <ul class="offer-buyer-meta-values-wrap">
-                    <li><span>Name: </span><?php echo (isset($postmeta['offer_name'][0])) ? stripslashes($postmeta['offer_name'][0]) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li><span>Email: </span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li><span>Phone: </span><?php echo (isset($postmeta['offer_phone'][0])) ? stripslashes($postmeta['offer_phone'][0]) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
-                    <li><span>Company: </span><?php echo (isset($postmeta['offer_company_name'][0])) ? stripslashes($postmeta['offer_company_name'][0]) : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?></li>
+                    <li><span><?php echo __('Name:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_name'][0])) ? stripslashes($postmeta['offer_name'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
+                    <li><span><?php echo __('Email:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', $this->plugin_slug); ?></li>
+                    <li><span><?php echo __('Phone:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_phone'][0])) ? stripslashes($postmeta['offer_phone'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
+                    <li><span><?php echo __('Company:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_company_name'][0])) ? stripslashes($postmeta['offer_company_name'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
                 </ul>
             </div>
 
             <div class="angelleye-col-container" id="angelleye-offer-buyer-history">
                 <?php if( $author_data ) { ?>
                 <h5>Buyer Offer History
-                    <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', 'angelleye_offers_for_woocommerce');?>"><?php echo __('close', 'angelleye_offers_for_woocommerce');?></a>
+                    <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', $this->plugin_slug);?>"><?php echo __('close', $this->plugin_slug);?></a>
                 </h5>
                 <ul class="offer-buyer-history-values-wrap">
                     <table id="offer-buyer-history">
@@ -116,15 +116,15 @@
                 <div class="offer-original-meta-values-wrap">
                     <label for="original-offer-quantity">Orig. Quantity</label>
                     <div>
-                        <input type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                        <input type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', $this->plugin_slug); ?>" disabled="disabled" />
                     </div>
                     <label for="original-offer-price-per">Orig. Price Per</label>
                     <div>
-                        <input type="text" id="original-offer-amount" value="<?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                        <input type="text" id="original-offer-amount" value="<?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', $this->plugin_slug); ?>" disabled="disabled" />
                     </div>
                     <label for="original-offer-price-per">Orig. Amount</label>
                     <div>
-                        <input type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'angelleye_offers_for_woocommerce' ); ?>" disabled="disabled" />
+                        <input type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', $this->plugin_slug); ?>" disabled="disabled" />
                     </div>
                 </div>
             </div>
