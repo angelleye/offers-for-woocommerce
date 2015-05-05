@@ -20,9 +20,9 @@
     </h2>
     
     <h2 class="nav-tab-wrapper">
-        <a href="?page=offers-for-woocommerce&tab=general_settings" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('General Settings', $this->plugin_slug); ?></a>
-        <a href="?page=offers-for-woocommerce&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('Display Settings', $this->plugin_slug); ?></a>
-        <a href="?page=offers-for-woocommerce&tab=tools" class="nav-tab <?php echo $active_tab == 'tools' ? 'nav-tab-active' : ''; ?>"><?php echo __('Tools', $this->plugin_slug); ?></a>
+        <a href="?page=<?php echo $this->plugin_slug; ?>&tab=general_settings" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('General Settings', $this->plugin_slug); ?></a>
+        <a href="?page=<?php echo $this->plugin_slug; ?>&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('Display Settings', $this->plugin_slug); ?></a>
+        <a href="?page=<?php echo $this->plugin_slug; ?>&tab=tools" class="nav-tab <?php echo $active_tab == 'tools' ? 'nav-tab-active' : ''; ?>"><?php echo __('Tools', $this->plugin_slug); ?></a>
     </h2>
 
     <?php if( $active_tab == 'display_settings' ) { ?>
@@ -35,7 +35,7 @@
     ?>
         </form>
     <?php } elseif( $active_tab == 'tools' ) { ?>
-        <form id="woocommerce_offers_options_form_bulk_tool_enable_offers" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
+        <form id="woocommerce_offers_options_form_bulk_tool_enable_offers" autocomplete="off" action="<?php echo admin_url('options-general.php?page=' . $this->plugin_slug . '&tab=tools'); ?>" method="post">
         <!--<p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
         </p>-->
