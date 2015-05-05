@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 echo $email_heading . "\n\n";
 
-echo sprintf( __('New Offer submitted on', 'angelleye-offers-for-woocommerce') . ' %s. ' . __('To manage this counter offer please visit the following url:', 'angelleye-offers-for-woocommerce') . ' %s', get_bloginfo( 'name' ),  admin_url( 'post.php?post='. $offer_args['offer_id']  .'&action=edit' ) ) . "\n\n";
+echo sprintf( __('New Offer submitted on', 'angelleye-offers-for-woocommerce') . ' %s. ' . __('To manage this offer please visit the following url:', 'angelleye-offers-for-woocommerce') . ' %s', get_bloginfo( 'name' ),  admin_url( 'post.php?post='. $offer_args['offer_id']  .'&action=edit' ) ) . "\n\n";
 
 echo "****************************************************\n";
 
