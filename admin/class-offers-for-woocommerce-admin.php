@@ -601,15 +601,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	}
 	
 	/**
-	 * Filter - Add custom CSS in the admin head
-	 * @since	0.1.0	 
-	 */
-	public function hide_that_stuff() 
-	{		
-		// NOT BEING USED
-	}
-	
-	/**
 	 * Filter - Modify the comments clause - to exclude "woocommerce_offer" post type
 	 * @since	0.1.0
 	 * @param  array  $clauses
