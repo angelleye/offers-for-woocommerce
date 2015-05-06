@@ -16,7 +16,7 @@
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5>Product Data</h5>
+                <h5>Product Details</h5>
                 <?php
                 if(!isset($_product)) {
                     echo __('Product not found', $this->plugin_slug);
