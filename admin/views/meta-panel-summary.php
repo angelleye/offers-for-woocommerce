@@ -209,7 +209,7 @@
                 </div>
 
                 <div id="angelleye-woocommerce-offer-meta-summary-expire-notice-msg" class="angelleye-hidden">
-                    <div class="aeofwc-notice-msg-inner"><?php echo __('Expiration date has past', $this->plugin_slug); ?></div>
+                    <div class="aeofwc-notice-msg-inner"><?php echo __('Expiration date has passed.', $this->plugin_slug); ?></div>
                 </div>
 
                 <div class="woocommerce-offer-edit-submit-btn-wrap">
