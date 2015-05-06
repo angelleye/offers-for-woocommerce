@@ -65,7 +65,7 @@
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5>
-                    <?php echo __('Buyer Data', $this->plugin_slug); ?>
+                    <?php echo __('Buyer Details', $this->plugin_slug); ?>
                     <?php if( $author_data ) { ?>
                         <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', $this->plugin_slug);?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', $this->plugin_slug). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
                     <?php } ?>
@@ -112,7 +112,7 @@
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Original Data', $this->plugin_slug);?></h5>
+                <h5><?php echo __('Original Offer', $this->plugin_slug);?></h5>
                 <div class="offer-original-meta-values-wrap">
                     <label for="original-offer-quantity"><?php echo __('Orig. Quantity', $this->plugin_slug); ?></label>
                     <div>
@@ -131,7 +131,7 @@
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Counter Values', $this->plugin_slug); ?></h5>
+                <h5><?php echo __('Counter Offer', $this->plugin_slug); ?></h5>
                 <div class="offer-counter-offer-values-wrap">
                     <label for="offer-quantity"><?php echo __('Quantity', $this->plugin_slug); ?></label>
                     <div>
@@ -166,13 +166,14 @@
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Buyer Note', $this->plugin_slug); ?></h5>
+                <h5><?php echo __('Offer Note to Buyer', $this->plugin_slug); ?></h5>
                 <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class="" autocomplete="off"></textarea>
+                <p class="description">Enter a note here to be included in the email notification to the buyer when the offer status is updated.</p>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Status', $this->plugin_slug); ?></h5>
+                <h5><?php echo __('Offer Status', $this->plugin_slug); ?></h5>
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
                         <select id="woocommerce_offer_post_status" name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
