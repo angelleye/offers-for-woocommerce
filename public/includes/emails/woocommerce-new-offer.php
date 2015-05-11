@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
     </tbody>
     <tfoot>
     <tr>
-        <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee;"><?php e_( 'Subtotal', 'woocommerce' ); ?></th>
+        <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
         <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2 ); ?></td>
     </tr>
     </tfoot>
