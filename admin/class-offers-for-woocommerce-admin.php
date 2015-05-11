@@ -59,9 +59,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
-		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
-		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'ofwc_add_plugin_action_links' ) );
+		/**
+         * Filter - Add links to plugin meta
+         * @since   1.1.2
+         */
+        add_filter( 'plugin_row_meta', array( $this, 'ofwc_add_plugin_action_links' ), 10, 2 );
 		
 		/**
 		 *******************************
@@ -2389,17 +2391,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * Add Plugin Page Action links
 	 * @since    0.1.0
 	 */
-	public function ofwc_add_plugin_action_links( $links ) 
+	public function ofwc_add_plugin_action_links( $links, $file )
 	{
-		return array_merge(
-			array(
-				'configure' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Configure', $this->plugin_slug ) ),
-				'docs'      => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://www.angelleye.com/category/docs/offers-for-woocommerce/?utm_source=offers_for_woocommerce&utm_medium=docs_link&utm_campaign=offers_for_woocommerce', __( 'Docs', $this->plugin_slug ) ),
-				'support'   => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/plugin/offers-for-woocommerce/', __( 'Support', $this->plugin_slug ) ),
-				'review'    => sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/view/plugin-reviews/offers-for-woocommerce', __( 'Write a Review', $this->plugin_slug ) ),
-			),
-			$links
-		);
+        $plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . 'offers-for-woocommerce' . '.php' );
+
+        if($file == $plugin_basename)
+        {
+            $new_links = array(
+                sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Configure', $this->plugin_slug ) ),
+                sprintf( '<a href="%s" target="_blank">%s</a>', 'http://www.angelleye.com/category/docs/offers-for-woocommerce/?utm_source=offers_for_woocommerce&utm_medium=docs_link&utm_campaign=offers_for_woocommerce', __( 'Docs', $this->plugin_slug ) ),
+                sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/plugin/offers-for-woocommerce/', __( 'Support', $this->plugin_slug ) ),
+                sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/view/plugin-reviews/offers-for-woocommerce', __( 'Write a Review', $this->plugin_slug ) ),
+            );
+
+            $links = array_merge( $links, $new_links );
+        }
+        return $links;
 	}
 	
 	/**
