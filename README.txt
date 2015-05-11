@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.2.1
-Stable tag: 1.1.1
+Tested up to: 4.2.2
+Stable tag: 1.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -62,6 +62,14 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
 
 == Changelog ==
+
+= 1.1.2 - 05.11.2015 =
+* Tweak - Adjusts localization so the plugin is ready for translation.
+* Tweak - Moves plugin action links to Description column in Plugins screen.
+* Fix - Resolves a conflict with some 3rd party plugins.
+* Fix - Resolves various PHP notices and other minor bugs.
+* Cleanup - Removes unused functions.
+* Cleanup - Minor CSS adjustments.
 
 = 1.1.1 - 04.30.2015 =
 * Tweak - Adds option for handling available offer QTY based on WooCommerce inventory back-order settings.
