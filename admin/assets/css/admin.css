@@ -613,3 +613,5 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .angelleye-offers-clearfix { clear: both!important; }
 
 .angelleye-settings-description { font-style: italic; margin-top:3px;}
+
+body.wp-admin.post-php.post-type-woocommerce_offer #post-body-content { margin-bottom:0px!important; margin-top:0px!important; }
