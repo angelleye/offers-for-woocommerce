@@ -20,11 +20,10 @@ class WC_Offer_Received_Email extends WC_Email {
      */
     public function __construct() {
         /**
-         * Call $plugin_slug from public plugin class
-         * @since	0.1.0
+         * Set plugin slug
+         * @since	1.1.2
          */
-        $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
-        $this->plugin_slug = $plugin->get_plugin_slug();
+        $this->plugin_slug = 'angelleye-offers-for-woocommerce';
 
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_offer_received';

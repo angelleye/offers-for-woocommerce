@@ -973,6 +973,9 @@ class Angelleye_Offers_For_Woocommerce {
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
 
+                // set plugin slug in email class
+                $new_email->plugin_slug = $this->plugin_slug;
+
                 if($is_counter_offer)
                 {
                     // define email template/path (html)
@@ -1007,6 +1010,9 @@ class Angelleye_Offers_For_Woocommerce {
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
+
+                // set plugin slug in email class
+                $new_email->plugin_slug = $this->plugin_slug;
 
                 // define email template/path (html)
                 $new_email->template_html  = 'woocommerce-offer-received.php';
