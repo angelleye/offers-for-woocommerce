@@ -22,6 +22,9 @@ Provide the ability for customers to submit offers for items in a WooCommerce st
  * Manage offers from your WordPress control panel through WooCommerce -> Offers just like you would with your WooCommerce orders.
  * Options to enable/disable offers at the product level as well as options for handling inventory tracked items based on how the WooCommerce settings for back-orders are configured.
 
+= Localization =
+Offers for WooCommerce was developed with localization in mind and is ready for translation.
+
 = Get Involved =
 
 Developers can contribute to the source code on the [Offers for WooCommerce GitHub repository](https://github.com/angelleye/offers-for-woocommerce).
@@ -53,6 +56,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 2. Make an Offer tab on product details with a form to submit offer details.
 3. Manage Offers list view from the WordPress admin panel (WooCommerce -> Offers)
 4. Manage Offer details page where you can accept an offer, decline an offer, or submit a counter-offer.
+5. New offer email notification.
+6. Accepted offer email notification.
+7. Counter offer email notification.
+8. Declined offer email notification.
 
 == Frequently Asked Questions ==
 
@@ -60,6 +67,16 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 * If you allow your buyers to submit an offer to you, this opens a direct line of communication with an interested buyer.
 * Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
+* People like to feel like they've "won" something.  If you accept an offer from an interested buyer this feeling will entice them to quickly complete checkout for the accepted offer.
+
+= Where can I find documentation? =
+
+* [Installation and Activation](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-2)
+* [Enabling and Disabling Offers for Products](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-3)
+* [Managing Offers](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-4)
+* [Plugin Settings](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-5)
+* [Email Settings](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-7)
+* [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
 
