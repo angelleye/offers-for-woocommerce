@@ -69,7 +69,38 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Negotiation tactics come into play when people submit offers.  For example, you might be able to sell 20 of an item to somebody that originally requested 15 if they're trying to meet a particular cost.
 * People like to feel like they've "won" something.  If you accept an offer from an interested buyer this feeling will entice them to quickly complete checkout for the accepted offer.
 
-= Where can I find documentation? =
+= My theme does not use tabs within the products details page, and the Make Offer form is not displaying correctly.  How do I fix this? =
+
+1. In your WordPress admin panel, go to Settings -> Offers for WooCommerce.
+2. Click the Display Settings tab.
+3. Set the "Form Display Type" to Lightbox.
+4. Click "Save Changes" at the bottom of the form.
+
+= How can I move the location of the Make Offer button? =
+
+1. In your WordPress admin panel, go to Settings -> Offers for WooCommerce.
+2. Click the Display Settings tab.
+3. Set the "Button Position" to the location you would like.
+4. Click "Save Changes" at the bottom of the form.
+
+= How can I enable / disable offers on multiple products at once? =
+
+1. In your WordPress admin panel, go to Settings -> Offers for WooCommerce.
+2. Click the Tools tab.
+3. Set the Action to Enable or Disable.
+4. Set the Target based on the products you would like to adjust.
+5. If you choose "Where" from the Target list, you will then choose an option under the "Where" list as well as enter your value accordingly.
+6. Click the "Process" button to make the adjustment.
+
+= How do I retract or adjust an offer? =
+
+1. In your WordPress admin panel, go to WooCommerce -> Offers.
+2. Find the offer you would like to adjust by using the search or available filters and click View Details.
+3. Make any adjustments you need to the Counter Offer and/or Offer Status details.
+4. Optionally, add an "Offer Note to Buyer" to inform the buyer why the adjustment is being made.
+5. Click the "Update" button to save the adjustment.
+
+= Where can I find more documentation? =
 
 * [Installation and Activation](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-2)
 * [Enabling and Disabling Offers for Products](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-3)
