@@ -171,8 +171,6 @@ class Angelleye_Offers_For_Woocommerce {
         // get offers options - display
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
-        echo $_product->get_price();
-
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
