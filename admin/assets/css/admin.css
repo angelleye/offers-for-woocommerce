@@ -110,9 +110,9 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 	font-weight:normal;
 }
 
-.woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link {
+.woocommerce-offer-list-actions-wrap {
 	color:#0074A2;
-	opacity:.65;
+	opacity:0;
 }
 .woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link span {
 	margin-top:5px;
@@ -124,18 +124,22 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 }
 
 
-.type-woocommerce_offer:hover .woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link {
-	opacity:1; 
+.type-woocommerce_offer:hover .woocommerce-offer-list-actions-wrap {
+	opacity:1;
 }
 .type-woocommerce_offer:hover .woocommerce-offer-post-status-grid-icon-div {
-	opacity:1;	
+	opacity:1;
 }
 
 body.wp-admin.post-type-woocommerce_offer .row-actions { padding-top:3px!important; }
 body.wp-admin.post-type-woocommerce_offer .row-actions span { word-wrap:normal!important; }
 body.wp-admin.post-type-woocommerce_offer .row-actions span a { border:1px solid #CCC; padding:4px 7px; margin-left:0px!important; line-height:35px; background:#F7F7F7; box-shadow: 0px 1px 0px #FFF inset, 0px 1px 0px rgba(0, 0, 0, 0.08); border-radius:3px!important; word-wrap:normal!important; }
 body.wp-admin.post-type-woocommerce_offer .row-actions span:hover a { background:#FFF; color:auto; border-color:#999!important; }
-/*body.wp-admin.post-type-woocommerce_offer .wrap ul li.all span.count { display:none!important; }*/
+
+body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul { margin:0; padding:0; }
+body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul li { margin:0; }
+body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul li a { border:1px solid #CCC; padding:4px 7px; margin-left:0px!important; line-height:35px; background:#F7F7F7; box-shadow: 0px 1px 0px #FFF inset, 0px 1px 0px rgba(0, 0, 0, 0.08); border-radius:3px!important;  }
+body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul li a:hover { background:#FFF; color:auto; border-color:#999!important; }
 
 .woocommerce-offer-edit-status-inputs { padding-top:5px;
     float: left;
