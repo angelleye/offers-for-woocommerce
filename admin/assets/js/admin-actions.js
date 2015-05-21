@@ -28,10 +28,7 @@
 					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').addClass('accepted');
 					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').attr('title', 'Offer Status: Accepted');
 					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').html('Accepted');
-					
-					// modify action links on post
-					$('#woocommerce-offer-post-action-link-manage-id-'+targetID+'').html('Manage Offer');
-					
+
 					var previousPendingCountBubbleValue = $('#woocommerce-offers-count .pending-count').html();
 					var newPendingCount = (previousPendingCountBubbleValue - 1);
 					$('#woocommerce-offers-count .pending-count').html(newPendingCount);
@@ -41,7 +38,7 @@
 					}
 					
 					// remove accept action link
-					$('#woocommerce-offer-post-action-link-accept-id-'+targetID+'').parent('span').hide();
+					$('#woocommerce-offer-post-action-link-accept-id-'+targetID+'').parent('li').hide();
 					return true;
 				});
 				return false;
@@ -86,8 +83,8 @@
                         $('#woocommerce-offer-post-action-link-manage-id-'+targetID+'').html('Manage Offer');
 
                         // remove accept and decline action links
-                        $('#woocommerce-offer-post-action-link-decline-id-'+targetID+'').parent('span').hide();
-                        $('#woocommerce-offer-post-action-link-accept-id-'+targetID+'').parent('span').hide();
+                        $('#woocommerce-offer-post-action-link-decline-id-'+targetID+'').parent('li').hide();
+                        $('#woocommerce-offer-post-action-link-accept-id-'+targetID+'').parent('li').hide();
                         return true;
 
                         // remove the declined post
