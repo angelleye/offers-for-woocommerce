@@ -38,11 +38,18 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         $this->heading = __('New Counter Offer', $this->plugin_slug);
         $this->subject = __('New Counter Offer', $this->plugin_slug);
 
+        // Set email template paths
+        $this->template_html 	= 'woocommerce-new-counter-offer.php';
+        $this->template_plain 	= 'plain/woocommerce-new-counter-offer.php';
+
         // Call parent constructor to load any other defaults not explicitly defined here
         parent::__construct();
 
         // Set the recipient
         $this->recipient = $this->get_option( 'admin_email' );
+
+        // Other settings
+        $this->template_base = OFWC_PUBLIC_EMAIL_TEMPLATE_PATH;
     }
 
     /**
