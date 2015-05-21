@@ -169,7 +169,7 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
             // get global on/off settings for offer button
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
@@ -209,7 +209,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -266,7 +266,7 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
             // get global on/off settings for offer button - frontpage and catalog
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
@@ -338,7 +338,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock)
+        if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
             // get offers options - display
             $button_options_display = get_option('offers_for_woocommerce_options_display');
