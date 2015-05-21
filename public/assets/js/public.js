@@ -141,8 +141,17 @@
 
                 var offerProductId = '';
                 var offerVariationId = '';
-                var offerProductId = $("input[name='add-to-cart']").val();
-                var offerVariationId = $("input[name='variation_id']").val();
+                if($('#ofwc-blank-price-product-id').attr('data-product-id').length > 0)
+                {
+                    var offerProductId = $('#ofwc-blank-price-product-id').attr('data-product-id');
+                    var offerVariationId = '';
+                }
+                else
+                {
+                    var offerProductId = $("input[name='add-to-cart']").val();
+                    var offerVariationId = $("input[name='variation_id']").val();
+                }
+
 
                 var offerName = $("input[name='offer_name']").val();
                 var offerEmail = $("input[name='offer_email']").val();

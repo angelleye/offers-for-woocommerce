@@ -209,3 +209,9 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
 
 .angelleye-ofwc-hidden { display: none; }
 .ofwc-no-float { float: none!important; height:50px; margin-left:0px; }
+
+.offers-for-woocommerce-make-offer-button-single-product.ofwc-no-float-button {
+    float: none!important;
+    margin-left:0;
+}
+
