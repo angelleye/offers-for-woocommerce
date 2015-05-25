@@ -132,14 +132,7 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 }
 
 body.wp-admin.post-type-woocommerce_offer .row-actions { padding-top:3px!important; }
-body.wp-admin.post-type-woocommerce_offer .row-actions span { word-wrap:normal!important; }
-body.wp-admin.post-type-woocommerce_offer .row-actions span a { border:1px solid #CCC; padding:4px 7px; margin-left:0px!important; line-height:35px; background:#F7F7F7; box-shadow: 0px 1px 0px #FFF inset, 0px 1px 0px rgba(0, 0, 0, 0.08); border-radius:3px!important; word-wrap:normal!important; }
-body.wp-admin.post-type-woocommerce_offer .row-actions span:hover a { background:#FFF; color:auto; border-color:#999!important; }
-
-body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul { margin:0; padding:0; }
-body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul li { margin:0; }
-body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul li a { border:1px solid #CCC; padding:4px 7px; margin-left:0px!important; line-height:35px; background:#F7F7F7; box-shadow: 0px 1px 0px #FFF inset, 0px 1px 0px rgba(0, 0, 0, 0.08); border-radius:3px!important;  }
-body.wp-admin.post-type-woocommerce_offer .woocommerce-offer-list-actions-wrap ul li a:hover { background:#FFF; color:auto; border-color:#999!important; }
+body.wp-admin.post-type-woocommerce_offer .row-actions span a { word-wrap: normal!important; }
 
 .woocommerce-offer-edit-status-inputs { padding-top:5px;
     float: left;
@@ -619,3 +612,19 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .angelleye-settings-description { font-style: italic; margin-top:3px;}
 
 body.wp-admin.post-php.post-type-woocommerce_offer #post-body-content { margin-bottom:0px!important; margin-top:0px!important; }
+
+body.post-type-woocommerce_offer td.column-title .row-title {
+    word-wrap: break-word!important;
+}
+body.post-type-woocommerce_offer th.column-title {
+    width:200px!important;
+}
+
+@media only screen and (max-width:780px) {
+    body.post-type-woocommerce_offer .column-offer_name,
+    body.post-type-woocommerce_offer .column-offer_amount,
+    body.post-type-woocommerce_offer .column-offer_price_per,
+    body.post-type-woocommerce_offer .column-offer_quantity {
+        display:none;
+    }
+}
