@@ -63,7 +63,7 @@
 transform: translateX(0px) translateY(3px);
 }
 
-.woocommerce-offer-post-status-grid-icon-div { padding-bottom:10px!important; box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1) inset!important; margin-bottom:0px!important; }
+.woocommerce-offer-post-status-grid-icon-div { padding-bottom:10px!important; margin-bottom:0px!important; }
 tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-grid-icon-div { box-shadow:none!important; }
 
 i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
@@ -122,7 +122,6 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 .woocommerce-offer-view-details-link:hover {
 	color:#0074A2!important;
 }
-
 
 .type-woocommerce_offer:hover .woocommerce-offer-list-actions-wrap {
 	opacity:1;
@@ -617,7 +616,7 @@ body.post-type-woocommerce_offer td.column-title .row-title {
     word-wrap: break-word!important;
 }
 body.post-type-woocommerce_offer th.column-title {
-    width:200px!important;
+    width:300px!important;
 }
 
 @media only screen and (max-width:780px) {
