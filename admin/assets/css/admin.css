@@ -616,7 +616,7 @@ body.post-type-woocommerce_offer td.column-title .row-title {
     word-wrap: break-word!important;
 }
 body.post-type-woocommerce_offer th.column-title {
-    width:300px!important;
+    width:320px!important;
 }
 
 @media only screen and (max-width:780px) {
