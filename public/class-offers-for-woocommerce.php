@@ -146,6 +146,13 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_action( 'woocommerce_before_checkout_process', array( $this, 'ae_ofwc_woocommerce_before_checkout_process' ) );
+
+        /**
+         * Filter - woocommerce_is_purchasable
+         * Ignore blank price item if Offers enabled
+         * @since   1.1.3
+         */
+        add_filter( 'woocommerce_is_purchasable', array( $this, 'ae_ofwc_woocommerce_is_purchasable' ), 1, 2 );
     }
 
 	/**
@@ -1528,6 +1535,23 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+    }
+
+    /**
+     * Filter - woocommerce_is_purchasable
+     * Ignore blank price item if Offers enabled
+     * @since   1.1.3
+     */
+    public function ae_ofwc_woocommerce_is_purchasable($purchasable, $product)
+    {
+        $is_blank_price = ($product->get_price() === '') ? TRUE : FALSE;
+        $is_offers_enabled = (get_post_meta( $product->id, 'offers_for_woocommerce_enabled', true ) == 'yes') ? TRUE : FALSE;
+
+        if($is_blank_price && $is_offers_enabled)
+        {
+            $purchasable = TRUE;
+        }
+        return $purchasable;
     }
 
 }
