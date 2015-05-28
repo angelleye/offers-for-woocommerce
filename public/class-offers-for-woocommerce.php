@@ -52,6 +52,11 @@ class Angelleye_Offers_For_Woocommerce {
 	 */
 	private function __construct()
 	{
+        /**
+         * Define email templates path
+         */
+        define( 'OFWC_PUBLIC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
+
 		/**
 		 * Load plugin text domain
 		 */

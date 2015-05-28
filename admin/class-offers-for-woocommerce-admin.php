@@ -39,12 +39,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	private function __construct()
 	{
-		/**
-		 * @NOTE: Uncomment following lines if the admin class should only be available for super admins
-		 */
-		//if( ! is_super_admin() ) {
-			//return;
-		//} 
+        /**
+         * Define email templates path
+         */
+        define( 'OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
+
 		/**
 		 * Call $plugin_slug from public plugin class
 		 * @since	0.1.0
