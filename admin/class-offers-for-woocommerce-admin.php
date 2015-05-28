@@ -39,12 +39,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	private function __construct()
 	{
-		/**
-		 * @NOTE: Uncomment following lines if the admin class should only be available for super admins
-		 */
-		//if( ! is_super_admin() ) {
-			//return;
-		//} 
+        /**
+         * Define email templates path
+         */
+        define( 'OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
+
 		/**
 		 * Call $plugin_slug from public plugin class
 		 * @since	0.1.0
@@ -640,7 +639,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		$columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
 		$columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
 		$columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
-		$columns['offer_actions'] = __( 'Action', $this->plugin_slug );
 		return $columns;
 	}
 	
@@ -696,11 +694,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $val = ($val != '') ? $val : '0';
                 echo get_woocommerce_currency_symbol().number_format($val, 2);
             break;
-			
-			case 'offer_actions' :
-				$view_detail_link = get_edit_post_link( $post_id );
-				include('includes/list-actions-html.php'); 
-			break;
 		}
 	}	
 	
@@ -847,7 +840,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			unset($actions['inline hide-if-no-js']);
 			unset($actions['edit']);
 			unset($actions['view']);
-			//unset($actions['trash']);
 
             if($post->post_status == 'accepted-offer')
             {
@@ -871,19 +863,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
             }
-			elseif($post->post_status == 'completed-offer')
-			{
-				unset($actions['trash']);
-			}
-			elseif($post->post_status == 'trash')
-			{				
-			}
+            elseif($post->post_status == 'completed-offer')
+            {
+                unset($actions['trash']);
+            }
+            elseif($post->post_status == 'trash')
+            {
+            }
             elseif($post->post_status == 'publish' || $post->post_status == 'buyercountered-offer')
-			{
-				$actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Make&nbsp;Counter&nbsp;Offer') . '</a>';				
-				$actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="Set Offer Status to Accepted" id="woocommerce-offer-post-action-link-accept-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Accept') . '</a>';
-				$actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
-			}
+            {
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Make&nbsp;Counter&nbsp;Offer') . '</a>';
+                $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="Set Offer Status to Accepted" id="woocommerce-offer-post-action-link-accept-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Accept') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
+            }
 		}
 		return $actions;
 	}
@@ -2008,6 +2000,34 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         );
 
         /**
+         * Add field - 'Display Settings' - 'display_setting_make_offer_form_fields'
+         * Enable optional form fields on make offer form
+         */
+        add_settings_field(
+            'display_setting_make_offer_form_fields', // ID
+            'Form Fields', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_checkbox_group' ), // Callback checkbox group
+            'offers_for_woocommerce_display_settings', // Page
+            'display_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_make_offer_form_field',
+                'input_required'=>FALSE,
+                'description' => __('Tick the checkbox of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, Your Email Address are required fields by default.', $this->plugin_slug),
+                'options'=> array(
+                    array('option_label' => 'Quantity', 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Price Each', 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Your Name', 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Your Email Address', 'option_name' => 'offer_email', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Total Offer Amount', 'option_name' => 'offer_total', 'option_disabled' => FALSE ),
+                    array('option_label' => 'Company Name', 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ),
+                    array('option_label' => 'Phone Number', 'option_name' => 'offer_phone', 'option_disabled' => FALSE ),
+                    array('option_label' => 'Offer Notes', 'option_name' => 'offer_notes', 'option_disabled' => FALSE )
+                )
+            )
+        );
+
+        /**
          * Add field - 'Display Settings' - 'display_setting_make_offer_button_position_single'
          * Make Offer Button position
          */
@@ -2025,6 +2045,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'options'=> array(
                     array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
                     array('option_label' => 'Before add to cart button', 'option_value' => 'before_add'),
+                    array('option_label' => 'To the right of add to cart button', 'option_value' => 'right_of_add'),
                     array('option_label' => 'After product price', 'option_value' => 'after_price'),
                     array('option_label' => 'After product tabs', 'option_value' => 'after_tabs')
                 ))
@@ -2173,11 +2194,35 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         print(
-            '</select>'
+        '</select>'
         );
 
         echo '<div class="angelleye-settings-description">' . $description . '</div>';
 
+    }
+
+    /**
+     * Callback - Options Page - Output a grouping of checkboxes for options page form
+     * @since	1.1.3
+     * @param	$args - Params to define 'option_name','option_label','option_disabled'
+     */
+    public function offers_for_woocommerce_options_page_output_checkbox_group($args)
+    {
+        $options = get_option($args['option_name']);
+        $description = isset($args['description']) ? $args['description'] : '';
+        $field_label = $args['input_label'];
+
+        echo '<div class="angelleye-settings-description"><p>' . $description . '</p></div>';
+        echo '<ul class="angelleye-settings-ul-checkboxes">';
+        foreach( $args['options'] as $option )
+        {
+            $is_checked = (isset($options[$field_label.'_'.$option['option_name']])) ? $options[$field_label.'_'.$option['option_name']] : '0';
+            $is_disabled = (!empty($option['option_disabled'])) ? 'disabled="disabled" checked="checked"' : '';
+            print(
+                '<li><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
+            );
+        }
+        echo '</ul>';
     }
 	
 	/**

@@ -28,10 +28,10 @@
 					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').addClass('accepted');
 					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').attr('title', 'Offer Status: Accepted');
 					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').html('Accepted');
-					
-					// modify action links on post
-					$('#woocommerce-offer-post-action-link-manage-id-'+targetID+'').html('Manage Offer');
-					
+
+                    // modify action links on post
+                    $('#woocommerce-offer-post-action-link-manage-id-'+targetID+'').html('Manage Offer');
+
 					var previousPendingCountBubbleValue = $('#woocommerce-offers-count .pending-count').html();
 					var newPendingCount = (previousPendingCountBubbleValue - 1);
 					$('#woocommerce-offers-count .pending-count').html(newPendingCount);

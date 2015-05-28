@@ -38,11 +38,18 @@ class WC_Accepted_Offer_Email extends WC_Email {
         $this->heading = __('Accepted Offer', $this->plugin_slug);
         $this->subject = __('Accepted Offer', $this->plugin_slug);
 
+        // Set email template paths
+        $this->template_html 	= 'woocommerce-offer-accepted.php';
+        $this->template_plain 	= 'plain/woocommerce-offer-accepted.php';
+
         // Call parent constructor to load any other defaults not explicitly defined here
         parent::__construct();
 
         // Set the recipient
         $this->recipient = $this->get_option( 'recipient' );
+
+        // Other settings
+        $this->template_base = OFWC_EMAIL_TEMPLATE_PATH;
     }
 
     /**
