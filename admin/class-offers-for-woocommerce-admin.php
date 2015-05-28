@@ -2008,6 +2008,34 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         );
 
         /**
+         * Add field - 'Display Settings' - 'display_setting_make_offer_form_fields'
+         * Enable optional form fields on make offer form
+         */
+        add_settings_field(
+            'display_setting_make_offer_form_fields', // ID
+            'Form Fields', // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_checkbox_group' ), // Callback checkbox group
+            'offers_for_woocommerce_display_settings', // Page
+            'display_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_display',
+                'input_label'=>'display_setting_make_offer_form_field',
+                'input_required'=>FALSE,
+                'description' => __('Tick the checkbox of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, Your Email Address are required fields by default.', $this->plugin_slug),
+                'options'=> array(
+                    array('option_label' => 'Quantity', 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Price Each', 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Your Name', 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Your Email Address', 'option_name' => 'offer_email', 'option_disabled' => TRUE ),
+                    array('option_label' => 'Total Offer Amount', 'option_name' => 'offer_total', 'option_disabled' => FALSE ),
+                    array('option_label' => 'Company Name', 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ),
+                    array('option_label' => 'Phone Number', 'option_name' => 'offer_phone', 'option_disabled' => FALSE ),
+                    array('option_label' => 'Offer Notes', 'option_name' => 'offer_notes', 'option_disabled' => FALSE )
+                )
+            )
+        );
+
+        /**
          * Add field - 'Display Settings' - 'display_setting_make_offer_button_position_single'
          * Make Offer Button position
          */
@@ -2173,11 +2201,35 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         print(
-            '</select>'
+        '</select>'
         );
 
         echo '<div class="angelleye-settings-description">' . $description . '</div>';
 
+    }
+
+    /**
+     * Callback - Options Page - Output a grouping of checkboxes for options page form
+     * @since	1.1.3
+     * @param	$args - Params to define 'option_name','option_label','option_disabled'
+     */
+    public function offers_for_woocommerce_options_page_output_checkbox_group($args)
+    {
+        $options = get_option($args['option_name']);
+        $description = isset($args['description']) ? $args['description'] : '';
+        $field_label = $args['input_label'];
+
+        echo '<div class="angelleye-settings-description"><p>' . $description . '</p></div>';
+        echo '<ul class="angelleye-settings-ul-checkboxes">';
+        foreach( $args['options'] as $option )
+        {
+            $is_checked = (isset($options[$field_label.'_'.$option['option_name']])) ? $options[$field_label.'_'.$option['option_name']] : '0';
+            $is_disabled = (!empty($option['option_disabled'])) ? 'disabled="disabled" checked="checked"' : '';
+            print(
+                '<li><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
+            );
+        }
+        echo '</ul>';
     }
 	
 	/**
