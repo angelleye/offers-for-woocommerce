@@ -2046,6 +2046,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'options'=> array(
                     array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
                     array('option_label' => 'Before add to cart button', 'option_value' => 'before_add'),
+                    array('option_label' => 'To the right of add to cart button', 'option_value' => 'right_of_add'),
                     array('option_label' => 'After product price', 'option_value' => 'after_price'),
                     array('option_label' => 'After product tabs', 'option_value' => 'after_tabs')
                 ))
