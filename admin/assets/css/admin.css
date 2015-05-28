@@ -63,7 +63,7 @@
 transform: translateX(0px) translateY(3px);
 }
 
-.woocommerce-offer-post-status-grid-icon-div { padding-bottom:10px!important; box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1) inset!important; margin-bottom:0px!important; }
+.woocommerce-offer-post-status-grid-icon-div { padding-bottom:10px!important; margin-bottom:0px!important; }
 tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-grid-icon-div { box-shadow:none!important; }
 
 i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
@@ -110,9 +110,9 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 	font-weight:normal;
 }
 
-.woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link {
+.woocommerce-offer-list-actions-wrap {
 	color:#0074A2;
-	opacity:.65;
+	opacity:0;
 }
 .woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link span {
 	margin-top:5px;
@@ -123,19 +123,15 @@ i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status
 	color:#0074A2!important;
 }
 
-
-.type-woocommerce_offer:hover .woocommerce-offer-list-actions-wrap .woocommerce-offer-view-details-link {
-	opacity:1; 
+.type-woocommerce_offer:hover .woocommerce-offer-list-actions-wrap {
+	opacity:1;
 }
 .type-woocommerce_offer:hover .woocommerce-offer-post-status-grid-icon-div {
-	opacity:1;	
+	opacity:1;
 }
 
 body.wp-admin.post-type-woocommerce_offer .row-actions { padding-top:3px!important; }
-body.wp-admin.post-type-woocommerce_offer .row-actions span { word-wrap:normal!important; }
-body.wp-admin.post-type-woocommerce_offer .row-actions span a { border:1px solid #CCC; padding:4px 7px; margin-left:0px!important; line-height:35px; background:#F7F7F7; box-shadow: 0px 1px 0px #FFF inset, 0px 1px 0px rgba(0, 0, 0, 0.08); border-radius:3px!important; word-wrap:normal!important; }
-body.wp-admin.post-type-woocommerce_offer .row-actions span:hover a { background:#FFF; color:auto; border-color:#999!important; }
-/*body.wp-admin.post-type-woocommerce_offer .wrap ul li.all span.count { display:none!important; }*/
+body.wp-admin.post-type-woocommerce_offer .row-actions span a { word-wrap: normal!important; }
 
 .woocommerce-offer-edit-status-inputs { padding-top:5px;
     float: left;
@@ -615,3 +611,19 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .angelleye-settings-description { font-style: italic; margin-top:3px;}
 
 body.wp-admin.post-php.post-type-woocommerce_offer #post-body-content { margin-bottom:0px!important; margin-top:0px!important; }
+
+body.post-type-woocommerce_offer td.column-title .row-title {
+    word-wrap: break-word!important;
+}
+body.post-type-woocommerce_offer th.column-title {
+    width:320px!important;
+}
+
+@media only screen and (max-width:780px) {
+    body.post-type-woocommerce_offer .column-offer_name,
+    body.post-type-woocommerce_offer .column-offer_amount,
+    body.post-type-woocommerce_offer .column-offer_price_per,
+    body.post-type-woocommerce_offer .column-offer_quantity {
+        display:none;
+    }
+}
