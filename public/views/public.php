@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="woocommerce-make-offer-form-part-left">
-                    <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
+                    <?php if( (isset($is_sold_individually) && $is_sold_individually) || empty($button_display_options['display_setting_make_offer_form_field_offer_total'])) { ?>
                         <input type="hidden" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
                     <?php } else { ?>
                     <label for="woocommerce-make-offer-form-total"><?php echo __('Total Offer Amount', $this->plugin_slug); ?></label>
@@ -103,22 +103,34 @@
                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo __('Your Name', $this->plugin_slug); ?></label>
                 <br /><input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
             </div>
+            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_company_name'])) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo __('Company Name', $this->plugin_slug); ?></label>
                 <br /><input type="text" id="offer-company-name" name="offer_company_name" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_company_name)) ? $offer_company_name: ''; ?>" />
             </div>
+            <?php } else { ?>
+                <input type="hidden" name="offer_company_name" id="offer-company-name" value="">
+            <?php } ?>
+            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_phone'])) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo __('Phone Number', $this->plugin_slug); ?></label>
                 <br /><input type="text" id="offer-phone" name="offer_phone" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_phone)) ? $offer_phone: ''; ?>" />
             </div>
+            <?php } else { ?>
+                <input type="hidden" name="offer_phone" id="offer-phone" value="">
+            <?php } ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="woocommerce-make-offer-form-email"><?php echo __('Your Email Address', $this->plugin_slug); ?></label>
                 <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
             </div>
+            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes'])) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="angelleye-offer-notes"><?php echo __('Offer Notes (optional)', $this->plugin_slug); ?></label>
                 <br /><textarea name="offer_notes" id="angelleye-offer-notes" rows="4"></textarea>
             </div>
+            <?php } else { ?>
+                <input type="hidden" name="offer_notes" id="angelleye-offer-notes" value="">
+            <?php } ?>
             <div class="woocommerce-make-offer-form-section woocommerce-make-offer-form-section-submit">
                 <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo __('Submit', $this->plugin_slug); ?>&nbsp;<?php echo ($is_counter_offer) ? ' ' . __('Counter', $this->plugin_slug) . ' ' : ''; ?><?php echo __('Offer', $this->plugin_slug); ?>" value="<?php echo __('Submit', $this->plugin_slug); ?>&nbsp;<?php echo ($is_counter_offer) ? ' ' . __('Counter', $this->plugin_slug) . ' ' : ''; ?><?php echo __('Offer', $this->plugin_slug); ?>" />
                 <div class="offer-submit-loader" id="offer-submit-loader"><?php echo __('Please wait...', $this->plugin_slug); ?></div>
