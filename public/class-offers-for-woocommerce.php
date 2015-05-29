@@ -33,7 +33,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'angelleye-offers-for-woocommerce';
+	protected $plugin_slug = 'offers-for-woocommerce';
 
 	/**
 	 * Instance of this class
@@ -57,11 +57,6 @@ class Angelleye_Offers_For_Woocommerce {
          */
         define( 'OFWC_PUBLIC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
 
-		/**
-		 * Load plugin text domain
-		 */
-		add_action('init', array( $this, 'load_plugin_textdomain' ) );
-		
 		/**
 		 * Activate plugin when new blog is added
 		 */
@@ -662,19 +657,6 @@ class Angelleye_Offers_For_Woocommerce {
 	private static function single_deactivate()
 	{
 		// @TODO: Define deactivation functionality here
-	}
-
-	/**
-	 * Load the plugin text domain for translation
-	 *
-	 * @since    0.1.0
-	 */
-	public function load_plugin_textdomain()
-	{
-		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-        load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
 	}
 
 	/**

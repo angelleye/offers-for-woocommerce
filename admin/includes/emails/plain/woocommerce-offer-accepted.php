@@ -11,16 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 echo $email_heading . "\n\n";
 
 $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
-echo sprintf( __( 'We have accepted your offer on', 'angelleye-offers-for-woocommerce').' %s.' . __('To pay for this order please use the following link:', 'angelleye-offers-for-woocommerce').' %s', get_bloginfo( 'name' ),  $offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'] ) . "\n\n";
+echo sprintf( __( 'We have accepted your offer on', 'offers-for-woocommerce').' %s.' . __('To pay for this order please use the following link:', 'offers-for-woocommerce').' %s', get_bloginfo( 'name' ),  $offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'] ) . "\n\n";
 
 if(isset($offer_args['offer_expiration_date']) && $offer_args['offer_expiration_date'])
 {
-    echo sprintf( '<p><strong>'. __( 'Offer expires on:', 'angelleye-offers-for-woocommerce' ).' %s.</strong></p>', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) ) . "\n\n";
+    echo sprintf( '<p><strong>'. __( 'Offer expires on:', 'offers-for-woocommerce' ).' %s.</strong></p>', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) ) . "\n\n";
 }
 
 echo "****************************************************\n";
 
-echo sprintf( __( 'Offer ID:', 'angelleye-offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
+echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
 
 echo "\n";
 
@@ -31,7 +31,7 @@ echo __( 'Subtotal', 'woocommerce' ) . ': ' . get_woocommerce_currency_symbol() 
 
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {
-    echo "\n\n" . __( 'Offer Notes:', 'angelleye-offers-for-woocommerce' ) . ' ' . $offer_args['offer_notes'];
+    echo "\n\n" . __( 'Offer Notes:', 'offers-for-woocommerce' ) . ' ' . $offer_args['offer_notes'];
 }
 
 echo "\n****************************************************\n\n";

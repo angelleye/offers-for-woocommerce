@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 echo $email_heading . "\n\n";
 
-echo sprintf( __('We have received your offer on', 'angelleye-offers-for-woocommerce') . ' %s. ' . __('Your offer will be processed as soon as possible.', 'angelleye-offers-for-woocommerce'), get_bloginfo( 'name' ) ) . "\n\n";
+echo sprintf( __('We have received your offer on', 'offers-for-woocommerce') . ' %s. ' . __('Your offer will be processed as soon as possible.', 'offers-for-woocommerce'), get_bloginfo( 'name' ) ) . "\n\n";
 
 echo "****************************************************\n";
 
-echo sprintf( __( 'Offer ID:', 'angelleye-offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
+echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
 
 echo "\n";
 
@@ -26,7 +26,7 @@ echo "\n\n";
 
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {
-    echo __( 'Offer Notes:', 'angelleye-offers-for-woocommerce' ) . ' ' . $offer_args['offer_notes'];
+    echo __( 'Offer Notes:', 'offers-for-woocommerce' ) . ' ' . $offer_args['offer_notes'];
 }
 
 echo "\n****************************************************\n\n";
