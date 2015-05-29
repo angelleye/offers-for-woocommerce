@@ -441,7 +441,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				// Add child submenu html
 				$submenu['woocommerce'][$key][0] .= "<script type='text/javascript'>
 				jQuery(window).load(function($){
-					jQuery('#woocommerce-offers-count').parent('a').after('<ul id=\'woocommerce-offer-admin-submenu\' class=\'\'><li class=\'woocommerce-offer-admin-submenu-item\'><a href=\'".$offers_manage_link_href."\'>&nbsp;&#8211;&nbsp;Manage Offers</a></li><li class=\'woocommerce-offer-admin-submenu-item\'><a id=\'woocommerce-offers-settings-link\' class=\'woocommerce-offer-submenu-link\' href=\'".$offers_settings_link_href."\'>&nbsp;&#8211;&nbsp;Offers Settings</a></li></ul>');
+					jQuery('#woocommerce-offers-count').parent('a').after('<ul id=\'woocommerce-offer-admin-submenu\' class=\'\'><li class=\'woocommerce-offer-admin-submenu-item\'><a href=\'".$offers_manage_link_href."\'>&nbsp;&#8211;&nbsp;". __('Manage Offers', $this->plugin_slug). "</a></li><li class=\'woocommerce-offer-admin-submenu-item\'><a id=\'woocommerce-offers-settings-link\' class=\'woocommerce-offer-submenu-link\' href=\'".$offers_settings_link_href."\'>&nbsp;&#8211;&nbsp;". __('Offers Settings', $this->plugin_slug). "</a></li></ul>');
 				});</script>";					
 			}
 		}
@@ -843,25 +843,25 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             if($post->post_status == 'accepted-offer')
             {
-                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage Offer', $this->plugin_slug) . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="'. __('Set Offer Status to Declined', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline', $this->plugin_slug) . '</a>';
             }
             if($post->post_status == 'countered-offer')
             {
                 $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="'. __('Set Offer Status to Declined', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline', $this->plugin_slug) . '</a>';
             }
             elseif($post->post_status == 'declined-offer')
             {
-                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="'. __('Offer Details', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage Offer', $this->plugin_slug) . '</a>';
             }
             elseif($post->post_status == 'on-hold-offer')
             {
-                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="'. __('Offer Details', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage Offer', $this->plugin_slug) . '</a>';
             }
             elseif($post->post_status == 'expired-offer')
             {
-                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage&nbsp;Offer') . '</a>';
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="'. __('Offer Details', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage Offer', $this->plugin_slug) . '</a>';
             }
             elseif($post->post_status == 'completed-offer')
             {
@@ -872,9 +872,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
             elseif($post->post_status == 'publish' || $post->post_status == 'buyercountered-offer')
             {
-                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Make&nbsp;Counter&nbsp;Offer') . '</a>';
-                $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="Set Offer Status to Accepted" id="woocommerce-offer-post-action-link-accept-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Accept') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="Set Offer Status to Declined" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline') . '</a>';
+                $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="'. __('Offer Details', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Make Counter Offer', $this->plugin_slug) . '</a>';
+                $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="'. __('Set Offer Status to Accepted', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-accept-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Accept', $this->plugin_slug) . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="'. __('Set Offer Status to Declined', $this->plugin_slug). '" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline', $this->plugin_slug) . '</a>';
             }
 		}
 		return $actions;
@@ -887,8 +887,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function my_custom_post_status_accepted()
     {
         $args = array(
-            'label'                     => _x( 'accepted-offer', 'Accepted Offer', $this->plugin_slug ),
-            'label_count'               => _n_noop( 'Accepted (%s)',  'Accepted (%s)', $this->plugin_slug ),
+            'label'                     => _x( 'accepted-offer', __('Accepted Offer', $this->plugin_slug) ),
+            'label_count'               => _n_noop( __('Accepted (%s)', $this->plugin_slug),  __('Accepted (%s)', $this->plugin_slug) ),
             'public'                    => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
@@ -904,8 +904,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function my_custom_post_status_countered()
     {
         $args = array(
-            'label'                     => _x( 'countered-offer', 'Countered Offer', $this->plugin_slug ),
-            'label_count'               => _n_noop( 'Countered (%s)',  'Countered (%s)', $this->plugin_slug ),
+            'label'                     => _x( 'countered-offer', __('Countered Offer', $this->plugin_slug) ),
+            'label_count'               => _n_noop( __('Countered (%s)', $this->plugin_slug),  __('Countered (%s)', $this->plugin_slug) ),
             'public'                    => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
@@ -921,8 +921,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function my_custom_post_status_on_hold()
     {
         $args = array(
-            'label'                     => _x( 'on-hold-offer', 'On Hold', $this->plugin_slug ),
-            'label_count'               => _n_noop( 'On Hold (%s)',  'On Hold (%s)', $this->plugin_slug ),
+            'label'                     => _x( 'on-hold-offer', __('On Hold', $this->plugin_slug) ),
+            'label_count'               => _n_noop( __('On Hold (%s)', $this->plugin_slug),  __('On Hold (%s)', $this->plugin_slug) ),
             'public'                    => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
@@ -938,8 +938,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function my_custom_post_status_expired()
     {
         $args = array(
-            'label'                     => _x( 'expired-offer', 'Expired', $this->plugin_slug ),
-            'label_count'               => _n_noop( 'Expired (%s)',  'Expired(%s)', $this->plugin_slug ),
+            'label'                     => _x( 'expired-offer', __('Expired', $this->plugin_slug) ),
+            'label_count'               => _n_noop( __('Expired (%s)', $this->plugin_slug),  __('Expired(%s)', $this->plugin_slug) ),
             'public'                    => true,
             'show_in_admin_all_list'    => false,
             'show_in_admin_status_list' => true,
@@ -955,8 +955,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function my_custom_post_status_buyer_countered()
     {
         $args = array(
-            'label'                     => _x( 'buyercountered-offer', 'Buyer Countered Offer', $this->plugin_slug ),
-            'label_count'               => _n_noop( 'Buyer Countered (%s)',  'Buyer Countered (%s)', $this->plugin_slug ),
+            'label'                     => _x( 'buyercountered-offer', __('Buyer Countered Offer', $this->plugin_slug) ),
+            'label_count'               => _n_noop( __('Buyer Countered (%s)', $this->plugin_slug),  __('Buyer Countered (%s)', $this->plugin_slug) ),
             'public'                    => true,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
@@ -972,8 +972,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function my_custom_post_status_declined() 
 	{
 		$args = array(
-			'label'                     => _x( 'declined-offer', 'Declined Offer', $this->plugin_slug ),
-			'label_count'               => _n_noop( 'Declined (%s)',  'Declined (%s)', $this->plugin_slug ),
+			'label'                     => _x( 'declined-offer', __('Declined Offer', $this->plugin_slug) ),
+			'label_count'               => _n_noop( __('Declined (%s)', $this->plugin_slug),  __('Declined (%s)', $this->plugin_slug) ),
 			'public'                    => true,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
@@ -989,8 +989,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function my_custom_post_status_completed() 
 	{
 		$args = array(
-			'label'                     => _x( 'completed-offer', 'Completed Offer', $this->plugin_slug ),
-			'label_count'               => _n_noop( 'Completed (%s)',  'Completed (%s)', $this->plugin_slug ),
+			'label'                     => _x( 'completed-offer', __('Completed Offer', $this->plugin_slug) ),
+			'label_count'               => _n_noop( __('Completed (%s)', $this->plugin_slug),  __('Completed (%s)', $this->plugin_slug) ),
 			'public'                    => true,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
@@ -1012,35 +1012,35 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		if (!empty($screen) && $screen->post_type == 'woocommerce_offer' )
 		{
             if($post->post_status == 'accepted-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="Offer Status: Accepted">Accepted</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="'. __('Offer Status: Accepted', $this->plugin_slug). '">'. __('Accepted', $this->plugin_slug). '</i></div>');
             }
             elseif($post->post_status == 'countered-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon countered" title="Offer Status: Countered">Countered</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon countered" title="'. __('Offer Status: Countered', $this->plugin_slug). '">'. __('Countered', $this->plugin_slug). '</i></div>');
             }
             elseif($post->post_status == 'buyercountered-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon buyercountered" title="Offer Status: Buyer Countered">Buyer Countered</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon buyercountered" title="'. __('Offer Status: Buyer Countered', $this->plugin_slug). '">'. __('Buyer Countered', $this->plugin_slug). '</i></div>');
             }
 			elseif($post->post_status == 'publish'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon pending" title="Offer Status: Pending">Pending</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon pending" title="'. __('Offer Status: Pending', $this->plugin_slug). '">'. __('Pending', $this->plugin_slug). '</i></div>');
 			}
 			elseif($post->post_status == 'trash'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon trash" title="Offer Status: Trashed">Trashed</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon trash" title="'. __('Offer Status: Trashed', $this->plugin_slug). '">'. __('Trashed', $this->plugin_slug). '</i></div>');
 			}
 			elseif($post->post_status == 'completed-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon completed" title="Offer Status: Completed">Completed</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon completed" title="'. __('Offer Status: Completed', $this->plugin_slug). '">'. __('Completed', $this->plugin_slug). '</i></div>');
 			}
             elseif($post->post_status == 'declined-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon declined" title="Offer Status: Declined">Declined</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon declined" title="'. __('Offer Status: Declined', $this->plugin_slug). '">'. __('Declined', $this->plugin_slug). '</i></div>');
             }
             elseif($post->post_status == 'on-hold-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon on-hold" title="Offer Status: On Hold">On Hold</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon on-hold" title="'. __('Offer Status: On Hold', $this->plugin_slug). '">'. __('On Hold', $this->plugin_slug). '</i></div>');
             }
             elseif($post->post_status == 'expired-offer'){
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon expired" title="Offer Status: Expired">Expired</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon expired" title="'. __('Offer Status: Expired', $this->plugin_slug). '">'. __('Expired', $this->plugin_slug). '</i></div>');
             }
 			else
 			{
-                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon" title="Offer Status: '.ucwords($post->post_status).'">'.ucwords($post->post_status).'</i></div>');
+                $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-'.$post->ID.'" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon" title="'. __('Offer Status:', $this->plugin_slug). '&nbsp;'.ucwords($post->post_status).'">'.ucwords($post->post_status).'</i></div>');
 			}
 
             if ( ! empty( $states ) ) {
@@ -1811,7 +1811,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         // Insert WP comment
-        $comment_text = "<span>Updated - Status: </span>";
+        $comment_text = "<span>". __('Updated - Status:', $this->plugin_slug). "&nbsp;</span>";
         $comment_text.= $post_status_text;
 
         // include update notes
@@ -1902,7 +1902,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'general_setting_enable_make_offer_btn_frontpage', // ID
-			'Show on Home Page', // Title
+			__('Show on Home Page', $this->plugin_slug), // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
 			'offers_for_woocommerce_general_settings', // Page
 			'general_settings', // Section 
@@ -1920,7 +1920,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_enable_make_offer_btn_catalog', // ID
-            'Show on Shop Page', // Title
+            __('Show on Shop Page', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -1938,7 +1938,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_enable_offers_by_default', // ID
-            'Enable Offers by Default', // Title
+            __('Enable Offers by Default', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -1956,7 +1956,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_limit_offer_quantity_by_stock', // ID
-            'Limit Offer Quantity at Product Stock Quantity', // Title
+            __('Limit Offer Quantity at Product Stock Quantity', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -1984,7 +1984,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'display_setting_make_offer_form_display_type', // ID
-            'Form Display Type', // Title
+            __('Form Display Type', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
             'offers_for_woocommerce_display_settings', // Page
             'display_settings', // Section
@@ -1994,8 +1994,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'input_required'=>FALSE,
                 'description' => __('Depending on your theme, you may wish to display the offer form on a tab within the product page or in a lightbox window on top of the product page.', $this->plugin_slug),
                 'options'=> array(
-                    array('option_label' => 'Product Tabs (default display)', 'option_value' => 'tabs'),
-                    array('option_label' => 'Lightbox', 'option_value' => 'lightbox')
+                    array('option_label' => __('Product Tabs (default display)', $this->plugin_slug), 'option_value' => 'tabs'),
+                    array('option_label' => __('Lightbox', $this->plugin_slug), 'option_value' => 'lightbox')
                 ))
         );
 
@@ -2005,7 +2005,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'display_setting_make_offer_form_fields', // ID
-            'Form Fields', // Title
+            __('Form Fields', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_checkbox_group' ), // Callback checkbox group
             'offers_for_woocommerce_display_settings', // Page
             'display_settings', // Section
@@ -2015,14 +2015,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'input_required'=>FALSE,
                 'description' => __('Tick the checkbox of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, Your Email Address are required fields by default.', $this->plugin_slug),
                 'options'=> array(
-                    array('option_label' => 'Quantity', 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
-                    array('option_label' => 'Price Each', 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
-                    array('option_label' => 'Your Name', 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
-                    array('option_label' => 'Your Email Address', 'option_name' => 'offer_email', 'option_disabled' => TRUE ),
-                    array('option_label' => 'Total Offer Amount', 'option_name' => 'offer_total', 'option_disabled' => FALSE ),
-                    array('option_label' => 'Company Name', 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ),
-                    array('option_label' => 'Phone Number', 'option_name' => 'offer_phone', 'option_disabled' => FALSE ),
-                    array('option_label' => 'Offer Notes', 'option_name' => 'offer_notes', 'option_disabled' => FALSE )
+                    array('option_label' => __('Quantity', $this->plugin_slug), 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Price Each', $this->plugin_slug), 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Your Name', $this->plugin_slug), 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Your Email Address', $this->plugin_slug), 'option_name' => 'offer_email', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Total Offer Amount', $this->plugin_slug), 'option_name' => 'offer_total', 'option_disabled' => FALSE ),
+                    array('option_label' => __('Company Name', $this->plugin_slug), 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ),
+                    array('option_label' => __('Phone Number', $this->plugin_slug), 'option_name' => 'offer_phone', 'option_disabled' => FALSE ),
+                    array('option_label' => __('Offer Notes', $this->plugin_slug), 'option_name' => 'offer_notes', 'option_disabled' => FALSE )
                 )
             )
         );
@@ -2033,7 +2033,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'display_setting_make_offer_button_position_single', // ID
-            'Button Position', // Title
+            __('Button Position', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
             'offers_for_woocommerce_display_settings', // Page
             'display_settings', // Section
@@ -2043,11 +2043,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'input_required'=>FALSE,
                 'description' => __('Use this setting to adjust the location of the \'Make Offer\' button on your product detail page.', $this->plugin_slug),
                 'options'=> array(
-                    array('option_label' => 'After add to cart button (default display)', 'option_value' => 'default'),
-                    array('option_label' => 'Before add to cart button', 'option_value' => 'before_add'),
-                    array('option_label' => 'To the right of add to cart button', 'option_value' => 'right_of_add'),
-                    array('option_label' => 'After product price', 'option_value' => 'after_price'),
-                    array('option_label' => 'After product tabs', 'option_value' => 'after_tabs')
+                    array('option_label' => __('After add to cart button (default display)', $this->plugin_slug), 'option_value' => 'default'),
+                    array('option_label' => __('Before add to cart button', $this->plugin_slug), 'option_value' => 'before_add'),
+                    array('option_label' => __('To the right of add to cart button', $this->plugin_slug), 'option_value' => 'right_of_add'),
+                    array('option_label' => __('After product price', $this->plugin_slug), 'option_value' => 'after_price'),
+                    array('option_label' => __('After product tabs', $this->plugin_slug), 'option_value' => 'after_tabs')
                 ))
         );
 		
@@ -2057,7 +2057,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_text', // ID
-			'Button Text', // Title
+			__('Button Text', $this->plugin_slug), // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
@@ -2075,7 +2075,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_text_color', // ID
-			'Button Text Color', // Title
+            __('Button Text Color', $this->plugin_slug), // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
@@ -2093,7 +2093,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 */
 		add_settings_field(
 			'display_setting_custom_make_offer_btn_color', // ID
-			'Button Color', // Title
+            __('Button Color', $this->plugin_slug), // Title
 			array( $this, 'offers_for_woocommerce_options_page_output_input_colorpicker' ), // Callback TEXT input
 			'offers_for_woocommerce_display_settings', // Page
 			'display_settings', // Section
@@ -2131,7 +2131,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function offers_for_woocommerce_options_page_intro_text() 
 	{
-		print('<p>Complete the form below and click Save Changes button to update your settings.</p>');
+		print('<p>'. __('Complete the form below and click Save Changes button to update your settings.', $this->plugin_slug). '</p>');
 	}
 	
 	/**
@@ -2547,7 +2547,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $wpdb->update( $table, $data_array, $where );
 
             // Filter Post Status Label
-            $post_status_text = 'Accepted';
+            $post_status_text = __('Accepted', $this->plugin_slug);
 
             // set update notes
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -2641,7 +2641,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_email->trigger($offer_args);
 
             // Insert WP comment
-            $comment_text = "<span>Updated - Status: </span>";
+            $comment_text = "<span>". __('Updated - Status:', $this->plugin_slug)."&nbsp;</span>";
             $comment_text.= $post_status_text;
 
             // include update notes
@@ -2704,7 +2704,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $wpdb->update( $table, $data_array, $where );
 
             // Filter Post Status Label
-            $post_status_text = 'Declined';
+            $post_status_text = __('Declined', $this->plugin_slug);
 
             // set update notes
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -2852,14 +2852,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $current_user = wp_get_current_user();
 
             // Insert WP comment
-            $comment_text = "<span>Offer Note:</span>";
+            $comment_text = "<span>". __('Offer Note:', $this->plugin_slug). "</span>";
             if($noteSendToBuyer != '1')
             {
-                $comment_text.= " (admin only)";
+                $comment_text.= "&nbsp;". __('(admin only)', $this->plugin_slug);
             }
             else
             {
-                $comment_text.= " (sent to buyer)";
+                $comment_text.= "&nbsp;". __('(sent to buyer)', $this->plugin_slug);
             }
             $comment_text.= "<br />" .$offer_notes;
 
@@ -3236,7 +3236,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if(!$author_data) return;
 
                 echo '<div class="notice error angelleye-admin-notice-filterby-author">';
-                echo '<p>'. __('Currently filtered by user', $this->plugin_slug). ' <strong>"' . $author_data->user_login . '"</strong> <a href="edit.php?post_type=woocommerce_offer">Click here to reset filter</a></p>';
+                echo '<p>'. __('Currently filtered by user', $this->plugin_slug). '&nbsp;<strong>"' . $author_data->user_login . '"</strong> <a href="edit.php?post_type=woocommerce_offer">'. __('Click here to reset filter', $this->plugin_slug). '</a></p>';
                 echo '</div>';
             }
         }
@@ -3392,10 +3392,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
-                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers')?>').appendTo("select[name='action']");
-                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers')?>').appendTo("select[name='action2']");
-                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers')?>').appendTo("select[name='action']");
-                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers')?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers', $this->plugin_slug);?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('enable_offers').text('<?php _e('Enable Offers', $this->plugin_slug);?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers', $this->plugin_slug);?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('disable_offers').text('<?php _e('Disable Offers', $this->plugin_slug);?>').appendTo("select[name='action2']");
                 });
             </script>
         <?php
