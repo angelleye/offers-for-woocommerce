@@ -36,7 +36,6 @@ if(!defined('ABSPATH'))
  */
 require_once( plugin_dir_path( __FILE__ ) . 'public/class-offers-for-woocommerce.php' );
 
-
 /**
  * Load plugin text domain
  */
