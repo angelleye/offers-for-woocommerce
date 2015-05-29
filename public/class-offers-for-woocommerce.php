@@ -148,11 +148,11 @@ class Angelleye_Offers_For_Woocommerce {
         add_action( 'woocommerce_before_checkout_process', array( $this, 'ae_ofwc_woocommerce_before_checkout_process' ) );
 
         /**
-         * Filter - woocommerce_is_purchasable
-         * Ignore blank price item if Offers enabled
+         * Action - woocommerce_remove_cart_item_from_session
+         * Runs after item removed from session if not is_purchasable
          * @since   1.1.3
          */
-        add_filter( 'woocommerce_is_purchasable', array( $this, 'ae_ofwc_woocommerce_is_purchasable' ), 1, 2 );
+        add_action( 'woocommerce_remove_cart_item_from_session', array( $this, 'ae_ofwc_woocommerce_remove_cart_item_from_session' ), 1, 2 );
     }
 
 	/**
@@ -379,18 +379,10 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                // adds hidden class if position is not default
-                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
-                $customclass = ( $hiddenclass == 'angelleye-ofwc-hidden' ) ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
-
-                $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
                 $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
 
-                echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap '.$hiddenclass.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ofwc-no-float-button ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
+                echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ofwc-no-float-button ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
                 echo '<div id="ofwc-blank-price-product-id" data-product-id="'.$post->ID.'"></div>';
-
-
-
             }
         }
     }
@@ -1294,6 +1286,13 @@ class Angelleye_Offers_For_Woocommerce {
 
             if(!$found)
             {
+                /**
+                 * Filter - woocommerce_is_purchasable
+                 * Ignore blank price item if Offers enabled
+                 * @since   1.1.3
+                 */
+                add_filter( 'woocommerce_is_purchasable', array( $this, 'ae_ofwc_woocommerce_is_purchasable' ), 1, 2 );
+
                 $item_id = $woocommerce->cart->add_to_cart( $product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta );
             }
 
@@ -1533,6 +1532,13 @@ class Angelleye_Offers_For_Woocommerce {
                         $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', $this->plugin_slug), '0');
                     }
                 }
+
+                /**
+                 * Filter - woocommerce_is_purchasable
+                 * Ignore blank price item if Offers enabled
+                 * @since   1.1.3
+                 */
+                add_filter( 'woocommerce_is_purchasable', array( $this, 'ae_ofwc_woocommerce_is_purchasable' ), 1, 2 );
             }
         }
     }
@@ -1552,6 +1558,44 @@ class Angelleye_Offers_For_Woocommerce {
             $purchasable = TRUE;
         }
         return $purchasable;
+    }
+
+    /**
+     * Action - woocommerce_remove_cart_item_from_session
+     * Runs after item removed from session if not is_purchasable
+     * @since   1.1.3
+     */
+    function ae_ofwc_woocommerce_remove_cart_item_from_session($key, $values)
+    {
+        global $woocommerce;
+
+        $_product = wc_get_product( $values['variation_id'] ? $values['variation_id'] : $values['product_id'] );
+
+        // lookup product meta by id or variant id
+        if( !empty($values['variation_id']) )
+        {
+            $product_variation_data = $_product->get_variation_attributes();
+        }
+
+        $product_variation_data['Offer ID'] = $values['woocommerce_offer_id'];
+
+        $product_meta['woocommerce_offer_id'] = $values['woocommerce_offer_id'];
+        $product_meta['woocommerce_offer_quantity'] = $values['woocommerce_offer_quantity'];
+        $product_meta['woocommerce_offer_price_per'] = $values['woocommerce_offer_price_per'];
+
+        if(!empty($values['woocommerce_offer_id']) && is_numeric($values['woocommerce_offer_id']))
+        {
+            //wc_clear_notices();
+
+            /**
+             * Filter - woocommerce_is_purchasable
+             * Ignore blank price item if Offers enabled
+             * @since   1.1.3
+             */
+            add_filter( 'woocommerce_is_purchasable', array( $this, 'ae_ofwc_woocommerce_is_purchasable' ), 1, 2 );
+
+            $woocommerce->cart->add_to_cart( $values['product_id'], $values['woocommerce_offer_quantity'], $values['variation_id'], $product_variation_data, $product_meta );
+        }
     }
 
 }
