@@ -38,11 +38,18 @@ class WC_Offer_Note_Email extends WC_Email {
         $this->heading = __('Offer Note', $this->plugin_slug);
         $this->subject = __('Offer Note', $this->plugin_slug);
 
+        // Set email template paths
+        $this->template_html 	= 'woocommerce-offer-note.php';
+        $this->template_plain 	= 'plain/woocommerce-offer-note.php';
+
         // Call parent constructor to load any other defaults not explicitly defined here
         parent::__construct();
 
         // Set the recipient
         $this->recipient = $this->get_option( 'recipient' );
+
+        // Other settings
+        $this->template_base = OFWC_EMAIL_TEMPLATE_PATH;
     }
 
     /**

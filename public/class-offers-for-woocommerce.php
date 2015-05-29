@@ -33,7 +33,7 @@ class Angelleye_Offers_For_Woocommerce {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'angelleye-offers-for-woocommerce';
+	protected $plugin_slug = 'offers-for-woocommerce';
 
 	/**
 	 * Instance of this class
@@ -52,11 +52,11 @@ class Angelleye_Offers_For_Woocommerce {
 	 */
 	private function __construct()
 	{
-		/**
-		 * Load plugin text domain
-		 */
-		add_action('init', array( $this, 'load_plugin_textdomain' ) );
-		
+        /**
+         * Define email templates path
+         */
+        define( 'OFWC_PUBLIC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
+
 		/**
 		 * Activate plugin when new blog is added
 		 */
@@ -178,6 +178,18 @@ class Angelleye_Offers_For_Woocommerce {
         // get offers options - display
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
+        $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', $this->plugin_slug);
+
+        $custom_styles_override = '';
+        if ($button_options_display) {
+            if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
+                $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . '!important;';
+            }
+            if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
+                $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '!important;';
+            }
+        }
+
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
@@ -192,11 +204,17 @@ class Angelleye_Offers_For_Woocommerce {
             else
             {
                 // adds hidden class if position is not default
-                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
+                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default' && $button_options_display['display_setting_make_offer_button_position_single'] != 'right_of_add') ? 'angelleye-ofwc-hidden' : '';
                 $customclass = ( $hiddenclass == 'angelleye-ofwc-hidden' ) ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
 
-                echo '<div class="offers-for-woocommerce-make-offer-button-cleared '.$hiddenclass.'"></div>
-                <div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap" data-ofwc-position="'.$customclass.'"><div>';
+                $display_right_of_add = ( $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add' ) ? TRUE : FALSE;
+                $display_right_of_add_class = ($display_right_of_add) ? 'ofwc-button-right-of-add-to-cart' : '';
+
+                if($display_right_of_add)
+                {
+                    echo '<div class="offers-for-woocommerce-make-offer-button-cleared '.$hiddenclass.'"></div>';
+                }
+                echo '<div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap '.$display_right_of_add_class.'" data-ofwc-position="'.$customclass.'"><div>';
             }
 		}
 	}
@@ -236,21 +254,28 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
 
-            if( (is_front_page() && !$button_global_onoff_frontpage) || (!is_front_page() && !is_product() && !$button_global_onoff_catalog) )
+            if( is_front_page() || (!is_front_page() && !is_product()) )
             {
                 //
             }
             else
             {
                 // adds hidden class if position is not default
-                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default') ? 'angelleye-ofwc-hidden' : '';
-                $customclass = ( $hiddenclass == 'angelleye-ofwc-hidden' ) ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
-
-                $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
+                $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default' && $button_options_display['display_setting_make_offer_button_position_single'] != 'right_of_add') ? 'angelleye-ofwc-hidden' : '';
                 $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
+                $display_right_of_add = ( $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add' ) ? TRUE : FALSE;
 
-                echo '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div></div><div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap '.$hiddenclass.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></div>';
-                echo '</div>';
+                if(!$display_right_of_add)
+                {
+                    echo '<div class="angelleye-offers-clearfix '.$hiddenclass.'"></div></div>';
+                }
+                else
+                {
+                    echo '</div>';
+                }
+                echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap '.$hiddenclass.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                echo '<div class="angelleye-offers-clearfix"></div></div></div>';
+
             }
         }
     }
@@ -699,20 +724,6 @@ class Angelleye_Offers_For_Woocommerce {
 	private static function single_deactivate()
 	{
 		// @TODO: Define deactivation functionality here
-	}
-
-	/**
-	 * Load the plugin text domain for translation
-	 *
-	 * @since    0.1.0
-	 */
-	public function load_plugin_textdomain()
-	{
-		$domain = $this->plugin_slug;
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
 	}
 
 	/**

@@ -4,7 +4,9 @@
 
 .offers-for-woocommerce-make-offer-button-catalog { margin: 0 0 7px 0!important; }
 .offers-for-woocommerce-make-offer-button-single-product { float:left; margin: 7px 0px!important; }
-.offers-for-woocommerce-make-offer-button-single-product .offers-for-woocommerce-make-offer-button-single-product-lightbox {}
+.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart { height:70px; }
+.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .single_add_to_cart_button { float:left!important; }
+.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .offers-for-woocommerce-make-offer-button-single-product { margin:0!important; float:left!important; }
 .angelleye-offers-clearfix { clear:both!important; height:1px!important; }
 
 .tabs .tab_custom_ofwc_offer_tab { display:block; }
@@ -214,4 +216,3 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
     float: none!important;
     margin-left:0;
 }
-

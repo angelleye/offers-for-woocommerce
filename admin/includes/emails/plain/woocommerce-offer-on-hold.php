@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 echo $email_heading . "\n\n";
 
-echo __( 'Your offer has been placed on hold.', 'angelleye-offers-for-woocommerce' );
+echo __( 'Your offer has been placed on hold.', 'offers-for-woocommerce' );
 echo "\n\n";
 
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
@@ -20,7 +20,7 @@ if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 
 echo "\n\n****************************************************\n";
 
-echo sprintf( __( 'Offer ID:', 'angelleye-offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
+echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
 
 echo "\n";
 

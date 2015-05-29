@@ -17,7 +17,7 @@ if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 
 echo "\n\n****************************************************\n";
 
-echo sprintf( __( 'Offer ID:', 'angelleye-offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
+echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
 
 echo "\n";
 

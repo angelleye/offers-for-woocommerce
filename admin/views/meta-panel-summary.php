@@ -168,7 +168,7 @@
             <div class="angelleye-col-container">
                 <h5><?php echo __('Offer Note to Buyer', $this->plugin_slug); ?></h5>
                 <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class="" autocomplete="off"></textarea>
-                <p class="description">Enter a note here to be included in the email notification to the buyer when the offer status is updated.</p>
+                <p class="description"><?php echo __('Enter a note here to be included in the email notification to the buyer when the offer status is updated.', $this->plugin_slug); ?></p>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
