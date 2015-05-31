@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.2.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -110,6 +110,14 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.1.3 - 06.01.2015 =
+* Tweak - Adjusts the email template system so that templates can be overridden from within a theme.
+* Tweak - Moves the plugin action links to the Description column on the Plugins page because there is more room there.
+* Tweak - Removes the offer button from products that are free (0.00 price).
+* Fix - Resolves localization / translation failure when using language files.
+* Feature - Adds an option to place the offer button directly to the right of the add to cart button.
+* Feature - Adds the ability to enable/disable fields that are displayed on the offer form.
 
 = 1.1.2 - 05.11.2015 =
 * Tweak - Adjusts localization so the plugin is ready for translation.
