@@ -111,7 +111,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.1.3 - 06.01.2015 =
+= 1.1.3 - 05.31.2015 =
 * Tweak - Adjusts the email template system so that templates can be overridden from within a theme.
 * Tweak - Moves the plugin action links to the Description column on the Plugins page because there is more room there.
 * Tweak - Removes the offer button from products that are free (0.00 price).
