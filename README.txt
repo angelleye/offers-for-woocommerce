@@ -100,6 +100,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 4. Optionally, add an "Offer Note to Buyer" to inform the buyer why the adjustment is being made.
 5. Click the "Update" button to save the adjustment.
 
+= The email notifications are not getting sent.  Why? =
+
+* Make sure to check in WooCommerce -> Settings, and then look in the Emails tab.  Click into the links for New Offer, New counteroffer, Offer received, etc. and enable the ones you want to get sent.
+
 = Where can I find more documentation? =
 
 * [Installation and Activation](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-2)
