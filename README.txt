@@ -13,7 +13,7 @@ Adds the power of negotiation to your WooCommerce store.
 == Description ==
 
 = Video Overview =
-[youtube https://youtu.be/3xb0Tfnx16o]
+[youtube https://www.youtube.com/watch?v=3xb0Tfnx16o]
 
 = Introduction =
 
