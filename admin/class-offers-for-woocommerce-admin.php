@@ -661,25 +661,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
                 $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
 
-                $_pf = new WC_Product_Factory();
-                $_product = $_pf->get_product($product_id);
+                $product_title = get_the_title($product_id);
 
-                if( $product_variant_id )
+                if($product_title)
                 {
-                    $_pf_variant = new WC_Product_Factory();
-                    $_product_variant = $_pf_variant->get_product($product_variant_id);
-                    $_product_permalink = $_product_variant->get_permalink();
-                    $_product_formatted_name = $_product_variant->get_formatted_name();
-                    $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
+                    $val = '<a href="post.php?post=' . $product_id . '&action=edit">' . $product_title . '</a>';
                 }
                 else
                 {
-                    $_product_permalink = $_product->get_permalink();
-                    $_product_formatted_name = $_product->get_formatted_name();
-                    $_product_image = $_product->get_image( 'shop_thumbnail');
+                    $val = '<em>' . __('Not Found', $this->plugin_slug ) . '</em>';
                 }
 
-                $val = '<a href="post.php?post=' . $_product->post->ID . '&action=edit">' . $_product_formatted_name . '</a>';
                 echo stripslashes($val);
                 break;
 
@@ -730,8 +722,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function woocommerce_offer_sortable_columns( $columns ) 
 	{
-        $columns['offer_name'] = 'offer_name';
         $columns['offer_email'] = 'offer_email';
+        $columns['offer_name'] = 'offer_name';
+        $columns['offer_product_title'] = 'orig_offer_product_id';
 		$columns['offer_price_per'] = 'offer_price_per';
 		$columns['offer_quantity'] = 'offer_quantity'; 
 		$columns['offer_amount'] = 'offer_amount';
