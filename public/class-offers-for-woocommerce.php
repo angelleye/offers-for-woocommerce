@@ -468,6 +468,18 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
 
+        // If name,phone,email not already specified, then try to pull logged in user data if user is logged in
+        if( is_user_logged_in() )
+        {
+            $current_user = wp_get_current_user();
+
+            if(empty($offer_name))
+            {
+                $offer_name = $current_user->user_firstname . ' ' . $current_user->user_lastname;
+                $offer_email = $current_user->user_email;
+            }
+        }
+
         // get options for button display
         $button_display_options = get_option('offers_for_woocommerce_options_display');
 
