@@ -12,6 +12,9 @@ Adds the power of negotiation to your WooCommerce store.
 
 == Description ==
 
+= Video Overview =
+[youtube https://youtu.be/3xb0Tfnx16o]
+
 = Introduction =
 
 Provide the ability for customers to submit offers for items in a WooCommerce store.
@@ -99,6 +102,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 3. Make any adjustments you need to the Counter Offer and/or Offer Status details.
 4. Optionally, add an "Offer Note to Buyer" to inform the buyer why the adjustment is being made.
 5. Click the "Update" button to save the adjustment.
+
+= The email notifications are not getting sent.  Why? =
+
+* Make sure to check in WooCommerce -> Settings, and then look in the Emails tab.  Click into the links for New Offer, New counteroffer, Offer received, etc. and enable the ones you want to get sent.
 
 = Where can I find more documentation? =
 
