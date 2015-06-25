@@ -636,6 +636,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function set_woocommerce_offer_columns($columns) 
 	{
         $columns['offer_name'] = __( 'Name', $this->plugin_slug );
+        $columns['offer_product_title'] = __( 'Product', $this->plugin_slug );
 		$columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
 		$columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
 		$columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
@@ -653,6 +654,32 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		switch ( $column ) {
             case 'offer_name' :
                 $val = get_post_meta( $post_id , 'offer_name' , true );
+                echo stripslashes($val);
+                break;
+
+            case 'offer_product_title' :
+                $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+                $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+
+                $_pf = new WC_Product_Factory();
+                $_product = $_pf->get_product($product_id);
+
+                if( $product_variant_id )
+                {
+                    $_pf_variant = new WC_Product_Factory();
+                    $_product_variant = $_pf_variant->get_product($product_variant_id);
+                    $_product_permalink = $_product_variant->get_permalink();
+                    $_product_formatted_name = $_product_variant->get_formatted_name();
+                    $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
+                }
+                else
+                {
+                    $_product_permalink = $_product->get_permalink();
+                    $_product_formatted_name = $_product->get_formatted_name();
+                    $_product_image = $_product->get_image( 'shop_thumbnail');
+                }
+
+                $val = '<a href="post.php?post=' . $_product->post->ID . '&action=edit">' . $_product_formatted_name . '</a>';
                 echo stripslashes($val);
                 break;
 
