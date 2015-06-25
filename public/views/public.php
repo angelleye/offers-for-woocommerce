@@ -13,6 +13,7 @@
 ?>
 
 <!-- This file is used to markup the public facing aspect of the plugin. -->
+<div id="aeofwc-close-lightbox-link"><a href="javascript:void(0);">Close</a></div>
 <div id="tab_custom_ofwc_offer_tab_alt_message" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
         <li><strong><?php echo __('Selection Required:', $this->plugin_slug); ?>&nbsp;</strong><?php echo __('Select product options above before making new offer.', $this->plugin_slug); ?></li>

@@ -211,3 +211,14 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
 
 .angelleye-ofwc-hidden { display: none; }
 .ofwc-no-float { float: none; }
+
+#aeofwc-close-lightbox-link {
+    display: none;
+    position: relative;
+}
+#aeofwc-close-lightbox-link a {
+    position: absolute;
+    right:10px;
+    top:10px;
+    z-index: 999;
+}
