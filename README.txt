@@ -12,6 +12,9 @@ Adds the power of negotiation to your WooCommerce store.
 
 == Description ==
 
+= Video Overview =
+[youtube https://youtu.be/3xb0Tfnx16o]
+
 = Introduction =
 
 Provide the ability for customers to submit offers for items in a WooCommerce store.
