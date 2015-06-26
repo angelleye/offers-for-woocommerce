@@ -1256,6 +1256,28 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
 
             /**
+             * Set default expiration date on 'pending' offer expiration date input field
+             * @since   1.2.0
+             */
+            if($current_status_value == 'publish')
+            {
+                // get offers options - general
+                $default_expire_date = '';
+                $options_general = get_option('offers_for_woocommerce_options_general');
+                if(!empty($options_general['general_setting_default_expire_days']) && is_numeric($options_general['general_setting_default_expire_days']))
+                {
+                    $current_time = date("Y-m-d H:i:s", current_time('timestamp', 0 ));
+
+                    $default_expire_days = str_replace(",","", $options_general['general_setting_default_expire_days']);
+                    $default_expire_date = ($default_expire_days != '') ? date("m/d/Y", strtotime( $current_time .' + '. $default_expire_days .' days') ) : '';
+                }
+                if($default_expire_date != '')
+                {
+                    $postmeta['offer_expiration_date'] = array($default_expire_date);
+                }
+            }
+
+            /**
              * Check to 'consider inventory' of product stock compared to offer quantities
              * @since   0.1.0
              */
@@ -1903,7 +1925,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		add_settings_field(
 			'general_setting_enable_make_offer_btn_frontpage', // ID
 			__('Show on Home Page', $this->plugin_slug), // Title
-			array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+			array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
 			'offers_for_woocommerce_general_settings', // Page
 			'general_settings', // Section 
 			array(
@@ -1921,7 +1943,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_settings_field(
             'general_setting_enable_make_offer_btn_catalog', // ID
             __('Show on Shop Page', $this->plugin_slug), // Title
-            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
             array(
@@ -1939,7 +1961,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_settings_field(
             'general_setting_enable_offers_by_default', // ID
             __('Enable Offers by Default', $this->plugin_slug), // Title
-            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
             array(
@@ -1957,7 +1979,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_settings_field(
             'general_setting_limit_offer_quantity_by_stock', // ID
             __('Limit Offer Quantity at Product Stock Quantity', $this->plugin_slug), // Title
-            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
             array(
@@ -1965,6 +1987,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'input_label'=>'general_setting_limit_offer_quantity_by_stock',
                 'input_required'=>FALSE,
                 'description' => __('Check this option to limit offer quantity at stock quantity on products not allowing backorders.', $this->plugin_slug),
+            )
+        );
+
+        /**
+         * Add field - 'General Settings' - 'general_setting_default_expire_days'
+         * Default amount of days out to set expire date
+         */
+        add_settings_field(
+            'general_setting_default_expire_days', // ID
+            __('Default Offer Expiration Days', $this->plugin_slug), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_default_expire_days',
+                'input_required'=>FALSE,
+                'description' => __('Enter the amount of days from accepting/countering an offer that you would like the expiration date to automatically set.', $this->plugin_slug),
             )
         );
 
@@ -2352,6 +2392,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
 			// Admin footer scripts
 			wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-footer-scripts', plugins_url( 'assets/js/admin-footer-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // autoNumeric js
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url( '../public/assets/js/autoNumeric-1-9-24.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
             // Admin settings scripts
             wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-settings-scripts', plugins_url( 'assets/js/admin-settings-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );

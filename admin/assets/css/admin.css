@@ -627,3 +627,5 @@ body.post-type-woocommerce_offer th.column-title {
         display:none;
     }
 }
+
+#general_setting_default_expire_days { width:60px; }
