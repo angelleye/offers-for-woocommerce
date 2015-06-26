@@ -749,6 +749,30 @@ class Angelleye_Offers_For_Woocommerce {
                 // set offer comments
                 $comments = (isset($_POST['offer_notes']) && $_POST['offer_notes'] != '') ? strip_tags(nl2br($_POST['offer_notes']), '<br><p>') : '';
 
+                /**
+                 * Akismet spam check
+                 * Passes back true (it's spam) or false (it's ham)
+                 * @since   1.2.0
+                 */
+                $akismet_api_key = '9a57112207be';
+                $data = array('blog' => get_site_url(),
+                    'user_ip' => $_SERVER['REMOTE_ADDR'],
+                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                    'referrer' => '',
+                    'permalink' => get_permalink($formData['offer_product_id']),
+                    'comment_type' => 'woocommerce_offer',
+                    'comment_author' => $formData['offer_name'],
+                    'comment_author_email' => $formData['offer_email'],
+                    'comment_author_url' => '',
+                    'comment_content' => $comments
+                );
+                if($this->aeofwc_akismet_comment_check( $akismet_api_key, $data ))
+                {
+                    // is spam
+                    echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __( 'Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug ) ));
+                    exit;
+                }
+
                 // check for parent post id
                 $parent_post_id = (isset($_POST['parent_offer_id'])) ? $_POST['parent_offer_id'] : '';
                 $parent_post_status = get_post_status($parent_post_id);
@@ -1471,6 +1495,55 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+    }
+
+    /**
+     * Akismet spam check
+     * Passes back true (it's spam) or false (it's ham)
+     * @param $key
+     * @param $data
+     * @return bool
+     * @since   1.2.0
+     */
+    public function aeofwc_akismet_comment_check( $key, $data ) {
+        $request = 'blog='. urlencode($data['blog']) .
+            '&user_ip='. urlencode($data['user_ip']) .
+            '&user_agent='. urlencode($data['user_agent']) .
+            '&referrer='. urlencode($data['referrer']) .
+            '&permalink='. urlencode($data['permalink']) .
+            '&comment_type='. urlencode($data['comment_type']) .
+            '&comment_author='. urlencode($data['comment_author']) .
+            '&comment_author_email='. urlencode($data['comment_author_email']) .
+            '&comment_author_url='. urlencode($data['comment_author_url']) .
+            '&comment_content='. urlencode($data['comment_content']);
+        $host = $http_host = $key.'.rest.akismet.com';
+        $path = '/1.1/comment-check';
+        $port = 443;
+        $akismet_ua = "WordPress/3.8.1 | Akismet/2.5.9";
+        $content_length = strlen( $request );
+        $http_request  = "POST $path HTTP/1.0\r\n";
+        $http_request .= "Host: $host\r\n";
+        $http_request .= "Content-Type: application/x-www-form-urlencoded\r\n";
+        $http_request .= "Content-Length: {$content_length}\r\n";
+        $http_request .= "User-Agent: {$akismet_ua}\r\n";
+        $http_request .= "\r\n";
+        $http_request .= $request;
+        $response = '';
+        if( false != ( $fs = @fsockopen( 'ssl://' . $http_host, $port, $errno, $errstr, 10 ) ) ) {
+
+            fwrite( $fs, $http_request );
+
+            while ( !feof( $fs ) )
+                $response .= fgets( $fs, 1160 ); // One TCP-IP packet
+            fclose( $fs );
+
+            $response = explode( "\r\n\r\n", $response, 2 );
+        }
+
+        if ( 'true' == $response[1] )
+            return true;
+        else
+            return false;
     }
 
 }

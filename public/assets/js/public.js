@@ -224,6 +224,17 @@
                                 $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
                                 $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
                             }
+                            else if(responseStatus == 'failed-spam')
+                            {
+                                //console.log('failed-custom-msg');
+                                // Hide loader image
+                                $('#offer-submit-loader').hide();
+                                // Show error message DIV
+                                $('#tab_custom_ofwc_offer_tab_alt_message_custom ul #alt-message-custom').html("<strong>Error: </strong>"+responseStatusDetail);
+                                $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
+                                $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                                $('#tab_custom_ofwc_offer_tab_inner fieldset').hide();
+                            }
                             else
                             {
                                 // SUCCESS
