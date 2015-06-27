@@ -1264,7 +1264,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 // get offers options - general
                 $default_expire_date = '';
                 $options_general = get_option('offers_for_woocommerce_options_general');
-                if(!empty($options_general['general_setting_default_expire_days']) && is_numeric($options_general['general_setting_default_expire_days']))
+                if(!empty($options_general['general_setting_default_expire_days']))
                 {
                     $current_time = date("Y-m-d H:i:s", current_time('timestamp', 0 ));
 
