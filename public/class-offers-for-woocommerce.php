@@ -129,7 +129,7 @@ class Angelleye_Offers_For_Woocommerce {
          * Action - woocommerce_checkout_order_processed
          * @since   0.1.0
          */
-        add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ), 1, 2 );
+        add_action( 'woocommerce_checkout_order_processed', array( $this, 'ae_ofwc_woocommerce_checkout_order_processed' ) );
 
         /**
          * Filter - ae_paypal_standard_additional_parameters
@@ -1360,7 +1360,7 @@ class Angelleye_Offers_For_Woocommerce {
      * Adds offer postmeta  'offer_order_id'
      * @since   0.1.0
      */
-    public function ae_ofwc_woocommerce_checkout_order_processed( $order_id, $posted )
+    public function ae_ofwc_woocommerce_checkout_order_processed( $order_id )
     {
         global $woocommerce;
 
