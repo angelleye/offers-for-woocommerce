@@ -1968,6 +1968,53 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             )
         );
 
+        /**
+         * Add field - 'General Settings' - 'general_setting_enable_offers_only_logged_in_users'
+         * Enable Offers For Only Logged-in Users
+         */
+        add_settings_field(
+            'general_setting_enable_offers_only_logged_in_users', // ID
+            __('Enable Offers For Only Logged-in Users', $this->plugin_slug), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_enable_offers_only_logged_in_users',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to enable offers on products for only logged-in users.', $this->plugin_slug),
+            )
+        );
+
+        /**
+         * Add field - 'General Settings' - 'general_setting_allowed_roles'
+         * Enable Offers For Only Specific User Roles
+         */
+        $editable_roles = get_editable_roles();
+        $editable_roles_inputs = array();
+        foreach($editable_roles as $role)
+        {
+            array_push($editable_roles_inputs,
+                array('option_label' => $role['name'], 'option_value' => strtolower($role['name']) )
+            );
+        }
+        add_settings_field(
+            'general_setting_allowed_roles', // ID
+            __('Enable Offers For Only Specific User Roles', $this->plugin_slug), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_allowed_roles',
+                'input_required'=>FALSE,
+                'description' => __('Select the roles you want offers enabled for. Leave blank for all roles enabled.', $this->plugin_slug),
+                'options'=> $editable_roles_inputs,
+                'multiple' => TRUE,
+                'extra_classes' => 'chosen-select'
+            )
+        );
+
 		/**
 		 * Add section - 'Display Settings'
 		 */
@@ -2181,13 +2228,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $description = isset($args['description']) ? $args['description'] : '';
         $field_label = $args['input_label'];
         $field_required = ($args['input_required'] === true) ? ' required="required" ' : '';
+        $multiple = (isset($args['multiple']) && $args['multiple'] === true) ? ' multiple="multiple" ' : '';
+        $field_label_multiple = (isset($args['multiple']) && $args['multiple'] === true) ? '[]' : '';
+        $extra_classes = (!empty($args['extra_classes'])) ? ' class="'. $args['extra_classes'] . '" ' : '';
 
         print(
-            '<select '. $field_required. ' id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']"/>'
+            '<select '. $extra_classes . $field_required. ' id="'.$field_label.'" name="'.$args['option_name'].'['.$field_label.']'. $field_label_multiple . '" ' . $multiple . '/>'
         );
         foreach( $args['options'] as $option )
         {
-            $is_selected = (isset($options[$field_label]) && $options[$field_label] == $option['option_value']) ? 'selected="selected"' : '';
+            if(isset($args['multiple']) && $args['multiple'] === true)
+            {
+                $is_selected = (isset($options[$field_label]) && in_array($option['option_value'], $options[$field_label])) ? 'selected="selected"' : '';
+            }
+            else
+            {
+                $is_selected = (isset($options[$field_label]) && $options[$field_label] == $option['option_value']) ? 'selected="selected"' : '';
+            }
             print(
                 '<option value="'. $option['option_value'] . '" '. $is_selected .'>'. $option['option_label'] . '</option>'
             );
@@ -2324,6 +2381,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // admin styles
             wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // chosen js styles
+            wp_enqueue_style( $this->plugin_slug .'-angelleye-offers-admin-styles-jquery-chosen', plugins_url( 'assets/css/chosen/chosen.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
         }
 
         if ( "product" == $screen->id && is_admin() )
@@ -2355,6 +2415,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Admin settings scripts
             wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-settings-scripts', plugins_url( 'assets/js/admin-settings-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+
+            // Chosen js
+            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 		}
         if ( "edit-woocommerce_offer" == $screen->id && is_admin() )
         {

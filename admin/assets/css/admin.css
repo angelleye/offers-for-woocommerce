@@ -627,3 +627,7 @@ body.post-type-woocommerce_offer th.column-title {
         display:none;
     }
 }
+
+#general_setting_allowed_roles_chosen {
+    max-width:650px;
+}

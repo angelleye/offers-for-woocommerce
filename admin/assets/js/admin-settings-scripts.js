@@ -5,6 +5,8 @@
 
         $(document).ready(function() {
 
+            $('.chosen-select').chosen({width: "100%", });
+
             // change target type -- toggle where input
             $('#ofwc-bulk-action-target-type').change(function(){
 

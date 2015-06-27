@@ -153,6 +153,34 @@ class Angelleye_Offers_For_Woocommerce {
 	public function angelleye_ofwc_before_add_to_cart_button()
 	{
 		global $post;
+        global $current_user;
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // get offers options - display
+        $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+        // enable offers for only logged in users
+        if($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ( !is_user_logged_in() ) return;
+        }
+
+        // enable offers for only certain user roles
+        if(!empty($button_options_general['general_setting_allowed_roles']))
+        {
+            if ( is_user_logged_in() ) {
+                $user_data = get_userdata($current_user->ID);
+                $user_roles = $user_data->roles;
+                $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles'] );
+                if( empty($role_match) ) return;
+            }
+            else
+            {
+                return;
+            }
+        }
+
 		$custom_tab_options_offers = array(
 			'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
 		);
@@ -161,12 +189,6 @@ class Angelleye_Offers_For_Woocommerce {
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-
-        // get offers options - display
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', $this->plugin_slug);
 
@@ -217,6 +239,34 @@ class Angelleye_Offers_For_Woocommerce {
     public function angelleye_ofwc_after_add_to_cart_button()
     {
         global $post;
+        global $current_user;
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // get offers options - display
+        $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+        // enable offers for only logged in users
+        if($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ( !is_user_logged_in() ) return;
+        }
+
+        // enable offers for only certain user roles
+        if(!empty($button_options_general['general_setting_allowed_roles']))
+        {
+            if ( is_user_logged_in() ) {
+                $user_data = get_userdata($current_user->ID);
+                $user_roles = $user_data->roles;
+                $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles'] );
+                if( empty($role_match) ) return;
+            }
+            else
+            {
+                return;
+            }
+        }
+
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
         );
@@ -229,9 +279,6 @@ class Angelleye_Offers_For_Woocommerce {
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
-            // get offers options - display
-            $button_options_display = get_option('offers_for_woocommerce_options_display');
-
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', $this->plugin_slug);
 
             $custom_styles_override = '';
@@ -277,7 +324,35 @@ class Angelleye_Offers_For_Woocommerce {
 	 */
 	public function angelleye_ofwc_after_show_loop_item($post)
 	{
-		global $post;
+        global $post;
+        global $current_user;
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // get offers options - display
+        $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+        // enable offers for only logged in users
+        if($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ( !is_user_logged_in() ) return;
+        }
+
+        // enable offers for only certain user roles
+        if(!empty($button_options_general['general_setting_allowed_roles']))
+        {
+            if ( is_user_logged_in() ) {
+                $user_data = get_userdata($current_user->ID);
+                $user_roles = $user_data->roles;
+                $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles'] );
+                if( empty($role_match) ) return;
+            }
+            else
+            {
+                return;
+            }
+        }
+
 		$custom_tab_options_offers = array(
 			'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
 		);
@@ -286,9 +361,6 @@ class Angelleye_Offers_For_Woocommerce {
         $_product = $_pf->get_product( $post->ID );
         $is_external_product = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
@@ -303,15 +375,11 @@ class Angelleye_Offers_For_Woocommerce {
             }
             else
             {
-                // get offers options - display
-                $button_options_display = get_option('offers_for_woocommerce_options_display');
-
                 $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __( 'Make Offer', $this->plugin_slug );
 
                 $custom_styles_override = 'style="';
                 if(isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '')
                 {
-
                     $custom_styles_override.= 'color:'.$button_options_display['display_setting_custom_make_offer_btn_text_color'].'!important;';
                 }
                 if(isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '')
@@ -332,8 +400,33 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function angelleye_ofwc_lightbox_make_offer_form()
     {
+        global $current_user;
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
         // get offers options - display
         $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+        // enable offers for only logged in users
+        if($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ( !is_user_logged_in() ) return;
+        }
+
+        // enable offers for only certain user roles
+        if(!empty($button_options_general['general_setting_allowed_roles']))
+        {
+            if ( is_user_logged_in() ) {
+                $user_data = get_userdata($current_user->ID);
+                $user_roles = $user_data->roles;
+                $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles'] );
+                if( empty($role_match) ) return;
+            }
+            else
+            {
+                return;
+            }
+        }
 
         $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
         if($is_lightbox)
@@ -353,6 +446,34 @@ class Angelleye_Offers_For_Woocommerce {
 	public function angelleye_ofwc_add_custom_woocommerce_product_tab($tabs)
 	{
         global $post;
+        global $current_user;
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // get offers options - display
+        $button_options_display = get_option('offers_for_woocommerce_options_display');
+
+        // enable offers for only logged in users
+        if($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ( !is_user_logged_in() ) return $tabs;
+        }
+
+        // enable offers for only certain user roles
+        if(!empty($button_options_general['general_setting_allowed_roles']))
+        {
+            if ( is_user_logged_in() ) {
+                $user_data = get_userdata($current_user->ID);
+                $user_roles = $user_data->roles;
+                $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles'] );
+                if( empty($role_match) ) return $tabs;
+            }
+            else
+            {
+                return $tabs;
+            }
+        }
+
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta( $post->ID, 'offers_for_woocommerce_enabled', true ),
         );
@@ -365,9 +486,6 @@ class Angelleye_Offers_For_Woocommerce {
         // if post has offers button enabled
         if ( $custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0))
         {
-            // get offers options - display
-            $button_options_display = get_option('offers_for_woocommerce_options_display');
-
             if( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox')
             {
                 return $tabs;
@@ -395,6 +513,30 @@ class Angelleye_Offers_For_Woocommerce {
 	public function angelleye_ofwc_display_custom_woocommerce_product_tab_content()
 	{
         global $post;
+        global $current_user;
+
+        // get offers options - general
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+
+        // enable offers for only logged in users
+        if($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ( !is_user_logged_in() ) return;
+        }
+
+        // enable offers for only certain user roles
+        if(!empty($button_options_general['general_setting_allowed_roles']))
+        {
+            if ( is_user_logged_in() ) {
+                $user_data = get_userdata($current_user->ID);
+                $user_roles = $user_data->roles;
+                $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles'] );
+                if( empty($role_match) ) return;
+            }
+            else
+            {
+                return;
+            }
+        }
 
         $_pf = new WC_Product_Factory();
         $_product = $_pf->get_product( $post->ID );
@@ -402,8 +544,6 @@ class Angelleye_Offers_For_Woocommerce {
         $is_backorders_allowed = $_product->backorders_allowed();
         $stock_quantity = $_product->get_stock_quantity();
 
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
         $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
 
         $new_offer_quantity_limit = (!$is_backorders_allowed && $stock_quantity && $stock_quantity > 0 && $global_limit_quantity_to_stock) ? $stock_quantity : '';
