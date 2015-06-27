@@ -5,7 +5,15 @@
 
         $(document).ready(function() {
 
-            $('.chosen-select').chosen({width: "100%", });
+            $('.chosen-select').chosen({width: "100%"});
+
+            $('#general_setting_default_expire_days').autoNumeric('init',
+                {
+                    vMin: '0',
+                    mDec: '0',
+                    lZero: 'allow',
+                    aForm: false}
+            );
 
             // change target type -- toggle where input
             $('#ofwc-bulk-action-target-type').change(function(){

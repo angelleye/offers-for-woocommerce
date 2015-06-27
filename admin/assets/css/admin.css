@@ -631,3 +631,5 @@ body.post-type-woocommerce_offer th.column-title {
 #general_setting_allowed_roles_chosen {
     max-width:650px;
 }
+
+#general_setting_default_expire_days { width:60px; }
