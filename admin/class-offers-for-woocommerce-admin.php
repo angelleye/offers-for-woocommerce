@@ -636,6 +636,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function set_woocommerce_offer_columns($columns) 
 	{
         $columns['offer_name'] = __( 'Name', $this->plugin_slug );
+        $columns['offer_product_title'] = __( 'Product', $this->plugin_slug );
 		$columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
 		$columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
 		$columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
@@ -653,6 +654,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		switch ( $column ) {
             case 'offer_name' :
                 $val = get_post_meta( $post_id , 'offer_name' , true );
+                echo stripslashes($val);
+                break;
+
+            case 'offer_product_title' :
+                $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+                $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+
+                $product_title = get_the_title($product_id);
+
+                if($product_title)
+                {
+                    $val = '<a href="post.php?post=' . $product_id . '&action=edit">' . $product_title . '</a>';
+                }
+                else
+                {
+                    $val = '<em>' . __('Not Found', $this->plugin_slug ) . '</em>';
+                }
+
                 echo stripslashes($val);
                 break;
 
@@ -703,8 +722,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function woocommerce_offer_sortable_columns( $columns ) 
 	{
-        $columns['offer_name'] = 'offer_name';
         $columns['offer_email'] = 'offer_email';
+        $columns['offer_name'] = 'offer_name';
+        $columns['offer_product_title'] = 'orig_offer_product_id';
 		$columns['offer_price_per'] = 'offer_price_per';
 		$columns['offer_quantity'] = 'offer_quantity'; 
 		$columns['offer_amount'] = 'offer_amount';
