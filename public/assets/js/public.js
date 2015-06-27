@@ -51,7 +51,7 @@
                 angelleyeOpenMakeOfferForm();
             });
 
-            $("#lightbox_custom_ofwc_offer_form_close_btn").on('click', function()
+            $("#lightbox_custom_ofwc_offer_form_close_btn, #aeofwc-close-lightbox-link").on('click', function()
             {
                 $("#lightbox_custom_ofwc_offer_form").removeClass('active');
                 $("#lightbox_custom_ofwc_offer_form").hide();
@@ -313,7 +313,15 @@
 
             return false;
         }
-		
+
+        $(window).load(function(){
+
+            if( $(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox") )
+            {
+                $("#aeofwc-close-lightbox-link").css('display','block');
+            }
+        });
+
 		$(window).load(function(){
 			var variantDisplay = $('.single_variation_wrap').css('display');
 			if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block')
