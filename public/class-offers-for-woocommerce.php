@@ -1310,27 +1310,6 @@ class Angelleye_Offers_For_Woocommerce {
                     $this->send_api_response( __( 'Error - Product Not Found; See shop manager for assistance', $this->plugin_slug ) );
                 }
 
-                // Check product stock availability
-                $_pf = new WC_Product_Factory();
-                $_product = $_pf->get_product($product_id);
-                $_product_stock = $_product->get_total_stock();
-                $_product_in_stock = $_product->has_enough_stock($offer_meta['offer_quantity'][0]);
-
-                if(!$_product_in_stock)
-                {
-                    $request_error = true;
-
-                    if($_product_stock != '' && $_product_stock != '0' && $_product_stock < $offer_meta['offer_quantity'][0])
-                    {
-                        $_product_in_stock_formatted = number_format($_product_stock, 0);
-                        $this->send_api_response( sprintf( __( 'Error - Product does not have enough in stock to fulfill your order at this time.', $this->plugin_slug ). '<br />Current stock available: %s', $_product_in_stock_formatted ) );
-                    }
-                    else
-                    {
-                        $this->send_api_response( __( 'Error - Product is out of stock; See shop manager for assistance', $this->plugin_slug ) );
-                    }
-                }
-
                 if(!$request_error)
                 {
                     // Add offer to cart
