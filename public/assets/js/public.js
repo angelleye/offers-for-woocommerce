@@ -46,11 +46,6 @@
                 angelleyeOpenMakeOfferForm();
             });
 
-            $(".tab_custom_ofwc_offer_tab a").on('click', function()
-            {
-                angelleyeOpenMakeOfferForm();
-            });
-
             $("#lightbox_custom_ofwc_offer_form_close_btn, #aeofwc-close-lightbox-link").on('click', function()
             {
                 $("#lightbox_custom_ofwc_offer_form").removeClass('active');
