@@ -102,6 +102,11 @@ div.tab_custom_ofwc_offer_tab_inner_content .make-offer-form-intro {
 	color: #777;
 	text-shadow: 0 1px 0 #fff;	
 }
+div.tab_custom_ofwc_offer_tab_inner_content .make-offer-form-outro {
+    padding: .10em 1.75em;
+    color: #777;
+    text-shadow: 0 1px 0 #fff;
+}
 div.tab_custom_ofwc_offer_tab_inner_content .make-offer-form-intro h2 { margin:10px 0px 0px 0px; color:#555; }
 div.tab_custom_ofwc_offer_tab_inner_content .make-offer-form-intro .make-offer-form-intro-text { margin:3px 0px 15px 0px; }
 
