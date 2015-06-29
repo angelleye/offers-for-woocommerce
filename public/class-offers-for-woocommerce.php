@@ -1144,7 +1144,13 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 else
                 {
-                    $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                    if ( $product->get_sku() ) {
+                        $identifier = $product->get_sku();
+                    } else {
+                        $identifier = '#' . $product_id;
+                    }
+
+                    $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s', 'woocommerce' ), $identifier, $product->get_title() );
                 }
 
                 if($is_counter_offer)
