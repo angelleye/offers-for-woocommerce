@@ -1144,7 +1144,7 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 else
                 {
-                    if ( $product->get_sku() ) {
+                    if ( !empty($product) ) {
                         $identifier = $product->get_sku();
                     } else {
                         $identifier = '#' . $product_id;
