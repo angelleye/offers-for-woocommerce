@@ -1037,22 +1037,7 @@ class Angelleye_Offers_For_Woocommerce {
                             $newPostMetaData['post_id'] = $parent_post_id;
                             $newPostMetaData['meta_key'] = $k;
                             $newPostMetaData['meta_value'] = $v;
-
-                            if(!$wpdb->query( $wpdb->prepare(
-                                "INSERT INTO $wpdb->postmeta
-                                    ( post_id, meta_key, meta_value )
-                                    VALUES ( %d, %s, %s )
-                                ",
-                                $parent_post_id,
-                                $newPostMetaData['meta_key'],
-                                $newPostMetaData['meta_value']
-                                ) ) )
-                            {
-                                ////echo json_encode($wpdb->last_query);
-                                // return error msg
-                                echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
-                                exit;
-                            }
+                            add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
                         }
 
                         // Insert WP comment
@@ -1162,7 +1147,6 @@ class Angelleye_Offers_For_Woocommerce {
                      */
                     // the email we want to send
                     $email_class = 'WC_New_Counter_Offer_Email';
-
                 }
                 else
                 {
