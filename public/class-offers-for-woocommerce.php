@@ -1037,22 +1037,7 @@ class Angelleye_Offers_For_Woocommerce {
                             $newPostMetaData['post_id'] = $parent_post_id;
                             $newPostMetaData['meta_key'] = $k;
                             $newPostMetaData['meta_value'] = $v;
-
-                            if(!$wpdb->query( $wpdb->prepare(
-                                "INSERT INTO $wpdb->postmeta
-                                    ( post_id, meta_key, meta_value )
-                                    VALUES ( %d, %s, %s )
-                                ",
-                                $parent_post_id,
-                                $newPostMetaData['meta_key'],
-                                $newPostMetaData['meta_value']
-                                ) ) )
-                            {
-                                ////echo json_encode($wpdb->last_query);
-                                // return error msg
-                                echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
-                                exit;
-                            }
+                            add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
                         }
 
                         // Insert WP comment
@@ -1144,7 +1129,13 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 else
                 {
-                    $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                    if ( !empty($product) ) {
+                        $identifier = $product->get_sku();
+                    } else {
+                        $identifier = '#' . $product_id;
+                    }
+
+                    $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s', 'woocommerce' ), $identifier, $product->get_title() );
                 }
 
                 if($is_counter_offer)
@@ -1156,7 +1147,6 @@ class Angelleye_Offers_For_Woocommerce {
                      */
                     // the email we want to send
                     $email_class = 'WC_New_Counter_Offer_Email';
-
                 }
                 else
                 {
