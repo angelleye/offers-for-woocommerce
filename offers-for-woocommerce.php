@@ -59,10 +59,10 @@ function angelleye_ofwc_load_plugin_textdomain()
         $loadplugintextdomain = load_plugin_textdomain( $plugin_slug, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
         if(!$loadplugintextdomain)
         {
-            if( file_exists($mo_file_path) )
+            if( file_exists($mo_file_path) && is_admin() )
             {
                 echo '<div class="notice error">';
-                echo '<p>'. __('<strong>Error: </strong>Language translation file could not be loaded', $plugin_slug). '</p>';
+                echo '<p>'. __('<strong>Error: </strong>Offers for WooCommerce language translation file could not be loaded', $plugin_slug). '</p>';
                 echo '</div>';
             }
         }
