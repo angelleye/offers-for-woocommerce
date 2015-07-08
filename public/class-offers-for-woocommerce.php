@@ -388,7 +388,9 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 $custom_styles_override.= '"';
 
-                echo '<a href="'.get_permalink($post->ID).'?aewcobtn=1" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-catalog button alt" '.$custom_styles_override.'>'.$button_title.'</a>';
+                $permalink = get_permalink($post->ID);
+                $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+                echo '<a href="'.$permalink.'" id="offers-for-woocommerce-make-offer-button-id-'.$post->ID.'" class="offers-for-woocommerce-make-offer-button-catalog button alt" '.$custom_styles_override.'>'.$button_title.'</a>';
             }
 		}
 	}
