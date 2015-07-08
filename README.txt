@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.2.2
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,26 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.1.4 - 07.08.2015 =
+* Tweak - Adds a "close" icon to the lightbox offer form display.
+* Tweak - Displays the offer status on the grid view at all times (no longer need hover over the row to see).
+* Tweak - CSS adjustments to offer email notifications.
+* Tweak - Adds the product title/name to the manage offers list.
+* Tweak - Adjusts the way variable products are handled with parent inventory.  Variable stock now takes precedence over parent stock.
+* Tweak - Clicking the offer tab on a product page no longer automatically scrolls down in order to stay consistent with other tabs.
+* Fix - Resolves PHP warning when product price is blank.
+* Fix - Resolves an issue where core WP functions would not trigger correctly for some users.
+* Fix - Adds default options for settings in case no settings have been saved to avoid PHP notices.
+* Fix - Adjustments to translation logic to resolve an issue where translations would not be triggered.
+* Fix - Resolves an issue where the offer button from shop/category pages would return a 404 page if permanlinks were not enabled.
+* Feature - If a user is logged in to the site, the offer form will be pre-populated with available user profile data.
+* Feature - Adds the ability to enable/disable offers based on WordPress user role.
+* Feature - Adds option to enable offers only for logged in users on the site.
+* Feature - Adds German translation file (translation by Emanuel Plesa).
+* Feature - Adds filter hooks to adjust offer form labels or add custom messages.
+* Feature - Adds an option to set a default number of days in the future for setting an expiration accepted/countered offers.
+* Feature - Akismet compatibility.  Offer submissions are now filtered for spam by the Akismet system.
 
 = 1.1.3 - 05.31.2015 =
 * Tweak - Adjusts the email template system so that templates can be overridden from within a theme.
