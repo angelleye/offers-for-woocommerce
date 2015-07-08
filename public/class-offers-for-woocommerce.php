@@ -219,7 +219,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default' && $button_options_display['display_setting_make_offer_button_position_single'] != 'right_of_add') ? 'angelleye-ofwc-hidden' : '';
                 $customclass = ( $hiddenclass == 'angelleye-ofwc-hidden' ) ? $button_options_display['display_setting_make_offer_button_position_single'] : '';
 
-                $display_right_of_add = ( $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add' ) ? TRUE : FALSE;
+                $display_right_of_add = ( !empty($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add' ) ? TRUE : FALSE;
                 $display_right_of_add_class = ($display_right_of_add) ? 'ofwc-button-right-of-add-to-cart' : '';
 
                 if($display_right_of_add)
@@ -300,7 +300,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // adds hidden class if position is not default
                 $hiddenclass = ( isset($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] != 'default' && $button_options_display['display_setting_make_offer_button_position_single'] != 'right_of_add') ? 'angelleye-ofwc-hidden' : '';
                 $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-                $display_right_of_add = ( $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add' ) ? TRUE : FALSE;
+                $display_right_of_add = ( !empty($button_options_display['display_setting_make_offer_button_position_single']) && $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add' ) ? TRUE : FALSE;
 
                 if(!$display_right_of_add)
                 {
