@@ -2050,7 +2050,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_enable_offers_only_logged_in_users', // ID
-            __('Enable Offers For Only Logged-in Users', $this->plugin_slug), // Title
+            __('Enable Offers for Only Logged-in Users', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -2076,7 +2076,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         add_settings_field(
             'general_setting_allowed_roles', // ID
-            __('Enable Offers For Only Specific User Roles', $this->plugin_slug), // Title
+            __('Enable Offers for Only Specific User Roles', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_select' ), // Callback SELECT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
