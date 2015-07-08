@@ -1896,20 +1896,36 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	{
 		/**
 		 * Add option - 'General Settings'
-		 */ 
-		if(false == get_option('offers_for_woocommerce_options_general'))	// If the plugin options don't exist, create them.
-		{
-			add_option('offers_for_woocommerce_options_general');
-		}
+		 */
+        //the default options
+        $offers_for_woocommerce_options_general = array(
+            'general_setting_enable_make_offer_btn_frontpage' => '1',
+            'general_setting_enable_make_offer_btn_catalog' => '1'
+        );
+
+        //check to see if present already
+        if(!get_option('offers_for_woocommerce_options_general')) {
+            //option not found, add new
+            add_option('offers_for_woocommerce_options_general', $offers_for_woocommerce_options_general);
+        }
 
 		/**
 		 * Add option - 'Display Settings'
 		 */
-		if(false == get_option('offers_for_woocommerce_options_display'))	// If the plugin options don't exist, create them.
-		{
-			add_option('offers_for_woocommerce_options_display');
-		}
-		
+        //the default options
+        $offers_for_woocommerce_options_display = array(
+            'display_setting_make_offer_form_field_offer_total' => '1',
+            'display_setting_make_offer_form_field_offer_company_name' => '1',
+            'display_setting_make_offer_form_field_offer_phone' => '1',
+            'display_setting_make_offer_form_field_offer_notes' => '1'
+        );
+
+        //check to see if present already
+        if(!get_option('offers_for_woocommerce_options_display')) {
+            //option not found, add new
+            add_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
+        }
+
 		/**
 		 * Register setting - 'General Settings'
 		 */	
