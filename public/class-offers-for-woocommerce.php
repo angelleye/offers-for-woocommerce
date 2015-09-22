@@ -77,7 +77,7 @@ class Angelleye_Offers_For_Woocommerce {
 		 * Init - New Offer Form Submit
 		 * @since	0.1.0
 		 */
-		add_action( 'init', array( $this, 'new_offer_form_submit' ) );
+		add_action( 'wp_loaded', array( $this, 'new_offer_form_submit' ) );
 		 
 		/* Add "Make Offer" button code parts - Before add to cart */
 		add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
