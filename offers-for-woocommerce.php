@@ -22,6 +22,9 @@ if(!defined('ABSPATH'))
 {
 	die;
 }
+if (!defined('OFW_PLUGIN_URL')) {
+    define('OFW_PLUGIN_URL', plugin_dir_path( __FILE__ ));
+}
 
 /**
  *******************************
