@@ -946,7 +946,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'comment_author_url' => '',
                     'comment_content' => $comments
                 );
-                if($this->aeofwc_akismet_comment_check( $akismet_api_key, $data ) && FALSE)
+                if($this->aeofwc_akismet_comment_check( $akismet_api_key, $data ) )
                 {
                     // is spam
                     echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __( 'Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug ) ));
