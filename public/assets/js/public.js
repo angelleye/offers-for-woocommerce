@@ -2,8 +2,25 @@
 	"use strict";
 	$(function () {
 		// Public-facing JavaScript
-				
 		$(document).ready(function(){
+                    if (offers_for_woocommerce_js_params.is_product_type_variable == 'true') {
+                        var variations_select = $( ".woocommerce div.product form.cart .variations select option:selected" ).attr("value");
+                        if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
+                            if(variations_select.length > 0) {
+                                $("#offers-for-woocommerce-add-to-cart-wrap").show();
+                            } else {
+                                $("#offers-for-woocommerce-add-to-cart-wrap").hide();
+                            }
+                        } 
+                        $('.variations select').on('change', function (e) {
+                            if (this.value.length === 0) {
+                                $("#offers-for-woocommerce-add-to-cart-wrap").hide();
+                            } else {
+                                $("#offers-for-woocommerce-add-to-cart-wrap").show();
+                            }
+                        });  
+                    }
+                
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
                 var split = val.split("=", 2);
@@ -311,10 +328,12 @@
                     $("#woocommerce-make-offer-form-quantity").focus();
                 }
 
-                var targetTab = $(".tab_custom_ofwc_offer_tab");
-                $('html, body').animate({
-                    scrollTop: $(targetTab).offset().top - '100'
-                }, 'fast');
+               if ( $( ".tab_custom_ofwc_offer_tab" ).length ) {
+                    var targetTab = $(".tab_custom_ofwc_offer_tab");
+                    $('html, body').animate({
+                        scrollTop: $(targetTab).offset().top - '100'
+                    }, 'fast');
+                }
             }
 
             return false;

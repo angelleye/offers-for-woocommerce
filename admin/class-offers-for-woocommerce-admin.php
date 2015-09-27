@@ -360,6 +360,31 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_notices', array( $this, 'custom_bulk_admin_notices' ) );
         
         /**
+         * Action - Quick edit - Process Enable/Disable Offers on WooCommerce products display field
+         * @since   1.2
+         */
+        add_action('woocommerce_product_quick_edit_end', array( $this, 'woocommerce_product_quick_edit_end_own' ), 10 );
+        
+        /**
+         * Action - Quick edit - Process Enable/Disable Offers on WooCommerce products save field
+         * @since   1.2
+         */
+        add_action('woocommerce_product_quick_edit_save', array( $this, 'woocommerce_product_quick_edit_save_own' ), 10, 1 );
+        
+        /**
+         * Action - Bulk edit - Process Enable/Disable Offers on WooCommerce products display field
+         * @since   1.2
+         */
+        add_action('woocommerce_product_bulk_edit_end', array( $this, 'woocommerce_product_quick_edit_end_own' ), 10 );
+        
+        /**
+         * Action - Bulk edit - Process Enable/Disable Offers on WooCommerce products save data
+         * @since   1.2
+         */
+        add_action('woocommerce_product_bulk_edit_save', array( $this, 'woocommerce_product_quick_edit_save_own' ), 10, 1 );
+        
+
+        /**
          * END - custom functions
          */
 
@@ -3643,5 +3668,37 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             echo '<div class="updated"><p>'.$message.'</p></div>';
         }
     }
-       
+
+    /**
+     * Action - Quick edit - Process Enable/Disable Offers on WooCommerce products display field
+     * @since   1.2
+     */
+    public function woocommerce_product_quick_edit_end_own() {
+        global $post;
+        $field_value = 'yes';
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {
+            $is_enable = 'yes';
+        } else {
+            $is_enable = 'no';
+        }
+        ?>
+        <br class="clear" />
+        <label class="alignleft">
+            <span class="checkbox-title"><?php _e( 'Enable Offers?', $this->plugin_slug ); ?></span>
+            <input type="checkbox" name="offers_for_woocommerce_enabled" value="yes" <?php echo checked( $field_value, $is_enable, false ); ?>>
+        </label>
+        <br class="clear" />
+        <?php
+    }
+    
+    /**
+     * Action - Quick edit - Process Enable/Disable Offers on WooCommerce products save field
+     * @since   1.2
+     */
+    public function woocommerce_product_quick_edit_save_own($product) {
+        $post_id = $product->id;
+        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
+    } 
+
 }

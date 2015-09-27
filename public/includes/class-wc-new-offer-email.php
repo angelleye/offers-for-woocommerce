@@ -36,7 +36,7 @@ class WC_New_Offer_Email extends WC_Email {
 
         // these are the default heading and subject lines that can be overridden using the settings
         $this->heading = __('New Offer', $this->plugin_slug);
-        $this->subject = __('New Offer', $this->plugin_slug);
+        $this->subject = __('[{site_title}] New Offer ({offer_number}) - {offer_date}', $this->plugin_slug);
 
         // Set email template paths
         $this->template_html 	= 'woocommerce-new-offer.php';
@@ -71,6 +71,12 @@ class WC_New_Offer_Email extends WC_Email {
         {
             return;
         }
+        
+        $this->find['offer_date']      = '{offer_date}';
+        $this->find['offer_number']    = '{offer_number}';
+
+        $this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( date( 'Y-m-d H:i:s') ));
+        $this->replace['offer_number'] = $this->offer_args['offer_id'];
 
         // woohoo, send the email!
         $this->send( $this->recipient, $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
