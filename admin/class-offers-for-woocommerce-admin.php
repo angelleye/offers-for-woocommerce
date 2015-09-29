@@ -3181,9 +3181,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $errors = FALSE;
             $products = FALSE;
             $product_ids = FALSE;
-            $update_count = '0';
+            $update_count = 0;
             $where_args = array(
-                'post_type' => array( 'product', 'product_variation' ),
+                'post_type' => array( 'product' ),
                 'posts_per_page' => -1,
                 'post_status' => 'publish',
                 'fields' => 'id=>parent',
@@ -3347,18 +3347,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 {
                     foreach($products->posts as $target)
                     {
+                        
+                        $count_updated = false;
                         $target_product_id = ( $target->post_parent != '0' ) ? $target->post_parent : $target->ID;
-                        if(!update_post_meta($target_product_id, $ofw_meta_key_value , $ofwc_bulk_action_type ))
-                        {
+                        if( get_post_type( $target_product_id ) == 'product' ) {
+                            if(!update_post_meta($target_product_id, $ofw_meta_key_value , $ofwc_bulk_action_type )) {
+                            } else {
+                                $update_count++;
+                                $count_updated = true;
+                            }
                             if( $autoAcceptDeclinePercentage ) {
-                                if(update_post_meta($target_product_id, '_ofw_auto_accept_decline_percentage' , $autoAcceptDeclinePercentage )){
+                                update_post_meta($target_product_id, '_ofw_auto_accept_decline_percentage' , $autoAcceptDeclinePercentage );
+                                if(!$count_updated) {
                                     $update_count++;
                                 }
                             }
-                        }
-                        else
-                        {
-                            $update_count++;
                         }
                     }
                 }
