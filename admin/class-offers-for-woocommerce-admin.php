@@ -42,7 +42,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /**
          * Define email templates path
          */
-        define( 'OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
+                if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
+                    define( 'OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
+                }  
 
 		/**
 		 * Call $plugin_slug from public plugin class
@@ -312,7 +314,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since	0.1.0
          */
         add_action( 'wp_ajax_adminToolBulkEnableDisable', array( $this, 'adminToolBulkEnableDisableCallback') );
-
+        
         /*
          * Filter - Add email class to WooCommerce for 'Accepted Offer'
          * @since   0.1.0
@@ -487,7 +489,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @since	0.1.0
 	 */
 	function process_product_meta_custom_tab( $post_id ) {
-		update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_POST['offers_for_woocommerce_enabled']) && $_POST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_POST['offers_for_woocommerce_enabled']) && $_POST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_ofw_auto_accept_decline_enable', ( isset($_POST['_ofw_auto_accept_decline_enable']) && $_POST['_ofw_auto_accept_decline_enable'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_ofw_auto_accept_decline_percentage', ( isset($_POST['_ofw_auto_accept_decline_percentage']) && !empty($_POST['_ofw_auto_accept_decline_percentage']) ) ? $_POST['_ofw_auto_accept_decline_percentage'] : '' );
 	}
 	
 	/**
@@ -510,35 +514,48 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * Provides the input fields and add/remove buttons for custom tabs on the single product page.
 	 * @since	0.0.1
 	 */
-	function custom_tab_options_offers() 
-	{
-		global $post, $pagenow;
-        $post_meta_offers_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true);
-
-        $field_value = 'yes';
-        $field_callback = ($post_meta_offers_enabled) ? $post_meta_offers_enabled : 'no';
-
-        // get offers options - general
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-
-        // if new post, then set default based on settings
-        if( $pagenow == 'post-new.php' && isset($button_options_general['general_setting_enable_offers_by_default']) )
-        {
-            if( $button_options_general['general_setting_enable_offers_by_default'] == '1' )
-            {
-                $field_callback = 'yes';
-            }
-        }
-
-		?>
-		<div id="custom_tab_data_offers_for_woocommerce" class="panel woocommerce_options_panel">
-			<div class="options_group">
-				<p class="form-field">                    
-					<?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', $this->plugin_slug), 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', $this->plugin_slug) ) ); ?>
-				</p>                    
-			</div>                
-		</div>
-		<?php
+	function custom_tab_options_offers() {
+            global $post, $pagenow;
+            
+            /**
+             * offers_for_woocommerce_enabled
+             */
+            
+            $post_meta_offers_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true);
+            $field_value = 'yes';
+            $field_callback = ($post_meta_offers_enabled) ? $post_meta_offers_enabled : 'no';
+            $button_options_general = get_option('offers_for_woocommerce_options_general');
+            if( $pagenow == 'post-new.php' && isset($button_options_general['general_setting_enable_offers_by_default']) ) {
+                if( $button_options_general['general_setting_enable_offers_by_default'] == '1' ) {
+                    $field_callback = 'yes';
+                }
+             }
+             
+             /**
+             *  Auto Accept Offer
+             */
+             
+            $post_meta_auto_accept_decline_enabled = get_post_meta($post->ID, '_ofw_auto_accept_decline_enable', true);
+            $field_value_auto_accept_decline_enabled = 'yes';
+            $field_callback_auto_accept_decline_enabled = ($post_meta_auto_accept_decline_enabled) ? $post_meta_auto_accept_decline_enabled : 'no';
+            $post_meta_auto_accept_decline_percentage = get_post_meta($post->ID, '_ofw_auto_accept_decline_percentage', true);
+            $post_meta_auto_accept_decline_percentage_value = ($post_meta_auto_accept_decline_percentage) ? $post_meta_auto_accept_decline_percentage : '';
+            
+            ?>
+            <div id="custom_tab_data_offers_for_woocommerce" class="panel woocommerce_options_panel">
+                <div class="options_group">
+                    <p class="form-field">                    
+                        <?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', $this->plugin_slug) ) ); ?>
+                    </p>                    
+                </div> 
+                <div class="options_group">
+                     <p class="form-field">                    
+                        <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_accept_decline_enabled, 'cbvalue' => $field_callback_auto_accept_decline_enabled, 'id' => '_ofw_auto_accept_decline_enable', 'label' => __('Enable Auto Accept/Decline Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to Auto Accept/Decline Offer.', $this->plugin_slug) ) ); ?>
+                     </p> 
+                     <p class="form-field ofw_auto_accept_decline_percentage"><label for="ofw_auto_accept_decline_percentage"><?php echo __( 'Auto Accept/Decline Percentage', $this->plugin_slug ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_accept_decline_percentage_value; ?>" min="1" max="100" id="_ofw_auto_accept_decline_percentage" name="_ofw_auto_accept_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Enter percentage of product price to auto accept/decline offer' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
+                </div>
+            </div>
+            <?php
 	}
 	
 	/*************/
@@ -3180,8 +3197,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $ofwc_bulk_action_target_where_product_type = ( isset( $_POST["actionTargetWhereProductType"] ) ) ? $_POST['actionTargetWhereProductType'] : FALSE;
             $ofwc_bulk_action_target_where_price_value = ( isset( $_POST["actionTargetWherePriceValue"] ) ) ? $_POST['actionTargetWherePriceValue'] : FALSE;
             $ofwc_bulk_action_target_where_stock_value = ( isset( $_POST["actionTargetWhereStockValue"] ) ) ? $_POST['actionTargetWhereStockValue'] : FALSE;
+            $ofw_meta_key_value = ( isset($_POST['ofw_meta_key_value']) && !empty($_POST["ofw_meta_key_value"]) ) ?  $_POST['ofw_meta_key_value'] : FALSE;
+            $autoAcceptDeclinePercentage = ( isset($_POST['autoAcceptDeclinePercentage']) && !empty($_POST['autoAcceptDeclinePercentage']) ) ? $_POST['autoAcceptDeclinePercentage'] : FALSE;
 
             if (!$ofwc_bulk_action_type || !$ofwc_bulk_action_target_type){
+                $errors = TRUE;
+            }
+            if (!$ofw_meta_key_value){
                 $errors = TRUE;
             }
 
@@ -3326,9 +3348,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     foreach($products->posts as $target)
                     {
                         $target_product_id = ( $target->post_parent != '0' ) ? $target->post_parent : $target->ID;
-                        if(!update_post_meta($target_product_id, 'offers_for_woocommerce_enabled', $ofwc_bulk_action_type ))
+                        if(!update_post_meta($target_product_id, $ofw_meta_key_value , $ofwc_bulk_action_type ))
                         {
-
+                            if( $autoAcceptDeclinePercentage ) {
+                                if(update_post_meta($target_product_id, '_ofw_auto_accept_decline_percentage' , $autoAcceptDeclinePercentage )){
+                                    $update_count++;
+                                }
+                            }
                         }
                         else
                         {
@@ -3343,7 +3369,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 if($update_count == 0)
                 {
-                    $update_count = 'zero';
+                   $update_count = 'zero';
                 }
 
                 $redirect_url = admin_url('options-general.php?page=' . $this->plugin_slug . '&tab=tools&processed='.$update_count);
@@ -3645,6 +3671,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $post;
         $field_value = 'yes';
         $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $is_default_enable = 'no';
         if( isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {
             $is_enable = 'yes';
         } else {
@@ -3657,6 +3684,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             <input type="checkbox" name="offers_for_woocommerce_enabled" value="yes" <?php echo checked( $field_value, $is_enable, false ); ?>>
         </label>
         <br class="clear" />
+        <label class="alignleft">
+            <span class="checkbox-title"><?php _e( 'Enable Auto Accept/Decline Offers?', $this->plugin_slug ); ?></span>
+            <input type="checkbox" name="_ofw_auto_accept_decline_enable" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
+        </label>                  
+           
+        <label class="alignleft" for="ofw_auto_accept_decline_percentage"><?php echo __( 'Auto Accept/Decline Percentage', $this->plugin_slug ) ; ?>
+            <input type="number" placeholder="Enter Percentage" value="" min="1" max="100" id="_ofw_auto_accept_decline_percentage" name="_ofw_auto_accept_decline_percentage" style="" class="short">                   
+        </label>
+
         <?php
     }
     
@@ -3667,6 +3703,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function woocommerce_product_quick_edit_save_own($product) {
         $post_id = $product->id;
         update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
+        update_post_meta( $post_id, '_ofw_auto_accept_decline_enable', ( isset($_REQUEST['_ofw_auto_accept_decline_enable']) && $_REQUEST['_ofw_auto_accept_decline_enable'] ) ? 'yes' : 'no' );
+        if( isset($_REQUEST['_ofw_auto_accept_decline_percentage']) && !empty($_REQUEST['_ofw_auto_accept_decline_percentage']) ) {
+            update_post_meta( $post_id, '_ofw_auto_accept_decline_percentage', $_REQUEST['_ofw_auto_accept_decline_percentage']);
+        }
     } 
 
 }
