@@ -3177,7 +3177,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
             global $wpdb;
-
+            $processed_product_id = array();
             $errors = FALSE;
             $products = FALSE;
             $product_ids = FALSE;
@@ -3347,23 +3347,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 {
                     foreach($products->posts as $target)
                     {
-                        
-                        $count_updated = false;
                         $target_product_id = ( $target->post_parent != '0' ) ? $target->post_parent : $target->ID;
-                        if( get_post_type( $target_product_id ) == 'product' ) {
+                        if( get_post_type( $target_product_id ) == 'product' && !in_array($target_product_id, $processed_product_id) ) {
                             if(!update_post_meta($target_product_id, $ofw_meta_key_value , $ofwc_bulk_action_type )) {
                             } else {
-                                $update_count++;
-                                $count_updated = true;
+                                $processed_product_id[$target_product_id] = $target_product_id;
                             }
                             if( $autoAcceptDeclinePercentage ) {
                                 update_post_meta($target_product_id, '_ofw_auto_accept_decline_percentage' , $autoAcceptDeclinePercentage );
-                                if(!$count_updated) {
-                                    $update_count++;
-                                }
+                                $processed_product_id[$target_product_id] = $target_product_id;
                             }
                         }
                     }
+                    $update_count = count($processed_product_id);
                 }
             }
 
