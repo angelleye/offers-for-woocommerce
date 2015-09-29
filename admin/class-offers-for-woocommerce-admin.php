@@ -3183,7 +3183,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_ids = FALSE;
             $update_count = 0;
             $where_args = array(
-                'post_type' => array( 'product' ),
+                'post_type' => array( 'product', 'product_variation' ),
                 'posts_per_page' => -1,
                 'post_status' => 'publish',
                 'fields' => 'id=>parent',
