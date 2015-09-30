@@ -380,6 +380,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since   1.2
          */
         add_action('woocommerce_product_bulk_edit_save', array( $this, 'woocommerce_product_quick_edit_save_own' ), 10, 1 );
+        add_action('in_admin_footer', array($this, 'my_admin_footer_function'));
+
         
         
 
@@ -2858,6 +2860,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Get current data for Offer prior to save
             $post_data = get_post($post_id);
+            $coupon_code = ( isset($_POST["coupon_code"]) && !empty($_POST["coupon_code"]) ) ? $_POST["coupon_code"] : '';
 
             // if buyercountered-offer previous then use buyer counter values
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
@@ -2918,7 +2921,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
-                'offer_notes' => $offer_notes
+                'offer_notes' => $offer_notes,
+                'coupon_code' => $coupon_code
             );
 
             if( $variant_id )
@@ -3668,5 +3672,31 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $post_id = $product->id;
         update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
     } 
-
+    
+    public function my_admin_footer_function() {
+        $screen = get_current_screen();
+        if($screen->post_type == 'woocommerce_offer') {
+            add_thickbox();
+            $coupon_list = get_posts('post_type=shop_coupon');
+            
+            if($coupon_list) { ?>
+        <div id="ofw_send_coupon_declineOfferFromGrid" style="display: none;">
+                <form action="" id="declineOfferFromGrid">
+                    <label for="ofw_coupon_list">Coupon List</label>
+                    <select id="ofw_coupon_list" name="ofw_coupon_list">
+                        <option value="" >Select Coupon</option>
+                        <?php foreach ( $coupon_list as $coupon  ) : ?>
+                            <option value="<?php echo $coupon->post_name; ?>"><?php echo $coupon->post_title; ?></option>
+                        <?php endforeach; ?>
+                    </select><br><br>
+                    <input type="hidden" name="offer-id" id="offer-id" value="">
+                    <input type="button" value="Send coupon & Decline" class="button ofw-decline-popup" id="send_coupon_decline_offer" name="send_coupon_decline_offer">
+                    <input type="button" value="Decline" class="button ofw-decline-popup" id="decline_offer" name="decline_offer">
+                </form>
+             </div>
+            <a style="display: none" href="#TB_inline?height=150&amp;width=260&amp;&inlineId=ofw_send_coupon_declineOfferFromGrid" class="thickbox ofw_send_coupon_declineOfferFromGrid">View my inline content!</a>	
+            <?php 
+            }
+        }
+    }
 }

@@ -11,6 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
 
 <?php printf( '<p><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s.</strong></p>', get_bloginfo( 'name' ) ); ?>
+<?php 
+if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
+    printf( '<p><strong>'. __('Coupon Code: ', 'offers-for-woocommerce'). ' %s</strong></p>', $offer_args['coupon_code'] );
+}
+?>
 
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
