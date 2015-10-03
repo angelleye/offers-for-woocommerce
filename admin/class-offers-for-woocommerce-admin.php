@@ -1249,7 +1249,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function add_meta_box_offer_summary_callback( $post )
     {
-        global $post;
+        global $post, $wpdb;
 
         if($post->ID)
         {
@@ -1378,8 +1378,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if($author_data)
             {
                 // count offers by author id
-                global $wpdb;
-
+               
                 $post_type = 'woocommerce_offer';
 
                 $args = array($post_type,'trash', $post->post_author);
@@ -1421,6 +1420,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                 $author_data->offer_counts = $author_counts;
             }
+            
+            
+	    $query_counter_offers_history = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' AND $wpdb->comments.comment_type = 'offers-history' ORDER BY comment_date ASC", $post->ID );
+            $query_counter_offers_history_result = $wpdb->get_results($query_counter_offers_history);
 
             /**
              * Output html for Offer Comments loop
@@ -1911,7 +1914,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'comment_author_email' => '',
             'comment_author_url' => '',
             'comment_content' => $comment_text,
-            'comment_type' => '',
+            'comment_type' => 'offers-history',
             'comment_parent' => 0,
             'user_id' => get_current_user_id(),
             'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
@@ -1925,6 +1928,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if( $new_comment_id )
         {
             add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
+            if($post_data->post_status == 'countered-offer') {
+                add_comment_meta( $new_comment_id, 'offer_quantity', $offer_quantity, true );
+                add_comment_meta( $new_comment_id, 'offer_amount', $offer_total, true );
+                add_comment_meta( $new_comment_id, 'offer_price_per', $offer_price_per, true );
+                add_comment_meta( $new_comment_id, 'offer_status', '3', true );
+            }
         }
 	}
 

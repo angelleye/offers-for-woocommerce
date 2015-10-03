@@ -916,7 +916,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $formData['offer_email'] = $formData['orig_offer_email'];
                 $formData['offer_product_id'] = $formData['orig_offer_product_id'];
                 $formData['offer_variation_id'] = $formData['orig_offer_variation_id'];
-				$formData['offer_quantity'] = $formData['orig_offer_quantity'];
+		$formData['offer_quantity'] = $formData['orig_offer_quantity'];
                 $formData['offer_price_per'] = $formData['orig_offer_price_per'];
                 $formData['offer_amount'] = $formData['orig_offer_amount'];
                 $formData['offer_uid'] = $formData['orig_offer_uid'];
@@ -1031,7 +1031,7 @@ class Angelleye_Offers_For_Woocommerce {
                         'comment_author_email' => '',
                         'comment_author_url' => '',
                         'comment_content' => $comment_text,
-                        'comment_type' => '',
+                        'comment_type' => 'offers-history',
                         'comment_parent' => 0,
                         'user_id' => '',
                         'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
@@ -1045,6 +1045,10 @@ class Angelleye_Offers_For_Woocommerce {
                     if( $new_comment_id )
                     {
                         add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $parent_post_id, true );
+                        add_comment_meta( $new_comment_id, 'offer_quantity', $formData['offer_quantity'], true );
+                        add_comment_meta( $new_comment_id, 'offer_amount', $formData['offer_amount'], true );
+                        add_comment_meta( $new_comment_id, 'offer_price_per', $formData['offer_price_per'], true );
+                        add_comment_meta( $new_comment_id, 'offer_status', '2', true );
                     }
                 }
                 else
@@ -1078,7 +1082,7 @@ class Angelleye_Offers_For_Woocommerce {
                             'comment_author_email' => '',
                             'comment_author_url' => '',
                             'comment_content' => $comment_text,
-                            'comment_type' => '',
+                            'comment_type' => 'offers-history',
                             'comment_parent' => 0,
                             'user_id' => 1,
                             'comment_author_IP' => '127.0.0.1',
@@ -1092,6 +1096,10 @@ class Angelleye_Offers_For_Woocommerce {
                         if( $new_comment_id )
                         {
                             add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $parent_post_id, true );
+                            add_comment_meta( $new_comment_id, 'offer_quantity', $formData['offer_quantity'], true );
+                            add_comment_meta( $new_comment_id, 'offer_amount', $formData['offer_amount'], true );
+                            add_comment_meta( $new_comment_id, 'offer_price_per', $formData['offer_price_per'], true );
+                            add_comment_meta( $new_comment_id, 'offer_status', '1', true );
                         }
                     }
                     else
@@ -1600,7 +1608,7 @@ class Angelleye_Offers_For_Woocommerce {
                         'comment_author_email' => '',
                         'comment_author_url' => '',
                         'comment_content' => $comment_text,
-                        'comment_type' => '',
+                        'comment_type' => 'offers-history',
                         'comment_parent' => 0,
                         'user_id' => 1,
                         'comment_author_IP' => '127.0.0.1',
@@ -1614,6 +1622,7 @@ class Angelleye_Offers_For_Woocommerce {
                     if( $new_comment_id )
                     {
                         add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true );
+                        add_comment_meta( $new_comment_id, 'offer_status', '4', true );
                     }
                 }
             }
