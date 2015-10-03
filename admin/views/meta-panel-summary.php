@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <?php if( isset($query_counter_offers_history_result) && !empty($query_counter_offers_history_result) ) { ?>
-                <h5><?php echo __('Counter offers history', $this->plugin_slug);?></h5>
+                <h5><?php echo __('Offer History', $this->plugin_slug);?></h5>
                 <?php 
                 
                 $offer_history = '<ul class="counter-offers-history-wrap">';
