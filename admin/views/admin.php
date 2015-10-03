@@ -141,8 +141,8 @@
         </p>-->
         <a name="ofwc-t1"></a>
         <div class="ofw-enable-auto-accept-decline">
-            <h3><?php echo __('Bulk Edit Tool for auto accept/decline offer', $this->plugin_slug); ?></h3>
-            <div><?php echo __('Select from the options below to enable / disable auto accept/decline on multiple products at once.', $this->plugin_slug); ?></div>
+            <h3><?php echo __('Bulk Edit Tool for Automatically Accepting or Declining Offers', $this->plugin_slug); ?></h3>
+            <div><?php echo __('Select from the options below to enable or disable automated acceptance or declining of offers on multiple products at once.', $this->plugin_slug); ?></div>
 
             <div class="ofw-tool-auto-accept-decline-action-section ofw-bulk-tool-action-type">
                 <label for="ofw-bulk-tool-action-type"><?php echo __('Action', $this->plugin_slug); ?></label>
