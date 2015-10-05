@@ -192,9 +192,11 @@
                     formData['parent_offer_id'] = parentOfferId;
                     formData['parent_offer_uid'] = parentOfferUid;
                     formData['offer_notes'] = offerNotes;
+                    formData['security'] = offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce;
+                    formData['action'] = "new_offer_form_submit";
 
                     // ajax submit offer
-                    var ajaxtarget = '?woocommerceoffer_post=1';
+                    //var ajaxtarget = '?woocommerceoffer_post=1';
 
                     // abort any pending request
                     if (request) {
@@ -203,7 +205,7 @@
 
                     // fire off the request
                     var request = $.ajax({
-                        url: ajaxtarget,
+                        url: offers_for_woocommerce_js_params.ajax_url,
                         type: "post",
                         data: formData
                     });
