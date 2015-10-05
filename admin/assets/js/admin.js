@@ -39,6 +39,11 @@
             {
                 $('.woocommerce-offer-final-offer-wrap').hide();
             }
+            
+            if(currentPostStatus !== 'declined-offer')
+            {
+                $('.woocommerce-offer-send-coupon-wrap').hide();
+            }
 
             $('#woocommerce_offer_post_status').change(function(){
                 if( $(this).val() == 'countered-offer')
@@ -49,6 +54,13 @@
                 {
                     $('.woocommerce-offer-final-offer-wrap').slideUp();
                 }
+                
+                if( $(this).val() == 'declined-offer') { 
+                    $('.woocommerce-offer-send-coupon-wrap').fadeIn('fast');
+                } else {
+                    $('.woocommerce-offer-send-coupon-wrap').slideUp();
+                }
+                
                 return false;
             });
 

@@ -1821,6 +1821,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $offer_uid = get_post_meta($post_id, 'offer_uid', true);
             $offer_name = get_post_meta($post_id, 'offer_name', true);
             $offer_email = $recipient;
+            $coupon_code = ( isset($_POST["ofw_coupon_list"]) && !empty($_POST["ofw_coupon_list"]) ) ? $_POST["ofw_coupon_list"] : '';
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
@@ -1855,7 +1856,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
-                'offer_notes' => $offer_notes
+                'offer_notes' => $offer_notes,
+                'coupon_code' => $coupon_code
             );
 
             if( $variant_id )
@@ -3727,24 +3729,31 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             add_thickbox();
             $coupon_list = get_posts('post_type=shop_coupon');
             
-            if($coupon_list) { ?>
-        <div id="ofw_send_coupon_declineOfferFromGrid" style="display: none;">
+            ?>
+              <div id="ofw_send_coupon_declineOfferFromGrid" style="display: none;">
                 <form action="" id="declineOfferFromGrid">
+                    <?php if($coupon_list) { ?>
                     <label for="ofw_coupon_list">Coupon List</label>
                     <select id="ofw_coupon_list" name="ofw_coupon_list">
-                        <option value="" >Select Coupon</option>
+                        <option value="" ><?php _e( 'Select Coupon', $this->plugin_slug ); ?></option>
                         <?php foreach ( $coupon_list as $coupon  ) : ?>
                             <option value="<?php echo $coupon->post_name; ?>"><?php echo $coupon->post_title; ?></option>
                         <?php endforeach; ?>
-                    </select><br><br>
+                    </select>
+                    <?php } else { 
+                        echo __('No Coupons found.', $this->plugin_slug);
+                    }
+                     ?>
+                    <br><br>
                     <input type="hidden" name="offer-id" id="offer-id" value="">
-                    <input type="button" value="Send coupon & Decline" class="button ofw-decline-popup" id="send_coupon_decline_offer" name="send_coupon_decline_offer">
-                    <input type="button" value="Decline" class="button ofw-decline-popup" id="decline_offer" name="decline_offer">
+                    <?php if($coupon_list) { ?>
+                        <input type="button" value="<?php _e( 'Send coupon & Decline', $this->plugin_slug ); ?>" class="button ofw-decline-popup" id="send_coupon_decline_offer" name="send_coupon_decline_offer">
+                    <?php } ?>
+                    <input type="button" value="<?php _e( 'Decline', $this->plugin_slug ); ?>" class="button ofw-decline-popup" id="decline_offer" name="decline_offer">
                 </form>
              </div>
-            <a style="display: none" href="#TB_inline?height=150&amp;width=260&amp;&inlineId=ofw_send_coupon_declineOfferFromGrid" class="thickbox ofw_send_coupon_declineOfferFromGrid">View my inline content!</a>	
-            <?php 
-            }
+            <a style="display: none" href="#TB_inline?height=150&amp;width=260&amp;&inlineId=ofw_send_coupon_declineOfferFromGrid" class="thickbox ofw_send_coupon_declineOfferFromGrid"></a>	
+           <?php 
         }
-    }
+    }      
 }

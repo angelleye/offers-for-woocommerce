@@ -243,6 +243,21 @@
                         <input type="checkbox" name="offer_final_offer" id="offer-final-offer" value="1" <?php echo(isset($postmeta['offer_final_offer'][0]) && $postmeta['offer_final_offer'][0] == '1') ? 'checked="checked"' : ''?> autocomplete="off">
                     </div>
                 </div>
+                
+                <div class="woocommerce-offer-send-coupon-wrap">
+                    <?php 
+                        $coupon_list = get_posts('post_type=shop_coupon');
+                        if($coupon_list) { ?>
+                        <label for="ofw_coupon_list">Coupon List</label>
+                        <select id="ofw_coupon_list" name="ofw_coupon_list">
+                            <option value="" ><?php _e( 'Select Coupon', $this->plugin_slug ); ?></option>
+                            <?php foreach ( $coupon_list as $coupon  ) : ?>
+                                <option value="<?php echo $coupon->post_name; ?>"><?php echo $coupon->post_title; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php }
+                     ?>
+                </div>
 
                 <div class="woocommerce-offer-expiration-wrap">
                     <label for="offer-expiration-date"><?php echo __('Offer Expires', $this->plugin_slug); ?></label>
