@@ -1955,7 +1955,6 @@ class Angelleye_Offers_For_Woocommerce {
      * @param type $is_counter_offer
      */
     public function ofw_mailing_list_handler($is_counter_offer) {
-        mail('kcppdevelopers@gmail.com', 'log', print_r($_POST, true));
         if ($this->ofw_is_mailling_list_enable() && !$is_counter_offer) {
             if (isset($_POST['join_our_mailing_list']) && $_POST['join_our_mailing_list'] == "yes") {
                 if (isset($_POST) && !empty($_POST)) {

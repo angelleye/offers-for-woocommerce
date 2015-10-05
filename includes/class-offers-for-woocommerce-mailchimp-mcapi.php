@@ -1321,7 +1321,6 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
         $params["update_existing"] = $update_existing;
         $params["replace_interests"] = $replace_interests;
         $params["send_welcome"] = $send_welcome;
-        mail('kcppdevelopers@gmail.com', 'param', print_r($params, true));
         return $this->callServer("listSubscribe", $params);
     }
 
