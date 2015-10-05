@@ -26,6 +26,15 @@ if (!defined('OFW_PLUGIN_URL')) {
     define('OFW_PLUGIN_URL', plugin_dir_path( __FILE__ ));
 }
 
+if (!defined('OFFERS_FOR_WOOCOMMERCE_LOG_DIR')) {
+    $upload_dir = wp_upload_dir();
+    define('OFFERS_FOR_WOOCOMMERCE_LOG_DIR', $upload_dir['basedir'] . '/offers-for-woocommerce-logs/');
+}
+
+if (!defined('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR')) {
+    define('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR', dirname(__FILE__));
+}
+
 /**
  *******************************
  * Public-Facing Functionality *

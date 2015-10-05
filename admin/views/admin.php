@@ -23,6 +23,8 @@
         <a href="?page=<?php echo $this->plugin_slug; ?>&tab=general_settings" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('General Settings', $this->plugin_slug); ?></a>
         <a href="?page=<?php echo $this->plugin_slug; ?>&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('Display Settings', $this->plugin_slug); ?></a>
         <a href="?page=<?php echo $this->plugin_slug; ?>&tab=tools" class="nav-tab <?php echo $active_tab == 'tools' ? 'nav-tab-active' : ''; ?>"><?php echo __('Tools', $this->plugin_slug); ?></a>
+        <?php do_action('offers_for_woocommerce_setting_tab_content_save'); ?>
+        <?php do_action('offers_for_woocommerce_setting_tab'); ?>
     </h2>
 
     <?php if( $active_tab == 'display_settings' ) { ?>
@@ -240,7 +242,7 @@
         </div>
         </form>
 
-    <?php } else { ?>
+    <?php } elseif($active_tab == "general_settings") { ?>
         <form method="post" action="options.php" id="woocommerce_offers_options_form">
     <?php
         settings_fields( 'offers_for_woocommerce_options_general' );
@@ -250,4 +252,5 @@
     ?>
         </form>
     <?php } ?>
+    <?php do_action('offers_for_woocommerce_setting_tab_content'); ?>
 </div>

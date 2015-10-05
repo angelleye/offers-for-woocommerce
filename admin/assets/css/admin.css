@@ -653,3 +653,6 @@ body.post-type-woocommerce_offer th.column-title {
 }
 
 #general_setting_default_expire_days { width:60px; }
+form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_mailing_list {
+    width: 14px !important;
+}

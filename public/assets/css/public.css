@@ -231,3 +231,6 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
     font-weight: bold;
     line-height: 20px;
 }
+form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_mailing_list {
+    width: 14px !important;
+}

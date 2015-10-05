@@ -133,7 +133,8 @@
             <?php } else { ?>
                 <input type="hidden" name="offer_notes" id="angelleye-offer-notes" value="">
             <?php } ?>
-            <?php 
+            <?php
+            do_action('woocommerce_make_offer_form_end', $is_counter_offer);
             $submit_counter_offer_text = ($is_counter_offer) ? ' Counter' : '';
             $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
             ?>
