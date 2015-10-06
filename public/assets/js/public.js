@@ -89,10 +89,6 @@
                 }
             );
 
-            var offerSubmitBtnDefaultVal = $('#woocommerce-make-offer-form').find( ':submit' ).attr('data-orig-val');
-            if( offerSubmitBtnDefaultVal == '')
-                offerSubmitBtnDefaultVal = 'Submit Offer';
-            $('#woocommerce-make-offer-form').find( ':submit' ).attr('value', offerSubmitBtnDefaultVal);
             $('#woocommerce-make-offer-form').find( ':submit' ).removeAttr( 'disabled','disabled' );
 
             (function($){
