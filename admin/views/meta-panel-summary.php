@@ -244,6 +244,21 @@
                     </div>
                 </div>
 
+                <div class="woocommerce-offer-send-coupon-wrap">
+                    <?php 
+                        $coupon_list = get_posts('post_type=shop_coupon');
+                        if($coupon_list) { ?>
+                        <label for="ofw_coupon_list"><?php _e( 'Coupon List', $this->plugin_slug ); ?></label>
+                        <select id="ofw_coupon_list" name="ofw_coupon_list">
+                            <option value="" ><?php _e( 'Select Coupon', $this->plugin_slug ); ?></option>
+                            <?php foreach ( $coupon_list as $coupon  ) : ?>
+                                <option value="<?php echo $coupon->post_name; ?>"><?php echo $coupon->post_title; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php }
+                     ?>
+                </div>
+                
                 <div class="woocommerce-offer-expiration-wrap">
                     <label for="offer-expiration-date"><?php echo __('Offer Expires', $this->plugin_slug); ?></label>
                     <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("m/d/Y", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>" autocomplete="off">
