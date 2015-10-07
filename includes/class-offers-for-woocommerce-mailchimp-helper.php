@@ -14,17 +14,21 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
     /**
      * Subscribe User to MailChimp
      *
-     * @since    1.0.0
+     * @since    1.2.0
      * @access   static
      */
-    
     public $plugin_slug = null;
-    
+
     public function __construct() {
         $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
         $this->plugin_slug = $plugin->get_plugin_slug();
     }
 
+    /**
+     * @since    1.2.0
+     * @param type $posted
+     * @return type
+     */
     public function ofw_mailchimp_handler($posted) {
 
         if (!isset($posted) || empty($posted)) {
@@ -67,6 +71,10 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
         }
     }
 
+    /**
+     * @since    1.2.0
+     * @return string
+     */
     public function offers_for_woocommerce_mcapi_setting_fields() {
 
         $fields[] = array('title' => __('MailChimp Integration', $this->plugin_slug), 'type' => 'title', 'desc' => '', 'id' => 'general_options');
@@ -93,7 +101,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
         $fields[] = array(
             'title' => __('Force MailChimp lists refresh', $this->plugin_slug),
             'desc' => __("Check and 'Save changes' this if you've added a new MailChimp list and it's not showing in the list above.", $this->plugin_slug),
-            'id' => 'ofw_force_refresh',
+            'id' => 'ofw_mailchimp_force_refresh',
             'type' => 'checkbox',
         );
 
@@ -114,13 +122,14 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
     }
 
     /**
+     *  @since    1.2.0
      *  Get List from MailChimp
      */
     public function angelleye_get_ofw_mailchimp_lists($apikey) {
         $mailchimp_lists = array();
         $enable_mailchimp = get_option('ofw_enable_mailchimp');
         if (isset($enable_mailchimp) && $enable_mailchimp == 'yes') {
-            $mailchimp_lists = unserialize(get_transient('ofw_mailchimp_lists'));
+            $mailchimp_lists = unserialize(get_transient('ofw_mailchimp_mailinglist'));
             $mailchimp_debug_log = (get_option('ofw_log_enable_mailchimp') == 'yes') ? 'yes' : 'no';
             if ('yes' == $mailchimp_debug_log) {
                 if (!class_exists('Angelleye_Offers_For_Woocommerce_Logger')) {
@@ -128,7 +137,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 }
                 $log = new Angelleye_Offers_For_Woocommerce_Logger();
             }
-            if (empty($mailchimp_lists) || get_option('ofw_force_refresh') == 'yes') {
+            if (empty($mailchimp_lists) || get_option('ofw_mailchimp_force_refresh') == 'yes') {
                 include_once 'class-offers-for-woocommerce-mailchimp-mcapi.php';
                 $mailchimp_api_key = get_option('ofw_mailchimp_api_key');
                 $apikey = (isset($mailchimp_api_key)) ? $mailchimp_api_key : '';
@@ -156,7 +165,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                         $log->add('MailChimp', 'MailChimp Get List Success..');
                     }
                     set_transient('ofw_mailchimp_mailinglist', serialize($mailchimp_lists), 86400);
-                    update_option('ofw_force_refresh', 'no');
+                    update_option('ofw_mailchimp_force_refresh', 'no');
                 }
             }
         }

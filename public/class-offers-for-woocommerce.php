@@ -889,7 +889,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'comment_author_url' => '',
                     'comment_content' => $comments
                 );
-                if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data)) {
+                if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data) && FALSE) {
                     // is spam
                     echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __('Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug)));
                     exit;
@@ -1160,6 +1160,7 @@ class Angelleye_Offers_For_Woocommerce {
                 do_action('woocommerce_after_offer_submit', $is_counter_offer);
 
                 // Success
+                
                 echo json_encode(array("statusmsg" => 'success'));
                 exit;
             }
@@ -1923,13 +1924,27 @@ class Angelleye_Offers_For_Woocommerce {
             return false;
         }
     }
+    
+    /**
+     * @since   1.2.0
+     * @return boolean
+     */
+    public function is_mailpoet_enable() {
+        $enable_mailpoet = get_option('ofw_enable_mailpoet');
+        $ofw_mailpoet_lists = get_option('ofw_mailpoet_lists');
+        if ((isset($enable_mailpoet) && $enable_mailpoet == 'yes') && (isset($ofw_mailpoet_lists) && !empty($ofw_mailpoet_lists))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * @since   1.2.0
      * @return boolean
      */
     public function ofw_is_mailling_list_enable() {
-        if ($this->is_mailchimp_enable() || $this->is_constant_contact_enable()) {
+        if ($this->is_mailchimp_enable() || $this->is_constant_contact_enable() || $this->is_mailpoet_enable()) {
             return true;
         } else {
             return false;
@@ -1962,13 +1977,18 @@ class Angelleye_Offers_For_Woocommerce {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailChimp_Helper();
                         $OFW_MailChimp_Helper->ofw_mailchimp_handler($_POST);
-                    } else {
-                        include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-paypal-ipn-for-wordpress-constant-contact-helper.php';
+                    } elseif($this->is_constant_contact_enable()) {
+                        include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
                         $OFW_MailChimp_Helper->ofw_constantcontact_handler($_POST);
+                    } elseif($this->is_mailpoet_enable()) {
+                        include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
+                        $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
+                        $OFW_MailChimp_Helper->ofw_mailpoet_handler($_POST);
                     }
                 }
             }
+            return true;
         }
     }
 

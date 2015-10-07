@@ -9,8 +9,6 @@
  * @subpackage  offers-for-woocommerce/includes
  * @author      Angell EYE <service@angelleye.com>
  */
-
-
 require_once 'Ctct/autoload.php';
 
 use Ctct\ConstantContact;
@@ -157,7 +155,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
     }
 
     /**
-     * @since    1.0.0
+     * @since    1.2.0
      * @return type
      */
     public function angelleye_get_constantcontact_lists() {
@@ -172,7 +170,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 }
                 $log = new Angelleye_Offers_For_Woocommerce_Logger();
             }
-            $constantcontact_lists = unserialize(get_transient('ofw_constantcontact_lists'));
+            $constantcontact_lists = unserialize(get_transient('ofw_constantcontact_mailinglist'));
             if (empty($constantcontact_lists) || get_option('ofw_constantcontact_force_refresh') == 'yes') {
                 try {
                     $cc = new ConstantContact($concontact_api_key);
@@ -183,7 +181,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                         foreach ($list_name as $list_namekey => $list_namevalue) {
                             $constantcontact_lists[$list_namevalue->id] = $list_namevalue->name;
                         }
-                        set_transient('ofw_constantcontact_lists', serialize($constantcontact_lists), 86400);
+                        set_transient('ofw_constantcontact_mailinglist', serialize($constantcontact_lists), 86400);
                         update_option('ofw_constantcontact_force_refresh', 'no');
                     } else {
                         $constantcontact_lists['false'] = __("Unable to load Constant Contact lists, check your API Key.", $this->plugin_slug);
@@ -192,7 +190,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                     unset($constantcontact_lists);
                     $constantcontact_lists = array();
                     $constantcontact_lists['false'] = __("Unable to load Constant Contact lists, check your API Key.", $this->plugin_slug);
-                    set_transient('ofw_constantcontact_lists', serialize($constantcontact_lists), 86400);
+                    set_transient('ofw_constantcontact_mailinglist', serialize($constantcontact_lists), 86400);
                 }
             }
             return $constantcontact_lists;

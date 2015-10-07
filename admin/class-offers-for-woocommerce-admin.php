@@ -3726,6 +3726,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         ?>
         <a href="?page=<?php echo $this->plugin_slug; ?>&tab=mailchimp" class="nav-tab <?php echo $active_tab == 'mailchimp' ? 'nav-tab-active' : ''; ?>"><?php echo __('MailChimp', $this->plugin_slug); ?></a>
         <a href="?page=<?php echo $this->plugin_slug; ?>&tab=constant_contact" class="nav-tab <?php echo $active_tab == 'constant_contact' ? 'nav-tab-active' : ''; ?>"><?php echo __('Constant Contact', $this->plugin_slug); ?></a>
+        <a href="?page=<?php echo $this->plugin_slug; ?>&tab=mailpoet" class="nav-tab <?php echo $active_tab == 'mailpoet' ? 'nav-tab-active' : ''; ?>"><?php echo __('MailPoet', $this->plugin_slug); ?></a>
         <?php 
         
     }   
@@ -3750,18 +3751,38 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         
         if( $active_tab == 'constant_contact' ) {
             include_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
-            include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-paypal-ipn-for-wordpress-constant-contact-helper.php';
+            include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
             $OFW_Woocommerce_ConstantContact_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
             $ccapi_setting_fields = $OFW_Woocommerce_ConstantContact_Helper->ofw_ccapi_setting_field();
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
-        ?>
-        <form id="constantContact_integration_form" enctype="multipart/form-data" action="" method="post">
-            <?php $Html_output->init($ccapi_setting_fields); ?>
-            <p class="submit">
-                <input type="submit" name="ofw_constantContact_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
-            </p>
-        </form>
-        <?php
+            ?>
+            <form id="constantContact_integration_form" enctype="multipart/form-data" action="" method="post">
+                <?php $Html_output->init($ccapi_setting_fields); ?>
+                <p class="submit">
+                    <input type="submit" name="ofw_constantContact_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
+                </p>
+            </form>
+            <?php
+        }
+        
+        if( $active_tab == 'mailpoet' ) {
+            if (( class_exists('WYSIJA') )) {
+                include_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
+                include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
+                $OFW_Woocommerce_MailPoet_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
+                $mailpoet_setting_fields = $OFW_Woocommerce_MailPoet_Helper->offers_for_woocommerce_mailpoet_setting_fields();
+                $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
+                ?>
+                <form id="constantContact_integration_form" enctype="multipart/form-data" action="" method="post">
+                    <?php $Html_output->init($mailpoet_setting_fields); ?>
+                    <p class="submit">
+                        <input type="submit" name="ofw_mailpoet_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
+                    </p>
+                </form>
+                <?php
+            } else {
+                echo "<br><br><strong>MailPoet subscribe</strong> requires <strong><a target='_blank' href='http://wordpress.org/plugins/wysija-newsletters/' rel='nofollow'>MailPoet plugin</a></strong> plugin to work normally. Please activate it or install it.<br /><br />Back to the WordPress <a href='" . admin_url('plugin-install.php?tab=search&s=MailPoet') . "'>Plugins page</a>.";
+            }
         }
     }    
 
@@ -3776,11 +3797,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         if( isset($_POST['ofw_constantContact_integration']) ) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
-            include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-paypal-ipn-for-wordpress-constant-contact-helper.php';
+            include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
             $OFW_Woocommerce_ConstantContact_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
             $ccapi_setting_fields = $OFW_Woocommerce_ConstantContact_Helper->ofw_ccapi_setting_field();
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($ccapi_setting_fields);
+        }
+        if( isset($_POST['ofw_mailpoet_integration']) ) {
+            require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
+            include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
+            $OFW_Woocommerce_MailPoet_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
+            $mailpoet_setting_fields = $OFW_Woocommerce_MailPoet_Helper->offers_for_woocommerce_mailpoet_setting_fields();
+            $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
+            $Html_output->save_fields($mailpoet_setting_fields);
         }
     }
 
