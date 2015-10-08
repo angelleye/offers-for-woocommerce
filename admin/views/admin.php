@@ -149,15 +149,23 @@
                 <div>
                     <select name="ofw_bulk_tool_action_type" id="ofw-bulk-tool-action-type" required="required">
                         <option value=""><?php echo __('- Select option', $this->plugin_slug); ?></option>
-                        <option value="enable"><?php echo __('Enable auto accept/decline offer', $this->plugin_slug); ?></option>
-                        <option value="disable"><?php echo __('Disable auto accept/decline offer', $this->plugin_slug); ?></option>
+                        <option value="accept_enable"><?php echo __('Enable auto accept offer', $this->plugin_slug); ?></option>
+                        <option value="accept_disable"><?php echo __('Disable auto accept offer', $this->plugin_slug); ?></option>
+                        <option value="decline_enable"><?php echo __('Enable auto decline offer', $this->plugin_slug); ?></option>
+                        <option value="decline_disable"><?php echo __('Disable auto decline offer', $this->plugin_slug); ?></option>
                     </select>
                 </div>
             </div>
-            <div class="ofw-tool-auto-accept-decline-action-section ofw-bulk-tool-auto-accept-decline-percentage angelleye-hidden">
-                <label for="ofw-bulk-tool-auto-accept-percentage"><?php echo __( 'Auto Accept/Decline Percentage', $this->plugin_slug ) ; ?></label>
+            <div class="ofw-tool-auto-accept-decline-action-section ofw-bulk-tool-auto-accept-percentage angelleye-hidden">
+                <label for="ofw-bulk-tool-auto-accept-percentage"><?php echo __( 'Auto Accept Percentage', $this->plugin_slug ) ; ?></label>
                 <div>
-                    <input type="number" name="ofw_bulk_tool_auto_accept_decline_percentage" id="ofw-bulk-tool-auto-accept-decline-percentage" max="100" min="1" placeholder="Enter Percentage">
+                    <input type="number" name="ofw_bulk_tool_auto_accept_percentage" id="ofw-bulk-tool-auto-accept-percentage" max="100" min="1" placeholder="Enter Percentage">
+                </div>
+            </div>
+            <div class="ofw-tool-auto-accept-decline-action-section ofw-bulk-tool-auto-decline-percentage angelleye-hidden">
+                <label for="ofw-bulk-tool-auto-decline-percentage"><?php echo __( 'Auto Decline Percentage', $this->plugin_slug ) ; ?></label>
+                <div>
+                    <input type="number" name="ofw_bulk_tool_auto_decline_percentage" id="ofw-bulk-tool-auto-decline-percentage" max="100" min="1" placeholder="Enter Percentage">
                 </div>
             </div>
             <div class="ofw-tool-auto-accept-decline-action-section ofw-bulk-tool-action-target-type">

@@ -957,7 +957,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'comment_author_url' => '',
                     'comment_content' => $comments
                 );
-                if($this->aeofwc_akismet_comment_check( $akismet_api_key, $data ))
+                if($this->aeofwc_akismet_comment_check( $akismet_api_key, $data ) && FALSE)
                 {
                     // is spam
                     echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __( 'Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug ) ));
@@ -1958,7 +1958,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   1.2.0
      */
     public function ofwc_auto_accept_auto_decline_handler($offer_id, $product_id, $variant_id, $emails) {
-        $post_meta_auto_accept_enabled = get_post_meta($product_id, '_ofw_auto_accept_decline_enable', true);
+        $post_meta_auto_accept_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_enabled', true);
         if( isset($post_meta_auto_accept_enabled) && $post_meta_auto_accept_enabled == 'yes') {
             if( isset($variant_id) && !empty($variant_id) ) {
                  $variable_product = new WC_Product_Variation( $variant_id );
@@ -1972,15 +1972,36 @@ class Angelleye_Offers_For_Woocommerce {
              }
              $product_price = (isset($atual_sales_price) && !empty($atual_sales_price)) ? $atual_sales_price : $atual_regular_price;
              $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
-             $auto_accept_percentage = get_post_meta($product_id, '_ofw_auto_accept_decline_percentage', true);
+             $auto_accept_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_percentage', true);
              if( isset($offer_price) && !empty($offer_price) && isset($auto_accept_percentage) && !empty($auto_accept_percentage) ) {
                  $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
                  if( (int) $auto_accept_percentage <= (int) $user_offer_percentage) {
                      $this->ofw_auto_approve_offer($offer_id, $emails);
                      return true;
-                 } else {
-                      $this->ofw_auto_decline_offer($offer_id, $emails);
-                      return true;
+                 }
+             }
+        }
+
+        $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
+        if( isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
+            if( isset($variant_id) && !empty($variant_id) ) {
+                 $variable_product = new WC_Product_Variation( $variant_id );
+                 $atual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
+                 $atual_sales_price = $variable_product->sale_price;
+             } else {
+                 $atual_regular_price = get_post_meta( $product_id, '_regular_price', true);
+                 $atual_sales_price = get_post_meta( $product_id, '_sale_price', true);
+                 $atual_regular_price = (isset($atual_regular_price) && !empty($atual_regular_price) ) ? $atual_regular_price : 0;
+
+             }
+             $product_price = (isset($atual_sales_price) && !empty($atual_sales_price)) ? $atual_sales_price : $atual_regular_price;
+             $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
+             $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+             if( isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage) ) {
+                 $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
+                 if( (int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+                     $this->ofw_auto_decline_offer($offer_id, $emails);
+                     return true;
                  }
              }
         }
