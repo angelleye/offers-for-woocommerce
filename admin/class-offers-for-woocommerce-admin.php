@@ -490,8 +490,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function process_product_meta_custom_tab( $post_id ) {
             update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_POST['offers_for_woocommerce_enabled']) && $_POST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
-            update_post_meta( $post_id, '_ofw_auto_accept_decline_enable', ( isset($_POST['_ofw_auto_accept_decline_enable']) && $_POST['_ofw_auto_accept_decline_enable'] ) ? 'yes' : 'no' );
-            update_post_meta( $post_id, '_ofw_auto_accept_decline_percentage', ( isset($_POST['_ofw_auto_accept_decline_percentage']) && !empty($_POST['_ofw_auto_accept_decline_percentage']) ) ? $_POST['_ofw_auto_accept_decline_percentage'] : '' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', ( isset($_POST['_offers_for_woocommerce_auto_accept_enabled']) && $_POST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', ( isset($_POST['_offers_for_woocommerce_auto_decline_enabled']) && $_POST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', ( isset($_POST['_offers_for_woocommerce_auto_accept_percentage']) && !empty($_POST['_offers_for_woocommerce_auto_accept_percentage']) ) ? $_POST['_offers_for_woocommerce_auto_accept_percentage'] : '' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', ( isset($_POST['_offers_for_woocommerce_auto_decline_percentage']) && !empty($_POST['_offers_for_woocommerce_auto_decline_percentage']) ) ? $_POST['_offers_for_woocommerce_auto_decline_percentage'] : '' );
 	}
 	
 	/**
@@ -531,28 +533,37 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
              }
              
-             /**
+            /**
              *  Auto Accept Offer
              */
-             
-            $post_meta_auto_accept_decline_enabled = get_post_meta($post->ID, '_ofw_auto_accept_decline_enable', true);
-            $field_value_auto_accept_decline_enabled = 'yes';
-            $field_callback_auto_accept_decline_enabled = ($post_meta_auto_accept_decline_enabled) ? $post_meta_auto_accept_decline_enabled : 'no';
-            $post_meta_auto_accept_decline_percentage = get_post_meta($post->ID, '_ofw_auto_accept_decline_percentage', true);
-            $post_meta_auto_accept_decline_percentage_value = ($post_meta_auto_accept_decline_percentage) ? $post_meta_auto_accept_decline_percentage : '';
+            $post_meta_auto_accept_enabled = get_post_meta($post->ID, '_offers_for_woocommerce_auto_accept_enabled', true);
+            $field_value_auto_accept_enabled = 'yes';
+            $field_callback_auto_accept_enabled = ($post_meta_auto_accept_enabled) ? $post_meta_auto_accept_enabled : 'no';
+            $post_meta_auto_accept_percentage = get_post_meta($post->ID, '_offers_for_woocommerce_auto_accept_percentage', true);
+            $post_meta_auto_accept_percentage_value = ($post_meta_auto_accept_percentage) ? $post_meta_auto_accept_percentage : '';
+            
+            
+            /**
+             * Auto Decline Offer
+             */
+            $post_meta_auto_decline_enabled = get_post_meta($post->ID, '_offers_for_woocommerce_auto_decline_enabled', true);
+            $field_value_auto_decline_enabled = 'yes';
+            $field_callback_auto_decline_enabled = ($post_meta_auto_decline_enabled) ? $post_meta_auto_decline_enabled : 'no';
+            $post_meta_auto_decline_percentage = get_post_meta($post->ID, '_offers_for_woocommerce_auto_decline_percentage', true);
+            $post_meta_auto_decline_percentage_value = (!empty($post_meta_auto_decline_percentage)) ? $post_meta_auto_decline_percentage : '';
             
             ?>
             <div id="custom_tab_data_offers_for_woocommerce" class="panel woocommerce_options_panel">
                 <div class="options_group">
-                    <p class="form-field">                    
-                        <?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', $this->plugin_slug) ) ); ?>
-                    </p>                    
+                     <?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', $this->plugin_slug) ) ); ?>
                 </div> 
                 <div class="options_group">
-                     <p class="form-field">                    
-                        <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_accept_decline_enabled, 'cbvalue' => $field_callback_auto_accept_decline_enabled, 'id' => '_ofw_auto_accept_decline_enable', 'label' => __('Enable Auto Accept/Decline Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically accept or decline offers based on the percentage set.', $this->plugin_slug) ) ); ?>
-                     </p> 
-                     <p class="form-field ofw_auto_accept_decline_percentage"><label for="ofw_auto_accept_decline_percentage"><?php echo __( 'Auto Accept/Decline Percentage', $this->plugin_slug ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_accept_decline_percentage_value; ?>" min="1" max="100" id="_ofw_auto_accept_decline_percentage" name="_ofw_auto_accept_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer above the percentage entered here will be automatically accepted.  Any offer below will be automatically declined.' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
+                    <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_accept_enabled, 'cbvalue' => $field_callback_auto_accept_enabled, 'id' => '_offers_for_woocommerce_auto_accept_enabled', 'label' => __('Enable Auto Accept Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically accept offers based on the percentage set.', $this->plugin_slug) ) ); ?>
+                    <p class="form-field offers_for_woocommerce_auto_accept_percentage "><label for="offers_for_woocommerce_auto_accept_percentage"><?php echo __( 'Auto Accept Percentage', $this->plugin_slug ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_accept_percentage_value; ?>" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer above the percentage entered here will be automatically accepted.' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
+                </div>
+                <div class="options_group">
+                    <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_decline_enabled, 'cbvalue' => $field_callback_auto_decline_enabled, 'id' => '_offers_for_woocommerce_auto_decline_enabled', 'label' => __('Enable Auto Decline Offers?', $this->plugin_slug), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically decline offers based on the percentage set.', $this->plugin_slug) ) ); ?>
+                     <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', $this->plugin_slug ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer below the percentage entered here will be automatically declined' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
                 </div>
             </div>
             <?php
@@ -3216,7 +3227,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $errors = TRUE;
             }
 
-            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'enable') ? 'yes' : 'no';
+            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'accept_enable' || $ofwc_bulk_action_type == 'decline_enable') ? 'yes' : 'no';
 
             // All Products
             if ($ofwc_bulk_action_target_type == 'all'){
@@ -3363,7 +3374,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                                 $processed_product_id[$target_product_id] = $target_product_id;
                             }
                             if( $autoAcceptDeclinePercentage ) {
-                                update_post_meta($target_product_id, '_ofw_auto_accept_decline_percentage' , $autoAcceptDeclinePercentage );
+                                $ofw_auto_accept_or_decline_percentage_key = str_replace("enabled", "percentage", $ofw_meta_key_value);
+                                update_post_meta($target_product_id, $ofw_auto_accept_or_decline_percentage_key , $autoAcceptDeclinePercentage );
                                 $processed_product_id[$target_product_id] = $target_product_id;
                             }
                         }
@@ -3692,13 +3704,23 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             <input type="checkbox" name="offers_for_woocommerce_enabled" value="yes" <?php echo checked( $field_value, $is_enable, false ); ?>>
         </label>
         <br class="clear" />
+        
         <label class="alignleft">
-            <span class="checkbox-title"><?php _e( 'Enable Auto Accept/Decline Offers?', $this->plugin_slug ); ?></span>
-            <input type="checkbox" name="_ofw_auto_accept_decline_enable" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
+            <span class="checkbox-title"><?php _e( 'Enable Auto Accept Offers?', $this->plugin_slug ); ?></span>
+            <input type="checkbox" name="_offers_for_woocommerce_auto_accept_enabled" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
+        </label>                  
+        <label class="alignleft" for="_offers_for_woocommerce_auto_accept_percentage"><?php echo __( 'Auto Accept Percentage', $this->plugin_slug ) ; ?>
+            <input type="number" placeholder="Enter Percentage" value="" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short">                   
+        </label>
+        
+        
+        <label class="alignleft">
+            <span class="checkbox-title"><?php _e( 'Enable Auto Decline Offers?', $this->plugin_slug ); ?></span>
+            <input type="checkbox" name="_offers_for_woocommerce_auto_decline_enabled" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
         </label>                  
            
-        <label class="alignleft" for="ofw_auto_accept_decline_percentage"><?php echo __( 'Auto Accept/Decline Percentage', $this->plugin_slug ) ; ?>
-            <input type="number" placeholder="Enter Percentage" value="" min="1" max="100" id="_ofw_auto_accept_decline_percentage" name="_ofw_auto_accept_decline_percentage" style="" class="short">                   
+        <label class="alignleft" for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', $this->plugin_slug ) ; ?>
+            <input type="number" placeholder="Enter Percentage" value="" min="1" max="100" id="_offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short">                   
         </label>
 
         <?php
@@ -3711,9 +3733,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function woocommerce_product_quick_edit_save_own($product) {
         $post_id = $product->id;
         update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
-        update_post_meta( $post_id, '_ofw_auto_accept_decline_enable', ( isset($_REQUEST['_ofw_auto_accept_decline_enable']) && $_REQUEST['_ofw_auto_accept_decline_enable'] ) ? 'yes' : 'no' );
-        if( isset($_REQUEST['_ofw_auto_accept_decline_percentage']) && !empty($_REQUEST['_ofw_auto_accept_decline_percentage']) ) {
-            update_post_meta( $post_id, '_ofw_auto_accept_decline_percentage', $_REQUEST['_ofw_auto_accept_decline_percentage']);
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', ( isset($_REQUEST['_offers_for_woocommerce_auto_accept_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', ( isset($_REQUEST['_offers_for_woocommerce_auto_decline_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
+        if( isset($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) && !empty($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) ) {
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', $_REQUEST['_offers_for_woocommerce_auto_accept_percentage']);
+        }
+        if( isset($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) && !empty($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) ) {
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', $_REQUEST['_offers_for_woocommerce_auto_decline_percentage']);
         }
     } 
 

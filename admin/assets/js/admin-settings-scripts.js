@@ -153,12 +153,19 @@
             });
             
             $("#ofw-bulk-tool-action-type").change(function(){
-                if(  $(this).val() == 'enable' ) {
-                    $('.ofw-bulk-tool-auto-accept-decline-percentage').show();
-                    $('#ofw-bulk-tool-auto-accept-decline-percentage').attr('required', 'required');
+                if(  $(this).val() == 'accept_enable' ) {
+                    $('.ofw-bulk-tool-auto-accept-percentage').show();
+                    $('#ofw-bulk-tool-auto-accept-percentage').attr('required', 'required');
                 } else {
-                    $('.ofw-bulk-tool-auto-accept-decline-percentage').hide();
-                    $('#ofw-bulk-tool-auto-accept-decline-percentage').removeAttr('required', 'required');
+                    $('.ofw-bulk-tool-auto-accept-percentage').hide();
+                    $('#ofw-bulk-tool-auto-accept-percentage').removeAttr('required', 'required');
+                }
+                if(  $(this).val() == 'decline_enable' ) {
+                    $('.ofw-bulk-tool-auto-decline-percentage').show();
+                    $('#ofw-bulk-tool-auto-decline-percentage').attr('required', 'required');
+                } else {
+                    $('.ofw-bulk-tool-auto-decline-percentage').hide();
+                    $('#ofw-bulk-tool-auto-decline-percentage').removeAttr('required', 'required');
                 }
             });
             
@@ -261,11 +268,31 @@
                 var actionTargetWhereProductType = $('#ofw-bulk-tool-target-where-product-type').val();
                 var actionTargetWherePriceValue = $('#ofw-bulk-tool-action-target-where-price-value').val();
                 var actionTargetWhereStockValue = $('#ofw-bulk-tool-target-where-stock-value').val();
-                var autoAcceptDeclinePercentage = $('#ofw-bulk-tool-auto-accept-decline-percentage').val();
+                
+                var auto_accept_or_decline_enable = "";
+                var auto_accept_or_decline_percentage = "";
+                
+                if(  $("#ofw-bulk-tool-action-type").val() === "accept_enable" ) {
+                    auto_accept_or_decline_enable = "_offers_for_woocommerce_auto_accept_enabled";
+                    auto_accept_or_decline_percentage =  $("#ofw-bulk-tool-auto-accept-percentage").val();
+                } 
+                if(  $("#ofw-bulk-tool-action-type").val() === "accept_disable" ) {
+                    auto_accept_or_decline_enable = "_offers_for_woocommerce_auto_accept_enabled";
+                    auto_accept_or_decline_percentage =  $("#ofw-bulk-tool-auto-accept-percentage").val();
+                } 
+                if(  $("#ofw-bulk-tool-action-type").val() === "decline_enable" ) {
+                    auto_accept_or_decline_enable = "_offers_for_woocommerce_auto_decline_enabled";
+                    auto_accept_or_decline_percentage =  $("#ofw-bulk-tool-auto-decline-percentage").val();
+                } 
+                if(  $("#ofw-bulk-tool-action-type").val() === "decline_disable" ) {
+                    auto_accept_or_decline_enable = "_offers_for_woocommerce_auto_decline_enabled";
+                    auto_accept_or_decline_percentage =  $("#ofw-bulk-tool-auto-decline-percentage").val();
+                } 
+                
+                
 
                 var data = {
                     'action': 'adminToolBulkEnableDisable',
-
                     'actionType': actionType,
                     'actionTargetType': actionTargetType,
                     'actionTargetWhereType': actionTargetWhereType,
@@ -273,8 +300,8 @@
                     'actionTargetWhereProductType': actionTargetWhereProductType,
                     'actionTargetWherePriceValue': actionTargetWherePriceValue,
                     'actionTargetWhereStockValue': actionTargetWhereStockValue,
-                    'ofw_meta_key_value': '_ofw_auto_accept_decline_enable',
-                    'autoAcceptDeclinePercentage': autoAcceptDeclinePercentage
+                    'ofw_meta_key_value': auto_accept_or_decline_enable,
+                    'autoAcceptDeclinePercentage': auto_accept_or_decline_percentage
                 };
 
                 // post it
