@@ -10,10 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
 
-<?php printf( '<p><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s.</strong></p>', get_bloginfo( 'name' ) ); ?>
 <?php 
 if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
+    printf( '<p><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s, however, we do have an active coupon code that we can offer you for use on our website.</strong></p>', get_bloginfo( 'name' ) );
     printf( '<p><strong>'. __('Coupon Code: ', 'offers-for-woocommerce'). ' %s</strong></p>', $offer_args['coupon_code'] );
+} else {
+    printf( '<p><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s.</strong></p>', get_bloginfo( 'name' ) );
 }
 ?>
  

@@ -70,8 +70,8 @@
             });
 
             function m7_resize_thickbox() {
-                var TB_WIDTH = 290;
-                var TB_HEIGHT = 150;
+                var TB_WIDTH = 547;
+                var TB_HEIGHT = 226;
                 jQuery(document).find('#TB_window').width(TB_WIDTH).height(TB_HEIGHT).css('margin-left', -TB_WIDTH / 2);
             }
             
