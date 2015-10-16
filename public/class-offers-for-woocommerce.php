@@ -1958,7 +1958,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function woocommerce_make_offer_form_end_own($is_counter_offer) {
         if ($this->ofw_is_mailling_list_enable() && !$is_counter_offer) {
             ?>
-            <div class="woocommerce-make-offer-form-section wideBox25px">
+            <div class="woocommerce-make-offer-form-section">
                 <input name="join_our_mailing_list" id="join_our_mailing_list" type="checkbox" value="yes" checked="checked"><label for="join_our_mailing_list" class="checkbox"><?php echo str_repeat('&nbsp;', 1); ?> <?php echo apply_filters('aeofwc-offer-form-label-join-our-mailing-list', __('Join Our Mailing List', $this->plugin_slug)); ?></label>
             </div>
             
