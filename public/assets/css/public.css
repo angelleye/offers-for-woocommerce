@@ -234,7 +234,7 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
 .woocommerce-make-offer-form-section .checkbox {
 	display: inline-block;
 	cursor: pointer;
-	font-size: 13px; margin-left: 3px; line-height:18px;
+	margin-left: 3px; line-height:18px;
 }
 .woocommerce-make-offer-form-section input[type=checkbox] {
  display:none;	
