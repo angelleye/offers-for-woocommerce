@@ -231,19 +231,15 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
     font-weight: bold;
     line-height: 20px;
 }
-form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_mailing_list {
-    width: 14px !important;
-}
-
-.checkbox {
+.woocommerce-make-offer-form-section .checkbox {
 	display: inline-block;
 	cursor: pointer;
 	font-size: 13px; margin-right:10px; line-height:18px;
 }
-input[type=checkbox] {
+.woocommerce-make-offer-form-section input[type=checkbox] {
  display:none;	
 }
-.checkbox:before {
+.woocommerce-make-offer-form-section .checkbox:before {
 	content: "";
 	display: inline-block;
 	width: 18px;
@@ -255,7 +251,7 @@ input[type=checkbox] {
 	box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);	
 	border-radius: 3px;
 }
-input[type=checkbox]:checked + .checkbox:before {
+.woocommerce-make-offer-form-section input[type=checkbox]:checked + .checkbox:before {
 	content: "\2713";
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
 	font-size: 15px;
