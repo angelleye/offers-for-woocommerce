@@ -880,7 +880,9 @@ class Angelleye_Offers_For_Woocommerce {
             if( isset($_POST['value']) && !empty($_POST['value']) ) {
                 $post_data = $_POST['value'];
                 foreach ($post_data as $key => $post_data_value) {
-                   $post[$post_data_value['name']] = $post_data_value['value'];
+                   if( isset($post_data_value['name']) && !empty($post_data_value['name']) ) {
+                        $post[$post_data_value['name']] = ( isset($post_data_value['value']) && !empty($post_data_value['value']) ) ? $post_data_value['value'] : '';
+                   }
                 }
             }
        
