@@ -176,32 +176,28 @@
                     // show loader image
                     $('#offer-submit-loader').show();
 
-                    var formData = {};
-                    formData['offer_name'] = offerName;
-                    formData['offer_email'] = offerEmail;
-                    formData['offer_phone'] = offerPhone;
-                    formData['offer_company_name'] = offerCompanyName;
-                    formData['offer_quantity'] = offerQuantity;
-                    formData['offer_price_each'] = offerPriceEach;
-                    formData['offer_product_id'] = offerProductId;
-                    formData['offer_variation_id'] = offerVariationId;
-                    formData['parent_offer_id'] = parentOfferId;
-                    formData['parent_offer_uid'] = parentOfferUid;
-                    formData['offer_notes'] = offerNotes;
-
-                    // ajax submit offer
-                    var ajaxtarget = '?woocommerceoffer_post=1';
-
                     // abort any pending request
                     if (request) {
                         request.abort();
                     }
+                    
+                    var post_data_array = $("#woocommerce-make-offer-form").serializeArray();
+                    post_data_array.push({name: 'offer_product_id', value: offerProductId});
+                    post_data_array.push({name: 'offer_variation_id', value: offerVariationId});
+                    post_data_array.push({name: 'parent_offer_id', value: parentOfferId});
+                    post_data_array.push({name: 'parent_offer_uid', value: parentOfferUid});
+                           
+                    var data_make_offer = {
+                        action: 'new_offer_form_submit',
+                        security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
+                        value: post_data_array
+                    };
 
                     // fire off the request
                     var request = $.ajax({
-                        url: ajaxtarget,
+                        url: offers_for_woocommerce_js_params.ajax_url,
                         type: "post",
-                        data: formData
+                        data: data_make_offer
                     });
 
                     // callback handler that will be called on success
