@@ -137,6 +137,7 @@
             do_action('woocommerce_make_offer_form_end', $is_counter_offer);
             $submit_counter_offer_text = ($is_counter_offer) ? ' Counter' : '';
             $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
+            do_action('make_offer_form_before_submit_button');
             ?>
             <div class="woocommerce-make-offer-form-section woocommerce-make-offer-form-section-submit">
                 <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, $this->plugin_slug)); ?>" value="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, $this->plugin_slug)); ?>" />

@@ -152,10 +152,7 @@
                 var offerProductId = $("input[name='add-to-cart']").val();
                 var offerVariationId = $("input[name='variation_id']").val();
 
-                var offerName = $("input[name='offer_name']").val();
-                var offerEmail = $("input[name='offer_email']").val();
-                var offerPhone = $("input[name='offer_phone']").val();
-                var offerCompanyName = $("input[name='offer_company_name']").val();
+      
                 
                 var join_our_mailing_list = "no";
                 
@@ -165,8 +162,6 @@
                     } 
                 }
                 
-
-                var offerNotes = $("#angelleye-offer-notes").val();
 
                 var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
                 var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
@@ -185,33 +180,31 @@
                     // show loader image
                     $('#offer-submit-loader').show();
 
-                    var formData = {};
-                    formData['offer_name'] = offerName;
-                    formData['offer_email'] = offerEmail;
-                    formData['offer_phone'] = offerPhone;
-                    formData['offer_company_name'] = offerCompanyName;
-                    formData['offer_quantity'] = offerQuantity;
-                    formData['offer_price_each'] = offerPriceEach;
-                    formData['offer_product_id'] = offerProductId;
-                    formData['offer_variation_id'] = offerVariationId;
-                    formData['parent_offer_id'] = parentOfferId;
-                    formData['parent_offer_uid'] = parentOfferUid;
-                    formData['offer_notes'] = offerNotes;
-                    formData['join_our_mailing_list'] = join_our_mailing_list;
-
-                    // ajax submit offer
-                    var ajaxtarget = '?woocommerceoffer_post=1';
-
                     // abort any pending request
                     if (request) {
                         request.abort();
                     }
+                    
+                    var post_data_array = $("#woocommerce-make-offer-form").serializeArray();
+                    post_data_array.push({name: 'offer_product_id', value: offerProductId});
+                    post_data_array.push({name: 'offer_variation_id', value: offerVariationId});
+                    post_data_array.push({name: 'parent_offer_id', value: parentOfferId});
+                    post_data_array.push({name: 'parent_offer_uid', value: parentOfferUid});
+                    post_data_array.push({name: 'offer_quantity', value: offerQuantity});
+                    post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
+                    post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
+                           
+                    var data_make_offer = {
+                        action: 'new_offer_form_submit',
+                        security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
+                        value: post_data_array
+                    };
 
                     // fire off the request
                     var request = $.ajax({
-                        url: ajaxtarget,
+                        url: offers_for_woocommerce_js_params.ajax_url,
                         type: "post",
-                        data: formData
+                        data: data_make_offer
                     });
 
                     // callback handler that will be called on success

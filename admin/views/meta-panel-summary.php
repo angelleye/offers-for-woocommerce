@@ -75,6 +75,9 @@
                     <li><span><?php echo __('Email:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', $this->plugin_slug); ?></li>
                     <li><span><?php echo __('Phone:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_phone'][0])) ? stripslashes($postmeta['offer_phone'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
                     <li><span><?php echo __('Company:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_company_name'][0])) ? stripslashes($postmeta['offer_company_name'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
+                    <?php 
+                    global $post;
+                    do_action('make_offer_after_buyer_meta_display', $post->ID); ?>
                 </ul>
             </div>
 
