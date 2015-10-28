@@ -231,3 +231,28 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
     font-weight: bold;
     line-height: 20px;
 }
+.woocommerce-make-offer-form-section .checkbox {
+	display: inline-block;
+	cursor: pointer;
+	margin-left: 3px; line-height:18px;
+}
+.woocommerce-make-offer-form-section input[type=checkbox] {
+ display:none;	
+}
+.woocommerce-make-offer-form-section .checkbox:before {
+	content: "";
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	vertical-align:middle;
+	background-color: #60646c;
+	color: white;
+	text-align: center;
+	box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);	
+	border-radius: 3px;
+}
+.woocommerce-make-offer-form-section input[type=checkbox]:checked + .checkbox:before {
+	content: "\2713";
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+	font-size: 15px;
+}

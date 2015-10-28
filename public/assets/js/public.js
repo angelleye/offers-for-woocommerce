@@ -156,6 +156,15 @@
                 var offerEmail = $("input[name='offer_email']").val();
                 var offerPhone = $("input[name='offer_phone']").val();
                 var offerCompanyName = $("input[name='offer_company_name']").val();
+                
+                var join_our_mailing_list = "no";
+                
+                if($("#join_our_mailing_list").length > 0) {
+                    if($('#join_our_mailing_list').attr('checked')) {
+                        join_our_mailing_list = "yes";
+                    } 
+                }
+                
 
                 var offerNotes = $("#angelleye-offer-notes").val();
 
@@ -188,6 +197,7 @@
                     formData['parent_offer_id'] = parentOfferId;
                     formData['parent_offer_uid'] = parentOfferUid;
                     formData['offer_notes'] = offerNotes;
+                    formData['join_our_mailing_list'] = join_our_mailing_list;
 
                     // ajax submit offer
                     var ajaxtarget = '?woocommerceoffer_post=1';
