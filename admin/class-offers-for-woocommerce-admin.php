@@ -1137,7 +1137,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             }
             return;
-		}
+		} else {
+                    return $states;
+                }
 	}
 	
 	/**
