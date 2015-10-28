@@ -39,6 +39,11 @@
             {
                 $('.woocommerce-offer-final-offer-wrap').hide();
             }
+            
+            if(currentPostStatus !== 'declined-offer')
+            {
+                $('.woocommerce-offer-send-coupon-wrap').hide();
+            }
 
             $('#woocommerce_offer_post_status').change(function(){
                 if( $(this).val() == 'countered-offer')
@@ -49,25 +54,14 @@
                 {
                     $('.woocommerce-offer-final-offer-wrap').slideUp();
                 }
+                if( $(this).val() == 'declined-offer') { 
+                    $('.woocommerce-offer-send-coupon-wrap').fadeIn('fast');
+                } else {
+                    $('.woocommerce-offer-send-coupon-wrap').slideUp();
+                }
                 return false;
             });
-
-            var currentExpireDate = $('#offer-expiration-date').val();
-            var formattedDate = new Date(currentExpireDate);
-            var d = formattedDate.getDate();
-            var m =  formattedDate.getMonth();
-            m += 1;  // JavaScript months are 0-11
-            var y = formattedDate.getFullYear();
-            var formattedExpireDate = y + "-" + m + "-" + d;
-
-            var formattedTodayDate = new Date(currentDate);
-            var d = formattedTodayDate.getDate();
-            var m =  formattedTodayDate.getMonth();
-            m += 1;  // JavaScript months are 0-11
-            var y = formattedTodayDate.getFullYear();
-            var formattedTodayDate = y + "-" + m + "-" + d;
-
-            if(formattedExpireDate < formattedTodayDate)
+            if(ofw_param.ofw_offer_expiration_date_show === 'true')
             {
                 $('#angelleye-woocommerce-offer-meta-summary-expire-notice-msg').show();
             }
