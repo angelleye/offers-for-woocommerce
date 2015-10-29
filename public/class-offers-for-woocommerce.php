@@ -823,12 +823,23 @@ class Angelleye_Offers_For_Woocommerce {
 	public function new_offer_form_submit()
 	{
             $post_data = array();
-            if( isset($_POST['value']) && !empty($_POST['value']) ) {
-                $post_data = $_POST['value'];
-                foreach ($post_data as $key => $post_data_value) {
-                   if( isset($post_data_value['name']) && !empty($post_data_value['name']) ) {
-                        $post[$post_data_value['name']] = ( isset($post_data_value['value']) && !empty($post_data_value['value']) ) ? $post_data_value['value'] : '';
-                   }
+            if (is_ajax()) {
+                if( isset($_POST['value']) && !empty($_POST['value']) ) {
+                    $post_data = $_POST['value'];
+                    foreach ($post_data as $key => $post_data_value) {
+                       if( isset($post_data_value['name']) && !empty($post_data_value['name']) ) {
+                            $post[$post_data_value['name']] = ( isset($post_data_value['value']) && !empty($post_data_value['value']) ) ? $post_data_value['value'] : '';
+                       }
+                    }
+                }
+            } else {
+                if( isset($_POST['value']) && !empty($_POST['value']) ) {
+                    $post_data = $_POST['value'];
+                    foreach ($post_data as $key => $post_data_value) {
+                       if( isset($post_data_value) && !empty($post_data_value) ) {
+                            $post[$key] = ( isset($post_data_value) && !empty($post_data_value) ) ? $post_data_value : '';
+                       }
+                    }
                 }
             }
        
@@ -857,13 +868,21 @@ class Angelleye_Offers_For_Woocommerce {
                  */
                 // check for valid offer quantity (not zero)
                 if (($formData['orig_offer_quantity'] == '' || $formData['orig_offer_quantity'] == 0)) {
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Quantity\'', $this->plugin_slug)));
-                    exit;
+                    if (is_ajax()) {
+                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Quantity\'', $this->plugin_slug)));
+                        exit;
+                    } else {
+                        return false;
+                    }
                 }
                 // check for valid offer price (not zero)
                 if (($formData['orig_offer_price_per'] == '' || $formData['orig_offer_price_per'] == 0 || $formData['orig_offer_price_per'] == "0.00")) {
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Amount\'', $this->plugin_slug)));
-                    exit;
+                    if (is_ajax()) {
+                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Amount\'', $this->plugin_slug)));
+                        exit;
+                    } else {
+                        return false;
+                    }
                 }
 
                 // set postmeta vars
@@ -915,8 +934,12 @@ class Angelleye_Offers_For_Woocommerce {
                 );
                 if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data)) {
                     // is spam
-                    echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __('Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug)));
-                    exit;
+                    if (is_ajax()) {
+                        echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __('Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug)));
+                        exit;
+                    } else {
+                        return false;
+                    }
                 }
 
                 // check for parent post id
@@ -933,8 +956,12 @@ class Angelleye_Offers_For_Woocommerce {
 
                     // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
                     if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', $this->plugin_slug)));
-                        exit;
+                        if (is_ajax()) {
+                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', $this->plugin_slug)));
+                            exit;
+                        } else {
+                            return false;
+                        }
                     }
 
                     $parent_post = array(
@@ -1046,8 +1073,12 @@ class Angelleye_Offers_For_Woocommerce {
                         }
                     } else {
                         // return error msg
-                        echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
-                        exit;
+                        if (is_ajax()) {
+                            echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
+                            exit;
+                        } else {
+                            return false;
+                        }
                     }
                 }
                 
@@ -1185,9 +1216,12 @@ class Angelleye_Offers_For_Woocommerce {
                 do_action('woocommerce_after_offer_submit', $is_counter_offer);
 
                 // Success
-                
-                echo json_encode(array("statusmsg" => 'success'));
-                exit;
+                if (is_ajax()) {
+                    echo json_encode(array("statusmsg" => 'success'));
+                    exit;
+                } else {
+                    return false;
+                }
             }
         }
     }

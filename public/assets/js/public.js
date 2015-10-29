@@ -104,7 +104,7 @@
             })(jQuery);
 
             // Submit offer form
-            $('#woocommerce-make-offer-form').submit(function()
+            $("form[name='woocommerce-make-offer-form']").submit(function()
             {
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 

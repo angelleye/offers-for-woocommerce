@@ -66,7 +66,7 @@
             echo apply_filters( 'aeofwc-offer-form-intro-html', $intro_html );
             ?>
         </div>
-        <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="off">
+        <form id="woocommerce-make-offer-form" name="<?php echo apply_filters( 'woocommerce_make_offer_form_name', 'woocommerce-make-offer-form' );?>" method="POST" autocomplete="off" action="<?php echo apply_filters( 'woocommerce_make_offer_form_action', '' );?>">
             <?php if($is_counter_offer) {?>
             <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
             <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">
@@ -139,7 +139,7 @@
             $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
             do_action('make_offer_form_before_submit_button');
             ?>
-            <div class="woocommerce-make-offer-form-section woocommerce-make-offer-form-section-submit">
+            <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
                 <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, $this->plugin_slug)); ?>" value="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, $this->plugin_slug)); ?>" />
                 <div class="offer-submit-loader" id="offer-submit-loader"><?php echo __('Please wait...', $this->plugin_slug); ?></div>
             </div>
