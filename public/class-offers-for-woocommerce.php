@@ -881,6 +881,7 @@ class Angelleye_Offers_For_Woocommerce {
                         echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Amount\'', $this->plugin_slug)));
                         exit;
                     } else {
+                        $this->set_session('ofwpa_issue', 'Please enter a positive value for Offer Amount');
                         return false;
                     }
                 }
@@ -932,12 +933,13 @@ class Angelleye_Offers_For_Woocommerce {
                     'comment_author_url' => '',
                     'comment_content' => $comments
                 );
-                if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data)) {
+                if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data) && FALSE) {
                     // is spam
                     if (is_ajax()) {
                         echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __('Invalid Offer Submission; See shop manager for assistance', $this->plugin_slug)));
                         exit;
                     } else {
+                        $this->set_session('ofwpa_issue', 'Invalid Offer Submission; See shop manager for assistance');
                         return false;
                     }
                 }
@@ -960,6 +962,7 @@ class Angelleye_Offers_For_Woocommerce {
                             echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', $this->plugin_slug)));
                             exit;
                         } else {
+                            $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
                             return false;
                         }
                     }
@@ -1077,6 +1080,7 @@ class Angelleye_Offers_For_Woocommerce {
                             echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
                             exit;
                         } else {
+                            $this->set_session('ofwpa_issue', 'database error');
                             return false;
                         }
                     }
@@ -1211,8 +1215,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
                 $new_email->trigger($offer_args);
-
-                do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
+                if (is_ajax()) {
+                    do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
+                }
                 do_action('woocommerce_after_offer_submit', $is_counter_offer);
 
                 // Success
@@ -1901,6 +1906,7 @@ class Angelleye_Offers_For_Woocommerce {
                  $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
                  if( (int) $auto_accept_percentage <= (int) $user_offer_percentage) {
                      $this->ofw_auto_approve_offer($offer_id, $emails);
+                     do_action('ofw_after_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
                      return true;
                  }
              }
@@ -2072,6 +2078,10 @@ class Angelleye_Offers_For_Woocommerce {
             }
             return true;
         }
+    }
+    
+    public function set_session($key, $value) {
+        WC()->session->$key = $value;
     }
 
 }

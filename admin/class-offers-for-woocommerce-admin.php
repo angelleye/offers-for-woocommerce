@@ -2899,6 +2899,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
             }
+            
+            do_action('ofw_after_auto_approve_offer_admin', $post_id);
 
 
             die(); // this is required to return a proper result
