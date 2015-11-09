@@ -2759,9 +2759,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
+            
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
-
+            do_action('ofw_before_auto_approve_offer_admin', $post_id);
             // Get current data for Offer prior to save
             $post_data = get_post($post_id);
 
@@ -2917,7 +2918,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             global $wpdb; // this is how you get access to the database
             $post_id = $_POST["targetID"];
-
+            do_action('ofw_before_auto_decline_offer_admin', $post_id);
             // Get current data for Offer prior to save
             $post_data = get_post($post_id);
             $coupon_code = ( isset($_POST["coupon_code"]) && !empty($_POST["coupon_code"]) ) ? $_POST["coupon_code"] : '';
@@ -3058,6 +3059,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 add_comment_meta( $new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true );
             }
 
+            do_action('ofw_after_auto_decline_offer_admin', $post_id);
 
             die(); // this is required to return a proper result
         }

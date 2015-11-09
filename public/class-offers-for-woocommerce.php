@@ -1664,6 +1664,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   1.2.0
      */
     public function ofw_auto_approve_offer($offer_id = null, $emails = null) {
+        do_action('do_auto_approve_offer', $offer_id);
         global $wpdb;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
             $post_id = $_POST["targetID"];
@@ -1905,6 +1906,7 @@ class Angelleye_Offers_For_Woocommerce {
              if( isset($offer_price) && !empty($offer_price) && isset($auto_accept_percentage) && !empty($auto_accept_percentage) ) {
                  $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
                  if( (int) $auto_accept_percentage <= (int) $user_offer_percentage) {
+                     do_action('ofw_before_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
                      $this->ofw_auto_approve_offer($offer_id, $emails);
                      do_action('ofw_after_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
                      return true;
@@ -1930,7 +1932,9 @@ class Angelleye_Offers_For_Woocommerce {
              if( isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage) ) {
                  $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
                  if( (int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+                     do_action('ofw_before_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
                      $this->ofw_auto_decline_offer($offer_id, $emails);
+                     do_action('ofw_after_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
                      return true;
                  }
              }
