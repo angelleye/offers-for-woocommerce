@@ -1324,6 +1324,7 @@ class Angelleye_Offers_For_Woocommerce {
                 }
 
                 if (!$request_error) {
+                    do_action('before_add_offer_to_cart', $offer->ID);
                     // Add offer to cart
                     if ($this->add_offer_to_cart($offer, $offer_meta)) {
                         $this->send_api_response(__('Successfully added Offer to cart', $this->plugin_slug), json_decode($pid));
