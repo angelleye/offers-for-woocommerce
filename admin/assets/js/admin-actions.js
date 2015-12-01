@@ -16,7 +16,21 @@
 					'targetID': targetID
 				};
 				
-				$.post(ajaxurl, data, function(response) {					
+				$.post(ajaxurl, data, function(response) {
+                                    
+                                        if(typeof(response) != "undefined" && response !== null && response != "") {
+                                            var myObject = JSON.parse(response);
+
+                                            var responseStatus = myObject['statusmsg'];
+                                            var responseStatusDetail = myObject['statusmsgDetail'];
+
+                                            if(responseStatus == 'failed-do_capture') {
+                                                alert(responseStatusDetail);
+                                                return false;
+                                            }
+                                        }
+                                        
+                            
 					$('tr.post-'+targetID+'.type-woocommerce_offer').addClass('status-accepted-offer');
 					$('tr.post-'+targetID+'.type-woocommerce_offer').removeClass('status-publish');
 					
