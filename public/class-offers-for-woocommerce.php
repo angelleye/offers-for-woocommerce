@@ -502,7 +502,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Callback - Display "Make Offer" front-end form parts
+     * Callback - Display "Make Offer" front-end form parts 
      *
      * @since	0.1.0
      */
@@ -1164,8 +1164,12 @@ class Angelleye_Offers_For_Woocommerce {
                 }
 
                 // load the WooCommerce Emails
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
+                    $emails = $_POST['value']['emails_object'];
+                } else {
+                    $wc_emails = new WC_Emails();
+                    $emails = $wc_emails->get_emails();
+                }
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
