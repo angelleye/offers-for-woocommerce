@@ -6,15 +6,14 @@
                     if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
                         var variations_select = $( ".woocommerce div.product form.cart .variations select:last option:selected" ).attr("value");
                         
-                        if(variations_select.length > 0) {
+                        if (check_all_woocommerce_variation_is_selected() === true) {
                             $("#offers-for-woocommerce-add-to-cart-wrap").show();
                         } else {
                             $("#offers-for-woocommerce-add-to-cart-wrap").hide();
                         }
                             
                         $('.variations select').on('change', function (e) {
-                            var variations_select = $( ".woocommerce div.product form.cart .variations select:last option:selected" ).attr("value");
-                            if (variations_select.length === 0) {
+                            if (check_all_woocommerce_variation_is_selected() === false) {
                                 $("#offers-for-woocommerce-add-to-cart-wrap").hide();
                             } else {
                                 $("#offers-for-woocommerce-add-to-cart-wrap").show();
@@ -429,6 +428,19 @@
                 }
             }
         };
+        
+        function check_all_woocommerce_variation_is_selected() {
+            var result = true;
+            $( ".woocommerce div.product form.cart .variations select").each(function() {
+                var $el = $(this),
+                 $selected = $el.find('option:selected');   
+                 if($selected.val() === "") {
+                     result = false;
+                 } else {
+                 }
+             });
+             return result;
+        }
 
         // Check for PayPal Standard bn
         CheckPayPalStdBn();
