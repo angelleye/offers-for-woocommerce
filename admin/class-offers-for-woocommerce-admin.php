@@ -383,6 +383,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_action('woocommerce_product_bulk_edit_save', array( $this, 'woocommerce_product_quick_edit_save_own' ), 10, 1 );
         
+        /**
+         * @since   1.2
+         * Add jquery thinkbox in footer area
+         */
+        add_action('in_admin_footer', array($this, 'my_admin_footer_function'));
+        
         
 
         /**
@@ -1830,7 +1836,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $offer_uid = get_post_meta($post_id, 'offer_uid', true);
             $offer_name = get_post_meta($post_id, 'offer_name', true);
             $offer_email = $recipient;
-
+            $coupon_code = ( isset($_POST["ofw_coupon_list"]) && !empty($_POST["ofw_coupon_list"]) ) ? $_POST["ofw_coupon_list"] : '';
+            
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
             $_pf = new WC_Product_Factory;
@@ -1864,7 +1871,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
-                'offer_notes' => $offer_notes
+                'offer_notes' => $offer_notes,
+                'coupon_code' => $coupon_code
             );
 
             if( $variant_id )
@@ -2581,7 +2589,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url( '../public/assets/js/autoNumeric-1-9-24.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
             // admin scripts
-            wp_enqueue_script( $this->plugin_slug . '-angelleye-offers-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+            wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+            global $post, $wpdb;
+            $ofw_offer_expiration_date_show = 'false';
+            $expiration_date = get_post_meta($post->ID, 'offer_expiration_date', true );
+            $today_date = date("m/d/Y");  
+            if(strtotime($expiration_date) > strtotime($today_date)){ 
+                $ofw_offer_expiration_date_show = 'true';
+            }
+            wp_localize_script($this->plugin_slug . '-admin-script', 'ofw_param', array(
+                'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show
+            ));
         }
 
         if ( "product" == $screen->id && is_admin() )
@@ -2895,6 +2913,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Get current data for Offer prior to save
             $post_data = get_post($post_id);
+            $coupon_code = ( isset($_POST["coupon_code"]) && !empty($_POST["coupon_code"]) ) ? $_POST["coupon_code"] : '';
 
             // if buyercountered-offer previous then use buyer counter values
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
@@ -2955,7 +2974,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
                 'product_total' => $product_total,
-                'offer_notes' => $offer_notes
+                'offer_notes' => $offer_notes,
+                'coupon_code' => $coupon_code
             );
 
             if( $variant_id )
@@ -3742,5 +3762,40 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', $_REQUEST['_offers_for_woocommerce_auto_decline_percentage']);
         }
     } 
+    
+    public function my_admin_footer_function() {
+        $screen = get_current_screen();
+        if($screen->post_type == 'woocommerce_offer') {
+            add_thickbox();
+            $coupon_list = get_posts('post_type=shop_coupon');
+            ?>
+        <div id="ofw_send_coupon_declineOfferFromGrid" style="display: none;" class="wrap">
+                <form action="" id="declineOfferFromGrid">
+                    <?php if($coupon_list) { ?>
+                    <div><p>You may be declining this particular offer, but including a coupon code in the email notification to the buyer can often entice them to go ahead with a purchase. Select a coupon code here if you would like to include it in the declined offer email.</p></div>
+                    <label for="ofw_coupon_list"><?php _e( 'Coupon List', $this->plugin_slug ); ?></label>
+                    <select id="ofw_coupon_list" name="ofw_coupon_list">
+                        <option value="" ><?php _e( 'Select Coupon', $this->plugin_slug ); ?></option>
+                        <?php foreach ( $coupon_list as $coupon  ) : ?>
+                            <option value="<?php echo $coupon->post_name; ?>"><?php echo $coupon->post_title; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                      </select>
+                    <?php } else { 
+                        echo __('No Coupons found.', $this->plugin_slug);
+                    }
+                     ?>
+                    <br><br>
+                    <input type="hidden" name="offer-id" id="offer-id" value="">
+                    <?php if($coupon_list) { ?>
+                    <input type="button" value="<?php _e( 'Send coupon & Decline', $this->plugin_slug ); ?>" class="button ofw-decline-popup" id="send_coupon_decline_offer" name="send_coupon_decline_offer">
+                    <?php } ?>
+                    <input type="button" value="<?php _e( 'Decline', $this->plugin_slug ); ?>" class="button ofw-decline-popup" id="decline_offer" name="decline_offer">
+                </form>
+             </div>
+            <a style="display: none" href="#TB_inline?height=150&amp;width=260&amp;&inlineId=ofw_send_coupon_declineOfferFromGrid" class="thickbox ofw_send_coupon_declineOfferFromGrid">View my inline content!</a>	
+            <?php 
+        }
+    }
 
 }

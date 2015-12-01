@@ -654,3 +654,4 @@ body.post-type-woocommerce_offer th.column-title {
 }
 
 #general_setting_default_expire_days { width:60px; }
+#TB_ajaxContent {width: 100% !important; height: 100% !important;}
