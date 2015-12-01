@@ -4,16 +4,14 @@
 		// Public-facing JavaScript
 		$(document).ready(function(){
                     if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
-                        var variations_select = $( ".woocommerce div.product form.cart .variations select option:selected" ).attr("value");
-                        
-                        if(variations_select.length > 0) {
+                        if(check_all_woocommerce_variation_is_selected() === true) {
                             $("#offers-for-woocommerce-add-to-cart-wrap").show();
                         } else {
                             $("#offers-for-woocommerce-add-to-cart-wrap").hide();
                         }
                             
                         $('.variations select').on('change', function (e) {
-                            if (this.value.length === 0) {
+                            if (check_all_woocommerce_variation_is_selected() === false) {
                                 $("#offers-for-woocommerce-add-to-cart-wrap").hide();
                             } else {
                                 $("#offers-for-woocommerce-add-to-cart-wrap").show();
@@ -371,11 +369,10 @@
 					$('#tab_custom_ofwc_offer_tab_alt_message_success').hide();
 					$('#tab_custom_ofwc_offer_tab_inner fieldset').show();
 					
-					var selectedVariantOption = $('.variations select').val();
 					//var variantDisplay = $('.single_variation_wrap.ofwc_offer_tab_form_wrap').css('display');
 					
 					// Toggle form based on visibility
-					if(selectedVariantOption == '')
+					if(check_all_woocommerce_variation_is_selected() == false)
 					{
 						$('#tab_custom_ofwc_offer_tab_inner').hide();
 						$('#tab_custom_ofwc_offer_tab_alt_message').show();
@@ -434,6 +431,18 @@
 
         // Check for PayPal Standard bn
         CheckPayPalStdBn();
+         function check_all_woocommerce_variation_is_selected() {
+            var result = true;
+            $( ".woocommerce div.product form.cart .variations select").each(function() {
+                var $el = $(this),
+                 $selected = $el.find('option:selected');   
+                 if($selected.val() === "") {
+                     result = false;
+                 } else {
+                 }
+             });
+             return result;
+        }
 
     });
 }(jQuery));
