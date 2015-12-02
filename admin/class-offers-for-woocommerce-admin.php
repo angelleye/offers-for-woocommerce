@@ -1310,7 +1310,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                 $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
                 $_product_permalink = $_product_variant->get_permalink();
-                $_product_attributes = $_product_variant->get_variation_attributes();
+                $_product_attributes_resulat = $_product_variant->get_variation_attributes();
+                foreach ( $_product_attributes_resulat as $name => $attribute ) {
+                        $_product_attributes[] = wc_attribute_label( str_replace( 'attribute_', '', $name ) ) . ': <strong>' . $attribute . '</strong>';
+                }
                 $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
                 $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
 
