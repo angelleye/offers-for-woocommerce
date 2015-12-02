@@ -163,7 +163,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         add_action('woocommerce_make_offer_form_end', array($this, 'woocommerce_make_offer_form_end_own'), 10, 1);
 
-        add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 1);
+        add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
     }
 
     /**
@@ -1224,7 +1224,7 @@ class Angelleye_Offers_For_Woocommerce {
                 if (is_ajax()) {
                     do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
                 }
-                do_action('woocommerce_after_offer_submit', $is_counter_offer);
+                do_action('woocommerce_after_offer_submit', $is_counter_offer, $post);
 
                 // Success
                 if (is_ajax()) {
@@ -2068,22 +2068,22 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   1.2.0
      * @param type $is_counter_offer
      */
-    public function ofw_mailing_list_handler($is_counter_offer) {
+    public function ofw_mailing_list_handler($is_counter_offer, $post_data) {
         if ($this->ofw_is_mailling_list_enable() && !$is_counter_offer) {
-            if (isset($_POST['join_our_mailing_list']) && $_POST['join_our_mailing_list'] == "yes") {
-                if (isset($_POST) && !empty($_POST)) {
+            if (isset($post_data['join_our_mailing_list']) && $post_data['join_our_mailing_list'] == "yes") {
+                 if (isset($post_data) && !empty($post_data)) {
                     if ($this->is_mailchimp_enable()) {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailChimp_Helper();
-                        $OFW_MailChimp_Helper->ofw_mailchimp_handler($_POST);
+                        $OFW_MailChimp_Helper->ofw_mailchimp_handler($post_data);
                     } elseif($this->is_constant_contact_enable()) {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
-                        $OFW_MailChimp_Helper->ofw_constantcontact_handler($_POST);
+                        $OFW_MailChimp_Helper->ofw_constantcontact_handler($post_data);
                     } elseif($this->is_mailpoet_enable()) {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
-                        $OFW_MailChimp_Helper->ofw_mailpoet_handler($_POST);
+                        $OFW_MailChimp_Helper->ofw_mailpoet_handler($post_data);
                     }
                 }
             }
