@@ -824,6 +824,7 @@ class Angelleye_Offers_For_Woocommerce {
 
 	public function new_offer_form_submit()
 	{
+            ob_start();
             $post_data = array();
             if (is_ajax()) {
                 if( isset($_POST['value']) && !empty($_POST['value']) ) {
@@ -1235,6 +1236,7 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+        return ob_get_clean();
     }
 
     /**
