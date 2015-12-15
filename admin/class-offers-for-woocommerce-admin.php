@@ -3259,7 +3259,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $errors = TRUE;
             }
 
-            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'accept_enable' || $ofwc_bulk_action_type == 'decline_enable') ? 'yes' : 'no';
+            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'enable' || $ofwc_bulk_action_type == 'accept_enable' || $ofwc_bulk_action_type == 'decline_enable') ? 'yes' : 'no';
 
             // All Products
             if ($ofwc_bulk_action_target_type == 'all'){
