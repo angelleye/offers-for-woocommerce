@@ -35,29 +35,37 @@
             );
 
             var currentPostStatus = $('#woocommerce_offer_post_status').val();
-            if(currentPostStatus !== 'countered-offer')
-            {
+            
+            if(currentPostStatus !== 'countered-offer') {
                 $('.woocommerce-offer-final-offer-wrap').hide();
+            } else {
+                $('.woocommerce-offer-final-offer-wrap').show();
             }
             
-            if(currentPostStatus !== 'declined-offer')
-            {
+            if(currentPostStatus === 'declined-offer') {
+                $('.woocommerce-offer-send-coupon-wrap').show();
+                $('.woocommerce-offer-expiration-wrap').hide();
+            } else {
                 $('.woocommerce-offer-send-coupon-wrap').hide();
+                if(currentPostStatus === 'completed-offer') {
+                    $('.woocommerce-offer-expiration-wrap').hide();
+                } 
             }
 
             $('#woocommerce_offer_post_status').change(function(){
-                if( $(this).val() == 'countered-offer')
-                {
+                if( $(this).val() == 'countered-offer') {
                     $('.woocommerce-offer-final-offer-wrap').fadeIn('fast');
-                }
-                else
-                {
+                } else {
                     $('.woocommerce-offer-final-offer-wrap').slideUp();
                 }
                 if( $(this).val() == 'declined-offer') { 
                     $('.woocommerce-offer-send-coupon-wrap').fadeIn('fast');
+                    $('.woocommerce-offer-expiration-wrap').hide();
                 } else {
                     $('.woocommerce-offer-send-coupon-wrap').slideUp();
+                    if( $(this).val() !== 'completed-offer') {
+                        $('.woocommerce-offer-expiration-wrap').show();
+                    }
                 }
                 return false;
             });
