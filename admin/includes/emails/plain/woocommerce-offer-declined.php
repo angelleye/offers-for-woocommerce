@@ -11,9 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 echo $email_heading . "\n\n";
 
 $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
-echo sprintf( __( 'We have declined your offer on', 'angelleye_offers_for_woocommerce' ) . ' %s.', get_bloginfo( 'name' ) ) . "\n\n";
+if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
+    echo sprintf( __( 'We have declined your offer on', 'angelleye_offers_for_woocommerce' ) . ' %s, however, we do have an active coupon code that we can offer you for use on our website.', get_bloginfo( 'name' ) ) . "\n\n";
+    
+    echo "****************************************************\n";
+    echo sprintf(  __('Coupon Code: ', 'offers-for-woocommerce'). ' %s', $offer_args['coupon_code'] ). "\n";
+} else {
+    echo sprintf( __( 'We have declined your offer on', 'angelleye_offers_for_woocommerce' ) . ' %s.', get_bloginfo( 'name' ) ) . "\n\n";
 
-echo "****************************************************\n";
+    echo "****************************************************\n";
+}
 
 echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['offer_id'] ) . "\n";
 

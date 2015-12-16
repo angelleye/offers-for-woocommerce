@@ -601,9 +601,30 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
     background-size: contain!important;
 }
 
+.ofw-enable-auto-accept-decline { background:#FFF; margin:10px 0; padding:0 20px 10px 20px; border-left:4px solid #ffcc00; }
+.ofw-enable-auto-accept-decline h3 { padding-top:15px; margin-bottom:5px; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section { float: left; margin:10px 10px 10px 0; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section:last-child { border:none!important; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section label { font-weight: bold; margin:0 0 0 4px!important; line-height: 24px; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section select {  }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section input { width:110px; }
+.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-auto-accept-percentage input { width:211px !important; }
+.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-auto-decline-percentage input { width:211px !important; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section #ofw_bulk-acd_enable-tool-submit { margin-top:1px; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section #ofw_bulk-acd_enable-tool-submit i.ofwc-spinner {
+    height: 16px;
+    width: 16px;
+    margin-top: 5px;
+    float: left;
+    margin-right: 6px;
+    background: url('../images/spinner.gif') center center !important;
+    background-size: contain!important;
+}
+
 
 @media screen and (max-width:782px) {
     .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.ofwc-spinner { margin-top:2px; }
+    .ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section #ofw_bulk-acd_enable-tool-submit i.ofwc-spinner { margin-top:2px; }
 }
 
 .angelleye-offers-clearfix { clear: both!important; }
@@ -633,3 +654,7 @@ body.post-type-woocommerce_offer th.column-title {
 }
 
 #general_setting_default_expire_days { width:60px; }
+#TB_ajaxContent {width: 100% !important; height: 100% !important;}
+form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_mailing_list {
+    width: 14px !important;
+}

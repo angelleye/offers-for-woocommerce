@@ -30,6 +30,8 @@ echo (isset($offer_args['offer_company_name']) && $offer_args['offer_company_nam
 echo (isset($offer_args['offer_email']) && $offer_args['offer_email'] != '') ? "\n" . __('Email:', 'offers-for-woocommerce') . " ".stripslashes($offer_args['offer_email']) : "";
 echo (isset($offer_args['offer_phone']) && $offer_args['offer_phone'] != '') ? "\n" . __('Phone:', 'offers-for-woocommerce') . " ".stripslashes($offer_args['offer_phone']) : "";
 
+do_action('make_offer_email_display_custom_field_after_buyer_contact_details', $offer_args['offer_id']);
+
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {
     echo "\n\n" . __( 'Offer Notes:', 'offers-for-woocommerce' ) . ' ' . $offer_args['offer_notes'];

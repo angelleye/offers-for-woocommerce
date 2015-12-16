@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.4
-Stable tag: 1.1.4
+Stable tag: 1.2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,23 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.2.0 - 12.16.2015 =
+* Feature - Adds ability for users to join your MailChimp / ConstantContact mailing list while submitting an offer. ([#7](https://github.com/angelleye/offers-for-woocommerce/issues/7))
+* Feature - Adds ability to include an active coupon in the declined offer email buyers receive. ([#23](https://github.com/angelleye/offers-for-woocommerce/issues/23))
+* Feature - Adds ability to set price ranges for auto-accepting and auto-declining offers.  ([#35](https://github.com/angelleye/offers-for-woocommerce/issues/35))
+* Feature - Improves offer history details.  ([#67](https://github.com/angelleye/offers-for-woocommerce/issues/67))
+* Feature - Adds ability to enable/disable offers from product quick edit. ([#191](https://github.com/angelleye/offers-for-woocommerce/issues/191))
+* Feature - Adds ability to add custom fields to offer form. ([#199](https://github.com/angelleye/offers-for-woocommerce/issues/199))
+* Fix - Resolves a bug with long URLs. ([#132](https://github.com/angelleye/offers-for-woocommerce/issues/132))
+* Fix - Resolves a potential jQuery conflict with some themes. ([#193](https://github.com/angelleye/offers-for-woocommerce/issues/193))
+* Fix - Resolves post status values disappearing when plugin is enabled. ([#200](https://github.com/angelleye/offers-for-woocommerce/issues/200))
+* Fix - Resolves bugs in bulk update tool. ([#207](https://github.com/angelleye/offers-for-woocommerce/issues/207))
+* Tweak - Improves email notification subject line. ([#173](https://github.com/angelleye/offers-for-woocommerce/issues/173))
+* Tweak - Improves offers on variable products. ([#188](https://github.com/angelleye/offers-for-woocommerce/issues/188))
+* Tweak - General code improvements and bug fixes.
+* Tweak - Compatibility with qTranslate-X plugin.  ([#197](https://github.com/angelleye/offers-for-woocommerce/issues/197))
+* Tweak - Improves offers on parent / child products. ([#202](https://github.com/angelleye/offers-for-woocommerce/issues/202))
 
 = 1.1.4 - 07.08.2015 =
 * Tweak - Adds a "close" icon to the lightbox offer form display.

@@ -75,6 +75,9 @@
                     <li><span><?php echo __('Email:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', $this->plugin_slug); ?></li>
                     <li><span><?php echo __('Phone:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_phone'][0])) ? stripslashes($postmeta['offer_phone'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
                     <li><span><?php echo __('Company:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_company_name'][0])) ? stripslashes($postmeta['offer_company_name'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
+                    <?php 
+                    global $post;
+                    do_action('make_offer_after_buyer_meta_display', $post->ID); ?>
                 </ul>
             </div>
 
@@ -127,6 +130,52 @@
                         <input type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', $this->plugin_slug); ?>" disabled="disabled" />
                     </div>
                 </div>
+                <?php if( isset($query_counter_offers_history_result) && !empty($query_counter_offers_history_result) ) { ?>
+                <h5><?php echo __('Offer History', $this->plugin_slug);?></h5>
+                <?php 
+                
+                $offer_history = '<ul class="counter-offers-history-wrap">';
+                
+                 foreach($query_counter_offers_history_result as $offers_history_result){
+                     
+                    $offer_status_value = '';
+                    $offer_signle_entry = '';
+                    
+                    if($offers_history_result->comment_id) {
+                        
+                        $offer_status = get_comment_meta( $offers_history_result->comment_id, 'offer_status', true );
+                        $offer_quantity = get_comment_meta( $offers_history_result->comment_id, 'offer_quantity', true );
+                        $offer_amount = get_comment_meta( $offers_history_result->comment_id, 'offer_amount', true );
+                        
+                        if( $offer_status == '1') {
+                            $offer_status_value = 'Buyers original offer';
+                        } elseif ( $offer_status == '2' ) {
+                            $offer_status_value = 'Buyer counter-offers';
+                        } elseif ( $offer_status == '3' ) {
+                            $offer_status_value = 'Seller counter-offers';
+                        } elseif ( $offer_status == '4' ) {
+                            $offer_status_value = 'Buyer completes the purchase';
+                        }
+                            
+                        if( !empty($offer_amount) ) {
+
+                            $offer_quantity_value = (isset($offer_quantity) && !empty($offer_quantity)) ? 'QTY '. $offer_quantity : 'QTY 0';
+                            $offer_amount_value = ( isset($offer_amount) && !empty($offer_amount) ) ? get_woocommerce_currency_symbol(). $offer_amount : get_woocommerce_currency_symbol(). '0';
+
+                            $offer_signle_entry = $offer_status_value .' '. $offer_quantity_value .' at '. $offer_amount_value;
+                            $offer_history .= '<li>'. $offer_signle_entry .'</li>';
+                        
+                        } elseif( !empty ($offer_status_value) ) {
+                            $offer_history .= '<li>'. $offer_status_value .'</li>';
+                        }
+                    }
+                }
+                
+                $offer_history .= '</ul>';
+                echo $offer_history;
+                
+                ?>
+                <?php } ?>
             </div>
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
@@ -198,6 +247,21 @@
                     </div>
                 </div>
 
+                <div class="woocommerce-offer-send-coupon-wrap">
+                    <?php 
+                        $coupon_list = get_posts('post_type=shop_coupon');
+                        if($coupon_list) { ?>
+                        <label for="ofw_coupon_list"><?php _e( 'Coupon List', $this->plugin_slug ); ?></label>
+                        <select id="ofw_coupon_list" name="ofw_coupon_list">
+                            <option value="" ><?php _e( 'Select Coupon', $this->plugin_slug ); ?></option>
+                            <?php foreach ( $coupon_list as $coupon  ) : ?>
+                                <option value="<?php echo $coupon->post_name; ?>"><?php echo $coupon->post_title; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php }
+                     ?>
+                </div>
+                
                 <div class="woocommerce-offer-expiration-wrap">
                     <label for="offer-expiration-date"><?php echo __('Offer Expires', $this->plugin_slug); ?></label>
                     <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("m/d/Y", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>" autocomplete="off">
