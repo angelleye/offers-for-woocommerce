@@ -88,6 +88,7 @@
                         <input type="text" name="offer_price_each" id="woocommerce-make-offer-form-price-each" pattern="([0-9]|\$|,|.)+" data-a-sign="$" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" />
                     </div>
                 </div>
+                <?php do_action('make_offer_form_before_total_offer_amount', 'add_custom_field_make_offer_form', 10); ?>                    
                 <div class="woocommerce-make-offer-form-part-left">
                     <?php if( (isset($is_sold_individually) && $is_sold_individually) || empty($button_display_options['display_setting_make_offer_form_field_offer_total'])) { ?>
                         <input type="hidden" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
@@ -100,11 +101,15 @@
                     </div>
                     <?php } ?>
                  </div>
+                <?php do_action('make_offer_form_after_total_offer_amount', 'add_custom_field_make_offer_form', 10); ?>
             </div>
+            <?php do_action('make_offer_form_before_your_name', 'add_custom_field_make_offer_form', 10); ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc-offer-form-label-your-name', __('Your Name', $this->plugin_slug) );?></label>
                 <br /><input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
             </div>
+            <?php do_action('make_offer_form_after_your_name', 'add_custom_field_make_offer_form', 10); ?>
+            <?php do_action('make_offer_form_before_company_name', 'add_custom_field_make_offer_form', 10); ?>
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_company_name'])) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc-offer-form-label-company-name', __('Company Name', $this->plugin_slug) );?></label>
@@ -113,6 +118,8 @@
             <?php } else { ?>
                 <input type="hidden" name="offer_company_name" id="offer-company-name" value="">
             <?php } ?>
+            <?php do_action('make_offer_form_after_company_name', 'add_custom_field_make_offer_form', 10); ?>
+            <?php do_action('make_offer_form_before_phone_number', 'add_custom_field_make_offer_form', 10); ?>                
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_phone'])) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc-offer-form-label-phone-number', __('Phone Number', $this->plugin_slug) );?></label>
@@ -121,10 +128,14 @@
             <?php } else { ?>
                 <input type="hidden" name="offer_phone" id="offer-phone" value="">
             <?php } ?>
+            <?php do_action('make_offer_form_after_phone_number', 'add_custom_field_make_offer_form', 10); ?>      
+            <?php do_action('make_offer_form_before_your_email_address', 'add_custom_field_make_offer_form', 10); ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="woocommerce-make-offer-form-email"><?php echo apply_filters( 'aeofwc-offer-form-label-your-email-address', __('Your Email Address', $this->plugin_slug) );?></label>
                 <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
             </div>
+            <?php do_action('make_offer_form_after_your_email_address', 'add_custom_field_make_offer_form', 10); ?>
+            <?php do_action('make_offer_form_before_offer_notes', 'add_custom_field_make_offer_form', 10); ?>
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes'])) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="angelleye-offer-notes"><?php echo apply_filters( 'aeofwc-offer-form-label-offer-notes', __('Offer Notes (optional)', $this->plugin_slug) );?></label>
@@ -134,6 +145,7 @@
                 <input type="hidden" name="offer_notes" id="angelleye-offer-notes" value="">
             <?php } ?>
             <?php
+            do_action('make_offer_form_after_offer_notes', 'add_custom_field_make_offer_form', 10);
             do_action('woocommerce_make_offer_form_end', $is_counter_offer);
             $submit_counter_offer_text = ($is_counter_offer) ? ' Counter' : '';
             $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
