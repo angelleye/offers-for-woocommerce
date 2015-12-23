@@ -2108,7 +2108,6 @@ class Angelleye_Offers_For_Woocommerce {
     }
     
     public function offers_for_woocommerce_new_counter_offer_email_recipient_own($recipient, $offer_args) {
-        
         if( isset($recipient) && !empty($recipient) ) {
             $recipient = get_option('admin_email');
         }
@@ -2117,8 +2116,9 @@ class Angelleye_Offers_For_Woocommerce {
         $recipient_email[$recipient] = $recipient;
         
         if( isset($offer_args['product_id']) && !empty($offer_args['product_id']) ) {
+            
             $post_author = get_post_field('post_author', $offer_args['product_id']);
-            if( isset($post_author) && !empty($post_author) ) {
+            if( !isset($post_author) && empty($post_author) ) {
                  return $recipient;
             }
             $user = get_user_by( 'id', $post_author );
@@ -2126,9 +2126,9 @@ class Angelleye_Offers_For_Woocommerce {
                 if( isset($user->user_email) && $user->user_email == $recipient ) {
                     return $recipient;
                 } else {
-                    $recipient_email[$user->user_email] = $user->user_email;
-                    $recipient_email = implode(', ', $recipient_email);
-                    return $recipient_email;
+                    //$recipient_email[$user->user_email] = $user->user_email;
+                    //$recipient_email = implode(', ', $recipient_email);
+                    return $user->user_email;
                 }
             } else {
                 return $recipient;
