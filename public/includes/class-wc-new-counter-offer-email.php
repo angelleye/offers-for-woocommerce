@@ -60,7 +60,7 @@ class WC_New_Counter_Offer_Email extends WC_Email {
     public function trigger( $offer_args ) {
 
         $this->offer_args = $offer_args;
-        $this->recipient = $this->get_option( 'recipient' );
+        $this->recipient = apply_filters( 'offers_for_woocommerce_new_counter_offer_email_recipient', $this->get_option( 'recipient' ), $offer_args );
 
         if( !$this->recipient )
         {
