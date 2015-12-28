@@ -247,7 +247,7 @@
                     </div>
                 </div>
 
-                <div class="woocommerce-offer-send-coupon-wrap">
+                <div class="woocommerce-offer-send-coupon-wrap angelleye-hidden">
                     <?php 
                         $coupon_list = get_posts('post_type=shop_coupon');
                         if($coupon_list) { ?>
