@@ -846,8 +846,7 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
        
-		if(!current_user_can('administrator'))
-		{
+	
             global $wpdb; // this is how you get access to the database
 
 			// Check if form was posted and select task accordingly
@@ -1235,7 +1234,7 @@ class Angelleye_Offers_For_Woocommerce {
                     return false;
                 }
             }
-        }
+
         return ob_get_clean();
     }
 
