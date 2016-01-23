@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.4
-Stable tag: 1.2.0
+Tested up to: 4.4.1
+Stable tag: 1.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.2.1 - 01.23.2016 =
+* Feature - Adds new hooks to offer submit form for custom field / content entry. ([#212](https://github.com/angelleye/offers-for-woocommerce/issues/212))
+* Fix - Resolves small bugs and improves general code structure.
+* Fix - Resolves an issue keeping email notifications from sending while logged in as an administrator. ([#222](https://github.com/angelleye/offers-for-woocommerce/issues/222))
+* Tweak - Hides the expiration date option when declining an offer. ([#208](https://github.com/angelleye/offers-for-woocommerce/issues/208))
 
 = 1.2.0 - 12.16.2015 =
 * Feature - Adds ability for users to join your MailChimp / ConstantContact mailing list while submitting an offer. ([#7](https://github.com/angelleye/offers-for-woocommerce/issues/7))
