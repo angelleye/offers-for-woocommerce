@@ -25,8 +25,8 @@
                     <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="<?php echo __('Click to view product', $this->plugin_slug); ?>"><?php echo $_product_image; ?></a></ul>
                     <ul class="offer-product-meta-values-wrap">
                         <li><span><?php echo __('Product:', $this->plugin_slug);?>&nbsp;</span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="' . __('Click to view product', $this->plugin_slug) . '">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->post->ID.'&action=edit" title="' . __('Click to edit product', $this->plugin_slug) . '"><span>('.$_product->post->ID.')</span></a>' : __('Missing Meta Value', $this->plugin_slug); ?></li>
-                        <?php if( $_product_attributes ) { ?>
-                            <li><span><?php echo __('Attributes:', $this->plugin_slug);?>&nbsp;</span><?php echo ucwords( implode( ", ", $_product_attributes ) ); ?></li>
+                        <?php if( isset($_product_attributes) && is_array($_product_attributes) && !empty($_product_attributes) ) { ?>
+                        <li><span><?php echo __('Attributes:', $this->plugin_slug);?>&nbsp;</span><?php echo ucwords( implode( ", ", array_values($_product_attributes)) ); ?></li>
                         <?php } ?>
                         <li><span><?php echo __('Regular Price:', $this->plugin_slug); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2) : __('Missing Meta Value', $this->plugin_slug); ?></li>
                         <?php if($_product_sale_price) { ?>
