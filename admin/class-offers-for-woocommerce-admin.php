@@ -2602,7 +2602,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $ofw_offer_expiration_date_show = 'false';
             $expiration_date = get_post_meta($post->ID, 'offer_expiration_date', true );
             $today_date = date("m/d/Y");  
-            if(strtotime($expiration_date) < strtotime($today_date)){ 
+            if((isset($expiration_date) && !empty($expiration_date)) && ( strtotime($expiration_date) < strtotime($today_date) )){ 
                 $ofw_offer_expiration_date_show = 'true';
             }
             wp_localize_script($this->plugin_slug . '-admin-script', 'ofw_param', array(
