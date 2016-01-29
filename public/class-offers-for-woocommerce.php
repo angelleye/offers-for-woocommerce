@@ -988,7 +988,11 @@ class Angelleye_Offers_For_Woocommerce {
                     $formDataUpdated['offer_buyer_counter_quantity'] = $formData['offer_quantity'];
                     $formDataUpdated['offer_buyer_counter_price_per'] = $formData['offer_price_per'];
                     $formDataUpdated['offer_buyer_counter_amount'] = $formData['offer_amount'];
-
+                    
+                    $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
+                    $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
+                    $formDataUpdated['offer_amount'] = $formData['offer_amount'];
+                    
                     // Insert new Post Meta Values
                     foreach ($formDataUpdated as $k => $v) {
                         $newPostMetaData = array();
@@ -1703,7 +1707,7 @@ class Angelleye_Offers_For_Woocommerce {
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = ($product_qty * $product_price_per);
+            $product_total = number_format(round($product_qty * $product_price_per), 2, ".", "");
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
@@ -1814,7 +1818,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product = ( $variant_id ) ? $_pf->get_product($variant_id) : $_pf->get_product($product_id);
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = ($product_qty * $product_price_per);
+            $product_total = number_format(round($product_qty * $product_price_per), 2, ".", "");
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
