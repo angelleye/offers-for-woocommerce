@@ -1328,7 +1328,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             else
             {
                 $_product_sku = $_product->get_sku();
-                $_product_attributes = $_product->get_attributes();
+                $_product_attributes = array();
                 $_product_permalink = $_product->get_permalink();
                 $_product_regular_price = $_product->get_regular_price();
                 $_product_sale_price = $_product->get_sale_price();
