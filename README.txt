@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.4.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.2.2 - 01.30.2016 =
+* Fix - Ensures expiration date option does not show up when it shouldn't. ([#226](https://github.com/angelleye/offers-for-woocommerce/issues/226))
+* Fix - Resolves PHP notices. ([#228](https://github.com/angelleye/offers-for-woocommerce/issues/228))
+* Fix - Resolves logic problems with auto-accept rules in relation to counter offer amounts. ([#229](https://github.com/angelleye/offers-for-woocommerce/issues/229))
+* Fix - Resolves rounding issues. ([#230](https://github.com/angelleye/offers-for-woocommerce/issues/230))
 
 = 1.2.1 - 01.23.2016 =
 * Feature - Adds new hooks to offer submit form for custom field / content entry. ([#212](https://github.com/angelleye/offers-for-woocommerce/issues/212))
