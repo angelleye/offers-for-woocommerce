@@ -147,8 +147,8 @@
             <?php
             do_action('make_offer_form_after_offer_notes', 'add_custom_field_make_offer_form', 10);
             do_action('woocommerce_make_offer_form_end', $is_counter_offer);
-            $submit_counter_offer_text = ($is_counter_offer) ? ' Counter' : '';
-            $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
+            $submit_counter_offer_text = ($is_counter_offer) ? __(' Counter', $this->plugin_slug) : '';
+            $submit_offer_text  = __('Submit', $this->plugin_slug) . $submit_counter_offer_text. __(' Offer', $this->plugin_slug);
             do_action('make_offer_form_before_submit_button');
             ?>
             <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
