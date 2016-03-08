@@ -748,7 +748,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $val = get_post_meta( $post_id , 'offer_quantity' , true );
                 }
                 $val = ($val != '') ? $val : '0';
-                echo number_format($val, 0);
+                echo number_format($val, 2, '.', '');
 			break;
 				
 			case 'offer_price_per' :
@@ -761,7 +761,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $val = get_post_meta( $post_id , 'offer_price_per' , true );
                 }
                 $val = ($val != '') ? $val : '0';
-				echo get_woocommerce_currency_symbol().number_format($val, 2);
+				echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
 			break;
 
 			case 'offer_amount' :
@@ -774,7 +774,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $val = get_post_meta( $post_id , 'offer_amount' , true );
                 }
                 $val = ($val != '') ? $val : '0';
-                echo get_woocommerce_currency_symbol().number_format($val, 2);
+                echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
             break;
 		}
 	}	
@@ -1328,7 +1328,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             else
             {
                 $_product_sku = $_product->get_sku();
-                $_product_attributes = $_product->get_attributes();
+                $_product_attributes = array();
                 $_product_permalink = $_product->get_permalink();
                 $_product_regular_price = $_product->get_regular_price();
                 $_product_sale_price = $_product->get_sale_price();
@@ -1741,7 +1741,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // set updated offer values
             $offer_quantity = (isset($_POST['offer_quantity']) && $_POST['offer_quantity'] != '') ? str_replace(",","", $_POST['offer_quantity']) : '';
             $offer_price_per = (isset($_POST['offer_price_per']) && $_POST['offer_price_per'] != '') ? str_replace(",","", $_POST['offer_price_per']) : '';
-            $offer_total = number_format(round($offer_quantity * $offer_price_per), 2, ".", "");
+            $offer_total = number_format(round($offer_quantity * $offer_price_per, 2), 2, '.', '');
 
             /**
              * Update Counter Offer post meta values
@@ -2602,7 +2602,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $ofw_offer_expiration_date_show = 'false';
             $expiration_date = get_post_meta($post->ID, 'offer_expiration_date', true );
             $today_date = date("m/d/Y");  
-            if(strtotime($expiration_date) > strtotime($today_date)){ 
+            if((isset($expiration_date) && !empty($expiration_date)) && ( strtotime($expiration_date) < strtotime($today_date) )){ 
                 $ofw_offer_expiration_date_show = 'true';
             }
             wp_localize_script($this->plugin_slug . '-admin-script', 'ofw_param', array(
@@ -3293,7 +3293,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_price',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2, '.', '') ),
                             'compare' => '>',
                             'type' => 'DECIMAL(10,2)'
                         )
@@ -3305,7 +3305,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_price',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2) ),
+                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2, '.', '') ),
                             'compare' => '<',
                             'type' => 'DECIMAL(10,2)'
                         )

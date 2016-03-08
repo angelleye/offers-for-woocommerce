@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '1.2.0';
+    const VERSION = '1.2.2';
 
     /**
      *
@@ -856,8 +856,7 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
        
-		if(!current_user_can('administrator'))
-		{
+	
             global $wpdb; // this is how you get access to the database
 
 			// Check if form was posted and select task accordingly
@@ -872,7 +871,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $formData['orig_offer_variation_id'] = (isset($post['offer_variation_id'])) ? $post['offer_variation_id'] : '';
 				$formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
                 $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
-				$formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per']), 2, ".", "");
+				$formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
                 $formData['orig_offer_uid'] = uniqid('aewco-');;
                 $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
 
@@ -999,7 +998,11 @@ class Angelleye_Offers_For_Woocommerce {
                     $formDataUpdated['offer_buyer_counter_quantity'] = $formData['offer_quantity'];
                     $formDataUpdated['offer_buyer_counter_price_per'] = $formData['offer_price_per'];
                     $formDataUpdated['offer_buyer_counter_amount'] = $formData['offer_amount'];
-
+                    
+                    $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
+                    $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
+                    $formDataUpdated['offer_amount'] = $formData['offer_amount'];
+                    
                     // Insert new Post Meta Values
                     foreach ($formDataUpdated as $k => $v) {
                         $newPostMetaData = array();
@@ -1245,7 +1248,7 @@ class Angelleye_Offers_For_Woocommerce {
                     return false;
                 }
             }
-        }
+
         return ob_get_clean();
     }
 
@@ -1714,7 +1717,7 @@ class Angelleye_Offers_For_Woocommerce {
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = ($product_qty * $product_price_per);
+            $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
@@ -1825,7 +1828,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product = ( $variant_id ) ? $_pf->get_product($variant_id) : $_pf->get_product($product_id);
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = ($product_qty * $product_price_per);
+            $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
