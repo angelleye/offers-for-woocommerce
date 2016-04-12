@@ -113,7 +113,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action( 'init', array( $this, 'comments_exclude_lazy_hook' ), 0 );
+		add_filter( 'comments_clauses', array( $this, 'angelleye_ofwc_exclude_cpt_from_comments_clauses' ), 10, 1 );
 		
 		/**
 		 * XXX
@@ -670,28 +670,18 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @param  object $wp_comment_query
 	 * @return array
 	 */
-	public function angelleye_ofwc_exclude_cpt_from_comments_clauses( $clauses )
-	{
-		global $wpdb;
-
-		$clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
-		
-		$clauses['where'] .=
-        $wpdb->prepare(" AND $wpdb->posts.post_type <> '%s'", 'woocommerce_offer');
-
-		return $clauses;
+	public function angelleye_ofwc_exclude_cpt_from_comments_clauses( $clauses ) {
+            $screen = get_current_screen();
+            if ( $screen->id == 'edit-comments' ) {
+                global $wpdb;
+                $clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
+                $clauses['where'] .= $wpdb->prepare(" AND $wpdb->posts.post_type <> '%s'", 'woocommerce_offer');
+                return $clauses;
+            } else {
+                return $clauses;
+            }
 	}
 	
-	/**
-	 * Filter - Modify the comments clause - to exclude "woocommerce_offer" post type
-	 * @since	0.1.0
-	 */
-	public function comments_exclude_lazy_hook( $screen )
-	{
-		//if ( $screen->id == 'edit-comments' )
-		add_filter( 'comments_clauses', array( $this, 'angelleye_ofwc_exclude_cpt_from_comments_clauses' ) );
-	}
-
 	/**
 	 * Set custom columns on CPT edit list view
 	 * @since	0.1.0
