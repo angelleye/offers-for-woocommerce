@@ -164,6 +164,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_action('woocommerce_make_offer_form_end', array($this, 'woocommerce_make_offer_form_end_own'), 10, 1);
 
         add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
+        add_filter( 'woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled' ), 10, 1);
     }
 
     /**
@@ -1375,7 +1376,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_meta['woocommerce_offer_price_per'] = $offer_meta['offer_price_per'][0];
 
             $found = false;
-
+           
             foreach ($woocommerce->cart->get_cart() as $cart_item) {
                 // check if offer id already in cart
                 if (isset($cart_item['woocommerce_offer_id']) && $cart_item['woocommerce_offer_id'] == $offer->ID) {
@@ -2098,6 +2099,18 @@ class Angelleye_Offers_For_Woocommerce {
     
     public function set_session($key, $value) {
         WC()->session->$key = $value;
+    }
+    
+    public function ofw_coupons_enabled($boolean) {
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        if(!WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
+            foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+                if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                    return false;
+                }
+            }
+        }
+        return $boolean;
     }
 
 }
