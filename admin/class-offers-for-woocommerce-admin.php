@@ -408,6 +408,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function angelleye_ofwc_add_post_type_woocommerce_offer()
 	{
+                $show_in_menu = current_user_can( 'manage_woocommerce' ) ? 'woocommerce' : true;
 		register_post_type( 'woocommerce_offer',
 			array(
 				'labels' => array(
@@ -430,7 +431,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				'publicly_queryable' => true,
 				'exclude_from_search' => true,            
 				'hierarchical' => false,
-				'show_in_menu' => 'woocommerce',
+				'show_in_menu' => $show_in_menu,
 				'menu_position' => '',
 				'show_in_admin_bar' => false,
 				'supports' => array( 'section_id_offer_comments', 'section_id_offer_summary', 'section_id_offer_addnote' ),
@@ -440,8 +441,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 				//'menu_icon' => plugins_url( 'images/image.png', __FILE__ ),	// No longer used; instead we use CSS for icon
 				'menu_icon' => '',
 				'has_archive' => false,
+                                'capability_type' => 'woocommerce_offer',
+                                'map_meta_cap' => true
 			)
 		);
+                
+                $this->create_woocommerce_offer_capabilities();
 	}
 		
 	/**
@@ -3899,6 +3904,69 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($mailpoet_setting_fields);
         }
+    }
+    
+    /**
+    * Create capabilities.
+    */
+    public function create_woocommerce_offer_capabilities() {
+        global $wp_roles;
+
+        $woocommerce_offer_capabilities = get_option('woocommerce_offer_capabilities');
+
+        if (empty($woocommerce_offer_capabilities)) {
+
+            if (!class_exists('WP_Roles')) {
+                return;
+            }
+
+            if (!isset($wp_roles)) {
+                $wp_roles = new WP_Roles();
+            }
+
+            $capabilities = $this->get_core_capabilities();
+
+            foreach ($capabilities as $cap_group) {
+                foreach ($cap_group as $cap) {
+                    $wp_roles->add_cap('shop_manager', $cap);
+                    $wp_roles->add_cap('administrator', $cap);
+                }
+            }
+        } else {
+            update_option('woocommerce_offer_capabilities', true);
+        }
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function get_core_capabilities() {
+        $capabilities = array();
+
+        $capability_types = array('woocommerce_offer');
+
+        foreach ($capability_types as $capability_type) {
+
+            $capabilities[$capability_type] = array(
+                // Post type
+                "edit_{$capability_type}",
+                "read_{$capability_type}",
+                "delete_{$capability_type}",
+                "edit_{$capability_type}s",
+                "edit_others_{$capability_type}s",
+                "publish_{$capability_type}s",
+                "read_private_{$capability_type}s",
+                "delete_{$capability_type}s",
+                "delete_private_{$capability_type}s",
+                "delete_published_{$capability_type}s",
+                "delete_others_{$capability_type}s",
+                "edit_private_{$capability_type}s",
+                "edit_published_{$capability_type}s",
+            );
+        }
+
+        return $capabilities;
     }
 
 }
