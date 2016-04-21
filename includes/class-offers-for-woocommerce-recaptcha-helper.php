@@ -39,7 +39,7 @@ class AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper {
             'desc' => __('Enter Site key. <a target="_blank" href="https://www.google.com/recaptcha/admin">Get your Site key</a>', $this->plugin_slug),
             'id' => 'ofw_recaptcha_site_key',
             'type' => 'text',
-            'css' => 'min-width:300px;',
+            'css' => 'min-width:355px;',
         );
 
         $fields[] = array(
@@ -47,7 +47,7 @@ class AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper {
             'desc' => __('Enter Secret key. <a target="_blank" href="https://www.google.com/recaptcha/admin">Get your Secret key</a>', $this->plugin_slug),
             'id' => 'ofw_recaptcha_secret_key',
             'type' => 'text',
-            'css' => 'min-width:300px;',
+            'css' => 'min-width:355px;',
         );
 
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
