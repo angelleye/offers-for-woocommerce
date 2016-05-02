@@ -456,7 +456,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
         foreach ($update_options as $name => $value) {
             update_option($name, $value);
         }
-        echo '<div class="updated"><p>' . __( 'Settings were saved successfully.' ) . '</p></div>';
+        echo '<div class="updated"><p>' . __( 'Settings were saved successfully.', 'offers-for-woocommerce' ) . '</p></div>';
         return true;
     }
 

@@ -23,20 +23,20 @@ class WC_New_Counter_Offer_Email extends WC_Email {
          * Set plugin slug
          * @since	1.1.2
          */
-        $this->plugin_slug = 'angelleye-offers-for-woocommerce';
+      
 
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_new_counter_offer';
 
         // this is the title in WooCommerce Email settings
-        $this->title = __('New counter offer', $this->plugin_slug);
+        $this->title = __('New counter offer', 'offers-for-woocommerce');
 
         // this is the description in WooCommerce email settings
-        $this->description = __('New Counter Offer Notification emails are sent to the admin when customer submits a counter offer', $this->plugin_slug);
+        $this->description = __('New Counter Offer Notification emails are sent to the admin when customer submits a counter offer', 'offers-for-woocommerce');
 
         // these are the default heading and subject lines that can be overridden using the settings
-        $this->heading = __('New Counter Offer', $this->plugin_slug);
-        $this->subject = __('[{site_title}] New Counter Offer ({offer_number}) - {offer_date}', $this->plugin_slug);
+        $this->heading = __('New Counter Offer', 'offers-for-woocommerce');
+        $this->subject = __('[{site_title}] New Counter Offer ({offer_number}) - {offer_date}', 'offers-for-woocommerce');
 
         // Set email template paths
         $this->template_html 	= 'woocommerce-new-counter-offer.php';
@@ -131,40 +131,40 @@ class WC_New_Counter_Offer_Email extends WC_Email {
 
         $this->form_fields = array(
             'enabled'    => array(
-                'title'   => __('Enable/Disable', $this->plugin_slug),
+                'title'   => __('Enable/Disable', 'offers-for-woocommerce'),
                 'type'    => 'checkbox',
-                'label'   => __('Enable this email notification', $this->plugin_slug),
+                'label'   => __('Enable this email notification', 'offers-for-woocommerce'),
                 'default' => 'yes'
             ),
             'recipient'    => array(
-                'title'       => __('Recipient(s)', $this->plugin_slug),
+                'title'       => __('Recipient(s)', 'offers-for-woocommerce'),
                 'type'        => 'text',
-                'description' => sprintf( __('Enter recipients (comma separated) for this email. Defaults to', $this->plugin_slug) . ' <code>%s</code>.', esc_attr( get_option('admin_email') ) ),
+                'description' => sprintf( __('Enter recipients (comma separated) for this email. Defaults to', 'offers-for-woocommerce') . ' <code>%s</code>.', esc_attr( get_option('admin_email') ) ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'subject'    => array(
-                'title'       => __('Subject', $this->plugin_slug),
+                'title'       => __('Subject', 'offers-for-woocommerce'),
                 'type'        => 'text',
-                'description' => sprintf( __('This controls the email subject line. Leave blank to use the default subject:', $this->plugin_slug) . ' <code>%s</code>.', $this->subject ),
+                'description' => sprintf( __('This controls the email subject line. Leave blank to use the default subject:', 'offers-for-woocommerce') . ' <code>%s</code>.', $this->subject ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'heading'    => array(
-                'title'       => __('Email Heading', $this->plugin_slug),
+                'title'       => __('Email Heading', 'offers-for-woocommerce'),
                 'type'        => 'text',
-                'description' => sprintf( __('This controls the main heading contained within the email notification. Leave blank to use the default heading:', $this->plugin_slug) . ' <code>%s</code>.', $this->heading ),
+                'description' => sprintf( __('This controls the main heading contained within the email notification. Leave blank to use the default heading:', 'offers-for-woocommerce') . ' <code>%s</code>.', $this->heading ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'email_type' => array(
-                'title'       => __('Email type', $this->plugin_slug),
+                'title'       => __('Email type', 'offers-for-woocommerce'),
                 'type'        => 'select',
-                'description' => __('Choose which format of email to send.', $this->plugin_slug),
+                'description' => __('Choose which format of email to send.', 'offers-for-woocommerce'),
                 'default'     => 'html',
                 'class'       => 'email_type',
                 'options'     => array(
-                    'plain'     => __('Plain text', $this->plugin_slug),
+                    'plain'     => __('Plain text', 'offers-for-woocommerce'),
                     'html'      => 'HTML',
                     'multipart' => 'Multipart',
                 )
