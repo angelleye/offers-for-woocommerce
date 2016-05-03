@@ -147,12 +147,16 @@
             <?php
             do_action('make_offer_form_after_offer_notes', 'add_custom_field_make_offer_form', 10);
             do_action('woocommerce_make_offer_form_end', $is_counter_offer);
-            $submit_counter_offer_text = ($is_counter_offer) ? ' Counter' : '';
-            $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
+            
+            if($is_counter_offer) {
+                $submit_offer_text = __( 'Submit Counter Offer', 'offers-for-woocommerce' );
+            } else {
+                $submit_offer_text = __( 'Submit Offer', 'offers-for-woocommerce' );
+            }
             do_action('make_offer_form_before_submit_button');
             ?>
             <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
-                <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, 'offers-for-woocommerce')); ?>" value="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, 'offers-for-woocommerce')); ?>" />
+                <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', $submit_offer_text); ?>" value="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', $submit_offer_text); ?>" />
                 <div class="offer-submit-loader" id="offer-submit-loader"><?php echo __('Please wait...', 'offers-for-woocommerce'); ?></div>
             </div>
         </form>
