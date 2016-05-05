@@ -1777,6 +1777,10 @@ class Angelleye_Offers_For_Woocommerce {
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
             }
+            $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
+            $redirect = $offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'];
+            echo json_encode(array("statusmsg" => 'accepted-offer', 'redirect' => $redirect));
+            exit;
         }
     }
 
