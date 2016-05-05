@@ -164,7 +164,11 @@ class Angelleye_Offers_For_Woocommerce {
         add_action('woocommerce_make_offer_form_end', array($this, 'woocommerce_make_offer_form_end_own'), 10, 1);
 
         add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
+
         add_filter( 'woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled' ), 10, 1);
+        
+        add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
+
     }
 
     /**
@@ -2133,6 +2137,9 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
         return $boolean;
+    }
+    public function ofw_woocommerce_after_my_account(){
+        include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
     }
 
      public function is_recaptcha_enable() {
