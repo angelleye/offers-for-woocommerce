@@ -2172,6 +2172,25 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'extra_classes' => 'chosen-select'
             )
         );
+        
+        
+        /**
+         * Add field - 'General Settings' - 'general_setting_disable_coupon'
+         * Disable coupons when checking out with accepted offer
+         */
+        add_settings_field(
+            'general_setting_disable_coupon', // ID
+            __('Disable coupons', $this->plugin_slug), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_disable_coupon',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to Disable coupons when checking out with accepted offer.', $this->plugin_slug),
+            )
+        );
 
 		/**
 		 * Add section - 'Display Settings'
