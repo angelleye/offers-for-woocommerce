@@ -150,6 +150,9 @@
             $submit_counter_offer_text = ($is_counter_offer) ? ' Counter' : '';
             $submit_offer_text  = 'Submit' . $submit_counter_offer_text. ' Offer';
             do_action('make_offer_form_before_submit_button');
+            if($is_recaptcha_enable) {
+                 printf( '<div class="woocommerce-make-offer-form-section"><div class="g-recaptcha" data-sitekey="%s"></div></div>', get_option('ofw_recaptcha_site_key') );
+            }
             ?>
             <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
                 <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, $this->plugin_slug)); ?>" value="<?php echo apply_filters( 'aeofwc-offer-form-label-submit-button', __($submit_offer_text, $this->plugin_slug)); ?>" />

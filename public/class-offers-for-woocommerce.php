@@ -56,7 +56,7 @@ class Angelleye_Offers_For_Woocommerce {
          * Define email templates path
          */
         define('OFWC_PUBLIC_EMAIL_TEMPLATE_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . '/includes/emails/');
-
+        
         if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
             define('OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/');
         }
@@ -623,6 +623,7 @@ class Angelleye_Offers_For_Woocommerce {
         $currency_symbol = get_woocommerce_currency_symbol();
 
         // Set html content for output
+        $is_recaptcha_enable = $this->is_recaptcha_enable();
         include_once( 'views/public.php' );
     }
 
@@ -820,6 +821,9 @@ class Angelleye_Offers_For_Woocommerce {
                     'offers_for_woocommerce_params_nonce' => wp_create_nonce("offers_for_woocommerce_params_nonce")
                 )));
             }
+            if($this->is_recaptcha_enable()) {
+                wp_enqueue_script($this->plugin_slug . '-recaptcha', 'https://www.google.com/recaptcha/api.js', array('jquery'), self::VERSION);
+            }
         }
     }
 
@@ -866,6 +870,24 @@ class Angelleye_Offers_For_Woocommerce {
                 $formData['orig_offer_uid'] = uniqid('aewco-');;
                 $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
 
+                if($this->is_recaptcha_enable()) {
+                    if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
+                        $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
+                        if(empty($response)) {
+                           echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', $this->plugin_slug)));
+                            exit; 
+                        } else {
+                            $response_array = json_decode($response, true);
+                            if( $response_array['success'] != true ) {
+                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', $this->plugin_slug)));
+                                exit;
+                            }
+                        }
+                    } else {
+                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', $this->plugin_slug)));
+                        exit;
+                    }
+                }
                 /**
                  * Check minimum quantity and minimum price
                  */
@@ -2112,5 +2134,28 @@ class Angelleye_Offers_For_Woocommerce {
         }
         return $boolean;
     }
+
+     public function is_recaptcha_enable() {
+         $ofw_enable_recaptcha = get_option('ofw_enable_recaptcha');
+         if( empty($ofw_enable_recaptcha) || $ofw_enable_recaptcha == 'no' ) {
+             return false;
+         }
+         $ofw_recaptcha_site_key = get_option('ofw_recaptcha_site_key');
+         if( empty($ofw_recaptcha_site_key) ) {
+             return false;
+         }
+         $ofw_recaptcha_secret_key = get_option('ofw_recaptcha_secret_key');
+         if( empty($ofw_recaptcha_secret_key) ) {
+             return false;
+         }
+         return true;
+     }
+     
+     public function recaptcha_verify_response($response) {
+         if($this->is_recaptcha_enable()) {
+             $recaptcha_url = add_query_arg( array( 'secret' => get_option('ofw_recaptcha_secret_key'), 'response' => $response, 'remoteip' => $_SERVER['REMOTE_ADDR']), 'https://www.google.com/recaptcha/api/siteverify' );
+             return wp_remote_retrieve_body( wp_remote_get($recaptcha_url) );
+         }
+     }
 
 }
