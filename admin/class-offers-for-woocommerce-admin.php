@@ -1300,158 +1300,162 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $_pf = new WC_Product_Factory();
             $_product = $_pf->get_product($product_id);
 
-            if( $product_variant_id )
-            {
-                $_pf_variant = new WC_Product_Factory();
-                $_product_variant = $_pf_variant->get_product($product_variant_id);
-                $_product_variant_managing_stock = ( $_product_variant->managing_stock() == 'parent' ) ? true : false;
-
-                $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
-                $_product_permalink = $_product_variant->get_permalink();
-                $_product_attributes_resulat = $_product_variant->get_variation_attributes();
-                foreach ( $_product_attributes_resulat as $name => $attribute ) {
-                        $_product_attributes[] = wc_attribute_label( str_replace( 'attribute_', '', $name ) ) . ': <strong>' . $attribute . '</strong>';
-                }
-                $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
-                $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
-
-                $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
-                $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
-                $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
-                $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
-                $_product_backorders_require_notification = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_require_notification() : $_product->backorders_require_notification();
-                $_product_formatted_name = $_product_variant->get_formatted_name();
-                $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
-            }
-            else
-            {
-                $_product_sku = $_product->get_sku();
-                $_product_attributes = array();
-                $_product_permalink = $_product->get_permalink();
-                $_product_regular_price = $_product->get_regular_price();
-                $_product_sale_price = $_product->get_sale_price();
-                $_product_managing_stock = $_product->managing_stock();
-                $_product_stock = $_product->get_total_stock();
-                $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
-                $_product_backorders_allowed = $_product->backorders_allowed();
-                $_product_backorders_require_notification = $_product->backorders_require_notification();
-                $_product_formatted_name = $_product->get_formatted_name();
-                $_product_image = $_product->get_image( 'shop_thumbnail');
-
-                // set error message if product not found...
-            }
-
-            /**
-             * Set default expiration date on 'pending' offer expiration date input field
-             * @since   1.2.0
-             */
-            if($current_status_value == 'publish')
-            {
-                // get offers options - general
-                $default_expire_date = '';
-                $options_general = get_option('offers_for_woocommerce_options_general');
-                if(!empty($options_general['general_setting_default_expire_days']))
+            if($_product != false) {
+            
+                if( $product_variant_id )
                 {
-                    $current_time = date("Y-m-d H:i:s", current_time('timestamp', 0 ));
+                    $_pf_variant = new WC_Product_Factory();
+                    $_product_variant = $_pf_variant->get_product($product_variant_id);
+                    $_product_variant_managing_stock = ( $_product_variant->managing_stock() == 'parent' ) ? true : false;
 
-                    $default_expire_days = str_replace(",","", $options_general['general_setting_default_expire_days']);
-                    $default_expire_date = ($default_expire_days != '') ? date("m/d/Y", strtotime( $current_time .' + '. $default_expire_days .' days') ) : '';
-                }
-                if($default_expire_date != '')
-                {
-                    $postmeta['offer_expiration_date'] = array($default_expire_date);
-                }
-            }
+                    $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
+                    $_product_permalink = $_product_variant->get_permalink();
+                    $_product_attributes_resulat = $_product_variant->get_variation_attributes();
+                    foreach ( $_product_attributes_resulat as $name => $attribute ) {
+                            $_product_attributes[] = wc_attribute_label( str_replace( 'attribute_', '', $name ) ) . ': <strong>' . $attribute . '</strong>';
+                    }
+                    $_product_regular_price = ( $_product_variant->get_regular_price() ) ? $_product_variant->get_regular_price() : $_product->get_regular_price();
+                    $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
 
-            /**
-             * Check to 'consider inventory' of product stock compared to offer quantities
-             * @since   0.1.0
-             */
-
-            $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', $this->plugin_slug);
-            $show_offer_inventory_msg = ( $_product_in_stock ) ? FALSE : TRUE;
-
-            // Check for 'offer_order_id'
-            if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
-            {
-                $order_id = $postmeta['offer_order_id'][0];
-
-                // Set order meta data array
-                $offer_order_meta = array();
-                $offer_order_meta['Order ID'] = '<a href="post.php?post='. $order_id . '&action=edit">' . '#' . $order_id . '</a>';
-
-                // Get Order
-                $order = new WC_Order( $order_id );
-                if($order->post)
-                {
-                    $offer_order_meta['Order Date'] = $order->post->post_date;
-                    $offer_order_meta['Order Status'] = ucwords($order->get_status() );
+                    $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
+                    $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
+                    $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                    $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
+                    $_product_backorders_require_notification = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_require_notification() : $_product->backorders_require_notification();
+                    $_product_formatted_name = $_product_variant->get_formatted_name();
+                    $_product_image = ( $_product_variant->get_image( 'shop_thumbnail') ) ? $_product_variant->get_image( 'shop_thumbnail') : $_product->get_image( 'shop_thumbnail');
                 }
                 else
                 {
-                    $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', $this->plugin_slug) . '</small>';
+                    $_product_sku = $_product->get_sku();
+                    $_product_attributes = array();
+                    $_product_permalink = $_product->get_permalink();
+                    $_product_regular_price = $_product->get_regular_price();
+                    $_product_sale_price = $_product->get_sale_price();
+                    $_product_managing_stock = $_product->managing_stock();
+                    $_product_stock = $_product->get_total_stock();
+                    $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
+                    $_product_backorders_allowed = $_product->backorders_allowed();
+                    $_product_backorders_require_notification = $_product->backorders_require_notification();
+                    $_product_formatted_name = $_product->get_formatted_name();
+                    $_product_image = $_product->get_image( 'shop_thumbnail');
+
+                    // set error message if product not found...
                 }
-            }
 
-            // set author_data
-            $author_data = get_userdata($post->post_author);
+                /**
+                 * Set default expiration date on 'pending' offer expiration date input field
+                 * @since   1.2.0
+                 */
+                if($current_status_value == 'publish')
+                {
+                    // get offers options - general
+                    $default_expire_date = '';
+                    $options_general = get_option('offers_for_woocommerce_options_general');
+                    if(!empty($options_general['general_setting_default_expire_days']))
+                    {
+                        $current_time = date("Y-m-d H:i:s", current_time('timestamp', 0 ));
 
-            // set author offer counts
-            $author_counts = array();
-            if($author_data)
-            {
-                // count offers by author id
-               
-                $post_type = 'woocommerce_offer';
+                        $default_expire_days = str_replace(",","", $options_general['general_setting_default_expire_days']);
+                        $default_expire_date = ($default_expire_days != '') ? date("m/d/Y", strtotime( $current_time .' + '. $default_expire_days .' days') ) : '';
+                    }
+                    if($default_expire_date != '')
+                    {
+                        $postmeta['offer_expiration_date'] = array($default_expire_date);
+                    }
+                }
 
-                $args = array($post_type,'trash', $post->post_author);
-                $count_all = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status != '%s' AND post_author = '%s'", $args ) );
+                /**
+                 * Check to 'consider inventory' of product stock compared to offer quantities
+                 * @since   0.1.0
+                 */
 
-                $args = array($post_type,'publish', $post->post_author);
-                $count_pending = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', $this->plugin_slug);
+                $show_offer_inventory_msg = ( $_product_in_stock ) ? FALSE : TRUE;
 
-                $args = array($post_type,'accepted-offer', $post->post_author);
-                $count_accepted = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                // Check for 'offer_order_id'
+                if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
+                {
+                    $order_id = $postmeta['offer_order_id'][0];
 
-                $args = array($post_type,'countered-offer', $post->post_author);
-                $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                    // Set order meta data array
+                    $offer_order_meta = array();
+                    $offer_order_meta['Order ID'] = '<a href="post.php?post='. $order_id . '&action=edit">' . '#' . $order_id . '</a>';
 
-                $args = array($post_type,'buyercountered-offer', $post->post_author);
-                $count_buyer_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                    // Get Order
+                    $order = new WC_Order( $order_id );
+                    if($order->post)
+                    {
+                        $offer_order_meta['Order Date'] = $order->post->post_date;
+                        $offer_order_meta['Order Status'] = ucwords($order->get_status() );
+                    }
+                    else
+                    {
+                        $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', $this->plugin_slug) . '</small>';
+                    }
+                }
 
-                $args = array($post_type,'declined-offer', $post->post_author);
-                $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                // set author_data
+                $author_data = get_userdata($post->post_author);
 
-                $args = array($post_type,'completed-offer', $post->post_author);
-                $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                // set author offer counts
+                $author_counts = array();
+                if($author_data)
+                {
+                    // count offers by author id
 
-                $args = array($post_type,'on-hold-offer', $post->post_author);
-                $count_on_hold = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                    $post_type = 'woocommerce_offer';
 
-                $args = array($post_type,'expired-offer', $post->post_author);
-                $count_expired = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+                    $args = array($post_type,'trash', $post->post_author);
+                    $count_all = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status != '%s' AND post_author = '%s'", $args ) );
 
-                $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
-                $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
-                $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
-                $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
-                $author_counts['buyercountered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
-                $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
-                $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
-                $author_counts['on_hold'] = apply_filters( 'get_usernumposts', $count_on_hold, $post->post_author );
-                $author_counts['expired'] = apply_filters( 'get_usernumposts', $count_expired, $post->post_author );
+                    $args = array($post_type,'publish', $post->post_author);
+                    $count_pending = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
 
-                $author_data->offer_counts = $author_counts;
-            }
+                    $args = array($post_type,'accepted-offer', $post->post_author);
+                    $count_accepted = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $args = array($post_type,'countered-offer', $post->post_author);
+                    $count_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $args = array($post_type,'buyercountered-offer', $post->post_author);
+                    $count_buyer_countered = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $args = array($post_type,'declined-offer', $post->post_author);
+                    $count_declined = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $args = array($post_type,'completed-offer', $post->post_author);
+                    $count_completed = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $args = array($post_type,'on-hold-offer', $post->post_author);
+                    $count_on_hold = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $args = array($post_type,'expired-offer', $post->post_author);
+                    $count_expired = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s' AND post_author = '%s'", $args ) );
+
+                    $author_counts['all'] = apply_filters( 'get_usernumposts', $count_all, $post->post_author );
+                    $author_counts['pending'] = apply_filters( 'get_usernumposts', $count_pending, $post->post_author );
+                    $author_counts['accepted'] = apply_filters( 'get_usernumposts', $count_accepted, $post->post_author );
+                    $author_counts['countered'] = apply_filters( 'get_usernumposts', $count_countered, $post->post_author );
+                    $author_counts['buyercountered'] = apply_filters( 'get_usernumposts', $count_buyer_countered, $post->post_author );
+                    $author_counts['declined'] = apply_filters( 'get_usernumposts', $count_declined, $post->post_author );
+                    $author_counts['completed'] = apply_filters( 'get_usernumposts', $count_completed, $post->post_author );
+                    $author_counts['on_hold'] = apply_filters( 'get_usernumposts', $count_on_hold, $post->post_author );
+                    $author_counts['expired'] = apply_filters( 'get_usernumposts', $count_expired, $post->post_author );
+
+                    $author_data->offer_counts = $author_counts;
+                }
             
-            
-	    $query_counter_offers_history = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' AND $wpdb->comments.comment_type = 'offers-history' ORDER BY comment_date ASC", $post->ID );
-            $query_counter_offers_history_result = $wpdb->get_results($query_counter_offers_history);
+                $query_counter_offers_history = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' AND $wpdb->comments.comment_type = 'offers-history' ORDER BY comment_date ASC", $post->ID );
+                $query_counter_offers_history_result = $wpdb->get_results($query_counter_offers_history);
 
-            /**
-             * Output html for Offer Comments loop
-             */
-            include_once(OFW_PLUGIN_URL . '/admin/views/meta-panel-summary.php');
+                /**
+                 * Output html for Offer Comments loop
+                 */
+                include_once(OFW_PLUGIN_URL . '/admin/views/meta-panel-summary.php');
+            } else {
+                wp_die( '<strong>ERROR</strong>: ' . __( 'Product not found for this offer.', $this->plugin_slug ) );
+            }
         }
     }
 
@@ -2120,6 +2124,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'description' => __('Enter the amount of days from accepting/countering an offer that you would like the expiration date to automatically set.', $this->plugin_slug),
             )
         );
+        
 
         /**
          * Add field - 'General Settings' - 'general_setting_enable_offers_only_logged_in_users'
