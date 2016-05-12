@@ -2183,7 +2183,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_general',
                 'input_label'=>'general_setting_enable_anonymous_communication',
                 'input_required'=>FALSE,
-                'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors.', $this->plugin_slug),
+                'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', $this->plugin_slug),
             )
         );
 
