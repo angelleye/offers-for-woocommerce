@@ -83,7 +83,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_filter('manage_woocommerce_offer_posts_columns' , array( $this, 'set_woocommerce_offer_columns' ) );
+		add_filter('manage_woocommerce_offer_posts_columns' , array( $this, 'set_woocommerce_offer_columns' ), 1, 10  );
 
 		/**
 		 * XXX
@@ -391,6 +391,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('offers_for_woocommerce_setting_tab', array( $this, 'offers_for_woocommerce_setting_tab_own' ) );
         add_action('offers_for_woocommerce_setting_tab_content', array( $this, 'offers_for_woocommerce_setting_tab_content_own' ) );
         add_action('offers_for_woocommerce_setting_tab_content_save', array( $this, 'offers_for_woocommerce_setting_tab_content_save_own' ) );
+        add_filter( 'the_title', array($this, 'ofw_anonymous_title'), 10, 2);
         
         
 
@@ -698,12 +699,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function set_woocommerce_offer_columns($columns) 
 	{
-        $columns['offer_name'] = __( 'Name', $this->plugin_slug );
-        $columns['offer_product_title'] = __( 'Product', $this->plugin_slug );
-		$columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
-		$columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
-		$columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
-		return $columns;
+            if(!$this->ofw_is_anonymous_communication_enable()) {
+                $columns['offer_name'] = __( 'Name', $this->plugin_slug );
+            }
+            $columns['offer_product_title'] = __( 'Product', $this->plugin_slug );
+            $columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
+            $columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
+            $columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
+            return $columns;
 	}
 	
 	/**
@@ -719,7 +722,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $val = get_post_meta( $post_id , 'offer_name' , true );
                 echo stripslashes($val);
                 break;
-
             case 'offer_product_title' :
                 $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
                 $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
@@ -1453,6 +1455,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             /**
              * Output html for Offer Comments loop
              */
+            $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
             include_once('views/meta-panel-summary.php');
         }
     }
@@ -2167,6 +2170,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'options'=> $editable_roles_inputs,
                 'multiple' => TRUE,
                 'extra_classes' => 'chosen-select'
+            )
+        );
+        
+        add_settings_field(
+            'general_setting_enable_anonymous_communication', // ID
+            __('Enable Anonymous Communication', $this->plugin_slug), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_enable_anonymous_communication',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to name and contact info for the person making the offer would be hidden from the seller.', $this->plugin_slug),
             )
         );
 
@@ -3898,6 +3915,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $mailpoet_setting_fields = $OFW_Woocommerce_MailPoet_Helper->offers_for_woocommerce_mailpoet_setting_fields();
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($mailpoet_setting_fields);
+        }
+    }
+    
+    public function ofw_is_anonymous_communication_enable() {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1 ) {
+            return true;
+        } 
+        return false;
+    }
+    
+    public function ofw_anonymous_title($title, $id) {
+        if( get_post_type( $id ) == 'woocommerce_offer'  && $this->ofw_is_anonymous_communication_enable() ) {
+            return 'anonymous';
+        } else {
+            return $title;
         }
     }
 

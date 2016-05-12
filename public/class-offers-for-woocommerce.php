@@ -1198,7 +1198,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $new_email->template_plain = 'woocommerce-new-offer.php';
                     $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
                 }
-
+                $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
                 $new_email->trigger($offer_args);
 
                 /**
@@ -2098,6 +2098,14 @@ class Angelleye_Offers_For_Woocommerce {
     
     public function set_session($key, $value) {
         WC()->session->$key = $value;
+    }
+    
+    public function ofw_is_anonymous_communication_enable() {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1 ) {
+            return true;
+        } 
+        return false;
     }
 
 }
