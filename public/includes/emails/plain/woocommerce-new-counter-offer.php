@@ -23,7 +23,7 @@ echo __( 'Quantity', 'woocommerce' ) . ': ' . number_format( $offer_args['produc
 echo __( 'Price', 'woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ) . "\n";
 echo __( 'Subtotal', 'woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' );
 echo "\n\n";
-if( !$is_anonymous_communication_enable ) {
+if( !$offer_args['is_anonymous_communication_enable'] ) {
     echo __('Offer Contact Details:', 'offers-for-woocommerce');
     echo (isset($offer_args['offer_name']) && $offer_args['offer_name'] != '') ? "\n" . __('Name:', 'offers-for-woocommerce') . " ".stripslashes($offer_args['offer_name']) : "";
     echo (isset($offer_args['offer_company_name']) && $offer_args['offer_company_name'] != '') ? "\n" . __('Company Name:', 'offers-for-woocommerce') . " ".stripslashes($offer_args['offer_company_name']) : "";
