@@ -20,8 +20,7 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
     public $plugin_slug = null;
 
     public function __construct() {
-        $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
-        $this->plugin_slug = $plugin->get_plugin_slug();
+       
     }
 
     /**
@@ -83,12 +82,12 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
      */
     public function offers_for_woocommerce_mailpoet_setting_fields() {
 
-        $fields[] = array('title' => __('MailPoet Integration', $this->plugin_slug), 'type' => 'title', 'desc' => '', 'id' => 'general_options');
+        $fields[] = array('title' => __('MailPoet Integration', 'offers-for-woocommerce'), 'type' => 'title', 'desc' => '', 'id' => 'general_options');
 
-        $fields[] = array('title' => __('Enable MailPoet', $this->plugin_slug), 'type' => 'checkbox', 'desc' => '', 'id' => 'ofw_enable_mailpoet');
+        $fields[] = array('title' => __('Enable MailPoet', 'offers-for-woocommerce'), 'type' => 'checkbox', 'desc' => '', 'id' => 'ofw_enable_mailpoet');
 
         $fields[] = array(
-            'title' => __('MailPoet lists', $this->plugin_slug),
+            'title' => __('MailPoet lists', 'offers-for-woocommerce'),
             'desc' => __('After you add your MailPoet API Key above and save it this list will be populated.', 'Option'),
             'id' => 'ofw_mailpoet_lists',
             'css' => 'min-width:300px;',
@@ -97,19 +96,19 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
         );
 
         $fields[] = array(
-            'title' => __('Force MailPoet lists refresh', $this->plugin_slug),
-            'desc' => __("Check and 'Save changes' this if you've added a new MailPoet list and it's not showing in the list above.", $this->plugin_slug),
+            'title' => __('Force MailPoet lists refresh', 'offers-for-woocommerce'),
+            'desc' => __("Check and 'Save changes' this if you've added a new MailPoet list and it's not showing in the list above.", 'offers-for-woocommerce'),
             'id' => 'ofw_mailpoet_force_refresh',
             'type' => 'checkbox',
         );
 
         $fields[] = array(
-            'title' => __('Debug Log', $this->plugin_slug),
+            'title' => __('Debug Log', 'offers-for-woocommerce'),
             'id' => 'ofw_log_enable_mailpoet',
             'type' => 'checkbox',
-            'label' => __('Enable logging', $this->plugin_slug),
+            'label' => __('Enable logging', 'offers-for-woocommerce'),
             'default' => 'no',
-            'desc' => sprintf(__('Log MailPoet events, inside <code>%s</code>', $this->plugin_slug), OFFERS_FOR_WOOCOMMERCE_LOG_DIR)
+            'desc' => sprintf(__('Log MailPoet events, inside <code>%s</code>', 'offers-for-woocommerce'), OFFERS_FOR_WOOCOMMERCE_LOG_DIR)
         );
 
 

@@ -23,20 +23,20 @@ class WC_Countered_Offer_Email extends WC_Email {
          * Set plugin slug
          * @since	1.1.2
          */
-        $this->plugin_slug = 'angelleye-offers-for-woocommerce';
+   
 
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_countered_offer';
 
         // this is the title in WooCommerce Email settings
-        $this->title = __('Countered offer', $this->plugin_slug);
+        $this->title = __('Countered offer', 'offers-for-woocommerce');
 
         // this is the description in WooCommerce email settings
-        $this->description = __('Countered Offer Notification emails are sent when a customer offer is countered by the store admin', $this->plugin_slug);
+        $this->description = __('Countered Offer Notification emails are sent when a customer offer is countered by the store admin', 'offers-for-woocommerce');
 
         // these are the default heading and subject lines that can be overridden using the settings
-        $this->heading = __('Countered Offer', $this->plugin_slug);
-        $this->subject = __('[{site_title}] Countered Offer ({offer_number}) - {offer_date}', $this->plugin_slug);
+        $this->heading = __('Countered Offer', 'offers-for-woocommerce');
+        $this->subject = __('[{site_title}] Countered Offer ({offer_number}) - {offer_date}', 'offers-for-woocommerce');
 
         // Set email template paths
         $this->template_html 	= 'woocommerce-offer-countered.php';
@@ -126,33 +126,33 @@ class WC_Countered_Offer_Email extends WC_Email {
 
         $this->form_fields = array(
             'enabled'    => array(
-                'title'   => __('Enable/Disable', $this->plugin_slug),
+                'title'   => __('Enable/Disable', 'offers-for-woocommerce'),
                 'type'    => 'checkbox',
-                'label'   => __('Enable this email notification', $this->plugin_slug),
+                'label'   => __('Enable this email notification', 'offers-for-woocommerce'),
                 'default' => 'yes'
             ),
             'subject'    => array(
-                'title'       => __('Subject', $this->plugin_slug),
+                'title'       => __('Subject', 'offers-for-woocommerce'),
                 'type'        => 'text',
-                'description' => sprintf( __('This controls the email subject line. Leave blank to use the default subject:', $this->plugin_slug).' <code>%s</code>', $this->subject ),
+                'description' => sprintf( __('This controls the email subject line. Leave blank to use the default subject:', 'offers-for-woocommerce').' <code>%s</code>', $this->subject ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'heading'    => array(
-                'title'       => __('Email Heading', $this->plugin_slug),
+                'title'       => __('Email Heading', 'offers-for-woocommerce'),
                 'type'        => 'text',
-                'description' => sprintf( __( 'This controls the main heading contained within the email notification. Leave blank to use the default heading:', $this->plugin_slug).' <code>%s</code>', $this->heading ),
+                'description' => sprintf( __( 'This controls the main heading contained within the email notification. Leave blank to use the default heading:', 'offers-for-woocommerce').' <code>%s</code>', $this->heading ),
                 'placeholder' => '',
                 'default'     => ''
             ),
             'email_type' => array(
-                'title'       => __('Email type', $this->plugin_slug),
+                'title'       => __('Email type', 'offers-for-woocommerce'),
                 'type'        => 'select',
-                'description' => __('Choose which format of email to send.', $this->plugin_slug),
+                'description' => __('Choose which format of email to send.', 'offers-for-woocommerce'),
                 'default'     => 'html',
                 'class'       => 'email_type',
                 'options'     => array(
-                    'plain'     => __('Plain text', $this->plugin_slug),
+                    'plain'     => __('Plain text', 'offers-for-woocommerce'),
                     'html'      => 'HTML',
                     'multipart' => 'Multipart',
                 )
