@@ -2780,7 +2780,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
  */
     public function approveOfferFromGridCallback()
     {
-        
         if(is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true)))
         {
             
@@ -2790,6 +2789,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $post_id = $_GET["targetID"];
             } else {
                 $post_id = $_POST['targetID'];
+            }
             do_action('ofw_before_auto_approve_offer_admin', $post_id);
             // Get current data for Offer prior to save
             $post_data = get_post($post_id);
@@ -2925,17 +2925,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $offer_args['product_title_formatted'] = $product->get_formatted_name();
                 }
 
-                // the email we want to send
-                $email_class = 'WC_Accepted_Offer_Email';
-                $attributes = $product->get_variation_attributes();
-                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
-                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'offers-for-woocommerce' ), $identifier, $product->get_title(), $extra_data );
+                
             }
             else
             {
                 $offer_args['product_title_formatted'] = $product->get_formatted_name();
             }
 
+                // the email we want to send
+                $email_class = 'WC_Accepted_Offer_Email';
                 // load the WooCommerce Emails
                 $wc_emails = new WC_Emails();
                 $emails = $wc_emails->get_emails();
@@ -2996,7 +2994,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             }
         }
-    }
 
     /*
      * Action - Ajax 'decline offer' from manage list
@@ -3148,9 +3145,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 {
                     $offer_args['product_title_formatted'] = $product->get_formatted_name();
                 }
-                $attributes = $product->get_variation_attributes();
-                $extra_data = ' &ndash; ' . implode( ', ', $attributes );
-                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'offers-for-woocommerce' ), $identifier, $product->get_title(), $extra_data );
             }
             else
             {
