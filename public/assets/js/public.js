@@ -243,6 +243,8 @@
                                 $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
                                 $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
                                 $('#tab_custom_ofwc_offer_tab_inner fieldset').hide();
+                            } else if(responseStatus == 'accepted-offer') {
+                                window.location = decodeURI(myObject['redirect']);
                             }
                             else
                             {
