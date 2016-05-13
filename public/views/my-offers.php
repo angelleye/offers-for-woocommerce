@@ -4,12 +4,12 @@ if (!defined('ABSPATH')) {
 }
 
 $my_offers_columns = apply_filters('ofw_my_account_my_offers_columns', array(
-    'offer_product_title' => __('Product', $this->plugin_slug),
-    'offer_amount' => __('Amount', $this->plugin_slug),
-    'offer_price_per' => __('Price Per', $this->plugin_slug),
-    'offer_quantity' => __('Quantity', $this->plugin_slug),
-    'offer-status' => __('Status', $this->plugin_slug),
-    'offer-action' => __('Action', $this->plugin_slug),
+    'offer_product_title' => __('Product', 'offers-for-woocommerce'),
+    'offer_amount' => __('Amount', 'offers-for-woocommerce'),
+    'offer_price_per' => __('Price Per', 'offers-for-woocommerce'),
+    'offer_quantity' => __('Quantity', 'offers-for-woocommerce'),
+    'offer-status' => __('Status', 'offers-for-woocommerce'),
+    'offer-action' => __('Action', 'offers-for-woocommerce'),
         ));
 
 $customer_offers = get_posts(apply_filters('ofw_my_account_my_offers_query', array(
@@ -21,7 +21,7 @@ $customer_offers = get_posts(apply_filters('ofw_my_account_my_offers_query', arr
 
 if ($customer_offers) :
     ?>
-    <h2><?php echo apply_filters('ofw_my_account_my_offers_title', __('Recent Offers', $this->plugin_slug)); ?></h2>
+    <h2><?php echo apply_filters('ofw_my_account_my_offers_title', __('Recent Offers', 'offers-for-woocommerce')); ?></h2>
     <table class="shop_table shop_table_responsive my_account_orders">
         <thead>
             <tr>
@@ -72,7 +72,7 @@ if ($customer_offers) :
                                             echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url(get_the_permalink($product_id)), get_the_title($product_id)));
                                         }
                                     } else {
-                                        echo '<em>' . __('Not Found', $this->plugin_slug) . '</em>';
+                                        echo '<em>' . __('Not Found', 'offers-for-woocommerce') . '</em>';
                                     }
 
                                     break;
@@ -105,31 +105,31 @@ if ($customer_offers) :
                                 case 'offer-status' :
                                     switch ($post_status) {
                                         case 'publish' :
-                                            echo __('Pending', $this->plugin_slug);
+                                            echo __('Pending', 'offers-for-woocommerce');
                                             break;
                                         case 'countered-offer' :
-                                            echo __('Countered', $this->plugin_slug);
+                                            echo __('Countered', 'offers-for-woocommerce');
                                             break;
                                         case 'accepted-offer' :
-                                            echo __('Accepted', $this->plugin_slug);
+                                            echo __('Accepted', 'offers-for-woocommerce');
                                             break;
                                         case 'declined-offer' :
-                                            echo __('Declined', $this->plugin_slug);
+                                            echo __('Declined', 'offers-for-woocommerce');
                                             break;
                                         case 'buyercountered-offer' :
-                                            echo __('Buyer Countered', $this->plugin_slug);
+                                            echo __('Buyer Countered', 'offers-for-woocommerce');
                                             break;
                                         case 'trash' :
-                                            echo __('Trashed', $this->plugin_slug);
+                                            echo __('Trashed', 'offers-for-woocommerce');
                                             break;
                                         case 'completed-offer' :
-                                            echo __('Completed', $this->plugin_slug);
+                                            echo __('Completed', 'offers-for-woocommerce');
                                             break;
                                         case 'on-hold-offer' :
-                                            echo __('On Hold', $this->plugin_slug);
+                                            echo __('On Hold', 'offers-for-woocommerce');
                                             break;
                                         case 'expired-offer' :
-                                            echo __('Expired', $this->plugin_slug);
+                                            echo __('Expired', 'offers-for-woocommerce');
                                             break;
                                         default :
                                             echo $post_status;

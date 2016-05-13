@@ -815,7 +815,7 @@ class Angelleye_Offers_For_Woocommerce {
                 )));
             }
             if($this->is_recaptcha_enable()) {
-                wp_enqueue_script($this->plugin_slug . '-recaptcha', 'https://www.google.com/recaptcha/api.js', array('jquery'), self::VERSION);
+                wp_enqueue_script('offers-for-woocommerce-recaptcha', 'https://www.google.com/recaptcha/api.js', array('jquery'), self::VERSION);
             }
         }
     }
@@ -867,17 +867,17 @@ class Angelleye_Offers_For_Woocommerce {
                     if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
                         $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
                         if(empty($response)) {
-                           echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', $this->plugin_slug)));
+                           echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
                             exit; 
                         } else {
                             $response_array = json_decode($response, true);
                             if( $response_array['success'] != true ) {
-                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', $this->plugin_slug)));
+                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
                                 exit;
                             }
                         }
                     } else {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', $this->plugin_slug)));
+                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
                         exit;
                     }
                 }

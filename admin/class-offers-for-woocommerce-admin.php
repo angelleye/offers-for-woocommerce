@@ -1363,15 +1363,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', 'offers-for-woocommerce');
             $show_offer_inventory_msg = ( $_product_in_stock ) ? FALSE : TRUE;
-
-                /**
-                 * Check to 'consider inventory' of product stock compared to offer quantities
-                 * @since   0.1.0
-                 */
-
-                $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', $this->plugin_slug);
-                $show_offer_inventory_msg = ( $_product_in_stock ) ? FALSE : TRUE;
-
+                
                 // Check for 'offer_order_id'
                 if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
                 {
@@ -1390,7 +1382,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
                     else
                     {
-                        $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', $this->plugin_slug) . '</small>';
+                        $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                     }
                     $offer_order_meta['Order Date'] = $order->post->post_date;
                     $offer_order_meta['Order Status'] = ucwords($order->get_status() );
@@ -1459,7 +1451,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                  */
                 include_once(OFW_PLUGIN_URL . '/admin/views/meta-panel-summary.php');
             } else {
-                wp_die( '<strong>ERROR</strong>: ' . __( 'Product not found for this offer.', $this->plugin_slug ) );
+                wp_die( '<strong>ERROR</strong>: ' . __( 'Product not found for this offer.', 'offers-for-woocommerce' ) );
             }
         }
     }
@@ -2185,7 +2177,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_disable_coupon', // ID
-            __('Disable coupons', $this->plugin_slug), // Title
+            __('Disable coupons', 'offers-for-woocommerce'), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -2193,7 +2185,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_general',
                 'input_label'=>'general_setting_disable_coupon',
                 'input_required'=>FALSE,
-                'description' => __('Check this option to Disable coupons when checking out with accepted offer.', $this->plugin_slug),
+                'description' => __('Check this option to Disable coupons when checking out with accepted offer.', 'offers-for-woocommerce'),
             )
         );
 
@@ -2863,7 +2855,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $wpdb->update( $table, $data_array, $where );
 
                 // Filter Post Status Label
-                $post_status_text = __('Accepted', $this->plugin_slug);
+                $post_status_text = __('Accepted', 'offers-for-woocommerce');
 
                 // set update notes
                 $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -2951,13 +2943,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
 
-                // set plugin slug in email class
-                $new_email->plugin_slug = $this->plugin_slug;
-
-                // define email template/path (html)
-                $new_email->template_html  = 'woocommerce-offer-accepted.php';
-                $new_email->template_html_path = plugin_dir_path(__FILE__). 'includes/emails/';
-            // set plugin slug in email class
+               
             $new_email->plugin_slug = 'offers-for-woocommerce';
 
             // define email template/path (html)
@@ -3097,7 +3083,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $wpdb->update( $table, $data_array, $where );
 
                 // Filter Post Status Label
-                $post_status_text = __('Declined', $this->plugin_slug);
+                $post_status_text = __('Declined', 'offers-for-woocommerce');
 
                 // set update notes
                 $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
@@ -3183,10 +3169,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
 
-                // set plugin slug in email class
-                $new_email->plugin_slug = $this->plugin_slug;
-            // set plugin slug in email class
-            $new_email->plugin_slug = 'offers-for-woocommerce';
+                $new_email->plugin_slug = 'offers-for-woocommerce';
 
                 // define email template/path (html)
                 $new_email->template_html  = 'woocommerce-offer-declined.php';
