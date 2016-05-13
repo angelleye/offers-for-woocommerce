@@ -1364,13 +1364,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $offer_inventory_msg = '<strong>Notice: </strong>' . __('Product stock is lower than offer quantity!', 'offers-for-woocommerce');
             $show_offer_inventory_msg = ( $_product_in_stock ) ? FALSE : TRUE;
                 
+                $offer_order_meta = array();
                 // Check for 'offer_order_id'
                 if( isset( $postmeta['offer_order_id'][0] ) && is_numeric( $postmeta['offer_order_id'][0] ) )
                 {
                     $order_id = $postmeta['offer_order_id'][0];
 
                     // Set order meta data array
-                    $offer_order_meta = array();
+                    
                     $offer_order_meta['Order ID'] = '<a href="post.php?post='. $order_id . '&action=edit">' . '#' . $order_id . '</a>';
 
                     // Get Order
@@ -1389,7 +1390,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
                 else
                 {
-                    $offer_order_meta['Order ID'].= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
+                    $offer_order_meta['Order ID'] = '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                 }
 
                 // set author_data
@@ -3010,6 +3011,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $post_id = $_GET["targetID"];
             } else {
                 $post_id = $_POST["targetID"];
+            }
             do_action('ofw_before_auto_decline_offer_admin', $post_id);
             // Get current data for Offer prior to save
             $post_data = get_post($post_id);
@@ -3060,9 +3062,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 update_post_meta( $post_id, 'offer_price_per', $product_price_per );
                 update_post_meta( $post_id, 'offer_amount', $product_total );
             }
-            $abc = get_post_status ( $post_id );
-            $jkl = ($abc) ? $abc : 'ohh';
-            //mail('kcppdevelopers@gmail.com', 'test', $jkl);
             if ( get_post_status ( $post_id ) != 'declined-offer' ) {
             
                 do_action('ofw_before_auto_decline_offer_admin', $post_id);
@@ -3220,7 +3219,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             }
         }
-    }
+    
 
     /*
      * Action - Ajax 'add offer note' from manage offer details
