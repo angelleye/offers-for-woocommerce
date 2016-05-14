@@ -620,7 +620,7 @@ class Angelleye_Offers_For_Woocommerce {
         $button_display_options = get_option('offers_for_woocommerce_options_display');
 
         $currency_symbol = get_woocommerce_currency_symbol();
-
+        $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
         // Set html content for output
         include_once( 'views/public.php' );
     }
