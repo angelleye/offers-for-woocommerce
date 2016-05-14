@@ -696,12 +696,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	public function set_woocommerce_offer_columns($columns) 
 	{
             if(!$this->ofw_is_anonymous_communication_enable()) {
-                $columns['offer_name'] = __( 'Name', $this->plugin_slug );
+                $columns['offer_name'] = __( 'Name', 'offers-for-woocommerce' );
             }
-            $columns['offer_product_title'] = __( 'Product', $this->plugin_slug );
-            $columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
-            $columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
-            $columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
+            $columns['offer_product_title'] = __( 'Product', 'offers-for-woocommerce' );
+            $columns['offer_amount'] = __( 'Amount', 'offers-for-woocommerce' );
+            $columns['offer_price_per'] = __( 'Price Per', 'offers-for-woocommerce' );
+            $columns['offer_quantity'] = __( 'Quantity', 'offers-for-woocommerce' );
             return $columns;
 	}
 	
@@ -2186,7 +2186,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
           */
          add_settings_field(
             'general_setting_disable_coupon', // ID
-             __('Disable coupons', $this->plugin_slug), // Title
+             __('Disable coupons', 'offers-for-woocommerce'), // Title
              array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
              'offers_for_woocommerce_general_settings', // Page
              'general_settings', // Section
@@ -2194,13 +2194,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                  'option_name'=>'offers_for_woocommerce_options_general',
                  'input_label'=>'general_setting_disable_coupon',
                  'input_required'=>FALSE,
-                 'description' => __('Check this option to Disable coupons when checking out with accepted offer.', $this->plugin_slug),
+                 'description' => __('Check this option to Disable coupons when checking out with accepted offer.', 'offers-for-woocommerce'),
              )
          );
 
                 add_settings_field(
             'general_setting_enable_anonymous_communication', // ID
-            __('Enable Anonymous Communication', $this->plugin_slug), // Title
+            __('Enable Anonymous Communication', 'offers-for-woocommerce'), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -2211,7 +2211,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'description' => __('Check this option to Disable coupons when checking out with accepted offer.', 'offers-for-woocommerce'),
                 'input_label'=>'general_setting_enable_anonymous_communication',
                 'input_required'=>FALSE,
-                'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', $this->plugin_slug),
+                'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', 'offers-for-woocommerce'),
             )
         );
 

@@ -67,16 +67,16 @@
             if(!$is_anonymous_communication_enable) { ?>
                 <div class="angelleye-col-container">
                     <h5>
-                        <?php echo __('Buyer Details', $this->plugin_slug); ?>
+                        <?php echo __('Buyer Details', 'offers-for-woocommerce'); ?>
                         <?php if( $author_data ) { ?>
-                            <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', $this->plugin_slug);?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', $this->plugin_slug). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
+                            <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', 'offers-for-woocommerce');?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', 'offers-for-woocommerce'). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
                         <?php } ?>
                     </h5>
                     <ul class="offer-buyer-meta-values-wrap">
-                        <li><span><?php echo __('Name:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_name'][0])) ? stripslashes($postmeta['offer_name'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
-                        <li><span><?php echo __('Email:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', $this->plugin_slug); ?></li>
-                        <li><span><?php echo __('Phone:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_phone'][0])) ? stripslashes($postmeta['offer_phone'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
-                        <li><span><?php echo __('Company:', $this->plugin_slug); ?>&nbsp;</span><?php echo (isset($postmeta['offer_company_name'][0])) ? stripslashes($postmeta['offer_company_name'][0]) : __('Missing Meta Value', $this->plugin_slug); ?></li>
+                        <li><span><?php echo __('Name:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (isset($postmeta['offer_name'][0])) ? stripslashes($postmeta['offer_name'][0]) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Email:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (isset($postmeta['offer_email'][0])) ? '<a href="mailto:'.$postmeta['offer_email'][0].'" target="_blank" title="Click to email">'.$postmeta['offer_email'][0].'</a>' : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Phone:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (isset($postmeta['offer_phone'][0])) ? stripslashes($postmeta['offer_phone'][0]) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Company:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (isset($postmeta['offer_company_name'][0])) ? stripslashes($postmeta['offer_company_name'][0]) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php 
                         global $post;
                         do_action('make_offer_after_buyer_meta_display', $post->ID); ?>
