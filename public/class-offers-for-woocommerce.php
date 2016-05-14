@@ -625,7 +625,7 @@ class Angelleye_Offers_For_Woocommerce {
         $button_display_options = get_option('offers_for_woocommerce_options_display');
 
         $currency_symbol = get_woocommerce_currency_symbol();
-
+        $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
         // Set html content for output
         $is_recaptcha_enable = $this->is_recaptcha_enable();
         include_once( 'views/public.php' );
@@ -1214,7 +1214,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $new_email->template_plain = 'woocommerce-new-offer.php';
                     $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
                 }
-
+                $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
                 $new_email->trigger($offer_args);
 
                 /**
@@ -2133,6 +2133,13 @@ class Angelleye_Offers_For_Woocommerce {
     }
     public function ofw_woocommerce_after_my_account(){
         include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
+    }
+    public function ofw_is_anonymous_communication_enable() {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1 ) {
+            return true;
+        } 
+        return false;
     }
 
      public function is_recaptcha_enable() {

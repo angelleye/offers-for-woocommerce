@@ -81,7 +81,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_filter('manage_woocommerce_offer_posts_columns' , array( $this, 'set_woocommerce_offer_columns' ) );
+		add_filter('manage_woocommerce_offer_posts_columns' , array( $this, 'set_woocommerce_offer_columns' ), 1, 10  );
 
 		/**
 		 * XXX
@@ -392,6 +392,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('offers_for_woocommerce_setting_tab_content', array( $this, 'offers_for_woocommerce_setting_tab_content_own' ) );
         add_action('offers_for_woocommerce_setting_tab_content_save', array( $this, 'offers_for_woocommerce_setting_tab_content_save_own' ) );
         add_action( 'admin_init', array( $this, 'ofw_auto_accept_decline_from_email' ) );
+        add_filter( 'the_title', array($this, 'ofw_anonymous_title'), 10, 2);
         
         
 
@@ -694,12 +695,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function set_woocommerce_offer_columns($columns) 
 	{
-        $columns['offer_name'] = __( 'Name', 'offers-for-woocommerce' );
-        $columns['offer_product_title'] = __( 'Product', 'offers-for-woocommerce' );
-		$columns['offer_amount'] = __( 'Amount', 'offers-for-woocommerce' );
-		$columns['offer_price_per'] = __( 'Price Per', 'offers-for-woocommerce' );
-		$columns['offer_quantity'] = __( 'Quantity', 'offers-for-woocommerce' );
-		return $columns;
+            if(!$this->ofw_is_anonymous_communication_enable()) {
+                $columns['offer_name'] = __( 'Name', $this->plugin_slug );
+            }
+            $columns['offer_product_title'] = __( 'Product', $this->plugin_slug );
+            $columns['offer_amount'] = __( 'Amount', $this->plugin_slug );
+            $columns['offer_price_per'] = __( 'Price Per', $this->plugin_slug );
+            $columns['offer_quantity'] = __( 'Quantity', $this->plugin_slug );
+            return $columns;
 	}
 	
 	/**
@@ -715,7 +718,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $val = get_post_meta( $post_id , 'offer_name' , true );
                 echo stripslashes($val);
                 break;
-
             case 'offer_product_title' :
                 $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
                 $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
@@ -1454,6 +1456,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             } else {
                 wp_die( '<strong>ERROR</strong>: ' . __( 'Product not found for this offer.', 'offers-for-woocommerce' ) );
             }
+            /**
+             * Output html for Offer Comments loop
+             */
+            $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
+            include_once('views/meta-panel-summary.php');
         }
     }
 
@@ -2171,14 +2178,29 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             )
         );
         
+
         
         /**
-         * Add field - 'General Settings' - 'general_setting_disable_coupon'
-         * Disable coupons when checking out with accepted offer
-         */
-        add_settings_field(
+          * Add field - 'General Settings' - 'general_setting_disable_coupon'
+          * Disable coupons when checking out with accepted offer
+          */
+         add_settings_field(
             'general_setting_disable_coupon', // ID
-            __('Disable coupons', 'offers-for-woocommerce'), // Title
+             __('Disable coupons', $this->plugin_slug), // Title
+             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
+             'offers_for_woocommerce_general_settings', // Page
+             'general_settings', // Section
+             array(
+                 'option_name'=>'offers_for_woocommerce_options_general',
+                 'input_label'=>'general_setting_disable_coupon',
+                 'input_required'=>FALSE,
+                 'description' => __('Check this option to Disable coupons when checking out with accepted offer.', $this->plugin_slug),
+             )
+         );
+
+                add_settings_field(
+            'general_setting_enable_anonymous_communication', // ID
+            __('Enable Anonymous Communication', $this->plugin_slug), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -2187,6 +2209,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'input_label'=>'general_setting_disable_coupon',
                 'input_required'=>FALSE,
                 'description' => __('Check this option to Disable coupons when checking out with accepted offer.', 'offers-for-woocommerce'),
+                'input_label'=>'general_setting_enable_anonymous_communication',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', $this->plugin_slug),
             )
         );
 
@@ -4150,6 +4175,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         return $capabilities;
+    }
+    
+    public function ofw_is_anonymous_communication_enable() {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1 ) {
+            return true;
+        } 
+        return false;
+    }
+    
+    public function ofw_anonymous_title($title, $id) {
+        if( get_post_type( $id ) == 'woocommerce_offer'  && $this->ofw_is_anonymous_communication_enable() ) {
+            return 'Potential Buyer';
+        } else {
+            return $title;
+        }
     }
 
 }

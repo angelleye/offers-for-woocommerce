@@ -136,7 +136,7 @@
             </div>
             <?php do_action('make_offer_form_after_your_email_address', 'add_custom_field_make_offer_form', 10); ?>
             <?php do_action('make_offer_form_before_offer_notes', 'add_custom_field_make_offer_form', 10); ?>
-            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes'])) { ?>
+            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) && $is_anonymous_communication_enable == false ) { ?>
             <div class="woocommerce-make-offer-form-section">
                 <label for="angelleye-offer-notes"><?php echo apply_filters( 'aeofwc-offer-form-label-offer-notes', __('Offer Notes (optional)', 'offers-for-woocommerce') );?></label>
                 <br /><textarea name="offer_notes" id="angelleye-offer-notes" rows="4"></textarea>
