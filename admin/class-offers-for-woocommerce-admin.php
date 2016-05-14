@@ -1448,11 +1448,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             
                 $query_counter_offers_history = $wpdb->prepare("SELECT * FROM $wpdb->commentmeta INNER JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID WHERE $wpdb->commentmeta.meta_value = '%d' AND $wpdb->comments.comment_type = 'offers-history' ORDER BY comment_date ASC", $post->ID );
                 $query_counter_offers_history_result = $wpdb->get_results($query_counter_offers_history);
-
-                /**
-                 * Output html for Offer Comments loop
-                 */
-                include_once(OFW_PLUGIN_URL . '/admin/views/meta-panel-summary.php');
+               
             } else {
                 wp_die( '<strong>ERROR</strong>: ' . __( 'Product not found for this offer.', 'offers-for-woocommerce' ) );
             }
