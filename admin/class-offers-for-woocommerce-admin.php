@@ -197,7 +197,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * XXX
          * @since	0.1.0
          */
-        add_action( 'add_meta_boxes', array( $this, 'add_meta_box_offer_addnote' ), 10, 2 );
+                if(!$this->ofw_is_anonymous_communication_enable()) {
+                    add_action( 'add_meta_boxes', array( $this, 'add_meta_box_offer_addnote' ), 10, 2 );
+                }
 		
 		/**
 		 * XXX

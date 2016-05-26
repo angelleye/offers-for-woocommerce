@@ -215,6 +215,7 @@
         </div>
     </div>
     <div class="angelleye-col-m-1-1">
+       <?php if(!$is_anonymous_communication_enable) { ?>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5><?php echo __('Offer Note to Buyer', 'offers-for-woocommerce'); ?></h5>
@@ -222,6 +223,7 @@
                 <p class="description"><?php echo __('Enter a note here to be included in the email notification to the buyer when the offer status is updated.', 'offers-for-woocommerce'); ?></p>
             </div>
         </div>
+        <?php } ?>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5><?php echo __('Offer Status', 'offers-for-woocommerce'); ?></h5>
