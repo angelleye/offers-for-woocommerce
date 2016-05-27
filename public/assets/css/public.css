@@ -256,3 +256,27 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
 	font-size: 15px;
 }
+.ofw-info {
+    background-color: #f7f6f7;
+    color: #515151;
+    list-style: outside none none !important;
+    margin: 9px 0 !important;
+    padding: 1em 2em 1em 1.5em !important;
+    position: relative;
+    width: auto;
+    word-wrap: break-word;
+}
+.ofw-info::before, .ofw-info::after {
+    content: " ";
+    display: table;
+}
+.ofw-info::after {
+    clear: both;
+
+}
+.ofw-info::before {
+    display: inline-block;
+    font-family: WooCommerce;
+    position: absolute;
+    top: 1em;
+}

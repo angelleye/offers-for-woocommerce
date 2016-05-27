@@ -2204,15 +2204,27 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'general_settings', // Section
             array(
                 'option_name'=>'offers_for_woocommerce_options_general',
-                'input_label'=>'general_setting_disable_coupon',
                 'input_required'=>FALSE,
-                'description' => __('Check this option to Disable coupons when checking out with accepted offer.', 'offers-for-woocommerce'),
                 'input_label'=>'general_setting_enable_anonymous_communication',
-                'input_required'=>FALSE,
                 'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', 'offers-for-woocommerce'),
             )
         );
-
+                
+            add_settings_field(
+                'general_setting_show_pending_offer', // ID
+                __('Show pending offer(s) on front end', 'offers-for-woocommerce'), // Title
+                array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
+                    'offers_for_woocommerce_general_settings', // Page
+                    'general_settings', // Section
+                array(
+                    'option_name'=>'offers_for_woocommerce_options_general',
+                    'input_required'=>FALSE,
+                    'input_label'=>'general_setting_show_pending_offer',
+                    'description' => __('Check this option to Show pending offer(s) on front end.', 'offers-for-woocommerce'),
+                )
+            );
+                
+                
 		/**
 		 * Add section - 'Display Settings'
 		 */
