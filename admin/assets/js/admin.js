@@ -33,6 +33,16 @@
                     aForm: true
                 }
             );
+    
+            $('#offer_shipping_cost').autoNumeric('init',
+                {
+                    mDec: '2',
+                    aSign: '',
+                    //wEmpty: 'sign',
+                    lZero: 'allow',
+                    aForm: true
+                }
+            );
 
             var currentPostStatus = $('#woocommerce_offer_post_status').val();
             
@@ -164,10 +174,14 @@
         var updateTotal = function () {
             var input1 = $('#offer-quantity').autoNumeric('get');
             var input2 = $('#offer-price-per').autoNumeric('get');
+            var offer_shiipng_cost = $('#offer_shipping_cost').autoNumeric('get');
             if (isNaN(input1) || isNaN(input2)) {
                 $('#offer-total').val('');
             } else {
                 var theTotal = (input1 * input2);
+                
+                var theTotal = (parseFloat(theTotal) + parseFloat(offer_shiipng_cost));
+                
                 $('#offer-total').val( parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString() );
             }
 
@@ -196,6 +210,10 @@
 
         // offer price each input keyup
         $('#offer-price-per').keyup(function() {
+            updateTotal();
+        });
+        
+        $('#offer_shipping_cost').keyup(function() {
             updateTotal();
         });
 

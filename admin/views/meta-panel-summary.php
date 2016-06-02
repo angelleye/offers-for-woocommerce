@@ -201,6 +201,15 @@
                             <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" autocomplete="off" />
                         <?php } ?>
                     </div>
+                    <label for="offer-shipping-cost"><?php echo __('Shipping Cost', 'offers-for-woocommerce'); ?></label>
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
+                            <input type="text" name="offer_shipping_cost" id="offer_shipping_cost" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_shipping_cost'][0])) ? $postmeta['offer_shipping_cost'][0] : '0.00'; ?>" autocomplete="off" />
+                        <?php } else { ?>
+                            <input type="text" name="offer_shipping_cost" id="offer_shipping_cost" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_shipping_cost'][0])) ? $postmeta['offer_shipping_cost'][0] : '0.00'; ?>" autocomplete="off" />
+                        <?php } ?>
+                    </div>
                     <label for="offer-total"><?php echo __('Total', 'offers-for-woocommerce'); ?></label>
                     <div class="angelleye-input-group">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
