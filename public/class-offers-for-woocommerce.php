@@ -1412,7 +1412,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             if (!$found) {
-                WC()->cart->empty_cart();
+               // WC()->cart->empty_cart();
                 $item_id = $woocommerce->cart->add_to_cart($product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta);
             }
 
