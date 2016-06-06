@@ -168,6 +168,12 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled' ), 10, 1);
         
         add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
+        
+        
+        add_filter( 'woocommerce_shipping_methods', array($this, 'add_your_shipping_method' ), 10, 1);
+        add_action( 'woocommerce_shipping_init', array($this, 'your_shipping_method_init' ));
+        add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
+        
 
     }
 
@@ -1129,6 +1135,8 @@ class Angelleye_Offers_For_Woocommerce {
                 $product_qty = $formData['offer_quantity'];
                 $product_price_per = $formData['offer_price_per'];
                 $product_total = $formData['offer_amount'];
+                
+                $product_shipping_cost = get_post_meta($parent_post_id, 'product_shipping_cost', true);
 
                 $offer_args = array(
                     'offer_email' => $offer_email,
@@ -1142,6 +1150,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'product' => $product,
                     'product_qty' => $product_qty,
                     'product_price_per' => $product_price_per,
+                    'product_shipping_cost' => $product_shipping_cost,
                     'product_total' => $product_total,
                     'offer_notes' => $comments
                 );
@@ -1404,6 +1413,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             if (!$found) {
+               // WC()->cart->empty_cart();
                 $item_id = $woocommerce->cart->add_to_cart($product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta);
             }
 
@@ -1724,10 +1734,13 @@ class Angelleye_Offers_For_Woocommerce {
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
+            $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
             $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+           
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
+                update_post_meta($post_id, 'offer_shipping_cost', $product_shipping_cost);
                 update_post_meta($post_id, 'offer_amount', $product_total);
             }
             $offer_args = array(
@@ -1742,6 +1755,7 @@ class Angelleye_Offers_For_Woocommerce {
                 'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
+                'product_shipping_cost' => $product_shipping_cost,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
@@ -1839,10 +1853,13 @@ class Angelleye_Offers_For_Woocommerce {
             $product = ( $variant_id ) ? $_pf->get_product($variant_id) : $_pf->get_product($product_id);
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
+            $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
             $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+          
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
+                update_post_meta($post_id, 'offer_shipping_cost', $product_shipping_cost);
                 update_post_meta($post_id, 'offer_amount', $product_total);
             }
             $offer_args = array(
@@ -1857,6 +1874,7 @@ class Angelleye_Offers_For_Woocommerce {
                 'product' => $product,
                 'product_qty' => $product_qty,
                 'product_price_per' => $product_price_per,
+                'product_shipping_cost' => $product_shipping_cost,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes
             );
@@ -2193,4 +2211,35 @@ class Angelleye_Offers_For_Woocommerce {
         return false;
     }
 
+    public function add_your_shipping_method( $methods ) {
+        $methods[] = 'Angelleye_Offers_For_Woocommerce_Shipping_Method';
+        return $methods;
+    }
+        
+    public function your_shipping_method_init() {
+        if ( ! class_exists( 'Angelleye_Offers_For_Woocommerce_Shipping_Method' ) ) {
+            include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-shipping.php';
+        }
+    }
+    
+    public function hide_shipping_when_offer_for_woocommerce_is_available( $rates, $package ) {
+        if($this->is_offer_product_in_cart()) {
+            if ( isset( $rates['offer_for_woocommerce_shipping'] ) ) {
+                unset( $rates['flat_rate'] );
+                $free_shipping          = $rates['offer_for_woocommerce_shipping'];
+                $rates                  = array();
+                $rates['free_shipping'] = $free_shipping;
+            }
+        }
+	return $rates;
+    }
+    
+    public function is_offer_product_in_cart() {
+        foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+            if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                return true;
+            }
+        }
+       return false;
+    }
 }
