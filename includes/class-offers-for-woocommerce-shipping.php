@@ -21,6 +21,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
         }
         
         public function is_available( $package ) {
+            $is_available = false;
             if ($this->is_offer_product_in_cart()) {
 		$is_available = true;
             }
