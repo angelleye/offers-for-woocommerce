@@ -805,11 +805,14 @@ class Angelleye_Offers_For_Woocommerce {
     public function enqueue_scripts() {
         global $post;
         if(is_object($post)) {
+           
             $is_product_type_variable = 'false';
-            if (function_exists('get_product')) {
-                $product = get_product($post->ID);
-                if ($product->is_type('variable') && is_single()) {
-                    $is_product_type_variable = 'true';
+            if (function_exists('wc_get_product')) {
+                $product = wc_get_product($post);
+                if($product) {
+                    if ($product->is_type('variable') && is_single()) {
+                        $is_product_type_variable = 'true';
+                    }
                 }
             }
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
@@ -2226,9 +2229,9 @@ class Angelleye_Offers_For_Woocommerce {
         if($this->is_offer_product_in_cart()) {
             if ( isset( $rates['offer_for_woocommerce_shipping'] ) ) {
                 unset( $rates['flat_rate'] );
-                $free_shipping          = $rates['offer_for_woocommerce_shipping'];
-                $rates                  = array();
-                $rates['free_shipping'] = $free_shipping;
+                $offer_for_woocommerce_shipping = $rates['offer_for_woocommerce_shipping'];
+                $rates = array();
+                $rates['offer_for_woocommerce_shipping'] = $offer_for_woocommerce_shipping;
             }
         }
 	return $rates;
