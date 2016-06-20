@@ -2201,7 +2201,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
           */
          add_settings_field(
             'general_setting_disable_coupon', // ID
-             __('Disable coupons', 'offers-for-woocommerce'), // Title
+             __('Disable Coupons', 'offers-for-woocommerce'), // Title
              array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
              'offers_for_woocommerce_general_settings', // Page
              'general_settings', // Section
@@ -2209,7 +2209,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                  'option_name'=>'offers_for_woocommerce_options_general',
                  'input_label'=>'general_setting_disable_coupon',
                  'input_required'=>FALSE,
-                 'description' => __('Check this option to Disable coupons when checking out with accepted offer.', 'offers-for-woocommerce'),
+                 'description' => __('Check this option to Disable coupons when checking out with an accepted offer included in the shopping cart.', 'offers-for-woocommerce'),
              )
          );
 
