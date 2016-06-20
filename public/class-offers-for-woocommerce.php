@@ -2201,7 +2201,8 @@ class Angelleye_Offers_For_Woocommerce {
             $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
             $total_offer = (isset($total_result[0]['total_offer']) && !empty($total_result[0]['total_offer'])) ? $total_result[0]['total_offer'] : 0;
             if($total_qty > 0 && $total_offer > 0) {
-                echo '<div class="ofw-info"> ' . sprintf( _n( 'Total %d offer is pending with ', 'Total %d offers are pending with ', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . sprintf( _n( '%d quantity.', '%d quantities.', $total_qty, 'offers-for-woocommerce' ), $total_qty ) . '</div>';
+                //echo '<div class="ofw-info"> ' . sprintf( _n( 'Total %d offer is pending with ', 'Total %d offers are pending with ', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . sprintf( _n( '%d quantity.', '%d quantities.', $total_qty, 'offers-for-woocommerce' ), $total_qty ) . '</div>';
+                echo '<div class="ofw-info"> ' . sprintf( _n( '%d offer is currently pending.', '%d offers are currently pending.', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . '</div>';
             }
         }
      }

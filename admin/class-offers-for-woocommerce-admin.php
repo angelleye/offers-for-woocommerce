@@ -2229,7 +2229,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 
             add_settings_field(
                 'general_setting_show_pending_offer', // ID
-                __('Show pending offer(s) on front end', 'offers-for-woocommerce'), // Title
+                __('Show Pending Offer Details to Buyers', 'offers-for-woocommerce'), // Title
                 array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
                     'offers_for_woocommerce_general_settings', // Page
                     'general_settings', // Section
