@@ -262,9 +262,10 @@ body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position
     list-style: outside none none !important;
     margin: 9px 0 !important;
     padding: 1em 2em 1em 1.5em !important;
-    position: relative;
+/*    position: relative;*/
     width: auto;
     word-wrap: break-word;
+    clear: both;
 }
 .ofw-info::before, .ofw-info::after {
     content: " ";

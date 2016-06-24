@@ -328,8 +328,9 @@ class Angelleye_Offers_For_Woocommerce {
                 } else {
                     echo '</div>';
                 }
-                $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
+                
                 echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
                 echo '<div class="angelleye-offers-clearfix"></div></div></div>';
             }
         }
@@ -2201,7 +2202,6 @@ class Angelleye_Offers_For_Woocommerce {
             $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
             $total_offer = (isset($total_result[0]['total_offer']) && !empty($total_result[0]['total_offer'])) ? $total_result[0]['total_offer'] : 0;
             if($total_qty > 0 && $total_offer > 0) {
-                //echo '<div class="ofw-info"> ' . sprintf( _n( 'Total %d offer is pending with ', 'Total %d offers are pending with ', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . sprintf( _n( '%d quantity.', '%d quantities.', $total_qty, 'offers-for-woocommerce' ), $total_qty ) . '</div>';
                 echo '<div class="ofw-info"> ' . sprintf( _n( '%d offer is currently pending.', '%d offers are currently pending.', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . '</div>';
             }
         }
