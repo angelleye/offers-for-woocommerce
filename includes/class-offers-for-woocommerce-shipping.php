@@ -13,20 +13,37 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             $this->method_title = __('Offers for WooCommerce Shipping');
             $this->method_description = __('Offers for WooCommerce Shipping');
             $this->enabled = "yes";
-            $this->init();
-        }
+            $this->title = $this->get_option('title', 'Offer Shiipng Cost');
+            // Load the form fields.
+            $this->init_form_fields();
 
-        function init() {
+            // Load the settings.
+            $this->init_settings();
             add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
         }
-        
-        public function is_available( $package ) {
+
+        /**
+         * Initialise Gateway Settings Form Fields
+         */
+        public function init_form_fields() {
+            $this->form_fields = array(
+                'title' => array(
+                    'title' => __('Method Title', 'offers-for-woocommerce'),
+                    'type' => 'text',
+                    'description' => __('This controls the title which the user sees during checkout.', 'offers-for-woocommerce'),
+                    'default' => __('Offer Shiipng Cost', 'offers-for-woocommerce'),
+                    'desc_tip' => true
+                )
+            );
+        }
+
+        public function is_available($package) {
             $is_available = false;
             if ($this->is_offer_product_in_cart()) {
-		$is_available = true;
+                $is_available = true;
             }
-            
-            return apply_filters( 'woocommerce_shipping_' . $this->id . '_is_available', $is_available, $package );
+
+            return apply_filters('woocommerce_shipping_' . $this->id . '_is_available', $is_available, $package);
         }
 
         public function calculate_shipping($package = Array()) {
@@ -43,9 +60,9 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
 
                 $rate = array(
                     'id' => $this->id,
-                    'label' => 'Offer Shiipng Cost',
+                    'label' => $this->title,
                     'cost' => number_format($total_shipping_cost, 2, '.', ''),
-                    'taxes'   => false,
+                    'taxes' => false,
                     'package' => $package,
                 );
                 $this->add_rate($rate);
@@ -62,4 +79,5 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
         }
 
     }
+
 }
