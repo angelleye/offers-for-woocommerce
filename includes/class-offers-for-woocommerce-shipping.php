@@ -58,21 +58,34 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
                     }
                 }
 
-                $rate = array(
-                    'id' => $this->id,
-                    'label' => $this->title,
-                    'cost' => number_format($total_shipping_cost, 2, '.', ''),
-                    'taxes' => false,
-                    'package' => $package,
-                );
-                $this->add_rate($rate);
+                if($total_shipping_cost > 0) {
+                
+                    $rate = array(
+                        'id' => $this->id,
+                        'label' => $this->title,
+                        'cost' => number_format($total_shipping_cost, 2, '.', ''),
+                        'taxes' => false,
+                        'package' => $package,
+                    );
+                    $this->add_rate($rate);
+                }
             }
         }
 
         public function is_offer_product_in_cart() {
+            $total_shipping_cost = 0;
             foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
                 if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                     $product_shipping_cost = get_post_meta($values['woocommerce_offer_id'], 'offer_shipping_cost', true);
+                        if (isset($product_shipping_cost) && !empty($product_shipping_cost)) {
+                            $total_shipping_cost = $total_shipping_cost + number_format($product_shipping_cost, 2, '.', '');
+                        }
+                }
+                
+                if($total_shipping_cost > 0) {
                     return true;
+                } else {
+                    return false;
                 }
             }
             return false;

@@ -49,8 +49,7 @@ if ($customer_offers) :
                             $variant_id = get_post_meta($post_id, 'orig_offer_variation_id', true);
                             $offer_uid = get_post_meta($post_id, 'offer_uid', true);
                             $offer_final_offer = get_post_meta($post_id, 'offer_final_offer', true);
-                            $_product = new WC_Product_Factory;
-                            $product = ( $variant_id ) ? $_product->get_product($variant_id) : $_product->get_product($product_id);
+                            $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
                             $product_title = get_the_title($product_id);
                             $offer_args['product_url'] = $product->get_permalink();
                             $offer_args['offer_id'] = $post_id;

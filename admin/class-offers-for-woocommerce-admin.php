@@ -395,6 +395,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('offers_for_woocommerce_setting_tab_content_save', array( $this, 'offers_for_woocommerce_setting_tab_content_save_own' ) );
         add_action( 'admin_init', array( $this, 'ofw_auto_accept_decline_from_email' ) );
         add_filter( 'the_title', array($this, 'ofw_anonymous_title'), 10, 2);
+        add_filter( 'woocommerce_cart_shipping_packages', array($this, 'ofw_woocommerce_cart_shipping_packages'), 10, 1);
         
         
 
@@ -520,9 +521,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function custom_tab_options_tab_offers() {
         global $post;
-
-        $_pf = new WC_Product_Factory();
-        $_product = $_pf->get_product( $post->ID );
+        $_product = wc_get_product($post->ID);
         $class_hidden = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
         print(
             '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce '. $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce">' . __('Offers', 'offers-for-woocommerce') . '</a></li>'
@@ -1299,15 +1298,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_id = $postmeta['offer_product_id'][0];
             $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
 
-            $_pf = new WC_Product_Factory();
-            $_product = $_pf->get_product($product_id);
+            $_product = wc_get_product($product_id);
 
             if($_product != false) {
             
                 if( $product_variant_id )
                 {
-                    $_pf_variant = new WC_Product_Factory();
-                    $_product_variant = $_pf_variant->get_product($product_variant_id);
+                    $_product_variant = wc_get_product($product_variant_id);
+                    
                     $_product_variant_managing_stock = ( $_product_variant->managing_stock() == 'parent' ) ? true : false;
 
                     $_product_sku = ( $_product_variant->get_sku() ) ? $_product_variant->get_sku() : $_product->get_sku();
@@ -1576,8 +1574,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $_pf = new WC_Product_Factory;
-            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+            
+            $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product( $product_id );
 
             // if buyercountered-offer previous then use buyer counter values
             $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
@@ -1671,8 +1669,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $_pf = new WC_Product_Factory;
-            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+            
+            $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
             // if buyercountered-offer previous then use buyer counter values
             $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
@@ -1780,8 +1778,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $_pf = new WC_Product_Factory;
-            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+            
+            $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
             $product_qty = get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = get_post_meta($post_id, 'offer_price_per', true);
@@ -1867,8 +1865,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $_pf = new WC_Product_Factory;
-            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+            
+            $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
             // if buyercountered-offer previous then use buyer counter values
             $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
@@ -2874,8 +2872,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $_pf = new WC_Product_Factory;
-            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+            
+            $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
             // if buyercountered-offer previous then use buyer counter values
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
@@ -2928,8 +2926,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                 $product_id = get_post_meta($post_id, 'offer_product_id', true);
                 $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-                $_pf = new WC_Product_Factory;
-                $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+                
+                $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
                 // if buyercountered-offer previous then use buyer counter values
                 $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
@@ -3102,8 +3100,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            $_pf = new WC_Product_Factory;
-            $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+            
+            $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
@@ -3156,8 +3154,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                 $product_id = get_post_meta($post_id, 'offer_product_id', true);
                 $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-                $_pf = new WC_Product_Factory;
-                $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+                
+                $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
                 $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
                 $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
@@ -3349,8 +3347,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                     $product_id = get_post_meta($post_id, 'offer_product_id', true);
                     $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-                    $_pf = new WC_Product_Factory;
-                    $product = ( $variant_id ) ? $_pf->get_product( $variant_id ) : $_pf->get_product( $product_id );
+                    
+                    $product = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
 
                     // if buyercountered-offer previous then use buyer counter values
                     $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
@@ -4229,6 +4227,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         } else {
             return $title;
         }
+    }
+    
+    public function ofw_woocommerce_cart_shipping_packages($packages) {
+        WC()->session->__unset( 'shipping_for_package' );
+        return $packages;
     }
 
 }
