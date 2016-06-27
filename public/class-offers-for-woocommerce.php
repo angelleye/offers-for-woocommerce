@@ -490,6 +490,9 @@ class Angelleye_Offers_For_Woocommerce {
         );
 
         $_product = wc_get_product($post->ID);
+        if($_product == false) {
+            return false;
+        }
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
