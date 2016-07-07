@@ -2207,7 +2207,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                  'option_name'=>'offers_for_woocommerce_options_general',
                  'input_label'=>'general_setting_disable_coupon',
                  'input_required'=>FALSE,
-                 'description' => __('Check this option to Disable coupons when checking out with an accepted offer included in the shopping cart.', 'offers-for-woocommerce'),
+                 'description' => __('Check this option to disable coupons when checking out with an accepted offer included in the shopping cart.', 'offers-for-woocommerce'),
              )
          );
 
@@ -2235,7 +2235,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'option_name'=>'offers_for_woocommerce_options_general',
                     'input_required'=>FALSE,
                     'input_label'=>'general_setting_show_pending_offer',
-                    'description' => __('Check this option to Show pending offer(s) on front end.', 'offers-for-woocommerce'),
+                    'description' => __('Check this option to display pending offer(s) on front end.', 'offers-for-woocommerce'),
                 )
             );
                 

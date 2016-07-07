@@ -458,7 +458,7 @@ msgid "Disable coupons"
 msgstr ""
 
 #: admin/class-offers-for-woocommerce-admin.php:2189
-msgid "Check this option to Disable coupons when checking out with accepted offer."
+msgid "Check this option to disable coupons when checking out with accepted offer."
 msgstr ""
 
 #: admin/class-offers-for-woocommerce-admin.php:2209

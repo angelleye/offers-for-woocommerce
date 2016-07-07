@@ -118,6 +118,19 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.3.0 - 07.07.2016 =
+* Feature - Adds the ability to accept or deny offers directly from the email notification. ([#206](https://github.com/angelleye/offers-for-woocommerce/issues/206))
+* Feature - Adds offer history to the user account screen so that buyers can see their offer history with the website. ([#235](https://github.com/angelleye/offers-for-woocommerce/issues/235))
+* Feature - Adds an option to disable coupons for orders with an accepted offer so that buyers cannot "double dip". ([#213](https://github.com/angelleye/offers-for-woocommerce/issues/213))
+* Feature - Capability Manager compatibility. ([#231](https://github.com/angelleye/offers-for-woocommerce/issues/231))
+* Feature - Adds the option to make all communication between buyers and sellers anonymous. ([#239](https://github.com/angelleye/offers-for-woocommerce/issues/239))
+* Feature - If an auto-accept rule is triggered, the buyer is now sent directly to checkout for the accepted offer instead of needing to wait for the email notification. ([#240](https://github.com/angelleye/offers-for-woocommerce/issues/240))
+* Fix - Resolves a conflict with WPML plugin. ([#233](https://github.com/angelleye/offers-for-woocommerce/issues/233))
+* Fix - Resolves errors that occur if you open an offer for an item that has been deleted. ([#236](https://github.com/angelleye/offers-for-woocommerce/issues/236))
+* Fix - Localization adjustments. ([#238](https://github.com/angelleye/offers-for-woocommerce/issues/238))
+* Fix - WooCommerce Tab Manager compatibility ([#244](https://github.com/angelleye/offers-for-woocommerce/issues/244))
+* Fix - WooCommerce 2.6 compatibility. ([#242](https://github.com/angelleye/offers-for-woocommerce/issues/242))
+
 = 1.2.2 - 01.30.2016 =
 * Fix - Ensures expiration date option does not show up when it shouldn't. ([#226](https://github.com/angelleye/offers-for-woocommerce/issues/226))
 * Fix - Resolves PHP notices. ([#228](https://github.com/angelleye/offers-for-woocommerce/issues/228))
