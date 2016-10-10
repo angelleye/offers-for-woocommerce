@@ -2262,7 +2262,7 @@ class Angelleye_Offers_For_Woocommerce {
             $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
             $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
             if($total_qty > 0 && $max_offer > 0) {
-                echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Bid: %s%d', 'Highest Current Bid: %s%d', get_woocommerce_currency_symbol(), $max_offer, 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), $max_offer ) . '</div>';
+                echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%d', 'Highest Current Offer: %s%d', get_woocommerce_currency_symbol(), $max_offer, 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), $max_offer ) . '</div>';
             }
         }
     }

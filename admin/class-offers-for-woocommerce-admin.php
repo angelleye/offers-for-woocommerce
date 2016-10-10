@@ -2242,7 +2242,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             
             add_settings_field(
                 'general_setting_show_highest_current_bid', // ID
-                __('Display highest current bid on product page.', 'offers-for-woocommerce'), // Title
+                __('Display Highest Offer', 'offers-for-woocommerce'), // Title
                 array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
                     'offers_for_woocommerce_general_settings', // Page
                     'general_settings', // Section
@@ -2250,7 +2250,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'option_name'=>'offers_for_woocommerce_options_general',
                     'input_required'=>FALSE,
                     'input_label'=>'general_setting_show_highest_current_bid',
-                    'description' => __('Check this option to display highest current bid on product page.', 'offers-for-woocommerce'),
+                    'description' => __('Check this option to display the highest current offer on product page for potential buyers to see.', 'offers-for-woocommerce'),
                 )
             );
                 
