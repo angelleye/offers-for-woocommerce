@@ -118,6 +118,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.3.1 - xx.xx.2016 =
+* Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
+
+
 = 1.3.0 - 07.07.2016 =
 * Feature - Adds the ability to accept or deny offers directly from the email notification. ([#206](https://github.com/angelleye/offers-for-woocommerce/issues/206))
 * Feature - Adds offer history to the user account screen so that buyers can see their offer history with the website. ([#235](https://github.com/angelleye/offers-for-woocommerce/issues/235))
