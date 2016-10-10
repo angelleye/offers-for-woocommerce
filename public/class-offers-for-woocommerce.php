@@ -169,14 +169,11 @@ class Angelleye_Offers_For_Woocommerce {
         
         add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
         
-        
         add_filter( 'woocommerce_shipping_methods', array($this, 'add_your_shipping_method' ), 10, 1);
         add_action( 'woocommerce_shipping_init', array($this, 'your_shipping_method_init' ));
         add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
-        add_action( 'woocommerce_single_product_summary', array($this, 'woocommerce_template_single_price'), 10 );
-        
-        
-
+        add_action( 'woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10 );
+        add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
     }
 
     /**
@@ -2247,10 +2244,9 @@ class Angelleye_Offers_For_Woocommerce {
        return false;
     }
     
-    public function woocommerce_template_single_price() {
-        global $post;
+    public function ofw_display_highest_current_offer() {
+        global $post, $wpdb;
         if($this->ofw_is_highest_current_bid_enable()) {
-            global $wpdb;
             $total_result = $wpdb->get_results($wpdb->prepare("
                     SELECT MAX( postmeta.meta_value ) AS max_offer, COUNT(posts.ID) as total_qty
                     FROM $wpdb->postmeta AS postmeta
@@ -2262,11 +2258,28 @@ class Angelleye_Offers_For_Woocommerce {
             $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
             $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
             if($total_qty > 0 && $max_offer > 0) {
-                echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%d', 'Highest Current Offer: %s%d', get_woocommerce_currency_symbol(), $max_offer, 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), $max_offer ) . '</div>';
+                echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ), 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ) ) . '</div>';
             }
         }
     }
     
+    public function ofw_display_highest_current_offer_shortcode() {
+        global $post, $wpdb;
+        $total_result = $wpdb->get_results($wpdb->prepare("
+                SELECT MAX( postmeta.meta_value ) AS max_offer, COUNT(posts.ID) as total_qty
+                FROM $wpdb->postmeta AS postmeta
+                JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
+                INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status NOT LIKE 'completed-offer')
+                WHERE postmeta.meta_key LIKE 'offer_price_per' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
+                AND postmeta.post_id = posts.ID LIMIT 0, 99
+        ", $post->ID), ARRAY_A);
+        $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
+        $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
+        if($total_qty > 0 && $max_offer > 0) {
+            echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ), 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ) ) . '</div>';
+        }
+    }
+
     public function ofw_is_highest_current_bid_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
         if( isset($offers_for_woocommerce_options_general['general_setting_show_highest_current_bid']) && $offers_for_woocommerce_options_general['general_setting_show_highest_current_bid'] == 1 ) {
