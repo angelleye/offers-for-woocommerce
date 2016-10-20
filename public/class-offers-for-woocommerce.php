@@ -105,7 +105,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_lightbox_make_offer_form'));
 
         /* Add "Make Offer" product tab on product single view */
-        add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'));
+        add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'),99);
 
         /* Add query vars for api endpoint
          * Used for add offer to cart
