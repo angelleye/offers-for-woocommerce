@@ -485,14 +485,27 @@ class Angelleye_Offers_For_Woocommerce {
                 return $tabs;
             }
         }
-
+        /**
+         * post is not avalable so create problem @line No.497,501 and also third party add-ons who uses tab filter
+         * @ticket https://github.com/angelleye/offers-for-woocommerce/issues/246
+         * @author Chirag Ips <chiragc@itpathsolutions.co.in>
+         */ 
+        if(is_null($post)){
+            return $tabs;
+        }
+        
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
         );
-
+        /**
+         * it was returning false that may breck filter function and Offers tabs are not visible on the front end
+         * to avoid such a things we need to return $tabs
+         * @ticket https://github.com/angelleye/offers-for-woocommerce/issues/244
+         * @author Chirag Ips <chiragc@itpathsolutions.co.in>
+         */
         $_product = wc_get_product($post->ID);
         if($_product == false) {
-            return false;
+            return $tabs;
         }
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
