@@ -120,6 +120,8 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 1.3.1 - xx.xx.2016 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
+* Tweak - Adds div tag for easier targeting of offer buttons. ([#250](https://github.com/angelleye/offers-for-woocommerce/issues/250))
+* Fix - WooCommerce Tabs Manager compatibility. ([#246](https://github.com/angelleye/offers-for-woocommerce/issues/246))
 
 
 = 1.3.0 - 07.07.2016 =
