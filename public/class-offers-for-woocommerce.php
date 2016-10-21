@@ -1211,7 +1211,16 @@ class Angelleye_Offers_For_Woocommerce {
                     // the email we want to send
                     $email_class = 'WC_New_Offer_Email';
                 }
-
+                /**
+                 * @uses woocommerce-pdf-invoices-packing-slips check plugin exsits or not.
+                 * @link https://github.com/angelleye/offers-for-woocommerce/issues/227 woocommerce-pdf-invoices-packing-slips plugin use dirty way code 
+                 * so conflict with us.
+                 * @author chirag <chiragc@itpathsolutions.co.in>
+                 */
+                if ( is_plugin_active( 'woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packingslips.php' ) ) {
+                      remove_action( 'woocommerce_email_header', array( WC()->mailer(), 'email_header' ) );
+                      remove_action( 'woocommerce_email_footer', array( WC()->mailer(), 'email_footer' ) );
+                }
                 // load the WooCommerce Emails
                 if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
                     $emails = $_POST['value']['emails_object'];
