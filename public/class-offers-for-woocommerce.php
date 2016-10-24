@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Offers for WooCommerce - public
  *
@@ -52,14 +52,17 @@ class Angelleye_Offers_For_Woocommerce {
      * @since    0.1.0
      */
     private function __construct() {
+        
         /**
          * Define email templates path
          */
         define('OFWC_PUBLIC_EMAIL_TEMPLATE_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . '/includes/emails/');
-        
+
         if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
             define('OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/');
         }
+       
+        
 
         /**
          * Activate plugin when new blog is added
@@ -81,7 +84,6 @@ class Angelleye_Offers_For_Woocommerce {
          * Init - New Offer Form Submit
          * @since	0.1.0
          */
-
         /* Add "Make Offer" button code parts - Before add to cart */
         add_action('woocommerce_before_add_to_cart_button', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
 
@@ -89,11 +91,11 @@ class Angelleye_Offers_For_Woocommerce {
          * Init - New Offer Form Submit
          * @since	0.1.0
          */
-        add_action( 'wp_ajax_new_offer_form_submit', array( $this, 'new_offer_form_submit' ) );
-        add_action( 'wp_ajax_nopriv_new_offer_form_submit', array( $this, 'new_offer_form_submit' ) );
+        add_action('wp_ajax_new_offer_form_submit', array($this, 'new_offer_form_submit'));
+        add_action('wp_ajax_nopriv_new_offer_form_submit', array($this, 'new_offer_form_submit'));
 
         /* Add "Make Offer" button code parts - Before add to cart */
-	add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
+        add_action('woocommerce_before_add_to_cart_button', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
 
         /* Add "Make Offer" button code parts - After add to cart */
         add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
@@ -105,7 +107,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_lightbox_make_offer_form'));
 
         /* Add "Make Offer" product tab on product single view */
-        add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'),99);
+        add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'), 99);
 
         /* Add query vars for api endpoint
          * Used for add offer to cart
@@ -165,15 +167,15 @@ class Angelleye_Offers_For_Woocommerce {
 
         add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
 
-        add_filter( 'woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled' ), 10, 1);
-        
-        add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
-        
-        add_filter( 'woocommerce_shipping_methods', array($this, 'add_your_shipping_method' ), 10, 1);
-        add_action( 'woocommerce_shipping_init', array($this, 'your_shipping_method_init' ));
-        add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
-        add_action( 'woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10 );
-        add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
+        add_filter('woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled'), 10, 1);
+
+        add_action('woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
+
+        add_filter('woocommerce_shipping_methods', array($this, 'add_your_shipping_method'), 10, 1);
+        add_action('woocommerce_shipping_init', array($this, 'your_shipping_method_init'));
+        add_filter('woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2);
+        add_action('woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10);
+        add_shortcode('highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10);
     }
 
     /**
@@ -215,7 +217,7 @@ class Angelleye_Offers_For_Woocommerce {
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
         );
 
-        
+
         $_product = wc_get_product($post->ID);
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
@@ -295,7 +297,7 @@ class Angelleye_Offers_For_Woocommerce {
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
         );
 
-        
+
         $_product = wc_get_product($post->ID);
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
@@ -327,7 +329,7 @@ class Angelleye_Offers_For_Woocommerce {
                 } else {
                     echo '</div>';
                 }
-                
+
                 echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
                 $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
                 echo '<div class="angelleye-offers-clearfix"></div></div></div>';
@@ -374,7 +376,7 @@ class Angelleye_Offers_For_Woocommerce {
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
         );
 
-        
+
         $_product = wc_get_product($post->ID);
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
@@ -489,11 +491,11 @@ class Angelleye_Offers_For_Woocommerce {
          * post is not avalable so create problem @line No.497,501 and also third party add-ons who uses tab filter
          * @ticket https://github.com/angelleye/offers-for-woocommerce/issues/246
          * @author Chirag Ips <chiragc@itpathsolutions.co.in>
-         */ 
-        if(is_null($post)){
+         */
+        if (is_null($post)) {
             return $tabs;
         }
-        
+
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
         );
@@ -504,7 +506,7 @@ class Angelleye_Offers_For_Woocommerce {
          * @author Chirag Ips <chiragc@itpathsolutions.co.in>
          */
         $_product = wc_get_product($post->ID);
-        if($_product == false) {
+        if ($_product == false) {
             return $tabs;
         }
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
@@ -820,18 +822,20 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function enqueue_scripts() {
         global $post;
-        if(is_object($post)) {
-           
+        if (is_object($post)) {
+
             $is_product_type_variable = 'false';
             if (function_exists('wc_get_product')) {
                 $product = wc_get_product($post);
-                if($product) {
+                if ($product) {
                     if ($product->is_type('variable') && is_single()) {
                         $is_product_type_variable = 'true';
                     }
                 }
             }
+
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
+            
             wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', plugins_url('assets/js/autoNumeric-1-9-24.js', __FILE__), self::VERSION);
             if (wp_script_is('offers-for-woocommerce-plugin-script')) {
                 wp_localize_script('offers-for-woocommerce-plugin-script', 'offers_for_woocommerce_js_params', apply_filters('offers_for_woocommerce_js_params', array(
@@ -840,213 +844,256 @@ class Angelleye_Offers_For_Woocommerce {
                     'offers_for_woocommerce_params_nonce' => wp_create_nonce("offers_for_woocommerce_params_nonce")
                 )));
             }
-            if($this->is_recaptcha_enable()) {
+            if ($this->is_recaptcha_enable()) {
                 wp_enqueue_script('offers-for-woocommerce-recaptcha', 'https://www.google.com/recaptcha/api.js', array('jquery'), self::VERSION);
             }
         }
     }
 
-	public function new_offer_form_submit()
-	{
-            ob_start();
-            $post_data = array();
-            if (is_ajax()) {
-                if( isset($_POST['value']) && !empty($_POST['value']) ) {
-                    $post_data = $_POST['value'];
-                    foreach ($post_data as $key => $post_data_value) {
-                       if( isset($post_data_value['name']) && !empty($post_data_value['name']) ) {
-                            $post[$post_data_value['name']] = ( isset($post_data_value['value']) && !empty($post_data_value['value']) ) ? $post_data_value['value'] : '';
-                       }
-                    }
-                }
-            } else {
-                if( isset($_POST['value']) && !empty($_POST['value']) ) {
-                    $post_data = $_POST['value'];
-                    foreach ($post_data as $key => $post_data_value) {
-                       if( isset($post_data_value) && !empty($post_data_value) ) {
-                            $post[$key] = ( isset($post_data_value) && !empty($post_data_value) ) ? $post_data_value : '';
-                       }
+    public function new_offer_form_submit() {
+        ob_start();
+        $post_data = array();
+        if (is_ajax()) {
+            if (isset($_POST['value']) && !empty($_POST['value'])) {
+                $post_data = $_POST['value'];
+                foreach ($post_data as $key => $post_data_value) {
+                    if (isset($post_data_value['name']) && !empty($post_data_value['name'])) {
+                        $post[$post_data_value['name']] = ( isset($post_data_value['value']) && !empty($post_data_value['value']) ) ? $post_data_value['value'] : '';
                     }
                 }
             }
-       
-	
-            global $wpdb; // this is how you get access to the database
+        } else {
+            if (isset($_POST['value']) && !empty($_POST['value'])) {
+                $post_data = $_POST['value'];
+                foreach ($post_data as $key => $post_data_value) {
+                    if (isset($post_data_value) && !empty($post_data_value)) {
+                        $post[$key] = ( isset($post_data_value) && !empty($post_data_value) ) ? $post_data_value : '';
+                    }
+                }
+            }
+        }
 
-			// Check if form was posted and select task accordingly
-            if(isset($post["offer_product_id"]) && $post["offer_product_id"] != '')
-            {
-				// set postmeta original vars
-                $formData['orig_offer_name'] = (isset($post['offer_name'])) ? $post['offer_name'] : '';
-                $formData['orig_offer_company_name'] = (isset($post['offer_company_name'])) ? $post['offer_company_name'] : '';
-                $formData['orig_offer_phone'] = (isset($post['offer_phone'])) ? $post['offer_phone'] : '';
-                $formData['orig_offer_email'] = (isset($post['offer_email'])) ? $post['offer_email'] : '';
-                $formData['orig_offer_product_id'] = (isset($post['offer_product_id'])) ? $post['offer_product_id'] : '';
-                $formData['orig_offer_variation_id'] = (isset($post['offer_variation_id'])) ? $post['offer_variation_id'] : '';
-				$formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
-                $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
-				$formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
-                $formData['orig_offer_uid'] = uniqid('aewco-');;
-                $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
 
-                if($this->is_recaptcha_enable()) {
-                    if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
-                        $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
-                        if(empty($response)) {
-                           echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                            exit; 
-                        } else {
-                            $response_array = json_decode($response, true);
-                            if( $response_array['success'] != true ) {
-                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                                exit;
-                            }
-                        }
-                    } else {
+        global $wpdb; // this is how you get access to the database
+        // Check if form was posted and select task accordingly
+        if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {
+            // set postmeta original vars
+            $formData['orig_offer_name'] = (isset($post['offer_name'])) ? $post['offer_name'] : '';
+            $formData['orig_offer_company_name'] = (isset($post['offer_company_name'])) ? $post['offer_company_name'] : '';
+            $formData['orig_offer_phone'] = (isset($post['offer_phone'])) ? $post['offer_phone'] : '';
+            $formData['orig_offer_email'] = (isset($post['offer_email'])) ? $post['offer_email'] : '';
+            $formData['orig_offer_product_id'] = (isset($post['offer_product_id'])) ? $post['offer_product_id'] : '';
+            $formData['orig_offer_variation_id'] = (isset($post['offer_variation_id'])) ? $post['offer_variation_id'] : '';
+            $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
+            $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
+            $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
+            $formData['orig_offer_uid'] = uniqid('aewco-');
+            ;
+            $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
+
+            if ($this->is_recaptcha_enable()) {
+                if (isset($post['g-recaptcha-response']) && !empty($post['g-recaptcha-response'])) {
+                    $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
+                    if (empty($response)) {
                         echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
                         exit;
-                    }
-                }
-                /**
-                 * Check minimum quantity and minimum price
-                 */
-                // check for valid offer quantity (not zero)
-                if (($formData['orig_offer_quantity'] == '' || $formData['orig_offer_quantity'] == 0)) {
-                    if (is_ajax()) {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Quantity\'', 'offers-for-woocommerce')));
-                        exit;
                     } else {
-                        return false;
-                    }
-                }
-                // check for valid offer price (not zero)
-                if (($formData['orig_offer_price_per'] == '' || $formData['orig_offer_price_per'] == 0 || $formData['orig_offer_price_per'] == "0.00")) {
-                    if (is_ajax()) {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Amount\'', 'offers-for-woocommerce')));
-                        exit;
-                    } else {
-                        $this->set_session('ofwpa_issue', 'Please enter a positive value for Offer Amount');
-                        return false;
-                    }
-                }
-
-                // set postmeta vars
-                $formData['offer_name'] = $formData['orig_offer_name'];
-                $formData['offer_company_name'] = $formData['orig_offer_company_name'];
-                $formData['offer_phone'] = $formData['orig_offer_phone'];
-                $formData['offer_email'] = $formData['orig_offer_email'];
-                $formData['offer_product_id'] = $formData['orig_offer_product_id'];
-                $formData['offer_variation_id'] = $formData['orig_offer_variation_id'];
-                $formData['offer_quantity'] = $formData['orig_offer_quantity'];
-                $formData['offer_price_per'] = $formData['orig_offer_price_per'];
-                $formData['offer_amount'] = $formData['orig_offer_amount'];
-                $formData['offer_uid'] = $formData['orig_offer_uid'];
-
-                // if not logged in, check for matching wp user by email
-                // set author_data
-                $author_data = (!is_user_logged_in() ) ? get_user_by('email', $formData['offer_email']) : false;
-
-                if ($author_data) {
-                    $newPostData['post_author'] = $author_data->ID;
-                }
-
-                // set post vars
-                $newPostData['post_date'] = date("Y-m-d H:i:s", current_time('timestamp', 0));
-                $newPostData['post_date_gmt'] = gmdate("Y-m-d H:i:s", time());
-                $newPostData['post_type'] = 'woocommerce_offer';
-                $newPostData['post_status'] = 'publish';
-                $newPostData['post_title'] = $formData['offer_email'];
-
-                // set offer comments
-                $comments = (isset($post['offer_notes']) && $post['offer_notes'] != '') ? strip_tags(nl2br($post['offer_notes']), '<br><p>') : '';
-
-                /**
-                 * Akismet spam check
-                 * Passes back true (it's spam) or false (it's ham)
-                 * @since   1.2.0
-                 */
-                $akismet_api_key = '9a57112207be';
-                $data = array('blog' => get_site_url(),
-                    'user_ip' => $_SERVER['REMOTE_ADDR'],
-                    'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-                    'referrer' => '',
-                    'permalink' => get_permalink($formData['offer_product_id']),
-                    'comment_type' => 'woocommerce_offer',
-                    'comment_author' => $formData['offer_name'],
-                    'comment_author_email' => $formData['offer_email'],
-                    'comment_author_url' => '',
-                    'comment_content' => $comments
-                );
-                if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data) && FALSE) {
-                    // is spam
-                    if (is_ajax()) {
-                        echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __('Invalid Offer Submission; See shop manager for assistance', 'offers-for-woocommerce')));
-                        exit;
-                    } else {
-                        $this->set_session('ofwpa_issue', 'Invalid Offer Submission; See shop manager for assistance');
-                        return false;
-                    }
-                }
-
-                // check for parent post id
-                $parent_post_id = (isset($post['parent_offer_id'])) ? $post['parent_offer_id'] : '';
-                $parent_post_status = get_post_status($parent_post_id);
-                $post_parent_type = get_post_type($parent_post_id);
-
-                // If has valid parent offer id post
-                $is_counter_offer = ( $parent_post_id != '' ) ? true : false;
-
-                if ($is_counter_offer) {
-                    // check for parent offer unique id
-                    $parent_post_offer_uid = get_post_meta($parent_post_id, 'offer_uid', true);
-
-                    // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
-                    if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
-                        if (is_ajax()) {
-                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
+                        $response_array = json_decode($response, true);
+                        if ($response_array['success'] != true) {
+                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
                             exit;
-                        } else {
-                            $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
-                            return false;
                         }
                     }
+                } else {
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
+                    exit;
+                }
+            }
+            /**
+             * Check minimum quantity and minimum price
+             */
+            // check for valid offer quantity (not zero)
+            if (($formData['orig_offer_quantity'] == '' || $formData['orig_offer_quantity'] == 0)) {
+                if (is_ajax()) {
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Quantity\'', 'offers-for-woocommerce')));
+                    exit;
+                } else {
+                    return false;
+                }
+            }
+            // check for valid offer price (not zero)
+            if (($formData['orig_offer_price_per'] == '' || $formData['orig_offer_price_per'] == 0 || $formData['orig_offer_price_per'] == "0.00")) {
+                if (is_ajax()) {
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Amount\'', 'offers-for-woocommerce')));
+                    exit;
+                } else {
+                    $this->set_session('ofwpa_issue', 'Please enter a positive value for Offer Amount');
+                    return false;
+                }
+            }
 
-                    $parent_post = array(
-                        'ID' => $parent_post_id,
-                        'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
-                        'post_modified_gmt' => gmdate("Y-m-d H:i:s", current_time('timestamp', 0)),
-                        'post_status' => 'buyercountered-offer'
-                    );
+            // set postmeta vars
+            $formData['offer_name'] = $formData['orig_offer_name'];
+            $formData['offer_company_name'] = $formData['orig_offer_company_name'];
+            $formData['offer_phone'] = $formData['orig_offer_phone'];
+            $formData['offer_email'] = $formData['orig_offer_email'];
+            $formData['offer_product_id'] = $formData['orig_offer_product_id'];
+            $formData['offer_variation_id'] = $formData['orig_offer_variation_id'];
+            $formData['offer_quantity'] = $formData['orig_offer_quantity'];
+            $formData['offer_price_per'] = $formData['orig_offer_price_per'];
+            $formData['offer_amount'] = $formData['orig_offer_amount'];
+            $formData['offer_uid'] = $formData['orig_offer_uid'];
 
-                    if ($author_data) {
-                        $parent_post['post_author'] = $newPostData['post_author'];
+            // if not logged in, check for matching wp user by email
+            // set author_data
+            $author_data = (!is_user_logged_in() ) ? get_user_by('email', $formData['offer_email']) : false;
+
+            if ($author_data) {
+                $newPostData['post_author'] = $author_data->ID;
+            }
+
+            // set post vars
+            $newPostData['post_date'] = date("Y-m-d H:i:s", current_time('timestamp', 0));
+            $newPostData['post_date_gmt'] = gmdate("Y-m-d H:i:s", time());
+            $newPostData['post_type'] = 'woocommerce_offer';
+            $newPostData['post_status'] = 'publish';
+            $newPostData['post_title'] = $formData['offer_email'];
+
+            // set offer comments
+            $comments = (isset($post['offer_notes']) && $post['offer_notes'] != '') ? strip_tags(nl2br($post['offer_notes']), '<br><p>') : '';
+
+            /**
+             * Akismet spam check
+             * Passes back true (it's spam) or false (it's ham)
+             * @since   1.2.0
+             */
+            $akismet_api_key = '9a57112207be';
+            $data = array('blog' => get_site_url(),
+                'user_ip' => $_SERVER['REMOTE_ADDR'],
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'referrer' => '',
+                'permalink' => get_permalink($formData['offer_product_id']),
+                'comment_type' => 'woocommerce_offer',
+                'comment_author' => $formData['offer_name'],
+                'comment_author_email' => $formData['offer_email'],
+                'comment_author_url' => '',
+                'comment_content' => $comments
+            );
+            if ($this->aeofwc_akismet_comment_check($akismet_api_key, $data) && FALSE) {
+                // is spam
+                if (is_ajax()) {
+                    echo json_encode(array("statusmsg" => 'failed-spam', "statusmsgDetail" => __('Invalid Offer Submission; See shop manager for assistance', 'offers-for-woocommerce')));
+                    exit;
+                } else {
+                    $this->set_session('ofwpa_issue', 'Invalid Offer Submission; See shop manager for assistance');
+                    return false;
+                }
+            }
+
+            // check for parent post id
+            $parent_post_id = (isset($post['parent_offer_id'])) ? $post['parent_offer_id'] : '';
+            $parent_post_status = get_post_status($parent_post_id);
+            $post_parent_type = get_post_type($parent_post_id);
+
+            // If has valid parent offer id post
+            $is_counter_offer = ( $parent_post_id != '' ) ? true : false;
+
+            if ($is_counter_offer) {
+                // check for parent offer unique id
+                $parent_post_offer_uid = get_post_meta($parent_post_id, 'offer_uid', true);
+
+                // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
+                if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
+                    if (is_ajax()) {
+                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
+                        exit;
+                    } else {
+                        $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
+                        return false;
                     }
+                }
 
-                    // Update the parent post into the database
-                    wp_update_post($parent_post);
+                $parent_post = array(
+                    'ID' => $parent_post_id,
+                    'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
+                    'post_modified_gmt' => gmdate("Y-m-d H:i:s", current_time('timestamp', 0)),
+                    'post_status' => 'buyercountered-offer'
+                );
 
-                    $formDataUpdated = array();
+                if ($author_data) {
+                    $parent_post['post_author'] = $newPostData['post_author'];
+                }
 
-                    $formDataUpdated['offer_buyer_counter_quantity'] = $formData['offer_quantity'];
-                    $formDataUpdated['offer_buyer_counter_price_per'] = $formData['offer_price_per'];
-                    $formDataUpdated['offer_buyer_counter_amount'] = $formData['offer_amount'];
-                    
-                    $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
-                    $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
-                    $formDataUpdated['offer_amount'] = $formData['offer_amount'];
-                    
+                // Update the parent post into the database
+                wp_update_post($parent_post);
+
+                $formDataUpdated = array();
+
+                $formDataUpdated['offer_buyer_counter_quantity'] = $formData['offer_quantity'];
+                $formDataUpdated['offer_buyer_counter_price_per'] = $formData['offer_price_per'];
+                $formDataUpdated['offer_buyer_counter_amount'] = $formData['offer_amount'];
+
+                $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
+                $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
+                $formDataUpdated['offer_amount'] = $formData['offer_amount'];
+
+                // Insert new Post Meta Values
+                foreach ($formDataUpdated as $k => $v) {
+                    $newPostMetaData = array();
+                    $newPostMetaData['post_id'] = $parent_post_id;
+                    $newPostMetaData['meta_key'] = $k;
+                    $newPostMetaData['meta_value'] = $v;
+
+                    update_post_meta($parent_post_id, $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
+                }
+
+                // Insert WP comment
+                $comment_text = "<span>" . __('Buyer Submitted Counter Offer', 'offers-for-woocommerce') . "</span>";
+
+                if ($comments != '') {
+                    // Insert WP comment
+                    $comment_text.= '<br />' . $comments;
+                }
+
+                $data = array(
+                    'comment_post_ID' => '',
+                    'comment_author' => 'admin',
+                    'comment_author_email' => '',
+                    'comment_author_url' => '',
+                    'comment_content' => $comment_text,
+                    'comment_type' => 'offers-history',
+                    'comment_parent' => 0,
+                    'user_id' => '',
+                    'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                    'comment_agent' => '',
+                    'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
+                    'comment_approved' => 'post-trashed',
+                );
+                $new_comment_id = wp_insert_comment($data);
+
+                // insert comment meta
+                if ($new_comment_id) {
+                    add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $parent_post_id, true);
+                    add_comment_meta($new_comment_id, 'offer_quantity', $formData['offer_quantity'], true);
+                    add_comment_meta($new_comment_id, 'offer_amount', $formData['offer_amount'], true);
+                    add_comment_meta($new_comment_id, 'offer_price_per', $formData['offer_price_per'], true);
+                    add_comment_meta($new_comment_id, 'offer_status', '2', true);
+                }
+            } else {
+                // Insert new Post
+                $parent_post_id = wp_insert_post($newPostData);
+                if ($parent_post_id) {
                     // Insert new Post Meta Values
-                    foreach ($formDataUpdated as $k => $v) {
+                    foreach ($formData as $k => $v) {
                         $newPostMetaData = array();
                         $newPostMetaData['post_id'] = $parent_post_id;
                         $newPostMetaData['meta_key'] = $k;
                         $newPostMetaData['meta_value'] = $v;
-
-                        update_post_meta($parent_post_id, $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
+                        add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
                     }
 
                     // Insert WP comment
-                    $comment_text = "<span>" . __('Buyer Submitted Counter Offer', 'offers-for-woocommerce') . "</span>";
+                    $comment_text = "<span>" . __('Created New Offer', 'offers-for-woocommerce') . "</span>";
 
                     if ($comments != '') {
                         // Insert WP comment
@@ -1061,8 +1108,8 @@ class Angelleye_Offers_For_Woocommerce {
                         'comment_content' => $comment_text,
                         'comment_type' => 'offers-history',
                         'comment_parent' => 0,
-                        'user_id' => '',
-                        'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                        'user_id' => 1,
+                        'comment_author_IP' => '127.0.0.1',
                         'comment_agent' => '',
                         'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
                         'comment_approved' => 'post-trashed',
@@ -1075,214 +1122,169 @@ class Angelleye_Offers_For_Woocommerce {
                         add_comment_meta($new_comment_id, 'offer_quantity', $formData['offer_quantity'], true);
                         add_comment_meta($new_comment_id, 'offer_amount', $formData['offer_amount'], true);
                         add_comment_meta($new_comment_id, 'offer_price_per', $formData['offer_price_per'], true);
-                        add_comment_meta($new_comment_id, 'offer_status', '2', true);
+                        add_comment_meta($new_comment_id, 'offer_status', '1', true);
                     }
                 } else {
-                    // Insert new Post
-                    $parent_post_id = wp_insert_post($newPostData);
-                    if ($parent_post_id) {
-                        // Insert new Post Meta Values
-                        foreach ($formData as $k => $v) {
-                            $newPostMetaData = array();
-                            $newPostMetaData['post_id'] = $parent_post_id;
-                            $newPostMetaData['meta_key'] = $k;
-                            $newPostMetaData['meta_value'] = $v;
-                            add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
-                        }
-
-                        // Insert WP comment
-                        $comment_text = "<span>" . __('Created New Offer', 'offers-for-woocommerce') . "</span>";
-
-                        if ($comments != '') {
-                            // Insert WP comment
-                            $comment_text.= '<br />' . $comments;
-                        }
-
-                        $data = array(
-                            'comment_post_ID' => '',
-                            'comment_author' => 'admin',
-                            'comment_author_email' => '',
-                            'comment_author_url' => '',
-                            'comment_content' => $comment_text,
-                            'comment_type' => 'offers-history',
-                            'comment_parent' => 0,
-                            'user_id' => 1,
-                            'comment_author_IP' => '127.0.0.1',
-                            'comment_agent' => '',
-                            'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
-                            'comment_approved' => 'post-trashed',
-                        );
-                        $new_comment_id = wp_insert_comment($data);
-
-                        // insert comment meta
-                        if ($new_comment_id) {
-                            add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $parent_post_id, true);
-                            add_comment_meta($new_comment_id, 'offer_quantity', $formData['offer_quantity'], true);
-                            add_comment_meta($new_comment_id, 'offer_amount', $formData['offer_amount'], true);
-                            add_comment_meta($new_comment_id, 'offer_price_per', $formData['offer_price_per'], true);
-                            add_comment_meta($new_comment_id, 'offer_status', '1', true);
-                        }
+                    // return error msg
+                    if (is_ajax()) {
+                        echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
+                        exit;
                     } else {
-                        // return error msg
-                        if (is_ajax()) {
-                            echo json_encode(array("statusmsg" => 'failed', "statusmsgDetail" => 'database error'));
-                            exit;
-                        } else {
-                            $this->set_session('ofwpa_issue', 'database error');
-                            return false;
-                        }
+                        $this->set_session('ofwpa_issue', 'database error');
+                        return false;
                     }
                 }
-                
-                do_action('make_offer_after_save_form_data', $parent_post_id, $post);
-                /**
-                 * Email Out - admin email notification of new or countered offer
-                 * @since   0.1.0
-                 */
-                $offer_id = $parent_post_id;
+            }
 
-                $offer_name = get_post_meta($parent_post_id, 'offer_name', true);
-                $offer_phone = get_post_meta($parent_post_id, 'offer_phone', true);
-                $offer_company_name = get_post_meta($parent_post_id, 'offer_company_name', true);
-                $offer_email = get_post_meta($parent_post_id, 'offer_email', true);
+            do_action('make_offer_after_save_form_data', $parent_post_id, $post);
+            /**
+             * Email Out - admin email notification of new or countered offer
+             * @since   0.1.0
+             */
+            $offer_id = $parent_post_id;
 
-                $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
-                $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
-                
-                $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+            $offer_name = get_post_meta($parent_post_id, 'offer_name', true);
+            $offer_phone = get_post_meta($parent_post_id, 'offer_phone', true);
+            $offer_company_name = get_post_meta($parent_post_id, 'offer_company_name', true);
+            $offer_email = get_post_meta($parent_post_id, 'offer_email', true);
 
-                $product_qty = $formData['offer_quantity'];
-                $product_price_per = $formData['offer_price_per'];
-                $product_total = $formData['offer_amount'];
-                
-                $product_shipping_cost = get_post_meta($parent_post_id, 'product_shipping_cost', true);
+            $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
+            $variant_id = get_post_meta($parent_post_id, 'offer_variation_id', true);
 
-                $offer_args = array(
-                    'offer_email' => $offer_email,
-                    'offer_name' => $offer_name,
-                    'offer_phone' => $offer_phone,
-                    'offer_company_name' => $offer_company_name,
-                    'offer_id' => $offer_id,
-                    'product_id' => $product_id,
-                    'product_url' => get_permalink($product_id),
-                    'variant_id' => $variant_id,
-                    'product' => $product,
-                    'product_qty' => $product_qty,
-                    'product_price_per' => $product_price_per,
-                    'product_shipping_cost' => $product_shipping_cost,
-                    'product_total' => $product_total,
-                    'offer_notes' => $comments
-                );
+            $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
 
-                if ($variant_id) {
-                    if ($product->get_sku()) {
-                        $identifier = $product->get_sku();
-                    } else {
-                        $identifier = '#' . $product->variation_id;
-                    }
+            $product_qty = $formData['offer_quantity'];
+            $product_price_per = $formData['offer_price_per'];
+            $product_total = $formData['offer_amount'];
 
-                    $attributes = $product->get_variation_attributes();
-                    $extra_data = ' &ndash; ' . implode(', ', $attributes);
-                    $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s%s', 'offers-for-woocommerce'), $identifier, $product->get_title(), $extra_data);
+            $product_shipping_cost = get_post_meta($parent_post_id, 'product_shipping_cost', true);
+
+            $offer_args = array(
+                'offer_email' => $offer_email,
+                'offer_name' => $offer_name,
+                'offer_phone' => $offer_phone,
+                'offer_company_name' => $offer_company_name,
+                'offer_id' => $offer_id,
+                'product_id' => $product_id,
+                'product_url' => get_permalink($product_id),
+                'variant_id' => $variant_id,
+                'product' => $product,
+                'product_qty' => $product_qty,
+                'product_price_per' => $product_price_per,
+                'product_shipping_cost' => $product_shipping_cost,
+                'product_total' => $product_total,
+                'offer_notes' => $comments
+            );
+
+            if ($variant_id) {
+                if ($product->get_sku()) {
+                    $identifier = $product->get_sku();
                 } else {
-                    if (!empty($product)) {
-                        $identifier = $product->get_sku();
-                    } else {
-                        $identifier = '#' . $product_id;
-                    }
-
-                    $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s', 'offers-for-woocommerce'), $identifier, $product->get_title());
+                    $identifier = '#' . $product->variation_id;
                 }
 
-                if ($is_counter_offer) {
-                    $offer_args['is_counter_offer'] = true;
-
-                    /**
-                     * send admin 'New counter offer' email template
-                     */
-                    // the email we want to send
-                    $email_class = 'WC_New_Counter_Offer_Email';
+                $attributes = $product->get_variation_attributes();
+                $extra_data = ' &ndash; ' . implode(', ', $attributes);
+                $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s%s', 'offers-for-woocommerce'), $identifier, $product->get_title(), $extra_data);
+            } else {
+                if (!empty($product)) {
+                    $identifier = $product->get_sku();
                 } else {
-                    $offer_args['is_counter_offer'] = false;
-
-                    /**
-                     * send admin 'New offer' email template
-                     */
-                    // the email we want to send
-                    $email_class = 'WC_New_Offer_Email';
+                    $identifier = '#' . $product_id;
                 }
 
-                // load the WooCommerce Emails
-                if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
-                    $emails = $_POST['value']['emails_object'];
-                } else {
-                    $wc_emails = new WC_Emails();
-                    $emails = $wc_emails->get_emails();
-                }
+                $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s', 'offers-for-woocommerce'), $identifier, $product->get_title());
+            }
 
-                // select the email we want & trigger it to send
-                $new_email = $emails[$email_class];
-
-                // set plugin slug in email class
-                $new_email->plugin_slug = 'offers-for-woocommerce';
-
-                if ($is_counter_offer) {
-                    // define email template/path (html)
-                    $new_email->template_html = 'woocommerce-new-counter-offer.php';
-                    $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
-
-                    // define email template/path (plain)
-                    $new_email->template_plain = 'woocommerce-new-counter-offer.php';
-                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
-                } else {
-                    // define email template/path (html)
-                    $new_email->template_html = 'woocommerce-new-offer.php';
-                    $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
-
-                    // define email template/path (plain)
-                    $new_email->template_plain = 'woocommerce-new-offer.php';
-                    $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
-                }
-                $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
-                $new_email->trigger($offer_args);
+            if ($is_counter_offer) {
+                $offer_args['is_counter_offer'] = true;
 
                 /**
-                 * Send buyer 'offer received' email notification
+                 * send admin 'New counter offer' email template
                  */
                 // the email we want to send
-                $email_class = 'WC_Offer_Received_Email';
-                // set recipient
-                $recipient = $offer_email;
-                $offer_args['recipient'] = $offer_email;
-                // select the email we want & trigger it to send
-                $new_email = $emails[$email_class];
-                $new_email->recipient = $recipient;
+                $email_class = 'WC_New_Counter_Offer_Email';
+            } else {
+                $offer_args['is_counter_offer'] = false;
 
-                // set plugin slug in email class
-                $new_email->plugin_slug = 'offers-for-woocommerce';
+                /**
+                 * send admin 'New offer' email template
+                 */
+                // the email we want to send
+                $email_class = 'WC_New_Offer_Email';
+            }
 
+            // load the WooCommerce Emails
+            if (isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object'])) {
+                $emails = $_POST['value']['emails_object'];
+            } else {
+                $wc_emails = new WC_Emails();
+                $emails = $wc_emails->get_emails();
+            }
+
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+
+            // set plugin slug in email class
+            $new_email->plugin_slug = 'offers-for-woocommerce';
+
+            if ($is_counter_offer) {
                 // define email template/path (html)
-                $new_email->template_html = 'woocommerce-offer-received.php';
+                $new_email->template_html = 'woocommerce-new-counter-offer.php';
                 $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
 
                 // define email template/path (plain)
-                $new_email->template_plain = 'woocommerce-offer-received.php';
+                $new_email->template_plain = 'woocommerce-new-counter-offer.php';
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+            } else {
+                // define email template/path (html)
+                $new_email->template_html = 'woocommerce-new-offer.php';
+                $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
 
-                $new_email->trigger($offer_args);
-                if (is_ajax()) {
-                    do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
-                }
-                do_action('woocommerce_after_offer_submit', $is_counter_offer, $post);
-
-                // Success
-                if (is_ajax()) {
-                    echo json_encode(array("statusmsg" => 'success'));
-                    exit;
-                } else {
-                    return false;
-                }
+                // define email template/path (plain)
+                $new_email->template_plain = 'woocommerce-new-offer.php';
+                $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
             }
+            $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
+            $new_email->trigger($offer_args);
+
+            /**
+             * Send buyer 'offer received' email notification
+             */
+            // the email we want to send
+            $email_class = 'WC_Offer_Received_Email';
+            // set recipient
+            $recipient = $offer_email;
+            $offer_args['recipient'] = $offer_email;
+            // select the email we want & trigger it to send
+            $new_email = $emails[$email_class];
+            $new_email->recipient = $recipient;
+
+            // set plugin slug in email class
+            $new_email->plugin_slug = 'offers-for-woocommerce';
+
+            // define email template/path (html)
+            $new_email->template_html = 'woocommerce-offer-received.php';
+            $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+
+            // define email template/path (plain)
+            $new_email->template_plain = 'woocommerce-offer-received.php';
+            $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+
+            $new_email->trigger($offer_args);
+            if (is_ajax()) {
+                do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
+            }
+            do_action('woocommerce_after_offer_submit', $is_counter_offer, $post);
+
+            // Success
+            if (is_ajax()) {
+                echo json_encode(array("statusmsg" => 'success'));
+                exit;
+            } else {
+                return false;
+            }
+        }
 
         return ob_get_clean();
     }
@@ -1417,7 +1419,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_meta['woocommerce_offer_price_per'] = $offer_meta['offer_price_per'][0];
 
             $found = false;
-           
+
             foreach ($woocommerce->cart->get_cart() as $cart_item) {
                 // check if offer id already in cart
                 if (isset($cart_item['woocommerce_offer_id']) && $cart_item['woocommerce_offer_id'] == $offer->ID) {
@@ -1429,7 +1431,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             if (!$found) {
-               // WC()->cart->empty_cart();
+                // WC()->cart->empty_cart();
                 $item_id = $woocommerce->cart->add_to_cart($product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta);
             }
 
@@ -1745,14 +1747,14 @@ class Angelleye_Offers_For_Woocommerce {
             $offer_email = $recipient;
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            
+
             $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
             $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
             $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
-           
+
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
@@ -1824,8 +1826,8 @@ class Angelleye_Offers_For_Woocommerce {
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
             }
-            $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
-            $redirect = $offer_args['product_url'] . $link_insert .'__aewcoapi=1&woocommerce-offer-id='.$offer_args['offer_id'].'&woocommerce-offer-uid=' .$offer_args['offer_uid'];
+            $link_insert = ( strpos($offer_args['product_url'], '?') ) ? '&' : '?';
+            $redirect = $offer_args['product_url'] . $link_insert . '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid'];
             echo json_encode(array("statusmsg" => 'accepted-offer', 'redirect' => $redirect));
             exit;
         }
@@ -1865,13 +1867,13 @@ class Angelleye_Offers_For_Woocommerce {
             $offer_email = $recipient;
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
-            
+
             $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
             $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
-          
+
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
@@ -1956,55 +1958,53 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofwc_auto_accept_auto_decline_handler($offer_id, $product_id, $variant_id, $emails) {
         $post_meta_auto_accept_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_enabled', true);
-        if( isset($post_meta_auto_accept_enabled) && $post_meta_auto_accept_enabled == 'yes') {
-            if( isset($variant_id) && !empty($variant_id) ) {
-                 $variable_product = new WC_Product_Variation( $variant_id );
-                 $atual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
-                 $atual_sales_price = $variable_product->sale_price;
-             } else {
-                 $atual_regular_price = get_post_meta( $product_id, '_regular_price', true);
-                 $atual_sales_price = get_post_meta( $product_id, '_sale_price', true);
-                 $atual_regular_price = (isset($atual_regular_price) && !empty($atual_regular_price) ) ? $atual_regular_price : 0;
-
-             }
-             $product_price = (isset($atual_sales_price) && !empty($atual_sales_price)) ? $atual_sales_price : $atual_regular_price;
-             $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
-             $auto_accept_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_percentage', true);
-             if( isset($offer_price) && !empty($offer_price) && isset($auto_accept_percentage) && !empty($auto_accept_percentage) ) {
-                 $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
-                 if( (int) $auto_accept_percentage <= (int) $user_offer_percentage) {
-                     do_action('ofw_before_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
-                     $this->ofw_auto_approve_offer($offer_id, $emails);
-                     do_action('ofw_after_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
-                     return true;
-                 }
-             }
+        if (isset($post_meta_auto_accept_enabled) && $post_meta_auto_accept_enabled == 'yes') {
+            if (isset($variant_id) && !empty($variant_id)) {
+                $variable_product = new WC_Product_Variation($variant_id);
+                $atual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
+                $atual_sales_price = $variable_product->sale_price;
+            } else {
+                $atual_regular_price = get_post_meta($product_id, '_regular_price', true);
+                $atual_sales_price = get_post_meta($product_id, '_sale_price', true);
+                $atual_regular_price = (isset($atual_regular_price) && !empty($atual_regular_price) ) ? $atual_regular_price : 0;
+            }
+            $product_price = (isset($atual_sales_price) && !empty($atual_sales_price)) ? $atual_sales_price : $atual_regular_price;
+            $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
+            $auto_accept_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_percentage', true);
+            if (isset($offer_price) && !empty($offer_price) && isset($auto_accept_percentage) && !empty($auto_accept_percentage)) {
+                $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
+                if ((int) $auto_accept_percentage <= (int) $user_offer_percentage) {
+                    do_action('ofw_before_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
+                    $this->ofw_auto_approve_offer($offer_id, $emails);
+                    do_action('ofw_after_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
+                    return true;
+                }
+            }
         }
 
         $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
-        if( isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
-            if( isset($variant_id) && !empty($variant_id) ) {
-                 $variable_product = new WC_Product_Variation( $variant_id );
-                 $atual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
-                 $atual_sales_price = $variable_product->sale_price;
-             } else {
-                 $atual_regular_price = get_post_meta( $product_id, '_regular_price', true);
-                 $atual_sales_price = get_post_meta( $product_id, '_sale_price', true);
-                 $atual_regular_price = (isset($atual_regular_price) && !empty($atual_regular_price) ) ? $atual_regular_price : 0;
-
-             }
-             $product_price = (isset($atual_sales_price) && !empty($atual_sales_price)) ? $atual_sales_price : $atual_regular_price;
-             $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
-             $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
-             if( isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage) ) {
-                 $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
-                 if( (int) $auto_decline_percentage >= (int) $user_offer_percentage) {
-                     do_action('ofw_before_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
-                     $this->ofw_auto_decline_offer($offer_id, $emails);
-                     do_action('ofw_after_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
-                     return true;
-                 }
-             }
+        if (isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
+            if (isset($variant_id) && !empty($variant_id)) {
+                $variable_product = new WC_Product_Variation($variant_id);
+                $atual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
+                $atual_sales_price = $variable_product->sale_price;
+            } else {
+                $atual_regular_price = get_post_meta($product_id, '_regular_price', true);
+                $atual_sales_price = get_post_meta($product_id, '_sale_price', true);
+                $atual_regular_price = (isset($atual_regular_price) && !empty($atual_regular_price) ) ? $atual_regular_price : 0;
+            }
+            $product_price = (isset($atual_sales_price) && !empty($atual_sales_price)) ? $atual_sales_price : $atual_regular_price;
+            $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
+            $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+            if (isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage)) {
+                $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
+                if ((int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+                    do_action('ofw_before_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
+                    $this->ofw_auto_decline_offer($offer_id, $emails);
+                    do_action('ofw_after_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
+                    return true;
+                }
+            }
         }
     }
 
@@ -2082,7 +2082,7 @@ class Angelleye_Offers_For_Woocommerce {
             return false;
         }
     }
-    
+
     /**
      * @since   1.2.0
      * @return boolean
@@ -2119,7 +2119,7 @@ class Angelleye_Offers_For_Woocommerce {
             <div class="woocommerce-make-offer-form-section">
                 <input name="join_our_mailing_list" id="join_our_mailing_list" type="checkbox" value="yes" checked="checked"><label for="join_our_mailing_list" class="checkbox"><?php echo str_repeat('&nbsp;', 1); ?> <?php echo apply_filters('aeofwc-offer-form-label-join-our-mailing-list', __('Join Our Mailing List', 'offers-for-woocommerce')); ?></label>
             </div>
-            
+
             <?php
         }
     }
@@ -2131,16 +2131,16 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofw_mailing_list_handler($is_counter_offer, $post_data) {
         if ($this->ofw_is_mailling_list_enable() && !$is_counter_offer) {
             if (isset($post_data['join_our_mailing_list']) && $post_data['join_our_mailing_list'] == "yes") {
-                 if (isset($post_data) && !empty($post_data)) {
+                if (isset($post_data) && !empty($post_data)) {
                     if ($this->is_mailchimp_enable()) {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailChimp_Helper();
                         $OFW_MailChimp_Helper->ofw_mailchimp_handler($post_data);
-                    } elseif($this->is_constant_contact_enable()) {
+                    } elseif ($this->is_constant_contact_enable()) {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
                         $OFW_MailChimp_Helper->ofw_constantcontact_handler($post_data);
-                    } elseif($this->is_mailpoet_enable()) {
+                    } elseif ($this->is_mailpoet_enable()) {
                         include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
                         $OFW_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
                         $OFW_MailChimp_Helper->ofw_mailpoet_handler($post_data);
@@ -2150,58 +2150,60 @@ class Angelleye_Offers_For_Woocommerce {
             return true;
         }
     }
-    
+
     public function set_session($key, $value) {
         WC()->session->$key = $value;
     }
-    
+
     public function ofw_coupons_enabled($boolean) {
         $button_options_general = get_option('offers_for_woocommerce_options_general');
-        if(!WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
-            foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-                if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+        if (!WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
+            foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
+                if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
                     return false;
                 }
             }
         }
         return $boolean;
     }
-    public function ofw_woocommerce_after_my_account(){
+
+    public function ofw_woocommerce_after_my_account() {
         include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
     }
+
     public function ofw_is_anonymous_communication_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
-        if( isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1 ) {
+        if (isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1) {
             return true;
-        } 
+        }
         return false;
     }
 
-     public function is_recaptcha_enable() {
-         $ofw_enable_recaptcha = get_option('ofw_enable_recaptcha');
-         if( empty($ofw_enable_recaptcha) || $ofw_enable_recaptcha == 'no' ) {
-             return false;
-         }
-         $ofw_recaptcha_site_key = get_option('ofw_recaptcha_site_key');
-         if( empty($ofw_recaptcha_site_key) ) {
-             return false;
-         }
-         $ofw_recaptcha_secret_key = get_option('ofw_recaptcha_secret_key');
-         if( empty($ofw_recaptcha_secret_key) ) {
-             return false;
-         }
-         return true;
-     }
-     
-     public function recaptcha_verify_response($response) {
-         if($this->is_recaptcha_enable()) {
-             $recaptcha_url = add_query_arg( array( 'secret' => get_option('ofw_recaptcha_secret_key'), 'response' => $response, 'remoteip' => $_SERVER['REMOTE_ADDR']), 'https://www.google.com/recaptcha/api/siteverify' );
-             return wp_remote_retrieve_body( wp_remote_get($recaptcha_url) );
-         }
-     }
-     
-     public function ofw_display_pending_offer_lable_product_details_page($product_id) {
-        if($this->ofw_is_show_pending_offer_enable()) {
+    public function is_recaptcha_enable() {
+        $ofw_enable_recaptcha = get_option('ofw_enable_recaptcha');
+        if (empty($ofw_enable_recaptcha) || $ofw_enable_recaptcha == 'no') {
+            return false;
+        }
+        $ofw_recaptcha_site_key = get_option('ofw_recaptcha_site_key');
+        if (empty($ofw_recaptcha_site_key)) {
+            return false;
+        }
+        $ofw_recaptcha_secret_key = get_option('ofw_recaptcha_secret_key');
+        if (empty($ofw_recaptcha_secret_key)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function recaptcha_verify_response($response) {
+        if ($this->is_recaptcha_enable()) {
+            $recaptcha_url = add_query_arg(array('secret' => get_option('ofw_recaptcha_secret_key'), 'response' => $response, 'remoteip' => $_SERVER['REMOTE_ADDR']), 'https://www.google.com/recaptcha/api/siteverify');
+            return wp_remote_retrieve_body(wp_remote_get($recaptcha_url));
+        }
+    }
+
+    public function ofw_display_pending_offer_lable_product_details_page($product_id) {
+        if ($this->ofw_is_show_pending_offer_enable()) {
             global $wpdb;
             $total_result = $wpdb->get_results($wpdb->prepare("
                     SELECT SUM( postmeta.meta_value ) AS total_qty, COUNT(posts.ID) as total_offer
@@ -2213,55 +2215,55 @@ class Angelleye_Offers_For_Woocommerce {
             ", $product_id), ARRAY_A);
             $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
             $total_offer = (isset($total_result[0]['total_offer']) && !empty($total_result[0]['total_offer'])) ? $total_result[0]['total_offer'] : 0;
-            if($total_qty > 0 && $total_offer > 0) {
-                echo '<div class="ofw-info"> ' . sprintf( _n( '%d offer is currently pending.', '%d offers are currently pending.', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . '</div>';
+            if ($total_qty > 0 && $total_offer > 0) {
+                    echo '<div class="ofw-info"> ' . sprintf(_n('%d offer is currently pending.', '%d offers are currently pending.', $total_offer, 'offers-for-woocommerce'), $total_offer) . '</div>';
             }
         }
-     }
-     
+    }
+
     public function ofw_is_show_pending_offer_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
-        if( isset($offers_for_woocommerce_options_general['general_setting_show_pending_offer']) && $offers_for_woocommerce_options_general['general_setting_show_pending_offer'] == 1 ) {
+        if (isset($offers_for_woocommerce_options_general['general_setting_show_pending_offer']) && $offers_for_woocommerce_options_general['general_setting_show_pending_offer'] == 1) {
             return true;
-        } 
+        }
         return false;
     }
 
-    public function add_your_shipping_method( $methods ) {
+    public function add_your_shipping_method($methods) {
         $methods[] = 'Angelleye_Offers_For_Woocommerce_Shipping_Method';
         return $methods;
     }
-        
+
     public function your_shipping_method_init() {
-        if ( ! class_exists( 'Angelleye_Offers_For_Woocommerce_Shipping_Method' ) ) {
+        if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-shipping.php';
         }
     }
-    
-    public function hide_shipping_when_offer_for_woocommerce_is_available( $rates, $package ) {
-        if($this->is_offer_product_in_cart()) {
-            if ( isset( $rates['offer_for_woocommerce_shipping'] ) ) {
-                unset( $rates['flat_rate'] );
+
+    public function hide_shipping_when_offer_for_woocommerce_is_available($rates, $package) {
+        if ($this->is_offer_product_in_cart()) {
+            if (isset($rates['offer_for_woocommerce_shipping'])) {
+                unset($rates['flat_rate']);
                 $offer_for_woocommerce_shipping = $rates['offer_for_woocommerce_shipping'];
                 $rates = array();
                 $rates['offer_for_woocommerce_shipping'] = $offer_for_woocommerce_shipping;
             }
         }
-	return $rates;
+        return $rates;
     }
-    
+
     public function is_offer_product_in_cart() {
-        foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-            if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+        foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
+            if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
                 return true;
             }
         }
-       return false;
+        return false;
     }
-    
+
     public function ofw_display_highest_current_offer() {
         global $post, $wpdb;
-        if($this->ofw_is_highest_current_bid_enable()) {
+        if ($this->ofw_is_highest_current_bid_enable()) {
             $total_result = $wpdb->get_results($wpdb->prepare("
                     SELECT MAX( postmeta.meta_value ) AS max_offer, COUNT(posts.ID) as total_qty
                     FROM $wpdb->postmeta AS postmeta
@@ -2272,12 +2274,12 @@ class Angelleye_Offers_For_Woocommerce {
             ", $post->ID), ARRAY_A);
             $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
             $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
-            if($total_qty > 0 && $max_offer > 0) {
-                echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ), 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ) ) . '</div>';
+            if ($total_qty > 0 && $max_offer > 0) {
+                echo '<div class="ofw-info"> ' . sprintf(_n('Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal($max_offer, wc_get_price_decimals()), 'offers-for-woocommerce'), get_woocommerce_currency_symbol(), wc_format_decimal($max_offer, wc_get_price_decimals())) . '</div>';
             }
         }
     }
-    
+
     public function ofw_display_highest_current_offer_shortcode() {
         global $post, $wpdb;
         $total_result = $wpdb->get_results($wpdb->prepare("
@@ -2290,16 +2292,16 @@ class Angelleye_Offers_For_Woocommerce {
         ", $post->ID), ARRAY_A);
         $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
         $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
-        if($total_qty > 0 && $max_offer > 0) {
-            echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ), 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ) ) . '</div>';
+        if ($total_qty > 0 && $max_offer > 0) {
+            echo '<div class="ofw-info"> ' . sprintf(_n('Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal($max_offer, wc_get_price_decimals()), 'offers-for-woocommerce'), get_woocommerce_currency_symbol(), wc_format_decimal($max_offer, wc_get_price_decimals())) . '</div>';
         }
     }
 
     public function ofw_is_highest_current_bid_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
-        if( isset($offers_for_woocommerce_options_general['general_setting_show_highest_current_bid']) && $offers_for_woocommerce_options_general['general_setting_show_highest_current_bid'] == 1 ) {
+        if (isset($offers_for_woocommerce_options_general['general_setting_show_highest_current_bid']) && $offers_for_woocommerce_options_general['general_setting_show_highest_current_bid'] == 1) {
             return true;
-        } 
+        }
         return false;
     }
 }
