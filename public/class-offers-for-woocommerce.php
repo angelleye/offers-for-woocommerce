@@ -305,7 +305,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
 
             $custom_styles_override = '';
@@ -2324,13 +2324,13 @@ class Angelleye_Offers_For_Woocommerce {
      * @param wc_product $_product
      * @return boolean true
      */
-    public function angelleye_ofwc_woocommerce_is_purchasable($purchasable,$_product) {
-        if($purchasable === false && $_product->get_price() == ''){
+    public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
+        if ($purchasable === false && $_product->get_price() == '') {
             return true;
-        } else if($purchasable === true && ($_product->get_price() > 0) === false){
+        } else if ($purchasable === true && ($_product->get_price() > 0) === false) {
             return false;
-        }else{
-            return $purchasable;    
-}
+        } else {
+            return $purchasable;
+        }
     }
 }

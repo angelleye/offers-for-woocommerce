@@ -123,6 +123,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Tweak - Adds div tag for easier targeting of offer buttons. ([#250](https://github.com/angelleye/offers-for-woocommerce/issues/250))
 * Fix - Resolves an issue with the loader graphic. ([#254](https://github.com/angelleye/offers-for-woocommerce/issues/254))
 * Fix - WooCommerce Tabs Manager compatibility. ([#246](https://github.com/angelleye/offers-for-woocommerce/issues/246))
+* Fix - Resolves a conflict with WooCommerce PDF Invoices & Packing Slips causing duplicate headers / footers in email notifications. ([#227](https://github.com/angelleye/offers-for-woocommerce/issues/227))
 
 
 = 1.3.0 - 07.07.2016 =
