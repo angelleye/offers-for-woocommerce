@@ -60,7 +60,11 @@ class Angelleye_Offers_For_Woocommerce {
         if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
             define('OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/');
         }
-
+        /**
+         * make filter to wc_product show add_to_cart button and make_offer button
+         * @since 1.3.1
+         */
+        add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
         /**
          * Activate plugin when new blog is added
          */
@@ -217,11 +221,11 @@ class Angelleye_Offers_For_Woocommerce {
 
         
         $_product = wc_get_product($post->ID);
+ 
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
-
         $custom_styles_override = '';
         if ($button_options_display) {
             if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
@@ -233,7 +237,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock ) {
             // get global on/off settings for offer button
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
             $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
@@ -507,11 +511,12 @@ class Angelleye_Offers_For_Woocommerce {
         if($_product == false) {
             return $tabs;
         }
+        
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $_product->is_purchasable()) {
             if (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') {
                 return $tabs;
             }
@@ -2310,5 +2315,22 @@ class Angelleye_Offers_For_Woocommerce {
             return true;
         } 
         return false;
+    }
+    
+    /**
+     * Fillter woocommerce_is_purchasable
+     * @uses purchasable allow purchasable even if price is "Blank" not 0.00
+     * @param boolean $purchasable
+     * @param wc_product $_product
+     * @return boolean true
+     */
+    public function angelleye_ofwc_woocommerce_is_purchasable($purchasable,$_product) {
+        if($purchasable === false && $_product->get_price() == ''){
+            return true;
+        } else if($purchasable === true && ($_product->get_price() > 0) === false){
+            return false;
+        }else{
+            return $purchasable;    
+}
     }
 }
