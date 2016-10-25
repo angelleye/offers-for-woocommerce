@@ -17,22 +17,42 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
     <thead>
     <tr>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Product', 'woocommerce' ); ?></th>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Quantity', 'woocommerce' ); ?></th>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Price', 'woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Product', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Quantity', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Price', 'offers-for-woocommerce' ); ?></th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
-        <td><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
-        <td><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2 ); ?></td>
+        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
+        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
+        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ); ?></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
-        <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
-        <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2 ); ?></td>
+        <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
+        <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' ); ?></td>
+    </tr>
+     <?php 
+        if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
+            $product_total = number_format(round($offer_args['product_total'] + $offer_args['product_shipping_cost'], 2), 2, '.', '');
+          ?>
+            <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php _e( 'Shipping', 'offers-for-woocommerce' ); ?></th>
+            <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_shipping_cost'], 2, '.', '' ); ?></td>
+           <?php 
+        }
+        ?>
+    </tr>
+    <tr>
+        <?php 
+        if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
+          ?>
+            <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php _e( 'Total', 'offers-for-woocommerce' ); ?></th>
+            <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $product_total, 2, '.', '' ); ?></td>
+           <?php 
+        }
+        ?>
     </tr>
     </tfoot>
 </table>

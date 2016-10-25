@@ -4,12 +4,13 @@
  * Plugin Name:       Offers for WooCommerce
  * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce
  * Description:       Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily.
- * Version:           1.1.2
+ * Version:           1.3.0
  * Author:            Angell EYE
  * Author URI:        http://www.angelleye.com/
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
- * Domain Path:       /i18n/languages/
+ * Text Domain:       offers-for-woocommerce
+ * Domain Path:       /languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
  *
 
@@ -21,6 +22,18 @@
 if(!defined('ABSPATH'))
 {
 	die;
+}
+if (!defined('OFW_PLUGIN_URL')) {
+    define('OFW_PLUGIN_URL', plugin_dir_path( __FILE__ ));
+}
+
+if (!defined('OFFERS_FOR_WOOCOMMERCE_LOG_DIR')) {
+    $upload_dir = wp_upload_dir();
+    define('OFFERS_FOR_WOOCOMMERCE_LOG_DIR', $upload_dir['basedir'] . '/offers-for-woocommerce-logs/');
+}
+
+if (!defined('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR')) {
+    define('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR', dirname(__FILE__));
 }
 
 /**
@@ -48,25 +61,7 @@ add_action('plugins_loaded', 'angelleye_ofwc_load_plugin_textdomain');
  */
 function angelleye_ofwc_load_plugin_textdomain()
 {
-    $plugin = Angelleye_Offers_For_Woocommerce::get_instance();
-    $plugin_slug = $plugin->get_plugin_slug();
-    $locale = apply_filters( 'plugin_locale', get_locale(), $plugin_slug );
-    $plugin_rel_path = plugin_dir_path( __FILE__ );
-    $mo_file_path = $plugin_rel_path . 'languages/'.$plugin_slug.'-'. $locale . '.mo';
-
-    if($locale != 'en_US')
-    {
-        $loadplugintextdomain = load_plugin_textdomain( $plugin_slug, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-        if(!$loadplugintextdomain)
-        {
-            if( file_exists($mo_file_path) )
-            {
-                echo '<div class="notice error">';
-                echo '<p>'. __('<strong>Error: </strong>Language translation file could not be loaded', $plugin_slug). '</p>';
-                echo '</div>';
-            }
-        }
-    }
+    load_plugin_textdomain( 'offers-for-woocommerce', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 
 /**

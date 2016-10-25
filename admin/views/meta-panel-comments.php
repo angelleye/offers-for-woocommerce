@@ -28,6 +28,6 @@ if( isset($offer_comments) ){
     </div>
 <?php
 } else {
-    echo __('No Comments Found.', $this->plugin_slug);
+    echo __('No Comments Found.', 'offers-for-woocommerce');
 }
 ?>

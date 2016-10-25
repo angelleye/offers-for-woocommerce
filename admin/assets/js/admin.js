@@ -33,41 +33,53 @@
                     aForm: true
                 }
             );
+    
+            $('#offer_shipping_cost').autoNumeric('init',
+                {
+                    mDec: '2',
+                    aSign: '',
+                    //wEmpty: 'sign',
+                    lZero: 'allow',
+                    aForm: true
+                }
+            );
 
             var currentPostStatus = $('#woocommerce_offer_post_status').val();
-            if(currentPostStatus !== 'countered-offer')
-            {
+            
+            if(currentPostStatus !== 'countered-offer') {
                 $('.woocommerce-offer-final-offer-wrap').hide();
+            } else {
+                $('.woocommerce-offer-final-offer-wrap').show();
+            }
+            
+            if(currentPostStatus === 'declined-offer') {
+                $('.woocommerce-offer-send-coupon-wrap').show();
+                $('.woocommerce-offer-expiration-wrap').hide();
+            } else {
+                $('.woocommerce-offer-send-coupon-wrap').hide();
+                if(currentPostStatus === 'completed-offer') {
+                    $('.woocommerce-offer-expiration-wrap').hide();
+                } 
             }
 
             $('#woocommerce_offer_post_status').change(function(){
-                if( $(this).val() == 'countered-offer')
-                {
+                if( $(this).val() == 'countered-offer') {
                     $('.woocommerce-offer-final-offer-wrap').fadeIn('fast');
-                }
-                else
-                {
+                } else {
                     $('.woocommerce-offer-final-offer-wrap').slideUp();
+                }
+                if( $(this).val() == 'declined-offer') { 
+                    $('.woocommerce-offer-send-coupon-wrap').fadeIn('fast');
+                    $('.woocommerce-offer-expiration-wrap').hide();
+                } else {
+                    $('.woocommerce-offer-send-coupon-wrap').slideUp();
+                    if( $(this).val() !== 'completed-offer') {
+                        $('.woocommerce-offer-expiration-wrap').show();
+                    }
                 }
                 return false;
             });
-
-            var currentExpireDate = $('#offer-expiration-date').val();
-            var formattedDate = new Date(currentExpireDate);
-            var d = formattedDate.getDate();
-            var m =  formattedDate.getMonth();
-            m += 1;  // JavaScript months are 0-11
-            var y = formattedDate.getFullYear();
-            var formattedExpireDate = y + "-" + m + "-" + d;
-
-            var formattedTodayDate = new Date(currentDate);
-            var d = formattedTodayDate.getDate();
-            var m =  formattedTodayDate.getMonth();
-            m += 1;  // JavaScript months are 0-11
-            var y = formattedTodayDate.getFullYear();
-            var formattedTodayDate = y + "-" + m + "-" + d;
-
-            if(formattedExpireDate < formattedTodayDate)
+            if(ofw_param.ofw_offer_expiration_date_show === 'true')
             {
                 $('#angelleye-woocommerce-offer-meta-summary-expire-notice-msg').show();
             }
@@ -162,10 +174,14 @@
         var updateTotal = function () {
             var input1 = $('#offer-quantity').autoNumeric('get');
             var input2 = $('#offer-price-per').autoNumeric('get');
+            var offer_shiipng_cost = $('#offer_shipping_cost').autoNumeric('get');
             if (isNaN(input1) || isNaN(input2)) {
                 $('#offer-total').val('');
             } else {
                 var theTotal = (input1 * input2);
+                
+                var theTotal = (parseFloat(theTotal) + parseFloat(offer_shiipng_cost));
+                
                 $('#offer-total').val( parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString() );
             }
 
@@ -194,6 +210,10 @@
 
         // offer price each input keyup
         $('#offer-price-per').keyup(function() {
+            updateTotal();
+        });
+        
+        $('#offer_shipping_cost').keyup(function() {
             updateTotal();
         });
 

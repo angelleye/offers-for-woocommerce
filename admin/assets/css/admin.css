@@ -63,7 +63,7 @@
 transform: translateX(0px) translateY(3px);
 }
 
-.woocommerce-offer-post-status-grid-icon-div { padding-bottom:10px!important; margin-bottom:0px!important; }
+.woocommerce-offer-post-status-grid-icon-div { padding-bottom:4px!important; margin-bottom:0px!important; }
 tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-grid-icon-div { box-shadow:none!important; }
 
 i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
@@ -76,7 +76,7 @@ i.woocommerce-offer-post-status-grid-icon.completed, i.woocommerce-offer-post-st
 i.woocommerce-offer-post-status-grid-icon.declined, i.woocommerce-offer-post-status-grid-icon.declined:hover { background-color:transparent!important; color:#777777!important; border:1px solid #777!important; }
 i.woocommerce-offer-post-status-grid-icon.trash, i.woocommerce-offer-post-status-grid-icon.trash:hover { background-color:transparent!important; color:#777!important; border:1px solid #777!important; }
 
-.woocommerce-offer-post-status-grid-icon-div { font-size:12px!important; line-height:22px!important; opacity:0; }
+.woocommerce-offer-post-status-grid-icon-div { font-size:12px!important; line-height:22px!important; opacity:1; }
 .woocommerce-offer-post-status-grid-icon-div:before {
 	content: 'Status: ';
 }
@@ -601,9 +601,30 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
     background-size: contain!important;
 }
 
+.ofw-enable-auto-accept-decline { background:#FFF; margin:10px 0; padding:0 20px 10px 20px; border-left:4px solid #ffcc00; }
+.ofw-enable-auto-accept-decline h3 { padding-top:15px; margin-bottom:5px; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section { float: left; margin:10px 10px 10px 0; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section:last-child { border:none!important; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section label { font-weight: bold; margin:0 0 0 4px!important; line-height: 24px; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section select {  }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section input { width:110px; }
+.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-auto-accept-percentage input { width:211px !important; }
+.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-auto-decline-percentage input { width:211px !important; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section #ofw_bulk-acd_enable-tool-submit { margin-top:1px; }
+.ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section #ofw_bulk-acd_enable-tool-submit i.ofwc-spinner {
+    height: 16px;
+    width: 16px;
+    margin-top: 5px;
+    float: left;
+    margin-right: 6px;
+    background: url('../images/spinner.gif') center center !important;
+    background-size: contain!important;
+}
+
 
 @media screen and (max-width:782px) {
     .angelleye-offers-tools-wrap .angelleye-offers-tools-bulk-action-section #bulk-enable-tool-submit i.ofwc-spinner { margin-top:2px; }
+    .ofw-enable-auto-accept-decline .ofw-tool-auto-accept-decline-action-section #ofw_bulk-acd_enable-tool-submit i.ofwc-spinner { margin-top:2px; }
 }
 
 .angelleye-offers-clearfix { clear: both!important; }
@@ -626,4 +647,14 @@ body.post-type-woocommerce_offer th.column-title {
     body.post-type-woocommerce_offer .column-offer_quantity {
         display:none;
     }
+}
+
+#general_setting_allowed_roles_chosen {
+    max-width:650px;
+}
+
+#general_setting_default_expire_days { width:60px; }
+#TB_ajaxContent {width: 100% !important; height: 100% !important;}
+form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_mailing_list {
+    width: 14px !important;
 }

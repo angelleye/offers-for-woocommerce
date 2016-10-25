@@ -2,8 +2,23 @@
 	"use strict";
 	$(function () {
 		// Public-facing JavaScript
-				
 		$(document).ready(function(){
+                    if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
+                        if(check_all_woocommerce_variation_is_selected() === true) {
+                            $("#offers-for-woocommerce-add-to-cart-wrap").show();
+                        } else {
+                            $("#offers-for-woocommerce-add-to-cart-wrap").hide();
+                        }
+                            
+                        $('.variations select').on('change', function (e) {
+                            if (check_all_woocommerce_variation_is_selected() === false) {
+                                $("#offers-for-woocommerce-add-to-cart-wrap").hide();
+                            } else {
+                                $("#offers-for-woocommerce-add-to-cart-wrap").show();
+                            }
+                        });  
+                    }
+                
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
                 var split = val.split("=", 2);
@@ -46,12 +61,7 @@
                 angelleyeOpenMakeOfferForm();
             });
 
-            $(".tab_custom_ofwc_offer_tab a").on('click', function()
-            {
-                angelleyeOpenMakeOfferForm();
-            });
-
-            $("#lightbox_custom_ofwc_offer_form_close_btn").on('click', function()
+            $("#lightbox_custom_ofwc_offer_form_close_btn, #aeofwc-close-lightbox-link").on('click', function()
             {
                 $("#lightbox_custom_ofwc_offer_form").removeClass('active');
                 $("#lightbox_custom_ofwc_offer_form").hide();
@@ -77,10 +87,6 @@
                 }
             );
 
-            var offerSubmitBtnDefaultVal = $('#woocommerce-make-offer-form').find( ':submit' ).attr('data-orig-val');
-            if( offerSubmitBtnDefaultVal == '')
-                offerSubmitBtnDefaultVal = 'Submit Offer';
-            $('#woocommerce-make-offer-form').find( ':submit' ).attr('value', offerSubmitBtnDefaultVal);
             $('#woocommerce-make-offer-form').find( ':submit' ).removeAttr( 'disabled','disabled' );
 
             (function($){
@@ -96,7 +102,7 @@
             })(jQuery);
 
             // Submit offer form
-            $('#woocommerce-make-offer-form').submit(function()
+            $("form[name='woocommerce-make-offer-form']").submit(function()
             {
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 
@@ -153,12 +159,16 @@
                 }
 
 
-                var offerName = $("input[name='offer_name']").val();
-                var offerEmail = $("input[name='offer_email']").val();
-                var offerPhone = $("input[name='offer_phone']").val();
-                var offerCompanyName = $("input[name='offer_company_name']").val();
-
-                var offerNotes = $("#angelleye-offer-notes").val();
+      
+                
+                var join_our_mailing_list = "no";
+                
+                if($("#join_our_mailing_list").length > 0) {
+                    if($('#join_our_mailing_list').attr('checked')) {
+                        join_our_mailing_list = "yes";
+                    } 
+                }
+                
 
                 var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
                 var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
@@ -177,32 +187,31 @@
                     // show loader image
                     $('#offer-submit-loader').show();
 
-                    var formData = {};
-                    formData['offer_name'] = offerName;
-                    formData['offer_email'] = offerEmail;
-                    formData['offer_phone'] = offerPhone;
-                    formData['offer_company_name'] = offerCompanyName;
-                    formData['offer_quantity'] = offerQuantity;
-                    formData['offer_price_each'] = offerPriceEach;
-                    formData['offer_product_id'] = offerProductId;
-                    formData['offer_variation_id'] = offerVariationId;
-                    formData['parent_offer_id'] = parentOfferId;
-                    formData['parent_offer_uid'] = parentOfferUid;
-                    formData['offer_notes'] = offerNotes;
-
-                    // ajax submit offer
-                    var ajaxtarget = '?woocommerceoffer_post=1';
-
                     // abort any pending request
                     if (request) {
                         request.abort();
                     }
+                    
+                    var post_data_array = $("#woocommerce-make-offer-form").serializeArray();
+                    post_data_array.push({name: 'offer_product_id', value: offerProductId});
+                    post_data_array.push({name: 'offer_variation_id', value: offerVariationId});
+                    post_data_array.push({name: 'parent_offer_id', value: parentOfferId});
+                    post_data_array.push({name: 'parent_offer_uid', value: parentOfferUid});
+                    post_data_array.push({name: 'offer_quantity', value: offerQuantity});
+                    post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
+                    post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
+                           
+                    var data_make_offer = {
+                        action: 'new_offer_form_submit',
+                        security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
+                        value: post_data_array
+                    };
 
                     // fire off the request
                     var request = $.ajax({
-                        url: ajaxtarget,
+                        url: offers_for_woocommerce_js_params.ajax_url,
                         type: "post",
-                        data: formData
+                        data: data_make_offer
                     });
 
                     // callback handler that will be called on success
@@ -232,6 +241,19 @@
                                 $('#tab_custom_ofwc_offer_tab_alt_message_custom ul #alt-message-custom').html("<strong>Error: </strong>"+responseStatusDetail);
                                 $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
                                 $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                            }
+                            else if(responseStatus == 'failed-spam')
+                            {
+                                //console.log('failed-custom-msg');
+                                // Hide loader image
+                                $('#offer-submit-loader').hide();
+                                // Show error message DIV
+                                $('#tab_custom_ofwc_offer_tab_alt_message_custom ul #alt-message-custom').html("<strong>Error: </strong>"+responseStatusDetail);
+                                $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
+                                $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                                $('#tab_custom_ofwc_offer_tab_inner fieldset').hide();
+                            } else if(responseStatus == 'accepted-offer') {
+                                window.location = decodeURI(myObject['redirect']);
                             }
                             else
                             {
@@ -314,15 +336,25 @@
                     $("#woocommerce-make-offer-form-quantity").focus();
                 }
 
-                var targetTab = $(".tab_custom_ofwc_offer_tab");
-                $('html, body').animate({
-                    scrollTop: $(targetTab).offset().top - '100'
-                }, 'fast');
+               if ( $( ".tab_custom_ofwc_offer_tab" ).length ) {
+                    var targetTab = $(".tab_custom_ofwc_offer_tab");
+                    $('html, body').animate({
+                        scrollTop: $(targetTab).offset().top - '100'
+                    }, 'fast');
+                }
             }
 
             return false;
         }
-		
+
+        $(window).load(function(){
+
+            if( $(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox") )
+            {
+                $("#aeofwc-close-lightbox-link").css('display','block');
+            }
+        });
+
 		$(window).load(function(){
 			var variantDisplay = $('.single_variation_wrap').css('display');
 			if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block')
@@ -348,11 +380,10 @@
 					$('#tab_custom_ofwc_offer_tab_alt_message_success').hide();
 					$('#tab_custom_ofwc_offer_tab_inner fieldset').show();
 					
-					var selectedVariantOption = $('.variations select').val();
 					//var variantDisplay = $('.single_variation_wrap.ofwc_offer_tab_form_wrap').css('display');
 					
 					// Toggle form based on visibility
-					if(selectedVariantOption == '')
+					if(check_all_woocommerce_variation_is_selected() == false)
 					{
 						$('#tab_custom_ofwc_offer_tab_inner').hide();
 						$('#tab_custom_ofwc_offer_tab_alt_message').show();
@@ -411,6 +442,18 @@
 
         // Check for PayPal Standard bn
         CheckPayPalStdBn();
-
+         function check_all_woocommerce_variation_is_selected() {
+            var result = true;
+            $( ".woocommerce div.product form.cart .variations select").each(function() {
+                var $el = $(this),
+                 $selected = $el.find('option:selected');   
+                 if($selected.val() === "") {
+                     result = false;
+                 } else {
+                 }
+             });
+             return result;
+        }
+        
     });
 }(jQuery));
