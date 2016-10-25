@@ -35,21 +35,33 @@ if ($customer_offers) :
             foreach ($customer_offers as $customer_order) :
                 ?>
                 <tr class="order">
-                    <?php foreach ($my_offers_columns as $column_id => $column_name) : ?>
-                        <td class="<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>">
+                    <?php
+                    foreach ($my_offers_columns as $column_id => $column_name) :
+                        $offer_args = array();
+                        $post_id = $customer_order->ID;
+                        $offer_status = get_post_status($post_id);
+                        $post_status = $offer_status;
+                        if (empty($offer_status)) {
+                            return false;
+                        }
+                        $product_id = get_post_meta($post_id, 'orig_offer_product_id', true);
+                        $variant_id = get_post_meta($post_id, 'orig_offer_variation_id', true);
+                        $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+                        $offer_final_offer = get_post_meta($post_id, 'offer_final_offer', true);
+                        $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+
+                        if (is_null($product) || !$product) {
+                            $col_span = count($my_offers_columns);
+                            ?>
+                            <td class="<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>" colspan="<?php echo $col_span; ?>">
+                                <?php echo __('it is done in the admin page for manage offers, that product is not found.'); ?>
+                            </td>
                             <?php
-                            $offer_args = array();
-                            $post_id = $customer_order->ID;
-                            $offer_status = get_post_status($post_id);
-                            $post_status = $offer_status;
-                            if (empty($offer_status)) {
-                                return false;
-                            }
-                            $product_id = get_post_meta($post_id, 'orig_offer_product_id', true);
-                            $variant_id = get_post_meta($post_id, 'orig_offer_variation_id', true);
-                            $offer_uid = get_post_meta($post_id, 'offer_uid', true);
-                            $offer_final_offer = get_post_meta($post_id, 'offer_final_offer', true);
-                            $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+                            break;
+                        }
+                        ?>
+                        <td class="<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>" >
+                            <?php
                             $product_title = get_the_title($product_id);
                             $offer_args['product_url'] = $product->get_permalink();
                             $offer_args['offer_id'] = $post_id;
