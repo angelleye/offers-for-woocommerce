@@ -28,7 +28,7 @@
                         <?php if( isset($_product_attributes) && is_array($_product_attributes) && !empty($_product_attributes) ) { ?>
                         <li><span><?php echo __('Attributes:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo ucwords( implode( ", ", array_values($_product_attributes)) ); ?></li>
                         <?php } ?>
-                        <li><span><?php echo __('Regular Price:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2, '.', '') : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Regular Price:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2, '.', '') : __('Not Applicable', 'offers-for-woocommerce'); ?></li>
                         <?php if($_product_sale_price) { ?>
                             <li><span><?php echo __('Sale Price:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (!empty($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2, '.', '') : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php } ?>

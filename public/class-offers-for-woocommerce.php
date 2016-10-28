@@ -60,12 +60,14 @@ class Angelleye_Offers_For_Woocommerce {
         if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
             define('OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/');
         }
-
+       
+//        add_filter('wc_get_template',array($this,'angelleye_ofwc_get_template'),10,5);
+        add_action( 'woocommerce_single_product_summary', array($this, 'remove_product_description_add_cart_button'), 5);
         /**
          * make filter to wc_product show add_to_cart button and make_offer button
          * @since 1.3.1
          */
-        add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
+        //add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
         /**
          * Activate plugin when new blog is added
          */
@@ -88,7 +90,7 @@ class Angelleye_Offers_For_Woocommerce {
          */
 
         /* Add "Make Offer" button code parts - Before add to cart */
-        add_action('woocommerce_before_add_to_cart_button', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
+        add_action('woocommerce_before_add_to_cart_form', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
 
         /**
          * Init - New Offer Form Submit
@@ -98,7 +100,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_action( 'wp_ajax_nopriv_new_offer_form_submit', array( $this, 'new_offer_form_submit' ) );
 
         /* Add "Make Offer" button code parts - Before add to cart */
-	add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
+	add_action( 'woocommerce_before_add_to_cart_form', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
 
         /* Add "Make Offer" button code parts - After add to cart */
         add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
@@ -2325,6 +2327,8 @@ class Angelleye_Offers_For_Woocommerce {
      * @return boolean true
      */
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
+//        var_dump($_product->is_purchasable(),$_product->get_price());
+        
         if ($purchasable === false && $_product->get_price() == '') {
             return true;
         } else if ($purchasable === true && ($_product->get_price() > 0) === false) {
@@ -2333,4 +2337,57 @@ class Angelleye_Offers_For_Woocommerce {
             return $purchasable;
         }
     }
+    
+    function remove_product_description_add_cart_button() {
+        global $product;
+//        var_dump($product->is_purchasable(),$product->get_price());
+        //Remove Add to Cart button from product description of product with id 1234
+        if (($product->is_purchasable() === false && $product->get_price() == '') || ($product->is_purchasable() && $product->get_price() == null)) {
+             add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
+             add_filter( 'woocommerce_locate_template', array($this,'angelleye_ofwc_woocommerce_locate_template'), 10, 3 );
+//            remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+//            add_action('woocommerce_single_product_summary',array($this,'angelleye_ofwc_woocommerce_template_single_add_to_cart'));
+        }
+    }
+    
+    function angelleye_ofwc_woocommerce_template_single_add_to_cart(){
+        global $product;
+		do_action( 'woocommerce_' . $product->product_type . '_add_to_cart' );
+    }
+    
+    public function angelleye_ofwc_get_template( $located, $template_name, $args, $template_path, $default_path ) {
+//        var_dump($located, $template_name, $args, $template_path, $default_path );
+        return $located; 
+    }
+    
+    public function angelleye_ofwc_woocommerce_locate_template($template, $template_name, $template_path) {
+        global $woocommerce;
+
+        $_template = $template;
+
+        if (!$template_path)
+            $template_path = $woocommerce->template_url;
+
+        $plugin_path = OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/woocommerce/';
+
+        // Look within passed path within the theme - this is priority
+        $template = locate_template(
+                array(
+                    $template_path . $template_name,
+                    $template_name
+                )
+        );
+//        var_dump($plugin_path . $template_name,$template);
+        // Modification: Get the template from this plugin, if it exists
+        if (!$template && file_exists($plugin_path . $template_name))
+            $template = $plugin_path . $template_name;
+
+        // Use default template
+        if (!$template)
+            $template = $_template;
+
+        // Return what we found
+        return $template;
+    }
+
 }

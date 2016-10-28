@@ -436,7 +436,8 @@
          function check_all_woocommerce_variation_is_selected() {
             var result = true;
             $( ".woocommerce div.product form.cart .variations select").each(function() {
-                var $el = $(this),
+                var $el = $(this);
+                
                  $selected = $el.find('option:selected');   
                  if($selected.val() === "") {
                      result = false;
