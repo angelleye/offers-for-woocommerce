@@ -60,14 +60,25 @@ class Angelleye_Offers_For_Woocommerce {
         if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
             define('OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/');
         }
-       
-//        add_filter('wc_get_template',array($this,'angelleye_ofwc_get_template'),10,5);
-        add_action( 'woocommerce_single_product_summary', array($this, 'remove_product_description_add_cart_button'), 5);
+       /**
+        * @uses not usefull
+        add_filter('wc_get_template',array($this,'angelleye_ofwc_get_template'),10,5);
+        * */
+
         /**
+         * @uses woocommerce_single_product_summary 
+         * @since 1.3.1
+         * @link https://www.skyverge.com/blog/override-woocommerce-template-file-within-a-plugin/
+         */
+        add_action( 'woocommerce_single_product_summary', array($this, 'angelleye_ofwc_woocommerce_single_product_summary'), 5);
+        
+        /**
+         * @uses not usefull after 156-B
          * make filter to wc_product show add_to_cart button and make_offer button
          * @since 1.3.1
+        add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
          */
-        //add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
+        
         /**
          * Activate plugin when new blog is added
          */
@@ -518,7 +529,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $_product->is_purchasable()) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock ) {
             if (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') {
                 return $tabs;
             }
@@ -2328,7 +2339,6 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
 //        var_dump($_product->is_purchasable(),$_product->get_price());
-        
         if ($purchasable === false && $_product->get_price() == '') {
             return true;
         } else if ($purchasable === true && ($_product->get_price() > 0) === false) {
@@ -2337,29 +2347,51 @@ class Angelleye_Offers_For_Woocommerce {
             return $purchasable;
         }
     }
-    
-    function remove_product_description_add_cart_button() {
+    /**
+     * @hook woocommerce_single_product_summary
+     * @uses angelleye_ofwc_woocommerce_single_product_summary if product is not purchesable and price is blank
+     *      switch to offer-for-woo template insted of core WC template
+     * @global wc_product $product
+     * @since 1.3.1
+     */
+    function angelleye_ofwc_woocommerce_single_product_summary() {
         global $product;
 //        var_dump($product->is_purchasable(),$product->get_price());
-        //Remove Add to Cart button from product description of product with id 1234
         if (($product->is_purchasable() === false && $product->get_price() == '') || ($product->is_purchasable() && $product->get_price() == null)) {
              add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
              add_filter( 'woocommerce_locate_template', array($this,'angelleye_ofwc_woocommerce_locate_template'), 10, 3 );
-//            remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-//            add_action('woocommerce_single_product_summary',array($this,'angelleye_ofwc_woocommerce_template_single_add_to_cart'));
         }
     }
-    
+    /**
+     * @uses  Not usefull
+     * @global type $product
     function angelleye_ofwc_woocommerce_template_single_add_to_cart(){
         global $product;
 		do_action( 'woocommerce_' . $product->product_type . '_add_to_cart' );
     }
+     */
     
+    /**
+     * @uses  Not usefull
+     * @param type $located
+     * @param type $template_name
+     * @param type $args
+     * @param type $template_path
+     * @param type $default_path
+     * @return type
     public function angelleye_ofwc_get_template( $located, $template_name, $args, $template_path, $default_path ) {
-//        var_dump($located, $template_name, $args, $template_path, $default_path );
         return $located; 
     }
+     */
     
+    /**
+     * Add Custom Template file loader from Offer-for-woocommerce plugin "/woocommerce/" directory
+     * @global WC $woocommerce
+     * @param string $template
+     * @param string $template_name
+     * @param string $template_path
+     * @return string
+     */
     public function angelleye_ofwc_woocommerce_locate_template($template, $template_name, $template_path) {
         global $woocommerce;
 
