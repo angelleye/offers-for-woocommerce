@@ -62,6 +62,18 @@ if ($customer_offers) :
                         ?>
                         <td class="<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>" >
                             <?php
+                            if (is_null($product) || !$product) {
+                                $col_span = count($my_offers_columns);
+                                ?>
+                                <td class="<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>" colspan="<?php echo $col_span; ?>">
+                                    <?php echo __('it is done in the admin page for manage offers, that product is not found.'); ?>
+                                </td>
+                                <?php
+                                break;
+                            }
+                            ?>
+                        <td class="<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>" >
+                            <?php
                             $product_title = get_the_title($product_id);
                             $offer_args['product_url'] = $product->get_permalink();
                             $offer_args['offer_id'] = $post_id;
