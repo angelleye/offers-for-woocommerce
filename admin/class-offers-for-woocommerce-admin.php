@@ -45,7 +45,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
                     define( 'OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
                 }  
-
+                
+                /**
+                * Confirm Admin about delete Product
+                * @since   1.3.1
+                */
+                add_action('admin_footer',array($this,'ofw_client_before_trash_action'));
+                add_action('wp_ajax_offer_server_before_trash_action', array($this, 'ofw_server_before_trash_action'));
+                
 		/**
 		 * Call $plugin_slug from public plugin class
 		 * @since	0.1.0
@@ -2604,6 +2611,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function enqueue_admin_styles() 
 	{
+             wp_enqueue_style('alertify', plugins_url('assets/css/alertify.min.css', __FILE__));
+            
 		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
@@ -2640,6 +2649,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function enqueue_admin_scripts() 
 	{
+            wp_enqueue_script('alertify', plugins_url('assets/js/alertify.min.js', __FILE__), array());
 		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
@@ -4247,6 +4257,133 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function ofw_woocommerce_cart_shipping_packages($packages) {
         WC()->session->__unset( 'shipping_for_package' );
         return $packages;
+    }
+    public function ofw_is_show_pending_offer_enable() {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if (isset($offers_for_woocommerce_options_general['general_setting_show_pending_offer']) && $offers_for_woocommerce_options_general['general_setting_show_pending_offer'] == 1) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function ofw_display_pending_offer_lable_product_details_page($product_id) {
+        if ($this->ofw_is_show_pending_offer_enable()) {
+            global $wpdb;
+            $total_result = $wpdb->get_results($wpdb->prepare("
+                    SELECT SUM( postmeta.meta_value ) AS total_qty, COUNT(posts.ID) as total_offer
+                    FROM $wpdb->postmeta AS postmeta
+                    JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
+                    INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status NOT LIKE 'completed-offer')
+                    WHERE postmeta.meta_key LIKE 'offer_quantity' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
+                    AND postmeta.post_id = posts.ID LIMIT 0, 99
+            ", $product_id), ARRAY_A);
+            $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
+            $total_offer = (isset($total_result[0]['total_offer']) && !empty($total_result[0]['total_offer'])) ? $total_result[0]['total_offer'] : 0;
+            if ($total_qty > 0 && $total_offer > 0) {
+                    return array('qty'=>$total_qty,'total'=>$total_offer);
+            }
+        }
+    }
+    
+    public function ofw_server_before_trash_action() {
+        ob_clean();
+        if ('product' === $_POST['post_type']) {
+            $msg = $this->ofw_display_pending_offer_lable_product_details_page($_POST['id']);
+           
+            if($msg != null){
+                echo json_encode(array("statusmsg" => 'do-you-want-procced', "statusmsgDetail" => __(sprintf('There are current offer(%d) pending on this product. How would you like to proceed?',$msg['total']), 'offers-for-woocommerce')));
+            }else{
+                echo json_encode(array("statusmsg" => 'you-can'));    
+            }
+        }
+        exit();
+    }
+    
+    public function ofw_client_before_trash_action() {
+        global $post;
+        if(get_post_type($post) == 'product'){
+           ?>
+        <script>
+            var offers_for_woocommerce_js_params = {};
+            offers_for_woocommerce_js_params.ajax_url = '<?php echo admin_url('admin-ajax.php'); ?>';
+            offers_for_woocommerce_js_params.post_type = '<?php echo get_post_type($post); ?>';
+            offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce = '<?php echo wp_create_nonce("offers_for_woocommerce_params_nonce"); ?>'
+            jQuery( document ).ready( function( $ )
+                {
+                   function action_before_trash(){
+                    $(document).on('click','span.trash a.submitdelete', function(e){
+                       e.preventDefault();
+                       console.log($(this).parents('tr').find('input[name="post[]"]').val());
+                       var trash_any_way = $(this).attr('href');
+                        var data_make_offer = {
+                         action: 'offer_server_before_trash_action',
+                         security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
+                         id: $(this).parents('tr').find('input[name="post[]"]').val(),
+                         post_type: offers_for_woocommerce_js_params.post_type
+                        };
+                       // fire off the request
+                        var request = $.ajax({
+                            url: offers_for_woocommerce_js_params.ajax_url,
+                            type: "post",
+                            data: data_make_offer
+                        });
+                        // callback handler that will be called on success
+                        request.done(function (response, textStatus, jqXHR){
+                            console.log(response, textStatus, jqXHR);
+                            
+                            if(request.statusText == 'OK'){
+
+                            var myObject = JSON.parse(request.responseText);
+
+                            var responseStatus = myObject['statusmsg'];
+                            var responseStatusDetail = myObject['statusmsgDetail'];
+
+                                if(responseStatus == 'do-you-want-procced')
+                                {
+                                    alertify.confirm('Woo Offers', responseStatusDetail,
+                                    function(){
+                                        alertify.success('Ok');
+                                        window.location = trash_any_way;
+                                    },
+                                    function(){ 
+                                        alertify.error('Cancel')
+                                    })
+                                    .set('labels', {ok:'continue deleting product', cancel:'do not delete the product'});
+
+//                                    if(confirm(responseStatusDetail)){
+//                                        
+//                                    }else{
+//                                        alert('cancel');
+//                                    }
+                                }
+                                else
+                                {
+                                    window.location = trash_any_way;
+                                }
+
+                            } else {
+                                //console.log('error received');
+                                //alert('Timeout has likely occured, please refresh this page to reinstate your session');
+                                // Hide loader image
+                                $('#offer-submit-loader').hide();
+                                $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
+                                $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
+                            }
+                        });
+                        // callback handler that will be called on failure
+                        request.fail(function (jqXHR, textStatus, errorThrown){
+                            // log the error to the console
+                            // Hide loader image
+                            $('#offer-submit-loader').hide();
+                            $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
+                        });
+                    });
+                }
+                action_before_trash();
+            });
+        </script>
+           <?php
+        }
     }
 
 }
