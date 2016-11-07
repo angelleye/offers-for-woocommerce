@@ -1265,7 +1265,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // set recipient
                 $recipient = $offer_email;
                 
-                $offer_args['recipient'] = $recipient
+                $offer_args['recipient'] = $recipient;
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
