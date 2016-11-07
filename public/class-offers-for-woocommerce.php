@@ -1234,6 +1234,8 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // set plugin slug in email class
                 $new_email->plugin_slug = 'offers-for-woocommerce';
+                //set admin recipient of email
+                $new_email->recipient = apply_filters('ofw_email_admin_recipient_filter',get_option('admin_email'),$post['offer_product_id']);
 
                 if ($is_counter_offer) {
                     // define email template/path (html)
@@ -1262,11 +1264,12 @@ class Angelleye_Offers_For_Woocommerce {
                 $email_class = 'WC_Offer_Received_Email';
                 // set recipient
                 $recipient = $offer_email;
-                $offer_args['recipient'] = $offer_email;
+                
+                $offer_args['recipient'] = $recipient
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
                 $new_email->recipient = $recipient;
-
+                
                 // set plugin slug in email class
                 $new_email->plugin_slug = 'offers-for-woocommerce';
 
@@ -1277,7 +1280,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // define email template/path (plain)
                 $new_email->template_plain = 'woocommerce-offer-received.php';
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
-
+                
                 $new_email->trigger($offer_args);
                 if (is_ajax()) {
                     do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);

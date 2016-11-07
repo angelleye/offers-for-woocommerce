@@ -60,11 +60,14 @@ class WC_New_Counter_Offer_Email extends WC_Email {
     public function trigger( $offer_args ) {
 
         $this->offer_args = $offer_args;
+        if( !$this->recipient ){
+            
         $this->recipient = $this->get_option( 'recipient' );
 
-        if( !$this->recipient )
-        {
-            $this->recipient = get_option('admin_email');
+            if( !$this->recipient )
+            {
+                $this->recipient = get_option('admin_email');
+            }
         }
 
         if ( ! $this->is_enabled() )
