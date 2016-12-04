@@ -120,7 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 1.3.1 - xx.xx.2016 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
-
+* Fix - Resolves an issue with the loader graphic. ([#254](https://github.com/angelleye/offers-for-woocommerce/issues/254))
 
 = 1.3.0 - 07.07.2016 =
 * Feature - Adds the ability to accept or deny offers directly from the email notification. ([#206](https://github.com/angelleye/offers-for-woocommerce/issues/206))
