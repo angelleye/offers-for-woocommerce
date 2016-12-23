@@ -174,6 +174,11 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
         add_action( 'woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10 );
         add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
+		// Resolve conflict with PDF Invoice Packaging Slip plugin
+        if ( class_exists( 'WooCommerce_PDF_Invoices' ) ) {
+            remove_action( 'woocommerce_email_header', array( WC()->mailer(), 'email_header' ) );
+            remove_action( 'woocommerce_email_footer', array( WC()->mailer(), 'email_footer' ) );
+        }
     }
 
     /**
