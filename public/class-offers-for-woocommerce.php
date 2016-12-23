@@ -176,6 +176,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
         add_action( 'woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10 );
         add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
+        add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
     }
 
     /**
@@ -235,7 +236,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
             // get global on/off settings for offer button
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
             $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
@@ -303,7 +304,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
 
             $custom_styles_override = '';
@@ -382,7 +383,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
             // get global on/off settings for offer button - frontpage and catalog
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
             $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
@@ -583,7 +584,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && ($_product->get_price() > 0)) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
             if (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') {
                 return $tabs;
             }
@@ -1499,7 +1500,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $this->send_api_response($message);
                 }
             }
-
+            
             if (!$found) {
                // WC()->cart->empty_cart();
                 $item_id = $woocommerce->cart->add_to_cart($product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta);
@@ -1510,6 +1511,15 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
         return false;
+    }
+    
+    // make product purchasable even price not set and have an accepted offers.
+    public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
+	if ($purchasable === false && $_product->get_price() === '') {
+            return true;
+	} else {
+            return $purchasable;
+	}
     }
 
     /** API Response Handler
@@ -1543,6 +1553,7 @@ class Angelleye_Offers_For_Woocommerce {
             // if offer item found
             if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
                 $value['data']->set_price($value['woocommerce_offer_price_per']);
+                $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
             }
         }
 
