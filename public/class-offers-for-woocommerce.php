@@ -176,7 +176,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
         add_action( 'woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10 );
         add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
-        add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),99,2);
+        add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),999,2);
     }
 
     /**
@@ -1515,9 +1515,13 @@ class Angelleye_Offers_For_Woocommerce {
     
     // make product purchasable even price not set and have an accepted offers.
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
-	if ($purchasable === false && $_product->get_price() === '') {
+        if ($purchasable === false && $_product->get_price() === '') {
+            remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart');
+            remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
             return true;
 	} else {
+            add_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart');
+            add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
             return $purchasable;
 	}
     }
