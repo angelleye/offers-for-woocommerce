@@ -1518,8 +1518,14 @@ class Angelleye_Offers_For_Woocommerce {
         }
         return false;
     }
-    
-    // make product purchasable even price not set and have an accepted offers.
+
+    /**
+     * @param $purchasable
+     * @param $_product
+     * @return bool
+     *
+     * https://github.com/angelleye/offers-for-woocommerce/issues/156
+     */
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
         if ($purchasable === false && $_product->get_price() === '') {
             remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart');
