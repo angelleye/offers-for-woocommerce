@@ -481,6 +481,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
                 
                 echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><input type="hidden" name="add-to-cart" value="'. esc_attr( $post->ID ) .'" /><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                $this->ofw_display_highest_current_offer();
                 $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
                 echo '<div class="angelleye-offers-clearfix"></div></div>';
             }
