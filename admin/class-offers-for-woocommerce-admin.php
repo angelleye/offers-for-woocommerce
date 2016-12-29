@@ -44,16 +44,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
                 if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
                     define( 'OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/includes/emails/' );
-                }  
-
-                /**
-                * Confirm Admin about delete Product
-                * @since   1.3.1
-                */
-                add_action('admin_footer',array($this,'ofw_client_before_trash_action'));
-                add_action('wp_ajax_offer_server_before_trash_action', array($this, 'ofwc_server_before_trash_action'));
-                add_action('wp_ajax_decline_all_offers', array($this, 'ofwc_decline_all_offers'));
-                add_action( 'wp_trash_post', array( $this, 'ofw_before_delete_post' ),99);
+                }
                 
 		/**
 		 * Call $plugin_slug from public plugin class
@@ -405,7 +396,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'admin_init', array( $this, 'ofw_auto_accept_decline_from_email' ) );
         add_filter( 'the_title', array($this, 'ofw_anonymous_title'), 10, 2);
         add_filter( 'woocommerce_cart_shipping_packages', array($this, 'ofw_woocommerce_cart_shipping_packages'), 10, 1);
-
+        /**
+         * Action - Manage offers if product is deleted
+         */
+        add_action( 'trashed_post', array($this, 'ofw_before_product_trash_action'), 10, 1);
+        add_action( 'after_delete_post', array($this, 'ofw_before_product_trash_action'), 10, 1);
+        add_action( 'untrashed_post', array($this, 'ofw_before_product_untrash_action'), 10, 1);
         /**
          * END - custom functions
          */
@@ -4498,134 +4494,170 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
     }
     
-    public function ofw_get_pending_offer_count_by_product_id($product_id) {
+    /*
+     * Decline offers if product is trashed.
+     */
+    public function decline_offers_for_trashed_products($offer_id = null)
+    {
         global $wpdb;
+        $post_id = $offer_id;        
+        if (isset($post_id) && !empty($post_id)) {
+            $post_data = get_post($post_id);
+            if(in_array($post_data->post_status, array( 'expired-offer', 'declined-offer' ))){
+                $deleted_post = wp_trash_post($post_id);
+            } else {
+                $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+                $table = $wpdb->prefix . "posts";
+                $data_array = array(
+                    'post_status' => 'declined-offer',
+                    'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
+                    'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1))
+                );
+                $where = array('ID' => $post_id);
+                $wpdb->update($table, $data_array, $where);
+                $post_status_text = __('Declined', 'offers-for-woocommerce');
+                $offer_notes = '';
+                $recipient = get_post_meta($post_id, 'offer_email', true);
+                $offer_uid = get_post_meta($post_id, 'offer_uid', true);
+                $offer_name = get_post_meta($post_id, 'offer_name', true);
+                $offer_email = $recipient;
+                $product_id = get_post_meta($post_id, 'offer_product_id', true);
+                $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+
+                $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+                $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
+                $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
+                $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
+                $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+
+                if ($is_offer_buyer_countered_status) {
+                    update_post_meta($post_id, 'offer_quantity', $product_qty);
+                    update_post_meta($post_id, 'offer_price_per', $product_price_per);
+                    update_post_meta($post_id, 'offer_shipping_cost', $product_shipping_cost);
+                    update_post_meta($post_id, 'offer_amount', $product_total);
+                }
+                $offer_args = array(
+                    'recipient' => $recipient,
+                    'offer_email' => $offer_email,
+                    'offer_name' => $offer_name,
+                    'offer_id' => $offer_id,
+                    'offer_uid' => $offer_uid,
+                    'product_id' => $product_id,
+                    'product_url' => $product->get_permalink(),
+                    'variant_id' => $variant_id,
+                    'product' => $product,
+                    'product_qty' => $product_qty,
+                    'product_price_per' => $product_price_per,
+                    'product_shipping_cost' => $product_shipping_cost,
+                    'product_total' => $product_total,
+                    'offer_notes' => $offer_notes
+                );
+                if ($variant_id) {
+                    if ($product->get_sku()) {
+                        $identifier = $product->get_sku();
+                    } else {
+                        $identifier = '#' . $product->variation_id;
+                    }
+                    $attributes = $product->get_variation_attributes();
+                    $extra_data = ' &ndash; ' . implode(', ', $attributes);
+                    $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s%s', 'offers-for-woocommerce'), $identifier, $product->get_title(), $extra_data);
+                } else {
+                    $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                }
+                $email_class = 'WC_Declined_Offer_Email';
+                $new_email = WC()->mailer()->emails[$email_class];
+                $new_email->recipient = $recipient;
+                $new_email->plugin_slug = 'offers-for-woocommerce';
+                $new_email->template_html = 'woocommerce-offer-declined.php';
+                $new_email->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
+                $new_email->template_plain = 'woocommerce-offer-declined.php';
+                $new_email->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
+                $new_email->trigger($offer_args);
+                $deleted_post = wp_trash_post($post_id);
+            }
+        }
+    }
+    
+    /*
+     * Decline and delete offers if product is trashed.
+     */
+    public function ofw_before_product_trash_action($product_id) {
+        global $wpdb;
+        $_product = wc_get_product( $product_id );
+        if($_product == false){
+            return;
+        }
         $args = array(
             'post_type' => 'woocommerce_offer',
-            'post_status' => array( 'publish','accepted-offer','countered-offer','buyercountered-offer','declined-offer','on-hold-offer' ),
+            'post_status' => array( 'publish','accepted-offer','countered-offer','buyercountered-offer','on-hold-offer', 'expired-offer', 'declined-offer' ),
             'posts_per_page' => -1,
             'meta_key' => 'offer_product_id',
             'meta_value' => $product_id,
             'meta_compare' => '==',
+            'fields' => 'ids',
         );
         $query = new WP_Query( $args );
-        $count = $query->post_count;
-        return $query;
+        if ($query->have_posts()):
+            foreach( $query->posts as $offer_id ):
+                $this->decline_offers_for_trashed_products($offer_id);
+            endforeach;
+        endif;
     }
     
-    public function ofwc_server_before_trash_action() {
-        ob_clean();
-        if ('product' === $_POST['post_type']) {
-            $post_count = $this->ofw_get_pending_offer_count_by_product_id($_POST['id']);
-            $count = $post_count->post_count;
-            if(isset($post_count) && $post_count > 0){
-                echo json_encode(array("statusmsg" => 'do-you-want-procced', "statusmsgDetail" => __('There are pending offers for this product. Would you like to decline all pending offers and continue deleting the product?', 'offers-for-woocommerce')));
-            }else{
-                echo json_encode(array("statusmsg" => 'you-can'));    
-            }
-        }
-        exit();
-    }
-    
-    public function ofw_client_before_trash_action() {
-        global $post;
-        if(get_post_type($post) == 'product'){
-           ?>
-        <script>
-            var offers_for_woocommerce_js_params = {};
-            offers_for_woocommerce_js_params.ajax_url = '<?php echo admin_url('admin-ajax.php'); ?>';
-            offers_for_woocommerce_js_params.post_type = '<?php echo get_post_type($post); ?>';
-            offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce = '<?php echo wp_create_nonce("offers_for_woocommerce_params_nonce"); ?>'
-            jQuery( document ).ready( function( $ )
-                {
-                   function action_before_trash(){
-                    $(document).on('click','span.trash a.submitdelete', function(e){
-                       e.preventDefault();
-                       console.log($(this).parents('tr').find('input[name="post[]"]').val());
-                       var pid = $(this).parents('tr').find('input[name="post[]"]').val();
-                       var trash_any_way = $(this).attr('href');
-                        var data_make_offer = {
-                         action: 'offer_server_before_trash_action',
-                         security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
-                         id: pid,
-                         post_type: offers_for_woocommerce_js_params.post_type
-                        };
-                       // fire off the request
-                        var request = $.ajax({
-                            url: offers_for_woocommerce_js_params.ajax_url,
-                            type: "post",
-                            data: data_make_offer
-                        });
-                        // callback handler that will be called on success
-                        request.done(function (response, textStatus, jqXHR){
-                            console.log(response, textStatus, jqXHR);
-                            
-                            if(request.statusText == 'OK'){
-                            var myObject = JSON.parse(request.responseText);
-                            var responseStatus = myObject['statusmsg'];
-                            var responseStatusDetail = myObject['statusmsgDetail'];
-                                if(responseStatus == 'do-you-want-procced')
-                                {
-                                    alertify.confirm('Woo Offers', responseStatusDetail,
-                                    function(){
-                                        alertify.success('Ok');
-                                        var data = {
-                                            'action': 'decline_all_offers',
-                                            'PID': pid
-                                         };
-                                        window.location = trash_any_way;
-                                    },
-                                    function(){ 
-                                        alertify.error('Cancel')
-                                    })
-                                    .set('labels', {ok:'Ok', cancel:'Cancel'});
-                                }
-                                else
-                                {
-                                    window.location = trash_any_way;
-                                }
-                            } else {
-                                // Hide loader image
-                                $('#offer-submit-loader').hide();
-                                $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
-                                $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
-                            }
-                        });
-                        // callback handler that will be called on failure
-                        request.fail(function (jqXHR, textStatus, errorThrown){
-                            // log the error to the console
-                            // Hide loader image
-                            $('#offer-submit-loader').hide();
-                            $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
-                        });
-                    });
-                }
-                action_before_trash();
-            });
-        </script>
-           <?php
+    /*
+     * Restore offers if product is untrashed.
+     */
+    public function restore_offers_for_untrashed_products($offer_id = null)
+    {
+        global $wpdb;
+        $post_id = $offer_id;        
+        if (isset($post_id) && !empty($post_id)) {
+            
+            if ( !$post = get_post($post_id, ARRAY_A) )
+		return $post;
+
+            if ( $post['post_status'] != 'trash' )
+                    return false;
+
+            do_action( 'untrash_post', $post_id );
+
+            $post_status = get_post_meta($post_id, '_wp_trash_meta_status', true);
+
+            $post['post_status'] = $post_status;
+
+            delete_post_meta($post_id, '_wp_trash_meta_status');
+            delete_post_meta($post_id, '_wp_trash_meta_time');
+
+            wp_insert_post( wp_slash( $post ) );
+
+            wp_untrash_post_comments($post_id);
+
+            do_action( 'untrashed_post', $post_id );
+
+            return $post;
         }
     }
     
-    /* Action - before delete product manage offers 
-    *
-    * @since	0.1.0
-    */
-   function ofw_before_delete_post($post_id)
-   {
-       global $woocommerce;
-       $product = wc_get_product( $post_id);
-       if(!$product == false){
-           add_action( 'admin_notices', array( $this, 'ofw_admin_notices_before_delete_product' ));
-           return false;
-       }
-   }
-
-   function ofw_admin_notices_before_delete_product()
-   {
-       echo '<div class="notice error my-acf-notice is-dismissible" >';
-       echo '<p>'. _e( 'There are some pending offers related to this product. ', 'offers-for-woocommerce' ).'</p>';
-       echo '</div>';
-   }
-
+    public function ofw_before_product_untrash_action($product_id) {
+        global $wpdb;
+        $_product = wc_get_product( $product_id );
+        if($_product == false){
+            return;
+        }
+        $args = array(
+            'post_type' => 'woocommerce_offer',
+            'post_status' => array( 'trash' ),
+            'posts_per_page' => -1,
+            'meta_key' => 'offer_product_id',
+            'meta_value' => $product_id,
+            'meta_compare' => '==',
+            'fields' => 'ids',
+        );
+        $query = new WP_Query( $args );
+        if ($query->have_posts()):
+            foreach( $query->posts as $offer_id ):
+                $this->restore_offers_for_untrashed_products($offer_id);
+            endforeach;
+        endif;
+    }
 }
