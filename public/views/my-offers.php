@@ -66,9 +66,17 @@ if ($customer_offers) :
                                     if ($product_title) {
                                         if ($product->product_type == 'variation') {
                                             $_product = new WC_Product_Variation($variant_id);
-                                            echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url($_product->get_permalink()), $_product->get_title()));
+                                            if(get_post_status($product->id) == 'trash'){
+                                                echo sprintf('%s', $_product->get_title());
+                                            } else {
+                                                echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url($_product->get_permalink()), $_product->get_title()));
+                                            }
                                         } else {
-                                            echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url(get_the_permalink($product_id)), get_the_title($product_id)));
+                                            if(get_post_status($product->id) == 'trash'){
+                                                echo sprintf('%s', get_the_title($product_id));
+                                            } else {
+                                                echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url(get_the_permalink($product_id)), get_the_title($product_id)));
+                                            }
                                         }
                                     } else {
                                         echo '<em>' . __('Not Found', 'offers-for-woocommerce') . '</em>';
