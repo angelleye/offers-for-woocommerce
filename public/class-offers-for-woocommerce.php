@@ -174,7 +174,6 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_shipping_methods', array($this, 'add_your_shipping_method' ), 10, 1);
         add_action( 'woocommerce_shipping_init', array($this, 'your_shipping_method_init' ));
         add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
-        add_action( 'woocommerce_single_product_summary', array($this, 'ofw_display_highest_current_offer'), 10 );
         add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
 
 		// Resolve conflict with PDF Invoice Packaging Slip plugin
@@ -338,6 +337,7 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 
                 echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap ' . $hiddenclass . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                $this->ofw_display_highest_current_offer();
                 $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
                 echo '<div class="angelleye-offers-clearfix"></div></div></div>';
             }
@@ -481,6 +481,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
                 
                 echo '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap"><input type="hidden" name="add-to-cart" value="'. esc_attr( $post->ID ) .'" /><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                $this->ofw_display_highest_current_offer();
                 $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
                 echo '<div class="angelleye-offers-clearfix"></div></div>';
             }
