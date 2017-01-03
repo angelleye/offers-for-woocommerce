@@ -118,10 +118,11 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.3.1 - xx.xx.2016 =
+= 1.3.1 - xx.xx.2017 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
 * Feature - Silent Auction - Adds the ability to leave the price empty for products and still allows buyers to submit offers. ([#156](https://github.com/angelleye/offers-for-woocommerce/issues/156))
-* Tweak - Adjusts display location for highest current offer on product pages (when enabled.)  [#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
+* Tweak - Adjusts display location for highest current offer on product pages (when enabled.)  ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
+* Tweak - Deletes related offer data when products are deleted. ([#251](https://github.com/angelleye/offers-for-woocommerce/issues/251))
 * Fix - Resolves an issue with the loader graphic. ([#254](https://github.com/angelleye/offers-for-woocommerce/issues/254))
 * Fix - Resolves a conflict with WC PDF Invoices and Packing Slips that caused double headers to be output in offer email notifications. ([#227](https://github.com/angelleye/offers-for-woocommerce/issues/227))
 
