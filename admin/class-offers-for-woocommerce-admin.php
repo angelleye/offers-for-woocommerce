@@ -2159,7 +2159,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'general_settings', // Section
             array(
                 'option_name'=>'offers_for_woocommerce_options_general',
-                'input_label'=>'general_setting_enable_offers_required_logged_in_users',
+                'input_label'=>'general_setting_enable_offers_only_logged_in_users',
                 'input_required'=>FALSE,
                 'description' => __('Check this option to require users to login in order to submit an offer.', 'offers-for-woocommerce'),
             )
@@ -2177,7 +2177,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'general_settings', // Section
             array(
                 'option_name'=>'offers_for_woocommerce_options_general',
-                'input_label'=>'general_setting_enable_offers_only_logged_in_users',
+                'input_label'=>'general_setting_enable_offers_hide_untill_logged_in_users',
                 'input_required'=>FALSE,
                 'description' => __('Check this option to completely hide the offer buttons unless the user is logged in.', 'offers-for-woocommerce'),
             )

@@ -194,7 +194,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofw_before_customer_login_form() {
         if(isset($_GET['ref']) && $_GET['ref'] == 'make-offer' && !is_user_logged_in()){
-            wc_print_notice( __( 'Please login first to make an offer.', 'offers-for-woocommerce' ), 'error' );
+            wc_print_notice( __( 'Please log in to make an offer.', 'offers-for-woocommerce' ), 'error' );
         }
     }
     
@@ -228,25 +228,19 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return;
             } elseif (!is_user_logged_in()) {
                 $req_login = TRUE;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return;
-            }
-            else {
-                return;
+                }
             }
         }
 
@@ -312,25 +306,19 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return;
             } elseif (!is_user_logged_in()) {
                 $req_login = TRUE;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return;
-            }
-            else {
-                return;
+                }
             }
         }
 
@@ -370,8 +358,9 @@ class Angelleye_Offers_For_Woocommerce {
                 } else {
                     echo '</div>';
                 }
-                $redirect_url = '';
+                
                 if($req_login){
+                    $redirect_url = '';
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.home_url(add_query_arg(array(),$wp->request));
                     $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
                 } else {
@@ -402,32 +391,25 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return;
             } elseif (!is_user_logged_in()) {
                 $req_login = TRUE;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return;
-            }
-            else {
-                return;
+                }
             }
         }
 
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
         );
-
         
         $_product = wc_get_product($post->ID);
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
@@ -456,9 +438,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $permalink = get_permalink($post->ID);
                 $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
                 
-                $redirect_url = '';
                 if($req_login){
-                    $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.home_url(add_query_arg(array(),$wp->request));
+                    $redirect_url = '';
+                    $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.get_permalink($post->ID);
                     $button = '<a href="' . $redirect_url . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt" ' . $custom_styles_override . '>' . $button_title . '</a>';
                 } else {
                     $button = '<a href="' . $permalink . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt" ' . $custom_styles_override . '>' . $button_title . '</a>';
@@ -486,25 +468,19 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return;
             } elseif (!is_user_logged_in()) {
                 $req_login = TRUE;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return;
-            }
-            else {
-                return;
+                }
             }
         }
 
@@ -535,9 +511,9 @@ class Angelleye_Offers_For_Woocommerce {
             } else {
                 // adds hidden class if position is not default
                 $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-                
-                $redirect_url = '';
+                                
                 if($req_login){
+                    $redirect_url = '';
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.home_url(add_query_arg(array(),$wp->request));
                     $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
                 } else {
@@ -566,25 +542,19 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return;
             } elseif (!is_user_logged_in()) {
                 return;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return;
-            }
-            else {
-                return;
+                }
             }
         }
 
@@ -613,27 +583,22 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return $tabs;
             } elseif (!is_user_logged_in()) {
                 return $tabs;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return $tabs;
-            }
-            else {
-                return $tabs;
+                }
             }
         }
+        
         /**
          * post is not avalable so create problem @line No.497,501 and also third party add-ons who uses tab filter
          * @ticket https://github.com/angelleye/offers-for-woocommerce/issues/246
@@ -692,25 +657,19 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         // enable offers for only logged in users
-        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_required_logged_in_users']) && $button_options_general['general_setting_enable_offers_required_logged_in_users'] != '') {
-            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '' && !is_user_logged_in()) {
+        if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
+            if ($button_options_general && isset($button_options_general['general_setting_enable_offers_hide_untill_logged_in_users']) && $button_options_general['general_setting_enable_offers_hide_untill_logged_in_users'] != '' && !is_user_logged_in()) {
                 return;
             } elseif (!is_user_logged_in()) {
                 return;
             }
-        }
-
-        // enable offers for only certain user roles
-        if (!empty($button_options_general['general_setting_allowed_roles'])) {
-            if (is_user_logged_in()) {
+            if (isset($button_options_general['general_setting_allowed_roles']) && $button_options_general['general_setting_allowed_roles'] != '' && is_user_logged_in()) {
                 $user_data = get_userdata($current_user->ID);
                 $user_roles = $user_data->roles;
                 $role_match = array_intersect($user_roles, $button_options_general['general_setting_allowed_roles']);
-                if (empty($role_match))
+                if (empty($role_match)) {
                     return;
-            }
-            else {
-                return;
+                }
             }
         }
 
