@@ -326,6 +326,22 @@
                 /*End Post*/
                 return false;
             });
+            
+            // Require login for offer button checkbox.
+            if($('#general_setting_enable_offers_required_logged_in_users').is(":checked")) {
+                $("#general_setting_enable_offers_only_logged_in_users").closest('tr').show();
+            } else {
+                $("#general_setting_enable_offers_only_logged_in_users").attr('checked', false);
+                $("#general_setting_enable_offers_only_logged_in_users").closest('tr').hide();
+            }
+            $("#general_setting_enable_offers_required_logged_in_users").click(function() {
+                if($(this).is(":checked")) {
+                    $("#general_setting_enable_offers_only_logged_in_users").closest('tr').show();
+                } else {
+                    $("#general_setting_enable_offers_only_logged_in_users").attr('checked', false);
+                    $("#general_setting_enable_offers_only_logged_in_users").closest('tr').hide();
+                }
+            });
         });
     });
 
