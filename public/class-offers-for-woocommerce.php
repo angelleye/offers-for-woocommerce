@@ -597,7 +597,8 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             $tab_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
-
+            $tab_title = apply_filters('woocommerce_make_offer_form_tab_name', $tab_title);
+            
             // Add new tab "Make Offer"
             $tabs['tab_custom_ofwc_offer'] = array(
                 'title' => $tab_title,
