@@ -182,6 +182,7 @@ class Angelleye_Offers_For_Woocommerce {
             remove_action( 'woocommerce_email_footer', array( WC()->mailer(), 'email_footer' ) );
         }
         add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),999,2);
+        add_filter('body_class',array($this,'ofwc_body_class'));
     }
 
     /**
@@ -2401,5 +2402,13 @@ class Angelleye_Offers_For_Woocommerce {
             return true;
         } 
         return false;
+    }
+    
+    public function ofwc_body_class($classes) {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog']) && $offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog'] == 1 && is_shop() ) {
+            $classes[] = 'ofwc-shop-page';
+        }
+        return $classes;
     }
 }

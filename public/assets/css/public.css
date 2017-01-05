@@ -135,7 +135,7 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
 
 .offers-for-woocommerce-make-offer-button-catalog { float:left; position:relative;  }
 
-body.archive.woocommerce-page a.button.add_to_cart_button { float:left; position:relative; }
+body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float:left; position:relative; }
 
 #adminmenu #menu-posts-woocommerce_offer .menu-icon-woocommerce_offer div.wp-menu-image:before { content: "\f110"; }
 #woocommerce-product-data ul.wc-tabs li.custom_tab_offers_for_woocommerce a:before, .woocommerce ul.wc-tabs li.custom_tab_offers_for_woocommerce a:before { content: "\e03a"; }
