@@ -3459,7 +3459,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * Action - Ajax 'bulk enable/disable tool' from offers settings/tools
      * @since	0.1.0
      */
-    public function adminToolBulkEnableDisableCallback()
+        public function adminToolBulkEnableDisableCallback()
     {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
@@ -3473,6 +3473,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_type' => array( 'product', 'product_variation' ),
                 'posts_per_page' => -1,
                 'post_status' => 'publish',
+                'suppress_filters' => 1,
                 'fields' => 'id=>parent',
                 );
             $where_args['meta_query'] = array();
