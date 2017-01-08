@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.0 - xx.xx.2017 =
+* Feature - Compatibility with WPML.  Bulk editor now updates all language versions of products. ([#204](https://github.com/angelleye/offers-for-woocommerce/issues/204))
+
 = 1.3.1 - 01.03.2017 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
 * Feature - Silent Auction - Adds the ability to leave the price empty for products and still allows buyers to submit offers. ([#156](https://github.com/angelleye/offers-for-woocommerce/issues/156))
