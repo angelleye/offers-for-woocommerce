@@ -115,10 +115,14 @@
                 var actionTargetWhereProductType = $('#ofwc-bulk-action-target-where-product-type').val();
                 var actionTargetWherePriceValue = $('#ofwc-bulk-action-target-where-price-value').val();
                 var actionTargetWhereStockValue = $('#ofwc-bulk-action-target-where-stock-value').val();
+                var meta_value = 'offers_for_woocommerce_enabled';
+                
+                if(actionType == 'enable_onexit' || actionType == 'disable_onexit'){
+                    meta_value = 'offers_for_woocommerce_onexit_only';
+                }
 
                 var data = {
                     'action': 'adminToolBulkEnableDisable',
-
                     'actionType': actionType,
                     'actionTargetType': actionTargetType,
                     'actionTargetWhereType': actionTargetWhereType,
@@ -126,7 +130,7 @@
                     'actionTargetWhereProductType': actionTargetWhereProductType,
                     'actionTargetWherePriceValue': actionTargetWherePriceValue,
                     'actionTargetWhereStockValue': actionTargetWhereStockValue,
-                    'ofw_meta_key_value': 'offers_for_woocommerce_enabled'
+                    'ofw_meta_key_value': meta_value
                 };
 
                 // post it

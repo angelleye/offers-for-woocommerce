@@ -221,6 +221,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
+            'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
         );
 
         
@@ -241,7 +242,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
             // get global on/off settings for offer button
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
             $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
@@ -301,6 +302,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
+            'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
         );
 
         
@@ -309,7 +311,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
 
             $custom_styles_override = '';
@@ -381,15 +383,15 @@ class Angelleye_Offers_For_Woocommerce {
 
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
+            'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
         );
-
         
         $_product = wc_get_product($post->ID);
         $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
             // get global on/off settings for offer button - frontpage and catalog
             $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
             $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
@@ -454,6 +456,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
+            'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
         );
 
         $_product = wc_get_product($post->ID);
@@ -461,7 +464,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && (($_product->get_price() === ''))) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && (($_product->get_price() === '')) && $custom_tab_options_offers['on_exit'] != 'yes') {
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
 
             $custom_styles_override = '';
@@ -494,7 +497,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   0.1.0
      */
     public function angelleye_ofwc_lightbox_make_offer_form() {
-        global $current_user;
+        global $current_user,$post;
 
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
@@ -523,11 +526,39 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
-        if ($is_lightbox) {
+        $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
+        $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled != '') ? $on_exit_enabled : 'no';
+        
+        if ($is_lightbox || $on_exit_enabled == "yes") {
             echo '<div id="lightbox_custom_ofwc_offer_form">';
             $this->angelleye_ofwc_display_custom_woocommerce_product_tab_content();
             echo '</div>';
             echo '<div id="lightbox_custom_ofwc_offer_form_close_btn"></div>';
+        }
+        if($on_exit_enabled == "yes"){
+            ?>
+            <script type="text/javascript">
+                jQuery( document ).ready(function($) {
+                    $(window).on('mouseout', function(e) {
+                        var from = e.relatedTarget || e.toElement;
+                        var visited = $.cookie("onexit_cookie");
+                        if (visited === '1') {
+                            return false;
+                        } else if ((!from || from.nodeName == "HTML") && e.pageY < $(window).scrollTop()) {
+                            // Launch the popup
+                            $("#lightbox_custom_ofwc_offer_form").addClass('active');
+                            $("#lightbox_custom_ofwc_offer_form").show();
+                            $("#lightbox_custom_ofwc_offer_form_close_btn").show();
+                            var date = new Date();
+                            date.setTime(date.getTime() + (60 * 1000)); //60 secounds time for cookie
+                            $.cookie("onexit_cookie", '1', {
+                              expires: date
+                            });
+                        }
+                    });
+                });
+            </script>
+            <?php
         }
     }
 
@@ -576,6 +607,7 @@ class Angelleye_Offers_For_Woocommerce {
         
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
+            'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
         );
         /**
          * it was returning false that may breck filter function and Offers tabs are not visible on the front end
@@ -591,7 +623,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
             if (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') {
                 return $tabs;
             }

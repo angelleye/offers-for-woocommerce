@@ -445,6 +445,5 @@
              });
              return result;
         }
-
     });
 }(jQuery));
