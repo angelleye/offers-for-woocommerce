@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.4.1
-Stable tag: 1.3.0
+Tested up to: 4.7
+Stable tag: 1.3.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,10 +118,17 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.3.1 - xx.xx.2016 =
+= 1.4.0 - xx.xx.2017 =
+* Feature - Compatibility with WPML.  Bulk editor now updates all language versions of products. ([#204](https://github.com/angelleye/offers-for-woocommerce/issues/204))
+* Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
+* Fix - Resolves CSS conflict with some themes. ([#260](https://github.com/angelleye/offers-for-woocommerce/issues/260))
+
+= 1.3.1 - 01.03.2017 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
 * Feature - Silent Auction - Adds the ability to leave the price empty for products and still allows buyers to submit offers. ([#156](https://github.com/angelleye/offers-for-woocommerce/issues/156))
-* Tweak - Adjusts display location for highest current offer on product pages (when enabled.)  [#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
+* Tweak - Adjusts display location for highest current offer on product pages (when enabled.)  ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
+* Tweak - Deletes related offer data when products are deleted. ([#251](https://github.com/angelleye/offers-for-woocommerce/issues/251))
+* Tweak - Adds a div wrapper around the offer button for more direct access to the element. ([#250](https://github.com/angelleye/offers-for-woocommerce/issues/250))
 * Fix - Resolves an issue with the loader graphic. ([#254](https://github.com/angelleye/offers-for-woocommerce/issues/254))
 * Fix - Resolves a conflict with WC PDF Invoices and Packing Slips that caused double headers to be output in offer email notifications. ([#227](https://github.com/angelleye/offers-for-woocommerce/issues/227))
 

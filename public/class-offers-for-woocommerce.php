@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '1.3.0';
+    const VERSION = '1.3.1';
 
     /**
      *
@@ -209,6 +209,7 @@ class Angelleye_Offers_For_Woocommerce {
             return $_GET['backto'].$join_url;
         }
         return $redirect;
+        add_filter('body_class',array($this,'ofwc_body_class'));
     }
 
     /**
@@ -631,7 +632,8 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             $tab_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
-
+            $tab_title = apply_filters('woocommerce_make_offer_form_tab_name', $tab_title);
+            
             // Add new tab "Make Offer"
             $tabs['tab_custom_ofwc_offer'] = array(
                 'title' => $tab_title,
@@ -2432,5 +2434,13 @@ class Angelleye_Offers_For_Woocommerce {
             return true;
         } 
         return false;
+    }
+    
+    public function ofwc_body_class($classes) {
+        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog']) && $offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog'] == 1 && is_shop() ) {
+            $classes[] = 'ofwc-shop-page';
+        }
+        return $classes;
     }
 }
