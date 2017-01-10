@@ -2163,22 +2163,39 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             )
         );
         
-
         /**
          * Add field - 'General Settings' - 'general_setting_enable_offers_only_logged_in_users'
          * Enable Offers For Only Logged-in Users
          */
         add_settings_field(
-            'general_setting_enable_offers_only_logged_in_users', // ID
-            __('Enable Offers for Only Logged-in Users', 'offers-for-woocommerce'), // Title
-            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback TEXT input
+            'general_setting_enable_offers_required_logged_in_users', // ID
+            __('Require Log In', 'offers-for-woocommerce'), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback Checkbox input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
             array(
                 'option_name'=>'offers_for_woocommerce_options_general',
                 'input_label'=>'general_setting_enable_offers_only_logged_in_users',
                 'input_required'=>FALSE,
-                'description' => __('Check this option to enable offers on products for only logged-in users.', 'offers-for-woocommerce'),
+                'description' => __('Check this option to require users to login in order to submit an offer.', 'offers-for-woocommerce'),
+            )
+        );
+        
+        /**
+         * Add field - 'General Settings' - 'general_setting_enable_offers_only_logged_in_users'
+         * Enable Offers For Only Logged-in Users
+         */
+        add_settings_field(
+            'general_setting_enable_offers_only_logged_in_users', // ID
+            __('Hide Offers Until Logged In', 'offers-for-woocommerce'), // Title
+            array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback Checkbox input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name'=>'offers_for_woocommerce_options_general',
+                'input_label'=>'general_setting_enable_offers_hide_untill_logged_in_users',
+                'input_required'=>FALSE,
+                'description' => __('Check this option to completely hide the offer buttons unless the user is logged in.', 'offers-for-woocommerce'),
             )
         );
 
@@ -3484,6 +3501,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_type' => array( 'product', 'product_variation' ),
                 'posts_per_page' => -1,
                 'post_status' => 'publish',
+                'suppress_filters' => 1,
                 'fields' => 'id=>parent',
                 );
             $where_args['meta_query'] = array();

@@ -313,10 +313,12 @@
             }
             else
             {
-                $(".woocommerce-tabs .tabs li").removeClass("active");
-                $(".woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab").addClass("active");
-                $(".woocommerce-tabs div.panel").css("display", "none");
-                $(".woocommerce-tabs div#tab-tab_custom_ofwc_offer").css("display", "block");
+                if( $('.woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab').length ){
+                    $(".woocommerce-tabs .tabs li").removeClass("active");
+                    $(".woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab").addClass("active");
+                    $(".woocommerce-tabs div.panel").css("display", "none");
+                    $(".woocommerce-tabs div#tab-tab_custom_ofwc_offer").css("display", "block");
+                }
 
                 if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
                 {
