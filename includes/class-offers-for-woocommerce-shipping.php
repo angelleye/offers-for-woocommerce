@@ -51,6 +51,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
                 $total_shipping_cost = 0;
                 foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
                     if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                        $enable_shipping_cost = get_post_meta($values['woocommerce_offer_id'], 'enable_shipping_cost', true);
                         $product_shipping_cost = get_post_meta($values['woocommerce_offer_id'], 'offer_shipping_cost', true);
                         if (isset($product_shipping_cost) && !empty($product_shipping_cost)) {
                             $total_shipping_cost = $total_shipping_cost + number_format($product_shipping_cost, 2, '.', '');
@@ -58,11 +59,11 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
                     }
                 }
 
-                if($total_shipping_cost > 0) {
+                if($enable_shipping_cost == 1) {
                 
                     $rate = array(
                         'id' => $this->id,
-                        'label' => $this->title,
+                        'label' => ($total_shipping_cost == 0) ? $this->title. __(" (Free)", "offers-for-woocommerce") : $this->title,
                         'cost' => number_format($total_shipping_cost, 2, '.', ''),
                         'taxes' => false,
                         'package' => $package,
@@ -73,22 +74,20 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
         }
 
         public function is_offer_product_in_cart() {
-            $total_shipping_cost = 0;
-            foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
-                if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
-                     $product_shipping_cost = get_post_meta($values['woocommerce_offer_id'], 'offer_shipping_cost', true);
-                        if (isset($product_shipping_cost) && !empty($product_shipping_cost)) {
-                            $total_shipping_cost = $total_shipping_cost + number_format($product_shipping_cost, 2, '.', '');
-                        }
-                }
-                
-                if($total_shipping_cost > 0) {
-                    return true;
+            $count = 0;$has_product = FALSE;
+            foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+                if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                    $has_product = true;
                 } else {
-                    return false;
+                    $count++;
                 }
             }
-            return false;
+            if($count < 1 && $has_product) {
+                return true;
+            } else {
+                return false;
+            }
+            
         }
 
     }

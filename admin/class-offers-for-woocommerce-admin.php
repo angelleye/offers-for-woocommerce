@@ -1564,7 +1564,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // set offer expiration date
         $offer_expire_date = get_post_meta($post_id, 'offer_expiration_date', true);
         
-        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $_POST['offer_shipping_cost'] : 0.00;
+        $enable_shipping_cost = ($_POST['enable_shipping_cost'] == 1) ? $_POST['enable_shipping_cost'] : 0;
+        update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
+        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00' && $enable_shipping_cost == 1) ? $_POST['offer_shipping_cost'] : 0.00;
         update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
 
         // Accept Offer
