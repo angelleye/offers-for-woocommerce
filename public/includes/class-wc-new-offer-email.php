@@ -60,7 +60,7 @@ class WC_New_Offer_Email extends WC_Email {
     public function trigger( $offer_args ) {
 
         $this->offer_args = $offer_args;
-        $this->recipient = apply_filters('aeofwc_seller_email_address', get_option('admin_email'), $offer_args);
+        $this->recipient = apply_filters('aeofwc_seller_email_address', $this->recipient, $offer_args);
 
         if( !$this->recipient )
         {
