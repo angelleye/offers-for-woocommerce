@@ -70,7 +70,7 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         $admin_email = get_option('admin_email');
         $recipients = $this->recipient;
         if ( !is_array( $recipients ) )
-            $recipients = explode( ',', $recipient );
+            $recipients = explode( ',', $recipients );
 
         if(!in_array( $admin_email, $recipients )){
             $recipients[] = $admin_email;
