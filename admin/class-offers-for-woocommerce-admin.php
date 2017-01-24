@@ -476,7 +476,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		foreach($submenu['woocommerce'] as $key => $value)
 		{
 			if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
-				$submenu['woocommerce'][$key][0] = 'Offers';
+				$submenu['woocommerce'][$key][0] = __('Offers', 'offers-for-woocommerce');
 				$submenu['woocommerce'][$key][0] .= " <span id='woocommerce-offers-count' class='awaiting-mod update-plugins count-$pend_count'><span class='pending-count'>" . $pend_count . '</span></span>';
 			}
 		}
