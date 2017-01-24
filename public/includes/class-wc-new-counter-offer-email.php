@@ -46,7 +46,7 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         parent::__construct();
 
         // Set the recipient
-        $this->recipient = $this->get_option( 'admin_email' );
+        $this->recipient = $this->get_option( 'recipient' );
 
         // Other settings
         $this->template_base = OFWC_PUBLIC_EMAIL_TEMPLATE_PATH;
@@ -59,17 +59,21 @@ class WC_New_Counter_Offer_Email extends WC_Email {
      */
     public function trigger( $offer_args ) {
 
-        $this->offer_args = $offer_args;
-        $this->recipient = $this->get_option( 'recipient' );
-
-        if( !$this->recipient )
-        {
-            $this->recipient = get_option('admin_email');
-        }
-
         if ( ! $this->is_enabled() )
         {
             return;
+        }
+        
+        $this->offer_args = $offer_args;
+        $this->recipient = apply_filters('aeofwc_seller_email_address', $this->recipient, $offer_args);
+        
+        $admin_email = get_option('admin_email');
+        $recipients = $this->recipient;
+        if ( !is_array( $recipients ) )
+            $recipients = explode( ',', $recipients );
+
+        if(!in_array( $admin_email, $recipients )){
+            $recipients[] = $admin_email;
         }
         
         $this->find['offer_date']      = '{offer_date}';
@@ -79,7 +83,7 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         $this->replace['offer_number'] = $this->offer_args['offer_id'];
 
         // woohoo, send the email!
-        $this->send( $this->recipient, $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+        $this->send( $recipients, $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
     }
 
     /**
