@@ -13,7 +13,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             $this->method_title = __('Offers for WooCommerce Shipping');
             $this->method_description = __('Offers for WooCommerce Shipping');
             $this->enabled = "yes";
-            $this->title = $this->get_option('title', 'Offer Shiipng Cost');
+            $this->title = $this->get_option('title', 'Offer Shipping Cost');
             // Load the form fields.
             $this->init_form_fields();
 
@@ -31,7 +31,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
                     'title' => __('Method Title', 'offers-for-woocommerce'),
                     'type' => 'text',
                     'description' => __('This controls the title which the user sees during checkout.', 'offers-for-woocommerce'),
-                    'default' => __('Offer Shiipng Cost', 'offers-for-woocommerce'),
+                    'default' => __('Offer Shipping Cost', 'offers-for-woocommerce'),
                     'desc_tip' => true
                 )
             );
