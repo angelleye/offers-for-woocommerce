@@ -105,7 +105,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * XXX
 		 * @since	0.1.0
 		 */
-		add_action('admin_menu', array( $this, 'my_remove_submenus' ) );
+		//add_action('admin_menu', array( $this, 'my_remove_submenus' ) );
 		
 		/**
 		 * XXX
@@ -249,7 +249,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		 * Action - Add custom tab options in WooCommerce product tabs
 		 * @since	0.1.0
 		 */
-		add_action('woocommerce_product_write_panels', array( $this, 'custom_tab_options_offers' ));
+		add_action('woocommerce_product_data_panels', array( $this, 'custom_tab_options_offers' ));
 		
 		/**
 		 * Override updated message for custom post type
@@ -469,17 +469,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function add_user_menu_bubble() 
 	{
-		global $wpdb;
-		$args = array('woocommerce_offer','publish');
-		$pend_count = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s'", $args ) );
-		global $submenu;
-		foreach($submenu['woocommerce'] as $key => $value)
-		{
-			if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
-				$submenu['woocommerce'][$key][0] = 'Offers';
-				$submenu['woocommerce'][$key][0] .= " <span id='woocommerce-offers-count' class='awaiting-mod update-plugins count-$pend_count'><span class='pending-count'>" . $pend_count . '</span></span>';
-			}
-		}
+            global $wpdb;
+            $args = array('woocommerce_offer','publish');
+            $pend_count = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts WHERE post_type = '%s' AND post_status = '%s'", $args ) );
+            global $submenu;
+
+            if(isset($submenu['woocommerce']) && !empty($submenu['woocommerce'])){
+                foreach($submenu['woocommerce'] as $key => $value)
+                {
+                    if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
+                            $submenu['woocommerce'][$key][0] = 'Offers';
+                            $submenu['woocommerce'][$key][0] .= " <span id='woocommerce-offers-count' class='awaiting-mod update-plugins count-$pend_count'><span class='pending-count'>" . $pend_count . '</span></span>';
+                    }
+                }
+            }
 	}
 	
 	/**
@@ -488,19 +491,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function add_offers_submenu_children() 
 	{
-		$offers_manage_link_href = admin_url( 'edit.php?post_type=woocommerce_offer');
-		$offers_settings_link_href = admin_url( 'options-general.php?page=offers-for-woocommerce');
-		global $submenu;
-		foreach($submenu['woocommerce'] as $key => $value)
-		{
-			if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
-				// Add child submenu html
-				$submenu['woocommerce'][$key][0] .= "<script type='text/javascript'>
-				jQuery(window).load(function($){
-					jQuery('#woocommerce-offers-count').parent('a').after('<ul id=\'woocommerce-offer-admin-submenu\' class=\'\'><li class=\'woocommerce-offer-admin-submenu-item\'><a href=\'".$offers_manage_link_href."\'>&nbsp;&#8211;&nbsp;". __('Manage Offers', 'offers-for-woocommerce'). "</a></li><li class=\'woocommerce-offer-admin-submenu-item\'><a id=\'woocommerce-offers-settings-link\' class=\'woocommerce-offer-submenu-link\' href=\'".$offers_settings_link_href."\'>&nbsp;&#8211;&nbsp;". __('Offers Settings', 'offers-for-woocommerce'). "</a></li></ul>');
-				});</script>";					
-			}
-		}
+            $offers_manage_link_href = admin_url( 'edit.php?post_type=woocommerce_offer');
+            $offers_settings_link_href = admin_url( 'options-general.php?page=offers-for-woocommerce');
+            global $submenu;
+            if(isset($submenu['woocommerce']) && !empty($submenu['woocommerce'])){
+                foreach($submenu['woocommerce'] as $key => $value)
+                {
+                    if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
+                            // Add child submenu html
+                            $submenu['woocommerce'][$key][0] .= "<script type='text/javascript'>
+                            jQuery(window).load(function($){
+                                    jQuery('#woocommerce-offers-count').parent('a').after('<ul id=\'woocommerce-offer-admin-submenu\' class=\'\'><li class=\'woocommerce-offer-admin-submenu-item\'><a href=\'".$offers_manage_link_href."\'>&nbsp;&#8211;&nbsp;". __('Manage Offers', 'offers-for-woocommerce'). "</a></li><li class=\'woocommerce-offer-admin-submenu-item\'><a id=\'woocommerce-offers-settings-link\' class=\'woocommerce-offer-submenu-link\' href=\'".$offers_settings_link_href."\'>&nbsp;&#8211;&nbsp;". __('Offers Settings', 'offers-for-woocommerce'). "</a></li></ul>');
+                            });</script>";					
+                    }
+                }
+            }
 	}
 	
 	/**
@@ -1281,6 +1286,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         global $post, $wpdb;
 
+		do_action('before_offer_summary_meta_box', $post);
+
         if($post->ID)
         {
             $postmeta = get_post_meta($post->ID);
@@ -1467,6 +1474,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
             include_once('views/meta-panel-summary.php');
         }
+
+		do_action('after_offer_summary_meta_box', $post);
     }
 
     /**
@@ -1530,11 +1539,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             return;
         }
+        
+        $user = wp_get_current_user();
+        $allowed_roles = array('vendor', 'administrator', 'shop_manager');
 
         // Check the user's permissions
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
         {
-            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'manage_woocommerce'))
+            if (!current_user_can('edit_page', $post_id) || !array_intersect($allowed_roles, $user->roles ))
             {
                 return;
             }
@@ -2610,9 +2622,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		/**
 		 * If not super admin or shop manager, return
 		 */
-		if( (! is_super_admin()) && (! current_user_can( 'manage_woocommerce')) ) {
+		if ( !(current_user_can('vendor') || current_user_can('administrator')) ) {
 			return;
 		}		
+
+
+
+
 
 		/*
 		 * If the single instance hasn't been set, set it now
@@ -2629,10 +2645,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @return    null    Return early if no settings page is registered
 	 */
 	public function enqueue_admin_styles() 
-	{
-		wp_enqueue_style('alertify', plugins_url('assets/css/alertify.min.css', __FILE__));
-                wp_enqueue_style('alertify-theme', plugins_url('assets/css/default.min.css', __FILE__));
-                if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+	{      
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 		$screen = get_current_screen();
@@ -2667,9 +2681,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @return    null    Return early if no settings page is registered
 	 */
 	public function enqueue_admin_scripts() 
-	{
-		wp_enqueue_script('alertify', plugins_url('assets/js/alertify.min.js', __FILE__), array());
-                if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+	{	
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
 		$screen = get_current_screen();
@@ -4219,6 +4232,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 foreach ($cap_group as $cap) {
                     $wp_roles->add_cap('shop_manager', $cap);
                     $wp_roles->add_cap('administrator', $cap);
+					$wp_roles->add_cap('vendor', $cap);
                 }
             }
         } else {
