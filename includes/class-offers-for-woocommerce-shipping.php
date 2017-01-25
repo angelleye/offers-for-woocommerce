@@ -10,8 +10,8 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
 
         public function __construct() {
             $this->id = 'offer_for_woocommerce_shipping';
-            $this->method_title = __('Offers for WooCommerce Shipping');
-            $this->method_description = __('Offers for WooCommerce Shipping');
+            $this->method_title = __('Offers for WooCommerce Shipping', 'offers-for-woocommerce');
+            $this->method_description = __('Offers for WooCommerce Shipping', 'offers-for-woocommerce');
             $this->enabled = "yes";
             $this->title = $this->get_option('title', 'Offer Shipping Cost');
             // Load the form fields.
