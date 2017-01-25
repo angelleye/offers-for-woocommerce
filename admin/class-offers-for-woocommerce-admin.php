@@ -4232,7 +4232,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 foreach ($cap_group as $cap) {
                     $wp_roles->add_cap('shop_manager', $cap);
                     $wp_roles->add_cap('administrator', $cap);
-					$wp_roles->add_cap('vendor', $cap);
                 }
             }
         } else {
