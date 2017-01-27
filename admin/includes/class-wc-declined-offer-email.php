@@ -74,7 +74,7 @@ class WC_Declined_Offer_Email extends WC_Email {
         $this->replace['offer_number'] = $this->offer_args['offer_id'];
 
         // woohoo, send the email!
-        $this->send( $this->recipient, $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
+        $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
     }
 
     /**
