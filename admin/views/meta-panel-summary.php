@@ -201,7 +201,7 @@
                             <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" autocomplete="off" />
                         <?php } ?>
                     </div>
-                    <label for="offer-shipping-cost"><input type="checkbox" id="ofwc_enable_shipping" name="enable_shipping_cost" value="1" style="width: auto !important;" <?php if( $postmeta['enable_shipping_cost'][0] == 1) echo 'checked'; ?>><?php echo __('Enable Shipping Cost', 'offers-for-woocommerce'); ?></label>
+                    <label for="offer-shipping-cost"><input type="checkbox" id="ofwc_enable_shipping" name="enable_shipping_cost" value="1" style="width: auto !important;" <?php if( $postmeta['enable_shipping_cost'][0] == 1) echo 'checked'; ?>><?php echo __('Include Shipping with Offer', 'offers-for-woocommerce'); ?></label>
                     <div class="angelleye-input-group">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                         <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
