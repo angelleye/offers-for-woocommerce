@@ -46,7 +46,7 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         parent::__construct();
 
         // Set the recipient
-        $this->recipient = $this->get_option( 'recipient', get_option( 'admin_email' ) );
+        $this->recipient = $this->get_option( 'recipient' );
 
         // Other settings
         $this->template_base = OFWC_PUBLIC_EMAIL_TEMPLATE_PATH;
@@ -65,6 +65,14 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         }
         
         $this->offer_args = $offer_args;
+        
+        $ofwc_options_general = get_option('offers_for_woocommerce_options_general');
+        if( isset($ofwc_options_general['general_setting_disable_admin_emails_wcvendor']) && $ofwc_options_general['general_setting_disable_admin_emails_wcvendor'] == 1 ) {
+            $this->recipient = '';
+        } else {
+            $this->recipient = $this->get_option( 'recipient', get_option( 'admin_email' ) );
+        }
+        
         $this->recipient = apply_filters('aeofwc_seller_email_address', $this->recipient, $offer_args);
         
         $this->find['offer_date']      = '{offer_date}';
