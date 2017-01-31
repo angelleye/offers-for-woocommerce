@@ -2292,22 +2292,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 )
             );
             
-            if ( class_exists( 'WC_Vendors' ) ) {
-                add_settings_field(
-                    'general_setting_disable_admin_emails_wcvendor', // ID
-                    __('Disable admin email notifications for vendor product offers.', 'offers-for-woocommerce'), // Title
-                    array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
-                        'offers_for_woocommerce_general_settings', // Page
-                        'general_settings', // Section
-                    array(
-                        'option_name'=>'offers_for_woocommerce_options_general',
-                        'input_required'=>FALSE,
-                        'input_label'=>'general_setting_disable_admin_emails_wcvendor',
-                        'description' => __('Check this option to disable admin email notifications for offers.', 'offers-for-woocommerce'),
-                    )
-                );
-            }
-            
             /**
              * Add section - 'Display Settings'
              */
@@ -2498,7 +2482,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      * @param	$args - Params to define 'option_name','input_label'
      */
-    public function offers_for_woocommerce_options_page_output_input_checkbox($args)
+    public static function offers_for_woocommerce_options_page_output_input_checkbox($args)
     {
         $options = get_option($args['option_name']);
         $description = isset($args['description']) ? $args['description'] : '';
