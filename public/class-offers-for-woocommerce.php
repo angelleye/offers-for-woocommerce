@@ -177,10 +177,10 @@ class Angelleye_Offers_For_Woocommerce {
         add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
 
 		// Resolve conflict with PDF Invoice Packaging Slip plugin
-        if ( class_exists( 'WooCommerce_PDF_Invoices' ) ) {
+        /*if ( class_exists( 'WooCommerce_PDF_Invoices' ) ) {
             remove_action( 'woocommerce_email_header', array( WC()->mailer(), 'email_header' ) );
             remove_action( 'woocommerce_email_footer', array( WC()->mailer(), 'email_footer' ) );
-        }
+        }*/
         add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),999,2);
         add_action( 'woocommerce_before_customer_login_form', array($this, 'ofw_before_customer_login_form'));
         add_filter('woocommerce_login_redirect',array($this,'ofw_login_redirect'),10,1);
@@ -1329,15 +1329,18 @@ class Angelleye_Offers_For_Woocommerce {
                 if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
                     $emails = $_POST['value']['emails_object'];
                 } else {
-                    $wc_emails = new WC_Emails();
-                    $emails = $wc_emails->get_emails();
+                    /*$wc_emails = new WC_Emails();
+                    $emails = $wc_emails->get_emails();*/
+                    global $woocommerce;
+                    $emails = $woocommerce->mailer()->get_emails();
                 }
+                
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
 
                 // set plugin slug in email class
-                $new_email->plugin_slug = 'offers-for-woocommerce';
+                //$new_email->plugin_slug = 'offers-for-woocommerce';
 
                 if ($is_counter_offer) {
                     // define email template/path (html)
