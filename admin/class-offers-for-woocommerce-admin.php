@@ -1566,6 +1566,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         
         $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $_POST['offer_shipping_cost'] : 0.00;
         update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
+        
+        global $woocommerce;
 
         // Accept Offer
         if($post_data->post_status == 'accepted-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'accepted-offer')
@@ -1641,8 +1643,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $email_class = 'WC_Accepted_Offer_Email';
 
             // load the WooCommerce Emails
-            $wc_emails = new WC_Emails();
-            $emails = $wc_emails->get_emails();
+            $emails = $woocommerce->mailer()->get_emails();
 
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
@@ -1736,8 +1737,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $email_class = 'WC_Offer_On_Hold_Email';
 
             // load the WooCommerce Emails
-            $wc_emails = new WC_Emails();
-            $emails = $wc_emails->get_emails();
+            $emails = $woocommerce->mailer()->get_emails();
 
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
@@ -1836,8 +1836,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $email_class = 'WC_Countered_Offer_Email';
 
             // load the WooCommerce Emails
-            $wc_emails = new WC_Emails();
-            $emails = $wc_emails->get_emails();
+            $emails = $woocommerce->mailer()->get_emails();
 
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
@@ -1933,8 +1932,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $email_class = 'WC_Declined_Offer_Email';
 
             // load the WooCommerce Emails
-            $wc_emails = new WC_Emails();
-            $emails = $wc_emails->get_emails();
+            $emails = $woocommerce->mailer()->get_emails();
 
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
@@ -2878,7 +2876,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             
 
-            global $post, $wpdb; // this is how you get access to the database
+            global $post, $wpdb, $woocommerce; // this is how you get access to the database
             if( isset($_GET['targetID']) && !empty($_GET['targetID'])) {
                 $post_id = $_GET["targetID"];
             } else {
@@ -3034,8 +3032,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 // the email we want to send
                 $email_class = 'WC_Accepted_Offer_Email';
                 // load the WooCommerce Emails
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
@@ -3102,7 +3099,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         if(is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true)))
         {
-            global $wpdb; // this is how you get access to the database
+            global $wpdb, $woocommerce; // this is how you get access to the database
             if( isset($_GET['targetID']) && !empty($_GET['targetID'])) {
                 $post_id = $_GET["targetID"];
             } else {
@@ -3258,8 +3255,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $email_class = 'WC_Declined_Offer_Email';
 
                 // load the WooCommerce Emails
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
@@ -3440,8 +3436,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $email_class = 'WC_Offer_Note_Email';
 
                     // load the WooCommerce Emails
-                    $wc_emails = new WC_Emails();
-                    $emails = $wc_emails->get_emails();
+                    global $woocommerce;
+                    $emails = $woocommerce->mailer()->get_emails();
 
                     // select the email we want & trigger it to send
                     $new_email = $emails[$email_class];
@@ -4288,7 +4284,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
     
     public function ofwc_decline_all_offers() {
-        global $wpdb; // this is how you get access to the database
+        global $wpdb, $woocommerce; // this is how you get access to the database
         $product_id = $_POST["targetID"];
         $post_count = $this->ofw_get_pending_offer_by_product_id($_POST['id']);
         
@@ -4442,8 +4438,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $email_class = 'WC_Declined_Offer_Email';
 
         // load the WooCommerce Emails
-        $wc_emails = new WC_Emails();
-        $emails = $wc_emails->get_emails();
+        $emails = $woocommerce->mailer()->get_emails();
 
         // select the email we want & trigger it to send
         $new_email = $emails[$email_class];

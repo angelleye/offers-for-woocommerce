@@ -984,7 +984,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
        
 	
-            global $wpdb; // this is how you get access to the database
+            global $wpdb,$woocommerce; // this is how you get access to the database
 
 			// Check if form was posted and select task accordingly
             if(isset($post["offer_product_id"]) && $post["offer_product_id"] != '')
@@ -1329,9 +1329,6 @@ class Angelleye_Offers_For_Woocommerce {
                 if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
                     $emails = $_POST['value']['emails_object'];
                 } else {
-                    /*$wc_emails = new WC_Emails();
-                    $emails = $wc_emails->get_emails();*/
-                    global $woocommerce;
                     $emails = $woocommerce->mailer()->get_emails();
                 }
                 
@@ -1856,7 +1853,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofw_auto_approve_offer($offer_id = null, $emails = null) {
         do_action('do_auto_approve_offer', $offer_id);
-        global $wpdb;
+        global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
             $post_id = $_POST["targetID"];
         } else {
@@ -1925,8 +1922,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
             $email_class = 'WC_Accepted_Offer_Email';
             if (empty($emails)) {
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
             }
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
@@ -1975,7 +1971,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   1.2.0
      */
     public function ofw_auto_decline_offer($offer_id = null, $emails = null) {
-        global $wpdb;
+        global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
             $post_id = $_POST["targetID"];
         } else {
@@ -2044,8 +2040,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
             $email_class = 'WC_Declined_Offer_Email';
             if (empty($emails)) {
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
             }
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
