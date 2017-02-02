@@ -396,13 +396,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'admin_init', array( $this, 'ofw_auto_accept_decline_from_email' ) );
         add_filter( 'the_title', array($this, 'ofw_anonymous_title'), 10, 2);
         add_filter( 'woocommerce_cart_shipping_packages', array($this, 'ofw_woocommerce_cart_shipping_packages'), 10, 1);
-
-        // Resolve conflict with PDF Invoice Packaging Slip plugin
-        /*if ( class_exists( 'WooCommerce_PDF_Invoices' ) ) {
-            remove_action( 'woocommerce_email_header', array( WC()->mailer(), 'email_header' ) );
-            remove_action( 'woocommerce_email_footer', array( WC()->mailer(), 'email_footer' ) );
-        }*/
-
         /**
          * Action - Manage offers if product is deleted
          */
