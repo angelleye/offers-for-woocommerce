@@ -231,6 +231,19 @@
                 return false;
             }
         });
-	});
+        if($('#ofwc_enable_shipping').is(":checked")) {
+            $('#offer_shipping_cost').parent('.angelleye-input-group').show();
+        } else {
+            $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
+        }
 
+        $("#ofwc_enable_shipping").click(function() {
+            if($(this).is(":checked")) {
+                $('#offer_shipping_cost').parent('.angelleye-input-group').show();
+            } else {
+                $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
+            }
+        });
+        
+	});
 }(jQuery));

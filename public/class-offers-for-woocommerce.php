@@ -2374,7 +2374,6 @@ class Angelleye_Offers_For_Woocommerce {
     public function hide_shipping_when_offer_for_woocommerce_is_available( $rates, $package ) {
         if($this->is_offer_product_in_cart()) {
             if ( isset( $rates['offer_for_woocommerce_shipping'] ) ) {
-                unset( $rates['flat_rate'] );
                 $offer_for_woocommerce_shipping = $rates['offer_for_woocommerce_shipping'];
                 $rates = array();
                 $rates['offer_for_woocommerce_shipping'] = $offer_for_woocommerce_shipping;
@@ -2384,12 +2383,19 @@ class Angelleye_Offers_For_Woocommerce {
     }
     
     public function is_offer_product_in_cart() {
+        $count = 0;$has_product = FALSE;
         foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
             if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
-                return true;
+                $has_product = true;
+            } else {
+                $count++;
             }
         }
-       return false;
+        if($count < 1 && $has_product) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function ofw_display_highest_current_offer() {

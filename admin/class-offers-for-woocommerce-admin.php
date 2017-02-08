@@ -476,7 +476,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		foreach($submenu['woocommerce'] as $key => $value)
 		{
 			if ( $submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer' ) {
-				$submenu['woocommerce'][$key][0] = 'Offers';
+				$submenu['woocommerce'][$key][0] = __( 'Offers', 'offers-for-woocommerce' ) ;
 				$submenu['woocommerce'][$key][0] .= " <span id='woocommerce-offers-count' class='awaiting-mod update-plugins count-$pend_count'><span class='pending-count'>" . $pend_count . '</span></span>';
 			}
 		}
@@ -596,11 +596,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 </div>
                 <div class="options_group">
                     <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_accept_enabled, 'cbvalue' => $field_callback_auto_accept_enabled, 'id' => '_offers_for_woocommerce_auto_accept_enabled', 'label' => __('Enable Auto Accept Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically accept offers based on the percentage set.', 'offers-for-woocommerce') ) ); ?>
-                    <p class="form-field offers_for_woocommerce_auto_accept_percentage "><label for="offers_for_woocommerce_auto_accept_percentage"><?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_accept_percentage_value; ?>" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer above the percentage entered here will be automatically accepted.' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
+                    <p class="form-field offers_for_woocommerce_auto_accept_percentage "><label for="offers_for_woocommerce_auto_accept_percentage"><?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="<?php echo $post_meta_auto_accept_percentage_value; ?>" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer above the percentage entered here will be automatically accepted.' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
                 </div>
                 <div class="options_group">
                     <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_decline_enabled, 'cbvalue' => $field_callback_auto_decline_enabled, 'id' => '_offers_for_woocommerce_auto_decline_enabled', 'label' => __('Enable Auto Decline Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically decline offers based on the percentage set.', 'offers-for-woocommerce') ) ); ?>
-                     <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer below the percentage entered here will be automatically declined' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
+                     <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer below the percentage entered here will be automatically declined' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
                 </div>
             </div>
             <?php
@@ -1575,7 +1575,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // set offer expiration date
         $offer_expire_date = get_post_meta($post_id, 'offer_expiration_date', true);
         
-        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $_POST['offer_shipping_cost'] : 0.00;
+        $enable_shipping_cost = ($_POST['enable_shipping_cost'] == 1) ? $_POST['enable_shipping_cost'] : 0;
+        update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
+        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00' && $enable_shipping_cost == 1) ? $_POST['offer_shipping_cost'] : 0.00;
         update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
 
         // Accept Offer
@@ -4006,7 +4008,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             <input type="checkbox" name="_offers_for_woocommerce_auto_accept_enabled" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
         </label>                  
         <label class="alignleft" for="_offers_for_woocommerce_auto_accept_percentage"><?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?>
-            <input type="number" placeholder="Enter Percentage" value="" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short">                   
+            <input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short">                   
         </label>
         
         
@@ -4016,7 +4018,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         </label>                  
            
         <label class="alignleft" for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?>
-            <input type="number" placeholder="Enter Percentage" value="" min="1" max="100" id="_offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short">                   
+            <input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short">                   
         </label>
 
         <?php
