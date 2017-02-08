@@ -175,12 +175,6 @@ class Angelleye_Offers_For_Woocommerce {
         add_action( 'woocommerce_shipping_init', array($this, 'your_shipping_method_init' ));
         add_filter( 'woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2 );
         add_shortcode( 'highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10 );
-
-		// Resolve conflict with PDF Invoice Packaging Slip plugin
-        if ( class_exists( 'WooCommerce_PDF_Invoices' ) ) {
-            remove_action( 'woocommerce_email_header', array( WC()->mailer(), 'email_header' ) );
-            remove_action( 'woocommerce_email_footer', array( WC()->mailer(), 'email_footer' ) );
-        }
         add_filter('woocommerce_is_purchasable',array($this,'angelleye_ofwc_woocommerce_is_purchasable'),999,2);
     }
 
@@ -984,7 +978,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
        
 	
-            global $wpdb; // this is how you get access to the database
+            global $wpdb,$woocommerce; // this is how you get access to the database
 
 			// Check if form was posted and select task accordingly
             if(isset($post["offer_product_id"]) && $post["offer_product_id"] != '')
@@ -1329,15 +1323,15 @@ class Angelleye_Offers_For_Woocommerce {
                 if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
                     $emails = $_POST['value']['emails_object'];
                 } else {
-                    $wc_emails = new WC_Emails();
-                    $emails = $wc_emails->get_emails();
+                    $emails = $woocommerce->mailer()->get_emails();
                 }
+                
 
                 // select the email we want & trigger it to send
                 $new_email = $emails[$email_class];
 
                 // set plugin slug in email class
-                $new_email->plugin_slug = 'offers-for-woocommerce';
+                //$new_email->plugin_slug = 'offers-for-woocommerce';
 
                 if ($is_counter_offer) {
                     // define email template/path (html)
@@ -1853,7 +1847,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofw_auto_approve_offer($offer_id = null, $emails = null) {
         do_action('do_auto_approve_offer', $offer_id);
-        global $wpdb;
+        global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
             $post_id = $_POST["targetID"];
         } else {
@@ -1922,8 +1916,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
             $email_class = 'WC_Accepted_Offer_Email';
             if (empty($emails)) {
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
             }
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
@@ -1972,7 +1965,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   1.2.0
      */
     public function ofw_auto_decline_offer($offer_id = null, $emails = null) {
-        global $wpdb;
+        global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
             $post_id = $_POST["targetID"];
         } else {
@@ -2041,8 +2034,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
             $email_class = 'WC_Declined_Offer_Email';
             if (empty($emails)) {
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
             }
             $new_email = $emails[$email_class];
             $new_email->recipient = $recipient;
