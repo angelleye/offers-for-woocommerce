@@ -54,6 +54,8 @@
                         <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
                         <option value="enable"><?php echo __('Enable Offers', 'offers-for-woocommerce'); ?></option>
                         <option value="disable"><?php echo __('Disable Offers', 'offers-for-woocommerce'); ?></option>
+                        <option value="enable_onexit"><?php echo __('Enable Offers On Exit', 'offers-for-woocommerce'); ?></option>
+                        <option value="disable_onexit"><?php echo __('Disable Offers On Exit', 'offers-for-woocommerce'); ?></option>
                     </select>
                 </div>
             </div>

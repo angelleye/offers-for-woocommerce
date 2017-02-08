@@ -447,6 +447,5 @@
              });
              return result;
         }
-
     });
 }(jQuery));

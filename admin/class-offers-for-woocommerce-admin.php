@@ -518,6 +518,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	function process_product_meta_custom_tab( $post_id ) {
             update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_POST['offers_for_woocommerce_enabled']) && $_POST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, 'offers_for_woocommerce_onexit_only', ( isset($_POST['offers_for_woocommerce_onexit_only']) && $_POST['offers_for_woocommerce_onexit_only'] ) ? 'yes' : 'no' );
             update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', ( isset($_POST['_offers_for_woocommerce_auto_accept_enabled']) && $_POST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
             update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', ( isset($_POST['_offers_for_woocommerce_auto_decline_enabled']) && $_POST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
             update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', ( isset($_POST['_offers_for_woocommerce_auto_accept_percentage']) && !empty($_POST['_offers_for_woocommerce_auto_accept_percentage']) ) ? $_POST['_offers_for_woocommerce_auto_accept_percentage'] : '' );
@@ -559,6 +560,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
              }
              
+             /**
+             * On exit only
+             */
+            
+            $post_meta_offers_onexit_only = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
+            $field_callback_onexit_only = ($post_meta_offers_onexit_only) ? $post_meta_offers_onexit_only : 'no';
+             
             /**
              *  Auto Accept Offer
              */
@@ -583,6 +591,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 <div class="options_group">
                      <?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback, 'id' => 'offers_for_woocommerce_enabled', 'label' => __('Enable Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to enable the \'Make Offer\' buttons and form display in the shop.', 'offers-for-woocommerce') ) ); ?>
                 </div> 
+                <div class="options_group">
+                     <?php woocommerce_wp_checkbox( array('value' => $field_value, 'cbvalue' => $field_callback_onexit_only, 'id' => 'offers_for_woocommerce_onexit_only', 'label' => __('On Exit Only?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to display the \'Make Offer\' form on exit from product detail page.', 'offers-for-woocommerce') ) ); ?>
+                </div>
                 <div class="options_group">
                     <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_accept_enabled, 'cbvalue' => $field_callback_auto_accept_enabled, 'id' => '_offers_for_woocommerce_auto_accept_enabled', 'label' => __('Enable Auto Accept Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically accept offers based on the percentage set.', 'offers-for-woocommerce') ) ); ?>
                     <p class="form-field offers_for_woocommerce_auto_accept_percentage "><label for="offers_for_woocommerce_auto_accept_percentage"><?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="Enter Percentage" value="<?php echo $post_meta_auto_accept_percentage_value; ?>" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer above the percentage entered here will be automatically accepted.' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
@@ -3512,7 +3523,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $errors = TRUE;
             }
 
-            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'enable' || $ofwc_bulk_action_type == 'accept_enable' || $ofwc_bulk_action_type == 'decline_enable') ? 'yes' : 'no';
+            $ofwc_bulk_action_type = ($ofwc_bulk_action_type == 'enable' || $ofwc_bulk_action_type == 'enable_onexit' || $ofwc_bulk_action_type == 'accept_enable' || $ofwc_bulk_action_type == 'decline_enable') ? 'yes' : 'no';
 
             // All Products
             if ($ofwc_bulk_action_target_type == 'all'){
