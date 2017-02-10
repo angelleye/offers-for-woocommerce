@@ -1,23 +1,35 @@
 (function ( $ ) {
 	"use strict";
 	$(function () {
-		// Public-facing JavaScript
-		$(document).ready(function(){
-                    if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
-                        if(check_all_woocommerce_variation_is_selected() === true) {
-                            $("#offers-for-woocommerce-add-to-cart-wrap").show();
-                        } else {
-                            $("#offers-for-woocommerce-add-to-cart-wrap").hide();
-                        }
-                            
-                        $('.variations select').on('change', function (e) {
-                            if (check_all_woocommerce_variation_is_selected() === false) {
-                                $("#offers-for-woocommerce-add-to-cart-wrap").hide();
-                            } else {
-                                $("#offers-for-woocommerce-add-to-cart-wrap").show();
-                            }
-                        });  
+        // Public-facing JavaScript
+        $(document).ready(function(){
+            $('.ofwc_no_price_product').remove();
+            function manage_button_for_variation(){
+                var variationId = $("input[name='variation_id']").val();
+                if(variationId > 0){
+                    $(".offers-for-woocommerce-make-offer-button-single-product").removeClass('disabled');
+                } else {
+                    $(".offers-for-woocommerce-make-offer-button-single-product").addClass('disabled');
+                }
+            }
+            
+            if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
+                manage_button_for_variation();
+                $( ".variations_form" ).on( "woocommerce_variation_has_changed", function () {
+                    manage_button_for_variation();
+                    var variationId = $("input[name='variation_id']").val();
+                    $('#tab_custom_ofwc_offer_tab_alt_message_2').hide();
+                    $('#tab_custom_ofwc_offer_tab_alt_message_success').hide();
+                    $('#tab_custom_ofwc_offer_tab_inner fieldset').show();
+                    if(variationId > 0){
+                        $('#tab_custom_ofwc_offer_tab_inner').show();
+                        $('#tab_custom_ofwc_offer_tab_alt_message').hide();
+                    } else {
+                        $('#tab_custom_ofwc_offer_tab_inner').hide();
+                        $('#tab_custom_ofwc_offer_tab_alt_message').show();
                     }
+                } );
+            }
                 
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
@@ -32,33 +44,50 @@
                 }
                 else
                 {
-                    angelleyeOpenMakeOfferForm();
+                    if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
+                        var variationId = $("input[name='variation_id']").val();
+                        if(variationId > 0){
+                            angelleyeOpenMakeOfferForm();
+                        } else {
+                            alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
+                        }
+                    } else {
+                        var productId = $("input[name='add-to-cart']").val();
+                        if(productId > 0){
+                            angelleyeOpenMakeOfferForm();
+                        } else {
+                            alert(offers_for_woocommerce_js_params.i18n_unavailable_text);
+                        }
+                    }
                 }
             }
 
             var makeOfferBtnPosition = $('#offers-for-woocommerce-add-to-cart-wrap').attr('data-ofwc-position');
-            if(makeOfferBtnPosition !== '' && makeOfferBtnPosition !== 'default')
-            {
-                var makeOfferBtnhtml = $('.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap').html();
+            var makeOfferBtnhtml = $('.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap').html();
 
-                // after price
+            // after price
+            if(makeOfferBtnhtml.length > 0){
                 if(makeOfferBtnPosition == 'after_price') {
                     $('.product .summary .price:first').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>"+ makeOfferBtnhtml +"");
-                }
-
-                // after product tabs
-                if(makeOfferBtnPosition == 'after_tabs') {
-                    $('.product .woocommerce-tabs').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>"+ makeOfferBtnhtml +"");
-                }
-
-                // before add to cart (after single_variation)
-                if(makeOfferBtnPosition == 'before_add') {
-                    $('#offers-for-woocommerce-add-to-cart-wrap div:first').before("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>" + makeOfferBtnhtml + "");
                 }
             }
 
             $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
-                angelleyeOpenMakeOfferForm();
+                if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
+                    var variationId = $("input[name='variation_id']").val();
+                    if(variationId > 0){
+                        angelleyeOpenMakeOfferForm();
+                    } else {
+                        alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
+                    }
+                } else {
+                    var productId = $("input[name='add-to-cart']").val();
+                    if(productId > 0){
+                        angelleyeOpenMakeOfferForm();
+                    } else {
+                        alert(offers_for_woocommerce_js_params.i18n_unavailable_text);
+                    }
+                }
             });
 
             $("#lightbox_custom_ofwc_offer_form_close_btn, #aeofwc-close-lightbox-link").on('click', function()
@@ -150,8 +179,6 @@
                 var offerProductId = $("input[name='add-to-cart']").val();
                 var offerVariationId = $("input[name='variation_id']").val();
 
-      
-                
                 var join_our_mailing_list = "no";
                 
                 if($("#join_our_mailing_list").length > 0) {
@@ -160,7 +187,6 @@
                     } 
                 }
                 
-
                 var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
                 var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
 
@@ -208,9 +234,7 @@
                     // callback handler that will be called on success
                     request.done(function (response, textStatus, jqXHR){
                         if(request.statusText == 'OK'){
-
                             var myObject = JSON.parse(request.responseText);
-
                             var responseStatus = myObject['statusmsg'];
                             var responseStatusDetail = myObject['statusmsgDetail'];
 
@@ -282,7 +306,6 @@
                 }
                 return false;
             });
-
         });
 
         function angelleyeOpenMakeOfferForm(){
@@ -313,11 +336,8 @@
             }
             else
             {
-                if( $('.woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab').length ){
-                    $(".woocommerce-tabs .tabs li").removeClass("active");
-                    $(".woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab").addClass("active");
-                    $(".woocommerce-tabs div.panel").css("display", "none");
-                    $(".woocommerce-tabs div#tab-tab_custom_ofwc_offer").css("display", "block");
+                if( $('.woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab').length > 0 ){
+                    $(".woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab a").click();
                 }
 
                 if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
@@ -329,7 +349,7 @@
                     $("#woocommerce-make-offer-form-quantity").focus();
                 }
 
-               if ( $( ".tab_custom_ofwc_offer_tab" ).length ) {
+               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {
                     var targetTab = $(".tab_custom_ofwc_offer_tab");
                     $('html, body').animate({
                         scrollTop: $(targetTab).offset().top - '100'
@@ -339,19 +359,15 @@
 
             return false;
         }
-
+        
         $(window).load(function(){
-
             if( $(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox") )
             {
                 $("#aeofwc-close-lightbox-link").css('display','block');
             }
-        });
-
-		$(window).load(function(){
-			var variantDisplay = $('.single_variation_wrap').css('display');
-			if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block')
-			{
+            var variantDisplay = $('.single_variation_wrap').css('display');
+            if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block')
+            {
                 if( $(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox") )
                 {
                     $("#lightbox_custom_ofwc_offer_form").hide();
@@ -363,59 +379,34 @@
                     $('#tab_custom_ofwc_offer_tab_inner').hide();
                 }
                 $('#tab_custom_ofwc_offer_tab_alt_message').show();
-			}
-		});
-		$(window).load(function(){
-			var datFunction = function () {
-				$('.variations select').change(function() {
-					
-					$('#tab_custom_ofwc_offer_tab_alt_message_2').hide();
-					$('#tab_custom_ofwc_offer_tab_alt_message_success').hide();
-					$('#tab_custom_ofwc_offer_tab_inner fieldset').show();
-					
-					//var variantDisplay = $('.single_variation_wrap.ofwc_offer_tab_form_wrap').css('display');
-					
-					// Toggle form based on visibility
-					if(check_all_woocommerce_variation_is_selected() == false)
-					{
-						$('#tab_custom_ofwc_offer_tab_inner').hide();
-						$('#tab_custom_ofwc_offer_tab_alt_message').show();
-					}
-					else
-					{
-						$('#tab_custom_ofwc_offer_tab_inner').show();
-						$('#tab_custom_ofwc_offer_tab_alt_message').hide();				
-					}
-				});
-			}();
-			datFunction;
-		});
+            }
+        });
 
-		// offer quantity input keyup
-		$('#woocommerce-make-offer-form-quantity').keyup(function() {  
-			updateTotal();
-		});
-		
-		// offer price each input keyup
-		$('#woocommerce-make-offer-form-price-each').keyup(function() {  
-			updateTotal();
-		});
+        // offer quantity input keyup
+        $('#woocommerce-make-offer-form-quantity').keyup(function() {  
+            updateTotal();
+        });
 
-		// Update totals
-		var updateTotal = function () {
-			var input1 = $('#woocommerce-make-offer-form-quantity').autoNumeric('get');
-			var input2 = $('#woocommerce-make-offer-form-price-each').autoNumeric('get');
-			if (isNaN(input1) || isNaN(input2)) {
-				$('#woocommerce-make-offer-form-total').val('');
-			} else {
-				var theTotal = (input1 * input2);
+        // offer price each input keyup
+        $('#woocommerce-make-offer-form-price-each').keyup(function() {  
+            updateTotal();
+        });
+
+        // Update totals
+        var updateTotal = function () {
+            var input1 = $('#woocommerce-make-offer-form-quantity').autoNumeric('get');
+            var input2 = $('#woocommerce-make-offer-form-price-each').autoNumeric('get');
+            if (isNaN(input1) || isNaN(input2)) {
+                    $('#woocommerce-make-offer-form-total').val('');
+            } else {
+                var theTotal = (input1 * input2);
                 var currencySymbol = $('#woocommerce-make-offer-form-total').attr('data-currency-symbol');
                 if(!currencySymbol) {
                     currencySymbol = '$';
                 }
-				$('#woocommerce-make-offer-form-total').val(parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-			}
-		};
+                $('#woocommerce-make-offer-form-total').val(parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+            }
+        };
 
         /**
          * Adds bn code for PayPal Standard
@@ -435,17 +426,5 @@
 
         // Check for PayPal Standard bn
         CheckPayPalStdBn();
-         function check_all_woocommerce_variation_is_selected() {
-            var result = true;
-            $( ".woocommerce div.product form.cart .variations select").each(function() {
-                var $el = $(this),
-                 $selected = $el.find('option:selected');   
-                 if($selected.val() === "") {
-                     result = false;
-                 } else {
-                 }
-             });
-             return result;
-        }
     });
 }(jQuery));
