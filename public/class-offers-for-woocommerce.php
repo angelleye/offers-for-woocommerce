@@ -407,7 +407,8 @@ class Angelleye_Offers_For_Woocommerce {
                 jQuery( document ).ready(function($) {
                     $(window).on('mouseout', function(e) {
                         var from = e.relatedTarget || e.toElement;
-                        var visited = $.cookie("onexit_cookie");
+                        var onexit_cookie = 'onexit_cookie_<?php echo $post->ID; ?>';
+                        var visited = $.cookie(onexit_cookie);
                         if (visited === '1') {
                             return false;
                         } else if ((!from || from.nodeName == "HTML") && e.pageY < $(window).scrollTop()) {
@@ -418,8 +419,9 @@ class Angelleye_Offers_For_Woocommerce {
                             $("#aeofwc-close-lightbox-link").css('display','block');
                             var date = new Date();
                             date.setTime(date.getTime() + (60 * 1000)); //60 secounds time for cookie
-                            $.cookie("onexit_cookie", '1', {
-                              expires: date
+                            $.cookie(onexit_cookie, '1', {
+                              expires: date,
+                              path    : <?php echo COOKIEPATH ? COOKIEPATH : '/'; ?>,
                             });
                         }
                     });
