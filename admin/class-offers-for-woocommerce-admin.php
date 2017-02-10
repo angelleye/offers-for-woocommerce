@@ -1545,9 +1545,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         // Check the user's permissions
+        $user = wp_get_current_user();
+        $allowed_roles = array('vendor', 'administrator', 'shop_manager');
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
         {
-            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'manage_woocommerce'))
+            if (!current_user_can('edit_page', $post_id) || !array_intersect($allowed_roles, $user->roles ))
             {
                 return;
             }
