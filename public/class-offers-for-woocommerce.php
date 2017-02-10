@@ -2082,17 +2082,21 @@ class Angelleye_Offers_For_Woocommerce {
      public function ofw_display_pending_offer_lable_product_details_page($product_id) {
         if($this->ofw_is_show_pending_offer_enable()) {
             global $wpdb;
-            $total_result = $wpdb->get_results($wpdb->prepare("
-                    SELECT SUM( postmeta.meta_value ) AS total_qty, COUNT(posts.ID) as total_offer
-                    FROM $wpdb->postmeta AS postmeta
-                    JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
-                    INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status NOT LIKE 'completed-offer')
-                    WHERE postmeta.meta_key LIKE 'offer_quantity' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
-                    AND postmeta.post_id = posts.ID LIMIT 0, 99
-            ", $product_id), ARRAY_A);
-            $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
-            $total_offer = (isset($total_result[0]['total_offer']) && !empty($total_result[0]['total_offer'])) ? $total_result[0]['total_offer'] : 0;
-            if($total_qty > 0 && $total_offer > 0) {
+            $args = array(
+                'post_type'  => 'woocommerce_offer',
+                'post_status'  => 'publish',
+                'posts_per_page'  => -1,
+                'meta_query' => array(
+                    array(
+                        'key'     => 'offer_product_id',
+                        'value'   => $product_id,
+                        'compare' => '=',
+                    ),
+                ),
+            );
+            $query = new WP_Query( $args );
+            $total_offer = $query->post_count;
+            if($total_offer > 0) {
                 echo '<div class="ofw-info"> ' . sprintf( _n( '%d offer is currently pending.', '%d offers are currently pending.', $total_offer, 'offers-for-woocommerce' ), $total_offer ) . '</div>';
             }
         }
