@@ -1716,7 +1716,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since   1.2.0
      */
     public function ofw_auto_approve_offer($offer_id = null, $emails = null, $is_approve = true) {
-        global $wpdb;
+        global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
             $post_id = $_POST["targetID"];
         } else {
@@ -1726,8 +1726,7 @@ class Angelleye_Offers_For_Woocommerce {
             $post_data = get_post($post_id);
             $table = $wpdb->prefix . "posts";
             if (empty($emails)) {
-                $wc_emails = new WC_Emails();
-                $emails = $wc_emails->get_emails();
+                $emails = $woocommerce->mailer()->get_emails();
             }
             if($is_approve){
                 $post_status = 'accepted-offer';

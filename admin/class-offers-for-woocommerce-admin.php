@@ -1574,8 +1574,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // set update notes
         $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
 
+        $enable_shipping_cost = (isset($_POST['enable_shipping_cost']) && $_POST['enable_shipping_cost'] == 1) ? 1 : 0;
         $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $_POST['offer_shipping_cost'] : 0.00;
-        update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
+        if($enable_shipping_cost){
+            update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
+            update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
+        }        
 
         $product_id = get_post_meta($post_id, 'offer_product_id', true);
         $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
@@ -1705,9 +1709,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         if(isset($email_class) && !empty($email_class)) {
+            global $woocommerce;
             // load the WooCommerce Emails
-            $wc_emails = new WC_Emails();
-            $emails = $wc_emails->get_emails();
+            $emails = $woocommerce->mailer()->get_emails();
 
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
@@ -2649,8 +2653,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $table = $wpdb->prefix . "posts";
             if (empty($emails)) {
                 $emails = $woocommerce->mailer()->get_emails();
-                //$wc_emails = new WC_Emails();
-                //$emails = $wc_emails->get_emails();
             }
             if($is_approve){
                 $post_status = 'accepted-offer';
@@ -2721,14 +2723,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             } else {
                 $offer_args['product_title_formatted'] = $product->get_formatted_name();
             }
-            $new_email = $emails[$email_class];
-            $new_email->recipient = $recipient;
-            $new_email->plugin_slug = 'offers-for-woocommerce';
-            $new_email->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
-            $new_email->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
-            $new_email->template_html = $template_name;
-            $new_email->template_plain = $template_name;
-            $new_email->trigger($offer_args);
+            if(isset($email_class) && !empty($email_class)) {
+                $new_email = $emails[$email_class];
+                $new_email->recipient = $recipient;
+                $new_email->plugin_slug = 'offers-for-woocommerce';
+                $new_email->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
+                $new_email->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
+                $new_email->template_html = $template_name;
+                $new_email->template_plain = $template_name;
+                $new_email->trigger($offer_args);
+            }
             $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "&nbsp;</span>";
             $comment_text.= $post_status_text;
             if (isset($offer_notes) && $offer_notes != '') {
