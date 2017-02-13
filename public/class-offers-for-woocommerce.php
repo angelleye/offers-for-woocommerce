@@ -318,10 +318,11 @@ class Angelleye_Offers_For_Woocommerce {
         echo '</div>'; // .aofwc-first-div
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         if($button_options_display['display_setting_make_offer_button_position_single'] == 'default' || $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add'){
+            echo '<div class="angelleye-offers-clearfix"></div>';
             echo $this->angelleye_ofwc_offer_button_output();
         }
         echo '</div>'; // #offers-for-woocommerce-add-to-cart-wrap
-        echo '<div class="angelleye-offers-clearfix"></div>';                
+        echo '<div class="angelleye-offers-clearfix"></div>';
         $this->ofw_display_highest_current_offer();
         $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
     }
