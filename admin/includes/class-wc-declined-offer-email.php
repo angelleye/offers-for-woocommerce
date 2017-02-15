@@ -89,7 +89,8 @@ class WC_Declined_Offer_Email extends WC_Email {
             'offer_args'         => $this->offer_args,
             'email_heading' => $this->get_heading(),
             'sent_to_admin'    => false,
-            'plain_text'    => false
+            'plain_text'    => false,
+            'email' => $this
             ),
             '',
             $this->template_html_path
@@ -109,7 +110,8 @@ class WC_Declined_Offer_Email extends WC_Email {
             'offer_args'         => $this->offer_args,
             'email_heading' => $this->get_heading(),
             'sent_to_admin'    => false,
-            'plain_text'    => true
+            'plain_text'    => true,
+            'email' => $this
             ),
             '',
             $this->template_plain_path
