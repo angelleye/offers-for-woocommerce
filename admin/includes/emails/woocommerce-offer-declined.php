@@ -8,7 +8,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
-<?php do_action( 'woocommerce_email_header', $email_heading ); ?>
+<?php do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php 
 if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
@@ -46,4 +46,4 @@ if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
     </tfoot>
 </table>
 
-<?php do_action( 'woocommerce_email_footer' ); ?>
+<?php do_action( 'woocommerce_email_footer', $email ); ?>

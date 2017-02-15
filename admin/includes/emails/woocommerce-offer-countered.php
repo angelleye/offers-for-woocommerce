@@ -8,7 +8,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
-<?php do_action( 'woocommerce_email_header', $email_heading ); ?>
+<?php do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 <?php printf( '<strong>'. _e('We have provided you with a counter offer on','offers-for-woocommerce').' %s.</strong><br />', get_bloginfo( 'name' ) ) ;?>
 <?php _e('To pay for this order please use the following link:', 'offers-for-woocommerce');?>&nbsp;<a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="<?php echo $offer_args['product_url'];?><?php echo ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'].'&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><span style="border-bottom:1px dotted #666; "><?php echo __( 'Click to Pay', 'offers-for-woocommerce' ); ?></span></a>
 <?php if(isset($offer_args['final_offer']) && $offer_args['final_offer'] == '1') {
@@ -70,4 +70,4 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __('Counter Offer Notes:', 'offers-for-woocommerce') .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
-<?php do_action( 'woocommerce_email_footer' ); ?>
+<?php do_action( 'woocommerce_email_footer', $email ); ?>

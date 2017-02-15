@@ -8,7 +8,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
-<?php do_action( 'woocommerce_email_header', $email_heading ); ?>
+<?php do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
     <p><strong><?php _e( 'Your offer has been placed on hold.', 'offers-for-woocommerce' ); ?></strong></p>
 
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
@@ -38,4 +38,4 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
         </tfoot>
     </table>
 
-<?php do_action( 'woocommerce_email_footer' ); ?>
+<?php do_action( 'woocommerce_email_footer', $email ); ?>

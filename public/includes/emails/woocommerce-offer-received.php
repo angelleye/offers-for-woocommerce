@@ -8,7 +8,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
-<?php do_action( 'woocommerce_email_header', $email_heading ); ?>
+<?php do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php printf( '<p><strong>' . __('We have received your offer on', 'offers-for-woocommerce') . ' %s.</strong> ' . __('Your offer will be processed as soon as possible', 'offers-for-woocommerce'). '</p>', get_bloginfo( 'name' ) ); ?>
 
@@ -59,4 +59,4 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
-<?php do_action( 'woocommerce_email_footer' ); ?>
+<?php do_action( 'woocommerce_email_footer', $email ); ?>
