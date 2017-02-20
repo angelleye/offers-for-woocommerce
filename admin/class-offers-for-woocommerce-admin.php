@@ -1541,7 +1541,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         
         $user = wp_get_current_user();
-        $allowed_roles = array('vendor', 'administrator', 'shop_manager');
+        $allowed_roles = array('vendor', 'administrator', 'shop_manager', 'seller');
 
         // Check the user's permissions
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
@@ -2621,7 +2621,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		/**
 		 * If not super admin or shop manager, return
 		 */
-		if ( !(current_user_can('vendor') || current_user_can('administrator')) ) {
+		if ( !(current_user_can('vendor') || current_user_can('administrator') || current_user_can('seller')) ) {
 			return;
 		}		
 
@@ -4242,7 +4242,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      *
      * @return array
      */
-    public function get_core_capabilities() {
+    public static function get_core_capabilities() {
         $capabilities = array();
 
         $capability_types = array('woocommerce_offer');
