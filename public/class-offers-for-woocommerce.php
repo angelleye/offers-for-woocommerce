@@ -393,6 +393,8 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
 
+        $_product = wc_get_product($post->ID);
+        $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
         $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
         $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled != '') ? $on_exit_enabled : 'no';
@@ -403,7 +405,7 @@ class Angelleye_Offers_For_Woocommerce {
             echo '</div>';
             echo '<div id="lightbox_custom_ofwc_offer_form_close_btn"></div>';
         }
-        if($on_exit_enabled == "yes"){
+        if($on_exit_enabled == "yes" && !$is_external_product){
             ?>
             <script type="text/javascript">
                 jQuery( document ).ready(function($) {
