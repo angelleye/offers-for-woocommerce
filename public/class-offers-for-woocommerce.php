@@ -425,7 +425,7 @@ class Angelleye_Offers_For_Woocommerce {
                             date.setTime(date.getTime() + (60 * 1000)); //60 secounds time for cookie
                             $.cookie(onexit_cookie, '1', {
                               expires: date,
-                              path    : <?php echo COOKIEPATH ? COOKIEPATH : '/'; ?>,
+                              path    : '<?php echo COOKIEPATH ? COOKIEPATH : "/"; ?>',
                             });
                         }
                     });
