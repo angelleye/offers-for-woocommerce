@@ -239,11 +239,12 @@ class Angelleye_Offers_For_Woocommerce {
         
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
+            'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
         );
         
         $btn_output = '';
         
-        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock) {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
 
             $custom_styles_override = '';
