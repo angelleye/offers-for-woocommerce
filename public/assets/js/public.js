@@ -66,7 +66,7 @@
             var makeOfferBtnhtml = $('.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap').html();
 
             // after price
-            if(makeOfferBtnhtml.length > 0){
+            if(makeOfferBtnhtml != null && makeOfferBtnhtml.length > 0){
                 if(makeOfferBtnPosition == 'after_price') {
                     $('.product .summary .price:first').after("<div class='offers-for-woocommerce-add-to-cart-wrap ofwc-no-float'>"+ makeOfferBtnhtml +"");
                 }
