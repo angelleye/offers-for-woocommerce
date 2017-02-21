@@ -414,7 +414,7 @@ class Angelleye_Offers_For_Woocommerce {
                         $("#lightbox_custom_ofwc_offer_form").show();
                         $("#lightbox_custom_ofwc_offer_form_close_btn").show();
                         $("#aeofwc-close-lightbox-link").css('display','block');
-                    <?php } ?>
+                    <?php } else { ?>
                     $(window).on('mouseout', function(e) {
                         var from = e.relatedTarget || e.toElement;
                         var onexit_cookie = 'onexit_cookie_<?php echo $post->ID; ?>';
@@ -435,6 +435,7 @@ class Angelleye_Offers_For_Woocommerce {
                             });
                         }
                     });
+                    <?php } ?>
                 });
             </script>
             <?php
