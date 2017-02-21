@@ -47,7 +47,7 @@
             <?php
                 $is_counter_offer = (isset($parent_offer_id) && $parent_offer_id != '') ? true : false;
                 $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
-                $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled != '') ? $on_exit_enabled : 'no';
+                $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
                 if(isset($button_display_options['display_setting_custom_make_offer_btn_text']) && !empty($button_display_options['display_setting_custom_make_offer_btn_text'])) {
                     $tab_title = apply_filters('woocommerce_make_offer_form_tab_title', $button_display_options['display_setting_custom_make_offer_btn_text'], $is_counter_offer, $on_exit_enabled);
                 } else {
@@ -59,6 +59,9 @@
                     $tab_title = apply_filters('woocommerce_make_offer_form_tab_name', __('Make Counter Offer', 'offers-for-woocommerce'), $is_counter_offer, $on_exit_enabled);
                     $intro_html = '<h2>' . $tab_title . '</h2>';
                     $intro_html.= '<div class="make-offer-form-intro-text">' . __('To make a counter offer please complete the form below:', 'offers-for-woocommerce') . '</div>';
+                } else if ($on_exit_enabled) {
+                    $intro_html = '<h2>' . $tab_title . '</h2>';
+                    $intro_html .= '<div class="make-offer-form-intro-text">' . __('Wait! Before you go, feel free to send us an offer. We may decide to go ahead and accept it!', 'offers-for-woocommerce') . '</div>';
                 } else {
                     $intro_html = '<h2>' . $tab_title . '</h2>';
                     $intro_html .= '<div class="make-offer-form-intro-text">' . __('To make an offer please complete the form below:', 'offers-for-woocommerce') . '</div>';
