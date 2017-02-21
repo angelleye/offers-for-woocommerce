@@ -409,7 +409,7 @@ class Angelleye_Offers_For_Woocommerce {
             ?>
             <script type="text/javascript">
                 jQuery( document ).ready(function($) {
-                    <?php if($_GET['aewcobtn'] == 1){ ?>
+                    <?php if(isset($_GET['aewcobtn']) && !empty($_GET['aewcobtn']) && $_GET['aewcobtn'] == 1){ ?>
                         $("#lightbox_custom_ofwc_offer_form").addClass('active');
                         $("#lightbox_custom_ofwc_offer_form").show();
                         $("#lightbox_custom_ofwc_offer_form_close_btn").show();
