@@ -409,6 +409,10 @@ class Angelleye_Offers_For_Woocommerce {
             ?>
             <script type="text/javascript">
                 jQuery( document ).ready(function($) {
+                    $("#lightbox_custom_ofwc_offer_form").addClass('active');
+                    $("#lightbox_custom_ofwc_offer_form").show();
+                    $("#lightbox_custom_ofwc_offer_form_close_btn").show();
+                    $("#aeofwc-close-lightbox-link").css('display','block');
                     $(window).on('mouseout', function(e) {
                         var from = e.relatedTarget || e.toElement;
                         var onexit_cookie = 'onexit_cookie_<?php echo $post->ID; ?>';
