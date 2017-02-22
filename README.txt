@@ -124,7 +124,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds an option to display the Make Offer form only when the user is about to exit the page. ([#192](https://github.com/angelleye/offers-for-woocommerce/issues/192))
 * Feature - Adds filter hooks to adjust the recipient(s) on email notifications for offers. ([#259](https://github.com/angelleye/offers-for-woocommerce/issues/259))
 * Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
-* Tweak - General code improvements. ([#267](https://github.com/angelleye/offers-for-woocommerce/issues/267))
+* Tweak - General code improvements. ([#267](https://github.com/angelleye/offers-for-woocommerce/issues/267), [#273](https://github.com/angelleye/offers-for-woocommerce/issues/273))
 * Fix - Resolves CSS conflict with some themes. ([#260](https://github.com/angelleye/offers-for-woocommerce/issues/260))
 * Fix - Resolves an issue with some themes where the Add to Cart button would display even if you disabled it in your theme. ([#270](https://github.com/angelleye/offers-for-woocommerce/issues/270))
 
