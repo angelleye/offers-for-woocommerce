@@ -197,7 +197,6 @@ class Angelleye_Offers_For_Woocommerce {
             return $_GET['backto'].$join_url;
         }
         return $redirect;
-        add_filter('body_class',array($this,'ofwc_body_class'));
     }
     
     /**
