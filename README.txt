@@ -125,6 +125,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds filter hooks to adjust the recipient(s) on email notifications for offers. ([#259](https://github.com/angelleye/offers-for-woocommerce/issues/259))
 * Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
 * Fix - Resolves CSS conflict with some themes. ([#260](https://github.com/angelleye/offers-for-woocommerce/issues/260))
+* Fix - Resolves an issue with some themes where the Add to Cart button would display even if you disabled it in your theme. ([#270](https://github.com/angelleye/offers-for-woocommerce/issues/270))
 
 = 1.3.1 - 01.03.2017 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))
