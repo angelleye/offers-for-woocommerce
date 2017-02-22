@@ -121,8 +121,13 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 = 1.4.0 - xx.xx.2017 =
 * Feature - Options for requiring user log in to submit offers. ([#263](https://github.com/angelleye/offers-for-woocommerce/issues/263))
 * Feature - Compatibility with WPML.  Bulk editor now updates all language versions of products. ([#204](https://github.com/angelleye/offers-for-woocommerce/issues/204))
+* Feature - Adds an option to display the Make Offer form only when the user is about to exit the page. ([#192](https://github.com/angelleye/offers-for-woocommerce/issues/192))
+* Feature - Adds filter hooks to adjust the recipient(s) on email notifications for offers. ([#259](https://github.com/angelleye/offers-for-woocommerce/issues/259))
 * Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
+* Tweak - General code improvements. ([#267](https://github.com/angelleye/offers-for-woocommerce/issues/267), [#273](https://github.com/angelleye/offers-for-woocommerce/issues/273))
 * Fix - Resolves CSS conflict with some themes. ([#260](https://github.com/angelleye/offers-for-woocommerce/issues/260))
+* Fix - Resolves an issue with some themes where the Add to Cart button would display even if you disabled it in your theme. ([#270](https://github.com/angelleye/offers-for-woocommerce/issues/270))
+* Fix - Resolves a potential conflict with other plugins working with WooCommerce email templates. [(#278](https://github.com/angelleye/offers-for-woocommerce/issues/278))
 
 = 1.3.1 - 01.03.2017 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))

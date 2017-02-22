@@ -562,6 +562,7 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .woocommerce-offer-expiration-wrap label { float:left; margin:5px 8px 3px 0; }
 
 .woocommerce-offer-expiration-wrap input { width: 90px; margin:0!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label[for=offer-total] {display: block;padding-top: 0 !important;}
 
 @media screen and (max-width:782px){
     .woocommerce-offer-final-offer-wrap label { margin-top:3px; }
