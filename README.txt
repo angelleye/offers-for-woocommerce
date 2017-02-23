@@ -123,6 +123,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Compatibility with WPML.  Bulk editor now updates all language versions of products. ([#204](https://github.com/angelleye/offers-for-woocommerce/issues/204))
 * Feature - Adds an option to display the Make Offer form only when the user is about to exit the page. ([#192](https://github.com/angelleye/offers-for-woocommerce/issues/192))
 * Feature - Adds filter hooks to adjust the recipient(s) on email notifications for offers. ([#259](https://github.com/angelleye/offers-for-woocommerce/issues/259))
+* Feature - Allows you to choose whether to include shipping on the accepted/countered offer or not. ([#271](https://github.com/angelleye/offers-for-woocommerce/issues/271))
 * Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
 * Tweak - General code improvements. ([#267](https://github.com/angelleye/offers-for-woocommerce/issues/267), [#273](https://github.com/angelleye/offers-for-woocommerce/issues/273))
 * Fix - Resolves CSS conflict with some themes. ([#260](https://github.com/angelleye/offers-for-woocommerce/issues/260))
