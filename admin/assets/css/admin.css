@@ -501,6 +501,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     position: relative;
     display: table;
     border-collapse: separate;
+    /* margin-bottom: 5px; */
 }
 .angelleye-input-group-addon, .angelleye-input-group-btn, .angelleye-input-group .form-control
 {
@@ -516,7 +517,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 
 /* counter offer inputs */
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap { margin-bottom:20px!important; }
-body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label { padding-top:10px!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label {padding-top: 5px!important;display: inline-block;}
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap input { width: 100%!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap input[type='text']:disabled,
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-price-per { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; color:inherit!important; }
@@ -562,7 +563,9 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 .woocommerce-offer-expiration-wrap label { float:left; margin:5px 8px 3px 0; }
 
 .woocommerce-offer-expiration-wrap input { width: 90px; margin:0!important; }
-body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label[for=offer-total] {display: block;padding-top: 0 !important;}
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label[for=offer-total] {display: block;/* padding-top: 0 !important; */}
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label[for=offer-shipping-cost]{padding-top: 10px !important;}
+body.wp-admin.post-type-woocommerce_offer form#post .offer_shipping {padding-top: 3px !important;}
 
 @media screen and (max-width:782px){
     .woocommerce-offer-final-offer-wrap label { margin-top:3px; }
