@@ -210,6 +210,8 @@ class Angelleye_Offers_For_Woocommerce {
         global $current_user;
         $req_login = FALSE;
         
+        do_action('ofwc_before_offer_button_output', $post->ID, $is_archive);
+        
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
@@ -287,7 +289,9 @@ class Angelleye_Offers_For_Woocommerce {
             $btn_output .= '</div>';
         }
         
-        return $btn_output;
+        do_action('ofwc_after_offer_button_output', $post->ID, $is_archive, $btn_output);
+        
+        return apply_filters( 'ofwc_offer_button_output', $btn_output, $post->ID, $is_archive );
     }
     
     /**
@@ -881,8 +885,10 @@ class Angelleye_Offers_For_Woocommerce {
 
 
         global $wpdb,$woocommerce; // this is how you get access to the database
+        
+        do_action('woocommerce_before_offer_submit', $post);
 
-                    // Check if form was posted and select task accordingly
+        // Check if form was posted and select task accordingly
         if(isset($post["offer_product_id"]) && $post["offer_product_id"] != '')
         {
             // set postmeta original vars
