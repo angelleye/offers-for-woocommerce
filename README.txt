@@ -127,9 +127,11 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds a few hooks. ([#265](https://github.com/angelleye/offers-for-woocommerce/issues/265))
 * Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
 * Tweak - General code improvements. ([#267](https://github.com/angelleye/offers-for-woocommerce/issues/267), [#273](https://github.com/angelleye/offers-for-woocommerce/issues/273))
+* Tweak - Adjustments to offer history settings / display. ([#277](https://github.com/angelleye/offers-for-woocommerce/issues/277))
 * Fix - Resolves CSS conflict with some themes. ([#260](https://github.com/angelleye/offers-for-woocommerce/issues/260))
 * Fix - Resolves an issue with some themes where the Add to Cart button would display even if you disabled it in your theme. ([#270](https://github.com/angelleye/offers-for-woocommerce/issues/270))
-* Fix - Resolves a potential conflict with other plugins working with WooCommerce email templates. [(#278](https://github.com/angelleye/offers-for-woocommerce/issues/278))
+* Fix - Resolves a potential conflict with other plugins working with WooCommerce email templates. ([#278](https://github.com/angelleye/offers-for-woocommerce/issues/278))
+* Fix - Resolves an issue where offers would get marked as completed if the user began checkout but then canceled before completing payment. ([#281](https://github.com/angelleye/offers-for-woocommerce/issues/281))
 
 = 1.3.1 - 01.03.2017 =
 * Feature - Adds ability to display current high offer on the product page. ([#257](https://github.com/angelleye/offers-for-woocommerce/issues/257))

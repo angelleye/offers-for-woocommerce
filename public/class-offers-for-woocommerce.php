@@ -137,7 +137,7 @@ class Angelleye_Offers_For_Woocommerce {
          * Action - woocommerce_checkout_order_processed
          * @since   0.1.0
          */
-        add_action('woocommerce_checkout_order_processed', array($this, 'ae_ofwc_woocommerce_checkout_order_processed'));
+        add_action('woocommerce_thankyou', array($this, 'ae_ofwc_woocommerce_checkout_order_processed'));
 
         /**
          * Filter - ae_paypal_standard_additional_parameters
@@ -172,7 +172,8 @@ class Angelleye_Offers_For_Woocommerce {
         add_action( 'woocommerce_before_customer_login_form', array($this, 'ofw_before_customer_login_form'));
         add_filter('woocommerce_login_redirect',array($this,'ofw_login_redirect'),10,1);
         add_filter('woocommerce_registration_redirect',array($this,'ofw_login_redirect'),10,1);
-        add_filter('woocommerce_loop_add_to_cart_link',array($this,'ofw_woocommerce_loop_add_to_cart_link'),10,2);        
+        add_filter('woocommerce_loop_add_to_cart_link',array($this,'ofw_woocommerce_loop_add_to_cart_link'),10,2);
+        add_action( 'admin_bar_menu', array($this, 'ofwc_manage_offer_admin_bar_callback'), 999 );
     }
     
     /**
@@ -208,8 +209,6 @@ class Angelleye_Offers_For_Woocommerce {
         global $post,$wp;;
         global $current_user;
         $req_login = FALSE;
-        
-        do_action('ofwc_before_offer_button_output', $post->ID, $is_archive);
         
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
@@ -288,9 +287,7 @@ class Angelleye_Offers_For_Woocommerce {
             $btn_output .= '</div>';
         }
         
-        do_action('ofwc_after_offer_button_output', $post->ID, $is_archive, $btn_output);
-        
-        return apply_filters( 'ofwc_offer_button_output', $btn_output, $post->ID, $is_archive );
+        return $btn_output;
     }
     
     /**
@@ -884,10 +881,8 @@ class Angelleye_Offers_For_Woocommerce {
 
 
         global $wpdb,$woocommerce; // this is how you get access to the database
-        
-        do_action('woocommerce_before_offer_submit', $post);
 
-        // Check if form was posted and select task accordingly
+                    // Check if form was posted and select task accordingly
         if(isset($post["offer_product_id"]) && $post["offer_product_id"] != '')
         {
             // set postmeta original vars
@@ -1595,53 +1590,55 @@ class Angelleye_Offers_For_Woocommerce {
         // Get order items
         $order_items = $order->get_items();
 
-        // Check for offer id
-        foreach ($order_items as $key => $value) {
-            $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
+        if ( get_post_status( $order_id ) == 'wc-completed' || get_post_status( $order_id ) == 'wc-processing' ) {
+            // Check for offer id
+            foreach ($order_items as $key => $value) {
+                $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
 
-            /**
-             * Update offer
-             * Add postmeta value 'offer_order_id' for this order id
-             * Set offer post status to 'completed-offer'
-             */
-            if ($item_offer_id) {
-                // Update offer post args
-                $offer_data = array();
-                $offer_data['ID'] = $item_offer_id;
-                $offer_data['post_status'] = 'completed-offer';
+                /**
+                 * Update offer
+                 * Add postmeta value 'offer_order_id' for this order id
+                 * Set offer post status to 'completed-offer'
+                 */
+                if ($item_offer_id) {
+                    // Update offer post args
+                    $offer_data = array();
+                    $offer_data['ID'] = $item_offer_id;
+                    $offer_data['post_status'] = 'completed-offer';
 
-                // Update offer
-                $offer_id = wp_update_post($offer_data);
+                    // Update offer
+                    $offer_id = wp_update_post($offer_data);
 
-                // Check for offer post id
-                if ($offer_id != 0) {
-                    // Add 'offer_order_id' postmeta to offer post
-                    add_post_meta($item_offer_id, 'offer_order_id', $order_id, true);
+                    // Check for offer post id
+                    if ($offer_id != 0) {
+                        // Add 'offer_order_id' postmeta to offer post
+                        add_post_meta($item_offer_id, 'offer_order_id', $order_id, true);
 
-                    // Insert WP comment on related 'offer'
-                    $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "</span> " . __('Completed', 'offers-for-woocommerce');
-                    $comment_text.= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
+                        // Insert WP comment on related 'offer'
+                        $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "</span> " . __('Completed', 'offers-for-woocommerce');
+                        $comment_text.= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
 
-                    $comment_data = array(
-                        'comment_post_ID' => '',
-                        'comment_author' => 'admin',
-                        'comment_author_email' => '',
-                        'comment_author_url' => '',
-                        'comment_content' => $comment_text,
-                        'comment_type' => 'offers-history',
-                        'comment_parent' => 0,
-                        'user_id' => 1,
-                        'comment_author_IP' => '127.0.0.1',
-                        'comment_agent' => '',
-                        'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
-                        'comment_approved' => 'post-trashed',
-                    );
-                    $new_comment_id = wp_insert_comment($comment_data);
+                        $comment_data = array(
+                            'comment_post_ID' => '',
+                            'comment_author' => 'admin',
+                            'comment_author_email' => '',
+                            'comment_author_url' => '',
+                            'comment_content' => $comment_text,
+                            'comment_type' => 'offers-history',
+                            'comment_parent' => 0,
+                            'user_id' => 1,
+                            'comment_author_IP' => '127.0.0.1',
+                            'comment_agent' => '',
+                            'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
+                            'comment_approved' => 'post-trashed',
+                        );
+                        $new_comment_id = wp_insert_comment($comment_data);
 
-                    // insert comment meta
-                    if ($new_comment_id) {
-                        add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true);
-                        add_comment_meta($new_comment_id, 'offer_status', '4', true);
+                        // insert comment meta
+                        if ($new_comment_id) {
+                            add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true);
+                            add_comment_meta($new_comment_id, 'offer_status', '4', true);
+                        }
                     }
                 }
             }
@@ -2184,37 +2181,31 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofw_display_highest_current_offer() {
         global $post, $wpdb;
         if($this->ofw_is_highest_current_bid_enable()) {
-            $total_result = $wpdb->get_results($wpdb->prepare("
-                    SELECT MAX( postmeta.meta_value ) AS max_offer, COUNT(posts.ID) as total_qty
-                    FROM $wpdb->postmeta AS postmeta
-                    JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
-                    INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status NOT LIKE 'completed-offer')
-                    WHERE postmeta.meta_key LIKE 'offer_price_per' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
-                    AND postmeta.post_id = posts.ID LIMIT 0, 99
-            ", $post->ID), ARRAY_A);
-            $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
-            $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
-            if($total_qty > 0 && $max_offer > 0) {
+            $highest_offers = $this->ofw_get_highest_current_offer_data();
+            $post_id = (isset($highest_offers['post_id']) && !empty($highest_offers['post_id'])) ? $highest_offers['post_id'] : 0;
+            $max_offer = (isset($highest_offers['max_offer']) && !empty($highest_offers['max_offer'])) ? $highest_offers['max_offer'] : 0;
+            if($post_id > 0 && $max_offer > 0) {
                 echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ), 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ) ) . '</div>';
             }
         }
     }
     
-    public function ofw_display_highest_current_offer_shortcode() {
+    public function ofw_get_highest_current_offer_data() {
         global $post, $wpdb;
         $total_result = $wpdb->get_results($wpdb->prepare("
-                SELECT MAX( postmeta.meta_value ) AS max_offer, COUNT(posts.ID) as total_qty
-                FROM $wpdb->postmeta AS postmeta
-                JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
-                INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status NOT LIKE 'completed-offer')
-                WHERE postmeta.meta_key LIKE 'offer_price_per' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
-                AND postmeta.post_id = posts.ID LIMIT 0, 99
+            SELECT MAX( postmeta.meta_value ) AS max_offer, posts.ID as post_id
+            FROM $wpdb->postmeta AS postmeta
+            JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
+            INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status IN ('publish'))
+            WHERE postmeta.meta_key LIKE 'offer_price_per' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
+            AND postmeta.post_id = posts.ID
         ", $post->ID), ARRAY_A);
-        $total_qty = (isset($total_result[0]['total_qty']) && !empty($total_result[0]['total_qty'])) ? $total_result[0]['total_qty'] : 0;
-        $max_offer = (isset($total_result[0]['max_offer']) && !empty($total_result[0]['max_offer'])) ? $total_result[0]['max_offer'] : 0;
-        if($total_qty > 0 && $max_offer > 0) {
-            echo '<div class="ofw-info"> ' . sprintf( _n( 'Highest Current Offer: %s%s', 'Highest Current Offer: %s%s', get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ), 'offers-for-woocommerce' ), get_woocommerce_currency_symbol(), wc_format_decimal( $max_offer, wc_get_price_decimals() ) ) . '</div>';
-        }
+        return $total_result[0];
+    }
+    
+    public function ofw_display_highest_current_offer_shortcode() {
+        global $post, $wpdb;
+        $this->ofw_display_highest_current_offer();
     }
 
     public function ofw_is_highest_current_bid_enable() {
@@ -2243,5 +2234,47 @@ class Angelleye_Offers_For_Woocommerce {
             return '<div class="ofwc_no_price_product">'.$link.'</div>';
         }
         return $link;
+    }
+    
+    public function ofwc_get_pending_offer_count_by_product_id($product_id, $count_only = false) {
+	global $wpdb;
+	$args = array(
+		'post_type' => 'woocommerce_offer',
+		'post_status' => array( 'publish','countered-offer','buyercountered-offer' ),
+		'posts_per_page' => -1,
+		'meta_key' => 'offer_product_id',
+		'meta_value' => $product_id,
+		'meta_compare' => '==',
+	);
+	$query = new WP_Query( $args );
+	$count = $query->post_count;
+        if($count_only)
+            return $count;
+	return $query;
+    }
+    
+    function ofwc_manage_offer_admin_bar_callback( $wp_admin_bar ) {
+        if ( ! is_user_logged_in() )
+            return;
+        
+        $user = wp_get_current_user();
+        $allowed_roles = array('vendor', 'administrator', 'shop_manager');
+        if ( ! array_intersect($allowed_roles, $user->roles ) )
+            return;
+        
+        if(!is_product() || is_admin())
+            return;
+        
+        global $wpdb, $post;
+        
+        if($this->ofwc_get_pending_offer_count_by_product_id($post->ID, true) > 0){
+            $args = array(
+                'id'    => 'manage_offers',
+                'title' => 'Manage Offers',
+                'href'  => get_edit_post_link($post->ID).'#ofwc_product_offers',
+                'meta'  => array( 'class' => 'ofwc-admin-bar-offers' )
+            );
+            $wp_admin_bar->add_node( $args );
+        }
     }
 }
