@@ -2194,7 +2194,7 @@ class Angelleye_Offers_For_Woocommerce {
             SELECT MAX( postmeta.meta_value ) AS max_offer, posts.ID as post_id
             FROM $wpdb->postmeta AS postmeta
             JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
-            INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status NOT IN ('completed-offer', 'declined-offer', 'accepted-offer'))
+            INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status IN ('publish'))
             WHERE postmeta.meta_key LIKE 'offer_price_per' AND pm2.meta_key LIKE 'offer_product_id' AND pm2.meta_value LIKE %d
             AND postmeta.post_id = posts.ID
         ", $post->ID), ARRAY_A);
