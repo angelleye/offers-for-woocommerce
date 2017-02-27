@@ -1279,7 +1279,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'normal', 'high'
             );
         }
-        add_meta_box( 'ofwc_product_offers', __( 'Offers for this Product', 'offers-for-woocommerce' ), array( $this, 'add_meta_box_product_offers_callback' ), 'product', 'normal' );
+        add_meta_box( 'ofwc_product_offers', __( 'Offer History', 'offers-for-woocommerce' ), array( $this, 'add_meta_box_product_offers_callback' ), 'product', 'normal' );
     }
 
     /**
