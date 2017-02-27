@@ -2255,7 +2255,9 @@ class Angelleye_Offers_For_Woocommerce {
         if ( ! is_user_logged_in() )
             return;
         
-        if ( ! current_user_can( 'edit_woocommerce_offer' ) )
+        $user = wp_get_current_user();
+        $allowed_roles = array('vendor', 'administrator', 'shop_manager');
+        if ( ! array_intersect($allowed_roles, $user->roles ) )
             return;
         
         if(!is_product() || is_admin())
