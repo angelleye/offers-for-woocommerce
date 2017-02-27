@@ -125,6 +125,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds filter hooks to adjust the recipient(s) on email notifications for offers. ([#259](https://github.com/angelleye/offers-for-woocommerce/issues/259))
 * Feature - Allows you to choose whether to include shipping on the accepted/countered offer or not. ([#271](https://github.com/angelleye/offers-for-woocommerce/issues/271))
 * Feature - Adds a few hooks. ([#265](https://github.com/angelleye/offers-for-woocommerce/issues/265))
+* Feature - Adds Offer History to product editor in WP admin panel.  Also adds "Manage Offers" link to admin toolbar when browsing a product page. ([#280](https://github.com/angelleye/offers-for-woocommerce/issues/280))
 * Tweak - Adjusts filter hooks. ([#261](https://github.com/angelleye/offers-for-woocommerce/issues/261))
 * Tweak - General code improvements. ([#267](https://github.com/angelleye/offers-for-woocommerce/issues/267), [#273](https://github.com/angelleye/offers-for-woocommerce/issues/273))
 * Tweak - Adjustments to offer history settings / display. ([#277](https://github.com/angelleye/offers-for-woocommerce/issues/277))
