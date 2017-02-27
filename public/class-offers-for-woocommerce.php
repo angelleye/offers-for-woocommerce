@@ -1590,7 +1590,7 @@ class Angelleye_Offers_For_Woocommerce {
         // Get order items
         $order_items = $order->get_items();
 
-        if ( get_post_status( $order_id ) == 'wc-completed'  ) {
+        if ( get_post_status( $order_id ) == 'wc-completed' || get_post_status( $order_id ) == 'wc-processing' ) {
             // Check for offer id
             foreach ($order_items as $key => $value) {
                 $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
