@@ -1279,7 +1279,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'normal', 'high'
             );
         }
-        add_meta_box( 'ofwc_product_offers', __( 'Offers for this Product', 'offers-for-woocommerce' ), array( $this, 'add_meta_box_product_offers_callback' ), 'product', 'normal' );
+        add_meta_box( 'ofwc_product_offers', __( 'Offer History', 'offers-for-woocommerce' ), array( $this, 'add_meta_box_product_offers_callback' ), 'product', 'normal' );
     }
 
     /**
@@ -3988,9 +3988,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             echo '<td class="title column-title" data-colname="title"><a href="'.get_edit_post_link().'">'.get_the_title().'</a></td>';
             echo '<td class="date column-date" data-colname="date"><abbr title="'.get_the_date().'">'.get_the_date().'</abbr></td>';
             echo '<td class="name column-name" data-colname="name">'.$name.'</td>';
-            echo '<td class="price_per column-price_per" data-colname="price_per">'.$offer_price_per.'</td>';
+            echo '<td class="price_per column-price_per" data-colname="price_per">'.get_woocommerce_currency_symbol().number_format($offer_price_per, 2, '.', '').'</td>';
             echo '<td class="quantity column-quantity" data-colname="quantity">'.$offer_quantity.'</td>';
-            echo '<td class="amount column-amount" data-colname="amount">'.$offer_amount.'</td>';
+            echo '<td class="amount column-amount" data-colname="amount">'.get_woocommerce_currency_symbol().number_format($offer_amount, 2, '.', '').'</td>';
             echo '<td class="status column-amount" data-colname="status">'.$status.'</td>';
             echo '</tr>';
 	endwhile;
