@@ -2262,7 +2262,7 @@ class Angelleye_Offers_For_Woocommerce {
         if ( ! array_intersect($allowed_roles, $user->roles ) )
             return;
         
-        if(!is_product() || is_admin())
+        if(!is_singular( array( 'product' ) ) || is_admin())
             return;
         
         global $wpdb, $post;
