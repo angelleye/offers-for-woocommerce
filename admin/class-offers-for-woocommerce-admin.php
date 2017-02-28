@@ -731,71 +731,81 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function get_woocommerce_offer_column( $column, $post_id ) 
 	{
-        $post_status = get_post_status( $post_id );
+            $post_status = get_post_status( $post_id );
 
-		switch ( $column ) {
-            case 'offer_name' :
-                $val = get_post_meta( $post_id , 'offer_name' , true );
-                echo stripslashes($val);
-                break;
-            case 'offer_product_title' :
-                $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
-                $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+            switch ( $column ) {
+                case 'offer_name' :
+                    $val = get_post_meta( $post_id , 'offer_name' , true );
+                    echo stripslashes($val);
+                    break;
+                case 'offer_product_title' :
+                    $product_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+                    $product_variant_id = get_post_meta( $post_id , 'orig_offer_product_id' , true );
+                    $wc_prd_vendor_options = get_option('wc_prd_vendor_options');
+                    $can_edit_opt = $wc_prd_vendor_options['can_edit_published_products'];
+                    $user = wp_get_current_user();
 
-                $product_title = get_the_title($product_id);
+                    if($product_id > 0)
+                    {
+                        $product_title = get_the_title($product_id);
+                        if ( in_array( 'vendor', (array) $user->roles )){
+                            if(isset($can_edit_opt) && $can_edit_opt == 1){
+                                $val = '<a href="post.php?post=' . $product_id . '&action=edit">' . $product_title . '</a>';
+                            } else {
+                                $val = $product_title;
+                            }
+                        } else {
+                            $val = '<a href="post.php?post=' . $product_id . '&action=edit">' . $product_title . '</a>';
+                        }
+                    }
+                    else
+                    {
+                        $val = '<em>' . __('Not Found', 'offers-for-woocommerce' ) . '</em>';
+                    }
 
-                if($product_title)
-                {
-                    $val = '<a href="post.php?post=' . $product_id . '&action=edit">' . $product_title . '</a>';
-                }
-                else
-                {
-                    $val = '<em>' . __('Not Found', 'offers-for-woocommerce' ) . '</em>';
-                }
+                    echo stripslashes($val);
+                    break;
 
-                echo stripslashes($val);
-                break;
+                case 'offer_quantity' :
+                    if( $post_status == 'buyercountered-offer' )
+                    {
+                        $val = get_post_meta( $post_id , 'offer_buyer_counter_quantity' , true );
+                    }
+                    else
+                    {
+                        $val = get_post_meta( $post_id , 'offer_quantity' , true );
+                    }
+                    $val = ($val != '') ? $val : '0';
+                    echo number_format($val, 2, '.', '');
+                    break;
 
-            case 'offer_quantity' :
-                if( $post_status == 'buyercountered-offer' )
-                {
-                    $val = get_post_meta( $post_id , 'offer_buyer_counter_quantity' , true );
-                }
-                else
-                {
-                    $val = get_post_meta( $post_id , 'offer_quantity' , true );
-                }
-                $val = ($val != '') ? $val : '0';
-                echo number_format($val, 2, '.', '');
-			break;
-				
-			case 'offer_price_per' :
-                if( $post_status == 'buyercountered-offer' )
-                {
-                    $val = get_post_meta( $post_id , 'offer_buyer_counter_price_per' , true );
-                }
-                else
-                {
-                    $val = get_post_meta( $post_id , 'offer_price_per' , true );
-                }
-                $val = ($val != '') ? $val : '0';
-				echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
-			break;
+                    case 'offer_price_per' :
+                    if( $post_status == 'buyercountered-offer' )
+                    {
+                        $val = get_post_meta( $post_id , 'offer_buyer_counter_price_per' , true );
+                    }
+                    else
+                    {
+                        $val = get_post_meta( $post_id , 'offer_price_per' , true );
+                    }
+                    $val = ($val != '') ? $val : '0';
+                    echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
+                    break;
 
-			case 'offer_amount' :
-                if( $post_status == 'buyercountered-offer' )
-                {
-                    $val = get_post_meta( $post_id , 'offer_buyer_counter_amount' , true );
-                }
-                else
-                {
-                    $val = get_post_meta( $post_id , 'offer_amount' , true );
-                }
-                $val = ($val != '') ? $val : '0';
-                echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
-            break;
-		}
-	}	
+                    case 'offer_amount' :
+                    if( $post_status == 'buyercountered-offer' )
+                    {
+                        $val = get_post_meta( $post_id , 'offer_buyer_counter_amount' , true );
+                    }
+                    else
+                    {
+                        $val = get_post_meta( $post_id , 'offer_amount' , true );
+                    }
+                    $val = ($val != '') ? $val : '0';
+                    echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
+                    break;
+            }
+	}
 	
 	/**
 	 * Filter the custom columns for CPT edit list view to be sortable
@@ -3723,7 +3733,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      *
      * @return array
      */
-    public function get_core_capabilities() {
+    public static function get_core_capabilities() {
         $capabilities = array();
 
         $capability_types = array('woocommerce_offer');
