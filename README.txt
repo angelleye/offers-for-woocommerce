@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.7
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.0 - xx.xx.2017 =
+= 1.4.0 - 02.28.2017 =
 * Feature - Options for requiring user log in to submit offers. ([#263](https://github.com/angelleye/offers-for-woocommerce/issues/263))
 * Feature - Compatibility with WPML.  Bulk editor now updates all language versions of products. ([#204](https://github.com/angelleye/offers-for-woocommerce/issues/204))
 * Feature - Adds an option to display the Make Offer form only when the user is about to exit the page. ([#192](https://github.com/angelleye/offers-for-woocommerce/issues/192))
