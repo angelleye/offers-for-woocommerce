@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '1.3.1';
+    const VERSION = '1.4.0';
 
     /**
      *
