@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.7
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.1 - 02.28.2017 =
+* Tweak - Adjustments for better compatibility with WC Vendors extension. ([#284](https://github.com/angelleye/offers-for-woocommerce/issues/284))
 * Fix - Resolves a potential PHP error with the Manage Offers admin bar link. ([#283](https://github.com/angelleye/offers-for-woocommerce/issues/283))
 
 = 1.4.0 - 02.28.2017 =
