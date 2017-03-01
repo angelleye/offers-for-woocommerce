@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.1 - 02.28.2017 =
+* Tweak - Adjustments for better compatibility with WC Vendors extension. ([#284](https://github.com/angelleye/offers-for-woocommerce/issues/284))
 * Fix - Resolves a potential PHP error with the Manage Offers admin bar link. ([#283](https://github.com/angelleye/offers-for-woocommerce/issues/283))
 
 = 1.4.0 - 02.28.2017 =
