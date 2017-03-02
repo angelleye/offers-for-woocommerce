@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '1.4.1';
+    const VERSION = '1.4.2';
 
     /**
      *
@@ -132,12 +132,6 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_filter('woocommerce_email_classes', array($this, 'add_woocommerce_email_classes'));
-
-        /**
-         * Action - woocommerce_checkout_order_processed
-         * @since   0.1.0
-         */
-        add_action('woocommerce_thankyou', array($this, 'ae_ofwc_woocommerce_checkout_order_processed'));
 
         /**
          * Filter - ae_paypal_standard_additional_parameters
@@ -1575,74 +1569,6 @@ class Angelleye_Offers_For_Woocommerce {
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
 
         return $email_classes;
-    }
-
-    /**
-     * Action - woocommerce_checkout_order_processed
-     * Adds offer postmeta  'offer_order_id'
-     * @since   0.1.0
-     */
-    public function ae_ofwc_woocommerce_checkout_order_processed($order_id) {
-        global $woocommerce;
-
-        // Get Order
-        $order = new WC_Order($order_id);
-        // Get order items
-        $order_items = $order->get_items();
-
-        if ( get_post_status( $order_id ) == 'wc-completed' || get_post_status( $order_id ) == 'wc-processing' ) {
-            // Check for offer id
-            foreach ($order_items as $key => $value) {
-                $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
-
-                /**
-                 * Update offer
-                 * Add postmeta value 'offer_order_id' for this order id
-                 * Set offer post status to 'completed-offer'
-                 */
-                if ($item_offer_id) {
-                    // Update offer post args
-                    $offer_data = array();
-                    $offer_data['ID'] = $item_offer_id;
-                    $offer_data['post_status'] = 'completed-offer';
-
-                    // Update offer
-                    $offer_id = wp_update_post($offer_data);
-
-                    // Check for offer post id
-                    if ($offer_id != 0) {
-                        // Add 'offer_order_id' postmeta to offer post
-                        add_post_meta($item_offer_id, 'offer_order_id', $order_id, true);
-
-                        // Insert WP comment on related 'offer'
-                        $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "</span> " . __('Completed', 'offers-for-woocommerce');
-                        $comment_text.= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
-
-                        $comment_data = array(
-                            'comment_post_ID' => '',
-                            'comment_author' => 'admin',
-                            'comment_author_email' => '',
-                            'comment_author_url' => '',
-                            'comment_content' => $comment_text,
-                            'comment_type' => 'offers-history',
-                            'comment_parent' => 0,
-                            'user_id' => 1,
-                            'comment_author_IP' => '127.0.0.1',
-                            'comment_agent' => '',
-                            'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
-                            'comment_approved' => 'post-trashed',
-                        );
-                        $new_comment_id = wp_insert_comment($comment_data);
-
-                        // insert comment meta
-                        if ($new_comment_id) {
-                            add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true);
-                            add_comment_meta($new_comment_id, 'offer_status', '4', true);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
