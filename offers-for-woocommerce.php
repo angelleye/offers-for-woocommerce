@@ -95,8 +95,18 @@ add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_in
  *
  * @since	0.1.0
  */
-if( is_admin() )
+function ofwc_get_active_plugins(){ 
+    $active_plugins = (array) get_option( 'active_plugins', array() );
+    if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+    return $active_plugins; 
+}
+
+function ofwc_is_wcvendors_pro_active() {
+    $active_plugins = ofwc_get_active_plugins(); 		
+    return in_array( 'wcvendors-pro/wcvendors-pro.php', $active_plugins ) || array_key_exists( 'wcvendors-pro/wcvendors-pro.php', $active_plugins );
+}
+if( is_admin() || ofwc_is_wcvendors_pro_active() )
 {
-	require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
-	add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
+    require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
+    add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
 }
