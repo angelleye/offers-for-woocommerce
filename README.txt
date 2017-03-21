@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.3 - xx.xx.2017 =
+* Feature - Adds option to set a custom class name for the offer button so that you can adjust CSS more easily. ([#286](https://github.com/angelleye/offers-for-woocommerce/issues/286))
 * Tweak - Moves register post type function into main plugin file for loading in init. ([#287](https://github.com/angelleye/offers-for-woocommerce/issues/287))
 
 = 1.4.2 - 03.02.2017 =
