@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.3 - xx.xx.2017 =
+* Tweak - Moves register post type function into main plugin file for loading in init. ([#287](https://github.com/angelleye/offers-for-woocommerce/issues/287))
+
 = 1.4.2 - 03.02.2017 =
 * Tweak - Changes the hook used to update the offer status based on the order status. ([#285](https://github.com/angelleye/offers-for-woocommerce/issues/285))
 
