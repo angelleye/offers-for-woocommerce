@@ -2173,7 +2173,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_display',
                 'input_label'=>'display_setting_custom_make_offer_btn_class',
                 'input_required'=>FALSE,
-                'description' => __('Set the class you would like to be displayed in the offer button.', 'offers-for-woocommerce'),
+                'description' => __('Set a custom CSS class name for the offer button.', 'offers-for-woocommerce'),
             )
 		);
                 
