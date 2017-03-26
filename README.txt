@@ -122,6 +122,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds option to set a custom class name for the offer button so that you can adjust CSS more easily. ([#286](https://github.com/angelleye/offers-for-woocommerce/issues/286))
 * Tweak - Moves register post type function into main plugin file for loading in init. ([#287](https://github.com/angelleye/offers-for-woocommerce/issues/287))
 * Tweak - Adjusts code to work with old and new versions of jQuery. ([#288](https://github.com/angelleye/offers-for-woocommerce/issues/288))
+* Fix - Resolves a PHP notice about a non-object. ([#292](https://github.com/angelleye/offers-for-woocommerce/issues/292))
 
 = 1.4.2 - 03.02.2017 =
 * Tweak - Changes the hook used to update the offer status based on the order status. ([#285](https://github.com/angelleye/offers-for-woocommerce/issues/285))
