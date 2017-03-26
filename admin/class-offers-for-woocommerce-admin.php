@@ -704,7 +704,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function angelleye_ofwc_exclude_cpt_from_comments_clauses( $clauses ) {
             $screen = get_current_screen();
-            if ( $screen->id == 'edit-comments' ) {
+            if ( !empty($screen->id) && $screen->id == 'edit-comments' ) {
                 global $wpdb;
                 $clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
                 $clauses['where'] .= $wpdb->prepare(" AND $wpdb->posts.post_type <> '%s'", 'woocommerce_offer');
