@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.7
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.3 - xx.xx.2017 =
+= 1.4.3 - 03.26.2017 =
 * Feature - Adds option to set a custom class name for the offer button so that you can adjust CSS more easily. ([#286](https://github.com/angelleye/offers-for-woocommerce/issues/286))
 * Tweak - Moves register post type function into main plugin file for loading in init. ([#287](https://github.com/angelleye/offers-for-woocommerce/issues/287))
 * Tweak - Adjusts code to work with old and new versions of jQuery. ([#288](https://github.com/angelleye/offers-for-woocommerce/issues/288))
