@@ -112,6 +112,14 @@
                 <br /><input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
             </div>
             <?php do_action('make_offer_form_after_your_name', 'add_custom_field_make_offer_form', $is_counter_offer); ?>
+            
+            <?php do_action('make_offer_form_before_your_email_address', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
+            <div class="woocommerce-make-offer-form-section">
+                <label for="woocommerce-make-offer-form-email"><?php echo apply_filters( 'aeofwc_offer_form_label_your_email_address', __('Your Email Address', 'offers-for-woocommerce'), $is_counter_offer );?></label>
+                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
+            </div>
+            <?php do_action('make_offer_form_after_your_email_address', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>    
+                
             <?php do_action('make_offer_form_before_company_name', 'add_custom_field_make_offer_form', $is_counter_offer); ?>
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_company_name'])) { ?>
                 <div class="woocommerce-make-offer-form-section">
@@ -132,12 +140,6 @@
                 <input type="hidden" name="offer_phone" id="offer-phone" value="">
             <?php } ?>
             <?php do_action('make_offer_form_after_phone_number', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>      
-            <?php do_action('make_offer_form_before_your_email_address', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
-            <div class="woocommerce-make-offer-form-section">
-                <label for="woocommerce-make-offer-form-email"><?php echo apply_filters( 'aeofwc_offer_form_label_your_email_address', __('Your Email Address', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
-            </div>
-            <?php do_action('make_offer_form_after_your_email_address', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
             <?php do_action('make_offer_form_before_offer_notes', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) && $is_anonymous_communication_enable == false ) { ?>
                 <div class="woocommerce-make-offer-form-section">
