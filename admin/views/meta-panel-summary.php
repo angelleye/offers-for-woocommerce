@@ -56,6 +56,10 @@
                                 <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'offers-for-woocommerce'); ?></span>
                             </li>
                         <?php } ?>
+                            <hr><li><span>Product Add-ons Data</span></li><hr>
+                            <li>
+                                <span>Name&nbsp;</span> 20.00
+                            </li>    
                         <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
                         <input id="offer-backorders-allowed" type="hidden" value="<?php echo ( $_product_backorders_allowed ) ? 'true' : 'false';?>">
                     </ul>

@@ -1311,7 +1311,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         if($post->ID)
         {
-            $postmeta = get_post_meta($post->ID);
+            $postmeta = get_post_meta($post->ID);            
+            /* Below line of code fetch the post meta that are set during submit offer */
+            $offers_product_addon = get_post_meta($post->ID,'offers_product_addon',true);            
+            /* end */
             $currency_symbol = get_woocommerce_currency_symbol();
 
             // Add an nonce field so we can check for it later.
@@ -1336,7 +1339,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
             $postmeta['enable_shipping_cost'][0] = ( isset( $postmeta['enable_shipping_cost'][0] ) && $postmeta['enable_shipping_cost'][0] != '' ) ? $postmeta['enable_shipping_cost'][0] : 0;
             $_product = wc_get_product($product_id);
-
+            
             if($_product != false) {
             
                 if( $product_variant_id )
@@ -1379,6 +1382,50 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                     // set error message if product not found...
                 }
+                
+                /* Products Addon and Offers Plugin meta check starts */
+                  $_product_addons_data =  get_post_meta($_product->post->ID,'_product_addons',true);
+                  echo "<pre>";
+                  
+                  $arry = array();
+                  $k = 0;
+                  $p = 0;
+                  var_dump($offers_product_addon);
+                  exit;
+                  foreach ($offers_product_addon as $offers_product_addon_values) {
+                      if(array_key_exists('group', $offers_product_addon_values)){
+                          $t = $offers_product_addon_values['name'];
+                          $key = array_keys( array_column($offers_product_addon, 'name'),$t);                          
+                          $arry[$k]['name'] = $offers_product_addon_values['group'];
+                          $arry[$k]['input_name'] = $offers_product_addon_values['name'];
+                          for($j=0;$j<count($key);$j++){
+                          if((count($p)%3) != 0){
+                              if($offers_product_addon[$key[$j]]['value'] !=''){
+                              $arry[$k]['options'][$p]['label'] = $offers_product_addon[$key[$j]]['value'];
+                                if($p < count($key)){                                 
+                                    $p++;
+                                }
+                              }
+                          }
+                          }
+                          $arry[$k]['price'] = $offers_product_addon[$key[1]]['price'];
+                      
+                          $k++;
+                      }
+                     
+                  }
+                  $final_array = $newArray = array();
+                  $j = 0;
+                  foreach ( $arry AS $key => $line ) { 
+                        if ( !in_array($line['input_name'], $final_array) ) { 
+                            $final_array[] = $line['input_name']; 
+                            $newArray[$j] = $line; 
+                            $j++;
+                        } 
+                    }
+                  print_r($newArray);
+                  exit;
+                /* Products Addon and Offers Plugin meta check end. */
 
                 /**
                  * Set default expiration date on 'pending' offer expiration date input field

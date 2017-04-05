@@ -851,9 +851,23 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     public function new_offer_form_submit()
-    {
+    {        
         ob_start();
-        $post_data = $formData = $newPostData = array();
+        $post_data = $formData = $newPostData = array();            
+        $arr_main_array = $_POST['value'];
+
+        foreach($arr_main_array as  $value){
+            $exp_key = explode('-', $value['name']);
+            if($exp_key[0] == 'addon'){
+                 $arr_result[] = $value;
+            }
+        }
+        var_dump($arr_result);
+        exit;
+        if(isset($arr_result)){
+            $formData['offers_product_addon']=  $arr_result;
+        }
+
         if (is_ajax()) {
             if( isset($_POST['value']) && !empty($_POST['value']) ) {
                 $post_data = $_POST['value'];
@@ -892,7 +906,7 @@ class Angelleye_Offers_For_Woocommerce {
                             $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
             $formData['orig_offer_uid'] = uniqid('aewco-');;
             $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
-
+                        
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
                     $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
@@ -1038,6 +1052,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
                 $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
                 $formDataUpdated['offer_amount'] = $formData['offer_amount'];
+                 if(isset($arr_result)){
+                    $formDataUpdated['offers_product_addon']=  serialize($arr_result);
+                 }
 
                 // Insert new Post Meta Values
                 foreach ($formDataUpdated as $k => $v) {
