@@ -229,29 +229,31 @@
                     post_data_array.push({name: 'offer_quantity', value: offerQuantity});
                     post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
                     post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
-                    
+                      var cart_form_array = [];                                      
                     jQuery("div.product-addon").each(function(){
+                        
                          var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
-                         //var input_tag = jQuery(this).find('input');
                          var input_tag = jQuery(this).find(":input[name^='addon-9']");
                          
                          input_tag.each(function(){
                             if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){
                                 if(jQuery(this).is(':checked')){
-                                    post_data_array.push({name: jQuery(this).attr("name"), value: jQuery(this).val()});
-                                    post_data_array.push({name: jQuery(this).attr("name"), price: jQuery(this).attr('data-raw-price')});
-                                    post_data_array.push({name: jQuery(this).attr("name"), group: group_name});
+                                    var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
+                                    cart_form_array.push({group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
                                 }
                             }
-                            else{
+                            
+                            if(jQuery(this).is('textarea')){
                                 if(jQuery(this).val() !== ''){
-                                    post_data_array.push({name: jQuery(this).attr("name"), value: jQuery(this).val()});
-                                    post_data_array.push({name: jQuery(this).attr("name"), price: jQuery(this).attr('data-raw-price')});
-                                    post_data_array.push({name: jQuery(this).attr("name"), group: group_name});
+                                    var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
+                                    cart_form_array.push({group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_textarea"});
                                 }
                             }
+                           
                         });
-                    });                                               
+                        
+                    });      
+                    post_data_array.push({cart_form_array:cart_form_array});                   
                     var data_make_offer = {
                         action: 'new_offer_form_submit',
                         security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
@@ -262,6 +264,7 @@
                     var request = $.ajax({
                         url: offers_for_woocommerce_js_params.ajax_url,
                         type: "post",
+                        dataType : 'json',
                         data: data_make_offer
                     });
 

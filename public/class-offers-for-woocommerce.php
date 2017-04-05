@@ -855,15 +855,15 @@ class Angelleye_Offers_For_Woocommerce {
         ob_start();
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = $_POST['value'];
-
+        echo "<pre>";
+        print_r($arr_main_array);
+        exit;
         foreach($arr_main_array as  $value){
             $exp_key = explode('-', $value['name']);
             if($exp_key[0] == 'addon'){
                  $arr_result[] = $value;
             }
-        }
-        //var_dump($arr_result);
-        //exit;
+        }        
         if(isset($arr_result)){
             $formData['offers_product_addon']=  $arr_result;
         }
