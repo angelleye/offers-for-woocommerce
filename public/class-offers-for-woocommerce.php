@@ -1287,7 +1287,7 @@ class Angelleye_Offers_For_Woocommerce {
                 return false;
             }
         }
-
+        
         return ob_get_clean();
     }
 

@@ -52,8 +52,8 @@
                             alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
                         }
                     } else {
-                        var productId = $("input[name='add-to-cart']").val();
-                        if(productId > 0){
+                        //var productId = $("button[name='add-to-cart']").val();
+                        if($("input[name='add-to-cart']").val() > 0 || $("button[name='add-to-cart']").val() > 0){
                             angelleyeOpenMakeOfferForm();
                         } else {
                             alert(offers_for_woocommerce_js_params.i18n_unavailable_text);
@@ -176,7 +176,19 @@
 
                 var offerProductId = '';
                 var offerVariationId = '';
-                var offerProductId = $("input[name='add-to-cart']").val();
+                
+                /* old WC version condition start*/
+                if($("input[name='add-to-cart']").val() > 0 ){
+                    var offerProductId = $("input[name='add-to-cart']").val();
+                }
+                /* old WC version condition end */
+                
+                /* New WC version condition start*/
+                if($("button[name='add-to-cart']").val() > 0){
+                    var offerProductId = $("button[name='add-to-cart']").val();
+                }
+                /* New WC version condition end */
+                
                 var offerVariationId = $("input[name='variation_id']").val();
 
                 var join_our_mailing_list = "no";
@@ -191,7 +203,7 @@
                 var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
 
                 var offerForm = $('#woocommerce-make-offer-form');
-
+                
                 if(offerProductId != '')
                 {
                     // disable submit button
