@@ -220,8 +220,8 @@
                     
                     jQuery("div.product-addon").each(function(){
                          var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
-                         var input_tag = jQuery(this).find('input');
-                         //var input_tag = jQuery(this).find(":input[name^='addon-9']");
+                         //var input_tag = jQuery(this).find('input');
+                         var input_tag = jQuery(this).find(":input[name^='addon-9']");
                          
                          input_tag.each(function(){
                             if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){

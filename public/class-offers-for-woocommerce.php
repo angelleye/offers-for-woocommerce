@@ -862,8 +862,8 @@ class Angelleye_Offers_For_Woocommerce {
                  $arr_result[] = $value;
             }
         }
-        var_dump($arr_result);
-        exit;
+        //var_dump($arr_result);
+        //exit;
         if(isset($arr_result)){
             $formData['offers_product_addon']=  $arr_result;
         }
