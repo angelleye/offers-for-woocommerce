@@ -81,8 +81,8 @@
                         alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
                     }
                 } else {
-                    var productId = $("input[name='add-to-cart']").val();
-                    if(productId > 0){
+                    //var productId = $("input[name='add-to-cart']").val();                    
+                    if($("input[name='add-to-cart']").val() > 0 || $("button[name='add-to-cart']").val() > 0){
                         angelleyeOpenMakeOfferForm();
                     } else {
                         alert(offers_for_woocommerce_js_params.i18n_unavailable_text);
