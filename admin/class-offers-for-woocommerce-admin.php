@@ -1385,8 +1385,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 
                 /* Products Addon and Offers Plugin meta check starts */
                   $_product_addons_data =  get_post_meta($_product->post->ID,'_product_addons',true);                  
-                  //echo "<pre>";
-                  //var_dump($_product_addons_data);
+                  echo "<pre>";
+                  print_r($_product_addons_data);
+                  exit;
                   $arry = array();
                   $k = 0;
                                 

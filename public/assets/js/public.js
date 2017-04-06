@@ -229,9 +229,8 @@
                     post_data_array.push({name: 'offer_quantity', value: offerQuantity});
                     post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
                     post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
-                      var cart_form_array = [];                                      
-                    jQuery("div.product-addon").each(function(){
-                        
+                      var cart_form_array = [];                                                            
+                    jQuery("div.product-addon").each(function(key,index){
                          var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
                          var input_tag = jQuery(this).find(":input[name^='addon-9']");
                          
@@ -239,17 +238,19 @@
                             if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){
                                 if(jQuery(this).is(':checked')){
                                     var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
-                                    cart_form_array.push({group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
+                                    cart_form_array.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
                                 }
                             }
                             
                             if(jQuery(this).is('textarea')){
                                 if(jQuery(this).val() !== ''){
-                                    var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
-                                    cart_form_array.push({group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_textarea"});
+                                    var label_text = jQuery(this).parent().find('label').text().substr(0, jQuery(this).parent().find('label').text().indexOf('('));
+                                    cart_form_array.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_textarea"});
                                 }
                             }
-                           
+                            
+                            
+                            
                         });
                         
                     });      
