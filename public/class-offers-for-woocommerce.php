@@ -856,24 +856,28 @@ class Angelleye_Offers_For_Woocommerce {
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = $_POST['value'];        
         $nmArray = array();
-        foreach($arr_main_array as $key => $value){            
-            if(array_key_exists('product_addon_array',$arr_main_array[$key])){
-                $p = $position = 0;
-                foreach($value['product_addon_array'] as $pro){
-                    if($position != $pro['position']){
-                        $p = 0;
+        
+        $active_plugins = (array) get_option( 'active_plugins', array() );        
+        if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){            
+            foreach($arr_main_array as $key => $value){            
+                if(array_key_exists('product_addon_array',$arr_main_array[$key])){
+                    $p = $position = 0;
+                    foreach($value['product_addon_array'] as $pro){
+                        if($position != $pro['position']){
+                            $p = 0;
+                        }
+                        $position = $pro['position'];
+                        $nmArray[$pro['position']]['group'] = $pro['group'];
+                        $nmArray[$pro['position']]['position'] = $pro['position'];
+                        $nmArray[$pro['position']]['type'] = $pro['type'];
+                        $nmArray[$pro['position']]['options'][$p]['label'] = $pro['label'];
+                        $nmArray[$pro['position']]['options'][$p]['price'] = $pro['price'];
+                        $p++;
                     }
-                    $position = $pro['position'];
-                    $nmArray[$pro['position']]['group'] = $pro['group'];
-                    $nmArray[$pro['position']]['position'] = $pro['position'];
-                    $nmArray[$pro['position']]['type'] = $pro['type'];
-                    $nmArray[$pro['position']]['options'][$p]['label'] = $pro['label'];
-                    $nmArray[$pro['position']]['options'][$p]['price'] = $pro['price'];
-                    $p++;
                 }
             }
-        }
-          
+        }  
         if(isset($nmArray)){
             $formData['offers_product_addon']=  $nmArray;
         }

@@ -114,28 +114,33 @@
         </div>
         <div class="angelleye-clearfix"></div>
     </div>
+    <?php 
+        $active_plugins = (array) get_option( 'active_plugins', array() );        
+        if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){
+    ?>
     <div class="angelleye-col-m-1-1">
-            <div class="angelleye-col-1-1 angelleye-col-s-1-1">
-                <div class="angelleye-col-container">
-                    <h5><?php echo __('Product Add-ons Data', 'offers-for-woocommerce'); ?></h5>
-                </div>                                    
-                <?php
-                    foreach($offers_product_addon as $key => $offerProducts){
-                        echo '<div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">';
-                        echo '<ul class="offer-product-meta-values-wrap">';
-                        echo "<li><span>Group&nbsp;</span>{$offerProducts['group']}</li>";
-                        echo "<li><span>Type&nbsp;</span>{$offerProducts['type']}</li>";
-                        echo "<li><span>Options Selected : &nbsp;</span></li>";
-                        foreach ($offerProducts['options'] as $labelPrices){
-                            echo "<li><span>Label&nbsp;</span>{$labelPrices['label']} | <span>&nbsp;Price&nbsp;</span>{$labelPrices['price']}</li>";
-                        }
-                        //echo "<hr>";
-                        echo "</ul>";
-                        echo "</div>";                                    
-                    }
-                ?>
-            </div>
+        <div class="angelleye-col-1-1 angelleye-col-s-1-1">
+            <div class="angelleye-col-container">
+                <h5><?php echo __('Product Add-ons Data', 'offers-for-woocommerce'); ?></h5>
+            </div>                                    
+            <?php
+                foreach($offers_product_addon as $key => $offerProducts){
+                    echo '<div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">';
+                    echo '<ul class="offer-product-meta-values-wrap">';
+                    echo "<li><span>Group&nbsp;</span>{$offerProducts['group']}</li>";
+                    echo "<li><span>Type&nbsp;</span>{$offerProducts['type']}</li>";
+                    echo "<li><span>Options Selected : &nbsp;</span></li>";
+                    foreach ($offerProducts['options'] as $labelPrices){
+                        echo "<li><span>Label&nbsp;</span>{$labelPrices['label']} | <span>&nbsp;Price&nbsp;</span>{$labelPrices['price']}</li>";
+                    }                        
+                    echo "</ul>";
+                    echo "</div>";                                    
+                }
+            ?>
         </div>
+    </div>
+        <?php } ?>
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
