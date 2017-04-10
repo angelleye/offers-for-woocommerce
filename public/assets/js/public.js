@@ -229,7 +229,7 @@
                     post_data_array.push({name: 'offer_quantity', value: offerQuantity});
                     post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
                     post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
-                      var cart_form_array = [];                                                            
+                      var product_addon_array_js = [];                                                            
                     jQuery("div.product-addon").each(function(key,index){
                          var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
                          var input_tag = jQuery(this).find(":input[name^='addon-9']");
@@ -238,23 +238,43 @@
                             if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){
                                 if(jQuery(this).is(':checked')){
                                     var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
-                                    cart_form_array.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
                                 }
                             }
-                            
                             if(jQuery(this).is('textarea')){
                                 if(jQuery(this).val() !== ''){
                                     var label_text = jQuery(this).parent().find('label').text().substr(0, jQuery(this).parent().find('label').text().indexOf('('));
-                                    cart_form_array.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_textarea"});
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_textarea"});
+                                }
+                            }                            
+                            if(jQuery(this).hasClass('input-text addon addon-custom-price')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text();
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_price"});
                                 }
                             }
-                            
-                            
-                            
+                            if(jQuery(this).hasClass('input-text addon addon-input_multiplier')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text();
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"input_multiplier"});
+                                }
+                            }
+                            if(jQuery(this).hasClass('addon addon-select')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).find(":selected").text().substr(0, jQuery(this).find(":selected").text().indexOf('('));
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price:jQuery(this).find(":selected").attr('data-raw-price'),type:"select"});
+                                }
+                            }                                                        
+                            if(jQuery(this).hasClass('input-text addon addon-custom')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text();
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom"});                                     
+                                }
+                            }
                         });
                         
                     });      
-                    post_data_array.push({cart_form_array:cart_form_array});                   
+                    post_data_array.push({product_addon_array:product_addon_array_js});                   
                     var data_make_offer = {
                         action: 'new_offer_form_submit',
                         security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,

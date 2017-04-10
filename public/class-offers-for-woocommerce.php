@@ -854,18 +854,28 @@ class Angelleye_Offers_For_Woocommerce {
     {        
         ob_start();
         $post_data = $formData = $newPostData = array();            
-        $arr_main_array = $_POST['value'];
-        echo "<pre>";
-        print_r($arr_main_array);
-        exit;
-        foreach($arr_main_array as  $value){
-            $exp_key = explode('-', $value['name']);
-            if($exp_key[0] == 'addon'){
-                 $arr_result[] = $value;
+        $arr_main_array = $_POST['value'];        
+        $nmArray = array();
+        foreach($arr_main_array as $key => $value){            
+            if(array_key_exists('product_addon_array',$arr_main_array[$key])){
+                $p = $position = 0;
+                foreach($value['product_addon_array'] as $pro){
+                    if($position != $pro['position']){
+                        $p = 0;
+                    }
+                    $position = $pro['position'];
+                    $nmArray[$pro['position']]['group'] = $pro['group'];
+                    $nmArray[$pro['position']]['position'] = $pro['position'];
+                    $nmArray[$pro['position']]['type'] = $pro['type'];
+                    $nmArray[$pro['position']]['options'][$p]['label'] = $pro['label'];
+                    $nmArray[$pro['position']]['options'][$p]['price'] = $pro['price'];
+                    $p++;
+                }
             }
-        }        
-        if(isset($arr_result)){
-            $formData['offers_product_addon']=  $arr_result;
+        }
+          
+        if(isset($nmArray)){
+            $formData['offers_product_addon']=  $nmArray;
         }
 
         if (is_ajax()) {
@@ -1052,8 +1062,8 @@ class Angelleye_Offers_For_Woocommerce {
                 $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
                 $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
                 $formDataUpdated['offer_amount'] = $formData['offer_amount'];
-                 if(isset($arr_result)){
-                    $formDataUpdated['offers_product_addon']=  serialize($arr_result);
+                 if(isset($nmArray)){
+                    $formDataUpdated['offers_product_addon']=  serialize($nmArray);
                  }
 
                 // Insert new Post Meta Values

@@ -56,16 +56,12 @@
                                 <span class="out-of-stock-offer"><?php echo __('Not enough stock to fulfill offer', 'offers-for-woocommerce'); ?></span>
                             </li>
                         <?php } ?>
-                            <hr><li><span>Product Add-ons Data</span></li><hr>
-                            <li>
-                                <span>Name&nbsp;</span> 20.00
-                            </li>    
                         <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
                         <input id="offer-backorders-allowed" type="hidden" value="<?php echo ( $_product_backorders_allowed ) ? 'true' : 'false';?>">
                     </ul>
                 <?php } ?>
             </div>
-        </div>
+        </div>        
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
             <?php 
             if(!$is_anonymous_communication_enable) { ?>
@@ -118,6 +114,28 @@
         </div>
         <div class="angelleye-clearfix"></div>
     </div>
+    <div class="angelleye-col-m-1-1">
+            <div class="angelleye-col-1-1 angelleye-col-s-1-1">
+                <div class="angelleye-col-container">
+                    <h5><?php echo __('Product Add-ons Data', 'offers-for-woocommerce'); ?></h5>
+                </div>                                    
+                <?php
+                    foreach($offers_product_addon as $key => $offerProducts){
+                        echo '<div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">';
+                        echo '<ul class="offer-product-meta-values-wrap">';
+                        echo "<li><span>Group&nbsp;</span>{$offerProducts['group']}</li>";
+                        echo "<li><span>Type&nbsp;</span>{$offerProducts['type']}</li>";
+                        echo "<li><span>Options Selected : &nbsp;</span></li>";
+                        foreach ($offerProducts['options'] as $labelPrices){
+                            echo "<li><span>Label&nbsp;</span>{$labelPrices['label']} | <span>&nbsp;Price&nbsp;</span>{$labelPrices['price']}</li>";
+                        }
+                        //echo "<hr>";
+                        echo "</ul>";
+                        echo "</div>";                                    
+                    }
+                ?>
+            </div>
+        </div>
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
