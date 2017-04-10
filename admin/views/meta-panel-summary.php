@@ -133,10 +133,11 @@
                     echo "<li><span>Options Selected : &nbsp;</span></li>";
                     foreach ($offerProducts['options'] as $labelPrices){
                         echo "<li><span>Label&nbsp;</span>{$labelPrices['label']} | <span>&nbsp;Price&nbsp;</span>{$labelPrices['price']}</li>";
+                        echo "<li><span>Value&nbsp;</span>{$labelPrices['value']}";
                     }                        
                     echo "</ul>";
                     echo "</div>";                                    
-                }
+                }                
             ?>
         </div>
     </div>

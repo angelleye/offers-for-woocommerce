@@ -859,7 +859,7 @@ class Angelleye_Offers_For_Woocommerce {
         
         $active_plugins = (array) get_option( 'active_plugins', array() );        
         if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
-        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){            
+        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){
             foreach($arr_main_array as $key => $value){            
                 if(array_key_exists('product_addon_array',$arr_main_array[$key])){
                     $p = $position = 0;
@@ -873,6 +873,7 @@ class Angelleye_Offers_For_Woocommerce {
                         $nmArray[$pro['position']]['type'] = $pro['type'];
                         $nmArray[$pro['position']]['options'][$p]['label'] = $pro['label'];
                         $nmArray[$pro['position']]['options'][$p]['price'] = $pro['price'];
+                        $nmArray[$pro['position']]['options'][$p]['value'] = $pro['value'];
                         $p++;
                     }
                 }
