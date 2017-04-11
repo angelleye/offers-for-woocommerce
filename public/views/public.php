@@ -70,9 +70,19 @@
             ?>
         </div>
         <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="off" action="">
+            <?php
+                /* this code checks for if Woocommerce variable table plugin activated then it will add one extra field to jquery */
+                    $active_plugins = (array) get_option('active_plugins', array());
+                    if (is_multisite())
+                        $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
+                    if (in_array('woo-variations-table/woo-variations-table.php', $active_plugins) || array_key_exists('woo-variations-table/woo-variations-table.php', $active_plugins)) {
+                        echo '<input type="hidden" name="offer_variations_table_variation_id" value="" />';
+                    }
+                 /* End */
+                 ?>
             <?php if($is_counter_offer) {?>
                 <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
-                <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">
+                <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">               
             <?php } ?>
             <div class="woocommerce-make-offer-form-section">
                 <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>

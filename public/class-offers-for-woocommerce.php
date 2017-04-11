@@ -833,11 +833,24 @@ class Angelleye_Offers_For_Woocommerce {
                     }
                 }
             }
+            /* this code checks for if Woocommerce variable table plugin activated then it will add one extra field to jquery */
+            $active_plugins = (array) get_option('active_plugins', array());
+            if (is_multisite())
+                $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
+            if (in_array('woo-variations-table/woo-variations-table.php', $active_plugins) || array_key_exists('woo-variations-table/woo-variations-table.php', $active_plugins)) {
+                $is_woo_variations_table_installed='1';
+            }
+            else{
+                $is_woo_variations_table_installed='0';
+            }
+            /* End */
+            
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
             wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', plugins_url('assets/js/autoNumeric-1-9-24.js', __FILE__), self::VERSION);
             if (wp_script_is('offers-for-woocommerce-plugin-script')) {
                 wp_localize_script('offers-for-woocommerce-plugin-script', 'offers_for_woocommerce_js_params', apply_filters('offers_for_woocommerce_js_params', array(
                     'is_product_type_variable' => $is_product_type_variable,
+                    'is_woo_variations_table_installed' => $is_woo_variations_table_installed,
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'offers_for_woocommerce_params_nonce' => wp_create_nonce("offers_for_woocommerce_params_nonce"),
                     'i18n_make_a_selection_text' => esc_attr__( 'Please select some product options before making offer for this product.', 'offers-for-woocommerce' ),

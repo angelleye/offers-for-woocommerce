@@ -5,19 +5,19 @@
         $(document).ready(function(){
             $('.ofwc_no_price_product').remove();
             function manage_button_for_variation(){
-                var variationId = $("input[name='variation_id']").val();
-                if(variationId > 0){
+                var variationId = $("input[name='variation_id']").val();                
+                if(variationId > 0){                    
                     $(".offers-for-woocommerce-make-offer-button-single-product").removeClass('disabled');
-                } else {
+                } else {                    
                     $(".offers-for-woocommerce-make-offer-button-single-product").addClass('disabled');
                 }
             }
             
-            if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
+            if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {                
                 manage_button_for_variation();
                 $( ".variations_form" ).on( "woocommerce_variation_has_changed", function () {
                     manage_button_for_variation();
-                    var variationId = $("input[name='variation_id']").val();
+                    var variationId = $("input[name='variation_id']").val();                    
                     $('#tab_custom_ofwc_offer_tab_alt_message_2').hide();
                     $('#tab_custom_ofwc_offer_tab_alt_message_success').hide();
                     $('#tab_custom_ofwc_offer_tab_inner fieldset').show();
@@ -74,7 +74,14 @@
 
             $(".offers-for-woocommerce-make-offer-button-single-product").click(function(){
                 if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
-                    var variationId = $("input[name='variation_id']").val();
+                    if(offers_for_woocommerce_js_params.is_woo_variations_table_installed==='1'){
+                        var variationId = $(this).parents("tr").find("input[name='variation_id']").val();
+                        $("input[name='offer_variations_table_variation_id']").val(variationId);
+                    }
+                    else{
+                        var variationId = $("input[name='variation_id']").val();
+                    }
+                    
                     if(variationId > 0){
                         angelleyeOpenMakeOfferForm();
                     } else {
@@ -132,7 +139,7 @@
 
             // Submit offer form
             $("form[name='woocommerce-make-offer-form']").submit(function()
-            {
+            {               
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 
                 var offerCheckMinValuesPassed = true;
@@ -177,8 +184,14 @@
                 var offerProductId = '';
                 var offerVariationId = '';
                 var offerProductId = $("input[name='add-to-cart']").val();
-                var offerVariationId = $("input[name='variation_id']").val();
-
+                
+                 if(offers_for_woocommerce_js_params.is_woo_variations_table_installed==='1'){
+                    var offerVariationId = $("input[name='offer_variations_table_variation_id']").val();
+                 }
+                 else{
+                    var offerVariationId = $("input[name='variation_id']").val();
+                 }
+                
                 var join_our_mailing_list = "no";
                 
                 if($("#join_our_mailing_list").length > 0) {
@@ -366,8 +379,8 @@
                 $("#aeofwc-close-lightbox-link").css('display','block');
             }
             var variantDisplay = $('.single_variation_wrap').css('display');
-            if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block')
-            {
+            if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block' && offers_for_woocommerce_js_params.is_woo_variations_table_installed === '0')
+            {                
                 if( $(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox") )
                 {
                     $("#lightbox_custom_ofwc_offer_form").hide();
