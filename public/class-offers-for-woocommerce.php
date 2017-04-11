@@ -168,9 +168,40 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter('woocommerce_registration_redirect',array($this,'ofw_login_redirect'),10,1);
         add_filter('woocommerce_loop_add_to_cart_link',array($this,'ofw_woocommerce_loop_add_to_cart_link'),10,2);
         add_action( 'admin_bar_menu', array($this, 'ofwc_manage_offer_admin_bar_callback'), 999 );
+        
+        /* this will display the data of Product addon if plugin is activated - Start */
+        
+        $active_plugins = (array) get_option( 'active_plugins', array() );        
+        if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){
+            add_filter( 'woocommerce_cart_item_name', array($this,'render_meta_on_cart_item'), 1, 3 );    
+        }
+        /* this will display the data of Product addon if plugin is activated - End */
+    }       
+
+    /* this will display the data of Product addon if plugin is activated - Start */
+    public function render_meta_on_cart_item($title = null, $cart_item = null, $cart_item_key = null) {
+        if ($cart_item_key && is_cart()) {
+            $offers_product_addon = get_post_meta($cart_item['woocommerce_offer_id'], 'offers_product_addon', true);
+            if (!empty($offers_product_addon)) {
+                echo $title;
+                foreach ($offers_product_addon as $key => $offerProducts) {
+                    foreach ($offerProducts['options'] as $labelPrices) {
+                        echo "<dl class='variation'><dt class=''><p>{$offerProducts['group']} - {$labelPrices['label']} ({$labelPrices['price']})</p></dt></dl>";
+                        echo "<dl><dd><p>{$labelPrices['value']}</p></dd></dl>";
+                    }
+                }
+            }
+            else {
+                echo $title;
+            }            
+        } else {
+            echo $title;
+        }
     }
-    
-    /**
+
+    /* this will display the data of Product addon if plugin is activated - End */
+        /**
      * display notice on login form if user login is required
      *
      * @since	0.1.0
@@ -1569,7 +1600,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
         if (array_key_exists('woocommerce_offer_price_per', $values)) {
             $item['woocommerce_offer_price_per'] = $values['woocommerce_offer_price_per'];
-        }
+        }        
         return $item;
     }
 
