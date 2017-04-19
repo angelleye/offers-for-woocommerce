@@ -2360,12 +2360,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         foreach( $args['options'] as $option )
         {
             $is_checked = (isset($options[$field_label.'_'.$option['option_name']])) ? $options[$field_label.'_'.$option['option_name']] : '0';
+            $is_checked_required = (isset($options[$field_label.'_'.$option['option_name'].'_required'])) ? $options[$field_label.'_'.$option['option_name'].'_required'] : '0';
             $is_disabled = (!empty($option['option_disabled'])) ? 'disabled="disabled" checked="checked"' : '';
-            print(
+            if(empty($is_disabled)){
+                print(
+                '<li><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'&nbsp; <input type="checkbox" name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].'_required]" value="1" '. checked(1, $is_checked_required, false) .' />&nbsp;Required ?</li>'
+                );
+            }
+            else{
+                print(
                 '<li><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
-            );
+                );
+            }                       
         }
-        echo '</ul>';
+        echo '</ul>';        
     }
 	
 	/**
