@@ -1260,7 +1260,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                 $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s', 'offers-for-woocommerce'), $identifier, $product->get_title());
             }
-
+            
             if ($is_counter_offer) {
                 $offer_args['is_counter_offer'] = true;
 
@@ -1301,7 +1301,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // define email template/path (plain)
                 $new_email->template_plain = 'woocommerce-new-counter-offer.php';
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
-            } else {
+            } else {                
                 // define email template/path (html)
                 $new_email->template_html = 'woocommerce-new-offer.php';
                 $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
