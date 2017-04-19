@@ -9,7 +9,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
-<?php if ( is_plugin_active( 'wc-vendors/class-wc-vendors.php' )  && is_plugin_active( 'wcvendors-pro/wcvendors-pro.php') ) {
+<?php if ( is_plugin_active( 'offers-for-woocommerce-wc-vendors/offers-for-woocommerce-wc-vendors.php' )  && is_plugin_active( 'wcvendors-pro/wcvendors-pro.php') ) {
     printf( '<p><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), '<a style="background:#EFEFEF; color:#161616; padding:8px 15px; margin:10px; border:1px solid #CCCCCC; text-decoration:none; " href="'. site_url('dashboard/woocommerce_offer/edit/'.$offer_args['offer_id']) .'"><span style="border-bottom:1px dotted #666; ">' . __( 'Manage Offer', 'offers-for-woocommerce') . '</span></a>' );
  } 
 else{
