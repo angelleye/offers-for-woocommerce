@@ -124,6 +124,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds the "regular price" to the offer email notifications so you can easily compare to the offer price. ([#289](https://github.com/angelleye/offers-for-woocommerce/issues/289))
 * Feature - Woo Product Variations Compatibility. ([#252](https://github.com/angelleye/offers-for-woocommerce/issues/252))
 * Tweak - Adds Make Offer button text to localization for easy translation. ([#291](https://github.com/angelleye/offers-for-woocommerce/issues/291))
+* Tweak - Adjustments for better WC Vendor Pro compatibility via our premium extension. ([#297](https://github.com/angelleye/offers-for-woocommerce/issues/297))
 * Fix - Resolves issues with the CSS class name option for offer buttons. ([#295](https://github.com/angelleye/offers-for-woocommerce/issues/295))
 
 = 1.4.3 - 03.26.2017 =
