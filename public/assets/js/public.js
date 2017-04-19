@@ -52,8 +52,8 @@
                             alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
                         }
                     } else {
-                        var productId = $("input[name='add-to-cart']").val();
-                        if(productId > 0){
+                        //var productId = $("button[name='add-to-cart']").val();
+                        if($("input[name='add-to-cart']").val() > 0 || $("button[name='add-to-cart']").val() > 0){
                             angelleyeOpenMakeOfferForm();
                         } else {
                             alert(offers_for_woocommerce_js_params.i18n_unavailable_text);
@@ -88,8 +88,8 @@
                         alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
                     }
                 } else {
-                    var productId = $("input[name='add-to-cart']").val();
-                    if(productId > 0){
+                    //var productId = $("input[name='add-to-cart']").val();                    
+                    if($("input[name='add-to-cart']").val() > 0 || $("button[name='add-to-cart']").val() > 0){
                         angelleyeOpenMakeOfferForm();
                     } else {
                         alert(offers_for_woocommerce_js_params.i18n_unavailable_text);
@@ -183,12 +183,19 @@
 
                 var offerProductId = '';
                 var offerVariationId = '';
-                var offerProductId = $("input[name='add-to-cart']").val();
                 
-                 if(offers_for_woocommerce_js_params.is_woo_variations_table_installed==='1'){
-                    var offerVariationId = $("input[name='offer_variations_table_variation_id']").val();
-                 }
-                 else{
+                /* old WC version condition start*/
+                if($("input[name='add-to-cart']").val() > 0 ){
+                var offerProductId = $("input[name='add-to-cart']").val();
+                }
+                /* old WC version condition end */
+                
+                /* New WC version condition start*/
+                if($("button[name='add-to-cart']").val() > 0){
+                    var offerProductId = $("button[name='add-to-cart']").val();
+                }
+                /* New WC version condition end */
+                
                     var offerVariationId = $("input[name='variation_id']").val();
                  }
                 
@@ -230,7 +237,52 @@
                     post_data_array.push({name: 'offer_quantity', value: offerQuantity});
                     post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
                     post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
+                      var product_addon_array_js = [];                                                            
+                    jQuery("div.product-addon").each(function(key,index){
+                         var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
+                         var input_tag = jQuery(this).find(":input[name^='addon-9']");
                            
+                         input_tag.each(function(){
+                            if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){
+                                if(jQuery(this).is(':checked')){
+                                    var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
+                                }
+                            }
+                            if(jQuery(this).is('textarea')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text().substr(0, jQuery(this).parent().find('label').text().indexOf('('));
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_textarea"});
+                                }
+                            }                            
+                            if(jQuery(this).hasClass('input-text addon addon-custom-price')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text();
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom_price"});
+                                }
+                            }
+                            if(jQuery(this).hasClass('input-text addon addon-input_multiplier')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text();
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"input_multiplier"});
+                                }
+                            }
+                            if(jQuery(this).hasClass('addon addon-select')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).find(":selected").text().substr(0, jQuery(this).find(":selected").text().indexOf('('));
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price:jQuery(this).find(":selected").attr('data-raw-price'),type:"select"});
+                                }
+                            }                                                        
+                            if(jQuery(this).hasClass('input-text addon addon-custom')){
+                                if(jQuery(this).val() !== ''){
+                                    var label_text = jQuery(this).parent().find('label').text();
+                                    product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type:"custom"});                                     
+                                }
+                            }
+                        });
+                        
+                    });      
+                    post_data_array.push({product_addon_array:product_addon_array_js});                   
                     var data_make_offer = {
                         action: 'new_offer_form_submit',
                         security: offers_for_woocommerce_js_params.offers_for_woocommerce_params_nonce,
@@ -241,6 +293,7 @@
                     var request = $.ajax({
                         url: offers_for_woocommerce_js_params.ajax_url,
                         type: "post",
+                        dataType : 'json',
                         data: data_make_offer
                     });
 

@@ -27,6 +27,7 @@ if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
     <thead>
     <tr>
         <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Product', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Regular Price', 'offers-for-woocommerce' ); ?></th>
         <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Quantity', 'offers-for-woocommerce' ); ?></th>
         <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Price', 'offers-for-woocommerce' ); ?></th>
     </tr>
@@ -34,16 +35,17 @@ if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
     <tbody>
     <tr>
         <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
+        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(), 2, '.', '' ); ?></td>
         <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
         <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ); ?></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
-        <th scope="row" colspan="2" style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
+        <th scope="row" colspan="3" style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
         <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' ); ?></td>
     </tr>
     </tfoot>
 </table>
-
+<?php exit; ?>
 <?php do_action( 'woocommerce_email_footer' ); ?>

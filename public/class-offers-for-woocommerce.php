@@ -168,9 +168,40 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter('woocommerce_registration_redirect',array($this,'ofw_login_redirect'),10,1);
         add_filter('woocommerce_loop_add_to_cart_link',array($this,'ofw_woocommerce_loop_add_to_cart_link'),10,2);
         add_action( 'admin_bar_menu', array($this, 'ofwc_manage_offer_admin_bar_callback'), 999 );
+        
+        /* this will display the data of Product addon if plugin is activated - Start */
+        
+        $active_plugins = (array) get_option( 'active_plugins', array() );        
+        if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){
+            add_filter( 'woocommerce_cart_item_name', array($this,'render_meta_on_cart_item'), 1, 3 );    
+        }
+        /* this will display the data of Product addon if plugin is activated - End */
+    }       
+
+    /* this will display the data of Product addon if plugin is activated - Start */
+    public function render_meta_on_cart_item($title = null, $cart_item = null, $cart_item_key = null) {
+        if ($cart_item_key && is_cart()) {
+            $offers_product_addon = get_post_meta($cart_item['woocommerce_offer_id'], 'offers_product_addon', true);
+            if (!empty($offers_product_addon)) {
+                echo $title;
+                foreach ($offers_product_addon as $key => $offerProducts) {
+                    foreach ($offerProducts['options'] as $labelPrices) {
+                        echo "<dl class='variation'><dt class=''><p>{$offerProducts['group']} - {$labelPrices['label']} ({$labelPrices['price']})</p></dt></dl>";
+                        echo "<dl><dd><p>{$labelPrices['value']}</p></dd></dl>";
+                    }
+                }
+            }
+            else {
+                echo $title;
+            }            
+        } else {
+            echo $title;
+        }
     }
-    
-    /**
+
+    /* this will display the data of Product addon if plugin is activated - End */
+        /**
      * display notice on login form if user login is required
      *
      * @since	0.1.0
@@ -239,20 +270,20 @@ class Angelleye_Offers_For_Woocommerce {
         $btn_output = '';
         
         if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
-            $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
+            $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ?  __($button_options_display['display_setting_custom_make_offer_btn_text'],'offers-for-woocommerce') : __('Make Offer', 'offers-for-woocommerce');
 
             $custom_styles_override = '';
             if ($button_options_display) {
                 if (isset($button_options_display['display_setting_custom_make_offer_btn_text_color']) && $button_options_display['display_setting_custom_make_offer_btn_text_color'] != '') {
-                    $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . ' !important;';
+                    $custom_styles_override .= 'color:' . $button_options_display['display_setting_custom_make_offer_btn_text_color'] . ';';
                 }
                 if (isset($button_options_display['display_setting_custom_make_offer_btn_color']) && $button_options_display['display_setting_custom_make_offer_btn_color'] != '') {
-                    $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . ' !important; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . ' !important;';
+                    $custom_styles_override .= ' background:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . '; border-color:' . $button_options_display['display_setting_custom_make_offer_btn_color'] . ';';
                 }
             }
             
             $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
-            $button_class = (isset($button_options_display['display_setting_custom_make_offer_btn_class']) && $button_options_display['display_setting_custom_make_offer_btn_class'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_class'] : __('Make Offer', 'offers-for-woocommerce');            
+            $button_class = (isset($button_options_display['display_setting_custom_make_offer_btn_class']) && $button_options_display['display_setting_custom_make_offer_btn_class'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_class'] : '';            
             $btn_output = '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap">';
             $permalink = get_permalink($post->ID);
             $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
@@ -260,7 +291,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $redirect_url = '';
                 if($is_archive){
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.get_permalink($post->ID);
-                    $button = '<a href="' . $redirect_url . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt '.$button_class.' " ' . $custom_styles_override . '>' . $button_title . '</a>';
+                    $button = '<a href="' . $redirect_url . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt '.$button_class.' " style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.home_url(add_query_arg(array(),$wp->request));
                     $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.'  ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
@@ -268,7 +299,7 @@ class Angelleye_Offers_For_Woocommerce {
                 
             } else {
                 if($is_archive){
-                    $button = '<a href="' . $permalink . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt  '.$button_class.' " ' . $custom_styles_override . '>' . $button_title . '</a>';
+                    $button = '<a href="' . $permalink . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt  '.$button_class.' " style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
                     $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.' ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
                 }
@@ -517,7 +548,7 @@ class Angelleye_Offers_For_Woocommerce {
                 return $tabs;
             }
 
-            $tab_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_text'] : __('Make Offer', 'offers-for-woocommerce');
+            $tab_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? __($button_options_display['display_setting_custom_make_offer_btn_text'],'offers-for-woocommerce') : __('Make Offer', 'offers-for-woocommerce');
             $tab_title = apply_filters('woocommerce_make_offer_form_tab_name', $tab_title);
             
             // Add new tab "Make Offer"
@@ -648,7 +679,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         // get options for button display
         $button_display_options = get_option('offers_for_woocommerce_options_display');
-
+        
         $currency_symbol = get_woocommerce_currency_symbol();
         $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
         // Set html content for output
@@ -864,9 +895,38 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     public function new_offer_form_submit()
-    {
+    {        
         ob_start();
-        $post_data = $formData = $newPostData = array();
+        $post_data = $formData = $newPostData = array();            
+        $arr_main_array = $_POST['value'];        
+        $nmArray = array();
+        
+        $active_plugins = (array) get_option( 'active_plugins', array() );        
+        if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+        if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){
+            foreach($arr_main_array as $key => $value){            
+                if(array_key_exists('product_addon_array',$arr_main_array[$key])){
+                    $p = $position = 0;
+                    foreach($value['product_addon_array'] as $pro){
+                        if($position != $pro['position']){
+                            $p = 0;
+                        }
+                        $position = $pro['position'];
+                        $nmArray[$pro['position']]['group'] = $pro['group'];
+                        $nmArray[$pro['position']]['position'] = $pro['position'];
+                        $nmArray[$pro['position']]['type'] = $pro['type'];
+                        $nmArray[$pro['position']]['options'][$p]['label'] = $pro['label'];
+                        $nmArray[$pro['position']]['options'][$p]['price'] = $pro['price'];
+                        $nmArray[$pro['position']]['options'][$p]['value'] = $pro['value'];
+                        $p++;
+                    }
+                }
+            }
+        }  
+        if(isset($nmArray)){
+            $formData['offers_product_addon']=  $nmArray;
+        }
+
         if (is_ajax()) {
             if( isset($_POST['value']) && !empty($_POST['value']) ) {
                 $post_data = $_POST['value'];
@@ -905,7 +965,7 @@ class Angelleye_Offers_For_Woocommerce {
                             $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
             $formData['orig_offer_uid'] = uniqid('aewco-');;
             $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
-
+                        
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
                     $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
@@ -1051,6 +1111,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
                 $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
                 $formDataUpdated['offer_amount'] = $formData['offer_amount'];
+                 if(isset($nmArray)){
+                    $formDataUpdated['offers_product_addon']=  serialize($nmArray);
+                 }
 
                 // Insert new Post Meta Values
                 foreach ($formDataUpdated as $k => $v) {
@@ -1210,7 +1273,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                 $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s', 'offers-for-woocommerce'), $identifier, $product->get_title());
             }
-
+            
             if ($is_counter_offer) {
                 $offer_args['is_counter_offer'] = true;
 
@@ -1251,7 +1314,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // define email template/path (plain)
                 $new_email->template_plain = 'woocommerce-new-counter-offer.php';
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
-            } else {
+            } else {                
                 // define email template/path (html)
                 $new_email->template_html = 'woocommerce-new-offer.php';
                 $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
@@ -1300,7 +1363,7 @@ class Angelleye_Offers_For_Woocommerce {
                 return false;
             }
         }
-
+        
         return ob_get_clean();
     }
 
@@ -1550,7 +1613,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
         if (array_key_exists('woocommerce_offer_price_per', $values)) {
             $item['woocommerce_offer_price_per'] = $values['woocommerce_offer_price_per'];
-        }
+        }        
         return $item;
     }
 
