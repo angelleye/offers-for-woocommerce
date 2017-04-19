@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.7
-Stable tag: 1.4.3
+Tested up to: 4.7.3
+Stable tag: 1.4.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.4 - xx.xx.2017 =
+= 1.4.4 - 04.19.2017 =
 * Feature - Woo Product Add-Ons Compatibility. ([#215](https://github.com/angelleye/offers-for-woocommerce/issues/215))
 * Feature - Adds the option to require fields on the Make Offer form. ([#248](https://github.com/angelleye/offers-for-woocommerce/issues/248))
 * Feature - Adds the "regular price" to the offer email notifications so you can easily compare to the offer price. ([#289](https://github.com/angelleye/offers-for-woocommerce/issues/289))
