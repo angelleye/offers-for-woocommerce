@@ -122,6 +122,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Woo Product Add-Ons Compatibility. ([#215](https://github.com/angelleye/offers-for-woocommerce/issues/215))
 * Feature - Adds the option to require fields on the Make Offer form. ([#248](https://github.com/angelleye/offers-for-woocommerce/issues/248))
 * Feature - Adds the "regular price" to the offer email notifications so you can easily compare to the offer price. ([#289](https://github.com/angelleye/offers-for-woocommerce/issues/289))
+* Feature - Woo Product Variations Compatibility. ([#252](https://github.com/angelleye/offers-for-woocommerce/issues/252))
 * Tweak - Adds Make Offer button text to localization for easy translation. ([#291](https://github.com/angelleye/offers-for-woocommerce/issues/291))
 * Fix - Resolves issues with the CSS class name option for offer buttons. ([#295](https://github.com/angelleye/offers-for-woocommerce/issues/295))
 
