@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.5 - 04.20.2017 =
+* Fix - Resolves a JavaScript bug. ([#300](https://github.com/angelleye/offers-for-woocommerce/issues/300))
+
 = 1.4.4 - 04.19.2017 =
 * Feature - WooCommerce 3.0 compatibility. ([#296](https://github.com/angelleye/offers-for-woocommerce/issues/296))
 * Feature - Woo Product Add-Ons compatibility. ([#215](https://github.com/angelleye/offers-for-woocommerce/issues/215))
