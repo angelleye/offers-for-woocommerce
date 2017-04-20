@@ -196,9 +196,6 @@
                 }
                 /* New WC version condition end */
                 
-                    var offerVariationId = $("input[name='variation_id']").val();
-                 }
-                
                 var join_our_mailing_list = "no";
                 
                 if($("#join_our_mailing_list").length > 0) {
