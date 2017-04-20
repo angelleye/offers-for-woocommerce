@@ -648,7 +648,8 @@ class Angelleye_Offers_For_Woocommerce {
 
         // get options for button display
         $button_display_options = get_option('offers_for_woocommerce_options_display');
-
+        $button_display_position = get_option('angelleye_displaySettingFormFieldPosition');
+        
         $currency_symbol = get_woocommerce_currency_symbol();
         $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
         // Set html content for output

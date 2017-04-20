@@ -352,6 +352,30 @@
                     $("#general_setting_allowed_roles").closest('tr').hide();
                 }
             });
+            
+            /* Display setting tab : Form Field Sortable */
+            $( "#angelleye-settings-ul-checkboxes-sortable" ).sortable({
+                placeholder: "ui-state-highlight",
+                items: "li:not(.ui-state-disabled)",               
+                update: function(e, ui) {                                                            
+                    var nm = 4;
+                    var data = {action:'displaySettingFormFieldPosition'};                    
+                    $('.angelleye-settings-li').each(function( index, value ) {
+                        if($(this).attr('data-sequence-id') !=''){
+                           $(this).attr('data-sequence-id',nm);
+                           data[nm] = ((($(this).find('input[type=checkbox]').attr('name')).split('['))[1]).slice(0,-1);
+                           nm++;                           
+                       }                       
+                    });                   
+                   
+                    $.post(ajaxurl, data, function(response) {
+                        console.log(response);
+                        return true;  
+                    });
+                }
+            });
+            $( "#angelleye-settings-ul-checkboxes-sortable" ).disableSelection();
+            
         });
     });
 
