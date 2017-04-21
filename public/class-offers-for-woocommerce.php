@@ -259,7 +259,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
         
         $_product = wc_get_product($post->ID);
-        $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+        $is_external_product = ( $_product->get_type() == 'external' ) ? TRUE : FALSE;
         $is_instock = $_product->is_in_stock();
         
         $custom_tab_options_offers = array(
@@ -431,7 +431,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         $_product = wc_get_product($post->ID);
-        $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+        $is_external_product = ( $_product->get_type() == 'external' ) ? TRUE : FALSE;
         $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
         $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled != '') ? $on_exit_enabled : 'no';
@@ -539,7 +539,7 @@ class Angelleye_Offers_For_Woocommerce {
         if($_product == false) {
             return $tabs;
         }
-        $is_external_product = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE;
+        $is_external_product = ( $_product->get_type() == 'external' ) ? TRUE : FALSE;
         $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
@@ -1454,7 +1454,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $product = new WC_Product($product_id);
 
                 // Error - Invalid Product
-                if (!isset($product->post) || $product->post->ID == '' || !is_numeric($product_id)) {
+                if (!isset($product->post) || $product->get_id() == '' || !is_numeric($product_id)) {
                     $request_error = true;
                     $this->send_api_response(__('Error - Product Not Found; See shop manager for assistance', 'offers-for-woocommerce'));
                 }
@@ -1483,7 +1483,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_variation_id = $offer_meta['orig_offer_variation_id'][0];
 
             $_product = ( $product_variation_id ) ? wc_get_product($product_variation_id) : wc_get_product($product_id);
-            $_product_stock = $_product->get_total_stock();
+            $_product_stock = $_product->get_stock_quantity();
 
             // lookup product meta by id or variant id
             if ($product_variation_id) {

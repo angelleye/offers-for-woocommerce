@@ -20,11 +20,11 @@
                 <?php
                 if(!isset($_product)) {
                     echo __('Product not found', 'offers-for-woocommerce');
-                } else { ?>
-
+                } else { ?>                    
+                        
                     <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="<?php echo __('Click to view product', 'offers-for-woocommerce'); ?>"><?php echo $_product_image; ?></a></ul>
                     <ul class="offer-product-meta-values-wrap">
-                        <li><span><?php echo __('Product:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="' . __('Click to view product', 'offers-for-woocommerce') . '">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->post->ID.'&action=edit" title="' . __('Click to edit product', 'offers-for-woocommerce') . '"><span>('.$_product->post->ID.')</span></a>' : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Product:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="' . __('Click to view product', 'offers-for-woocommerce') . '">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->get_id().'&action=edit" title="' . __('Click to edit product', 'offers-for-woocommerce') . '"><span>('.$_product->get_id().')</span></a>' : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php if( isset($_product_attributes) && is_array($_product_attributes) && !empty($_product_attributes) ) { ?>
                         <li><span><?php echo __('Attributes:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo ucwords( implode( ", ", array_values($_product_attributes)) ); ?></li>
                         <?php } ?>
