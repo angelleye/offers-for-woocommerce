@@ -1828,7 +1828,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'display_setting_make_offer_form_field_offer_total' => '1',
             'display_setting_make_offer_form_field_offer_company_name' => '1',
             'display_setting_make_offer_form_field_offer_phone' => '1',
-            'display_setting_make_offer_form_field_offer_notes' => '1'
+            'display_setting_make_offer_form_field_offer_notes' => '1',
+            'display_setting_make_offer_button_position_single' => 'default'
         );
 
         //check to see if present already
