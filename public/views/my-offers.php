@@ -62,17 +62,25 @@ if ($customer_offers) :
                                     $val = get_post_meta($post_id, 'offer_name', true);
                                     echo stripslashes($val);
                                     break;
-                                case 'offer_product_title' :
+                                case 'offer_product_title' :                                  
                                     if ($product_title) {
-                                        if ($product->product_type == 'variation') {
+                                        if(version_compare(WC_VERSION, '3.0', '<')){
+                                            $product_type = $product->product_type;
+                                            $pproduct_id  = $product->id;
+                                        } 
+                                        else{
+                                            $product_type = $product->get_type();
+                                            $pproduct_id  = $product->get_id();
+                                        }
+                                        if ($product_type == 'variation') {
                                             $_product = new WC_Product_Variation($variant_id);
-                                            if(get_post_status($product->id) == 'trash'){
+                                            if(get_post_status($pproduct_id) == 'trash'){
                                                 echo sprintf('%s', $_product->get_title());
                                             } else {
                                                 echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url($_product->get_permalink()), $_product->get_title()));
                                             }
                                         } else {
-                                            if(get_post_status($product->id) == 'trash'){
+                                            if(get_post_status($pproduct_id) == 'trash'){
                                                 echo sprintf('%s', get_the_title($product_id));
                                             } else {
                                                 echo apply_filters('ofw_product_url', sprintf('<a title="%s" target="_blank" href="%s">%s</a>', __('View Product', 'offers-for-woocommerce'), esc_url(get_the_permalink($product_id)), get_the_title($product_id)));
