@@ -536,7 +536,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	function custom_tab_options_tab_offers() {
         global $post;
         $_product = wc_get_product($post->ID);
-        $class_hidden = ( $_product->get_type() == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
+        if(version_compare(WC_VERSION, '3.0', '<')){
+            $class_hidden = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
+        }
+        else{
+            $class_hidden = ( $_product->get_type() == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
+        }
+        
         print(
             '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce '. $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce">' . __('Offers', 'offers-for-woocommerce') . '</a></li>'
         );
@@ -1358,7 +1364,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $_product_sale_price = ( $_product_variant->get_sale_price() ) ? $_product_variant->get_sale_price() : $_product->get_sale_price();
 
                     $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
-                    $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_stock_quantity() : $_product->get_stock_quantity();
+                    
+                    if(version_compare(WC_VERSION, '3.0', '<')){
+                        $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
+                    }
+                    else{
+                        $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_stock_quantity() : $_product->get_stock_quantity();
+                    }
+                    
                     $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                     $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
                     $_product_backorders_require_notification = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_require_notification() : $_product->backorders_require_notification();
@@ -1373,7 +1386,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $_product_regular_price = $_product->get_regular_price();
                     $_product_sale_price = $_product->get_sale_price();
                     $_product_managing_stock = $_product->managing_stock();
-                    $_product_stock = $_product->get_stock_quantity();
+                    $_product_stock =  version_compare(WC_VERSION, '3.0', '<') ? $_product->get_total_stock() : $_product->get_stock_quantity();
                     $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                     $_product_backorders_allowed = $_product->backorders_allowed();
                     $_product_backorders_require_notification = $_product->backorders_require_notification();
@@ -1384,7 +1397,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
                 
                 /* Products Addon and Offers Plugin meta check starts */
-                  $_product_addons_data =  get_post_meta($_product->get_id(),'_product_addons',true);                  
+                  $product_addon_id = version_compare(WC_VERSION, '3.0', '<') ? $_product->post->ID : $_product->get_id();
+                  $_product_addons_data =  get_post_meta($product_addon_id,'_product_addons',true);
                 /* Products Addon and Offers Plugin meta check end. */
 
                 /**
