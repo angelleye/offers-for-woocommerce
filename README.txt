@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.6 - 04.25.2017 =
+* Tweak - Further adjustments for WooCommerce 3.0 compatibility. ([#301](https://github.com/angelleye/offers-for-woocommerce/issues/301))
+
 = 1.4.5 - 04.20.2017 =
 * Fix - Resolves a JavaScript bug. ([#300](https://github.com/angelleye/offers-for-woocommerce/issues/300))
 
