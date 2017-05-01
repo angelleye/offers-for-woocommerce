@@ -12,40 +12,39 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php 
 if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
-    printf( '<p><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s, however, we do have an active coupon code that we can offer you for use on our website.</strong></p>', get_bloginfo( 'name' ) );
-    printf( '<p><strong>'. __('Coupon Code: ', 'offers-for-woocommerce'). ' %s</strong></p>', $offer_args['coupon_code'] );
+    printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s, however, we do have an active coupon code that we can offer you for use on our website.</strong></p>', get_bloginfo( 'name' ) );
+    printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>'. __('Coupon Code: ', 'offers-for-woocommerce'). ' %s</strong></p>', $offer_args['coupon_code'] );
 } else {
-    printf( '<p><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s.</strong></p>', get_bloginfo( 'name' ) );
+    printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>'. __('We have declined your offer on', 'offers-for-woocommerce'). ' %s.</strong></p>', get_bloginfo( 'name' ) );
 }
 ?>
  
 <?php if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') { echo '<h4>'. __( 'Offer Notes:', 'offers-for-woocommerce' ) .'</h4>'. stripslashes($offer_args['offer_notes']); } ?>
 
-<h2><?php echo __( 'Offer ID:', 'offers-for-woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
+<h2 style="text-align:center"><?php echo __( 'Offer ID:', 'offers-for-woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
 
-<table cellspacing="0" cellpadding="6" style="width: 100%; border: 1px solid #eee;" border="1" bordercolor="#eee">
+<table cellspacing="0" cellpadding="6" style="width: 100%;">
     <thead>
     <tr>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Product', 'offers-for-woocommerce' ); ?></th>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Regular Price', 'offers-for-woocommerce' ); ?></th>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Quantity', 'offers-for-woocommerce' ); ?></th>
-        <th scope="col" style="text-align:left; border: 1px solid #eee;"><?php _e( 'Price', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; background-color: #f2f2f2; border-bottom: 1px solid #ddd;"><?php _e( 'Product', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; background-color: #f2f2f2; border-bottom: 1px solid #ddd;"><?php _e( 'Regular Price', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; background-color: #f2f2f2; border-bottom: 1px solid #ddd;"><?php _e( 'Quantity', 'offers-for-woocommerce' ); ?></th>
+        <th scope="col" style="text-align:left; background-color: #f2f2f2; border-bottom: 1px solid #ddd;"><?php _e( 'Price', 'offers-for-woocommerce' ); ?></th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
-        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(), 2, '.', '' ); ?></td>
-        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
-        <td style="text-align:left; vertical-align:middle; border: 1px solid #eee; padding:12px;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(), 2, '.', '' ); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ); ?></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
-        <th scope="row" colspan="3" style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
-        <td style="text-align:left; border: 1px solid #eee; border-top-width: 4px; "><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' ); ?></td>
+        <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
+        <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' ); ?></td>
     </tr>
     </tfoot>
 </table>
-<?php exit; ?>
 <?php do_action( 'woocommerce_email_footer' ); ?>
