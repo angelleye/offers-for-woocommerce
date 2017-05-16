@@ -120,7 +120,8 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 1.4.7 - xx.xx.2017 =
 * Tweak - Improvements to design of email notifications. ([#276](https://github.com/angelleye/offers-for-woocommerce/issues/276))
-* Fix - Resolves a compatibility i ssue with Shop Manager role. ([#298](https://github.com/angelleye/offers-for-woocommerce/issues/298))
+* Fix - Resolves a compatibility issue with Shop Manager role. ([#298](https://github.com/angelleye/offers-for-woocommerce/issues/298))
+* Fix - Resolves a compatibility issue with Woo Variations Table plugin. [(#302](https://github.com/angelleye/offers-for-woocommerce/issues/302))
 
 = 1.4.6 - 04.25.2017 =
 * Tweak - Further adjustments for WooCommerce 3.0 compatibility. ([#301](https://github.com/angelleye/offers-for-woocommerce/issues/301))
