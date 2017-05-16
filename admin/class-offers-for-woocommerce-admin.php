@@ -1845,8 +1845,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'display_setting_make_offer_form_field_offer_notes' => '1',
             'display_setting_make_offer_button_position_single' => 'default'
         );
+        
+        //this will check for the setting after version update.
+        $admin_button_options_display = get_option('offers_for_woocommerce_options_display');
+        if(!isset($admin_button_options_display['display_setting_make_offer_button_position_single'])){
+            update_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
+        }
 
-        //check to see if present already
+        //check to see if present already        
         if(!get_option('offers_for_woocommerce_options_display')) {
             //option not found, add new
             add_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
