@@ -414,9 +414,31 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         /**
          * END - custom functions
          */
-
+            /* This will add extra column in the product list */
+            add_filter( 'manage_edit-product_columns', array($this,'show_product_offers'),15 );
+            add_action( 'manage_product_posts_custom_column', array($this,'show_product_offers_counts'), 10, 2 );
+        
 	} // END - construct
 	
+        function show_product_offers($columns){
+            //add column
+            $columns['angelleye_Offers'] = __( 'Offers'); 
+            return $columns;
+         }
+         
+        function show_product_offers_counts( $column, $postid ) {
+            global $wpdb;
+            if ( $column == 'angelleye_Offers' ) {                
+                $offers_count = $wpdb->get_var( "SELECT COUNT(*) FROM ".$wpdb->prefix."postmeta where meta_value='".$postid."' and meta_key='orig_offer_product_id' "  );
+                if($offers_count > 0){
+                    echo '<mark style="color: #3973aa;font-size: 18px;font-weight: 700;background: 0 0;line-height: 1;">'.$offers_count.'</mark>';
+                }
+                else{
+                    echo '<span class="na">–</span>';
+                }
+            }
+        }
+        
 	/**
 	 * Action - Add post type "woocommerce_offer" 
 	 *
