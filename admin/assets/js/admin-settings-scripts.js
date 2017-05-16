@@ -358,7 +358,7 @@
                 placeholder: "ui-state-highlight",
                 items: "li:not(.ui-state-disabled)",               
                 update: function(e, ui) {                                                            
-                    var nm = 4;
+                    var nm = 3;
                     var data = {action:'displaySettingFormFieldPosition'};                    
                     $('.angelleye-settings-li').each(function( index, value ) {
                         if($(this).attr('data-sequence-id') !=''){

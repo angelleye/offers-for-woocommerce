@@ -1861,11 +1861,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             add_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
         }
 
-        $angelleye_displaySettingFormFieldPosition =array(
-            '4' => 'display_setting_make_offer_form_field_offer_company_name',
-            '5' => 'display_setting_make_offer_form_field_offer_phone',
-            '6' => 'display_setting_make_offer_form_field_offer_notes',
-            '7' => 'display_setting_make_offer_form_field_offer_total'
+        $angelleye_displaySettingFormFieldPosition =array(            
+            '3' => 'display_setting_make_offer_form_field_offer_name',
+            '4' => 'display_setting_make_offer_form_field_offer_email',            
+            '5' => 'display_setting_make_offer_form_field_offer_company_name',
+            '6' => 'display_setting_make_offer_form_field_offer_phone',
+            '7' => 'display_setting_make_offer_form_field_offer_notes',
+            '8' => 'display_setting_make_offer_form_field_offer_total'
         );
            
         if(!get_option('angelleye_displaySettingFormFieldPosition')) {
@@ -2158,25 +2160,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         
         $button_display_position = get_option('angelleye_displaySettingFormFieldPosition');
         $form_fields_options= array(
-                    array('option_label' => __('Quantity', 'offers-for-woocommerce'), 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Price Each', 'offers-for-woocommerce'), 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Your Name', 'offers-for-woocommerce'), 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Your Email Address', 'offers-for-woocommerce'), 'option_name' => 'offer_email', 'option_disabled' => TRUE )
+                    array('option_label' => __('Quantity', 'offers-for-woocommerce'), 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ,'option_sequence'=>'0'),
+                    array('option_label' => __('Price Each', 'offers-for-woocommerce'), 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ,'option_sequence'=>'0'),
+                    array('option_label' => __('Your Name', 'offers-for-woocommerce'), 'option_name' => 'offer_name', 'option_disabled' => TRUE ,'option_sequence'=>'3'),
+                    array('option_label' => __('Your Email Address', 'offers-for-woocommerce'), 'option_name' => 'offer_email', 'option_disabled' => TRUE , 'option_sequence'=>'4'),
+                    array('option_label' => __('Company Name', 'offers-for-woocommerce'), 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ,'option_sequence'=>'5'),
+                    array('option_label' => __('Phone Number', 'offers-for-woocommerce'), 'option_name' => 'offer_phone', 'option_disabled' => FALSE ,'option_sequence'=>'6'),
+                    array('option_label' => __('Offer Notes', 'offers-for-woocommerce'), 'option_name' => 'offer_notes', 'option_disabled' => FALSE ,'option_sequence'=>'7'),
+                    array('option_label' => __('Total Offer Amount', 'offers-for-woocommerce'), 'option_name' => 'offer_total', 'option_disabled' => FALSE ,'option_sequence'=>'8')
                 );
-        foreach ($button_display_position as $key => $value) {
-             if($value=='display_setting_make_offer_form_field_offer_company_name'){
-                 array_push($form_fields_options,array('option_label' => __('Company Name', 'offers-for-woocommerce'), 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ,'option_sequence'=>$key));
-             }
-             if($value=='display_setting_make_offer_form_field_offer_phone'){
-                 array_push($form_fields_options,array('option_label' => __('Phone Number', 'offers-for-woocommerce'), 'option_name' => 'offer_phone', 'option_disabled' => FALSE ,'option_sequence'=>$key));
-             }
-             if($value=='display_setting_make_offer_form_field_offer_notes'){
-                 array_push($form_fields_options,array('option_label' => __('Offer Notes', 'offers-for-woocommerce'), 'option_name' => 'offer_notes', 'option_disabled' => FALSE ,'option_sequence'=>$key));
-             }
-             if($value=='display_setting_make_offer_form_field_offer_total'){
-                 array_push($form_fields_options,array('option_label' => __('Total Offer Amount', 'offers-for-woocommerce'), 'option_name' => 'offer_total', 'option_disabled' => FALSE ,'option_sequence'=>$key));
-             }
-        }
         add_settings_field(
             'display_setting_make_offer_form_fields', // ID
             __('Form Fields', 'offers-for-woocommerce'), // Title
@@ -2411,16 +2403,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             $is_checked = (isset($options[$field_label.'_'.$option['option_name']])) ? $options[$field_label.'_'.$option['option_name']] : '0';
             $is_checked_required = (isset($options[$field_label.'_'.$option['option_name'].'_required'])) ? $options[$field_label.'_'.$option['option_name'].'_required'] : '0';
-            $is_disabled = (!empty($option['option_disabled'])) ? 'disabled="disabled" checked="checked"' : '';
-            if(empty($is_disabled)){
-                $sortable_class='';
-            }
-            else{
+            $is_disabled = (!empty($option['option_disabled'])) ? 'disabled="disabled" checked="checked"' : '';            
+            if($option['option_sequence']=='0'){
                 $sortable_class='ui-state-disabled';
             }
-                print(
-                '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
-                );                     
+            else{
+                $sortable_class='';
+            }
+            print(
+            '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
+            );
         }
         echo '</ul>';        
     }
