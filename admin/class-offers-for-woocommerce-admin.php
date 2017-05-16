@@ -434,7 +434,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 					'new_item' => __('New WooCommerce Offer', 'offers-for-woocommerce'),
 					'view' => __('View', 'offers-for-woocommerce'),
 					'view_item' => __('View WooCommerce Offer', 'offers-for-woocommerce'),
-					'search_items' => __('Search WooCommerce Offers', 'offers-for-woocommerce'),
+					'search_items' => __(apply_filters('ofwc_search_label','Search WooCommerce Offers'), 'offers-for-woocommerce'),
 					'not_found' => __('No WooCommerce Offers found', 'offers-for-woocommerce'),
 					'not_found_in_trash' => __('No WooCommerce Offers found in Trash', 'offers-for-woocommerce'),
 					'parent' => __('Parent WooCommerce Offer', 'offers-for-woocommerce')
