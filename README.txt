@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.7 - xx.xx.2017 =
+* Feature - Adds shortcode to display recent offers list. ([#304](https://github.com/angelleye/offers-for-woocommerce/issues/304))
 * Tweak - Improvements to design of email notifications. ([#276](https://github.com/angelleye/offers-for-woocommerce/issues/276))
 * Fix - Resolves a compatibility issue with Shop Manager role. ([#298](https://github.com/angelleye/offers-for-woocommerce/issues/298))
 * Fix - Resolves a compatibility issue with Woo Variations Table plugin. [(#302](https://github.com/angelleye/offers-for-woocommerce/issues/302))
