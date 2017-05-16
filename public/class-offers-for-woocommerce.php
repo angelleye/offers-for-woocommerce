@@ -169,7 +169,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter('woocommerce_loop_add_to_cart_link', array($this, 'ofw_woocommerce_loop_add_to_cart_link'), 10, 2);
         add_action('admin_bar_menu', array($this, 'ofwc_manage_offer_admin_bar_callback'), 999);
         /*this will add shortcode for recent offers */
-        add_shortcode('angelleye_ofw_recent_offers', array($this, 'angelleye_ofw_recent_offers'));
+        add_shortcode('aeofwc_recent_offers', array($this, 'angelleye_ofw_recent_offers'));
         
         /* this will display the data of Product addon if plugin is activated - Start */
 
