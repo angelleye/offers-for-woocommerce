@@ -662,3 +662,8 @@ body.post-type-woocommerce_offer th.column-title {
 form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_mailing_list {
     width: 14px !important;
 }
+
+#angelleye-settings-ul-checkboxes-sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; cursor: pointer;}
+#angelleye-settings-ul-checkboxes-sortable li { margin: 0 5px 5px 5px; padding: 5px; }
+html>body #angelleye-settings-ul-checkboxes-sortable li { height: 1.5em; line-height: 1.2em; }
+.ui-state-highlight { height: 1.5em; line-height: 1.2em; }

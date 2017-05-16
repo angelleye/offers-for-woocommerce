@@ -298,6 +298,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'wp_ajax_approveOfferFromGrid', array( $this, 'approveOfferFromGridCallback') );
         add_action( 'approveOfferFromGrid', array( $this, 'approveOfferFromGridCallback') );
 
+        /* Ajax call while sortable in display setting changes its position. */
+            add_action( 'wp_ajax_displaySettingFormFieldPosition', array( $this, 'displaySettingFormFieldPositionCallback') );
+            add_action( 'displaySettingFormFieldPosition', array( $this, 'displaySettingFormFieldPositionCallback'));
         /*
          * Action - Ajax 'decline offer' from manage list
          * @since	0.1.0
@@ -1858,6 +1861,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             add_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
         }
 
+        $angelleye_displaySettingFormFieldPosition =array(
+            '4' => 'display_setting_make_offer_form_field_offer_company_name',
+            '5' => 'display_setting_make_offer_form_field_offer_phone',
+            '6' => 'display_setting_make_offer_form_field_offer_notes',
+            '7' => 'display_setting_make_offer_form_field_offer_total'
+        );
+           
+        if(!get_option('angelleye_displaySettingFormFieldPosition')) {
+            //option not found, add new
+            add_option('angelleye_displaySettingFormFieldPosition', $angelleye_displaySettingFormFieldPosition);
+        }
+        
+
 		/**
 		 * Register setting - 'General Settings'
 		 */	
@@ -2139,6 +2155,28 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * Add field - 'Display Settings' - 'display_setting_make_offer_form_fields'
          * Enable optional form fields on make offer form
          */
+        
+        $button_display_position = get_option('angelleye_displaySettingFormFieldPosition');
+        $form_fields_options= array(
+                    array('option_label' => __('Quantity', 'offers-for-woocommerce'), 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Price Each', 'offers-for-woocommerce'), 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Your Name', 'offers-for-woocommerce'), 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
+                    array('option_label' => __('Your Email Address', 'offers-for-woocommerce'), 'option_name' => 'offer_email', 'option_disabled' => TRUE )
+                );
+        foreach ($button_display_position as $key => $value) {
+             if($value=='display_setting_make_offer_form_field_offer_company_name'){
+                 array_push($form_fields_options,array('option_label' => __('Company Name', 'offers-for-woocommerce'), 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ,'option_sequence'=>$key));
+             }
+             if($value=='display_setting_make_offer_form_field_offer_phone'){
+                 array_push($form_fields_options,array('option_label' => __('Phone Number', 'offers-for-woocommerce'), 'option_name' => 'offer_phone', 'option_disabled' => FALSE ,'option_sequence'=>$key));
+             }
+             if($value=='display_setting_make_offer_form_field_offer_notes'){
+                 array_push($form_fields_options,array('option_label' => __('Offer Notes', 'offers-for-woocommerce'), 'option_name' => 'offer_notes', 'option_disabled' => FALSE ,'option_sequence'=>$key));
+             }
+             if($value=='display_setting_make_offer_form_field_offer_total'){
+                 array_push($form_fields_options,array('option_label' => __('Total Offer Amount', 'offers-for-woocommerce'), 'option_name' => 'offer_total', 'option_disabled' => FALSE ,'option_sequence'=>$key));
+             }
+        }
         add_settings_field(
             'display_setting_make_offer_form_fields', // ID
             __('Form Fields', 'offers-for-woocommerce'), // Title
@@ -2150,17 +2188,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'input_label'=>'display_setting_make_offer_form_field',
                 'input_required'=>FALSE,
                 'description' => __('Tick the checkbox of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, Your Email Address are required fields by default.', 'offers-for-woocommerce'),
-                'options'=> array(
-                    array('option_label' => __('Quantity', 'offers-for-woocommerce'), 'option_name' => 'offer_quantity', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Price Each', 'offers-for-woocommerce'), 'option_name' => 'offer_price_each', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Your Name', 'offers-for-woocommerce'), 'option_name' => 'offer_name', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Your Email Address', 'offers-for-woocommerce'), 'option_name' => 'offer_email', 'option_disabled' => TRUE ),
-                    array('option_label' => __('Total Offer Amount', 'offers-for-woocommerce'), 'option_name' => 'offer_total', 'option_disabled' => FALSE ),
-                    array('option_label' => __('Company Name', 'offers-for-woocommerce'), 'option_name' => 'offer_company_name', 'option_disabled' => FALSE ),
-                    array('option_label' => __('Phone Number', 'offers-for-woocommerce'), 'option_name' => 'offer_phone', 'option_disabled' => FALSE ),
-                    array('option_label' => __('Offer Notes', 'offers-for-woocommerce'), 'option_name' => 'offer_notes', 'option_disabled' => FALSE )
+                'options'=> $form_fields_options
                 )
-            )
         );
 
         /**
@@ -2377,22 +2406,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $field_label = $args['input_label'];
 
         echo '<div class="angelleye-settings-description"><p>' . $description . '</p></div>';
-        echo '<ul class="angelleye-settings-ul-checkboxes">';
+        echo '<ul class="angelleye-settings-ul-checkboxes" id="angelleye-settings-ul-checkboxes-sortable">';
         foreach( $args['options'] as $option )
         {
             $is_checked = (isset($options[$field_label.'_'.$option['option_name']])) ? $options[$field_label.'_'.$option['option_name']] : '0';
             $is_checked_required = (isset($options[$field_label.'_'.$option['option_name'].'_required'])) ? $options[$field_label.'_'.$option['option_name'].'_required'] : '0';
             $is_disabled = (!empty($option['option_disabled'])) ? 'disabled="disabled" checked="checked"' : '';
             if(empty($is_disabled)){
-                print(
-                '<li><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'&nbsp; <input type="checkbox" name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].'_required]" value="1" '. checked(1, $is_checked_required, false) .' />&nbsp;Required ?</li>'
-                );
+                $sortable_class='';
             }
             else{
+                $sortable_class='ui-state-disabled';
+            }
                 print(
-                '<li><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
-                );
-            }                       
+                '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
+                );                     
         }
         echo '</ul>';        
     }
@@ -2525,6 +2553,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     // load color picker			
             $this->my_enqueue_colour_picker();
 
+            // Jquery UI js for Sortable.
+            wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-sortable', plugins_url( 'assets/js/jquery-ui.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+                        
             // Admin footer scripts
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-admin-footer-scripts', plugins_url( 'assets/js/admin-footer-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
@@ -2536,6 +2567,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Chosen js
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+            
 		}
             if ( "edit-woocommerce_offer" == $screen->id && is_admin() )
             {
@@ -4136,6 +4168,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
                 }
             }
+        }
+    }
+    
+    public function displaySettingFormFieldPositionCallback(){        
+       if(is_admin() &&  is_ajax()){         
+           $newArray= array();
+           foreach($_POST as $key => $value){
+               if($key != 'action'){
+                   $newArray [$key] = $value;
+}
+           }
+           update_option('angelleye_displaySettingFormFieldPosition', $newArray);
+       }
+       if(is_ajax()) {
+            die(); // this is required to return a proper result
         }
     }
 }
