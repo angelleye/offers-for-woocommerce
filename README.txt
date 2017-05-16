@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.7 - xx.xx.2017 =
+* Feature - Adds drag-and-drop functionality to re-order the display of offer form fields. ([#279](https://github.com/angelleye/offers-for-woocommerce/issues/279))
 * Feature - Adds shortcode to display recent offers list. ([#304](https://github.com/angelleye/offers-for-woocommerce/issues/304))
 * Feature - Adds filter hook to search button for white labeling.  ([#305](https://github.com/angelleye/offers-for-woocommerce/issues/305))
 * Tweak - Improvements to design of email notifications. ([#276](https://github.com/angelleye/offers-for-woocommerce/issues/276))
