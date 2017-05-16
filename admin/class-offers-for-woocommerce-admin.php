@@ -2179,7 +2179,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_display',
                 'input_label'=>'display_setting_make_offer_form_field',
                 'input_required'=>FALSE,
-                'description' => __('Tick the checkbox of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, Your Email Address are required fields by default.', 'offers-for-woocommerce'),
+                'description' => __('Check the boxes of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, and Your Email Address are forcefully required fields, while the remaining fields are optionally required via checkbox.<br />  You may also drag and drop fields to re-order the way they are displayed on the offer form.', 'offers-for-woocommerce'),
                 'options'=> $form_fields_options
                 )
         );
@@ -2412,7 +2412,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
              if(empty($is_disabled)){
                  print(
-                 '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'&nbsp; <input type="checkbox" name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].'_required]" value="1" '. checked(1, $is_checked_required, false) .' />&nbsp;Required ?</li>'
+                 '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'&nbsp; <input type="checkbox" name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].'_required]" value="1" '. checked(1, $is_checked_required, false) .' />&nbsp;Required?</li>'
                  );
             }
              else{
