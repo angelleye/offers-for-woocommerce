@@ -1583,11 +1583,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         // Check the user's permissions
-        $user = wp_get_current_user();
-        $allowed_roles = array('vendor', 'administrator', 'shop_manager');
+        //$user = wp_get_current_user();
+        //$allowed_roles = array('vendor', 'administrator', 'shop_manager');
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
         {
-            if (!current_user_can('edit_page', $post_id) || !array_intersect($allowed_roles, $user->roles ))
+            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'manage_woocommerce'))
             {
                 return;
             }
@@ -2453,9 +2453,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             /**
              * If not super admin or shop manager, return
              */
-            if ( !(current_user_can('vendor') || current_user_can('administrator')) ) {
-                    return;
-            }
+            if( (! is_super_admin()) && (! current_user_can( 'manage_woocommerce')) ) {
+			return;
+		}
 
             /*
              * If the single instance hasn't been set, set it now
