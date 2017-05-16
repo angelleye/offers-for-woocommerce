@@ -2410,9 +2410,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             else{
                 $sortable_class='';
             }
-            print(
-            '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>'
-            );
+             if(empty($is_disabled)){
+                 print(
+                 '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'&nbsp; <input type="checkbox" name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].'_required]" value="1" '. checked(1, $is_checked_required, false) .' />&nbsp;Required ?</li>'
+                 );
+            }
+             else{
+                 print(
+                  '<li class="angelleye-settings-li ui-state-default '.$sortable_class.'" data-sequence-id="'.$option['option_sequence'].'"><input name="'.$args['option_name'].'['.$field_label.'_'.$option['option_name'].']" type="checkbox" value="1" ' . checked(1, $is_checked, false) . $is_disabled . '/>&nbsp;'.$option['option_label'].'</li>' 
+                 );
+            }
         }
         echo '</ul>';        
     }
