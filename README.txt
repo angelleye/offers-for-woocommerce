@@ -124,6 +124,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds filter hook to search button for white labeling.  ([#305](https://github.com/angelleye/offers-for-woocommerce/issues/305))
 * Tweak - Improvements to design of email notifications. ([#276](https://github.com/angelleye/offers-for-woocommerce/issues/276))
 * Tweak - Adjustment for better compatibility with WC Vendors Pro. ([#309](https://github.com/angelleye/offers-for-woocommerce/issues/309))
+* Tweak - Adds Offers column in product list so you can quickly see if there are existing offers while browsing products. ([#266](https://github.com/angelleye/offers-for-woocommerce/issues/266))
 * Fix - Resolves a compatibility issue with Shop Manager role. ([#298](https://github.com/angelleye/offers-for-woocommerce/issues/298))
 * Fix - Resolves a compatibility issue with Woo Variations Table plugin. [(#302](https://github.com/angelleye/offers-for-woocommerce/issues/302))
 
