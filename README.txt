@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.7.3
-Stable tag: 1.4.6
+Tested up to: 4.8
+Stable tag: 1.4.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
