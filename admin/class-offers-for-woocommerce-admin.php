@@ -2508,10 +2508,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             /**
              * If not super admin or shop manager, return
              */
-            if( (! is_super_admin()) && (! current_user_can( 'manage_woocommerce')) ) {
+            if(self::checkForProActive()){
+                if ( !(current_user_can('vendor') || current_user_can('administrator')) ) {
+                    return;    
+                }
+            }
+            else{
+                if( (! is_super_admin()) && (! current_user_can( 'manage_woocommerce')) ) {
 			return;
 		}
-
+            }                        
             /*
              * If the single instance hasn't been set, set it now
              */
@@ -4206,4 +4212,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             die(); // this is required to return a proper result
         }
     }
+    
+    public static function checkForProActive(){
+        $active_plugins = (array) get_option( 'active_plugins', array() );
+        if ( is_multisite() ){
+            $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+        }
+        return in_array( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins ) || array_key_exists( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins );
+    }
+    
 }
