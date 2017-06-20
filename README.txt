@@ -117,6 +117,8 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+= 1.4.7.1 - 06.19.2017 =
+* Fix - Resolves an issue with our WC Vendors extension dashboard. ([#316](https://github.com/angelleye/offers-for-woocommerce/issues/316))
 
 = 1.4.7 - 06.18.2017 =
 * Feature - Adds drag-and-drop functionality to re-order the display of offer form fields. ([#279](https://github.com/angelleye/offers-for-woocommerce/issues/279))
