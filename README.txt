@@ -120,6 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 1.4.7.2 - 06.22.2017 =
 * Fix - Resolves a conflict with some theme's when using WC Vendors extension. ([#319](https://github.com/angelleye/offers-for-woocommerce/issues/319))
+* Fix - Resolves PHP notices happening when searching for products. ([#320](https://github.com/angelleye/offers-for-woocommerce/issues/320))
 
 = 1.4.7.1 - 06.19.2017 =
 * Fix - Resolves an issue with our WC Vendors extension dashboard. ([#316](https://github.com/angelleye/offers-for-woocommerce/issues/316))
