@@ -923,20 +923,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $wpdb, $screen, $wp;
 
         $screen = get_current_screen();
+        if($screen !== NULL){                    
+            if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
 
-        if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
-
-            $found_blank_s = (isset($_GET['s']) && isset($_GET['orderby'])) ? TRUE : FALSE;
-            if($found_blank_s)
-            {
-                $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-                $current_url = esc_url_raw($current_url);
-                $redirect_url = str_replace("&s=&", "&", $current_url);
-                wp_redirect($redirect_url);
+                $found_blank_s = (isset($_GET['s']) && isset($_GET['orderby'])) ? TRUE : FALSE;
+                if($found_blank_s)
+                {
+                    $current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+                    $current_url = esc_url_raw($current_url);
+                    $redirect_url = str_replace("&s=&", "&", $current_url);
+                    wp_redirect($redirect_url);
+                }
+                $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
             }
-            $join .='LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
         }
-
         return $join;
     }
 
@@ -949,13 +949,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $screen = get_current_screen();
-
-        if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
-            $where = preg_replace(
-                "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-                "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+        if($screen !== NULL){
+            if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
+                $where = preg_replace(
+                    "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                    "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+            }
         }
-
         return $where;
     }
 
@@ -967,11 +967,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $wpdb;
 
         $screen = get_current_screen();
-
-        if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
-            return "DISTINCT";
+        if($screen !== NULL){
+            if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
+                return "DISTINCT";
+            }
         }
-
         return $where;
     }
 	
