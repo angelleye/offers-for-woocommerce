@@ -863,32 +863,41 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * http://scribu.net/wordpress/custom-sortable-columns.html#comment-4732
 	 */
 	public function woocommerce_offers_list_orderby( $vars )
-    {
-        // check for orderby var
-        if ( !isset( $vars['orderby']) )
         {
-            // order by date default
-            $vars = array_merge( $vars, array(
-                'orderby' => 'post_date',
-                'order' => 'desc' ) );
-        }
-        else {
-            if (isset($vars['orderby']) && (($vars['orderby'] == 'date') ))
+            /**
+             * Below if condition will check for the $vars retrun while they are empty array.
+             * Reason behind adding this Line is Static Fron page will be redirect to Blog page.
+             * Issue's more info : https://github.com/angelleye/offers-for-woocommerce/issues/319
+            **/          
+            if(empty($vars)){
+               return $vars;
+            }
+            
+            // check for orderby var
+            if ( !isset( $vars['orderby']) )
             {
-                $vars['orderby'] = 'post_date';
+                // order by date default
+                $vars = array_merge( $vars, array(
+                    'orderby' => 'post_date',
+                    'order' => 'desc' ) );
             }
-            if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount'))) {
-                $vars = array_merge($vars, array(
-                    'meta_key' => $vars['orderby'],
-                    'orderby' => 'meta_value_num'));
+            else {
+                if (isset($vars['orderby']) && (($vars['orderby'] == 'date') ))
+                {
+                    $vars['orderby'] = 'post_date';
+                }
+                if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_amount') || ($vars['orderby'] == 'offer_price_per') || ($vars['orderby'] == 'offer_quantity') || ($vars['orderby'] == 'offer_amount'))) {
+                    $vars = array_merge($vars, array(
+                        'meta_key' => $vars['orderby'],
+                        'orderby' => 'meta_value_num'));
+                }
+                if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_name') || ($vars['orderby'] == 'offer_email'))) {
+                    $vars = array_merge($vars, array(
+                        'meta_key' => $vars['orderby'],
+                        'orderby' => 'meta_value'));
+                }
             }
-            if (isset($vars['orderby']) && (($vars['orderby'] == 'offer_name') || ($vars['orderby'] == 'offer_email'))) {
-                $vars = array_merge($vars, array(
-                    'meta_key' => $vars['orderby'],
-                    'orderby' => 'meta_value'));
-            }
-        }
-		return $vars;
+            return $vars;
 	}
 	
 	/*
@@ -967,7 +976,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $wpdb;
 
         $screen = get_current_screen();
-
+        
         if ( is_search() && $screen->post_type == 'woocommerce_offer' ) {
             return "DISTINCT";
         }
