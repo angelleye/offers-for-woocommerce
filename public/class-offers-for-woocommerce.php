@@ -1117,8 +1117,8 @@ class Angelleye_Offers_For_Woocommerce {
                 $formDataUpdated['offer_buyer_counter_price_per'] = $formData['offer_price_per'];
                 $formDataUpdated['offer_buyer_counter_amount'] = $formData['offer_amount'];
 
-                $formDataUpdated['offer_quantity'] = $formData['offer_amount'];
-                $formDataUpdated['offer_price_per'] = $formData['offer_amount'];
+                $formDataUpdated['offer_quantity'] = $formData['offer_quantity'];
+                $formDataUpdated['offer_price_per'] = $formData['offer_price_per'];
                 $formDataUpdated['offer_amount'] = $formData['offer_amount'];
                  if(isset($nmArray)){
                     $formDataUpdated['offers_product_addon']=  serialize($nmArray);
