@@ -298,8 +298,8 @@
                     });
 
                     // callback handler that will be called on success
-                    request.done(function (response, textStatus, jqXHR){                        
-                        if(request.statusText == 'OK' || request.statusText == 'success'){
+                    request.done(function (response, textStatus, jqXHR){                                        
+                        if(200 === request.status){
                             var myObject = JSON.parse(request.responseText);
                             var responseStatus = myObject['statusmsg'];
                             var responseStatusDetail = myObject['statusmsgDetail'];
