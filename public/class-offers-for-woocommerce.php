@@ -240,8 +240,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since	0.1.0
      */
     public function angelleye_ofwc_offer_button_output($is_archive = false) {
-        global $post, $wp;
-        ;
+        global $post, $wp;        
         global $current_user;
         $req_login = FALSE;
         
@@ -971,8 +970,7 @@ class Angelleye_Offers_For_Woocommerce {
                             $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
             $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
                             $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
-            $formData['orig_offer_uid'] = uniqid('aewco-');
-            ;
+            $formData['orig_offer_uid'] = uniqid('aewco-');           
             $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
                         
             if($this->is_recaptcha_enable()) {
