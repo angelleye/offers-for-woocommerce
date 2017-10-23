@@ -2310,8 +2310,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'description' => __('Use the color-picker to choose the background color for your offer buttons.', 'offers-for-woocommerce'),
             )
 		);
-
-	} // END - angelleye_ofwc_intialize_options
+                
+        add_settings_field(
+                'display_setting_disabled_make_offer_on_product_sale', // ID
+                __('Disable Make Offer button when Product is on Sale.', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
+                'offers_for_woocommerce_display_settings', // Page
+                'display_settings', // Section
+                array(
+            'option_name' => 'offers_for_woocommerce_options_display',
+            'input_label' => 'display_setting_disabled_make_offer_on_product_sale',
+            'input_required' => FALSE,
+            'description' => __('You can disabled "Make Offer" button for those products which are on SALE.', 'offers-for-woocommerce'),
+                )
+        );
+    } // END - angelleye_ofwc_intialize_options
 	
 	/**
 	 * Enqueue the colour picker
@@ -2340,7 +2353,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 		print('<p>'. __('Complete the form below and click Save Changes button to update your settings.', 'offers-for-woocommerce'). '</p>');
 	}
 	
-	/**
+        /**
 	 * Callback - Options Page - Output a 'text' input field for options page form
 	 * @since	0.1.0
 	 * @param	$args - Params to define 'option_name','input_label'
