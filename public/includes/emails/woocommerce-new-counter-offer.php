@@ -9,8 +9,13 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
+<?php if ( is_plugin_active( 'offers-for-woocommerce-wc-vendors/offers-for-woocommerce-wc-vendors.php' )  && is_plugin_active( 'wc-vendors-pro/wcvendors-pro.php') ) {
+   printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>'. __('New counter offer submitted on', 'offers-for-woocommerce'). ' %s.</strong><br />' . __('To manage this counter offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), '<br><p style="text-align:center"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="'. site_url('dashboard/woocommerce_offer/edit/'.$offer_args['offer_id']) .'">' . __( 'Manage Counter Offer', 'offers-for-woocommerce' ) . '</a></p>' );
+ } 
+else{
+   printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>'. __('New counter offer submitted on', 'offers-for-woocommerce'). ' %s.</strong><br />' . __('To manage this counter offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), '<br><p style="text-align:center"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="'. admin_url( 'post.php?post='. $offer_args['offer_id']  .'&action=edit' ) .'">' . __( 'Manage Counter Offer', 'offers-for-woocommerce' ) . '</a></p>' );
+ } ?>
 
-<?php printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>'. __('New counter offer submitted on', 'offers-for-woocommerce'). ' %s.</strong><br />' . __('To manage this counter offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), '<br><p style="text-align:center"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="'. admin_url( 'post.php?post='. $offer_args['offer_id']  .'&action=edit' ) .'">' . __( 'Manage Counter Offer', 'offers-for-woocommerce' ) . '</a></p>' ); ?>
 <br>
 <h2 style="text-align:center"><?php echo __( 'Offer ID:', 'offers-for-woocommerce' ) . ' ' . $offer_args['offer_id']; ?> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', time() ), date_i18n( wc_date_format(), time() ) ); ?>)</h2>
 
