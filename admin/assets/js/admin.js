@@ -245,5 +245,17 @@
             }
         });
         
+        $(document).on('click','#meta-box-offers-submit',function() {
+            var original_price = $('#original-offer-amount').val();
+            var countered_price = $('#offer-price-per').val();            
+            var current_status = $('#woocommerce_offer_post_status').val();
+            if(original_price === countered_price && current_status==='countered-offer'){
+                $('#counter_offer_notice').show();
+                return false;
+            }
+              
+        });
+        
+        
 	});
 }(jQuery));
