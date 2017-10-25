@@ -116,7 +116,7 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section .woocommerce-make-offer-form-part-left { float:left; width:200px; margin:0px 0px 10px 0px; }
 
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section label { float:none; position:relative; padding:6px 0px; }
-div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input { float:none; padding:8px 10px; width:80%; max-width:384px; }
+div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input { float:none; padding:8px 10px; width:80%; max-width:384px;margin: 0px;}
 
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='text']:disabled,
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='email']:disabled{ border:none!important; }
