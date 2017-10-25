@@ -187,6 +187,9 @@
                 if(offers_for_woocommerce_js_params.is_woo_variations_table_installed==='1'){
                     offerVariationId = $("input[name='offer_variations_table_variation_id']").val();
                 }
+                if($('input[name="variation_id"]').val() && $('input[name="variation_id"]').val() !== 0){
+                    offerVariationId = $('input[name="variation_id"]').val();
+                }
                 /* old WC version condition start*/
                 if($("input[name='add-to-cart']").val() > 0 ){
                 var offerProductId = $("input[name='add-to-cart']").val();
