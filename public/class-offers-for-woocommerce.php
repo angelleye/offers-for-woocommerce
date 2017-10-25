@@ -266,8 +266,13 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+                                        
+        $_product = wc_get_product($post->ID);        
         
-        $_product = wc_get_product($post->ID);                
+        if(isset($button_options_display['display_setting_disabled_make_offer_on_product_sale']) && $button_options_display['display_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
+            return;
+        }
+        
         $is_external_product = version_compare(WC_VERSION, '3.0', '<') ? ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE : ( $_product->get_type() == 'external' ) ? TRUE : FALSE ;
         $is_instock = $_product->is_in_stock();
         
@@ -524,7 +529,7 @@ class Angelleye_Offers_For_Woocommerce {
             else {
                 return $tabs;
             }
-        }
+        }                        
         /**
          * post is not avalable so create problem @line No.497,501 and also third party add-ons who uses tab filter
          * @ticket https://github.com/angelleye/offers-for-woocommerce/issues/246
@@ -546,6 +551,9 @@ class Angelleye_Offers_For_Woocommerce {
          */
         $_product = wc_get_product($post->ID);
         if($_product == false) {
+            return $tabs;
+        }
+        if(isset($button_options_display['display_setting_disabled_make_offer_on_product_sale']) && $button_options_display['display_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
             return $tabs;
         }
         $is_external_product = ( $_product->get_type() == 'external' ) ? TRUE : FALSE;
