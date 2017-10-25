@@ -88,7 +88,7 @@ class Angelleye_Offers_For_Woocommerce {
 	add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
 
         /* Add "Make Offer" button code parts - After add to cart */
-        add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
+        add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'),11);
 
         /* Add "Make Offer" button code parts - After shop loop item */
         add_action('woocommerce_after_shop_loop_item', array($this, 'angelleye_ofwc_after_show_loop_item'), 99, 2);
