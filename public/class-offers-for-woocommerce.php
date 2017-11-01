@@ -911,11 +911,42 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    public function ofwc_minimum_offer($product_id,$product_price,$offer_total){
-        var_dump($product_id,$product_price,$offer_total);
-        exit;
-        $ofwc_minimum_offer_price = get_post_meta($product_id, 'ofwc_minimum_offer_price', true);
-        $ofwc_minimum_offer_price_type = get_post_meta($product_id, 'ofwc_minimum_offer_price_type', true);        
+    public function ofwc_minimum_offer($product_id,$product_price,$offer_total,$offer_quantity){
+        if(empty($product_price) || empty($product_id)){
+            return 3;
+        }
+        else{
+            $ofwc_minimum_offer_price = get_post_meta($product_id, 'ofwc_minimum_offer_price', true);
+            $ofwc_minimum_offer_price_type = get_post_meta($product_id, 'ofwc_minimum_offer_price_type', true);
+            if($ofwc_minimum_offer_price_type == 'price'){
+                if($offer_total < $ofwc_minimum_offer_price){
+                    return array('status' =>'failed', 'minimum_offer_price' => $ofwc_minimum_offer_price ,'type' => 'price');
+                }
+                else{
+                    return true;
+                }
+            }
+            elseif($ofwc_minimum_offer_price_type == 'percentage'){
+                $product_price = substr($product_price, 1);
+                $offer_multi_price =($product_price * $offer_quantity);
+                $total = (($ofwc_minimum_offer_price / 100) * $offer_multi_price);
+                $mop_after_percentage = ($offer_multi_price - $total);
+                if($offer_total < $mop_after_percentage){
+                    return array('status' =>'failed', 
+                                 'minimum_offer_price' => $mop_after_percentage,
+                                 'type' => 'percentage',
+                                 'qty' => $offer_quantity,
+                                 'percent' => $ofwc_minimum_offer_price
+                        );
+                }
+                else{
+                    return true;
+                }
+            }
+            else{
+                return 2;
+            }
+        }
     }
 
     public function new_offer_form_submit() {        
@@ -1033,14 +1064,30 @@ class Angelleye_Offers_For_Woocommerce {
             
             /*Check for minimum offer set or not */
             $ofwc_minimum_offer_price_enabled = get_post_meta($formData['orig_offer_product_id'], 'ofwc_minimum_offer_price_enabled', true);
-            if(!empty($ofwc_minimum_offer_price_enabled) && $ofwc_minimum_offer_price_enabled ==='yes'){                
-                $this->ofwc_minimum_offer($formData['orig_offer_product_id'],$formData['offer_product_price'],$formData['offer_total']);
-                exit;
+            if(!empty($ofwc_minimum_offer_price_enabled) && $ofwc_minimum_offer_price_enabled ==='yes'){                  
+                $return = $this->ofwc_minimum_offer($formData['orig_offer_product_id'],
+                                                    $formData['offer_product_price'],
+                                                    $formData['offer_total'],
+                                                    $formData['orig_offer_quantity']);
+                $symbol = get_woocommerce_currency_symbol();
+                if(is_array($return) && $return['status'] =='failed' && $return['type']=='price'){
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Minimum Offer price is '.$symbol.$return['minimum_offer_price'], 'offers-for-woocommerce')));
+                    exit;
+                }
+                elseif(is_array($return) && $return['status'] =='failed' && $return['type']=='percentage'){                  
+                    echo json_encode(array("statusmsg" => 'failed-custom',
+                                     "statusmsgDetail" => __('Minimum Offer price must be '.$return['percent'].'%. For '.$return['qty'].' quantity Minimum offer price is '.$symbol.$return['minimum_offer_price'], 'offers-for-woocommerce')));
+                    exit;                 
+                }
+                else{
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Nothing return', 'offers-for-woocommerce')));
+                    exit;
+                }                
             }
             else{
-                echo "in else odder condition";
+                //echo "in else odder condition";
             }
-            exit;
+            //exit;
             
             // set postmeta vars
             $formData['offer_name'] = $formData['orig_offer_name'];

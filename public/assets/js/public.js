@@ -155,11 +155,11 @@
                     else if(ofwc_minimum_offer_price_type ==='percentage')
                     {
                         /* For Variable product */
-                        jQuery('.woocommerce-variation-price .amount').text().replace(/ /g,'');
+                        //jQuery('.woocommerce-variation-price .amount').text().replace(/ /g,'');
                         /* For Product on sale */
-                        jQuery('.summary  .price ins').text();
+                        //jQuery('.summary  .price ins').text();
                         /* For simple Product */
-                        jQuery('.summary  .price .amount').text();
+                        //jQuery('.summary  .price .amount').text();
                         
                         
                         /* For Percentage type */
@@ -229,15 +229,8 @@
                     offerVariationId = $("input[name='offer_variations_table_variation_id']").val();
                 }
                 if($('input[name="variation_id"]').val() && $('input[name="variation_id"]').val() !== 0){
-                    offerVariationId = $('input[name="variation_id"]').val();
-                    //offerProductPrice = $('.woocommerce-variation-price .amount').text().replace(/ /g,'');
-                }                    
-                if($('.summary  .price ins').text() && $('.summary  .price ins').text() !== 0){
-                    offerProductPrice = $('.summary  .price ins').text();
+                    offerVariationId = $('input[name="variation_id"]').val();                    
                 }
-//                if($('.summary  .price .amount').text() && $('.summary  .price .amount').text() !== 0){
-//                    offerProductPrice = $('.summary  .price .amount').text();
-//                }                
                 
                 /* old WC version condition start*/
                 if($("input[name='add-to-cart']").val() > 0 ){
@@ -251,7 +244,34 @@
                 }
                 /* New WC version condition end */
                 
+                /* Recognise product type and Product price  : start */
+                var productType = $("input[name='ofwc_hidden_price_type']").val();                
+                if(productType=='variable'){
+                    var variationPrice = $('.woocommerce-variation-price .amount').text().replace(/ /g,'');
+                    if(variationPrice === ''){
+                        offerProductPrice = jQuery('.summary .price .woocommerce-Price-amount').text();
+                    }
+                    else{
+                        offerProductPrice = variationPrice;
+                    }                    
+                }
+                else if(productType=='simple'){
+                    offerProductPrice = $('.summary  .price .amount').text();
+                }
+                else if(productType=='sale_product'){
+                    offerProductPrice = $('.summary  .price ins').text();
+                }
+                else if(productType=='grouped'){
+                    offerProductPrice = $('.summary  .price .amount').text();
+                }
+                else if(productType=='external'){
+                    offerProductPrice = $('.summary  .price .amount').text();
+                }
+                else{
+                    offerProductPrice = '';
+                }
                 
+                /* End */
                 
                 var join_our_mailing_list = "no";
                 
