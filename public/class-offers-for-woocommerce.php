@@ -911,7 +911,14 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    public function new_offer_form_submit() {
+    public function ofwc_minimum_offer($product_id,$product_price,$offer_total){
+        var_dump($product_id,$product_price,$offer_total);
+        exit;
+        $ofwc_minimum_offer_price = get_post_meta($product_id, 'ofwc_minimum_offer_price', true);
+        $ofwc_minimum_offer_price_type = get_post_meta($product_id, 'ofwc_minimum_offer_price_type', true);        
+    }
+
+    public function new_offer_form_submit() {        
         ob_start();
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = $_POST['value'];        
@@ -967,7 +974,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         global $wpdb,$woocommerce; // this is how you get access to the database
                     // Check if form was posted and select task accordingly
-        if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {
+        if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {            
             // set postmeta original vars
             $formData['orig_offer_name'] = (isset($post['offer_name'])) ? $post['offer_name'] : '';
             $formData['orig_offer_company_name'] = (isset($post['offer_company_name'])) ? $post['offer_company_name'] : '';
@@ -975,12 +982,14 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['orig_offer_email'] = (isset($post['offer_email'])) ? $post['offer_email'] : '';
             $formData['orig_offer_product_id'] = (isset($post['offer_product_id'])) ? $post['offer_product_id'] : '';
             $formData['orig_offer_variation_id'] = (isset($post['offer_variation_id'])) ? $post['offer_variation_id'] : '';
-                            $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
+            $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
             $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
-                            $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
-            $formData['orig_offer_uid'] = uniqid('aewco-');           
+            $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
+            $formData['orig_offer_uid'] = uniqid('aewco-');
             $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
-                        
+            $formData['offer_product_price'] = (isset($post['offer_product_price'])) ? $post['offer_product_price'] : '';
+            $formData['offer_total'] = (isset($post['offer_total'])) ? $post['offer_total'] : '';
+            
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
                     $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
@@ -1021,7 +1030,18 @@ class Angelleye_Offers_For_Woocommerce {
                     return false;
                 }
             }
-
+            
+            /*Check for minimum offer set or not */
+            $ofwc_minimum_offer_price_enabled = get_post_meta($formData['orig_offer_product_id'], 'ofwc_minimum_offer_price_enabled', true);
+            if(!empty($ofwc_minimum_offer_price_enabled) && $ofwc_minimum_offer_price_enabled ==='yes'){                
+                $this->ofwc_minimum_offer($formData['orig_offer_product_id'],$formData['offer_product_price'],$formData['offer_total']);
+                exit;
+            }
+            else{
+                echo "in else odder condition";
+            }
+            exit;
+            
             // set postmeta vars
             $formData['offer_name'] = $formData['orig_offer_name'];
             $formData['offer_company_name'] = $formData['orig_offer_company_name'];

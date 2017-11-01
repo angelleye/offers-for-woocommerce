@@ -137,13 +137,54 @@
                 };
             })(jQuery);
 
-            // Submit offer form
+            $('#woocommerce-make-offer-form-price-each').change(function(){                
+                /*var ofwc_minimum_offer_price_enabled = $('#ofwc_minimum_offer_price_enabled').val();
+                if(ofwc_minimum_offer_price_enabled === 'yes'){                                
+                    var ofwc_minimum_offer_price = $('#ofwc_minimum_offer_price').val();
+                    var ofwc_minimum_offer_price_type = $('#ofwc_minimum_offer_price_type').val();
+                    if(ofwc_minimum_offer_price_type ==='price'){
+                        if($('#woocommerce-make-offer-form-total').val() < ofwc_minimum_offer_price){
+                            $('#minimum_offer_price').show();
+                            $('#woocommerce-make-offer-form-submit-button').attr( 'disabled','disabled' );
+                            return false;
+                        }
+                        else{
+                            $('#minimum_offer_price').hide();
+                        }
+                    }
+                    else if(ofwc_minimum_offer_price_type ==='percentage')
+                    {
+                        /* For Variable product */
+                        jQuery('.woocommerce-variation-price .amount').text().replace(/ /g,'');
+                        /* For Product on sale */
+                        jQuery('.summary  .price ins').text();
+                        /* For simple Product */
+                        jQuery('.summary  .price .amount').text();
+                        
+                        
+                        /* For Percentage type */
+                        /*if($('#woocommerce-make-offer-form-total').val() < ofwc_minimum_offer_price){
+                            $('#minimum_offer_price').show();
+                            $('#woocommerce-make-offer-form-submit-button').attr( 'disabled','disabled' );
+                            return false;
+                        }
+                        else{
+                            $('#minimum_offer_price').hide();
+                        }
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                return false;*/
+            });               
+            /* Submit offer form */
             $("form[name='woocommerce-make-offer-form']").submit(function()
             {               
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 
-                var offerCheckMinValuesPassed = true;
-
+                var offerCheckMinValuesPassed = true;  
+                
                 if($('#woocommerce-make-offer-form-price-each').autoNumeric('get') == '0')
                 {
                     $('#woocommerce-make-offer-form-price-each').autoNumeric('set', '' );
@@ -176,20 +217,28 @@
                 if( offerCheckMinValuesPassed === false )
                 {
                     return false;
-                }
+                }                
 
                 var parentOfferId = $("input[name='parent_offer_id']").val();
                 var parentOfferUid = $("input[name='parent_offer_uid']").val();
 
                 var offerProductId = '';
                 var offerVariationId = '';
-                
+                var offerProductPrice = '';
                 if(offers_for_woocommerce_js_params.is_woo_variations_table_installed==='1'){
                     offerVariationId = $("input[name='offer_variations_table_variation_id']").val();
                 }
                 if($('input[name="variation_id"]').val() && $('input[name="variation_id"]').val() !== 0){
                     offerVariationId = $('input[name="variation_id"]').val();
+                    //offerProductPrice = $('.woocommerce-variation-price .amount').text().replace(/ /g,'');
+                }                    
+                if($('.summary  .price ins').text() && $('.summary  .price ins').text() !== 0){
+                    offerProductPrice = $('.summary  .price ins').text();
                 }
+//                if($('.summary  .price .amount').text() && $('.summary  .price .amount').text() !== 0){
+//                    offerProductPrice = $('.summary  .price .amount').text();
+//                }                
+                
                 /* old WC version condition start*/
                 if($("input[name='add-to-cart']").val() > 0 ){
                 var offerProductId = $("input[name='add-to-cart']").val();
@@ -202,6 +251,8 @@
                 }
                 /* New WC version condition end */
                 
+                
+                
                 var join_our_mailing_list = "no";
                 
                 if($("#join_our_mailing_list").length > 0) {
@@ -212,7 +263,7 @@
                 
                 var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
                 var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
-
+                var offerTotal  = $("input[name='offer_total']").val();
                 var offerForm = $('#woocommerce-make-offer-form');
 
                 if(offerProductId != '')
@@ -234,6 +285,8 @@
                     
                     var post_data_array = $("#woocommerce-make-offer-form").serializeArray();
                     post_data_array.push({name: 'offer_product_id', value: offerProductId});
+                    post_data_array.push({name: 'offer_product_price', value: offerProductPrice});
+                    post_data_array.push({name: 'offer_total', value: offerTotal});
                     post_data_array.push({name: 'offer_variation_id', value: offerVariationId});
                     post_data_array.push({name: 'parent_offer_id', value: parentOfferId});
                     post_data_array.push({name: 'parent_offer_uid', value: parentOfferUid});
@@ -301,7 +354,7 @@
                     });
 
                     // callback handler that will be called on success
-                    request.done(function (response, textStatus, jqXHR){                                        
+                    request.done(function (response, textStatus, jqXHR){                          
                         if(200 === request.status){
                             var myObject = JSON.parse(request.responseText);
                             var responseStatus = myObject['statusmsg'];
