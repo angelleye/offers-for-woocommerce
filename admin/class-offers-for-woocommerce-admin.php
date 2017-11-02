@@ -1621,7 +1621,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         //$allowed_roles = array('vendor', 'administrator', 'shop_manager');
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
         {
-            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'manage_woocommerce'))
+            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'edit_woocommerce_offers'))
             {
                 return;
             }
@@ -2536,7 +2536,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             }
             else{
-                if( (! is_super_admin()) && (! current_user_can( 'manage_woocommerce')) ) {
+                if( (! is_super_admin()) && (! current_user_can( 'edit_woocommerce_offers')) ) {
 			return;
 		}
             }                        
