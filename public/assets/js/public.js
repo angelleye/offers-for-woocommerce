@@ -435,7 +435,7 @@
                 $("#aeofwc-close-lightbox-link").css('display','block');
             }
             var variantDisplay = $('.single_variation_wrap').css('display');
-            if($('body.woocommerce.single-product #content div.product').hasClass('product-type-variable') && variantDisplay != 'block' && offers_for_woocommerce_js_params.is_woo_variations_table_installed === '0')
+            if($('body.woocommerce.single-product #content div.product .summary ').hasClass('product-type-variable') && variantDisplay != 'block' && offers_for_woocommerce_js_params.is_woo_variations_table_installed === '0')
             {                
                 if( $(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox") )
                 {
@@ -447,6 +447,7 @@
                 {
                     $('#tab_custom_ofwc_offer_tab_inner').hide();
                 }
+                console.log('this is in');
                 $('#tab_custom_ofwc_offer_tab_alt_message').show();
             }
         });
