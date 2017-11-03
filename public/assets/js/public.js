@@ -136,48 +136,7 @@
                     });
                 };
             })(jQuery);
-
-            $('#woocommerce-make-offer-form-price-each').change(function(){                
-                /*var ofwc_minimum_offer_price_enabled = $('#ofwc_minimum_offer_price_enabled').val();
-                if(ofwc_minimum_offer_price_enabled === 'yes'){                                
-                    var ofwc_minimum_offer_price = $('#ofwc_minimum_offer_price').val();
-                    var ofwc_minimum_offer_price_type = $('#ofwc_minimum_offer_price_type').val();
-                    if(ofwc_minimum_offer_price_type ==='price'){
-                        if($('#woocommerce-make-offer-form-total').val() < ofwc_minimum_offer_price){
-                            $('#minimum_offer_price').show();
-                            $('#woocommerce-make-offer-form-submit-button').attr( 'disabled','disabled' );
-                            return false;
-                        }
-                        else{
-                            $('#minimum_offer_price').hide();
-                        }
-                    }
-                    else if(ofwc_minimum_offer_price_type ==='percentage')
-                    {
-                        /* For Variable product */
-                        //jQuery('.woocommerce-variation-price .amount').text().replace(/ /g,'');
-                        /* For Product on sale */
-                        //jQuery('.summary  .price ins').text();
-                        /* For simple Product */
-                        //jQuery('.summary  .price .amount').text();
-                        
-                        
-                        /* For Percentage type */
-                        /*if($('#woocommerce-make-offer-form-total').val() < ofwc_minimum_offer_price){
-                            $('#minimum_offer_price').show();
-                            $('#woocommerce-make-offer-form-submit-button').attr( 'disabled','disabled' );
-                            return false;
-                        }
-                        else{
-                            $('#minimum_offer_price').hide();
-                        }
-                    }
-                    else{
-                        return false;
-                    }
-                }
-                return false;*/
-            });               
+                         
             /* Submit offer form */
             $("form[name='woocommerce-make-offer-form']").submit(function()
             {               
@@ -316,14 +275,14 @@
                       var product_addon_array_js = [];                                                            
                     jQuery("div.product-addon").each(function(key,index){
                          var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
-                         var input_tag = jQuery(this).find(":input[name^='addon-9']");
+                         var input_tag = jQuery(this).find(":input[name^='addon-']");
                            
-                         input_tag.each(function(){
+                         input_tag.each(function(){                             
                             if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){
                                 if(jQuery(this).is(':checked')){
                                     var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
                                     product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
-                                }
+                                }                               
                             }
                             if(jQuery(this).is('textarea')){
                                 if(jQuery(this).val() !== ''){
@@ -357,7 +316,15 @@
                             }
                         });
                         
-                    });      
+                    });    
+                    if(product_addon_array_js.length > 0){
+                        var updatedPrice = jQuery(".product-addon-totals .amount").last().text();
+                        if(updatedPrice !== ''){
+                            offerProductPrice = updatedPrice;
+                        }                        
+                        post_data_array.push({name: 'offer_product_price', value: offerProductPrice});
+                    }
+                    
                     post_data_array.push({product_addon_array:product_addon_array_js});                   
                     var data_make_offer = {
                         action: 'new_offer_form_submit',
