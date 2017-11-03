@@ -825,7 +825,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $val = get_post_meta( $post_id , 'offer_price_per' , true );
                     }
                     $val = ($val != '') ? $val : '0';
-                    echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
+                    echo wc_price($val);
                     break;
 
                     case 'offer_amount' :
@@ -838,7 +838,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $val = get_post_meta( $post_id , 'offer_amount' , true );
                     }
                     $val = ($val != '') ? $val : '0';
-                    echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
+                    echo wc_price($val);
                     break;
             }
 	}
