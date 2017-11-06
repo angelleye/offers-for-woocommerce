@@ -106,7 +106,7 @@ if ($customer_offers) :
                                         $val = get_post_meta($post_id, 'offer_price_per', true);
                                     }
                                     $val = ($val != '') ? $val : '0';
-                                    echo get_woocommerce_currency_symbol() . number_format($val, 2, '.', '');
+                                    echo get_woocommerce_currency_symbol() . number_format($val, wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator());
                                     break;
                                 case 'offer_amount' :
                                     if ($post_status == 'buyercountered-offer') {
@@ -115,7 +115,7 @@ if ($customer_offers) :
                                         $val = get_post_meta($post_id, 'offer_amount', true);
                                     }
                                     $val = ($val != '') ? $val : '0';
-                                    echo get_woocommerce_currency_symbol() . number_format($val, 2, '.', '');
+                                    echo get_woocommerce_currency_symbol() . number_format($val,wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator());
                                     break;
                                 case 'offer-status' :
                                     switch ($post_status) {

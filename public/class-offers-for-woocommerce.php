@@ -1809,7 +1809,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
-            $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+            $product_total = number_format(round($product_qty * $product_price_per, 2), wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator());
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
