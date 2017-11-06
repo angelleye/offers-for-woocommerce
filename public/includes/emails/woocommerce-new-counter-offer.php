@@ -31,23 +31,23 @@ else{
     <tbody>
     <tr>
         <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
-        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(), 2, '.', '' ); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(),wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()); ?></td>
         <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
-        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()); ?></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
         <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
-        <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' ); ?></td>
+        <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()); ?></td>
     </tr>
     <tr>
         <?php 
         if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
-            $product_total = number_format(round($offer_args['product_total'] + $offer_args['product_shipping_cost'], 2), 2, '.', '');
+            $product_total = number_format(round($offer_args['product_total'] + $offer_args['product_shipping_cost'], 2), wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator());
           ?>
             <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Shipping', 'offers-for-woocommerce' ); ?></th>
-            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_shipping_cost'], 2, '.', '' ); ?></td>
+            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_shipping_cost'],wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()); ?></td>
            <?php 
         }
         ?>
@@ -57,7 +57,7 @@ else{
         if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
           ?>
             <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Total', 'offers-for-woocommerce' ); ?></th>
-            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $product_total, 2, '.', '' ); ?></td>
+            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo get_woocommerce_currency_symbol() . ' ' . number_format( $product_total, wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator() ); ?></td>
            <?php 
         }
         ?>

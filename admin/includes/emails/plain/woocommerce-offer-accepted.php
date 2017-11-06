@@ -25,15 +25,15 @@ echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['of
 echo "\n";
 
 echo __( 'Product', 'offers-for-woocommerce' ) . ': ' . stripslashes($offer_args['product_title_formatted']) . "\n";
-echo __( 'Regular Price', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(), 2, '.', '' ) . "\n";
+echo __( 'Regular Price', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product']->get_regular_price(),wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()) . "\n";
 echo __( 'Quantity', 'offers-for-woocommerce' ) . ': ' . number_format( $offer_args['product_qty'], 0 ) . "\n";
-echo __( 'Price', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'], 2, '.', '' ) . "\n";
-echo __( 'Subtotal', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], 2, '.', '' );
+echo __( 'Price', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_price_per'],wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()) . "\n";
+echo __( 'Subtotal', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_total'], wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator() );
 
 if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
     $product_total = number_format(round($offer_args['product_total'] + $offer_args['product_shipping_cost'], 2), 2, '.', '') . "\n";
-    echo __( 'Shipping', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_shipping_cost'], 2, '.', '' ). "\n";
-    echo __( 'Total', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $product_total, 2, '.', '' ) . "\n";
+    echo __( 'Shipping', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $offer_args['product_shipping_cost'],wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()). "\n";
+    echo __( 'Total', 'offers-for-woocommerce' ) . ': ' . get_woocommerce_currency_symbol() . ' ' . number_format( $product_total,wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator() ) . "\n";
 }
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {

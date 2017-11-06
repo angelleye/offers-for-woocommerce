@@ -2647,7 +2647,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $ofw_offer_expiration_date_show = 'true';
                 }
                 wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param', array(
-                    'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show
+                    'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show,
+                    'ofw_wc_get_price_decimals' => wc_get_price_decimals()
                 ));
             }
 

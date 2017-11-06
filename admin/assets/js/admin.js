@@ -23,10 +23,10 @@
                     lZero: 'deny',
                     aForm: true}
             );
-
+            
             $('#offer-price-per').autoNumeric('init',
                 {
-                    mDec: '2',
+                    mDec: ofw_param.ofw_wc_get_price_decimals,
                     aSign: '',
                     //wEmpty: 'sign',
                     lZero: 'allow',
@@ -36,7 +36,7 @@
     
             $('#offer_shipping_cost').autoNumeric('init',
                 {
-                    mDec: '2',
+                    mDec: ofw_param.ofw_wc_get_price_decimals,
                     aSign: '',
                     //wEmpty: 'sign',
                     lZero: 'allow',
@@ -95,7 +95,7 @@
                     $('#offer-price-per').autoNumeric('set', '');
                     $('#offer-price-per').autoNumeric('update',
                         {
-                            mDec: '2',
+                            mDec: ofw_param.ofw_wc_get_price_decimals,
                             aSign: '',
                             //wEmpty: 'sign',
                             lZero: 'allow',

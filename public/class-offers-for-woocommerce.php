@@ -980,7 +980,7 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator());
             $formData['orig_offer_uid'] = uniqid('aewco-');           
             $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
-                        
+            
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
                     $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);

@@ -28,9 +28,9 @@
                         <?php if( isset($_product_attributes) && is_array($_product_attributes) && !empty($_product_attributes) ) { ?>
                         <li><span><?php echo __('Attributes:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo ucwords( implode( ", ", array_values($_product_attributes)) ); ?></li>
                         <?php } ?>
-                        <li><span><?php echo __('Regular Price:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_regular_price), 2, '.', '') : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Regular Price:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ? wc_price($_product_regular_price) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php if($_product_sale_price) { ?>
-                            <li><span><?php echo __('Sale Price:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (!empty($_product_sale_price)) ? get_woocommerce_currency_symbol().number_format( str_replace(",", "", $_product_sale_price), 2, '.', '') : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Sale Price:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (!empty($_product_sale_price)) ? wc_price($_product_sale_price) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php } ?>
                         <?php if(isset($_product_stock) && $_product_stock == 0  && $_product_managing_stock ) { ?>
                             <li>
@@ -226,7 +226,7 @@
                         <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
                             <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_buyer_counter_price_per'][0])) ? $postmeta['offer_buyer_counter_price_per'][0] : ''; ?>" autocomplete="off" />
                         <?php } else { ?>
-                            <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" autocomplete="off" />
+                            <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? number_format($postmeta['offer_price_per'][0], wc_get_price_decimals(), wc_get_price_decimal_separator(),wc_get_price_thousand_separator()) : ''; ?>" autocomplete="off" />
                         <?php } ?>
                     </div>
                     <label for="offer-shipping-cost"><input type="checkbox" id="ofwc_enable_shipping" name="enable_shipping_cost" value="1" style="width: auto !important;" <?php if( $postmeta['enable_shipping_cost'][0] == 1) echo 'checked'; ?>><?php echo __('Include Shipping with Offer', 'offers-for-woocommerce'); ?></label>

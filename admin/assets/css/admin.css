@@ -384,6 +384,15 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     font-weight: bold;
     padding-right:3px;
 }
+
+.offer-product-meta-values-wrap li .amount,
+.offer-buyer-meta-values-wrap li .amount
+{
+    font-weight: normal!important;
+}
+span.woocommerce-Price-currencySymbol{
+    font-weight: normal!important;
+}
 .offer-product-meta-values-wrap li a span {
     font-weight: normal!important;
 }
