@@ -861,7 +861,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @since    0.1.0
      */
     public function enqueue_styles() {
-        wp_enqueue_style('offers-for-woocommerce-plugin-styles', plugins_url('assets/css/public.css', __FILE__), array(), self::VERSION);
+        wp_enqueue_style('offers-for-woocommerce-plugin-styles', plugins_url('assets/css/public.css', __FILE__), array(), self::VERSION);        
     }
 
     /**
@@ -894,7 +894,7 @@ class Angelleye_Offers_For_Woocommerce {
             /* End */
             
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
-            wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', plugins_url('assets/js/autoNumeric-1-9-24.js', __FILE__), self::VERSION);
+            wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', plugins_url('assets/js/autoNumeric-1-9-24.js', __FILE__), self::VERSION);            
             if (wp_script_is('offers-for-woocommerce-plugin-script')) {
                 wp_localize_script('offers-for-woocommerce-plugin-script', 'offers_for_woocommerce_js_params', apply_filters('offers_for_woocommerce_js_params', array(
                     'is_product_type_variable' => $is_product_type_variable,
