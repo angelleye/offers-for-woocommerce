@@ -115,7 +115,7 @@
 
             $('#woocommerce-make-offer-form-price-each').autoNumeric('init',
                 {
-                    mDec: '2',
+                    mDec: offers_for_woocommerce_js_params.ofw_wc_get_price_decimals_public,
                     aSign: '',
                     //wEmpty: 'sign',
                     lZero: 'allow',
@@ -149,7 +149,7 @@
                     $('#woocommerce-make-offer-form-price-each').autoNumeric('set', '' );
                     $('#woocommerce-make-offer-form-price-each').autoNumeric('update',
                         {
-                            mDec: '2',
+                            mDec: offers_for_woocommerce_js_params.ofw_wc_get_price_decimals_public,
                             aSign: '',
                             //wEmpty: 'sign',
                             lZero: 'allow',
@@ -473,7 +473,7 @@
                 if(!currencySymbol) {
                     currencySymbol = '$';
                 }
-                $('#woocommerce-make-offer-form-total').val(parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+                $('#woocommerce-make-offer-form-total').val(parseFloat(theTotal, 10).toFixed(offers_for_woocommerce_js_params.ofw_wc_get_price_decimals_public).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
             }
         };
 
