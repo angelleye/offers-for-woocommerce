@@ -182,7 +182,7 @@
                 
                 var theTotal = (parseFloat(theTotal) + parseFloat(offer_shiipng_cost));
                 
-                $('#offer-total').val( parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString() );
+                $('#offer-total').val( parseFloat(theTotal, 10).toFixed(ofw_param.ofw_wc_get_price_decimals).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString() );
             }
 
             // show notice if offer quantity exceeds stock and backorders not allowed
