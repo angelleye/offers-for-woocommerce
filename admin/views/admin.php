@@ -258,6 +258,16 @@
                 <h3><?php echo __('Set expiration date for all Offers', 'offers-for-woocommerce'); ?></h3>
                 <div><?php echo __('Labore ex deserunt natus in enim ea do quis et eum quis voluptates', 'offers-for-woocommerce'); ?></div>
 
+                <div class="angelleye-offers-tools-bulk-action-section">
+                    <label for="ofw-set-expiration-offer-action-type"><?php echo __('Action', 'offers-for-woocommerce'); ?></label>
+                    <div>
+                        <select name="ofw_set_expiration_offer_action_type" id="ofw-set_expiration_offer-action-type" required="required">
+                            <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
+                            <option value="ofwc_minimum_offer_price_enable"><?php echo __('Enable', 'offers-for-woocommerce'); ?></option>
+                            <option value="ofwc_minimum_offer_price_disable"><?php echo __('Disable', 'offers-for-woocommerce'); ?></option>
+                        </select>
+                    </div>
+                </div>
                 <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
                     <label for="ofwc-bulk-action-type"><?php echo __('Select Expiry date', 'offers-for-woocommerce'); ?></label>
                     <div>
@@ -273,8 +283,8 @@
                 <div class="angelleye-offers-clearfix"></div>
             </div>
             <script>
-                jQuery(document).ready(function () {
-                    jQuery( "#offer-expiration-date" ).datepicker();
+                jQuery(document).ready(function () {                    
+                    jQuery( "#offer-expiration-date" ).datepicker({minDate: new Date()});
                 });                  
             </script>
         </form>
