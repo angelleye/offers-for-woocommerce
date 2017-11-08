@@ -251,7 +251,34 @@
             <div class="angelleye-offers-clearfix"></div>
         </div>
         </form>
+    
+        <form id="ofw_tool_set_expiration_offer_form" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
+            <a name="ofwc-t1"></a>
+            <div class="angelleye-offers-tools-wrap">
+                <h3><?php echo __('Set expiration date for all Offers', 'offers-for-woocommerce'); ?></h3>
+                <div><?php echo __('Labore ex deserunt natus in enim ea do quis et eum quis voluptates', 'offers-for-woocommerce'); ?></div>
 
+                <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
+                    <label for="ofwc-bulk-action-type"><?php echo __('Select Expiry date', 'offers-for-woocommerce'); ?></label>
+                    <div>
+                        <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="" autocomplete="off">
+                    </div>
+                </div> 
+                <div class="angelleye-offers-tools-bulk-action-section">
+                    <label for="ofwc-bulk-action-target-where-stock-value"></label>
+                    <div>
+                        <button class="button button-primary" id="bulk-enable-tool-submit" name="bulk_enable_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
+                    </div>
+                </div>
+                <div class="angelleye-offers-clearfix"></div>
+            </div>
+            <script>
+                jQuery(document).ready(function () {
+                    jQuery( "#offer-expiration-date" ).datepicker();
+                });                  
+            </script>
+        </form>
+    
     <?php } elseif($active_tab == "general_settings") { ?>
         <form method="post" action="options.php" id="woocommerce_offers_options_form">
     <?php
