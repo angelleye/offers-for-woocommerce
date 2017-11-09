@@ -254,30 +254,47 @@
     
         <form id="ofw_tool_set_expiration_offer_form" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
             <a name="ofwc-t1"></a>
+            <?php
+            global $wpdb;
+            $offers_sql = "SELECT ID FROM `".$wpdb->prefix."posts` WHERE `post_type` = 'woocommerce_offer'";
+            $offers_result = $wpdb->get_results($offers_sql);
+            if(is_array($offers_result) && !empty($offers_result)){
+                foreach ($offers_result as $offers) {
+                    $offers->ID;
+                }                
+            }
+            
+            ?>
             <div class="angelleye-offers-tools-wrap">
                 <h3><?php echo __('Set expiration date for all Offers', 'offers-for-woocommerce'); ?></h3>
-                <div><?php echo __('Labore ex deserunt natus in enim ea do quis et eum quis voluptates', 'offers-for-woocommerce'); ?></div>
+                <div><?php echo __('Select from the options below to enable or disable automated set expiration date for all Offers', 'offers-for-woocommerce'); ?></div>
 
                 <div class="angelleye-offers-tools-bulk-action-section">
                     <label for="ofw-set-expiration-offer-action-type"><?php echo __('Action', 'offers-for-woocommerce'); ?></label>
                     <div>
-                        <select name="ofw_set_expiration_offer_action_type" id="ofw-set_expiration_offer-action-type" required="required">
+                        <select name="ofw_set_expiration_offer_action_type" id="ofw-set-expiration-offer-action-type" required="required">
                             <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
-                            <option value="ofwc_minimum_offer_price_enable"><?php echo __('Enable', 'offers-for-woocommerce'); ?></option>
-                            <option value="ofwc_minimum_offer_price_disable"><?php echo __('Disable', 'offers-for-woocommerce'); ?></option>
+                            <option value="ofw_set_expiration_offer_enable"><?php echo __('Enable', 'offers-for-woocommerce'); ?></option>
+                            <option value="ofw_set_expiration_offer_disable"><?php echo __('Disable', 'offers-for-woocommerce'); ?></option>
                         </select>
                     </div>
                 </div>
-                <div class="angelleye-offers-tools-bulk-action-section ofwc-bulk-action-type">
+                <div class="angelleye-offers-tools-bulk-action-section offer_expiration_date angelleye-hidden">
                     <label for="ofwc-bulk-action-type"><?php echo __('Select Expiry date', 'offers-for-woocommerce'); ?></label>
                     <div>
                         <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="" autocomplete="off">
                     </div>
                 </div> 
+                <div class="angelleye-offers-tools-bulk-action-section offer_expiration_date_for_future angelleye-hidden">
+                    <label for="ofwc-bulk-action-type"><?php echo __('Include for future offers', 'offers-for-woocommerce'); ?></label>
+                    <div>
+                        <input style="width:auto;" type="checkbox" name="offer_expiration_date_for_future" id="offer-expiration-date-for-future">
+                    </div>
+                </div> 
                 <div class="angelleye-offers-tools-bulk-action-section">
                     <label for="ofwc-bulk-action-target-where-stock-value"></label>
                     <div>
-                        <button class="button button-primary" id="bulk-enable-tool-submit" name="bulk_enable_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
+                        <button class="button button-primary" id="offer-expiration-date-submit" name="bulk_enable_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
                     </div>
                 </div>
                 <div class="angelleye-offers-clearfix"></div>

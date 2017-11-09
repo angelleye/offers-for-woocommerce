@@ -321,6 +321,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action( 'wp_ajax_adminToolBulkEnableDisable', array( $this, 'adminToolBulkEnableDisableCallback') );
         
         /*
+         * Action - Ajax 'Set Expiration date tool' from offers settings/tools
+         * @since	1.4.8         
+         */
+        add_action( 'wp_ajax_adminToolBulkEnableDisableExpirationOffer', array( $this, 'adminToolBulkEnableDisableExpirationOfferCallback') );
+        
+        /*
          * Filter - Add email class to WooCommerce for 'Accepted Offer'
          * @since   0.1.0
          */
@@ -3114,6 +3120,40 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
     }
 
+    /*
+     *  Action - Ajax 'Set Expiration date tool' from offers settings/tools
+     *  @since	1.4.8
+     */
+    public function adminToolBulkEnableDisableExpirationOfferCallback(){
+        global $wpdb;
+        $updateTotal = 0;
+        $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
+        $offer_expiration_date = ( isset( $_POST["offer_expiration_date"] ) ) ? $_POST['offer_expiration_date'] : FALSE;
+        $offer_expiration_date_for_future = ( isset( $_POST["offer_expiration_date_for_future"] ) ) ? $_POST['offer_expiration_date_for_future'] : FALSE;
+        
+        if (!$ofwc_bulk_action_type || !$offer_expiration_date){
+            $errors = TRUE;
+        }                
+        
+        $offers_sql = "SELECT ID FROM `".$wpdb->prefix."posts` WHERE `post_type` = 'woocommerce_offer'";
+        $offers_result = $wpdb->get_results($offers_sql);
+        if(is_array($offers_result) && !empty($offers_result)){
+            foreach ($offers_result as $offers) {
+                $offers->ID;
+                /* save here for offer meta */
+                $updateTotal++;
+            }
+        }
+        else{
+            $errors = TRUE;
+        }
+        if(!$errors){
+            $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$updateTotal);
+            echo $redirect_url;
+        }
+        
+    }
+    
     /*
      * Action - Ajax 'bulk enable/disable tool' from offers settings/tools
      * @since	0.1.0
