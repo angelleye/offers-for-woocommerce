@@ -3127,19 +3127,29 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function adminToolBulkEnableDisableExpirationOfferCallback(){
         global $wpdb;
         $updateTotal = 0;
+        $errors = FALSE;
         $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
         $offer_expiration_date = ( isset( $_POST["offer_expiration_date"] ) ) ? $_POST['offer_expiration_date'] : FALSE;
         $offer_expiration_date_for_future = ( isset( $_POST["offer_expiration_date_for_future"] ) ) ? $_POST['offer_expiration_date_for_future'] : FALSE;
+        $ofw_offers_status = ( isset( $_POST["ofw_offers_status"] ) ) ? $_POST['ofw_offers_status'] : FALSE;
         
-        if (!$ofwc_bulk_action_type || !$offer_expiration_date){
+        if (!$ofwc_bulk_action_type && !$ofw_offers_status){
             $errors = TRUE;
-        }                
+        }
         
-        $offers_sql = "SELECT ID FROM `".$wpdb->prefix."posts` WHERE `post_type` = 'woocommerce_offer'";
+        if($ofw_offers_status == 'all'){
+            $sub_query = " AND post_status NOT IN ('declined-offer','completed-offer')";
+        }
+        else{
+            $sub_query = " AND post_status = '{$ofw_offers_status}'";
+        }
+                
+        $offers_sql = "SELECT ID FROM `".$wpdb->prefix."posts` WHERE `post_type` = 'woocommerce_offer' ".$sub_query;
+        
         $offers_result = $wpdb->get_results($offers_sql);
         if(is_array($offers_result) && !empty($offers_result)){
             foreach ($offers_result as $offers) {
-                $offers->ID;
+                update_post_meta($offers->ID, 'offer_expiration_date', $offer_expiration_date);
                 /* save here for offer meta */
                 $updateTotal++;
             }
@@ -3151,6 +3161,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed='.$updateTotal);
             echo $redirect_url;
         }
+        else
+        {
+            $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed=0');
+            echo $redirect_url;
+        }
+        die();
         
     }
     

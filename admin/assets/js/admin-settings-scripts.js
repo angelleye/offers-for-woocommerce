@@ -19,14 +19,12 @@
                 if($(this).val() === 'ofw_set_expiration_offer_enable'){
                     $('.offer_expiration_date').show();
                     $('#offer-expiration-date').attr('required', 'required');
-                    $('.offer_expiration_date_for_future').show();
-                    $('#offer-expiration-date-for-future').attr('required', 'required');
+                    $('.offer_expiration_date_for_future').show();                    
                 }
                 else if($(this).val() === 'ofw_set_expiration_offer_disable'){
                     $('.offer_expiration_date').hide();
-                    $('#offer-expiration-date').removeAttr('required', 'required');
-                    $('.offer_expiration_date_for_future').hide();
-                    $('#offer-expiration-date-for-future').removeAttr('required', 'required');
+                    $('#offer-expiration-date').removeAttr('required', 'required');                    
+                    $('.offer_expiration_date_for_future').hide();                    
                 }
             });
                         
@@ -36,37 +34,34 @@
                 $('#offer-expiration-date-submit').removeClass('button-primary');
                 $('#offer-expiration-date-submit').html('<i class="ofwc-spinner"></i> Processing, please wait...');
                 $('#offer-expiration-date-submit i.spinner').show();
-                var actionType = $('#ofw-set-expiration-offer-action-type').val();
-                if(actionType == 'ofw_set_expiration_offer_enable'){
-                    var offer_expiration_date = $('#offer-expiration-date').val();
-                    var offer_expiration_date_for_future = '';
-                    if($('#offer-expiration-date-for-future').is(':checked')){
-                        offer_expiration_date_for_future = 'yes';
-                    }                    
-                    var data = {
-                        action : 'adminToolBulkEnableDisableExpirationOffer',
-                        actionType : actionType,
-                        offer_expiration_date : offer_expiration_date,
-                        offer_expiration_date_for_future : offer_expiration_date_for_future                        
-                    };
-                    $.post(ajaxurl, data, function(response) {                        
-                        if ( 'failed' !== response )
-                        {
-                            var redirectUrl = response;
-                            top.location.replace(redirectUrl);
-                            return true;
-                        }
-                        else
-                        {
-                            alert('Error updating records.');
-                            return false;
-                        }
-                    });                    
-                    return false;
-                }
-                else{
-                    /*console.log('disabled');*/
-                }
+                var actionType = $('#ofw-set-expiration-offer-action-type').val();                
+                var offer_expiration_date = $('#offer-expiration-date').val();
+                var ofw_offers_status = $('#ofw-offers-status').val();
+                var offer_expiration_date_for_future = '';                                
+                if($('#offer-expiration-date-for-future').is(':checked')){
+                    offer_expiration_date_for_future = 'yes';
+                }                    
+                var data = {
+                    action : 'adminToolBulkEnableDisableExpirationOffer',
+                    actionType : actionType,
+                    offer_expiration_date : offer_expiration_date,
+                    offer_expiration_date_for_future : offer_expiration_date_for_future,
+                    ofw_offers_status : ofw_offers_status
+                };
+                $.post(ajaxurl, data, function(response) {                        
+                    if ( 'failed' !== response )
+                    {
+                        var redirectUrl = response;
+                        top.location.replace(redirectUrl);
+                        return true;
+                    }
+                    else
+                    {
+                        alert('Error updating records.');
+                        return false;
+                    }
+                });                    
+                return false;                
             });
 
             // change target type -- toggle where input

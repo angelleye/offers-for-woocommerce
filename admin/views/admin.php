@@ -279,12 +279,26 @@
                         </select>
                     </div>
                 </div>
+                <div class="angelleye-offers-tools-bulk-action-section ofw_offers_status">
+                    <label for="ofwc-bulk-action-type"><?php echo __('Offer Status', 'offers-for-woocommerce'); ?></label>
+                    <div>
+                        <select name="ofw_offers_status" id="ofw-offers-status" required="required">
+                            <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
+                            <option value="all"><?php echo __('All Offer', 'offers-for-woocommerce'); ?></option>
+                            <option value="accepted-offer"><?php echo __('Accepted Offer', 'offers-for-woocommerce'); ?></option>
+                            <option value="countered-offer"><?php echo __('Countered Offer', 'offers-for-woocommerce'); ?></option>
+<!--                            <option value="declined-offer"><?php echo __('Declined Offer', 'offers-for-woocommerce'); ?></option>-->
+<!--                            <option value="completed-offer"><?php echo __('Completed Offer', 'offers-for-woocommerce'); ?></option>-->
+                            <option value="on-hold-offer"><?php echo __('On Hold', 'offers-for-woocommerce'); ?></option>
+                        </select>
+                    </div>
+                </div>
                 <div class="angelleye-offers-tools-bulk-action-section offer_expiration_date angelleye-hidden">
                     <label for="ofwc-bulk-action-type"><?php echo __('Select Expiry date', 'offers-for-woocommerce'); ?></label>
                     <div>
                         <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="" autocomplete="off">
                     </div>
-                </div> 
+                </div>                                                
                 <div class="angelleye-offers-tools-bulk-action-section offer_expiration_date_for_future angelleye-hidden">
                     <label for="ofwc-bulk-action-type"><?php echo __('Include for future offers', 'offers-for-woocommerce'); ?></label>
                     <div>
