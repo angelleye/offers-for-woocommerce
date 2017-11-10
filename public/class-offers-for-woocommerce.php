@@ -1230,6 +1230,35 @@ class Angelleye_Offers_For_Woocommerce {
             }
 
             do_action('make_offer_after_save_form_data', $parent_post_id, $post);
+            
+            /*
+             * Below code is work for Disabled email notification for admin user when offers is auto decline for product
+             *  Setting ->  General -> Disable Admin Email on Auto Decline Offer
+             *  Start
+             */
+            $button_options_general = get_option('offers_for_woocommerce_options_general');
+            $option_for_admin_disable_email_auto_decline  = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
+            $offer_is_auto_decline ='';
+            if($option_for_admin_disable_email_auto_decline == '1'){
+                $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
+                $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
+                $offer_id = $parent_post_id;
+                $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
+                $_product = wc_get_product( $product_id );
+                $product_price = $_product->get_price();
+                $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
+
+                if( isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
+                    $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+                    if( isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage) ) {
+                        if( (int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+                          $offer_is_auto_decline = 'yes';
+                        }
+                    }
+                }
+            }            
+            /* End */
+            
             /**
              * Email Out - admin email notification of new or countered offer
              * @since   0.1.0
@@ -1339,8 +1368,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
             }
             $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
-            $new_email->trigger($offer_args);
-
+            if($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == ''){
+                $new_email->trigger($offer_args);
+            }
             /**
              * Send buyer 'offer received' email notification
              */
@@ -1364,7 +1394,10 @@ class Angelleye_Offers_For_Woocommerce {
             $new_email->template_plain = 'woocommerce-offer-received.php';
             $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
-            $new_email->trigger($offer_args);
+            if($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == ''){
+                $new_email->trigger($offer_args);
+            }
+            
             if (is_ajax()) {
                 do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
             }
@@ -1381,7 +1414,7 @@ class Angelleye_Offers_For_Woocommerce {
         
         return ob_get_clean();
     }
-
+    
     /**
      * Add public query vars for API requests
      * @param array $vars List of current public query vars
