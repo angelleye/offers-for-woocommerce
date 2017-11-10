@@ -36,16 +36,11 @@
                 $('#offer-expiration-date-submit i.spinner').show();
                 var actionType = $('#ofw-set-expiration-offer-action-type').val();                
                 var offer_expiration_date = $('#offer-expiration-date').val();
-                var ofw_offers_status = $('#ofw-offers-status').val();
-                var offer_expiration_date_for_future = '';                                
-                if($('#offer-expiration-date-for-future').is(':checked')){
-                    offer_expiration_date_for_future = 'yes';
-                }                    
+                var ofw_offers_status = $('#ofw-offers-status').val();                
                 var data = {
                     action : 'adminToolBulkEnableDisableExpirationOffer',
                     actionType : actionType,
-                    offer_expiration_date : offer_expiration_date,
-                    offer_expiration_date_for_future : offer_expiration_date_for_future,
+                    offer_expiration_date : offer_expiration_date,                    
                     ofw_offers_status : ofw_offers_status
                 };
                 $.post(ajaxurl, data, function(response) {                        

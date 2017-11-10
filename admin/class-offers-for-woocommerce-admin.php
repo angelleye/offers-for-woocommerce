@@ -3129,8 +3129,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $updateTotal = 0;
         $errors = FALSE;
         $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
-        $offer_expiration_date = ( isset( $_POST["offer_expiration_date"] ) ) ? $_POST['offer_expiration_date'] : FALSE;
-        $offer_expiration_date_for_future = ( isset( $_POST["offer_expiration_date_for_future"] ) ) ? $_POST['offer_expiration_date_for_future'] : FALSE;
+        $offer_expiration_date = ( isset( $_POST["offer_expiration_date"] ) ) ? $_POST['offer_expiration_date'] : FALSE;        
         $ofw_offers_status = ( isset( $_POST["ofw_offers_status"] ) ) ? $_POST['ofw_offers_status'] : FALSE;
         
         if (!$ofwc_bulk_action_type && !$ofw_offers_status){
@@ -3149,8 +3148,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offers_result = $wpdb->get_results($offers_sql);
         if(is_array($offers_result) && !empty($offers_result)){
             foreach ($offers_result as $offers) {
-                update_post_meta($offers->ID, 'offer_expiration_date', $offer_expiration_date);
-                /* save here for offer meta */
+                update_post_meta($offers->ID, 'offer_expiration_date', $offer_expiration_date);        
                 $updateTotal++;
             }
         }
@@ -3166,8 +3164,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $redirect_url = admin_url('options-general.php?page=offers-for-woocommerce&tab=tools&processed=0');
             echo $redirect_url;
         }
-        die();
-        
+        die();        
     }
     
     /*

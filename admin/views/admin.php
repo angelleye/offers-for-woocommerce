@@ -299,16 +299,11 @@
                         <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="" autocomplete="off">
                     </div>
                 </div>                                                
-                <div class="angelleye-offers-tools-bulk-action-section offer_expiration_date_for_future angelleye-hidden">
-                    <label for="ofwc-bulk-action-type"><?php echo __('Include for future offers', 'offers-for-woocommerce'); ?></label>
-                    <div>
-                        <input style="width:auto;" type="checkbox" name="offer_expiration_date_for_future" id="offer-expiration-date-for-future">
-                    </div>
-                </div> 
+                
                 <div class="angelleye-offers-tools-bulk-action-section">
                     <label for="ofwc-bulk-action-target-where-stock-value"></label>
                     <div>
-                        <button class="button button-primary" id="offer-expiration-date-submit" name="bulk_enable_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
+                        <button class="button button-primary" id="offer-expiration-date-submit" name="offer_expiration_date_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
                     </div>
                 </div>
                 <div class="angelleye-offers-clearfix"></div>
