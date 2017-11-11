@@ -1231,34 +1231,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             do_action('make_offer_after_save_form_data', $parent_post_id, $post);
             
-            /*
-             * Below code is work for Disabled email notification for admin user when offers is auto decline for product
-             *  Setting ->  General -> Disable Admin Email on Auto Decline Offer
-             *  Start
-             */
-            $button_options_general = get_option('offers_for_woocommerce_options_general');
-            $option_for_admin_disable_email_auto_decline  = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
-            $offer_is_auto_decline ='';
-            if($option_for_admin_disable_email_auto_decline == '1'){
-                $product_id = get_post_meta($parent_post_id, 'offer_product_id', true);
-                $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
-                $offer_id = $parent_post_id;
-                $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
-                $_product = wc_get_product( $product_id );
-                $product_price = $_product->get_price();
-                $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
-
-                if( isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
-                    $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
-                    if( isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage) ) {
-                        if( (int) $auto_decline_percentage >= (int) $user_offer_percentage) {
-                          $offer_is_auto_decline = 'yes';
-                        }
-                    }
-                }
-            }            
-            /* End */
-            
+                      
             /**
              * Email Out - admin email notification of new or countered offer
              * @since   0.1.0
@@ -1317,6 +1290,32 @@ class Angelleye_Offers_For_Woocommerce {
 
                 $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s', 'offers-for-woocommerce'), $identifier, $product->get_title());
             }
+            
+            
+            /*
+             * Below code is work for Disabled email notification for admin user when offers is auto decline for product
+             *  Setting ->  General -> Disable Admin Email on Auto Decline Offer
+             *  Start
+             */
+            $button_options_general = get_option('offers_for_woocommerce_options_general');
+            $option_for_admin_disable_email_auto_decline  = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
+            $offer_is_auto_decline ='';
+            if($option_for_admin_disable_email_auto_decline == '1'){
+                $productData = $this->ofwc_get_product_detail($offer_id, $product_id, $variant_id);
+                $offer_price = $productData['offer_price'];
+                $user_offer_percentage = $productData['user_offer_percentage'];
+                $product_url = $productData['product_url'];
+                $offer_uid = $productData['offer_uid'];
+                if( isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
+                    $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+                    if( isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage) ) {
+                        if( (int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+                          $offer_is_auto_decline = 'yes';
+                        }
+                    }
+                }
+            }            
+            /* End */
             
             if ($is_counter_offer) {
                 $offer_args['is_counter_offer'] = true;
@@ -1923,22 +1922,11 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofwc_auto_accept_auto_decline_handler($offer_id, $product_id, $variant_id, $emails) {
         $post_meta_auto_accept_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_enabled', true);
         $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
-        if( isset($variant_id) && !empty($variant_id) ) {
-            $variable_product = new WC_Product_Variation( $variant_id );
-            $actual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
-            $actual_sales_price = $variable_product->sale_price;
-        } else {
-            $actual_regular_price = get_post_meta( $product_id, '_regular_price', true);
-            $actual_sales_price = get_post_meta( $product_id, '_sale_price', true);
-            $actual_regular_price = (isset($actual_regular_price) && !empty($actual_regular_price) ) ? $actual_regular_price : 0;
-        }
-        $product_price = (isset($actual_sales_price) && !empty($actual_sales_price)) ? $actual_sales_price : $actual_regular_price;
-        $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
-        $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
-        $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
-        $product_url = $product->get_permalink();
-        $offer_uid = get_post_meta($offer_id, 'offer_uid', true);
-        
+        $productData = $this->ofwc_get_product_detail($offer_id, $product_id, $variant_id);
+        $offer_price = $productData['offer_price'];
+        $user_offer_percentage = $productData['user_offer_percentage'];
+        $product_url = $productData['product_url'];
+        $offer_uid = $productData['offer_uid'];
         if( isset($post_meta_auto_accept_enabled) && $post_meta_auto_accept_enabled == 'yes') {
             $auto_accept_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_percentage', true);
             if( isset($offer_price) && !empty($offer_price) && isset($auto_accept_percentage) && !empty($auto_accept_percentage) ) {
@@ -2332,5 +2320,29 @@ class Angelleye_Offers_For_Woocommerce {
             $wp_admin_bar->add_node( $args );
         }
     }
+    /*
+     * Fetch product variant price or regular/sale price.
+     *  @since	1.4.8      
+     */
+    
+    public function ofwc_get_product_detail($offer_id, $product_id, $variant_id) {
+        $productData = array();
+        if( isset($variant_id) && !empty($variant_id) ) {
+            $variable_product = new WC_Product_Variation( $variant_id );
+            $actual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
+            $actual_sales_price = $variable_product->sale_price;
+        } else {
+            $actual_regular_price = get_post_meta( $product_id, '_regular_price', true);
+            $actual_sales_price = get_post_meta( $product_id, '_sale_price', true);
+            $actual_regular_price = (isset($actual_regular_price) && !empty($actual_regular_price) ) ? $actual_regular_price : 0;
+        }
+        $product_price = (isset($actual_sales_price) && !empty($actual_sales_price)) ? $actual_sales_price : $actual_regular_price;
+        $productData['offer_price'] = $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
+        $productData['user_offer_percentage'] = $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
+        $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+        $productData['product_url'] = $product_url = $product->get_permalink();
+        $productData['offer_uid'] = $offer_uid = get_post_meta($offer_id, 'offer_uid', true);
+        return $productData;
+    }    
 
 }
