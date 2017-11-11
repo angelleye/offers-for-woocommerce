@@ -1154,7 +1154,8 @@ class Angelleye_Offers_For_Woocommerce {
 
             // If has valid parent offer id post
             $is_counter_offer = ( $parent_post_id != '' ) ? true : false;
-
+            do_action('woocommerce_before_offer_submit', $is_counter_offer, $post,$formData,$newPostData);
+            
             if ($is_counter_offer) {
                 // check for parent offer unique id
                 $parent_post_offer_uid = get_post_meta($parent_post_id, 'offer_uid', true);
