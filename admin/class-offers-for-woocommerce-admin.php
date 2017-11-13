@@ -635,7 +635,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 </div>
                 <div class="options_group">
                     <?php woocommerce_wp_checkbox( array('value' => $field_value_auto_decline_enabled, 'cbvalue' => $field_callback_auto_decline_enabled, 'id' => '_offers_for_woocommerce_auto_decline_enabled', 'label' => __('Enable Auto Decline Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically decline offers based on the percentage set.', 'offers-for-woocommerce') ) ); ?>
-                     <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer below the percentage entered here will be automatically declined.<br> For Example: the price on the product is $100, but you would be willing to accept as low as $80. You could use an auto-decline on anything 21% or higher, that way any offer below $80 would auto-decline' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>               
+                     <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?></label><input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr( 'Any offer below the percentage entered here will be automatically declined.' ) . '" src="' . esc_url( WC()->plugin_url() ) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
                 </div>
             </div>
             <?php
@@ -1621,7 +1621,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         //$allowed_roles = array('vendor', 'administrator', 'shop_manager');
         if(isset($_POST['post_type']) && 'woocommerce_offer' == $_POST['post_type'])
         {
-            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'manage_woocommerce'))
+            if (!current_user_can('edit_page', $post_id) || !current_user_can( 'edit_woocommerce_offers'))
             {
                 return;
             }
@@ -2013,7 +2013,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_default_expire_days', // ID
-            __('Default Offer Expiration Days', 'offers-for-woocommerce'), // Title
+            __('Default Expiration Date', 'offers-for-woocommerce'), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -2021,7 +2021,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_general',
                 'input_label'=>'general_setting_default_expire_days',
                 'input_required'=>FALSE,
-                'description' => __('Enter the amount of days from accepting/countering an offer that you would like the expiration date to automatically set.', 'offers-for-woocommerce'),
+                'description' => __('The number entered here will be used to automatically set the expiration date that many days in advance while accepting or countering an offer.', 'offers-for-woocommerce'),
             )
         );
         
@@ -2327,7 +2327,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 
         add_settings_field(
                 'display_setting_disabled_make_offer_on_product_sale', // ID
-                __('Disable Make Offer button when Product is on Sale.', 'offers-for-woocommerce'), // Title
+                __('Disable for Sale Items', 'offers-for-woocommerce'), // Title
                 array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
                 'offers_for_woocommerce_display_settings', // Page
                 'display_settings', // Section
@@ -2335,7 +2335,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'option_name' => 'offers_for_woocommerce_options_display',
             'input_label' => 'display_setting_disabled_make_offer_on_product_sale',
             'input_required' => FALSE,
-            'description' => __('You can disabled "Make Offer" button for those products which are on SALE.', 'offers-for-woocommerce'),
+            'description' => __('Disable the "Make Offer" button for products that are on sale.', 'offers-for-woocommerce'),
                 )
         );
     } // END - angelleye_ofwc_intialize_options
@@ -2550,7 +2550,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
             }
             else{
-                if( (! is_super_admin()) && (! current_user_can( 'manage_woocommerce')) ) {
+                if( (! is_super_admin()) && (! current_user_can( 'edit_woocommerce_offers')) ) {
 			return;
 		}
             }                        

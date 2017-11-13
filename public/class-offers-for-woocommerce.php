@@ -119,7 +119,7 @@ class Angelleye_Offers_For_Woocommerce {
          * @param $cart_object
          * @since   0.1.0
          */
-        add_action('woocommerce_before_calculate_totals', array($this, 'my_woocommerce_before_calculate_totals'));
+        add_action('woocommerce_before_calculate_totals', array($this, 'my_woocommerce_before_calculate_totals'),99,1);
 
         /*
          * Filter - get_cart_items_from_session

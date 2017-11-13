@@ -3,7 +3,7 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.8
+Tested up to: 4.9
 Stable tag: 1.4.7.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -117,6 +117,20 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.4.8 - xx.xx.2017 =
+* Feature - Adds WooCommerce Product Bundle compatibility. ([#350](https://github.com/angelleye/offers-for-woocommerce/issues/350))
+* Feature - Adds language file for Brazil / Portuguese. ([#336](https://github.com/angelleye/offers-for-woocommerce/issues/336))
+* Tweak - Removes unnecessary semicolon. ([#317](https://github.com/angelleye/offers-for-woocommerce/issues/317))
+* Tweak - Adjusts button alignment on the product page. ([#325](https://github.com/angelleye/offers-for-woocommerce/issues/325))
+* Tweak - Adjustments to make variation items display their attributes accordingly. ([#328](https://github.com/angelleye/offers-for-woocommerce/issues/328))
+* Fix - Resolves an issue where a method is unavailable from the admin panel. ([#324](https://github.com/angelleye/offers-for-woocommerce/issues/324))
+* Fix - Resolves an issue with incorrect email URL for counter offers. ([#327](https://github.com/angelleye/offers-for-woocommerce/issues/327))
+* Fix - Resolves an issue with incorrect parameter names being used loading values. ([#331](https://github.com/angelleye/offers-for-woocommerce/issues/331))
+* Fix - Resolves an issue with the offer form on some mobile devices. ([#333](https://github.com/angelleye/offers-for-woocommerce/issues/333))
+* Fix - Resolves a CSS conflict with The7 theme. ([#334](https://github.com/angelleye/offers-for-woocommerce/issues/334))
+* Fix - Resolves a conflict with Virtue Premium theme. ([#347](https://github.com/angelleye/offers-for-woocommerce/issues/347))
+* Fix - Resolves a capability conflict with WC Vendors extension. ([#351](https://github.com/angelleye/offers-for-woocommerce/issues/351))
 
 = 1.4.7.2 - 06.22.2017 =
 * Fix - Resolves a conflict with some theme's when using WC Vendors extension. ([#319](https://github.com/angelleye/offers-for-woocommerce/issues/319))
