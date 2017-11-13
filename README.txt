@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.9
-Stable tag: 1.4.7.2
+Stable tag: 1.4.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.8 - xx.xx.2017 =
+= 1.4.8 - 11.13.2017 =
 * Feature - Adds WooCommerce Product Bundle compatibility. ([#350](https://github.com/angelleye/offers-for-woocommerce/issues/350))
 * Feature - Adds language file for Brazil / Portuguese. ([#336](https://github.com/angelleye/offers-for-woocommerce/issues/336))
 * Feature - Adds option in settings to disable admin notifications for auto-declined offers. ([#349](https://github.com/angelleye/offers-for-woocommerce/issues/349))
