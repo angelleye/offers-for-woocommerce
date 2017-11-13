@@ -2021,7 +2021,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_general',
                 'input_label'=>'general_setting_default_expire_days',
                 'input_required'=>FALSE,
-                'description' => __('The number entered here will be used to automatically set the expiration date while accepting or countering an offer.', 'offers-for-woocommerce'),
+                'description' => __('The number entered here will be used to automatically set the expiration date that many days in advance while accepting or countering an offer.', 'offers-for-woocommerce'),
             )
         );
         
