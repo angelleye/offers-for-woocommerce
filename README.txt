@@ -125,6 +125,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Fix - Resolves an issue where a method is unavailable from the admin panel. ([#324](https://github.com/angelleye/offers-for-woocommerce/issues/324))
 * Fix - Resolves an issue with incorrect email URL for counter offers. ([#327](https://github.com/angelleye/offers-for-woocommerce/issues/327))
 * Fix - Resolves an issue with incorrect parameter names being used loading values. ([#331](https://github.com/angelleye/offers-for-woocommerce/issues/331))
+* Fix - Resolves an issue with the offer form on some mobile devices. ([#333](https://github.com/angelleye/offers-for-woocommerce/issues/333))
 
 = 1.4.7.2 - 06.22.2017 =
 * Fix - Resolves a conflict with some theme's when using WC Vendors extension. ([#319](https://github.com/angelleye/offers-for-woocommerce/issues/319))
