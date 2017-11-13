@@ -122,6 +122,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds WooCommerce Product Bundle compatibility. ([#350](https://github.com/angelleye/offers-for-woocommerce/issues/350))
 * Feature - Adds language file for Brazil / Portuguese. ([#336](https://github.com/angelleye/offers-for-woocommerce/issues/336))
 * Feature - Adds option in settings to disable admin notifications for auto-declined offers. ([#349](https://github.com/angelleye/offers-for-woocommerce/issues/349))
+* Feature - Adds user requested features: Counter-offer Alert, Minimum Offer Price, Form Hooks. ([#342](https://github.com/angelleye/offers-for-woocommerce/issues/342))
 * Tweak - Removes unnecessary semicolon. ([#317](https://github.com/angelleye/offers-for-woocommerce/issues/317))
 * Tweak - Adjusts button alignment on the product page. ([#325](https://github.com/angelleye/offers-for-woocommerce/issues/325))
 * Tweak - Adjustments to make variation items display their attributes accordingly. ([#328](https://github.com/angelleye/offers-for-woocommerce/issues/328))
