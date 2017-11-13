@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.8 - xx.xx.2017 =
+* Feature - Adds WooCommerce Product Bundle compatibility. ([#350](https://github.com/angelleye/offers-for-woocommerce/issues/350))
 * Tweak - Removes unnecessary semicolon. ([#317](https://github.com/angelleye/offers-for-woocommerce/issues/317))
 * Tweak - Adjusts button alignment on the product page. ([#325](https://github.com/angelleye/offers-for-woocommerce/issues/325))
 * Tweak - Adjustments to make variation items display their attributes accordingly. ([#328](https://github.com/angelleye/offers-for-woocommerce/issues/328))
