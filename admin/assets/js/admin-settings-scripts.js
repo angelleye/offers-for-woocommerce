@@ -15,7 +15,165 @@
                     aForm: false}
             );
 
-            // change target type -- toggle where input
+            /* Minimum Offer Price bulk toogle */            
+            $('#ofw-minimum-offer-price-target-type').change(function(){
+
+                $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').hide();
+                $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').hide();
+                $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').hide();
+                $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').hide();
+                $('#ofw-minimum-offer-price-target-where-category').removeAttr('required');
+                $('#ofw-minimum-offer-price-target-where-product-type').removeAttr('required');
+                $('#ofw-minimum-offer-price-target-where-price-value').removeAttr('required');
+                $('#ofw-minimum-offer-price-target-where-stock-value').removeAttr('required'); 
+
+                if(  $(this).val() == 'where' )
+                {
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').show();
+                    $('#ofw-minimum-offer-price-target-where-type').attr('required', 'required');
+                }
+                else
+                {
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').hide();
+                    $('#ofw-minimum-offer-price-target-where-type').removeAttr('required');
+                }
+            });
+            
+            /* change target where type -- toggle categories/value inputs */
+            $('#ofw-minimum-offer-price-target-where-type').change(function(){
+                if(  $(this).val() == 'category' )
+                {
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').show();
+                    $('#ofw-minimum-offer-price-target-where-category').attr('required', 'required');
+
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').hide();
+                    $('#ofw-minimum-offer-price-target-where-product-type').removeAttr('required');
+                    $('#ofw-minimum-offer-price-target-where-price-value').removeAttr('required');
+                    $('#ofw-minimum-offer-price-target-where-stock-value').removeAttr('required');
+                }
+                else if(  $(this).val() == 'product_type' )
+                {
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').show();
+                    $('#ofw-minimum-offer-price-target-where-product-type').attr('required', 'required');
+
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').hide();
+                    $('#ofw-minimum-offer-price-target-where-category').removeAttr('required');
+                    $('#ofw-minimum-offer-price-target-where-price-value').removeAttr('required');
+                    $('#ofw-minimum-offer-price-target-where-stock-value').removeAttr('required');
+                }
+                else
+                {
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').hide();
+                    $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').hide();
+                    $('#ofw-minimum-offer-price-target-where-category').removeAttr('required');
+                    $('#ofw-minimum-offer-price-target-where-product-type').removeAttr('required');
+
+                    if(  $(this).val() == 'price_greater' || $(this).val() == 'price_less' )
+                    {
+                        $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').show();
+                        $('#ofw-minimum-offer-price-target-where-price-value').attr('required', 'required');
+
+                        $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').hide();
+                        $('#ofw-minimum-offer-price-target-where-stock-value').removeAttr('required');
+                    }
+                    else if(  $(this).val() == 'stock_greater' || $(this).val() == 'stock_less' )
+                    {
+                        $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').hide();
+                        $('#ofw-minimum-offer-price-target-where-price-value').removeAttr('required');
+
+                        $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').show();
+                        $('#ofw-minimum-offer-price-target-where-stock-value').attr('required', 'required');
+                    }
+                    else
+                    {
+                        $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').hide();
+                        $('#ofw-minimum-offer-price-target-where-price-value').removeAttr('required');
+
+                        $('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').hide();
+                        $('#ofw-minimum-offer-price-target-where-stock-value').removeAttr('required');
+                    }
+                }
+            });
+            
+            $('#ofw-minimum-offer-action-type').change(function(){
+                var selected = $(this).val();
+                if('ofwc_minimum_offer_price_enable' === selected){
+                    $('.ofwc-minimun-offer-price-input').show();
+                    $('.ofwc-minimun-offer-price-input').attr('required', 'required');
+                    $('.ofw-minimum-offer-price-type').show();
+                    $('.ofw-minimum-offer-price-type').attr('required', 'required');
+                }
+                else{
+                    /* Disabled */
+                    $('.ofwc-minimun-offer-price-input').hide();
+                    $('.ofwc-minimun-offer-price-input').removeAttr('required');
+                    $('.ofw-minimum-offer-price-type').hide();
+                    $('.ofw-minimum-offer-price-type').removeAttr('required');
+                }
+            });
+
+            /* AJAX - Bulk enable/disable tool */
+            $('#ofw_tool_minimun_offer_price_form').submit(function(){                
+                /* show processing status */
+                $('#ofw-minimum-offer-price-tool-submit').attr('disabled', 'disabled');
+                $('#ofw-minimum-offer-price-tool-submit').removeClass('button-primary');
+                $('#ofw-minimum-offer-price-tool-submit').html('<i class="ofwc-spinner"></i> Processing, please wait...');
+                $('#ofw-minimum-offer-price-tool-submit i.spinner').show();
+                
+                
+                var minimum_price = $('#minimun-offer-price-input').val();
+                var price_type = $('#ofw-minimum-offer-price-type').val();
+                var actionType = $('#ofw-minimum-offer-action-type').val();
+                var actionTargetType = $('#ofw-minimum-offer-price-target-type').val();
+                var actionTargetWhereType = $('#ofw-minimum-offer-price-target-where-type').val();
+                var actionTargetWhereCategory = $('#ofw-minimum-offer-price-target-where-category').val();
+                var actionTargetWhereProductType = $('#ofw-minimum-offer-price-target-where-product-type').val();
+                var actionTargetWherePriceValue = $('#ofw-minimum-offer-price-target-where-price-value').val();
+                var actionTargetWhereStockValue = $('#ofw-minimum-offer-price-target-where-stock-value').val();
+                var meta_value = 'ofwc_minimum_offer_price';                                
+
+                var data = {
+                    'action': 'adminToolSetMinimumOfferPrice',
+                    'actionType' : actionType,
+                    'minimumPrice': minimum_price,
+                    'priceType': price_type,
+                    'actionTargetType': actionTargetType,
+                    'actionTargetWhereType': actionTargetWhereType,
+                    'actionTargetWhereCategory': actionTargetWhereCategory,
+                    'actionTargetWhereProductType': actionTargetWhereProductType,
+                    'actionTargetWherePriceValue': actionTargetWherePriceValue,
+                    'actionTargetWhereStockValue': actionTargetWhereStockValue,
+                    'ofw_meta_key_value': meta_value
+                };
+                
+                /* post it */
+                $.post(ajaxurl, data, function(response) {
+                    if ( 'failed' !== response )
+                    {
+                        var redirectUrl = response;
+
+                        /** Debug **/
+                        /** console.log(redirectUrl);
+                         ** return false; **/
+
+                        top.location.replace(redirectUrl);
+                        return true;
+                    }
+                    else
+                    {
+                        alert('Error updating records.');
+                        return false;
+                    }
+                });
+                /*End Post*/
+                return false;
+            });
+            
+            /* change target type -- toggle where input */
             $('#ofwc-bulk-action-target-type').change(function(){
 
                 $('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').hide();
@@ -39,7 +197,7 @@
                 }
             });
 
-            // change target where type -- toggle categories/value inputs
+            /* change target where type -- toggle categories/value inputs */
             $('#ofwc-bulk-action-target-where-type').change(function(){
                 if(  $(this).val() == 'category' )
                 {
@@ -99,10 +257,10 @@
                 }
             });
 
-            // AJAX - Bulk enable/disable tool
+            /* AJAX - Bulk enable/disable tool */
             $('#woocommerce_offers_options_form_bulk_tool_enable_offers').submit(function()
             {
-                // show processing status
+                /* show processing status */
                 $('#bulk-enable-tool-submit').attr('disabled', 'disabled');
                 $('#bulk-enable-tool-submit').removeClass('button-primary');
                 $('#bulk-enable-tool-submit').html('<i class="ofwc-spinner"></i> Processing, please wait...');
@@ -133,15 +291,15 @@
                     'ofw_meta_key_value': meta_value
                 };
 
-                // post it
+                /* post it */
                 $.post(ajaxurl, data, function(response) {
                     if ( 'failed' !== response )
                     {
                         var redirectUrl = response;
 
                         /** Debug **/
-                        //console.log(redirectUrl);
-                        //return false;
+                        /** console.log(redirectUrl);
+                         ** return false; **/
 
                         top.location.replace(redirectUrl);
                         return true;
@@ -196,7 +354,7 @@
                 }
             });
 
-            // change target where type -- toggle categories/value inputs
+            /* change target where type -- toggle categories/value inputs */
             $('#ofw-bulk-tool-action-target-where-type').change(function(){
                 if(  $(this).val() == 'category' )
                 {
@@ -256,10 +414,10 @@
                 }
             });
 
-            // AJAX - Bulk enable/disable tool
+            /* AJAX - Bulk enable/disable tool */
             $('#ofw_tool_enable_auto_accept_decline').submit(function()
             {
-                // show processing status
+                /* show processing status */
                 $('#ofw_bulk-acd_enable-tool-submit').attr('disabled', 'disabled');
                 $('#ofw_bulk-acd_enable-tool-submit').removeClass('button-primary');
                 $('#ofw_bulk-acd_enable-tool-submit').html('<i class="ofwc-spinner"></i> Processing, please wait...');
@@ -308,15 +466,15 @@
                     'autoAcceptDeclinePercentage': auto_accept_or_decline_percentage
                 };
 
-                // post it
+                /* post it */
                 $.post(ajaxurl, data, function(response) {
                     if ( 'failed' !== response )
                     {
                         var redirectUrl = response;
 
                         /** Debug **/
-                        //console.log(redirectUrl);
-                        //return false;
+                        /*console.log(redirectUrl);*/
+                        /*return false;*/
 
                         top.location.replace(redirectUrl);
                         return true;
@@ -331,7 +489,7 @@
                 return false;
             });
             
-            // Require login for offer button checkbox.
+            /* Require login for offer button checkbox.*/
             if($('#general_setting_enable_offers_only_logged_in_users').is(":checked")) {
                 $("#general_setting_enable_offers_hide_untill_logged_in_users").closest('tr').show();
                 $("#general_setting_allowed_roles").closest('tr').show();

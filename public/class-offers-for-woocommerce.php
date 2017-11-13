@@ -911,7 +911,45 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    public function new_offer_form_submit() {
+    public function ofwc_minimum_offer($product_id,$product_price,$offer_total,$offer_quantity){
+        if(empty($product_price) || empty($product_id)){
+            return 3;
+        }
+        else{
+            $ofwc_minimum_offer_price = get_post_meta($product_id, 'ofwc_minimum_offer_price', true);
+            $ofwc_minimum_offer_price_type = get_post_meta($product_id, 'ofwc_minimum_offer_price_type', true);
+            if($ofwc_minimum_offer_price_type == 'price'){
+                if($offer_total < $ofwc_minimum_offer_price){
+                    return array('status' =>'failed', 'minimum_offer_price' => $ofwc_minimum_offer_price ,'type' => 'price');
+                }
+                else{
+                    return true;
+                }
+            }
+            elseif($ofwc_minimum_offer_price_type == 'percentage'){
+                $product_price = substr($product_price, 1);
+                $offer_multi_price =($product_price * $offer_quantity);
+                $total = (($ofwc_minimum_offer_price / 100) * $offer_multi_price);
+                $mop_after_percentage = ($offer_multi_price - $total);
+                if($offer_total < $mop_after_percentage){
+                    return array('status' =>'failed', 
+                                 'minimum_offer_price' => $mop_after_percentage,
+                                 'type' => 'percentage',
+                                 'qty' => $offer_quantity,
+                                 'percent' => $ofwc_minimum_offer_price
+                        );
+                }
+                else{
+                    return true;
+                }
+            }
+            else{
+                return 2;
+            }
+        }
+    }
+
+    public function new_offer_form_submit() {        
         ob_start();
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = $_POST['value'];        
@@ -967,7 +1005,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         global $wpdb,$woocommerce; // this is how you get access to the database
                     // Check if form was posted and select task accordingly
-        if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {
+        if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {            
             // set postmeta original vars
             $formData['orig_offer_name'] = (isset($post['offer_name'])) ? $post['offer_name'] : '';
             $formData['orig_offer_company_name'] = (isset($post['offer_company_name'])) ? $post['offer_company_name'] : '';
@@ -975,12 +1013,14 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['orig_offer_email'] = (isset($post['offer_email'])) ? $post['offer_email'] : '';
             $formData['orig_offer_product_id'] = (isset($post['offer_product_id'])) ? $post['offer_product_id'] : '';
             $formData['orig_offer_variation_id'] = (isset($post['offer_variation_id'])) ? $post['offer_variation_id'] : '';
-                            $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
+            $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
             $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
-                            $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
-            $formData['orig_offer_uid'] = uniqid('aewco-');           
+            $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
+            $formData['orig_offer_uid'] = uniqid('aewco-');
             $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
-                        
+            $formData['offer_product_price'] = (isset($post['offer_product_price'])) ? $post['offer_product_price'] : '';
+            $formData['offer_total'] = (isset($post['offer_total'])) ? $post['offer_total'] : '';
+            
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
                     $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
@@ -1021,7 +1061,34 @@ class Angelleye_Offers_For_Woocommerce {
                     return false;
                 }
             }
-
+            
+            /*Check for minimum offer set or not */
+            $ofwc_minimum_offer_price_enabled = get_post_meta($formData['orig_offer_product_id'], 'ofwc_minimum_offer_price_enabled', true);
+            if(!empty($ofwc_minimum_offer_price_enabled) && $ofwc_minimum_offer_price_enabled ==='yes'){                  
+                $return = $this->ofwc_minimum_offer($formData['orig_offer_product_id'],
+                                                    $formData['offer_product_price'],
+                                                    $formData['offer_total'],
+                                                    $formData['orig_offer_quantity']);
+                $symbol = get_woocommerce_currency_symbol();
+                if(is_array($return) && $return['status'] =='failed' && $return['type']=='price'){
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Minimum Offer price is '.$symbol.$return['minimum_offer_price'], 'offers-for-woocommerce')));
+                    exit;
+                }
+                elseif(is_array($return) && $return['status'] =='failed' && $return['type']=='percentage'){                  
+                    echo json_encode(array("statusmsg" => 'failed-custom',
+                                     "statusmsgDetail" => __('Minimum Offer price must be '.$return['percent'].'%. For '.$return['qty'].' quantity Minimum offer price is '.$symbol.$return['minimum_offer_price'], 'offers-for-woocommerce')));
+                    exit;                 
+                }
+                else{
+                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Nothing return', 'offers-for-woocommerce')));
+                    exit;
+                }                
+            }
+            else{
+                //echo "in else odder condition";
+            }
+            //exit;
+            
             // set postmeta vars
             $formData['offer_name'] = $formData['orig_offer_name'];
             $formData['offer_company_name'] = $formData['orig_offer_company_name'];
@@ -1087,7 +1154,8 @@ class Angelleye_Offers_For_Woocommerce {
 
             // If has valid parent offer id post
             $is_counter_offer = ( $parent_post_id != '' ) ? true : false;
-
+            do_action('woocommerce_before_offer_submit', $is_counter_offer, $post,$formData,$newPostData);
+            
             if ($is_counter_offer) {
                 // check for parent offer unique id
                 $parent_post_offer_uid = get_post_meta($parent_post_id, 'offer_uid', true);

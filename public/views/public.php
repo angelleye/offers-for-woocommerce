@@ -44,9 +44,56 @@
 <div id="tab_custom_ofwc_offer_tab_inner" class="tab_custom_ofwc_offer_tab_inner_content">
     <fieldset>
     	<div class="make-offer-form-intro">
+            <?php                         
+            if(version_compare(WC_VERSION, '3.0', '<')){
+                $product = get_product( $post->ID );                
+                $product_id = $product->id;
+            }
+            else{
+                $product = wc_get_product( $post->ID );
+                $product_id = $product->get_id();
+            }
+            /* Get Product type */
+            if( $product->is_type( 'variable' ) ){
+                $product_type = 'variable';
+            }
+            else if($product->is_type( 'simple' )){
+                $product_type = 'simple';
+            }
+            else if($product->is_type( 'grouped' )){
+                $product_type = 'grouped';
+            }
+            else if($product->is_type( 'external' )){
+                $product_type = 'external';
+            }
+            else{
+                $product_type ='';
+            }
+            
+            if($product->is_on_sale())
+            {
+                $product_type = 'sale_product';
+            }
+        
+            $ofwc_minimum_offer_price_enabled = get_post_meta($product_id, 'ofwc_minimum_offer_price_enabled', true);
+            if(!empty($ofwc_minimum_offer_price_enabled) && $ofwc_minimum_offer_price_enabled ==='yes'){
+                $ofwc_minimum_offer_price = get_post_meta($product_id, 'ofwc_minimum_offer_price', true);
+                $ofwc_minimum_offer_price_type = get_post_meta($product_id, 'ofwc_minimum_offer_price_type', true);
+//                    if($ofwc_minimum_offer_price_type === 'percentage'){
+//                        $percentage = $ofwc_minimum_offer_price;                        
+//                        $ofwc_minimum_offer_price = ($percentage / 100) * $product_price;
+//                    }
+            }
+            else{
+                $ofwc_minimum_offer_price_enabled = 'no';
+                $ofwc_minimum_offer_price ='0';
+                $ofwc_minimum_offer_price_type ='';
+            }
+            
+            ?>
             <?php
                 $is_counter_offer = (isset($parent_offer_id) && $parent_offer_id != '') ? true : false;
-                $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
+                $on_exit_enabled = get_post_meta($product_id, 'offers_for_woocommerce_onexit_only', true);
                 $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
                 if(isset($button_display_options['display_setting_custom_make_offer_btn_text']) && !empty($button_display_options['display_setting_custom_make_offer_btn_text'])) {
                     $tab_title = apply_filters('woocommerce_make_offer_form_tab_title', __($button_display_options['display_setting_custom_make_offer_btn_text'],'offers-for-woocommerce'), $is_counter_offer, $on_exit_enabled);
@@ -65,9 +112,11 @@
                 } else {
                     $intro_html = '<h2>' . $tab_title . '</h2>';
                     $intro_html .= '<div class="make-offer-form-intro-text">' . __('To make an offer please complete the form below:', 'offers-for-woocommerce') . '</div>';
-                }
-                echo apply_filters( 'aeofwc_offer_form_top_message', $intro_html, $is_counter_offer, $on_exit_enabled );
+                }                
+                echo apply_filters( 'aeofwc_offer_form_top_message', $intro_html, $is_counter_offer, $on_exit_enabled );                
             ?>
+            <div class="woocommerce-info" id="minimum_offer_price" style="display: none"><?php _e('Minimum price for the offer must be greater than or equal to '.get_woocommerce_currency_symbol().$ofwc_minimum_offer_price,'offers-for-woocommerce') ?></div>
+            <div class="woocommerce-info" id="minimum_offer_price_percentage" style="display: none"><?php _e('Minimum price for the offer must be greater than '.$ofwc_minimum_offer_price.'% of the Product.','offers-for-woocommerce') ?></div>
         </div>
         <form id="woocommerce-make-offer-form" name="woocommerce-make-offer-form" method="POST" autocomplete="off" action="">
             <?php
@@ -84,6 +133,10 @@
                 <input type="hidden" name="parent_offer_id" id="parent_offer_id" value="<?php echo (isset($parent_offer_id) && $parent_offer_id != '') ? $parent_offer_id : ''; ?>">
                 <input type="hidden" name="parent_offer_uid" id="parent_offer_uid" value="<?php echo (isset($parent_offer_uid) && $parent_offer_uid != '') ? $parent_offer_uid : ''; ?>">               
             <?php } ?>
+                <input type="hidden" name="ofwc_minimum_offer_price_enabled" id="ofwc_minimum_offer_price_enabled" value="<?php echo $ofwc_minimum_offer_price_enabled; ?>">
+                <input type="hidden" name="ofwc_minimum_offer_price" id="ofwc_minimum_offer_price" value="<?php echo $ofwc_minimum_offer_price; ?>">
+                <input type="hidden" name="ofwc_minimum_offer_price_type" id="ofwc_minimum_offer_price_type" value="<?php echo $ofwc_minimum_offer_price_type; ?>">                
+                <input type="hidden" name="ofwc_hidden_price_type" id="ofwc_hidden_price_type" value="<?php echo $product_type; ?>">
             <div class="woocommerce-make-offer-form-section">
                 <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
                     <input type="hidden" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" value="1" />

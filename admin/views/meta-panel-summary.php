@@ -149,15 +149,17 @@
                 <div class="offer-original-meta-values-wrap">
                     <label for="original-offer-quantity"><?php echo __('Orig. Quantity', 'offers-for-woocommerce'); ?></label>
                     <div>
-                        <input type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
+                        <input style="cursor: not-allowed" type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
                     </div>
                     <label for="original-offer-price-per"><?php echo __('Orig. Price Per', 'offers-for-woocommerce'); ?></label>
-                    <div>
-                        <input type="text" id="original-offer-amount" value="<?php echo (isset($postmeta['orig_offer_price_per'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_price_per'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <input style="cursor: not-allowed" type="text" id="original-offer-amount" value="<?php echo (isset($postmeta['orig_offer_price_per'][0])) ? number_format($postmeta['orig_offer_price_per'][0], 2) : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
                     </div>
                     <label for="original-offer-price-per"><?php echo __('Orig. Amount', 'offers-for-woocommerce'); ?></label>
-                    <div>
-                        <input type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? get_woocommerce_currency_symbol().$postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
+                    <div class="angelleye-input-group">
+                        <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
+                        <input style="cursor: not-allowed" type="text" id="original-offer-price-per" value="<?php echo (isset($postmeta['orig_offer_amount'][0])) ? $postmeta['orig_offer_amount'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
                     </div>
                 </div>
                 <?php if( isset($query_counter_offers_history_result) && !empty($query_counter_offers_history_result) ) { ?>
@@ -229,6 +231,9 @@
                             <input type="text" name="offer_price_per" id="offer-price-per" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" value="<?php echo (isset($postmeta['offer_price_per'][0])) ? $postmeta['offer_price_per'][0] : ''; ?>" autocomplete="off" />
                         <?php } ?>
                     </div>
+                    <div style="display: none" id="counter_offer_notice" class="note_content">
+                        <p style="color: red;background: whitesmoke;border: solid 1px #f1f1f1;padding: 7px;"><?php _e('Original Price and Counter Price should not be same.','offers-for-woocommerce') ?></p>
+                    </div>
                     <label for="offer-shipping-cost"><input type="checkbox" id="ofwc_enable_shipping" name="enable_shipping_cost" value="1" style="width: auto !important;" <?php if( $postmeta['enable_shipping_cost'][0] == 1) echo 'checked'; ?>><?php echo __('Include Shipping with Offer', 'offers-for-woocommerce'); ?></label>
                     <div class="angelleye-input-group offer_shipping">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
@@ -247,8 +252,8 @@
                         <?php } else { ?>
                             <input type="text" name="offer_amount" id="offer-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" value="<?php echo (isset($postmeta['offer_amount'][0])) ? $postmeta['offer_amount'][0] : ''; ?>" disabled="disabled" autocomplete="off" />
                         <?php } ?>
-                    </div>
-                </div>
+                    </div>                    
+                </div>                
             </div>
         </div>
     </div>
@@ -322,7 +327,7 @@
                     <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
                     <input name="submit" id="submit" class="button button-completed-offer" value="<?php echo __('Completed Offer', 'offers-for-woocommerce'); ?>" type="submit" disabled="disabled">
                     <?php } else { ?>
-                    <input name="submit" id="submit" class="button button-primary" value="<?php echo __('Update', 'offers-for-woocommerce'); ?>" type="submit">
+                    <input name="submit" id="meta-box-offers-submit" class="button button-primary" value="<?php echo __('Update', 'offers-for-woocommerce'); ?>" type="submit">
                     <?php } ?>
                     <div class="angelleye-clearfix"></div>
                 </div>

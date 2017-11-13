@@ -136,14 +136,14 @@
                     });
                 };
             })(jQuery);
-
-            // Submit offer form
+                         
+            /* Submit offer form */
             $("form[name='woocommerce-make-offer-form']").submit(function()
             {               
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
 
-                var offerCheckMinValuesPassed = true;
-
+                var offerCheckMinValuesPassed = true;  
+                
                 if($('#woocommerce-make-offer-form-price-each').autoNumeric('get') == '0')
                 {
                     $('#woocommerce-make-offer-form-price-each').autoNumeric('set', '' );
@@ -176,20 +176,21 @@
                 if( offerCheckMinValuesPassed === false )
                 {
                     return false;
-                }
+                }                
 
                 var parentOfferId = $("input[name='parent_offer_id']").val();
                 var parentOfferUid = $("input[name='parent_offer_uid']").val();
 
                 var offerProductId = '';
                 var offerVariationId = '';
-                
+                var offerProductPrice = '';
                 if(offers_for_woocommerce_js_params.is_woo_variations_table_installed==='1'){
                     offerVariationId = $("input[name='offer_variations_table_variation_id']").val();
                 }
                 if($('input[name="variation_id"]').val() && $('input[name="variation_id"]').val() !== 0){
-                    offerVariationId = $('input[name="variation_id"]').val();
+                    offerVariationId = $('input[name="variation_id"]').val();                    
                 }
+                
                 /* old WC version condition start*/
                 if($("input[name='add-to-cart']").val() > 0 ){
                 var offerProductId = $("input[name='add-to-cart']").val();
@@ -202,6 +203,35 @@
                 }
                 /* New WC version condition end */
                 
+                /* Recognise product type and Product price  : start */
+                var productType = $("input[name='ofwc_hidden_price_type']").val();                
+                if(productType=='variable'){
+                    var variationPrice = $('.woocommerce-variation-price .amount').text().replace(/ /g,'');
+                    if(variationPrice === ''){
+                        offerProductPrice = jQuery('.summary .price .woocommerce-Price-amount').text();
+                    }
+                    else{
+                        offerProductPrice = variationPrice;
+                    }                    
+                }
+                else if(productType=='simple'){
+                    offerProductPrice = $('.summary  .price .amount').text();
+                }
+                else if(productType=='sale_product'){
+                    offerProductPrice = $('.summary  .price ins').text();
+                }
+                else if(productType=='grouped'){
+                    offerProductPrice = $('.summary  .price .amount').text();
+                }
+                else if(productType=='external'){
+                    offerProductPrice = $('.summary  .price .amount').text();
+                }
+                else{
+                    offerProductPrice = '';
+                }
+                
+                /* End */
+                
                 var join_our_mailing_list = "no";
                 
                 if($("#join_our_mailing_list").length > 0) {
@@ -212,7 +242,7 @@
                 
                 var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
                 var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
-
+                var offerTotal  = $("input[name='offer_total']").val();
                 var offerForm = $('#woocommerce-make-offer-form');
 
                 if(offerProductId != '')
@@ -234,6 +264,8 @@
                     
                     var post_data_array = $("#woocommerce-make-offer-form").serializeArray();
                     post_data_array.push({name: 'offer_product_id', value: offerProductId});
+                    post_data_array.push({name: 'offer_product_price', value: offerProductPrice});
+                    post_data_array.push({name: 'offer_total', value: offerTotal});
                     post_data_array.push({name: 'offer_variation_id', value: offerVariationId});
                     post_data_array.push({name: 'parent_offer_id', value: parentOfferId});
                     post_data_array.push({name: 'parent_offer_uid', value: parentOfferUid});
@@ -243,14 +275,14 @@
                       var product_addon_array_js = [];                                                            
                     jQuery("div.product-addon").each(function(key,index){
                          var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
-                         var input_tag = jQuery(this).find(":input[name^='addon-9']");
+                         var input_tag = jQuery(this).find(":input[name^='addon-']");
                            
-                         input_tag.each(function(){
+                         input_tag.each(function(){                             
                             if(jQuery(this).is(':checkbox') || jQuery(this).is(':radio')){
                                 if(jQuery(this).is(':checked')){
                                     var label_text = jQuery(this).closest('label').text().substr(0, jQuery(this).closest('label').text().indexOf('('));
                                     product_addon_array_js.push({position: key,group : group_name,label:jQuery.trim(label_text),value:jQuery(this).val(),price: jQuery(this).attr('data-raw-price'),type: jQuery(this).attr('type')});
-                                }
+                                }                               
                             }
                             if(jQuery(this).is('textarea')){
                                 if(jQuery(this).val() !== ''){
@@ -284,7 +316,15 @@
                             }
                         });
                         
-                    });      
+                    });    
+                    if(product_addon_array_js.length > 0){
+                        var updatedPrice = jQuery(".product-addon-totals .amount").last().text();
+                        if(updatedPrice !== ''){
+                            offerProductPrice = updatedPrice;
+                        }                        
+                        post_data_array.push({name: 'offer_product_price', value: offerProductPrice});
+                    }
+                    
                     post_data_array.push({product_addon_array:product_addon_array_js});                   
                     var data_make_offer = {
                         action: 'new_offer_form_submit',
@@ -301,7 +341,7 @@
                     });
 
                     // callback handler that will be called on success
-                    request.done(function (response, textStatus, jqXHR){                                        
+                    request.done(function (response, textStatus, jqXHR){                          
                         if(200 === request.status){
                             var myObject = JSON.parse(request.responseText);
                             var responseStatus = myObject['statusmsg'];
