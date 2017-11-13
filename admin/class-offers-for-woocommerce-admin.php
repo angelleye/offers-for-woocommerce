@@ -2155,7 +2155,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             
             add_settings_field(
                 'general_setting_admin_disable_email_auto_decline', // ID
-                __('Disable Admin Email on Auto Decline Offer', 'offers-for-woocommerce'), // Title
+                __('Disable Admin Email on Auto Declined Offers', 'offers-for-woocommerce'), // Title
                 array( $this, 'offers_for_woocommerce_options_page_output_input_checkbox' ), // Callback
                     'offers_for_woocommerce_general_settings', // Page
                     'general_settings', // Section
@@ -2163,7 +2163,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'option_name'=>'offers_for_woocommerce_options_general',
                     'input_required'=>FALSE,
                     'input_label'=>'general_setting_admin_disable_email_auto_decline',
-                    'description' => __('Disabled email notification for admin user when offers is auto decline for product', 'offers-for-woocommerce'),
+                    'description' => __('Disable the email notification for the admin user when offers are automatically declined.', 'offers-for-woocommerce'),
                 )
             );
             
