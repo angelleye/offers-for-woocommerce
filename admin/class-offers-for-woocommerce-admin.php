@@ -2013,7 +2013,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_settings_field(
             'general_setting_default_expire_days', // ID
-            __('Default Offer Expiration Days', 'offers-for-woocommerce'), // Title
+            __('Default Expiration Date', 'offers-for-woocommerce'), // Title
             array( $this, 'offers_for_woocommerce_options_page_output_input_text' ), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
@@ -2021,7 +2021,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'option_name'=>'offers_for_woocommerce_options_general',
                 'input_label'=>'general_setting_default_expire_days',
                 'input_required'=>FALSE,
-                'description' => __('Enter the amount of days from accepting/countering an offer that you would like the expiration date to automatically set.', 'offers-for-woocommerce'),
+                'description' => __('The number entered here will be used to automatically set the expiration date while accepting or countering an offer.', 'offers-for-woocommerce'),
             )
         );
         
