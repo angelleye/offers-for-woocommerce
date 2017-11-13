@@ -120,6 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 1.4.8 - xx.xx.2017 =
 * Tweak - Removes unnecessary semicolon. ([#317](https://github.com/angelleye/offers-for-woocommerce/issues/317))
+* Tweak - Adjusts button alignment on the product page. ([#325](https://github.com/angelleye/offers-for-woocommerce/issues/325))
 * Fix - Resolves an issue where a method is unavailable from the admin panel. ([#324](https://github.com/angelleye/offers-for-woocommerce/issues/324))
 
 = 1.4.7.2 - 06.22.2017 =
