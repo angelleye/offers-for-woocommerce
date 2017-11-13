@@ -269,7 +269,7 @@ class Angelleye_Offers_For_Woocommerce {
                                         
         $_product = wc_get_product($post->ID);        
         
-        if(isset($button_options_display['display_setting_disabled_make_offer_on_product_sale']) && $button_options_display['display_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
+        if(isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
             return;
         }
         
@@ -553,7 +553,7 @@ class Angelleye_Offers_For_Woocommerce {
         if($_product == false) {
             return $tabs;
         }
-        if(isset($button_options_display['display_setting_disabled_make_offer_on_product_sale']) && $button_options_display['display_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
+        if(isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
             return $tabs;
         }
         $is_external_product = ( $_product->get_type() == 'external' ) ? TRUE : FALSE;
