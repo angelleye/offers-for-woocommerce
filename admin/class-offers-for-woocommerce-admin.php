@@ -420,9 +420,21 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             /* This will add extra column in the product list */
             add_filter( 'manage_edit-product_columns', array($this,'show_product_offers'),15 );
             add_action( 'manage_product_posts_custom_column', array($this,'show_product_offers_counts'), 10, 2 );
+            
+            /**
+             * Action - Manage offers if product is deleted
+             */
+            add_action( 'trashed_post', array($this, 'ofw_before_offers_trash_action'), 10, 1);           
         
 	} // END - construct
 	
+        function ofw_before_offers_trash_action($offer_id){
+            if('woocommerce_offer' !== get_post_type( $offer_id )){
+                return;
+            }
+            do_action('ofwc_before_delete_woocoomerce_offer',$offer_id);
+        }
+             
         function show_product_offers($columns){
             //add column
             $columns['angelleye_Offers'] = __( 'Offers'); 
