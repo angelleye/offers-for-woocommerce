@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.8.1 - 11.14.2017 =
+* Feature - Adds action hook for when offer records are deleted. ([#356](https://github.com/angelleye/offers-for-woocommerce/issues/356))
+
 = 1.4.8 - 11.13.2017 =
 * Feature - Adds WooCommerce Product Bundle compatibility. ([#350](https://github.com/angelleye/offers-for-woocommerce/issues/350))
 * Feature - Adds language file for Brazil / Portuguese. ([#336](https://github.com/angelleye/offers-for-woocommerce/issues/336))
