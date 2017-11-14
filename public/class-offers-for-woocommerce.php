@@ -88,7 +88,7 @@ class Angelleye_Offers_For_Woocommerce {
 	add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
 
         /* Add "Make Offer" button code parts - After add to cart */
-        add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'),11);
+        add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
 
         /* Add "Make Offer" button code parts - After shop loop item */
         add_action('woocommerce_after_shop_loop_item', array($this, 'angelleye_ofwc_after_show_loop_item'), 99, 2);
@@ -358,7 +358,7 @@ class Angelleye_Offers_For_Woocommerce {
         echo '</div>'; // .aofwc-first-div
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         if($button_options_display['display_setting_make_offer_button_position_single'] == 'default' || $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add'){
-            echo '<div class="angelleye-offers-clearfix"></div>';
+            //echo '<div class="angelleye-offers-clearfix"></div>';
             echo $this->angelleye_ofwc_offer_button_output();
         }
         echo '</div>'; // #offers-for-woocommerce-add-to-cart-wrap
