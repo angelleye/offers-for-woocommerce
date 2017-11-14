@@ -86,6 +86,8 @@ class Angelleye_Offers_For_Woocommerce {
 
         /* Add "Make Offer" button code parts - Before add to cart */
 	add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'angelleye_ofwc_before_add_to_cart_button' ) );
+        
+        add_action('woocommerce_after_add_to_cart_form',array($this,'angelleye_ofwc_after_add_to_cart_form'));
 
         /* Add "Make Offer" button code parts - After add to cart */
         add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
@@ -182,6 +184,23 @@ class Angelleye_Offers_For_Woocommerce {
         /* this will display the data of Product addon if plugin is activated - End */
     }       
 
+    public function angelleye_ofwc_after_add_to_cart_form(){
+        global $post;
+        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
+        $parent_post_status = get_post_status($parent_offer_id);
+        $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
+        $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
+        if($on_exit_enabled){
+            if($parent_offer_id > 0 && isset($parent_post_status) && $parent_post_status == 'countered-offer'){
+                $this->ofw_display_highest_current_offer();
+                $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
+            }
+        } else {
+            $this->ofw_display_highest_current_offer();
+            $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
+        }
+    }    
+    
     /* Below function works as shortcode to display recent offers table*/
     public function angelleye_ofw_recent_offers() {
         include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
@@ -363,19 +382,6 @@ class Angelleye_Offers_For_Woocommerce {
         }
         echo '</div>'; // #offers-for-woocommerce-add-to-cart-wrap
         echo '<div class="angelleye-offers-clearfix"></div>';
-        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
-        $parent_post_status = get_post_status($parent_offer_id);
-        $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
-        $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
-        if($on_exit_enabled){
-            if($parent_offer_id > 0 && isset($parent_post_status) && $parent_post_status == 'countered-offer'){
-                $this->ofw_display_highest_current_offer();
-                $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
-            }
-        } else {
-            $this->ofw_display_highest_current_offer();
-            $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
-        }
     }
     
     /**
