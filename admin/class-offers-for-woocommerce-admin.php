@@ -3372,7 +3372,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'fields' => 'id=>parent',
                 );
             $where_args['meta_query'] = array();
-
+            $where_args['tax_query'] = array();
             $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
             $ofwc_bulk_action_target_type = ( isset( $_POST["actionTargetType"] ) ) ? $_POST['actionTargetType'] : FALSE;
             $ofwc_bulk_action_target_where_type = ( isset( $_POST["actionTargetWhereType"] ) ) ? $_POST['actionTargetWhereType'] : FALSE;
@@ -3398,10 +3398,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
             // Featured products
             elseif ($ofwc_bulk_action_target_type == 'featured') {
-                array_push($where_args['meta_query'],
+                array_push($where_args['tax_query'],
                     array(
-                        'key' => '_featured',
-                        'value' => 'yes'
+                       array(
+                         'taxonomy' => 'product_visibility',
+                         'field'    => 'name',
+                         'terms'    => 'featured',
+                        )
                     )
                 );
                 $products = new WP_Query($where_args);
@@ -3515,7 +3518,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             {
                 $errors = TRUE;
             }
-
+            
             // Update posts
             if(!$errors && $products)
             {
