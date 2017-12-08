@@ -3,6 +3,16 @@
 	$(function () {
         // Public-facing JavaScript
         $(document).ready(function(){
+            
+            $('#offer-phone').bind('keypress', function (e) {
+                if(this.value.length>= 10)
+                {
+                 return false;
+                }
+                 return !(e.which != 8 && e.which != 0 &&
+                         (e.which < 48 || e.which > 57) && e.which != 46);
+            });
+
             $('.ofwc_no_price_product').remove();
             function manage_button_for_variation(){
                 var variationId = $("input[name='variation_id']").val();                
