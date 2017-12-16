@@ -10,7 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
 <?php do_action( 'woocommerce_email_header', $email_heading ); ?>
 <?php if ( is_plugin_active( 'offers-for-woocommerce-wc-vendors/offers-for-woocommerce-wc-vendors.php' )  && is_plugin_active( 'wc-vendors-pro/wcvendors-pro.php') ) {
-    printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), '<a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="'. site_url('dashboard/woocommerce_offer/edit/'.$offer_args['offer_id']) .'">' . __( 'Manage Offer', 'offers-for-woocommerce') . '</a>' );
+    $wc_prd_vendor_options = get_option('wc_prd_vendor_options');
+    if(class_exists('WCVendors_Pro')){
+        $pro_dashboard_id = $wc_prd_vendor_options['dashboard_page_id'];
+        $dashboard_page_slug   = get_post( $pro_dashboard_id )->post_name;
+    }
+    else{
+        $vendor_dashbaord_id = $wc_prd_vendor_options['vendor_dashboard_page'];
+        $vendor_dashboard_slug = get_post( $vendor_dashbaord_id )->post_name;    
+        $dashboard_page_slug =  $vendor_dashboard_slug;
+     }
+    printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), '<a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="'. site_url($dashboard_page_slug.'/woocommerce_offer/edit/'.$offer_args['offer_id']) .'">' . __( 'Manage Offer', 'offers-for-woocommerce') . '</a>' );
  } 
 else{
 printf( '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo( 'name' ), 
