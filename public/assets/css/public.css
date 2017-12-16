@@ -3,7 +3,7 @@
 .offers-for-woocommerce-add-to-cart-wrap { position:relative; margin-left:3px;  }
 
 .offers-for-woocommerce-make-offer-button-catalog { margin: 0 0 7px 0!important; }
-.offers-for-woocommerce-make-offer-button-single-product { float:left; margin: 7px 0px!important; }
+.offers-for-woocommerce-make-offer-button-single-product { float:left; margin:0 0 0 5px !important; }
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart { height:70px; }
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .single_add_to_cart_button { float:left!important; }
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .offers-for-woocommerce-make-offer-button-single-product { margin:0 0 0 5px !important; float:left!important; }
@@ -283,3 +283,26 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 }
 .ofwc_no_price_product{display: none;}
 .single-product .button.offers-for-woocommerce-make-offer-button-single-product.disabled {opacity: .2;}
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1281px) {
+  /* CSS */
+  .offers-for-woocommerce-make-offer-button-single-product{
+      position: absolute !important;
+  }
+}
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  .offers-for-woocommerce-make-offer-button-single-product{
+      position: absolute !important;
+  }
+}
