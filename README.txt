@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.8.2 - xx.xx.2017 =
+* Tweak - Adjustments to the alignment of Offer button with Add to Cart and PayPal for WooCommerce buttons. ([#354](https://github.com/angelleye/offers-for-woocommerce/issues/354))
+
 = 1.4.8.1 - 11.14.2017 =
 * Feature - Adds action hook for when offer records are deleted. ([#356](https://github.com/angelleye/offers-for-woocommerce/issues/356))
 
