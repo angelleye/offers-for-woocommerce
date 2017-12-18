@@ -584,7 +584,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         
         print(
-            '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce '. $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce">' . __('Offers', 'offers-for-woocommerce') . '</a></li>'
+            '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce '. $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce"><span>' . __('Offers', 'offers-for-woocommerce') . '</span></a></li>'
         );
 	}
 	
