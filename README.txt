@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.9
-Stable tag: 1.4.8.1
+Tested up to: 4.9.1
+Stable tag: 1.4.8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.8.2 - xx.xx.2017 =
+= 1.4.8.2 - 12.18.2017 =
 * Feature - Ensures compatibility with WooCommerce 3.3 based on their beta release. ([#364](https://github.com/angelleye/offers-for-woocommerce/issues/364))
 * Tweak - Adjustments to the alignment of Offer button with Add to Cart and PayPal for WooCommerce buttons. ([#354](https://github.com/angelleye/offers-for-woocommerce/issues/354))
 * Tweak - Adjustments to the alignment of the Offers settings at the product level. ([#365](https://github.com/angelleye/offers-for-woocommerce/issues/365))
