@@ -211,6 +211,7 @@
                           }
                     ?>
                     <input type="text" id="offer-phone" name="offer_phone" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_phone)) ? $offer_phone: ''; ?>"  <?php echo $offer_phone_required; ?> />
+                    <label id="error_phone_number" style="color:red;margin:0.5em;display: none"><?php _e('Invalid Phone number','offers-for-woocommerce'); ?></label>    
                 </div>
             <?php } else { ?>
                 <input type="hidden" name="offer_phone" id="offer-phone" value="">

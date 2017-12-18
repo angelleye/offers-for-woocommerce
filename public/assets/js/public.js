@@ -1,16 +1,30 @@
 (function ( $ ) {
 	"use strict";
-	$(function () {
-        // Public-facing JavaScript
+	$(function () {        
+        var regex = {
+                phone:  /^1?(\d{3})(\d{3})(\d{4})$/  
+        };
         $(document).ready(function(){
             
-            $('#offer-phone').bind('keypress', function (e) {
-                if(this.value.length>= 10)
-                {
-                 return false;
+            $('#offer-phone').bind('blur', function (e) {                                                
+                var value;
+                value = $.trim($(this).val()).replace(/\D/g, '');
+                /* Validate! */
+                var el = $(this);
+                var re = regex.phone,
+                isValid = value.length > 7 && re.test(value);
+
+                if (isValid) {
+                    $('#error_phone_number').hide();
+                    /* Output nicely formatted phone number */
+                    el.value = value.replace(re, '$1-$2-$3');
+                    $('#offer-phone').val(el.value);
                 }
-                 return !(e.which != 8 && e.which != 0 &&
-                         (e.which < 48 || e.which > 57) && e.which != 46);
+                else{
+                    $('#offer-phone').focus();
+                    $('#error_phone_number').show();
+                }
+                return isValid;
             });
 
             $('.ofwc_no_price_product').remove();
