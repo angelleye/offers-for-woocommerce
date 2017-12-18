@@ -286,11 +286,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
                                         
-        $_product = wc_get_product($post->ID);                
-        $price = $_product->get_price();
-        if(empty($price)){
-            return;
-        }
+        $_product = wc_get_product($post->ID);        
         if(isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
             return;
         }
