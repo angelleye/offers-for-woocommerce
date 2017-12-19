@@ -1850,3 +1850,15 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.angelleye.com/"
 msgstr ""
+
+#: public/class-offers-for-woocommerce.php:2304
+msgid "Highest Current Offer"
+msgid_plural "Highest Current Offers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: public/class-offers-for-woocommerce.php:2245
+msgid "offer is currently pending."
+msgid_plural "offers are currently pending."
+msgstr[0] ""
+msgstr[1] ""
