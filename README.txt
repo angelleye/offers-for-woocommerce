@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.8.3 - 12.20.2017 =
+* Tweak - Adjusts default translation file template. ([#367](https://github.com/angelleye/offers-for-woocommerce/issues/367))
+
 = 1.4.8.2 - 12.18.2017 =
 * Feature - Ensures compatibility with WooCommerce 3.3 based on their beta release. ([#364](https://github.com/angelleye/offers-for-woocommerce/issues/364))
 * Tweak - Adjustments to the alignment of Offer button with Add to Cart and PayPal for WooCommerce buttons. ([#354](https://github.com/angelleye/offers-for-woocommerce/issues/354))
