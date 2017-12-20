@@ -1,720 +1,851 @@
-# Copyright (C) 2016 Offers for WooCommerce
+# Copyright (C) 2017 Offers for WooCommerce
 # This file is distributed under the same license as the Offers for WooCommerce package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Offers for WooCommerce 1.2.2\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/offers-for-woocommerce\n"
-"POT-Creation-Date: 2016-05-14 07:08:42+00:00\n"
+"Project-Id-Version: Offers for WooCommerce 1.4.8.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/offers-for-"
+"woocommerce\n"
+"POT-Creation-Date: 2017-12-19 14:02:01+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Angell EYE <service@angelleye.com>\n"
-"Language-Team: Angell EYE <service@angelleye.com>\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: admin/class-offers-for-woocommerce-admin.php:416
-#: admin/class-offers-for-woocommerce-admin.php:487 admin/views/admin.php:19
-msgid "Manage Offers"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:417
-msgid "WooCommerce Offer"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:418
-msgid "Add New"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:419
-msgid "Add New WooCommerce Offer"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:420
-msgid "Manage"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:421
-msgid "Manage WooCommerce Offer"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:422
-msgid "New WooCommerce Offer"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:423
-msgid "View"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:424
-msgid "View WooCommerce Offer"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:425
-msgid "Search WooCommerce Offers"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:426
-msgid "No WooCommerce Offers found"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:427
-msgid "No WooCommerce Offers found in Trash"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:428
-msgid "Parent WooCommerce Offer"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:487
-msgid "Offers Settings"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:525
+#: admin/class-offers-for-woocommerce-admin.php:440
+#: admin/class-offers-for-woocommerce-admin.php:587
 msgid "Offers"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:573
-#: admin/class-offers-for-woocommerce-admin.php:3882
+#: admin/class-offers-for-woocommerce-admin.php:468
+#: admin/class-offers-for-woocommerce-admin.php:543 admin/views/admin.php:19
+msgid "Manage Offers"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:469
+msgid "WooCommerce Offer"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:470
+msgid "Add New"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:471
+msgid "Add New WooCommerce Offer"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:472
+msgid "Manage"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:473
+msgid "Manage WooCommerce Offer"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:474
+msgid "New WooCommerce Offer"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:475
+msgid "View"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:476
+msgid "View WooCommerce Offer"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:478
+msgid "No WooCommerce Offers found"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:479
+msgid "No WooCommerce Offers found in Trash"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:480
+msgid "Parent WooCommerce Offer"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:543
+msgid "Offers Settings"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:642
+#: admin/class-offers-for-woocommerce-admin.php:3869
 msgid "Enable Offers?"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:573
-msgid "Enable this option to enable the 'Make Offer' buttons and form display in the shop."
+#: admin/class-offers-for-woocommerce-admin.php:642
+msgid ""
+"Enable this option to enable the 'Make Offer' buttons and form display in "
+"the shop."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:576
-#: admin/class-offers-for-woocommerce-admin.php:3888
+#: admin/class-offers-for-woocommerce-admin.php:645
+msgid "On Exit Only?"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:645
+msgid ""
+"Enable this option to display the 'Make Offer' form only when the user is "
+"about to exit the page."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:648
+#: admin/class-offers-for-woocommerce-admin.php:3875
 msgid "Enable Auto Accept Offers?"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:576
-msgid "Enable this option to automatically accept offers based on the percentage set."
+#: admin/class-offers-for-woocommerce-admin.php:648
+msgid ""
+"Enable this option to automatically accept offers based on the percentage "
+"set."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:577
-#: admin/class-offers-for-woocommerce-admin.php:3891 admin/views/admin.php:162
+#: admin/class-offers-for-woocommerce-admin.php:649
+#: admin/class-offers-for-woocommerce-admin.php:3878 admin/views/admin.php:164
 msgid "Auto Accept Percentage"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:580
-#: admin/class-offers-for-woocommerce-admin.php:3897
+#: admin/class-offers-for-woocommerce-admin.php:649
+#: admin/class-offers-for-woocommerce-admin.php:653
+#: admin/class-offers-for-woocommerce-admin.php:3879
+#: admin/class-offers-for-woocommerce-admin.php:3889
+msgid "Enter Percentage"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:652
+#: admin/class-offers-for-woocommerce-admin.php:3884
 msgid "Enable Auto Decline Offers?"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:580
-msgid "Enable this option to automatically decline offers based on the percentage set."
+#: admin/class-offers-for-woocommerce-admin.php:652
+msgid ""
+"Enable this option to automatically decline offers based on the percentage "
+"set."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:581
-#: admin/class-offers-for-woocommerce-admin.php:3901 admin/views/admin.php:168
+#: admin/class-offers-for-woocommerce-admin.php:653
+#: admin/class-offers-for-woocommerce-admin.php:3888 admin/views/admin.php:170
 msgid "Auto Decline Percentage"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:612
-#: admin/class-offers-for-woocommerce-admin.php:615
+#: admin/class-offers-for-woocommerce-admin.php:684
+#: admin/class-offers-for-woocommerce-admin.php:687
 msgid "Offer updated."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:613
+#: admin/class-offers-for-woocommerce-admin.php:685
 msgid "Offer Details updated."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:614
+#: admin/class-offers-for-woocommerce-admin.php:686
 msgid "Offer Details deleted."
 msgstr ""
 
 #. translators: %s: date and time of the revision
-
-#: admin/class-offers-for-woocommerce-admin.php:617
+#: admin/class-offers-for-woocommerce-admin.php:689
 msgid "Offer restored to revision from %s"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:618
+#: admin/class-offers-for-woocommerce-admin.php:690
 msgid "Offer set as Pending Status."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:619
+#: admin/class-offers-for-woocommerce-admin.php:691
 msgid "Offer saved."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:620
+#: admin/class-offers-for-woocommerce-admin.php:692
 msgid "Offer submitted."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:622
+#: admin/class-offers-for-woocommerce-admin.php:694
 msgid "Offer scheduled for: <strong>%1$s</strong>."
 msgstr ""
 
 #. translators: Publish box date format, see http://php.net/date
-
-#: admin/class-offers-for-woocommerce-admin.php:624
+#: admin/class-offers-for-woocommerce-admin.php:696
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:626
+#: admin/class-offers-for-woocommerce-admin.php:698
 msgid "Offer draft updated."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:627
+#: admin/class-offers-for-woocommerce-admin.php:699
 msgid "Offer note added."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:697
+#: admin/class-offers-for-woocommerce-admin.php:770
 msgid "Name"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:698
+#: admin/class-offers-for-woocommerce-admin.php:772
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:27
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:34
 #: admin/includes/emails/plain/woocommerce-offer-declined.php:29
 #: admin/includes/emails/plain/woocommerce-offer-note.php:24
 #: admin/includes/emails/plain/woocommerce-offer-on-hold.php:27
 #: admin/includes/emails/woocommerce-offer-accepted.php:26
-#: admin/includes/emails/woocommerce-offer-countered.php:29
+#: admin/includes/emails/woocommerce-offer-countered.php:31
 #: admin/includes/emails/woocommerce-offer-declined.php:29
 #: admin/includes/emails/woocommerce-offer-note.php:20
 #: admin/includes/emails/woocommerce-offer-on-hold.php:21
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:21
 #: public/includes/emails/plain/woocommerce-new-offer.php:21
 #: public/includes/emails/plain/woocommerce-offer-received.php:21
-#: public/includes/emails/woocommerce-new-counter-offer.php:20
-#: public/includes/emails/woocommerce-new-offer.php:20
-#: public/includes/emails/woocommerce-offer-received.php:20
+#: public/includes/emails/woocommerce-new-counter-offer.php:35
+#: public/includes/emails/woocommerce-new-offer.php:38
+#: public/includes/emails/woocommerce-offer-received.php:21
 #: public/views/my-offers.php:7
 msgid "Product"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:699
+#: admin/class-offers-for-woocommerce-admin.php:773
 #: public/views/my-offers.php:8
 msgid "Amount"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:700
-#: admin/views/meta-panel-summary.php:193 public/views/my-offers.php:9
+#: admin/class-offers-for-woocommerce-admin.php:774
+#: admin/views/meta-panel-summary.php:225 public/views/my-offers.php:9
 msgid "Price Per"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:701
-#: admin/class-offers-for-woocommerce-admin.php:2240
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:28
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:35
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:30
-#: admin/includes/emails/plain/woocommerce-offer-note.php:25
-#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:28
-#: admin/includes/emails/woocommerce-offer-accepted.php:27
-#: admin/includes/emails/woocommerce-offer-countered.php:30
-#: admin/includes/emails/woocommerce-offer-declined.php:30
-#: admin/includes/emails/woocommerce-offer-note.php:21
-#: admin/includes/emails/woocommerce-offer-on-hold.php:22
-#: admin/views/meta-panel-summary.php:185
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:22
-#: public/includes/emails/plain/woocommerce-new-offer.php:22
-#: public/includes/emails/plain/woocommerce-offer-received.php:22
-#: public/includes/emails/woocommerce-new-counter-offer.php:21
-#: public/includes/emails/woocommerce-new-offer.php:21
-#: public/includes/emails/woocommerce-offer-received.php:21
-#: public/views/my-offers.php:10 public/views/public.php:79
+#: admin/class-offers-for-woocommerce-admin.php:775
+#: admin/class-offers-for-woocommerce-admin.php:2236
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:29
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:36
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:31
+#: admin/includes/emails/plain/woocommerce-offer-note.php:26
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:29
+#: admin/includes/emails/woocommerce-offer-accepted.php:28
+#: admin/includes/emails/woocommerce-offer-countered.php:33
+#: admin/includes/emails/woocommerce-offer-declined.php:31
+#: admin/includes/emails/woocommerce-offer-note.php:22
+#: admin/includes/emails/woocommerce-offer-on-hold.php:23
+#: admin/views/meta-panel-summary.php:217
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/plain/woocommerce-new-offer.php:23
+#: public/includes/emails/plain/woocommerce-offer-received.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:37
+#: public/includes/emails/woocommerce-new-offer.php:40
+#: public/includes/emails/woocommerce-offer-received.php:23
+#: public/views/my-offers.php:10 public/views/public.php:145
 msgid "Quantity"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:731
-#: public/views/my-offers.php:75
+#: admin/class-offers-for-woocommerce-admin.php:814
+#: public/views/my-offers.php:90
 msgid "Not Found"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:925
-#: admin/class-offers-for-woocommerce-admin.php:935
-#: admin/class-offers-for-woocommerce-admin.php:939
-#: admin/class-offers-for-woocommerce-admin.php:943
-#: public/includes/emails/woocommerce-new-offer.php:13
+#: admin/class-offers-for-woocommerce-admin.php:1017
+#: admin/class-offers-for-woocommerce-admin.php:1027
+#: admin/class-offers-for-woocommerce-admin.php:1031
+#: admin/class-offers-for-woocommerce-admin.php:1035
+#: public/includes/emails/woocommerce-new-offer.php:23
+#: public/includes/emails/woocommerce-new-offer.php:27
 msgid "Manage Offer"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:926
-#: admin/class-offers-for-woocommerce-admin.php:931
-#: admin/class-offers-for-woocommerce-admin.php:956
+#: admin/class-offers-for-woocommerce-admin.php:1018
+#: admin/class-offers-for-woocommerce-admin.php:1023
+#: admin/class-offers-for-woocommerce-admin.php:1048
 msgid "Set Offer Status to Declined"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:926
-#: admin/class-offers-for-woocommerce-admin.php:931
-#: admin/class-offers-for-woocommerce-admin.php:956
-#: admin/class-offers-for-woocommerce-admin.php:3952
+#: admin/class-offers-for-woocommerce-admin.php:1018
+#: admin/class-offers-for-woocommerce-admin.php:1023
+#: admin/class-offers-for-woocommerce-admin.php:1048
+#: admin/class-offers-for-woocommerce-admin.php:3939
 msgid "Decline"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:930
+#: admin/class-offers-for-woocommerce-admin.php:1022
 msgid "Manage&nbsp;Offer"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:935
-#: admin/class-offers-for-woocommerce-admin.php:939
-#: admin/class-offers-for-woocommerce-admin.php:943
-#: admin/class-offers-for-woocommerce-admin.php:954
-#: admin/class-offers-for-woocommerce-admin.php:1254
+#: admin/class-offers-for-woocommerce-admin.php:1027
+#: admin/class-offers-for-woocommerce-admin.php:1031
+#: admin/class-offers-for-woocommerce-admin.php:1035
+#: admin/class-offers-for-woocommerce-admin.php:1046
+#: admin/class-offers-for-woocommerce-admin.php:1346
 msgid "Offer Details"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:954 public/views/public.php:50
+#: admin/class-offers-for-woocommerce-admin.php:1046
+#: public/views/public.php:106
 msgid "Make Counter Offer"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:955
+#: admin/class-offers-for-woocommerce-admin.php:1047
 msgid "Set Offer Status to Accepted"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:955
+#: admin/class-offers-for-woocommerce-admin.php:1047
 msgid "Accept"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1094
+#: admin/class-offers-for-woocommerce-admin.php:1186
 msgid "Offer Status: Accepted"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1094
-#: admin/class-offers-for-woocommerce-admin.php:2807
-#: admin/class-offers-for-woocommerce-admin.php:2859
-#: public/class-offers-for-woocommerce.php:1712 public/views/my-offers.php:114
+#: admin/class-offers-for-woocommerce-admin.php:1186
+#: admin/class-offers-for-woocommerce-admin.php:2835
+#: public/class-offers-for-woocommerce.php:1887 public/views/my-offers.php:129
 msgid "Accepted"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1097
+#: admin/class-offers-for-woocommerce-admin.php:1189
 msgid "Offer Status: Countered"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1097
-#: public/views/my-offers.php:111
+#: admin/class-offers-for-woocommerce-admin.php:1189
+#: public/views/my-offers.php:126
 msgid "Countered"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1100
+#: admin/class-offers-for-woocommerce-admin.php:1192
 msgid "Offer Status: Buyer Countered"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1100
-#: public/views/my-offers.php:120
+#: admin/class-offers-for-woocommerce-admin.php:1192
+#: public/views/my-offers.php:135
 msgid "Buyer Countered"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1103
+#: admin/class-offers-for-woocommerce-admin.php:1195
 msgid "Offer Status: Pending"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1103
-#: public/views/my-offers.php:108
+#: admin/class-offers-for-woocommerce-admin.php:1195
+#: public/views/my-offers.php:123
 msgid "Pending"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1106
+#: admin/class-offers-for-woocommerce-admin.php:1198
 msgid "Offer Status: Trashed"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1106
-#: public/views/my-offers.php:123
+#: admin/class-offers-for-woocommerce-admin.php:1198
+#: public/views/my-offers.php:138
 msgid "Trashed"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1109
+#: admin/class-offers-for-woocommerce-admin.php:1201
 msgid "Offer Status: Completed"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1109
-#: public/class-offers-for-woocommerce.php:1565 public/views/my-offers.php:126
+#: admin/class-offers-for-woocommerce-admin.php:1201
+#: admin/class-offers-for-woocommerce-admin.php:4433
+#: public/views/my-offers.php:141
 msgid "Completed"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1112
+#: admin/class-offers-for-woocommerce-admin.php:1204
 msgid "Offer Status: Declined"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1112
-#: admin/class-offers-for-woocommerce-admin.php:3030
-#: admin/class-offers-for-woocommerce-admin.php:3082
-#: public/class-offers-for-woocommerce.php:1828 public/views/my-offers.php:117
+#: admin/class-offers-for-woocommerce-admin.php:1204
+#: admin/class-offers-for-woocommerce-admin.php:2840
+#: admin/class-offers-for-woocommerce-admin.php:4193
+#: public/class-offers-for-woocommerce.php:1892 public/views/my-offers.php:132
 msgid "Declined"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1115
+#: admin/class-offers-for-woocommerce-admin.php:1207
 msgid "Offer Status: On Hold"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1115
-#: admin/views/meta-panel-summary.php:236 public/views/my-offers.php:129
+#: admin/class-offers-for-woocommerce-admin.php:1207
+#: admin/views/meta-panel-summary.php:283 public/views/my-offers.php:144
 msgid "On Hold"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1118
+#: admin/class-offers-for-woocommerce-admin.php:1210
 msgid "Offer Status: Expired"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1118
-#: public/views/my-offers.php:132
+#: admin/class-offers-for-woocommerce-admin.php:1210
+#: public/views/my-offers.php:147
 msgid "Expired"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1122
+#: admin/class-offers-for-woocommerce-admin.php:1214
 msgid "Offer Status:"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1216
+#: admin/class-offers-for-woocommerce-admin.php:1308
 msgid "Offer Activity Log"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1364
+#: admin/class-offers-for-woocommerce-admin.php:1352
+#: admin/views/meta-panel-summary.php:166
+msgid "Offer History"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:1473
 msgid "Product stock is lower than offer quantity!"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1386
-#: admin/class-offers-for-woocommerce-admin.php:1393
+#: admin/class-offers-for-woocommerce-admin.php:1495
+#: admin/class-offers-for-woocommerce-admin.php:1502
 msgid "Order not found; may have been deleted"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1455
+#: admin/class-offers-for-woocommerce-admin.php:1560
 msgid "Product not found for this offer."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1471
+#: admin/class-offers-for-woocommerce-admin.php:1583
 msgid "Add Offer Note"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1612
-#: admin/class-offers-for-woocommerce-admin.php:1706
-#: admin/class-offers-for-woocommerce-admin.php:1800
-#: admin/class-offers-for-woocommerce-admin.php:1896
-#: admin/class-offers-for-woocommerce-admin.php:2921
-#: admin/class-offers-for-woocommerce-admin.php:3142
-#: admin/class-offers-for-woocommerce-admin.php:3327
-#: public/class-offers-for-woocommerce.php:1157
-#: public/class-offers-for-woocommerce.php:1755
-#: public/class-offers-for-woocommerce.php:1870
+#: admin/class-offers-for-woocommerce-admin.php:1793
+#: admin/class-offers-for-woocommerce-admin.php:2898
+#: admin/class-offers-for-woocommerce-admin.php:3096
+#: admin/class-offers-for-woocommerce-admin.php:4238
+#: public/class-offers-for-woocommerce.php:1356
+#: public/class-offers-for-woocommerce.php:1948
 msgid "%s &ndash; %s%s"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:1929
-#: admin/class-offers-for-woocommerce-admin.php:2959
-#: public/class-offers-for-woocommerce.php:1565
-#: public/class-offers-for-woocommerce.php:1773
+#: admin/class-offers-for-woocommerce-admin.php:1824
+#: admin/class-offers-for-woocommerce-admin.php:2912
+#: admin/class-offers-for-woocommerce-admin.php:4433
+#: public/class-offers-for-woocommerce.php:1960
 msgid "Updated - Status:"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2042
+#: admin/class-offers-for-woocommerce-admin.php:1959
 msgid "Show on Home Page"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2050
-msgid "Check this option to display offer buttons for products on your home page."
+#: admin/class-offers-for-woocommerce-admin.php:1967
+msgid ""
+"Check this option to display offer buttons for products on your home page."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2060
+#: admin/class-offers-for-woocommerce-admin.php:1977
 msgid "Show on Shop Page"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2068
-msgid "Check this option to display offer buttons for products on your shop page."
+#: admin/class-offers-for-woocommerce-admin.php:1985
+msgid ""
+"Check this option to display offer buttons for products on your shop page."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2078
+#: admin/class-offers-for-woocommerce-admin.php:1995
 msgid "Enable Offers by Default"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2086
-msgid "Check this option to automatically enable offers on all new products by default."
+#: admin/class-offers-for-woocommerce-admin.php:2003
+msgid ""
+"Check this option to automatically enable offers on all new products by "
+"default."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2096
+#: admin/class-offers-for-woocommerce-admin.php:2013
 msgid "Limit Offer Quantity at Product Stock Quantity"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2104
-msgid "Check this option to limit offer quantity at stock quantity on products not allowing backorders."
+#: admin/class-offers-for-woocommerce-admin.php:2021
+msgid ""
+"Check this option to limit offer quantity at stock quantity on products not "
+"allowing backorders."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2114
-msgid "Default Offer Expiration Days"
+#: admin/class-offers-for-woocommerce-admin.php:2031
+msgid "Default Expiration Date"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2122
-msgid "Enter the amount of days from accepting/countering an offer that you would like the expiration date to automatically set."
+#: admin/class-offers-for-woocommerce-admin.php:2039
+msgid ""
+"The number entered here will be used to automatically set the expiration "
+"date that many days in advance while accepting or countering an offer."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2133
-msgid "Enable Offers for Only Logged-in Users"
+#: admin/class-offers-for-woocommerce-admin.php:2049
+msgid "Require Log In"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2141
-msgid "Check this option to enable offers on products for only logged-in users."
+#: admin/class-offers-for-woocommerce-admin.php:2057
+msgid ""
+"Check this option to require users to login in order to submit an offer."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2159
+#: admin/class-offers-for-woocommerce-admin.php:2067
+msgid "Hide Offers Until Logged In"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2075
+msgid ""
+"Check this option to completely hide the offer buttons unless the user is "
+"logged in."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2093
 msgid "Enable Offers for Only Specific User Roles"
 msgstr ""
 
+#: admin/class-offers-for-woocommerce-admin.php:2101
+msgid ""
+"Select the roles you want offers enabled for. Leave blank for all roles "
+"enabled."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2116
+msgid "Disable Coupons"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2124
+msgid ""
+"Check this option to disable coupons when checking out with an accepted "
+"offer included in the shopping cart."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2130
+msgid "Enable Anonymous Communication"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2138
+msgid ""
+"Check this option to hide the contact information for potential buyers while "
+"negotiation is going on.  This can be useful when working with vendors who "
+"would be paying you a commission."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2144
+msgid "Show Pending Offer Details to Buyers"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2152
+msgid "Check this option to display pending offer(s) on front end."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2159
+msgid "Display Highest Offer"
+msgstr ""
+
 #: admin/class-offers-for-woocommerce-admin.php:2167
-msgid "Select the roles you want offers enabled for. Leave blank for all roles enabled."
+msgid ""
+"Check this option to display the highest current offer on product page for "
+"potential buyers to see."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2173
+msgid "Disable Admin Email on Auto Declined Offers"
 msgstr ""
 
 #: admin/class-offers-for-woocommerce-admin.php:2181
-msgid "Disable coupons"
+msgid ""
+"Disable the email notification for the admin user when offers are "
+"automatically declined."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2189
-msgid "Check this option to disable coupons when checking out with accepted offer."
+#: admin/class-offers-for-woocommerce-admin.php:2187
+msgid "Disable for Sale Items"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2209
+#: admin/class-offers-for-woocommerce-admin.php:2195
+msgid "Disable the \"Make Offer\" button for products that are on sale."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2214
 msgid "Form Display Type"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2217
-msgid "Depending on your theme, you may wish to display the offer form on a tab within the product page or in a lightbox window on top of the product page."
+#: admin/class-offers-for-woocommerce-admin.php:2222
+msgid ""
+"Depending on your theme, you may wish to display the offer form on a tab "
+"within the product page or in a lightbox window on top of the product page."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2219
+#: admin/class-offers-for-woocommerce-admin.php:2224
 msgid "Product Tabs (default display)"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2220
+#: admin/class-offers-for-woocommerce-admin.php:2225
 msgid "Lightbox"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2230
-msgid "Form Fields"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:2238
-msgid "Tick the checkbox of the form fields you want to display on the offer form. Quantity, Price Each, Your Name, Your Email Address are required fields by default."
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:2241 public/views/public.php:84
+#: admin/class-offers-for-woocommerce-admin.php:2237
+#: public/views/public.php:150
 msgid "Price Each"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2242
-#: public/views/public.php:108
+#: admin/class-offers-for-woocommerce-admin.php:2238
+#: public/views/public.php:165
 msgid "Your Name"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2243
-#: public/views/public.php:134
+#: admin/class-offers-for-woocommerce-admin.php:2239
+#: public/views/public.php:174
 msgid "Your Email Address"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2244 public/views/public.php:96
-msgid "Total Offer Amount"
-msgstr ""
-
-#: admin/class-offers-for-woocommerce-admin.php:2245
-#: public/views/public.php:115
+#: admin/class-offers-for-woocommerce-admin.php:2240
+#: public/views/public.php:184
 msgid "Company Name"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2246
-#: public/views/public.php:125
+#: admin/class-offers-for-woocommerce-admin.php:2241
+#: public/views/public.php:204
 msgid "Phone Number"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2247
+#: admin/class-offers-for-woocommerce-admin.php:2242
 msgid "Offer Notes"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2258
-msgid "Button Position"
+#: admin/class-offers-for-woocommerce-admin.php:2243
+#: public/views/public.php:248
+msgid "Total Offer Amount"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2247
+msgid "Form Fields"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2255
+msgid ""
+"Check the boxes of the form fields you want to display on the offer form. "
+"Quantity, Price Each, Your Name, and Your Email Address are forcefully "
+"required fields, while the remaining fields are optionally required via "
+"checkbox.<br />  You may also drag and drop fields to re-order the way they "
+"are displayed on the offer form."
 msgstr ""
 
 #: admin/class-offers-for-woocommerce-admin.php:2266
-msgid "Use this setting to adjust the location of the 'Make Offer' button on your product detail page."
+msgid "Button Position"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2268
+#: admin/class-offers-for-woocommerce-admin.php:2274
+msgid ""
+"Use this setting to adjust the location of the 'Make Offer' button on your "
+"product detail page."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2276
 msgid "After add to cart button (default display)"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2269
+#: admin/class-offers-for-woocommerce-admin.php:2277
 msgid "Before add to cart button"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2270
+#: admin/class-offers-for-woocommerce-admin.php:2278
 msgid "To the right of add to cart button"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2271
+#: admin/class-offers-for-woocommerce-admin.php:2279
 msgid "After product price"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2272
+#: admin/class-offers-for-woocommerce-admin.php:2280
 msgid "After product tabs"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2282
-msgid "Button Text"
-msgstr ""
-
 #: admin/class-offers-for-woocommerce-admin.php:2290
-msgid "Set the text you would like to be displayed in the offer button."
+msgid "Button Class"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2300
-msgid "Button Text Color"
+#: admin/class-offers-for-woocommerce-admin.php:2298
+msgid "Set a custom CSS class name for the offer button."
 msgstr ""
 
 #: admin/class-offers-for-woocommerce-admin.php:2308
-msgid "Use the color-picker to choose the font color for the text on your offer buttons."
+msgid "Button Text"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2318
-msgid "Button Color"
+#: admin/class-offers-for-woocommerce-admin.php:2316
+msgid "Set the text you would like to be displayed in the offer button."
 msgstr ""
 
 #: admin/class-offers-for-woocommerce-admin.php:2326
-msgid "Use the color-picker to choose the background color for your offer buttons."
+msgid "Button Text Color"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2356
-msgid "Complete the form below and click Save Changes button to update your settings."
+#: admin/class-offers-for-woocommerce-admin.php:2334
+msgid ""
+"Use the color-picker to choose the font color for the text on your offer "
+"buttons."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2648
+#: admin/class-offers-for-woocommerce-admin.php:2344
+msgid "Button Color"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2352
+msgid ""
+"Use the color-picker to choose the background color for your offer buttons."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2375
+msgid ""
+"Complete the form below and click Save Changes button to update your "
+"settings."
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:2691
 msgid "Offers for WooCommerce - Settings"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2649
+#. #-#-#-#-#  offers-for-woocommerce.pot (Offers for WooCommerce 1.4.8.2)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: admin/class-offers-for-woocommerce-admin.php:2692
 msgid "Offers for WooCommerce"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2697
+#: admin/class-offers-for-woocommerce-admin.php:2740
 msgid "Configure"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2698
+#: admin/class-offers-for-woocommerce-admin.php:2741
 msgid "Docs"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2699
+#: admin/class-offers-for-woocommerce-admin.php:2742
 msgid "Support"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2700
+#: admin/class-offers-for-woocommerce-admin.php:2743
 msgid "Write a Review"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:2768
+#: admin/class-offers-for-woocommerce-admin.php:2811
 msgid "Pending Offer"
 msgid_plural "Pending Offers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3239
+#: admin/class-offers-for-woocommerce-admin.php:3006
 msgid "Offer Note:"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3242
+#: admin/class-offers-for-woocommerce-admin.php:3009
 msgid "(admin only)"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3246
+#: admin/class-offers-for-woocommerce-admin.php:3013
 msgid "(sent to buyer)"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3632
+#: admin/class-offers-for-woocommerce-admin.php:3619
 msgid "Currently filtered by user"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3632
+#: admin/class-offers-for-woocommerce-admin.php:3619
 msgid "Click here to reset filter"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3646
+#: admin/class-offers-for-woocommerce-admin.php:3633
 msgid "Action completed; %s records processed."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3652
+#: admin/class-offers-for-woocommerce-admin.php:3639
 msgid "Action completed; %s records processed. "
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3666
-msgid "We notice you are running the NextScripts Social Networks Auto-Poster plugin."
+#: admin/class-offers-for-woocommerce-admin.php:3653
+msgid ""
+"We notice you are running the NextScripts Social Networks Auto-Poster plugin."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3666
-msgid "Please make sure to exclude the custom post type \"woocommerce_offer\" in the {SNAP} Social Networks Auto-Poster settings in order to avoid conflicts with new offers."
+#: admin/class-offers-for-woocommerce-admin.php:3653
+msgid ""
+"Please make sure to exclude the custom post type \"woocommerce_offer\" in "
+"the {SNAP} Social Networks Auto-Poster settings in order to avoid conflicts "
+"with new offers."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3688
+#: admin/class-offers-for-woocommerce-admin.php:3675
 msgid "Overview"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3689
-#: admin/class-offers-for-woocommerce-admin.php:3695
-#: admin/class-offers-for-woocommerce-admin.php:3701
-msgid "This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you."
+#: admin/class-offers-for-woocommerce-admin.php:3676
+#: admin/class-offers-for-woocommerce-admin.php:3682
+#: admin/class-offers-for-woocommerce-admin.php:3688
+msgid ""
+"This plugin is currently in development. Please send any feedback or bug "
+"reports to andrew@angelleye.com. Thank you."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3694
-#: admin/class-offers-for-woocommerce-admin.php:3700
+#: admin/class-offers-for-woocommerce-admin.php:3681
+#: admin/class-offers-for-woocommerce-admin.php:3687
 msgid "Help Tab"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3752
-msgid "<strong>Offers for WooCommerce has been deactivated; WooCommerce is required.</strong><br />Please make sure that WooCommerce is installed and activated before activating Offers for WooCommerce."
+#: admin/class-offers-for-woocommerce-admin.php:3739
+msgid ""
+"<strong>Offers for WooCommerce has been deactivated; WooCommerce is required."
+"</strong><br />Please make sure that WooCommerce is installed and activated "
+"before activating Offers for WooCommerce."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3788
-#: admin/class-offers-for-woocommerce-admin.php:3789 admin/views/admin.php:55
+#: admin/class-offers-for-woocommerce-admin.php:3775
+#: admin/class-offers-for-woocommerce-admin.php:3776 admin/views/admin.php:55
 msgid "Enable Offers"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3790
-#: admin/class-offers-for-woocommerce-admin.php:3791 admin/views/admin.php:56
+#: admin/class-offers-for-woocommerce-admin.php:3777
+#: admin/class-offers-for-woocommerce-admin.php:3778 admin/views/admin.php:56
 msgid "Disable Offers"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3855
+#: admin/class-offers-for-woocommerce-admin.php:3842
 msgid "Offers enabled for %s products."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3860
+#: admin/class-offers-for-woocommerce-admin.php:3847
 msgid "Offers disabled for %s products."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3935
-#: admin/views/meta-panel-summary.php:254
+#: admin/class-offers-for-woocommerce-admin.php:3922
+#: admin/views/meta-panel-summary.php:301
 msgid "Coupon List"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3937
-#: admin/views/meta-panel-summary.php:256
+#: admin/class-offers-for-woocommerce-admin.php:3924
+#: admin/views/meta-panel-summary.php:303
 msgid "Select Coupon"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3944
+#: admin/class-offers-for-woocommerce-admin.php:3931
 msgid "No Coupons found."
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3950
+#: admin/class-offers-for-woocommerce-admin.php:3937
 msgid "Send coupon & Decline"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3962
+#: admin/class-offers-for-woocommerce-admin.php:3949
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3963
+#: admin/class-offers-for-woocommerce-admin.php:3950
 msgid "MailChimp"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3964
+#: admin/class-offers-for-woocommerce-admin.php:3951
 msgid "Constant Contact"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3965
+#: admin/class-offers-for-woocommerce-admin.php:3952
 msgid "MailPoet"
 msgstr ""
 
-#: admin/class-offers-for-woocommerce-admin.php:3982
-#: admin/class-offers-for-woocommerce-admin.php:3998
-#: admin/class-offers-for-woocommerce-admin.php:4015
-#: admin/class-offers-for-woocommerce-admin.php:4034
+#: admin/class-offers-for-woocommerce-admin.php:3969
+#: admin/class-offers-for-woocommerce-admin.php:3985
+#: admin/class-offers-for-woocommerce-admin.php:4002
+#: admin/class-offers-for-woocommerce-admin.php:4021
 msgid "Save changes"
+msgstr ""
+
+#: admin/class-offers-for-woocommerce-admin.php:4434
+msgid "Related Order"
 msgstr ""
 
 #: admin/includes/class-wc-accepted-offer-email.php:32
@@ -722,11 +853,13 @@ msgid "Accepted offer"
 msgstr ""
 
 #: admin/includes/class-wc-accepted-offer-email.php:35
-msgid "Accepted Offer Notification emails are sent when a customer offer is approved by the store admin"
+msgid ""
+"Accepted Offer Notification emails are sent when a customer offer is "
+"approved by the store admin"
 msgstr ""
 
 #: admin/includes/class-wc-accepted-offer-email.php:38
-#: admin/views/meta-panel-summary.php:232
+#: admin/views/meta-panel-summary.php:279
 msgid "Accepted Offer"
 msgstr ""
 
@@ -739,8 +872,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:129
 #: admin/includes/class-wc-offer-note-email.php:128
 #: admin/includes/class-wc-offer-on-hold-email.php:128
-#: public/includes/class-wc-new-counter-offer-email.php:134
-#: public/includes/class-wc-new-offer-email.php:134
+#: public/includes/class-wc-new-counter-offer-email.php:130
+#: public/includes/class-wc-new-offer-email.php:130
 #: public/includes/class-wc-offer-received-email.php:129
 msgid "Enable/Disable"
 msgstr ""
@@ -750,8 +883,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:131
 #: admin/includes/class-wc-offer-note-email.php:130
 #: admin/includes/class-wc-offer-on-hold-email.php:130
-#: public/includes/class-wc-new-counter-offer-email.php:136
-#: public/includes/class-wc-new-offer-email.php:136
+#: public/includes/class-wc-new-counter-offer-email.php:132
+#: public/includes/class-wc-new-offer-email.php:132
 #: public/includes/class-wc-offer-received-email.php:131
 msgid "Enable this email notification"
 msgstr ""
@@ -761,8 +894,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:135
 #: admin/includes/class-wc-offer-note-email.php:134
 #: admin/includes/class-wc-offer-on-hold-email.php:134
-#: public/includes/class-wc-new-counter-offer-email.php:147
-#: public/includes/class-wc-new-offer-email.php:147
+#: public/includes/class-wc-new-counter-offer-email.php:143
+#: public/includes/class-wc-new-offer-email.php:143
 #: public/includes/class-wc-offer-received-email.php:135
 msgid "Subject"
 msgstr ""
@@ -772,10 +905,11 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:137
 #: admin/includes/class-wc-offer-note-email.php:136
 #: admin/includes/class-wc-offer-on-hold-email.php:136
-#: public/includes/class-wc-new-counter-offer-email.php:149
-#: public/includes/class-wc-new-offer-email.php:149
+#: public/includes/class-wc-new-counter-offer-email.php:145
+#: public/includes/class-wc-new-offer-email.php:145
 #: public/includes/class-wc-offer-received-email.php:137
-msgid "This controls the email subject line. Leave blank to use the default subject:"
+msgid ""
+"This controls the email subject line. Leave blank to use the default subject:"
 msgstr ""
 
 #: admin/includes/class-wc-accepted-offer-email.php:142
@@ -783,8 +917,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:142
 #: admin/includes/class-wc-offer-note-email.php:141
 #: admin/includes/class-wc-offer-on-hold-email.php:141
-#: public/includes/class-wc-new-counter-offer-email.php:154
-#: public/includes/class-wc-new-offer-email.php:154
+#: public/includes/class-wc-new-counter-offer-email.php:150
+#: public/includes/class-wc-new-offer-email.php:150
 #: public/includes/class-wc-offer-received-email.php:142
 msgid "Email Heading"
 msgstr ""
@@ -794,10 +928,12 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:144
 #: admin/includes/class-wc-offer-note-email.php:143
 #: admin/includes/class-wc-offer-on-hold-email.php:143
-#: public/includes/class-wc-new-counter-offer-email.php:156
-#: public/includes/class-wc-new-offer-email.php:156
+#: public/includes/class-wc-new-counter-offer-email.php:152
+#: public/includes/class-wc-new-offer-email.php:152
 #: public/includes/class-wc-offer-received-email.php:144
-msgid "This controls the main heading contained within the email notification. Leave blank to use the default heading:"
+msgid ""
+"This controls the main heading contained within the email notification. "
+"Leave blank to use the default heading:"
 msgstr ""
 
 #: admin/includes/class-wc-accepted-offer-email.php:149
@@ -805,8 +941,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:149
 #: admin/includes/class-wc-offer-note-email.php:148
 #: admin/includes/class-wc-offer-on-hold-email.php:148
-#: public/includes/class-wc-new-counter-offer-email.php:161
-#: public/includes/class-wc-new-offer-email.php:161
+#: public/includes/class-wc-new-counter-offer-email.php:157
+#: public/includes/class-wc-new-offer-email.php:157
 #: public/includes/class-wc-offer-received-email.php:149
 msgid "Email type"
 msgstr ""
@@ -816,8 +952,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:151
 #: admin/includes/class-wc-offer-note-email.php:150
 #: admin/includes/class-wc-offer-on-hold-email.php:150
-#: public/includes/class-wc-new-counter-offer-email.php:163
-#: public/includes/class-wc-new-offer-email.php:163
+#: public/includes/class-wc-new-counter-offer-email.php:159
+#: public/includes/class-wc-new-offer-email.php:159
 #: public/includes/class-wc-offer-received-email.php:151
 msgid "Choose which format of email to send."
 msgstr ""
@@ -827,8 +963,8 @@ msgstr ""
 #: admin/includes/class-wc-declined-offer-email.php:155
 #: admin/includes/class-wc-offer-note-email.php:154
 #: admin/includes/class-wc-offer-on-hold-email.php:154
-#: public/includes/class-wc-new-counter-offer-email.php:167
-#: public/includes/class-wc-new-offer-email.php:167
+#: public/includes/class-wc-new-counter-offer-email.php:163
+#: public/includes/class-wc-new-offer-email.php:163
 #: public/includes/class-wc-offer-received-email.php:155
 msgid "Plain text"
 msgstr ""
@@ -838,11 +974,13 @@ msgid "Countered offer"
 msgstr ""
 
 #: admin/includes/class-wc-countered-offer-email.php:35
-msgid "Countered Offer Notification emails are sent when a customer offer is countered by the store admin"
+msgid ""
+"Countered Offer Notification emails are sent when a customer offer is "
+"countered by the store admin"
 msgstr ""
 
 #: admin/includes/class-wc-countered-offer-email.php:38
-#: admin/views/meta-panel-summary.php:233
+#: admin/views/meta-panel-summary.php:280
 msgid "Countered Offer"
 msgstr ""
 
@@ -855,11 +993,13 @@ msgid "Declined offer"
 msgstr ""
 
 #: admin/includes/class-wc-declined-offer-email.php:35
-msgid "Declined Offer Notification emails are sent when a customer offer is declined by the store admin"
+msgid ""
+"Declined Offer Notification emails are sent when a customer offer is "
+"declined by the store admin"
 msgstr ""
 
 #: admin/includes/class-wc-declined-offer-email.php:38
-#: admin/views/meta-panel-summary.php:234
+#: admin/views/meta-panel-summary.php:281
 msgid "Declined Offer"
 msgstr ""
 
@@ -889,7 +1029,9 @@ msgid "Offer On Hold"
 msgstr ""
 
 #: admin/includes/class-wc-offer-on-hold-email.php:34
-msgid "Offer On Hold Notification emails are sent when a customer offer is placed on hold by the store admin"
+msgid ""
+"Offer On Hold Notification emails are sent when a customer offer is placed "
+"on hold by the store admin"
 msgstr ""
 
 #: admin/includes/class-wc-offer-on-hold-email.php:38
@@ -911,7 +1053,7 @@ msgstr ""
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:18
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:19
 #: admin/includes/emails/woocommerce-offer-accepted.php:18
-#: admin/includes/emails/woocommerce-offer-countered.php:21
+#: admin/includes/emails/woocommerce-offer-countered.php:23
 msgid "Offer expires on:"
 msgstr ""
 
@@ -921,36 +1063,36 @@ msgstr ""
 #: admin/includes/emails/plain/woocommerce-offer-note.php:20
 #: admin/includes/emails/plain/woocommerce-offer-on-hold.php:23
 #: admin/includes/emails/woocommerce-offer-accepted.php:21
-#: admin/includes/emails/woocommerce-offer-countered.php:24
+#: admin/includes/emails/woocommerce-offer-countered.php:26
 #: admin/includes/emails/woocommerce-offer-declined.php:24
 #: admin/includes/emails/woocommerce-offer-note.php:15
 #: admin/includes/emails/woocommerce-offer-on-hold.php:16
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:17
 #: public/includes/emails/plain/woocommerce-new-offer.php:17
 #: public/includes/emails/plain/woocommerce-offer-received.php:17
-#: public/includes/emails/woocommerce-new-counter-offer.php:15
-#: public/includes/emails/woocommerce-new-offer.php:15
+#: public/includes/emails/woocommerce-new-counter-offer.php:30
+#: public/includes/emails/woocommerce-new-offer.php:32
 #: public/includes/emails/woocommerce-offer-received.php:15
 msgid "Offer ID:"
 msgstr ""
 
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:29
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:36
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:31
-#: admin/includes/emails/plain/woocommerce-offer-note.php:26
-#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:29
-#: admin/includes/emails/woocommerce-offer-accepted.php:28
-#: admin/includes/emails/woocommerce-offer-countered.php:31
-#: admin/includes/emails/woocommerce-offer-declined.php:31
-#: admin/includes/emails/woocommerce-offer-note.php:22
-#: admin/includes/emails/woocommerce-offer-on-hold.php:23
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:23
-#: public/includes/emails/plain/woocommerce-new-offer.php:23
-#: public/includes/emails/plain/woocommerce-offer-received.php:23
-#: public/includes/emails/woocommerce-new-counter-offer.php:22
-#: public/includes/emails/woocommerce-new-offer.php:22
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:28
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:35
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:30
+#: admin/includes/emails/plain/woocommerce-offer-note.php:25
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:28
+#: admin/includes/emails/woocommerce-offer-accepted.php:27
+#: admin/includes/emails/woocommerce-offer-countered.php:32
+#: admin/includes/emails/woocommerce-offer-declined.php:30
+#: admin/includes/emails/woocommerce-offer-note.php:21
+#: admin/includes/emails/woocommerce-offer-on-hold.php:22
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:22
+#: public/includes/emails/plain/woocommerce-new-offer.php:22
+#: public/includes/emails/plain/woocommerce-offer-received.php:22
+#: public/includes/emails/woocommerce-new-counter-offer.php:36
+#: public/includes/emails/woocommerce-new-offer.php:39
 #: public/includes/emails/woocommerce-offer-received.php:22
-msgid "Price"
+msgid "Regular Price"
 msgstr ""
 
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:30
@@ -958,33 +1100,76 @@ msgstr ""
 #: admin/includes/emails/plain/woocommerce-offer-declined.php:32
 #: admin/includes/emails/plain/woocommerce-offer-note.php:27
 #: admin/includes/emails/plain/woocommerce-offer-on-hold.php:30
-#: admin/includes/emails/woocommerce-offer-accepted.php:40
-#: admin/includes/emails/woocommerce-offer-countered.php:43
-#: admin/includes/emails/woocommerce-offer-declined.php:43
-#: admin/includes/emails/woocommerce-offer-note.php:34
-#: admin/includes/emails/woocommerce-offer-on-hold.php:35
+#: admin/includes/emails/woocommerce-offer-accepted.php:29
+#: admin/includes/emails/woocommerce-offer-countered.php:34
+#: admin/includes/emails/woocommerce-offer-declined.php:32
+#: admin/includes/emails/woocommerce-offer-note.php:23
+#: admin/includes/emails/woocommerce-offer-on-hold.php:24
+#: admin/views/admin.php:290
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:24
 #: public/includes/emails/plain/woocommerce-new-offer.php:24
 #: public/includes/emails/plain/woocommerce-offer-received.php:24
-#: public/includes/emails/woocommerce-new-counter-offer.php:34
-#: public/includes/emails/woocommerce-new-offer.php:34
-#: public/includes/emails/woocommerce-offer-received.php:34
+#: public/includes/emails/woocommerce-new-counter-offer.php:38
+#: public/includes/emails/woocommerce-new-offer.php:41
+#: public/includes/emails/woocommerce-offer-received.php:24
+msgid "Price"
+msgstr ""
+
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:31
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:38
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:33
+#: admin/includes/emails/plain/woocommerce-offer-note.php:28
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:31
+#: admin/includes/emails/woocommerce-offer-accepted.php:42
+#: admin/includes/emails/woocommerce-offer-countered.php:47
+#: admin/includes/emails/woocommerce-offer-declined.php:45
+#: admin/includes/emails/woocommerce-offer-note.php:36
+#: admin/includes/emails/woocommerce-offer-on-hold.php:37
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:25
+#: public/includes/emails/plain/woocommerce-new-offer.php:25
+#: public/includes/emails/plain/woocommerce-offer-received.php:25
+#: public/includes/emails/woocommerce-new-counter-offer.php:51
+#: public/includes/emails/woocommerce-new-offer.php:54
+#: public/includes/emails/woocommerce-offer-received.php:37
 msgid "Subtotal"
 msgstr ""
 
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:34
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:41
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:36
-#: admin/includes/emails/woocommerce-offer-accepted.php:46
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:35
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:42
+#: admin/includes/emails/woocommerce-offer-accepted.php:50
+#: admin/includes/emails/woocommerce-offer-countered.php:56
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:29
+#: public/includes/emails/plain/woocommerce-offer-received.php:29
+#: public/includes/emails/woocommerce-new-counter-offer.php:59
+#: public/includes/emails/woocommerce-offer-received.php:44
+msgid "Shipping"
+msgstr ""
+
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:36
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:43
+#: admin/includes/emails/woocommerce-offer-accepted.php:60
+#: admin/includes/emails/woocommerce-offer-countered.php:66
+#: admin/views/meta-panel-summary.php:247
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:30
+#: public/includes/emails/plain/woocommerce-offer-received.php:30
+#: public/includes/emails/woocommerce-new-counter-offer.php:69
+#: public/includes/emails/woocommerce-offer-received.php:54
+msgid "Total"
+msgstr ""
+
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:40
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:47
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:37
+#: admin/includes/emails/woocommerce-offer-accepted.php:69
 #: admin/includes/emails/woocommerce-offer-declined.php:22
 #: admin/includes/emails/woocommerce-offer-note.php:13
 #: admin/includes/emails/woocommerce-offer-on-hold.php:14
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:37
-#: public/includes/emails/plain/woocommerce-new-offer.php:37
-#: public/includes/emails/plain/woocommerce-offer-received.php:29
-#: public/includes/emails/woocommerce-new-counter-offer.php:48
-#: public/includes/emails/woocommerce-new-offer.php:47
-#: public/includes/emails/woocommerce-offer-received.php:40
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:44
+#: public/includes/emails/plain/woocommerce-new-offer.php:38
+#: public/includes/emails/plain/woocommerce-offer-received.php:37
+#: public/includes/emails/woocommerce-new-counter-offer.php:86
+#: public/includes/emails/woocommerce-new-offer.php:67
+#: public/includes/emails/woocommerce-offer-received.php:63
 msgid "Offer Notes:"
 msgstr ""
 
@@ -994,12 +1179,12 @@ msgid "We have provided you with a counter offer on"
 msgstr ""
 
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:23
-#: admin/includes/emails/woocommerce-offer-countered.php:15
+#: admin/includes/emails/woocommerce-offer-countered.php:16
 msgid "This is a final offer."
 msgstr ""
 
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:25
-#: admin/includes/emails/woocommerce-offer-countered.php:17
+#: admin/includes/emails/woocommerce-offer-countered.php:18
 msgid "To make a counter offer use the following link:"
 msgstr ""
 
@@ -1021,17 +1206,17 @@ msgid "Your offer has been placed on hold."
 msgstr ""
 
 #: admin/includes/emails/woocommerce-offer-accepted.php:15
-#: admin/includes/emails/woocommerce-offer-countered.php:13
-#: public/views/my-offers.php:146 public/views/my-offers.php:158
+#: admin/includes/emails/woocommerce-offer-countered.php:14
+#: public/views/my-offers.php:161 public/views/my-offers.php:173
 msgid "Click to Pay"
 msgstr ""
 
-#: admin/includes/emails/woocommerce-offer-countered.php:17
-#: public/views/my-offers.php:152
+#: admin/includes/emails/woocommerce-offer-countered.php:19
+#: public/views/my-offers.php:167
 msgid "Click to Counter"
 msgstr ""
 
-#: admin/includes/emails/woocommerce-offer-countered.php:49
+#: admin/includes/emails/woocommerce-offer-countered.php:75
 msgid "Counter Offer Notes:"
 msgstr ""
 
@@ -1060,123 +1245,169 @@ msgid "Bulk Edit Tool for Products"
 msgstr ""
 
 #: admin/views/admin.php:48
-msgid "Select from the options below to enable / disable offers on multiple products at once."
+msgid ""
+"Select from the options below to enable / disable offers on multiple "
+"products at once."
 msgstr ""
 
-#: admin/views/admin.php:51 admin/views/admin.php:150
+#: admin/views/admin.php:51 admin/views/admin.php:152 admin/views/admin.php:268
 #: public/views/my-offers.php:12
 msgid "Action"
 msgstr ""
 
-#: admin/views/admin.php:54 admin/views/admin.php:64 admin/views/admin.php:75
-#: admin/views/admin.php:92 admin/views/admin.php:109 admin/views/admin.php:153
-#: admin/views/admin.php:177 admin/views/admin.php:188
-#: admin/views/admin.php:205 admin/views/admin.php:222
+#: admin/views/admin.php:54 admin/views/admin.php:66 admin/views/admin.php:77
+#: admin/views/admin.php:94 admin/views/admin.php:111 admin/views/admin.php:155
+#: admin/views/admin.php:179 admin/views/admin.php:190
+#: admin/views/admin.php:207 admin/views/admin.php:224
+#: admin/views/admin.php:271 admin/views/admin.php:288
+#: admin/views/admin.php:299 admin/views/admin.php:310
+#: admin/views/admin.php:327 admin/views/admin.php:344
 msgid "- Select option"
 msgstr ""
 
-#: admin/views/admin.php:61 admin/views/admin.php:174
+#: admin/views/admin.php:57
+msgid "Enable Offers On Exit"
+msgstr ""
+
+#: admin/views/admin.php:58
+msgid "Disable Offers On Exit"
+msgstr ""
+
+#: admin/views/admin.php:63 admin/views/admin.php:176 admin/views/admin.php:296
 msgid "Target"
 msgstr ""
 
-#: admin/views/admin.php:65 admin/views/admin.php:178
+#: admin/views/admin.php:67 admin/views/admin.php:180 admin/views/admin.php:300
 msgid "All products"
 msgstr ""
 
-#: admin/views/admin.php:66 admin/views/admin.php:179
+#: admin/views/admin.php:68 admin/views/admin.php:181 admin/views/admin.php:301
 msgid "Featured products"
 msgstr ""
 
-#: admin/views/admin.php:67 admin/views/admin.php:180
+#: admin/views/admin.php:69 admin/views/admin.php:182 admin/views/admin.php:302
 msgid "Where..."
 msgstr ""
 
-#: admin/views/admin.php:72 admin/views/admin.php:185
+#: admin/views/admin.php:74 admin/views/admin.php:187 admin/views/admin.php:307
 msgid "Where"
 msgstr ""
 
-#: admin/views/admin.php:76 admin/views/admin.php:189
+#: admin/views/admin.php:78 admin/views/admin.php:191 admin/views/admin.php:311
 msgid "Category..."
 msgstr ""
 
-#: admin/views/admin.php:77 admin/views/admin.php:190
+#: admin/views/admin.php:79 admin/views/admin.php:192 admin/views/admin.php:312
 msgid "Product type..."
 msgstr ""
 
-#: admin/views/admin.php:78 admin/views/admin.php:191
+#: admin/views/admin.php:80 admin/views/admin.php:193 admin/views/admin.php:313
 msgid "Price greater than..."
 msgstr ""
 
-#: admin/views/admin.php:79 admin/views/admin.php:192
+#: admin/views/admin.php:81 admin/views/admin.php:194 admin/views/admin.php:314
 msgid "Price less than..."
 msgstr ""
 
-#: admin/views/admin.php:80 admin/views/admin.php:193
+#: admin/views/admin.php:82 admin/views/admin.php:195 admin/views/admin.php:315
 msgid "Stock greater than..."
 msgstr ""
 
-#: admin/views/admin.php:81 admin/views/admin.php:194
+#: admin/views/admin.php:83 admin/views/admin.php:196 admin/views/admin.php:316
 msgid "Stock less than..."
 msgstr ""
 
-#: admin/views/admin.php:82 admin/views/admin.php:195
+#: admin/views/admin.php:84 admin/views/admin.php:197 admin/views/admin.php:317
 msgid "In-stock"
 msgstr ""
 
-#: admin/views/admin.php:83 admin/views/admin.php:196
+#: admin/views/admin.php:85 admin/views/admin.php:198 admin/views/admin.php:318
 msgid "Out-of-stock"
 msgstr ""
 
-#: admin/views/admin.php:84 admin/views/admin.php:197
+#: admin/views/admin.php:86 admin/views/admin.php:199 admin/views/admin.php:319
 msgid "Sold individually"
 msgstr ""
 
-#: admin/views/admin.php:89 admin/views/admin.php:202
+#: admin/views/admin.php:91 admin/views/admin.php:204 admin/views/admin.php:324
 msgid "Category"
 msgstr ""
 
-#: admin/views/admin.php:110 admin/views/admin.php:223
+#: admin/views/admin.php:112 admin/views/admin.php:225
+#: admin/views/admin.php:345
 msgid "Simple"
 msgstr ""
 
-#: admin/views/admin.php:111 admin/views/admin.php:224
+#: admin/views/admin.php:113 admin/views/admin.php:226
+#: admin/views/admin.php:346
 msgid "Variable"
 msgstr ""
 
-#: admin/views/admin.php:112 admin/views/admin.php:225
+#: admin/views/admin.php:114 admin/views/admin.php:227
+#: admin/views/admin.php:347
 msgid "Grouped"
 msgstr ""
 
-#: admin/views/admin.php:113 admin/views/admin.php:226
+#: admin/views/admin.php:115 admin/views/admin.php:228
+#: admin/views/admin.php:348
 msgid "External"
 msgstr ""
 
-#: admin/views/admin.php:132 admin/views/admin.php:246
+#: admin/views/admin.php:134 admin/views/admin.php:248
+#: admin/views/admin.php:368
 msgid "Process"
 msgstr ""
 
-#: admin/views/admin.php:146
+#: admin/views/admin.php:148
 msgid "Bulk Edit Tool for Automatically Accepting or Declining Offers"
 msgstr ""
 
-#: admin/views/admin.php:147
-msgid "Select from the options below to enable or disable automated acceptance or declining of offers on multiple products at once."
-msgstr ""
-
-#: admin/views/admin.php:154
-msgid "Enable auto accept offer"
-msgstr ""
-
-#: admin/views/admin.php:155
-msgid "Disable auto accept offer"
+#: admin/views/admin.php:149
+msgid ""
+"Select from the options below to enable or disable automated acceptance or "
+"declining of offers on multiple products at once."
 msgstr ""
 
 #: admin/views/admin.php:156
-msgid "Enable auto decline offer"
+msgid "Enable auto accept offer"
 msgstr ""
 
 #: admin/views/admin.php:157
+msgid "Disable auto accept offer"
+msgstr ""
+
+#: admin/views/admin.php:158
+msgid "Enable auto decline offer"
+msgstr ""
+
+#: admin/views/admin.php:159
 msgid "Disable auto decline offer"
+msgstr ""
+
+#: admin/views/admin.php:264 admin/views/admin.php:279
+msgid "Minimum Offer Price"
+msgstr ""
+
+#: admin/views/admin.php:265
+msgid ""
+"Select from the options below to set Minimum Offer Price on multiple "
+"products at once."
+msgstr ""
+
+#: admin/views/admin.php:272
+msgid "Enable"
+msgstr ""
+
+#: admin/views/admin.php:273
+msgid "Disable"
+msgstr ""
+
+#: admin/views/admin.php:285
+msgid "Offer Price Type"
+msgstr ""
+
+#: admin/views/admin.php:289
+msgid "Percentage"
 msgstr ""
 
 #: admin/views/meta-panel-add-note.php:19
@@ -1189,6 +1420,10 @@ msgstr ""
 
 #: admin/views/meta-panel-comments.php:31
 msgid "No Comments Found."
+msgstr ""
+
+#: admin/views/meta-panel-summary.php:19
+msgid "Product Details"
 msgstr ""
 
 #: admin/views/meta-panel-summary.php:22
@@ -1208,11 +1443,11 @@ msgid "Click to edit product"
 msgstr ""
 
 #: admin/views/meta-panel-summary.php:27 admin/views/meta-panel-summary.php:31
-#: admin/views/meta-panel-summary.php:33 admin/views/meta-panel-summary.php:74
-#: admin/views/meta-panel-summary.php:75 admin/views/meta-panel-summary.php:76
-#: admin/views/meta-panel-summary.php:77 admin/views/meta-panel-summary.php:122
-#: admin/views/meta-panel-summary.php:126
-#: admin/views/meta-panel-summary.php:130
+#: admin/views/meta-panel-summary.php:33 admin/views/meta-panel-summary.php:76
+#: admin/views/meta-panel-summary.php:77 admin/views/meta-panel-summary.php:78
+#: admin/views/meta-panel-summary.php:79 admin/views/meta-panel-summary.php:152
+#: admin/views/meta-panel-summary.php:157
+#: admin/views/meta-panel-summary.php:162
 msgid "Missing Meta Value"
 msgstr ""
 
@@ -1248,132 +1483,139 @@ msgstr ""
 msgid "Not enough stock to fulfill offer"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:68
+#: admin/views/meta-panel-summary.php:70
 msgid "Buyer Details"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:70
+#: admin/views/meta-panel-summary.php:72
 msgid "View offer history"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:70
+#: admin/views/meta-panel-summary.php:72
 msgid "Buyer History"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:74
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:28
-#: public/includes/emails/plain/woocommerce-new-offer.php:28
-#: public/includes/emails/woocommerce-new-counter-offer.php:41
-#: public/includes/emails/woocommerce-new-offer.php:41
+#: admin/views/meta-panel-summary.php:76
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:35
+#: public/includes/emails/plain/woocommerce-new-offer.php:29
+#: public/includes/emails/woocommerce-new-counter-offer.php:79
+#: public/includes/emails/woocommerce-new-offer.php:61
 msgid "Name:"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:75
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:30
-#: public/includes/emails/plain/woocommerce-new-offer.php:30
-#: public/includes/emails/woocommerce-new-counter-offer.php:43
-#: public/includes/emails/woocommerce-new-offer.php:43
+#: admin/views/meta-panel-summary.php:77
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:37
+#: public/includes/emails/plain/woocommerce-new-offer.php:31
+#: public/includes/emails/woocommerce-new-counter-offer.php:81
+#: public/includes/emails/woocommerce-new-offer.php:63
 msgid "Email:"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:76
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:31
-#: public/includes/emails/plain/woocommerce-new-offer.php:31
-#: public/includes/emails/woocommerce-new-counter-offer.php:44
-#: public/includes/emails/woocommerce-new-offer.php:44
+#: admin/views/meta-panel-summary.php:78
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:38
+#: public/includes/emails/plain/woocommerce-new-offer.php:32
+#: public/includes/emails/woocommerce-new-counter-offer.php:82
+#: public/includes/emails/woocommerce-new-offer.php:64
 msgid "Phone:"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:77
+#: admin/views/meta-panel-summary.php:79
 msgid "Company:"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:86
+#: admin/views/meta-panel-summary.php:88
 msgid "Buyer Offer History"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:87
+#: admin/views/meta-panel-summary.php:89
 msgid "Close offer history"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:87
+#: admin/views/meta-panel-summary.php:89
 msgid "close"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:99 admin/views/meta-panel-summary.php:101
+#: admin/views/meta-panel-summary.php:101
+#: admin/views/meta-panel-summary.php:103
 msgid "view"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:118
+#: admin/views/meta-panel-summary.php:125
+msgid "Product Add-ons Data"
+msgstr ""
+
+#: admin/views/meta-panel-summary.php:148
 msgid "Original Offer"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:120
+#: admin/views/meta-panel-summary.php:150
 msgid "Orig. Quantity"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:124
+#: admin/views/meta-panel-summary.php:154
 msgid "Orig. Price Per"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:128
+#: admin/views/meta-panel-summary.php:159
 msgid "Orig. Amount"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:134
-msgid "Offer History"
-msgstr ""
-
-#: admin/views/meta-panel-summary.php:183
+#: admin/views/meta-panel-summary.php:215
 msgid "Counter Offer"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:202
-msgid "Total"
+#: admin/views/meta-panel-summary.php:235
+msgid "Original Price and Counter Price should not be same."
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:218
+#: admin/views/meta-panel-summary.php:237
+msgid "Include Shipping with Offer"
+msgstr ""
+
+#: admin/views/meta-panel-summary.php:264
 msgid "Offer Note to Buyer"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:220
-msgid "Enter a note here to be included in the email notification to the buyer when the offer status is updated."
+#: admin/views/meta-panel-summary.php:266
+msgid ""
+"Enter a note here to be included in the email notification to the buyer when "
+"the offer status is updated."
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:225
+#: admin/views/meta-panel-summary.php:272
 msgid "Offer Status"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:230
+#: admin/views/meta-panel-summary.php:277
 msgid "- Select status"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:235
-#: admin/views/meta-panel-summary.php:281
+#: admin/views/meta-panel-summary.php:282
+#: admin/views/meta-panel-summary.php:328
 msgid "Completed Offer"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:244
+#: admin/views/meta-panel-summary.php:291
 msgid "Final Offer"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:266
+#: admin/views/meta-panel-summary.php:313
 msgid "Offer Expires"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:276
+#: admin/views/meta-panel-summary.php:323
 msgid "Expiration date has passed."
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:283
+#: admin/views/meta-panel-summary.php:330
 msgid "Update"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:289
+#: admin/views/meta-panel-summary.php:336
 msgid "Move to Trash"
 msgstr ""
 
-#: admin/views/meta-panel-summary.php:294
+#: admin/views/meta-panel-summary.php:341
 msgid "Related Orders"
 msgstr ""
 
@@ -1390,7 +1632,9 @@ msgid "Constant Contact API Key"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-constant-contact-helper.php:112
-msgid "Enter your API Key. <a target=\"_blank\" href=\"https://constantcontact.mashery.com/apps/mykeys\">Get your API key</a>"
+msgid ""
+"Enter your API Key. <a target=\"_blank\" href=\"https://constantcontact."
+"mashery.com/apps/mykeys\">Get your API key</a>"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-constant-contact-helper.php:118
@@ -1406,7 +1650,9 @@ msgid "Constant Contact lists"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-constant-contact-helper.php:127
-msgid "After you add your Constant Contact API Key above and save it this list will be populated."
+msgid ""
+"After you add your Constant Contact API Key above and save it this list will "
+"be populated."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-constant-contact-helper.php:135
@@ -1414,7 +1660,9 @@ msgid "Force Constant Contact lists refresh"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-constant-contact-helper.php:136
-msgid "Check and 'Save changes' this if you've added a new Constant Contact list and it's not showing in the list above."
+msgid ""
+"Check and 'Save changes' this if you've added a new Constant Contact list "
+"and it's not showing in the list above."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-constant-contact-helper.php:142
@@ -1451,7 +1699,9 @@ msgid "MailChimp API Key"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailchimp-helper.php:85
-msgid "Enter your API Key. <a target=\"_blank\" href=\"http://admin.mailchimp.com/account/api-key-popup\">Get your API key</a>"
+msgid ""
+"Enter your API Key. <a target=\"_blank\" href=\"http://admin.mailchimp.com/"
+"account/api-key-popup\">Get your API key</a>"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailchimp-helper.php:92
@@ -1459,7 +1709,9 @@ msgid "MailChimp lists"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailchimp-helper.php:93
-msgid "After you add your MailChimp API Key above and save it this list will be populated."
+msgid ""
+"After you add your MailChimp API Key above and save it this list will be "
+"populated."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailchimp-helper.php:101
@@ -1467,7 +1719,9 @@ msgid "Force MailChimp lists refresh"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailchimp-helper.php:102
-msgid "Check and 'Save changes' this if you've added a new MailChimp list and it's not showing in the list above."
+msgid ""
+"Check and 'Save changes' this if you've added a new MailChimp list and it's "
+"not showing in the list above."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailchimp-helper.php:114
@@ -1495,7 +1749,9 @@ msgid "MailPoet lists"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailpoet-helper.php:91
-msgid "After you add your MailPoet API Key above and save it this list will be populated."
+msgid ""
+"After you add your MailPoet API Key above and save it this list will be "
+"populated."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailpoet-helper.php:99
@@ -1503,7 +1759,9 @@ msgid "Force MailPoet lists refresh"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailpoet-helper.php:100
-msgid "Check and 'Save changes' this if you've added a new MailPoet list and it's not showing in the list above."
+msgid ""
+"Check and 'Save changes' this if you've added a new MailPoet list and it's "
+"not showing in the list above."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-mailpoet-helper.php:111
@@ -1519,136 +1777,194 @@ msgid "Enable Google reCAPTCHA"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-recaptcha-helper.php:36
-msgid "Site key"
+msgid "Site Key"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-recaptcha-helper.php:37
-msgid "Enter Site key. <a target=\"_blank\" href=\"https://www.google.com/recaptcha/admin\">Get your Site key</a>"
+msgid ""
+"Enter site key. <a target=\"_blank\" href=\"https://www.google.com/recaptcha/"
+"admin\">Get your site key</a>."
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-recaptcha-helper.php:44
-msgid "Secret key"
+msgid "Secret Key"
 msgstr ""
 
 #: includes/class-offers-for-woocommerce-recaptcha-helper.php:45
-msgid "Enter Secret key. <a target=\"_blank\" href=\"https://www.google.com/recaptcha/admin\">Get your Secret key</a>"
+msgid ""
+"Enter secret key. <a target=\"_blank\" href=\"https://www.google.com/"
+"recaptcha/admin\">Get your secret key</a>."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:218
-#: public/class-offers-for-woocommerce.php:300
-#: public/class-offers-for-woocommerce.php:384
-#: public/class-offers-for-woocommerce.php:495 public/views/public.php:61
+#: includes/class-offers-for-woocommerce-shipping.php:13
+#: includes/class-offers-for-woocommerce-shipping.php:14
+msgid "Offers for WooCommerce Shipping"
+msgstr ""
+
+#: includes/class-offers-for-woocommerce-shipping.php:31
+msgid "Method Title"
+msgstr ""
+
+#: includes/class-offers-for-woocommerce-shipping.php:33
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/class-offers-for-woocommerce-shipping.php:34
+msgid "Offer Shipping Cost"
+msgstr ""
+
+#: includes/class-offers-for-woocommerce-shipping.php:66
+msgid " (Free)"
+msgstr ""
+
+#: public/class-offers-for-woocommerce.php:239
+msgid "Please log in to make an offer."
+msgstr ""
+
+#: public/class-offers-for-woocommerce.php:305
+#: public/class-offers-for-woocommerce.php:573 public/views/public.php:101
 msgid "Make Offer"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:574
-msgid "You can not submit another counter offer at this time; Counter offer is currently being reviewed. You can submit a new offer using the form below."
+#: public/class-offers-for-woocommerce.php:652
+msgid ""
+"You can not submit another counter offer at this time; Counter offer is "
+"currently being reviewed. You can submit a new offer using the form below."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:578
+#: public/class-offers-for-woocommerce.php:656
 msgid "Invalid Parent Offer Id; See shop manager for assistance."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:585
-msgid "You can not submit a counter offer at this time; Counter offer is a final offer. You can submit a new offer using the form below."
+#: public/class-offers-for-woocommerce.php:663
+msgid ""
+"You can not submit a counter offer at this time; Counter offer is a final "
+"offer. You can submit a new offer using the form below."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:592
-msgid "Counter offer has expired; You can not submit a counter offer at this time. You can submit a new offer using the form below."
+#: public/class-offers-for-woocommerce.php:670
+msgid ""
+"Counter offer has expired; You can not submit a counter offer at this time. "
+"You can submit a new offer using the form below."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:870
-#: public/class-offers-for-woocommerce.php:875
-#: public/class-offers-for-woocommerce.php:880
+#: public/class-offers-for-woocommerce.php:909
+msgid ""
+"Please select some product options before making offer for this product."
+msgstr ""
+
+#: public/class-offers-for-woocommerce.php:910
+msgid "Sorry, this product is unavailable. Please choose a different product."
+msgstr ""
+
+#: public/class-offers-for-woocommerce.php:1033
+#: public/class-offers-for-woocommerce.php:1038
+#: public/class-offers-for-woocommerce.php:1043
 msgid "Please check the captcha."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:890
+#: public/class-offers-for-woocommerce.php:1053
 msgid "Please enter a positive value for 'Offer Quantity'"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:899
+#: public/class-offers-for-woocommerce.php:1062
 msgid "Please enter a positive value for 'Offer Amount'"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:957
+#: public/class-offers-for-woocommerce.php:1088
+msgid "Nothing return"
+msgstr ""
+
+#: public/class-offers-for-woocommerce.php:1147
 msgid "Invalid Offer Submission; See shop manager for assistance"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:980
+#: public/class-offers-for-woocommerce.php:1171
 msgid "Invalid Parent Offer Id; See shop manager for assistance"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1023
+#: public/class-offers-for-woocommerce.php:1217
 msgid "Buyer Submitted Counter Offer"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1068
+#: public/class-offers-for-woocommerce.php:1262
 msgid "Created New Offer"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1165
+#: public/class-offers-for-woocommerce.php:1364
 msgid "%s &ndash; %s"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1293
+#: public/class-offers-for-woocommerce.php:1522
 msgid "Missing or Invalid Offer Id; See shop manager for assistance"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1310
-#: public/class-offers-for-woocommerce.php:1623
+#: public/class-offers-for-woocommerce.php:1539
+#: public/class-offers-for-woocommerce.php:1801
 msgid "Invalid or Expired Offer Id; See shop manager for assistance"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1314
-#: public/class-offers-for-woocommerce.php:1332
-#: public/class-offers-for-woocommerce.php:1631
-msgid "Invalid Offer Status or Expired Offer Id; See shop manager for assistance"
+#: public/class-offers-for-woocommerce.php:1543
+#: public/class-offers-for-woocommerce.php:1561
+#: public/class-offers-for-woocommerce.php:1809
+msgid ""
+"Invalid Offer Status or Expired Offer Id; See shop manager for assistance"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1319
+#: public/class-offers-for-woocommerce.php:1548
 msgid "Offer has expired; You can submit a new offer using the form below."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1327
-msgid "Offer is currently On Hold; We will notify you when offer status is updated."
+#: public/class-offers-for-woocommerce.php:1556
+msgid ""
+"Offer is currently On Hold; We will notify you when offer status is updated."
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1341
-#: public/class-offers-for-woocommerce.php:1350
+#: public/class-offers-for-woocommerce.php:1570
+#: public/class-offers-for-woocommerce.php:1580
 msgid "Error - Product Not Found; See shop manager for assistance"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1357
+#: public/class-offers-for-woocommerce.php:1587
 msgid "Successfully added Offer to cart"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1400
+#: public/class-offers-for-woocommerce.php:1627
 msgid "View Cart"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1400
+#: public/class-offers-for-woocommerce.php:1627
 msgid "Offer already added to cart"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1471
+#: public/class-offers-for-woocommerce.php:1715
 msgid "Offer quantity cannot be modified"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:1566
-msgid "Related Order"
-msgstr ""
-
-#: public/class-offers-for-woocommerce.php:2085
+#: public/class-offers-for-woocommerce.php:2142
 msgid "Join Our Mailing List"
 msgstr ""
+
+#: public/class-offers-for-woocommerce.php:2245
+msgid "%d offer is currently pending."
+msgid_plural "%d offers are currently pending."
+msgstr[0] ""
+msgstr[1] ""
+
+#: public/class-offers-for-woocommerce.php:2304
+msgid "Highest Current Offer: %s%s"
+msgid_plural "Highest Current Offer: %s%s"
+msgstr[0] ""
+msgstr[1] ""
 
 #: public/includes/class-wc-new-counter-offer-email.php:32
 msgid "New counter offer"
 msgstr ""
 
 #: public/includes/class-wc-new-counter-offer-email.php:35
-msgid "New Counter Offer Notification emails are sent to the admin when customer submits a counter offer"
+msgid ""
+"New Counter Offer Notification emails are sent to the admin when customer "
+"submits a counter offer"
 msgstr ""
 
 #: public/includes/class-wc-new-counter-offer-email.php:38
@@ -1659,13 +1975,13 @@ msgstr ""
 msgid "[{site_title}] New Counter Offer ({offer_number}) - {offer_date}"
 msgstr ""
 
-#: public/includes/class-wc-new-counter-offer-email.php:140
-#: public/includes/class-wc-new-offer-email.php:140
+#: public/includes/class-wc-new-counter-offer-email.php:136
+#: public/includes/class-wc-new-offer-email.php:136
 msgid "Recipient(s)"
 msgstr ""
 
-#: public/includes/class-wc-new-counter-offer-email.php:142
-#: public/includes/class-wc-new-offer-email.php:142
+#: public/includes/class-wc-new-counter-offer-email.php:138
+#: public/includes/class-wc-new-offer-email.php:138
 msgid "Enter recipients (comma separated) for this email. Defaults to"
 msgstr ""
 
@@ -1674,7 +1990,9 @@ msgid "New offer"
 msgstr ""
 
 #: public/includes/class-wc-new-offer-email.php:35
-msgid "New Offer Notification emails are sent to the admin when customer submits offer"
+msgid ""
+"New Offer Notification emails are sent to the admin when customer submits "
+"offer"
 msgstr ""
 
 #: public/includes/class-wc-new-offer-email.php:38
@@ -1690,7 +2008,9 @@ msgid "Offer received"
 msgstr ""
 
 #: public/includes/class-wc-offer-received-email.php:35
-msgid "Offer received notification emails are sent to a customer when a customer submits offer"
+msgid ""
+"Offer received notification emails are sent to a customer when a customer "
+"submits offer"
 msgstr ""
 
 #: public/includes/class-wc-offer-received-email.php:38
@@ -1709,17 +2029,17 @@ msgstr ""
 msgid "To manage this counter offer please visit the following url:"
 msgstr ""
 
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:27
-#: public/includes/emails/plain/woocommerce-new-offer.php:27
-#: public/includes/emails/woocommerce-new-counter-offer.php:40
-#: public/includes/emails/woocommerce-new-offer.php:40
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:34
+#: public/includes/emails/plain/woocommerce-new-offer.php:28
+#: public/includes/emails/woocommerce-new-counter-offer.php:78
+#: public/includes/emails/woocommerce-new-offer.php:60
 msgid "Offer Contact Details:"
 msgstr ""
 
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:29
-#: public/includes/emails/plain/woocommerce-new-offer.php:29
-#: public/includes/emails/woocommerce-new-counter-offer.php:42
-#: public/includes/emails/woocommerce-new-offer.php:42
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:36
+#: public/includes/emails/plain/woocommerce-new-offer.php:30
+#: public/includes/emails/woocommerce-new-counter-offer.php:80
+#: public/includes/emails/woocommerce-new-offer.php:62
 msgid "Company Name:"
 msgstr ""
 
@@ -1740,31 +2060,36 @@ msgstr ""
 msgid "Your offer will be processed as soon as possible."
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-counter-offer.php:13
+#: public/includes/emails/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:26
 msgid "New counter offer submitted on"
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-counter-offer.php:13
+#: public/includes/emails/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:26
 msgid "To manage this counter offer please use the following link:"
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-counter-offer.php:13
+#: public/includes/emails/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:26
 msgid "Manage Counter Offer"
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-offer.php:13
+#: public/includes/emails/woocommerce-new-offer.php:23
+#: public/includes/emails/woocommerce-new-offer.php:26
 msgid "New offer submitted on"
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-offer.php:13
+#: public/includes/emails/woocommerce-new-offer.php:23
+#: public/includes/emails/woocommerce-new-offer.php:26
 msgid "To manage this offer please use the following link:"
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-offer.php:13
+#: public/includes/emails/woocommerce-new-offer.php:28
 msgid "Decline Offer"
 msgstr ""
 
-#: public/includes/emails/woocommerce-new-offer.php:13
+#: public/includes/emails/woocommerce-new-offer.php:29
 msgid "Approve Offer"
 msgstr ""
 
@@ -1780,7 +2105,7 @@ msgstr ""
 msgid "Recent Offers"
 msgstr ""
 
-#: public/views/my-offers.php:70 public/views/my-offers.php:72
+#: public/views/my-offers.php:80 public/views/my-offers.php:86
 msgid "View Product"
 msgstr ""
 
@@ -1805,34 +2130,43 @@ msgid "Error:"
 msgstr ""
 
 #: public/views/public.php:29
-msgid "There was an error sending your offer, please try again. If this problem persists, please contact us."
+msgid ""
+"There was an error sending your offer, please try again. If this problem "
+"persists, please contact us."
 msgstr ""
 
-#: public/views/public.php:51
+#: public/views/public.php:108
 msgid "To make a counter offer please complete the form below:"
 msgstr ""
 
-#: public/views/public.php:64
+#: public/views/public.php:111
+msgid ""
+"Wait! Before you go, feel free to send us an offer. We may decide to go "
+"ahead and accept it!"
+msgstr ""
+
+#: public/views/public.php:114
 msgid "To make an offer please complete the form below:"
 msgstr ""
 
-#: public/views/public.php:141
+#: public/views/public.php:214
+msgid "Invalid Phone number"
+msgstr ""
+
+#: public/views/public.php:225
 msgid "Offer Notes (optional)"
 msgstr ""
 
-#: public/views/public.php:152
+#: public/views/public.php:264
 msgid "Submit Counter Offer"
 msgstr ""
 
-#: public/views/public.php:154
+#: public/views/public.php:266
 msgid "Submit Offer"
 msgstr ""
 
-#: public/views/public.php:163
+#: public/views/public.php:278
 msgid "Please wait..."
-msgstr ""
-#. Plugin Name of the plugin/theme
-msgid "Offers for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -1840,7 +2174,9 @@ msgid "http://www.angelleye.com/product/offers-for-woocommerce"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily."
+msgid ""
+"Accept offers for products on your website.  Respond with accept, deny, or "
+"counter-offer, and manage all active offers/counters easily."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -1851,14 +2187,3 @@ msgstr ""
 msgid "http://www.angelleye.com/"
 msgstr ""
 
-#: public/class-offers-for-woocommerce.php:2304
-msgid "Highest Current Offer"
-msgid_plural "Highest Current Offers"
-msgstr[0] ""
-msgstr[1] ""
-
-#: public/class-offers-for-woocommerce.php:2245
-msgid "offer is currently pending."
-msgid_plural "offers are currently pending."
-msgstr[0] ""
-msgstr[1] ""
