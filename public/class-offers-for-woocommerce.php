@@ -326,13 +326,13 @@ class Angelleye_Offers_For_Woocommerce {
                     $button = '<a href="' . $redirect_url . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button '.$button_class.'" style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.home_url(add_query_arg(array(),$wp->request));
-                    $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.'  ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
+                    $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="single_add_to_cart_button offers-for-woocommerce-make-offer-button-single-product button alt '.$button_class.'  '.$lightbox_class.'" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
                 }
             } else {
                 if($is_archive){
                     $button = '<a href="' . $permalink . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button '.$button_class.'" style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
-                    $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.' ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                    $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="single_add_to_cart_button offers-for-woocommerce-make-offer-button-single-product button alt '.$button_class.' '.$lightbox_class.'" style="' . $custom_styles_override . '">' . $button_title . '</button>';
                 }
             }            
             

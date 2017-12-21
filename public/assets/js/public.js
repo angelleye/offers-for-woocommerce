@@ -486,7 +486,7 @@
                     var targetTab = $(".tab_custom_ofwc_offer_tab");
                     $('html, body').animate({
                         scrollTop: $(targetTab).offset().top - '100'
-                    }, 'fast');
+                    }, 'fast');                    
                 }
             }
 
