@@ -1,437 +1,469 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Offers for WooCommerce 1.1.3\n"
-"POT-Creation-Date: 2015-05-29 13:58-0600\n"
-"PO-Revision-Date: 2015-07-08 17:58-0500\n"
-"Last-Translator: \n"
-"Language-Team: Angell EYE <service@angelleye.com>\n"
+"POT-Creation-Date: 2017-12-25 13:24+0000\n"
+"PO-Revision-Date: 2017-12-25 13:24+0000\n"
+"Last-Translator: admin <tejasm@itpathsolutions.co.in>\n"
+"Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Loco - https://localise.biz/\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: sv_SE\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
+"Language: sv-SE\n"
 "X-Poedit-SearchPath-0: .\n"
+"Report-Msgid-Bugs-To: "
 
-#: offers-for-woocommerce.php:65
-msgid "<strong>Error: </strong>Language translation file could not be loaded"
-msgstr "﻿<strong>Fel:</strong> Språköversättningsfilen kunde inte läsas in"
+#. Author of the plugin/theme
+msgid "Angell EYE"
+msgstr "Angell EYE"
 
-#: admin/class-offers-for-woocommerce-admin.php:377
-#: admin/class-offers-for-woocommerce-admin.php:444 admin/views/admin.php:19
-msgid "Manage Offers"
-msgstr "﻿Hantera bud"
+#. Author URI of the plugin/theme
+msgid "http://www.angelleye.com/"
+msgstr "http://www.angelleye.com/"
 
-#: admin/class-offers-for-woocommerce-admin.php:378
-msgid "WooCommerce Offer"
-msgstr "﻿WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:379
-msgid "Add New"
-msgstr "﻿Lägg till ny"
-
-#: admin/class-offers-for-woocommerce-admin.php:380
-msgid "Add New WooCommerce Offer"
-msgstr "﻿Lägg till nytt WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:381
-msgid "Manage"
-msgstr "﻿Hantera"
-
-#: admin/class-offers-for-woocommerce-admin.php:382
-msgid "Manage WooCommerce Offer"
-msgstr "﻿Hantera WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:383
-msgid "New WooCommerce Offer"
-msgstr "﻿Nytt WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:384
-msgid "View"
-msgstr "﻿Visa"
-
-#: admin/class-offers-for-woocommerce-admin.php:385
-msgid "View WooCommerce Offer"
-msgstr "﻿Visa WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:386
-msgid "Search WooCommerce Offers"
-msgstr "﻿Sök WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:387
-msgid "No WooCommerce Offers found"
-msgstr "﻿Inga WooCommerce bud hittades"
-
-#: admin/class-offers-for-woocommerce-admin.php:388
-msgid "No WooCommerce Offers found in Trash"
-msgstr "﻿Inga WooCommerce bud hittades i papperskorgen"
-
-#: admin/class-offers-for-woocommerce-admin.php:389
-msgid "Parent WooCommerce Offer"
-msgstr "﻿Överordnade WooCommerce bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:444
-msgid "Offers Settings"
-msgstr "﻿Bud inställningar"
-
-#: admin/class-offers-for-woocommerce-admin.php:478
+#: admin/class-offers-for-woocommerce-admin.php:440
+#: admin/class-offers-for-woocommerce-admin.php:587
 msgid "Offers"
 msgstr "﻿Bud"
 
-#: admin/class-offers-for-woocommerce-admin.php:511
+#: admin/class-offers-for-woocommerce-admin.php:468
+#: admin/class-offers-for-woocommerce-admin.php:543 admin/views/admin.php:19
+msgid "Manage Offers"
+msgstr "﻿Hantera bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:469
+msgid "WooCommerce Offer"
+msgstr "﻿WooCommerce bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:470
+msgid "Add New"
+msgstr "﻿Lägg till ny"
+
+#: admin/class-offers-for-woocommerce-admin.php:471
+msgid "Add New WooCommerce Offer"
+msgstr "﻿Lägg till nytt WooCommerce bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:472
+msgid "Manage"
+msgstr "﻿Hantera"
+
+#: admin/class-offers-for-woocommerce-admin.php:473
+msgid "Manage WooCommerce Offer"
+msgstr "﻿Hantera WooCommerce bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:474
+msgid "New WooCommerce Offer"
+msgstr "﻿Nytt WooCommerce bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:475
+msgid "View"
+msgstr "﻿Visa"
+
+#: admin/class-offers-for-woocommerce-admin.php:476
+msgid "View WooCommerce Offer"
+msgstr "﻿Visa WooCommerce bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:478
+msgid "No WooCommerce Offers found"
+msgstr "﻿Inga WooCommerce bud hittades"
+
+#: admin/class-offers-for-woocommerce-admin.php:479
+msgid "No WooCommerce Offers found in Trash"
+msgstr "﻿Inga WooCommerce bud hittades i papperskorgen"
+
+#: admin/class-offers-for-woocommerce-admin.php:480
+msgid "Parent WooCommerce Offer"
+msgstr "﻿Överordnade WooCommerce bud"
+
+#: admin/class-offers-for-woocommerce-admin.php:543
+msgid "Offers Settings"
+msgstr "﻿Bud inställningar"
+
+#: admin/class-offers-for-woocommerce-admin.php:642
+#: admin/class-offers-for-woocommerce-admin.php:3869
 msgid "Enable Offers?"
 msgstr "﻿Aktivera bud?"
 
-#: admin/class-offers-for-woocommerce-admin.php:511
+#: admin/class-offers-for-woocommerce-admin.php:642
 msgid ""
-"Enable this option to enable the 'Make Offer' buttons and form display in the "
-"shop."
+"Enable this option to enable the 'Make Offer' buttons and form display in "
+"the shop."
 msgstr ""
 "﻿Aktivera detta alternativ för att möjliggöra \"Ge bud\" visning av knappar "
 "och formulär i butiken."
 
-#: admin/class-offers-for-woocommerce-admin.php:543
-#: admin/class-offers-for-woocommerce-admin.php:546
+#: admin/class-offers-for-woocommerce-admin.php:645
+msgid "On Exit Only?"
+msgstr "Endast vid utgången?"
+
+#: admin/class-offers-for-woocommerce-admin.php:645
+msgid ""
+"Enable this option to display the 'Make Offer' form only when the user is "
+"about to exit the page."
+msgstr ""
+"Aktivera det här alternativet om du bara vill visa formuläret \"Erbjudande\" "
+"när användaren håller på att lämna sidan.\n"
+
+#: admin/class-offers-for-woocommerce-admin.php:648
+#: admin/class-offers-for-woocommerce-admin.php:3875
+msgid "Enable Auto Accept Offers?"
+msgstr ""
+"Aktivera automatisk godkännande erbjudanden?\n"
+
+#: admin/class-offers-for-woocommerce-admin.php:648
+msgid ""
+"Enable this option to automatically accept offers based on the percentage "
+"set."
+msgstr ""
+"Aktivera det här alternativet för att automatiskt acceptera erbjudanden "
+"baserat på procentuell uppsättning."
+
+#: admin/class-offers-for-woocommerce-admin.php:649
+#: admin/class-offers-for-woocommerce-admin.php:3878 admin/views/admin.php:164
+msgid "Auto Accept Percentage"
+msgstr "Bil Accepterad Procentandel"
+
+#: admin/class-offers-for-woocommerce-admin.php:649
+#: admin/class-offers-for-woocommerce-admin.php:653
+#: admin/class-offers-for-woocommerce-admin.php:3879
+#: admin/class-offers-for-woocommerce-admin.php:3889
+msgid "Enter Percentage"
+msgstr "Ange procentandel"
+
+#: admin/class-offers-for-woocommerce-admin.php:652
+#: admin/class-offers-for-woocommerce-admin.php:3884
+msgid "Enable Auto Decline Offers?"
+msgstr "Aktivera autofalla erbjudanden?"
+
+#: admin/class-offers-for-woocommerce-admin.php:652
+msgid ""
+"Enable this option to automatically decline offers based on the percentage "
+"set."
+msgstr ""
+"Aktivera det här alternativet för att automatiskt neka erbjudanden baserat "
+"på procentuell uppsättning."
+
+#: admin/class-offers-for-woocommerce-admin.php:653
+#: admin/class-offers-for-woocommerce-admin.php:3888 admin/views/admin.php:170
+msgid "Auto Decline Percentage"
+msgstr "Automatisk minskning av procentandel"
+
+#: admin/class-offers-for-woocommerce-admin.php:684
+#: admin/class-offers-for-woocommerce-admin.php:687
 msgid "Offer updated."
 msgstr "﻿Bud uppdaterat."
 
-#: admin/class-offers-for-woocommerce-admin.php:544
+#: admin/class-offers-for-woocommerce-admin.php:685
 msgid "Offer Details updated."
 msgstr "﻿Bud Detaljer uppdaterat."
 
-#: admin/class-offers-for-woocommerce-admin.php:545
+#: admin/class-offers-for-woocommerce-admin.php:686
 msgid "Offer Details deleted."
 msgstr "﻿Bud Detaljer borttagna."
 
-#: admin/class-offers-for-woocommerce-admin.php:548
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:689
 msgid "Offer restored to revision from %s"
 msgstr "﻿Bud återställt till revidering från %s"
 
-#: admin/class-offers-for-woocommerce-admin.php:549
+#: admin/class-offers-for-woocommerce-admin.php:690
 msgid "Offer set as Pending Status."
 msgstr "﻿Bud satt som väntande Status."
 
-#: admin/class-offers-for-woocommerce-admin.php:550
+#: admin/class-offers-for-woocommerce-admin.php:691
 msgid "Offer saved."
 msgstr "﻿Bud sparat."
 
-#: admin/class-offers-for-woocommerce-admin.php:551
+#: admin/class-offers-for-woocommerce-admin.php:692
 msgid "Offer submitted."
 msgstr "﻿Bud skickat."
 
-#: admin/class-offers-for-woocommerce-admin.php:553
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:694
 msgid "Offer scheduled for: <strong>%1$s</strong>."
 msgstr "﻿Bud planerad till: <strong>%1$s</strong>."
 
-#: admin/class-offers-for-woocommerce-admin.php:555
+#: admin/class-offers-for-woocommerce-admin.php:696
 msgid "M j, Y @ G:i"
 msgstr "﻿Y M j@ G:i"
 
-#: admin/class-offers-for-woocommerce-admin.php:557
+#: admin/class-offers-for-woocommerce-admin.php:698
 msgid "Offer draft updated."
 msgstr "﻿Budförslag uppdaterat."
 
-#: admin/class-offers-for-woocommerce-admin.php:558
+#: admin/class-offers-for-woocommerce-admin.php:699
 msgid "Offer note added."
 msgstr "﻿Bud anteckning tillagd."
 
-#: admin/class-offers-for-woocommerce-admin.php:638
+#: admin/class-offers-for-woocommerce-admin.php:770
 msgid "Name"
 msgstr "﻿Namn"
 
-#: admin/class-offers-for-woocommerce-admin.php:639
+#: admin/class-offers-for-woocommerce-admin.php:772
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:27
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:34
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:29
+#: admin/includes/emails/plain/woocommerce-offer-note.php:24
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:27
+#: admin/includes/emails/woocommerce-offer-accepted.php:26
+#: admin/includes/emails/woocommerce-offer-countered.php:31
+#: admin/includes/emails/woocommerce-offer-declined.php:29
+#: admin/includes/emails/woocommerce-offer-note.php:20
+#: admin/includes/emails/woocommerce-offer-on-hold.php:21
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:21
+#: public/includes/emails/plain/woocommerce-new-offer.php:21
+#: public/includes/emails/plain/woocommerce-offer-received.php:21
+#: public/includes/emails/woocommerce-new-counter-offer.php:35
+#: public/includes/emails/woocommerce-new-offer.php:38
+#: public/includes/emails/woocommerce-offer-received.php:21
+#: public/views/my-offers.php:7
+msgid "Product"
+msgstr "﻿Produkt"
+
+#: admin/class-offers-for-woocommerce-admin.php:773
+#: public/views/my-offers.php:8
 msgid "Amount"
 msgstr "﻿Antal/Mängd"
 
-#: admin/class-offers-for-woocommerce-admin.php:640
-#: admin/views/meta-panel-summary.php:144
+#: admin/class-offers-for-woocommerce-admin.php:774
+#: admin/views/meta-panel-summary.php:225 public/views/my-offers.php:9
 msgid "Price Per"
 msgstr "﻿Pris per artikel"
 
-#: admin/class-offers-for-woocommerce-admin.php:641
-#: admin/class-offers-for-woocommerce-admin.php:2018
-#: admin/includes/emails/woocommerce-offer-accepted.php:27
-#: admin/includes/emails/woocommerce-offer-countered.php:30
-#: admin/includes/emails/woocommerce-offer-declined.php:23
-#: admin/includes/emails/woocommerce-offer-note.php:21
-#: admin/includes/emails/woocommerce-offer-on-hold.php:22
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:28
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:35
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:23
-#: admin/includes/emails/plain/woocommerce-offer-note.php:25
-#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:28
-#: admin/views/meta-panel-summary.php:136
-#: public/includes/emails/woocommerce-new-counter-offer.php:21
-#: public/includes/emails/woocommerce-new-offer.php:21
-#: public/includes/emails/woocommerce-offer-received.php:21
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:22
-#: public/includes/emails/plain/woocommerce-new-offer.php:22
-#: public/includes/emails/plain/woocommerce-offer-received.php:22
-#: public/views/public.php:77
+#: admin/class-offers-for-woocommerce-admin.php:775
+#: admin/class-offers-for-woocommerce-admin.php:2236
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:29
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:36
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:31
+#: admin/includes/emails/plain/woocommerce-offer-note.php:26
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:29
+#: admin/includes/emails/woocommerce-offer-accepted.php:28
+#: admin/includes/emails/woocommerce-offer-countered.php:33
+#: admin/includes/emails/woocommerce-offer-declined.php:31
+#: admin/includes/emails/woocommerce-offer-note.php:22
+#: admin/includes/emails/woocommerce-offer-on-hold.php:23
+#: admin/views/meta-panel-summary.php:217
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/plain/woocommerce-new-offer.php:23
+#: public/includes/emails/plain/woocommerce-offer-received.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:37
+#: public/includes/emails/woocommerce-new-offer.php:40
+#: public/includes/emails/woocommerce-offer-received.php:23
+#: public/views/my-offers.php:10 public/views/public.php:145
 msgid "Quantity"
 msgstr "﻿Antal"
 
-#: admin/class-offers-for-woocommerce-admin.php:846
-#: admin/class-offers-for-woocommerce-admin.php:856
-#: admin/class-offers-for-woocommerce-admin.php:860
-#: admin/class-offers-for-woocommerce-admin.php:864
-#: public/includes/emails/woocommerce-new-offer.php:13
+#: admin/class-offers-for-woocommerce-admin.php:814
+#: public/views/my-offers.php:90
+msgid "Not Found"
+msgstr "Hittades inte"
+
+#: admin/class-offers-for-woocommerce-admin.php:1017
+#: admin/class-offers-for-woocommerce-admin.php:1027
+#: admin/class-offers-for-woocommerce-admin.php:1031
+#: admin/class-offers-for-woocommerce-admin.php:1035
+#: public/includes/emails/woocommerce-new-offer.php:23
+#: public/includes/emails/woocommerce-new-offer.php:27
 msgid "Manage Offer"
 msgstr "﻿Hantera erbjudande"
 
-#: admin/class-offers-for-woocommerce-admin.php:847
-#: admin/class-offers-for-woocommerce-admin.php:852
-#: admin/class-offers-for-woocommerce-admin.php:877
+#: admin/class-offers-for-woocommerce-admin.php:1018
+#: admin/class-offers-for-woocommerce-admin.php:1023
+#: admin/class-offers-for-woocommerce-admin.php:1048
 msgid "Set Offer Status to Declined"
 msgstr "Ange bud Status till avböjt"
 
-#: admin/class-offers-for-woocommerce-admin.php:847
-#: admin/class-offers-for-woocommerce-admin.php:852
-#: admin/class-offers-for-woocommerce-admin.php:877
+#: admin/class-offers-for-woocommerce-admin.php:1018
+#: admin/class-offers-for-woocommerce-admin.php:1023
+#: admin/class-offers-for-woocommerce-admin.php:1048
+#: admin/class-offers-for-woocommerce-admin.php:3939
 msgid "Decline"
 msgstr "﻿Avböj"
 
-#: admin/class-offers-for-woocommerce-admin.php:851
+#: admin/class-offers-for-woocommerce-admin.php:1022
 msgid "Manage&nbsp;Offer"
 msgstr "﻿Hantera&nbsp;Bud"
 
-#: admin/class-offers-for-woocommerce-admin.php:856
-#: admin/class-offers-for-woocommerce-admin.php:860
-#: admin/class-offers-for-woocommerce-admin.php:864
-#: admin/class-offers-for-woocommerce-admin.php:875
-#: admin/class-offers-for-woocommerce-admin.php:1173
+#: admin/class-offers-for-woocommerce-admin.php:1027
+#: admin/class-offers-for-woocommerce-admin.php:1031
+#: admin/class-offers-for-woocommerce-admin.php:1035
+#: admin/class-offers-for-woocommerce-admin.php:1046
+#: admin/class-offers-for-woocommerce-admin.php:1346
 msgid "Offer Details"
 msgstr "﻿Detaljer"
 
-#: admin/class-offers-for-woocommerce-admin.php:875 public/views/public.php:50
+#: admin/class-offers-for-woocommerce-admin.php:1046
+#: public/views/public.php:106
 msgid "Make Counter Offer"
 msgstr "Ge Motbud"
 
-#: admin/class-offers-for-woocommerce-admin.php:876
+#: admin/class-offers-for-woocommerce-admin.php:1047
 msgid "Set Offer Status to Accepted"
 msgstr "﻿Ange Bud Status till godkänd"
 
-#: admin/class-offers-for-woocommerce-admin.php:876
+#: admin/class-offers-for-woocommerce-admin.php:1047
 msgid "Accept"
 msgstr "﻿Acceptera"
 
-#: admin/class-offers-for-woocommerce-admin.php:890
-#: admin/includes/class-wc-accepted-offer-email.php:38
-#: admin/includes/class-wc-accepted-offer-email.php:39
-#: admin/views/meta-panel-summary.php:183
-msgid "Accepted Offer"
-msgstr "Budet Accepterat"
-
-#: admin/class-offers-for-woocommerce-admin.php:891
-#, php-format
-msgid "Accepted (%s)"
-msgstr "﻿Accepterat (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:907
-#: admin/includes/class-wc-countered-offer-email.php:38
-#: admin/includes/class-wc-countered-offer-email.php:39
-#: admin/views/meta-panel-summary.php:184
-msgid "Countered Offer"
-msgstr "Motbjudet Bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:908
-#, php-format
-msgid "Countered (%s)"
-msgstr "﻿Motbjudet (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:924
-#: admin/class-offers-for-woocommerce-admin.php:1036
-#: admin/views/meta-panel-summary.php:187
-msgid "On Hold"
-msgstr "Väntande"
-
-#: admin/class-offers-for-woocommerce-admin.php:925
-#, php-format
-msgid "On Hold (%s)"
-msgstr "Väntande (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:941
-#: admin/class-offers-for-woocommerce-admin.php:1039
-msgid "Expired"
-msgstr "﻿Utgången"
-
-#: admin/class-offers-for-woocommerce-admin.php:942
-#, php-format
-msgid "Expired (%s)"
-msgstr "﻿Utgången (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:942
-#, php-format
-msgid "Expired(%s)"
-msgstr "﻿Utgången(%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:958
-msgid "Buyer Countered Offer"
-msgstr "﻿Köparen gjorde Motbud"
-
-#: admin/class-offers-for-woocommerce-admin.php:959
-#, php-format
-msgid "Buyer Countered (%s)"
-msgstr "﻿Köparen gjorde Motbud (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:975
-#: admin/includes/class-wc-declined-offer-email.php:38
-#: admin/includes/class-wc-declined-offer-email.php:39
-#: admin/views/meta-panel-summary.php:185
-msgid "Declined Offer"
-msgstr "﻿Avböjt Bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:976
-#, php-format
-msgid "Declined (%s)"
-msgstr "﻿Avböjt (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:992
-#: admin/views/meta-panel-summary.php:186
-#: admin/views/meta-panel-summary.php:217
-msgid "Completed Offer"
-msgstr "Slutfört Bud"
-
-#: admin/class-offers-for-woocommerce-admin.php:993
-#, php-format
-msgid "Completed (%s)"
-msgstr "﻿Slutfört (%s)"
-
-#: admin/class-offers-for-woocommerce-admin.php:1015
+#: admin/class-offers-for-woocommerce-admin.php:1186
 msgid "Offer Status: Accepted"
 msgstr "﻿Bud Status: Accepterat"
 
-#: admin/class-offers-for-woocommerce-admin.php:1015
-#: admin/class-offers-for-woocommerce-admin.php:2550
+#: admin/class-offers-for-woocommerce-admin.php:1186
+#: admin/class-offers-for-woocommerce-admin.php:2835
+#: public/class-offers-for-woocommerce.php:1887 public/views/my-offers.php:129
 msgid "Accepted"
 msgstr "﻿Accepterat"
 
-#: admin/class-offers-for-woocommerce-admin.php:1018
+#: admin/class-offers-for-woocommerce-admin.php:1189
 msgid "Offer Status: Countered"
 msgstr "﻿Bud Status: Motbjudet"
 
-#: admin/class-offers-for-woocommerce-admin.php:1018
+#: admin/class-offers-for-woocommerce-admin.php:1189
+#: public/views/my-offers.php:126
 msgid "Countered"
 msgstr "Motbud gjort"
 
-#: admin/class-offers-for-woocommerce-admin.php:1021
+#: admin/class-offers-for-woocommerce-admin.php:1192
 msgid "Offer Status: Buyer Countered"
 msgstr "﻿Bud Status: Köparen gav motbud"
 
-#: admin/class-offers-for-woocommerce-admin.php:1021
+#: admin/class-offers-for-woocommerce-admin.php:1192
+#: public/views/my-offers.php:135
 msgid "Buyer Countered"
 msgstr "﻿Köparen gjorde Motbud"
 
-#: admin/class-offers-for-woocommerce-admin.php:1024
+#: admin/class-offers-for-woocommerce-admin.php:1195
 msgid "Offer Status: Pending"
 msgstr "﻿Bud Status: Väntande"
 
-#: admin/class-offers-for-woocommerce-admin.php:1024
+#: admin/class-offers-for-woocommerce-admin.php:1195
+#: public/views/my-offers.php:123
 msgid "Pending"
 msgstr "﻿Väntande"
 
-#: admin/class-offers-for-woocommerce-admin.php:1027
+#: admin/class-offers-for-woocommerce-admin.php:1198
 msgid "Offer Status: Trashed"
 msgstr "﻿Bud Status: Slängt"
 
-#: admin/class-offers-for-woocommerce-admin.php:1027
+#: admin/class-offers-for-woocommerce-admin.php:1198
+#: public/views/my-offers.php:138
 msgid "Trashed"
 msgstr "Slängt"
 
-#: admin/class-offers-for-woocommerce-admin.php:1030
+#: admin/class-offers-for-woocommerce-admin.php:1201
 msgid "Offer Status: Completed"
 msgstr "﻿Bud Status: Avslutat"
 
-#: admin/class-offers-for-woocommerce-admin.php:1030
-#: public/class-offers-for-woocommerce.php:1399
+#: admin/class-offers-for-woocommerce-admin.php:1201
+#: admin/class-offers-for-woocommerce-admin.php:4433
+#: public/views/my-offers.php:141
 msgid "Completed"
 msgstr "﻿Färdigbehandlad"
 
-#: admin/class-offers-for-woocommerce-admin.php:1033
+#: admin/class-offers-for-woocommerce-admin.php:1204
 msgid "Offer Status: Declined"
 msgstr "﻿Bud Status: Avböjt"
 
-#: admin/class-offers-for-woocommerce-admin.php:1033
-#: admin/class-offers-for-woocommerce-admin.php:2707
+#: admin/class-offers-for-woocommerce-admin.php:1204
+#: admin/class-offers-for-woocommerce-admin.php:2840
+#: admin/class-offers-for-woocommerce-admin.php:4193
+#: public/class-offers-for-woocommerce.php:1892 public/views/my-offers.php:132
 msgid "Declined"
 msgstr "Avböjt"
 
-#: admin/class-offers-for-woocommerce-admin.php:1036
+#: admin/class-offers-for-woocommerce-admin.php:1207
 msgid "Offer Status: On Hold"
 msgstr "﻿Bud Status: Väntande"
 
-#: admin/class-offers-for-woocommerce-admin.php:1039
+#: admin/class-offers-for-woocommerce-admin.php:1207
+#: admin/views/meta-panel-summary.php:283 public/views/my-offers.php:144
+msgid "On Hold"
+msgstr "Väntande"
+
+#: admin/class-offers-for-woocommerce-admin.php:1210
 msgid "Offer Status: Expired"
 msgstr "﻿Bud Status: Utgått"
 
-#: admin/class-offers-for-woocommerce-admin.php:1043
+#: admin/class-offers-for-woocommerce-admin.php:1210
+#: public/views/my-offers.php:147
+msgid "Expired"
+msgstr "﻿Utgången"
+
+#: admin/class-offers-for-woocommerce-admin.php:1214
 msgid "Offer Status:"
 msgstr "Bud Status:"
 
-#: admin/class-offers-for-woocommerce-admin.php:1135
+#: admin/class-offers-for-woocommerce-admin.php:1308
 msgid "Offer Activity Log"
 msgstr "Bud Aktiviteslogg"
 
-#: admin/class-offers-for-woocommerce-admin.php:1263
+#: admin/class-offers-for-woocommerce-admin.php:1352
+#: admin/views/meta-panel-summary.php:166
+msgid "Offer History"
+msgstr "Erbjudande historia"
+
+#: admin/class-offers-for-woocommerce-admin.php:1473
 msgid "Product stock is lower than offer quantity!"
 msgstr "﻿Produktlager är lägre än budets mängd!"
 
-#: admin/class-offers-for-woocommerce-admin.php:1284
+#: admin/class-offers-for-woocommerce-admin.php:1495
+#: admin/class-offers-for-woocommerce-admin.php:1502
 msgid "Order not found; may have been deleted"
 msgstr "﻿Beställningen hittades inte; kan ha tagits bort"
 
-#: admin/class-offers-for-woocommerce-admin.php:1358
+#: admin/class-offers-for-woocommerce-admin.php:1560
+msgid "Product not found for this offer."
+msgstr "Produkten hittades inte för detta erbjudande."
+
+#: admin/class-offers-for-woocommerce-admin.php:1583
 msgid "Add Offer Note"
 msgstr "﻿Lägg till notering till bud"
 
-#: admin/class-offers-for-woocommerce-admin.php:1499
-#: admin/class-offers-for-woocommerce-admin.php:1593
-#: admin/class-offers-for-woocommerce-admin.php:1687
-#: admin/class-offers-for-woocommerce-admin.php:1781
-#: admin/class-offers-for-woocommerce-admin.php:2612
-#: admin/class-offers-for-woocommerce-admin.php:2766
-#: admin/class-offers-for-woocommerce-admin.php:2943
-#: public/class-offers-for-woocommerce.php:951
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:1793
+#: admin/class-offers-for-woocommerce-admin.php:2898
+#: admin/class-offers-for-woocommerce-admin.php:3096
+#: admin/class-offers-for-woocommerce-admin.php:4238
+#: public/class-offers-for-woocommerce.php:1356
+#: public/class-offers-for-woocommerce.php:1948
 msgid "%s &ndash; %s%s"
-msgstr ""
+msgstr "%s &ndash; %s%s"
 
-#: admin/class-offers-for-woocommerce-admin.php:1814
-#: admin/class-offers-for-woocommerce-admin.php:2644
-#: public/class-offers-for-woocommerce.php:1399
+#: admin/class-offers-for-woocommerce-admin.php:1824
+#: admin/class-offers-for-woocommerce-admin.php:2912
+#: admin/class-offers-for-woocommerce-admin.php:4433
+#: public/class-offers-for-woocommerce.php:1960
 msgid "Updated - Status:"
 msgstr "﻿Uppdaterad - Status:"
 
-#: admin/class-offers-for-woocommerce-admin.php:1905
+#: admin/class-offers-for-woocommerce-admin.php:1959
 msgid "Show on Home Page"
 msgstr "﻿Visa på startsidan"
 
-#: admin/class-offers-for-woocommerce-admin.php:1913
+#: admin/class-offers-for-woocommerce-admin.php:1967
 msgid ""
 "Check this option to display offer buttons for products on your home page."
 msgstr ""
-"﻿Markera detta alternativ för att visa budknappar för produkter på din hemsida."
+"﻿Markera detta alternativ för att visa budknappar för produkter på din "
+"hemsida."
 
-#: admin/class-offers-for-woocommerce-admin.php:1923
+#: admin/class-offers-for-woocommerce-admin.php:1977
 msgid "Show on Shop Page"
 msgstr "﻿Visa på Butiken Sida"
 
-#: admin/class-offers-for-woocommerce-admin.php:1931
+#: admin/class-offers-for-woocommerce-admin.php:1985
 msgid ""
 "Check this option to display offer buttons for products on your shop page."
 msgstr ""
 "﻿Markera detta alternativ för att visa budknappar för produkter på din shop "
 "sida."
 
-#: admin/class-offers-for-woocommerce-admin.php:1941
+#: admin/class-offers-for-woocommerce-admin.php:1995
 msgid "Enable Offers by Default"
 msgstr "﻿Aktivera Bud som Standard"
 
-#: admin/class-offers-for-woocommerce-admin.php:1949
+#: admin/class-offers-for-woocommerce-admin.php:2003
 msgid ""
 "Check this option to automatically enable offers on all new products by "
 "default."
@@ -439,11 +471,11 @@ msgstr ""
 "﻿Markera detta alternativ för att automatiskt aktivera bud på alla nya "
 "produkter som standard."
 
-#: admin/class-offers-for-woocommerce-admin.php:1959
+#: admin/class-offers-for-woocommerce-admin.php:2013
 msgid "Limit Offer Quantity at Product Stock Quantity"
 msgstr "﻿Sätt gräns för Budets kvantitet vid Produktlagrets kvantitet"
 
-#: admin/class-offers-for-woocommerce-admin.php:1967
+#: admin/class-offers-for-woocommerce-admin.php:2021
 msgid ""
 "Check this option to limit offer quantity at stock quantity on products not "
 "allowing backorders."
@@ -451,11 +483,126 @@ msgstr ""
 "﻿Markera detta alternativ för att begränsa erbjudandets kvantitet på "
 "lagerkvantiteten på produkter som inte tillåter restorder."
 
-#: admin/class-offers-for-woocommerce-admin.php:1987
+#: admin/class-offers-for-woocommerce-admin.php:2031
+msgid "Default Expiration Date"
+msgstr "Standard Utgångsdatum"
+
+#: admin/class-offers-for-woocommerce-admin.php:2039
+msgid ""
+"The number entered here will be used to automatically set the expiration "
+"date that many days in advance while accepting or countering an offer."
+msgstr ""
+"Numret som anges här kommer att användas för att automatiskt ange "
+"utgångsdatum som många dagar i förväg medan du accepterar eller motverkar "
+"ett erbjudande."
+
+#: admin/class-offers-for-woocommerce-admin.php:2049
+msgid "Require Log In"
+msgstr "Kräver Logga in"
+
+#: admin/class-offers-for-woocommerce-admin.php:2057
+msgid ""
+"Check this option to require users to login in order to submit an offer."
+msgstr ""
+"Markera det här alternativet för att kräva att användarna loggar in för att "
+"kunna lämna in ett erbjudande.\n"
+
+#: admin/class-offers-for-woocommerce-admin.php:2067
+msgid "Hide Offers Until Logged In"
+msgstr "Dölj erbjudanden tills inloggad"
+
+#: admin/class-offers-for-woocommerce-admin.php:2075
+msgid ""
+"Check this option to completely hide the offer buttons unless the user is "
+"logged in."
+msgstr ""
+"Markera det här alternativet för att helt gömma erbjudandensknapparna om "
+"inte användaren är inloggad."
+
+#: admin/class-offers-for-woocommerce-admin.php:2093
+msgid "Enable Offers for Only Specific User Roles"
+msgstr "Aktivera erbjudanden för endast specifika användarroller"
+
+#: admin/class-offers-for-woocommerce-admin.php:2101
+msgid ""
+"Select the roles you want offers enabled for. Leave blank for all roles "
+"enabled."
+msgstr ""
+"Välj de roller du vill ha erbjudanden aktiverade för. Lämna tomma för alla "
+"roller aktiverade.\n"
+
+#: admin/class-offers-for-woocommerce-admin.php:2116
+msgid "Disable Coupons"
+msgstr "Inaktivera kuponger"
+
+#: admin/class-offers-for-woocommerce-admin.php:2124
+msgid ""
+"Check this option to disable coupons when checking out with an accepted "
+"offer included in the shopping cart."
+msgstr ""
+"Markera det här alternativet för att inaktivera kuponger när du checkar ut "
+"med ett godkänt erbjudande som ingår i kundvagnen."
+
+#: admin/class-offers-for-woocommerce-admin.php:2130
+msgid "Enable Anonymous Communication"
+msgstr "Aktivera anonym kommunikation"
+
+#: admin/class-offers-for-woocommerce-admin.php:2138
+msgid ""
+"Check this option to hide the contact information for potential buyers while "
+"negotiation is going on.  This can be useful when working with vendors who "
+"would be paying you a commission."
+msgstr ""
+"Markera det här alternativet för att dölja kontaktinformationen för "
+"potentiella köpare när förhandlingar pågår. Detta kan vara användbart när du "
+"arbetar med leverantörer som skulle betala dig en provision."
+
+#: admin/class-offers-for-woocommerce-admin.php:2144
+msgid "Show Pending Offer Details to Buyers"
+msgstr "Visa väntande erbjudandensdetaljer till köpare"
+
+#: admin/class-offers-for-woocommerce-admin.php:2152
+msgid "Check this option to display pending offer(s) on front end."
+msgstr ""
+"Markera det här alternativet för att visa väntande bud (er) på framsidan."
+
+#: admin/class-offers-for-woocommerce-admin.php:2159
+msgid "Display Highest Offer"
+msgstr "Visa högsta erbjudandet"
+
+#: admin/class-offers-for-woocommerce-admin.php:2167
+msgid ""
+"Check this option to display the highest current offer on product page for "
+"potential buyers to see."
+msgstr ""
+"Markera det här alternativet för att visa det högst aktuella erbjudandet på "
+"produktsidan för potentiella köpare att se."
+
+#: admin/class-offers-for-woocommerce-admin.php:2173
+msgid "Disable Admin Email on Auto Declined Offers"
+msgstr "Inaktivera administratörs e-post på automatiskt avvisade erbjudanden"
+
+#: admin/class-offers-for-woocommerce-admin.php:2181
+msgid ""
+"Disable the email notification for the admin user when offers are "
+"automatically declined."
+msgstr ""
+"Inaktivera e-postmeddelandet för administratörsanvändaren när erbjudanden "
+"avvisas automatiskt."
+
+#: admin/class-offers-for-woocommerce-admin.php:2187
+msgid "Disable for Sale Items"
+msgstr "Inaktivera för försäljningsobjekt"
+
+#: admin/class-offers-for-woocommerce-admin.php:2195
+msgid "Disable the \"Make Offer\" button for products that are on sale."
+msgstr "Inaktivera knappen \"Erbjudanden\" för produkter som säljs."
+
+#: admin/class-offers-for-woocommerce-admin.php:2214
 msgid "Form Display Type"
 msgstr "﻿Formulär Displaytyp"
 
-#: admin/class-offers-for-woocommerce-admin.php:1995
+#: admin/class-offers-for-woocommerce-admin.php:2222
 msgid ""
 "Depending on your theme, you may wish to display the offer form on a tab "
 "within the product page or in a lightbox window on top of the product page."
@@ -463,202 +610,221 @@ msgstr ""
 "﻿Beroende på ditt tema så kanske du vill visa budformuläret på en flik inom "
 "produktsidan eller i ett lightbox-fönster på toppen av produktsidan."
 
-#: admin/class-offers-for-woocommerce-admin.php:1997
+#: admin/class-offers-for-woocommerce-admin.php:2224
 msgid "Product Tabs (default display)"
 msgstr "﻿Produktflikar (standardfönstret)"
 
-#: admin/class-offers-for-woocommerce-admin.php:1998
+#: admin/class-offers-for-woocommerce-admin.php:2225
 msgid "Lightbox"
 msgstr "﻿Lightbox"
 
-#: admin/class-offers-for-woocommerce-admin.php:2008
-msgid "Form Fields"
-msgstr "﻿Formulärfält"
-
-#: admin/class-offers-for-woocommerce-admin.php:2016
-msgid ""
-"Tick the checkbox of the form fields you want to display on the offer form. "
-"Quantity, Price Each, Your Name, Your Email Address are required fields by "
-"default."
-msgstr ""
-"Markera rutan för formulärfälten som ska visas i formulärets erbjudande. "
-"Kvantitet, Pris per styck, ditt namn, din e-postadress är obligatoriska fält "
-"som standard."
-
-#: admin/class-offers-for-woocommerce-admin.php:2019 public/views/public.php:82
+#: admin/class-offers-for-woocommerce-admin.php:2237
+#: public/views/public.php:150
 msgid "Price Each"
 msgstr "﻿Pris per styck"
 
-#: admin/class-offers-for-woocommerce-admin.php:2020
-#: public/views/public.php:103
+#: admin/class-offers-for-woocommerce-admin.php:2238
+#: public/views/public.php:165
 msgid "Your Name"
 msgstr "﻿Ditt namn"
 
-#: admin/class-offers-for-woocommerce-admin.php:2021
-#: public/views/public.php:123
+#: admin/class-offers-for-woocommerce-admin.php:2239
+#: public/views/public.php:174
 msgid "Your Email Address"
 msgstr "﻿Din E-postadress"
 
-#: admin/class-offers-for-woocommerce-admin.php:2022 public/views/public.php:93
-msgid "Total Offer Amount"
-msgstr "﻿Totalt Bud Belopp"
-
-#: admin/class-offers-for-woocommerce-admin.php:2023
-#: public/views/public.php:108
+#: admin/class-offers-for-woocommerce-admin.php:2240
+#: public/views/public.php:184
 msgid "Company Name"
 msgstr "﻿Företagsnamn"
 
-#: admin/class-offers-for-woocommerce-admin.php:2024
-#: public/views/public.php:116
+#: admin/class-offers-for-woocommerce-admin.php:2241
+#: public/views/public.php:204
 msgid "Phone Number"
 msgstr "﻿Telefonnummer"
 
-#: admin/class-offers-for-woocommerce-admin.php:2025
+#: admin/class-offers-for-woocommerce-admin.php:2242
 msgid "Offer Notes"
 msgstr "﻿Anteckningar"
 
-#: admin/class-offers-for-woocommerce-admin.php:2036
+#: admin/class-offers-for-woocommerce-admin.php:2243
+#: public/views/public.php:248
+msgid "Total Offer Amount"
+msgstr "﻿Totalt Bud Belopp"
+
+#: admin/class-offers-for-woocommerce-admin.php:2247
+msgid "Form Fields"
+msgstr "﻿Formulärfält"
+
+#: admin/class-offers-for-woocommerce-admin.php:2255
+msgid ""
+"Check the boxes of the form fields you want to display on the offer form. "
+"Quantity, Price Each, Your Name, and Your Email Address are forcefully "
+"required fields, while the remaining fields are optionally required via "
+"checkbox.<br />  You may also drag and drop fields to re-order the way they "
+"are displayed on the offer form."
+msgstr ""
+"Markera rutorna i formulärfälten som du vill visa på formuläret. Kvantitet, "
+"pris Var och en, ditt namn och din e-postadress är obligatoriskt "
+"obligatoriska fält, medan de övriga fälten eventuellt krävs via kryssrutan. "
+"<br /> Du kan också dra och släppa fält för att ordna hur de visas på "
+"erbjudandet form."
+
+#: admin/class-offers-for-woocommerce-admin.php:2266
 msgid "Button Position"
 msgstr "Knapp Placering"
 
-#: admin/class-offers-for-woocommerce-admin.php:2044
+#: admin/class-offers-for-woocommerce-admin.php:2274
 msgid ""
 "Use this setting to adjust the location of the 'Make Offer' button on your "
 "product detail page."
 msgstr ""
-"﻿Använd den här inställningen för att justera placeringen av knappen \"Ge ett "
-"Bud\" på din produktinformationssida."
+"﻿Använd den här inställningen för att justera placeringen av knappen \"Ge "
+"ett Bud\" på din produktinformationssida."
 
-#: admin/class-offers-for-woocommerce-admin.php:2046
+#: admin/class-offers-for-woocommerce-admin.php:2276
 msgid "After add to cart button (default display)"
 msgstr "﻿Efter Lägg i varukorg knappen (standardfönstret)"
 
-#: admin/class-offers-for-woocommerce-admin.php:2047
+#: admin/class-offers-for-woocommerce-admin.php:2277
 msgid "Before add to cart button"
 msgstr "﻿Innan Lägg i varukorg knappen"
 
-#: admin/class-offers-for-woocommerce-admin.php:2048
+#: admin/class-offers-for-woocommerce-admin.php:2278
 msgid "To the right of add to cart button"
 msgstr "﻿Till höger om Lägg i varukorg knappen"
 
-#: admin/class-offers-for-woocommerce-admin.php:2049
+#: admin/class-offers-for-woocommerce-admin.php:2279
 msgid "After product price"
 msgstr "﻿Efter produktens pris"
 
-#: admin/class-offers-for-woocommerce-admin.php:2050
+#: admin/class-offers-for-woocommerce-admin.php:2280
 msgid "After product tabs"
 msgstr "﻿Efter produkt flikar"
 
-#: admin/class-offers-for-woocommerce-admin.php:2060
+#: admin/class-offers-for-woocommerce-admin.php:2290
+msgid "Button Class"
+msgstr "Knapp klass"
+
+#: admin/class-offers-for-woocommerce-admin.php:2298
+msgid "Set a custom CSS class name for the offer button."
+msgstr "Ange ett anpassat CSS-klassnamn för erbjudande-knappen."
+
+#: admin/class-offers-for-woocommerce-admin.php:2308
 msgid "Button Text"
 msgstr "﻿Knapptext"
 
-#: admin/class-offers-for-woocommerce-admin.php:2068
+#: admin/class-offers-for-woocommerce-admin.php:2316
 msgid "Set the text you would like to be displayed in the offer button."
 msgstr "﻿Ange den text du vill ska visas i budknappen."
 
-#: admin/class-offers-for-woocommerce-admin.php:2078
+#: admin/class-offers-for-woocommerce-admin.php:2326
 msgid "Button Text Color"
 msgstr "﻿Textfärg på knapp"
 
-#: admin/class-offers-for-woocommerce-admin.php:2086
+#: admin/class-offers-for-woocommerce-admin.php:2334
 msgid ""
 "Use the color-picker to choose the font color for the text on your offer "
 "buttons."
 msgstr "﻿Använd färgväljaren för att välja färg för texten på dina budknappar."
 
-#: admin/class-offers-for-woocommerce-admin.php:2096
+#: admin/class-offers-for-woocommerce-admin.php:2344
 msgid "Button Color"
 msgstr "﻿Färg på knapp"
 
-#: admin/class-offers-for-woocommerce-admin.php:2104
+#: admin/class-offers-for-woocommerce-admin.php:2352
 msgid ""
 "Use the color-picker to choose the background color for your offer buttons."
 msgstr "﻿Använd färgväljaren för att välja bakgrundsfärg för dina budknappar."
 
-#: admin/class-offers-for-woocommerce-admin.php:2134
+#: admin/class-offers-for-woocommerce-admin.php:2375
 msgid ""
-"Complete the form below and click Save Changes button to update your settings."
+"Complete the form below and click Save Changes button to update your "
+"settings."
 msgstr ""
-"﻿Fyll i formuläret nedan och klicka på Spara Ändringar för att uppdatera dina "
-"inställningar."
+"﻿Fyll i formuläret nedan och klicka på Spara Ändringar för att uppdatera "
+"dina inställningar."
 
-#: admin/class-offers-for-woocommerce-admin.php:2397
+#: admin/class-offers-for-woocommerce-admin.php:2691
 msgid "Offers for WooCommerce - Settings"
 msgstr "﻿Bud för WooCommerce - Inställningar"
 
-#: admin/class-offers-for-woocommerce-admin.php:2398
+#: admin/class-offers-for-woocommerce-admin.php:2692
 msgid "Offers for WooCommerce"
 msgstr "﻿Bud för WooCommerce"
 
-#: admin/class-offers-for-woocommerce-admin.php:2446
+#: admin/class-offers-for-woocommerce-admin.php:2740
 msgid "Configure"
 msgstr "﻿Konfigurera"
 
-#: admin/class-offers-for-woocommerce-admin.php:2447
+#: admin/class-offers-for-woocommerce-admin.php:2741
 msgid "Docs"
 msgstr "﻿Dokumentation"
 
-#: admin/class-offers-for-woocommerce-admin.php:2448
+#: admin/class-offers-for-woocommerce-admin.php:2742
 msgid "Support"
 msgstr "﻿Support"
 
-#: admin/class-offers-for-woocommerce-admin.php:2449
+#: admin/class-offers-for-woocommerce-admin.php:2743
 msgid "Write a Review"
 msgstr "﻿Skriv ett omdöme"
 
-#: admin/class-offers-for-woocommerce-admin.php:2855
+#: admin/class-offers-for-woocommerce-admin.php:2811
+msgid "Pending Offer"
+msgid_plural "Pending Offers"
+msgstr[0] "Väntande Erbjudande"
+msgstr[1] "Väntande erbjudanden"
+
+#: admin/class-offers-for-woocommerce-admin.php:3006
 msgid "Offer Note:"
 msgstr "﻿Bud Anteckningar:"
 
-#: admin/class-offers-for-woocommerce-admin.php:2858
+#: admin/class-offers-for-woocommerce-admin.php:3009
 msgid "(admin only)"
 msgstr "(﻿Endast admin)"
 
-#: admin/class-offers-for-woocommerce-admin.php:2862
+#: admin/class-offers-for-woocommerce-admin.php:3013
 msgid "(sent to buyer)"
 msgstr "﻿(skickat till köparen)"
 
-#: admin/class-offers-for-woocommerce-admin.php:3239
+#: admin/class-offers-for-woocommerce-admin.php:3619
 msgid "Currently filtered by user"
 msgstr "﻿För närvarande filtrerat av användare"
 
-#: admin/class-offers-for-woocommerce-admin.php:3239
+#: admin/class-offers-for-woocommerce-admin.php:3619
 msgid "Click here to reset filter"
 msgstr "﻿Klicka här om du vill återställa filter"
 
-#: admin/class-offers-for-woocommerce-admin.php:3253
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:3633
 msgid "Action completed; %s records processed."
 msgstr "﻿Avslutas; %s poster bearbetas."
 
-#: admin/class-offers-for-woocommerce-admin.php:3259
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:3639
 msgid "Action completed; %s records processed. "
 msgstr "﻿Avslutas; %s poster bearbetas."
 
-#: admin/class-offers-for-woocommerce-admin.php:3273
+#: admin/class-offers-for-woocommerce-admin.php:3653
 msgid ""
 "We notice you are running the NextScripts Social Networks Auto-Poster plugin."
 msgstr "﻿Vi märker du kör NextScripts Sociala Nätverks Auto-Poster plugin."
 
-#: admin/class-offers-for-woocommerce-admin.php:3273
+#: admin/class-offers-for-woocommerce-admin.php:3653
 msgid ""
-"Please make sure to exclude the custom post type \"woocommerce_offer\" in the "
-"{SNAP} Social Networks Auto-Poster settings in order to avoid conflicts with "
-"new offers."
+"Please make sure to exclude the custom post type \"woocommerce_offer\" in "
+"the {SNAP} Social Networks Auto-Poster settings in order to avoid conflicts "
+"with new offers."
 msgstr ""
 "﻿Se till att utesluta den anpassade inläggstypen \"woocommerce_offer\" i "
 "inställningarna för {SNAP} Sociala Nätverk Auto-Poster för att undvika "
 "konflikter med nya erbjudanden."
 
-#: admin/class-offers-for-woocommerce-admin.php:3295
+#: admin/class-offers-for-woocommerce-admin.php:3675
 msgid "Overview"
 msgstr "﻿Översikt"
 
-#: admin/class-offers-for-woocommerce-admin.php:3296
-#: admin/class-offers-for-woocommerce-admin.php:3302
-#: admin/class-offers-for-woocommerce-admin.php:3308
+#: admin/class-offers-for-woocommerce-admin.php:3676
+#: admin/class-offers-for-woocommerce-admin.php:3682
+#: admin/class-offers-for-woocommerce-admin.php:3688
 msgid ""
 "This plugin is currently in development. Please send any feedback or bug "
 "reports to andrew@angelleye.com. Thank you."
@@ -666,40 +832,83 @@ msgstr ""
 "﻿Denna plugin är för närvarande under utveckling. Vänligen skicka feedback "
 "eller buggrapporter till andrew@angelleye.com. Tack."
 
-#: admin/class-offers-for-woocommerce-admin.php:3301
-#: admin/class-offers-for-woocommerce-admin.php:3307
+#: admin/class-offers-for-woocommerce-admin.php:3681
+#: admin/class-offers-for-woocommerce-admin.php:3687
 msgid "Help Tab"
 msgstr "﻿Hjälpflik"
 
-#: admin/class-offers-for-woocommerce-admin.php:3359
+#: admin/class-offers-for-woocommerce-admin.php:3739
 msgid ""
 "<strong>Offers for WooCommerce has been deactivated; WooCommerce is required."
 "</strong><br />Please make sure that WooCommerce is installed and activated "
 "before activating Offers for WooCommerce."
 msgstr ""
-"﻿<strong>Bud för WooCommerce har återaktiverats; WooCommerce krävs.</"
-"strong><br>Kontrollera att WooCommerce har installerats och aktiverats innan "
-"du aktiverar erbjudanden för WooCommerce."
+"﻿<strong>Bud för WooCommerce har återaktiverats; WooCommerce krävs.</strong>"
+"<br>Kontrollera att WooCommerce har installerats och aktiverats innan du "
+"aktiverar erbjudanden för WooCommerce."
 
-#: admin/class-offers-for-woocommerce-admin.php:3395
-#: admin/class-offers-for-woocommerce-admin.php:3396 admin/views/admin.php:52
+#: admin/class-offers-for-woocommerce-admin.php:3775
+#: admin/class-offers-for-woocommerce-admin.php:3776 admin/views/admin.php:55
 msgid "Enable Offers"
 msgstr "﻿Aktivera Bud"
 
-#: admin/class-offers-for-woocommerce-admin.php:3397
-#: admin/class-offers-for-woocommerce-admin.php:3398 admin/views/admin.php:53
+#: admin/class-offers-for-woocommerce-admin.php:3777
+#: admin/class-offers-for-woocommerce-admin.php:3778 admin/views/admin.php:56
 msgid "Disable Offers"
 msgstr "﻿Inaktivera Bud"
 
-#: admin/class-offers-for-woocommerce-admin.php:3462
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:3842
 msgid "Offers enabled for %s products."
 msgstr "﻿Bud har aktiverats för %s produkter."
 
-#: admin/class-offers-for-woocommerce-admin.php:3467
-#, php-format
+#: admin/class-offers-for-woocommerce-admin.php:3847
 msgid "Offers disabled for %s products."
 msgstr "﻿Bud inaktiverade för %s produkter."
+
+#: admin/class-offers-for-woocommerce-admin.php:3922
+#: admin/views/meta-panel-summary.php:301
+msgid "Coupon List"
+msgstr "Kuponglista"
+
+#: admin/class-offers-for-woocommerce-admin.php:3924
+#: admin/views/meta-panel-summary.php:303
+msgid "Select Coupon"
+msgstr "Välj kupong"
+
+#: admin/class-offers-for-woocommerce-admin.php:3931
+msgid "No Coupons found."
+msgstr "Inga kuponger hittades."
+
+#: admin/class-offers-for-woocommerce-admin.php:3937
+msgid "Send coupon & Decline"
+msgstr "Skicka kupong och Avvisa"
+
+#: admin/class-offers-for-woocommerce-admin.php:3949
+msgid "Google reCAPTCHA"
+msgstr "Google reCAPTCHA"
+
+#: admin/class-offers-for-woocommerce-admin.php:3950
+msgid "MailChimp"
+msgstr "MailChimp"
+
+#: admin/class-offers-for-woocommerce-admin.php:3951
+msgid "Constant Contact"
+msgstr "Konstant kontakt"
+
+#: admin/class-offers-for-woocommerce-admin.php:3952
+msgid "MailPoet"
+msgstr "MailPoet"
+
+#: admin/class-offers-for-woocommerce-admin.php:3969
+#: admin/class-offers-for-woocommerce-admin.php:3985
+#: admin/class-offers-for-woocommerce-admin.php:4002
+#: admin/class-offers-for-woocommerce-admin.php:4021
+msgid "Save changes"
+msgstr "Spara ändringar"
+
+#: admin/class-offers-for-woocommerce-admin.php:4434
+msgid "Related Order"
+msgstr "﻿Relaterad Beställning"
 
 #: admin/includes/class-wc-accepted-offer-email.php:32
 msgid "Accepted offer"
@@ -707,115 +916,124 @@ msgstr "Budet Accepterat"
 
 #: admin/includes/class-wc-accepted-offer-email.php:35
 msgid ""
-"Accepted Offer Notification emails are sent when a customer offer is approved "
-"by the store admin"
+"Accepted Offer Notification emails are sent when a customer offer is "
+"approved by the store admin"
 msgstr ""
 "﻿Godkänt Bud Information skickas med e-post när en kunds bud är godkänt av "
 "butikens admin"
 
-#: admin/includes/class-wc-accepted-offer-email.php:123
-#: admin/includes/class-wc-countered-offer-email.php:123
-#: admin/includes/class-wc-declined-offer-email.php:123
-#: admin/includes/class-wc-offer-note-email.php:123
-#: admin/includes/class-wc-offer-on-hold-email.php:123
-#: public/includes/class-wc-new-counter-offer-email.php:128
-#: public/includes/class-wc-new-offer-email.php:128
-#: public/includes/class-wc-offer-received-email.php:123
-msgid "Enable/Disable"
-msgstr "﻿Aktivera/Inaktivera"
+#: admin/includes/class-wc-accepted-offer-email.php:38
+#: admin/views/meta-panel-summary.php:279
+msgid "Accepted Offer"
+msgstr "Budet Accepterat"
 
-#: admin/includes/class-wc-accepted-offer-email.php:125
-#: admin/includes/class-wc-countered-offer-email.php:125
-#: admin/includes/class-wc-declined-offer-email.php:125
-#: admin/includes/class-wc-offer-note-email.php:125
-#: admin/includes/class-wc-offer-on-hold-email.php:125
-#: public/includes/class-wc-new-counter-offer-email.php:130
-#: public/includes/class-wc-new-offer-email.php:130
-#: public/includes/class-wc-offer-received-email.php:125
-msgid "Enable this email notification"
-msgstr "﻿Aktivera den här e-postnotisen"
+#: admin/includes/class-wc-accepted-offer-email.php:39
+msgid "[{site_title}] Accepted Offer ({offer_number}) - {offer_date}"
+msgstr "[{site_title}] Godkänt erbjudande ({offer_number}) - {offer_date}"
 
 #: admin/includes/class-wc-accepted-offer-email.php:129
 #: admin/includes/class-wc-countered-offer-email.php:129
 #: admin/includes/class-wc-declined-offer-email.php:129
-#: admin/includes/class-wc-offer-note-email.php:129
-#: admin/includes/class-wc-offer-on-hold-email.php:129
-#: public/includes/class-wc-new-counter-offer-email.php:141
-#: public/includes/class-wc-new-offer-email.php:141
+#: admin/includes/class-wc-offer-note-email.php:128
+#: admin/includes/class-wc-offer-on-hold-email.php:128
+#: public/includes/class-wc-new-counter-offer-email.php:130
+#: public/includes/class-wc-new-offer-email.php:130
 #: public/includes/class-wc-offer-received-email.php:129
-msgid "Subject"
-msgstr "﻿Ämne"
+msgid "Enable/Disable"
+msgstr "﻿Aktivera/Inaktivera"
 
 #: admin/includes/class-wc-accepted-offer-email.php:131
 #: admin/includes/class-wc-countered-offer-email.php:131
 #: admin/includes/class-wc-declined-offer-email.php:131
-#: admin/includes/class-wc-offer-note-email.php:131
-#: admin/includes/class-wc-offer-on-hold-email.php:131
+#: admin/includes/class-wc-offer-note-email.php:130
+#: admin/includes/class-wc-offer-on-hold-email.php:130
+#: public/includes/class-wc-new-counter-offer-email.php:132
+#: public/includes/class-wc-new-offer-email.php:132
+#: public/includes/class-wc-offer-received-email.php:131
+msgid "Enable this email notification"
+msgstr "﻿Aktivera den här e-postnotisen"
+
+#: admin/includes/class-wc-accepted-offer-email.php:135
+#: admin/includes/class-wc-countered-offer-email.php:135
+#: admin/includes/class-wc-declined-offer-email.php:135
+#: admin/includes/class-wc-offer-note-email.php:134
+#: admin/includes/class-wc-offer-on-hold-email.php:134
 #: public/includes/class-wc-new-counter-offer-email.php:143
 #: public/includes/class-wc-new-offer-email.php:143
-#: public/includes/class-wc-offer-received-email.php:131
+#: public/includes/class-wc-offer-received-email.php:135
+msgid "Subject"
+msgstr "﻿Ämne"
+
+#: admin/includes/class-wc-accepted-offer-email.php:137
+#: admin/includes/class-wc-countered-offer-email.php:137
+#: admin/includes/class-wc-declined-offer-email.php:137
+#: admin/includes/class-wc-offer-note-email.php:136
+#: admin/includes/class-wc-offer-on-hold-email.php:136
+#: public/includes/class-wc-new-counter-offer-email.php:145
+#: public/includes/class-wc-new-offer-email.php:145
+#: public/includes/class-wc-offer-received-email.php:137
 msgid ""
 "This controls the email subject line. Leave blank to use the default subject:"
 msgstr ""
 "﻿Det här kontrollerar ämnesraden i mailet. Lämna tomt för att använda "
 "standardvärdet för ämne: <code>%s</code>."
 
-#: admin/includes/class-wc-accepted-offer-email.php:136
-#: admin/includes/class-wc-countered-offer-email.php:136
-#: admin/includes/class-wc-declined-offer-email.php:136
-#: admin/includes/class-wc-offer-note-email.php:136
-#: admin/includes/class-wc-offer-on-hold-email.php:136
-#: public/includes/class-wc-new-counter-offer-email.php:148
-#: public/includes/class-wc-new-offer-email.php:148
-#: public/includes/class-wc-offer-received-email.php:136
+#: admin/includes/class-wc-accepted-offer-email.php:142
+#: admin/includes/class-wc-countered-offer-email.php:142
+#: admin/includes/class-wc-declined-offer-email.php:142
+#: admin/includes/class-wc-offer-note-email.php:141
+#: admin/includes/class-wc-offer-on-hold-email.php:141
+#: public/includes/class-wc-new-counter-offer-email.php:150
+#: public/includes/class-wc-new-offer-email.php:150
+#: public/includes/class-wc-offer-received-email.php:142
 msgid "Email Heading"
 msgstr "﻿E-post Sidhuvud"
 
-#: admin/includes/class-wc-accepted-offer-email.php:138
-#: admin/includes/class-wc-countered-offer-email.php:138
-#: admin/includes/class-wc-declined-offer-email.php:138
-#: admin/includes/class-wc-offer-note-email.php:138
-#: admin/includes/class-wc-offer-on-hold-email.php:138
-#: public/includes/class-wc-new-counter-offer-email.php:150
-#: public/includes/class-wc-new-offer-email.php:150
-#: public/includes/class-wc-offer-received-email.php:138
+#: admin/includes/class-wc-accepted-offer-email.php:144
+#: admin/includes/class-wc-countered-offer-email.php:144
+#: admin/includes/class-wc-declined-offer-email.php:144
+#: admin/includes/class-wc-offer-note-email.php:143
+#: admin/includes/class-wc-offer-on-hold-email.php:143
+#: public/includes/class-wc-new-counter-offer-email.php:152
+#: public/includes/class-wc-new-offer-email.php:152
+#: public/includes/class-wc-offer-received-email.php:144
 msgid ""
-"This controls the main heading contained within the email notification. Leave "
-"blank to use the default heading:"
+"This controls the main heading contained within the email notification. "
+"Leave blank to use the default heading:"
 msgstr ""
 "﻿Det här kontrollerar inledningen i mailnotifikationen. Lämna tomt för att "
 "använda standardvärdet: <code>%s</code>."
 
-#: admin/includes/class-wc-accepted-offer-email.php:143
-#: admin/includes/class-wc-countered-offer-email.php:143
-#: admin/includes/class-wc-declined-offer-email.php:143
-#: admin/includes/class-wc-offer-note-email.php:143
-#: admin/includes/class-wc-offer-on-hold-email.php:143
-#: public/includes/class-wc-new-counter-offer-email.php:155
-#: public/includes/class-wc-new-offer-email.php:155
-#: public/includes/class-wc-offer-received-email.php:143
-msgid "Email type"
-msgstr "﻿E-posttyp"
-
-#: admin/includes/class-wc-accepted-offer-email.php:145
-#: admin/includes/class-wc-countered-offer-email.php:145
-#: admin/includes/class-wc-declined-offer-email.php:145
-#: admin/includes/class-wc-offer-note-email.php:145
-#: admin/includes/class-wc-offer-on-hold-email.php:145
-#: public/includes/class-wc-new-counter-offer-email.php:157
-#: public/includes/class-wc-new-offer-email.php:157
-#: public/includes/class-wc-offer-received-email.php:145
-msgid "Choose which format of email to send."
-msgstr "﻿Välj e-postformat att sända."
-
 #: admin/includes/class-wc-accepted-offer-email.php:149
 #: admin/includes/class-wc-countered-offer-email.php:149
 #: admin/includes/class-wc-declined-offer-email.php:149
-#: admin/includes/class-wc-offer-note-email.php:149
-#: admin/includes/class-wc-offer-on-hold-email.php:149
-#: public/includes/class-wc-new-counter-offer-email.php:161
-#: public/includes/class-wc-new-offer-email.php:161
+#: admin/includes/class-wc-offer-note-email.php:148
+#: admin/includes/class-wc-offer-on-hold-email.php:148
+#: public/includes/class-wc-new-counter-offer-email.php:157
+#: public/includes/class-wc-new-offer-email.php:157
 #: public/includes/class-wc-offer-received-email.php:149
+msgid "Email type"
+msgstr "﻿E-posttyp"
+
+#: admin/includes/class-wc-accepted-offer-email.php:151
+#: admin/includes/class-wc-countered-offer-email.php:151
+#: admin/includes/class-wc-declined-offer-email.php:151
+#: admin/includes/class-wc-offer-note-email.php:150
+#: admin/includes/class-wc-offer-on-hold-email.php:150
+#: public/includes/class-wc-new-counter-offer-email.php:159
+#: public/includes/class-wc-new-offer-email.php:159
+#: public/includes/class-wc-offer-received-email.php:151
+msgid "Choose which format of email to send."
+msgstr "﻿Välj e-postformat att sända."
+
+#: admin/includes/class-wc-accepted-offer-email.php:155
+#: admin/includes/class-wc-countered-offer-email.php:155
+#: admin/includes/class-wc-declined-offer-email.php:155
+#: admin/includes/class-wc-offer-note-email.php:154
+#: admin/includes/class-wc-offer-on-hold-email.php:154
+#: public/includes/class-wc-new-counter-offer-email.php:163
+#: public/includes/class-wc-new-offer-email.php:163
+#: public/includes/class-wc-offer-received-email.php:155
 msgid "Plain text"
 msgstr "﻿Vanlig text..."
 
@@ -831,195 +1049,265 @@ msgstr ""
 "Information om Motbud skickas som e-post när en kunds bud bivit motbjudet av "
 "butikens admin"
 
+#: admin/includes/class-wc-countered-offer-email.php:38
+#: admin/views/meta-panel-summary.php:280
+msgid "Countered Offer"
+msgstr "Motbjudet Bud"
+
+#: admin/includes/class-wc-countered-offer-email.php:39
+msgid "[{site_title}] Countered Offer ({offer_number}) - {offer_date}"
+msgstr "[{site_title}] Motbjudande erbjudande ({offer_number}) - {offer_date}"
+
 #: admin/includes/class-wc-declined-offer-email.php:32
 msgid "Declined offer"
 msgstr "﻿Avböjt Bud"
 
 #: admin/includes/class-wc-declined-offer-email.php:35
 msgid ""
-"Declined Offer Notification emails are sent when a customer offer is declined "
-"by the store admin"
+"Declined Offer Notification emails are sent when a customer offer is "
+"declined by the store admin"
 msgstr ""
 "Information om Avböjt Bud skickas som e-mail när en kunds bud avvisas av "
 "butikens admin"
 
-#: admin/includes/class-wc-offer-note-email.php:32
+#: admin/includes/class-wc-declined-offer-email.php:38
+#: admin/views/meta-panel-summary.php:281
+msgid "Declined Offer"
+msgstr "﻿Avböjt Bud"
+
+#: admin/includes/class-wc-declined-offer-email.php:39
+msgid "[{site_title}] Declined Offer ({offer_number}) - {offer_date}"
+msgstr "[{site_title}] Avvisat erbjudande ({offer_number}) - {offer_date}"
+
+#: admin/includes/class-wc-offer-note-email.php:31
 msgid "Offer note"
 msgstr "﻿Anteckningar för Bud:"
 
-#: admin/includes/class-wc-offer-note-email.php:35
+#: admin/includes/class-wc-offer-note-email.php:34
 msgid "Offer notes emails are sent to a customer by the store admin"
 msgstr ""
 "Information om budets anteckningar skickas som e-mail till kund av butikens "
 "admin"
 
-#: admin/includes/class-wc-offer-note-email.php:38
-#: admin/includes/class-wc-offer-note-email.php:39
+#: admin/includes/class-wc-offer-note-email.php:37
 msgid "Offer Note"
 msgstr "Anteckningar för Bud:"
 
-#: admin/includes/class-wc-offer-on-hold-email.php:32
-#: admin/includes/class-wc-offer-on-hold-email.php:38
-#: admin/includes/class-wc-offer-on-hold-email.php:39
+#: admin/includes/class-wc-offer-note-email.php:38
+msgid "[{site_title}] Offer Note ({offer_number}) - {offer_date}"
+msgstr ""
+"\n"
+"[{site_title}] Erbjudande notering ({offer_number}) - {offer_date}"
+
+#: admin/includes/class-wc-offer-on-hold-email.php:31
+#: admin/includes/class-wc-offer-on-hold-email.php:37
 msgid "Offer On Hold"
 msgstr "Bud Väntande"
 
-#: admin/includes/class-wc-offer-on-hold-email.php:35
+#: admin/includes/class-wc-offer-on-hold-email.php:34
 msgid ""
-"Offer On Hold Notification emails are sent when a customer offer is placed on "
-"hold by the store admin"
+"Offer On Hold Notification emails are sent when a customer offer is placed "
+"on hold by the store admin"
 msgstr ""
 "Information om Väntande Bud skickas som e-mail när en kunds bud är placerad "
 "på vänt av butikens admin"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:15
+#: admin/includes/class-wc-offer-on-hold-email.php:38
+msgid "[{site_title}] Offer On Hold ({offer_number}) - {offer_date}"
+msgstr "[{site_title}] Erbjudande i väntan ({offer_number}) - {offer_date}"
+
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:14
+#: admin/includes/emails/woocommerce-offer-accepted.php:15
 msgid "We have accepted your offer on"
 msgstr "﻿Vi har accepterat ditt bud på"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:15
-#: admin/includes/emails/woocommerce-offer-countered.php:13
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:14
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:15
+#: admin/includes/emails/woocommerce-offer-accepted.php:15
+#: admin/includes/emails/woocommerce-offer-countered.php:13
 msgid "To pay for this order please use the following link:"
 msgstr "﻿För att betala för denna order vänligen använd följande länk:"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:15
-#: admin/includes/emails/woocommerce-offer-countered.php:13
-msgid "Click to Pay"
-msgstr "﻿Klicka för att betala"
-
-#: admin/includes/emails/woocommerce-offer-accepted.php:18
-#: admin/includes/emails/woocommerce-offer-countered.php:21
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:18
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:19
+#: admin/includes/emails/woocommerce-offer-accepted.php:18
+#: admin/includes/emails/woocommerce-offer-countered.php:23
 msgid "Offer expires on:"
 msgstr "﻿Erbjudandet slutar den"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:21
-#: admin/includes/emails/woocommerce-offer-countered.php:24
-#: admin/includes/emails/woocommerce-offer-declined.php:17
-#: admin/includes/emails/woocommerce-offer-note.php:15
-#: admin/includes/emails/woocommerce-offer-on-hold.php:16
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:23
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:30
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:18
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:25
 #: admin/includes/emails/plain/woocommerce-offer-note.php:20
 #: admin/includes/emails/plain/woocommerce-offer-on-hold.php:23
-#: public/includes/emails/woocommerce-new-counter-offer.php:15
-#: public/includes/emails/woocommerce-new-offer.php:15
-#: public/includes/emails/woocommerce-offer-received.php:15
+#: admin/includes/emails/woocommerce-offer-accepted.php:21
+#: admin/includes/emails/woocommerce-offer-countered.php:26
+#: admin/includes/emails/woocommerce-offer-declined.php:24
+#: admin/includes/emails/woocommerce-offer-note.php:15
+#: admin/includes/emails/woocommerce-offer-on-hold.php:16
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:17
 #: public/includes/emails/plain/woocommerce-new-offer.php:17
 #: public/includes/emails/plain/woocommerce-offer-received.php:17
+#: public/includes/emails/woocommerce-new-counter-offer.php:30
+#: public/includes/emails/woocommerce-new-offer.php:32
+#: public/includes/emails/woocommerce-offer-received.php:15
 msgid "Offer ID:"
 msgstr "﻿Erbjudande-ID:"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:26
-#: admin/includes/emails/woocommerce-offer-countered.php:29
-#: admin/includes/emails/woocommerce-offer-declined.php:22
-#: admin/includes/emails/woocommerce-offer-note.php:20
-#: admin/includes/emails/woocommerce-offer-on-hold.php:21
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:27
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:34
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:22
-#: admin/includes/emails/plain/woocommerce-offer-note.php:24
-#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:27
-#: public/includes/emails/woocommerce-new-counter-offer.php:20
-#: public/includes/emails/woocommerce-new-offer.php:20
-#: public/includes/emails/woocommerce-offer-received.php:20
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:21
-#: public/includes/emails/plain/woocommerce-new-offer.php:21
-#: public/includes/emails/plain/woocommerce-offer-received.php:21
-msgid "Product"
-msgstr "﻿Produkt"
-
-#: admin/includes/emails/woocommerce-offer-accepted.php:28
-#: admin/includes/emails/woocommerce-offer-countered.php:31
-#: admin/includes/emails/woocommerce-offer-declined.php:24
-#: admin/includes/emails/woocommerce-offer-note.php:22
-#: admin/includes/emails/woocommerce-offer-on-hold.php:23
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:29
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:36
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:24
-#: admin/includes/emails/plain/woocommerce-offer-note.php:26
-#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:29
-#: public/includes/emails/woocommerce-new-counter-offer.php:22
-#: public/includes/emails/woocommerce-new-offer.php:22
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:28
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:35
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:30
+#: admin/includes/emails/plain/woocommerce-offer-note.php:25
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:28
+#: admin/includes/emails/woocommerce-offer-accepted.php:27
+#: admin/includes/emails/woocommerce-offer-countered.php:32
+#: admin/includes/emails/woocommerce-offer-declined.php:30
+#: admin/includes/emails/woocommerce-offer-note.php:21
+#: admin/includes/emails/woocommerce-offer-on-hold.php:22
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:22
+#: public/includes/emails/plain/woocommerce-new-offer.php:22
+#: public/includes/emails/plain/woocommerce-offer-received.php:22
+#: public/includes/emails/woocommerce-new-counter-offer.php:36
+#: public/includes/emails/woocommerce-new-offer.php:39
 #: public/includes/emails/woocommerce-offer-received.php:22
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:23
-#: public/includes/emails/plain/woocommerce-new-offer.php:23
-#: public/includes/emails/plain/woocommerce-offer-received.php:23
-msgid "Price"
-msgstr "﻿Pris"
+msgid "Regular Price"
+msgstr ""
+"Vanligt pris\n"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:40
-#: admin/includes/emails/woocommerce-offer-countered.php:43
-#: admin/includes/emails/woocommerce-offer-declined.php:36
-#: admin/includes/emails/woocommerce-offer-note.php:34
-#: admin/includes/emails/woocommerce-offer-on-hold.php:35
 #: admin/includes/emails/plain/woocommerce-offer-accepted.php:30
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:37
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:25
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:32
 #: admin/includes/emails/plain/woocommerce-offer-note.php:27
 #: admin/includes/emails/plain/woocommerce-offer-on-hold.php:30
-#: public/includes/emails/woocommerce-new-counter-offer.php:34
-#: public/includes/emails/woocommerce-new-offer.php:34
-#: public/includes/emails/woocommerce-offer-received.php:34
+#: admin/includes/emails/woocommerce-offer-accepted.php:29
+#: admin/includes/emails/woocommerce-offer-countered.php:34
+#: admin/includes/emails/woocommerce-offer-declined.php:32
+#: admin/includes/emails/woocommerce-offer-note.php:23
+#: admin/includes/emails/woocommerce-offer-on-hold.php:24
+#: admin/views/admin.php:290
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:24
 #: public/includes/emails/plain/woocommerce-new-offer.php:24
 #: public/includes/emails/plain/woocommerce-offer-received.php:24
+#: public/includes/emails/woocommerce-new-counter-offer.php:38
+#: public/includes/emails/woocommerce-new-offer.php:41
+#: public/includes/emails/woocommerce-offer-received.php:24
+msgid "Price"
+msgstr "﻿Pris"
+
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:31
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:38
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:33
+#: admin/includes/emails/plain/woocommerce-offer-note.php:28
+#: admin/includes/emails/plain/woocommerce-offer-on-hold.php:31
+#: admin/includes/emails/woocommerce-offer-accepted.php:42
+#: admin/includes/emails/woocommerce-offer-countered.php:47
+#: admin/includes/emails/woocommerce-offer-declined.php:45
+#: admin/includes/emails/woocommerce-offer-note.php:36
+#: admin/includes/emails/woocommerce-offer-on-hold.php:37
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:25
+#: public/includes/emails/plain/woocommerce-new-offer.php:25
+#: public/includes/emails/plain/woocommerce-offer-received.php:25
+#: public/includes/emails/woocommerce-new-counter-offer.php:51
+#: public/includes/emails/woocommerce-new-offer.php:54
+#: public/includes/emails/woocommerce-offer-received.php:37
 msgid "Subtotal"
 msgstr "﻿Summa"
 
-#: admin/includes/emails/woocommerce-offer-accepted.php:46
-#: admin/includes/emails/woocommerce-offer-declined.php:15
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:35
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:42
+#: admin/includes/emails/woocommerce-offer-accepted.php:50
+#: admin/includes/emails/woocommerce-offer-countered.php:56
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:29
+#: public/includes/emails/plain/woocommerce-offer-received.php:29
+#: public/includes/emails/woocommerce-new-counter-offer.php:59
+#: public/includes/emails/woocommerce-offer-received.php:44
+msgid "Shipping"
+msgstr "Frakt"
+
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:36
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:43
+#: admin/includes/emails/woocommerce-offer-accepted.php:60
+#: admin/includes/emails/woocommerce-offer-countered.php:66
+#: admin/views/meta-panel-summary.php:247
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:30
+#: public/includes/emails/plain/woocommerce-offer-received.php:30
+#: public/includes/emails/woocommerce-new-counter-offer.php:69
+#: public/includes/emails/woocommerce-offer-received.php:54
+msgid "Total"
+msgstr "﻿Totalt"
+
+#: admin/includes/emails/plain/woocommerce-offer-accepted.php:40
+#: admin/includes/emails/plain/woocommerce-offer-countered.php:47
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:37
+#: admin/includes/emails/woocommerce-offer-accepted.php:69
+#: admin/includes/emails/woocommerce-offer-declined.php:22
 #: admin/includes/emails/woocommerce-offer-note.php:13
 #: admin/includes/emails/woocommerce-offer-on-hold.php:14
-#: admin/includes/emails/plain/woocommerce-offer-accepted.php:34
-#: admin/includes/emails/plain/woocommerce-offer-countered.php:41
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:29
-#: public/includes/emails/woocommerce-new-counter-offer.php:46
-#: public/includes/emails/woocommerce-new-offer.php:46
-#: public/includes/emails/woocommerce-offer-received.php:40
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:35
-#: public/includes/emails/plain/woocommerce-new-offer.php:35
-#: public/includes/emails/plain/woocommerce-offer-received.php:29
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:44
+#: public/includes/emails/plain/woocommerce-new-offer.php:38
+#: public/includes/emails/plain/woocommerce-offer-received.php:37
+#: public/includes/emails/woocommerce-new-counter-offer.php:86
+#: public/includes/emails/woocommerce-new-offer.php:67
+#: public/includes/emails/woocommerce-offer-received.php:63
 msgid "Offer Notes:"
 msgstr "﻿Anteckningar från Bud:"
 
-#: admin/includes/emails/woocommerce-offer-countered.php:12
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:14
+#: admin/includes/emails/woocommerce-offer-countered.php:12
 msgid "We have provided you with a counter offer on"
 msgstr "﻿Vi har gett dig ett motbud på"
 
-#: admin/includes/emails/woocommerce-offer-countered.php:15
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:23
+#: admin/includes/emails/woocommerce-offer-countered.php:16
 msgid "This is a final offer."
 msgstr "﻿Detta är det sista erbjudandet."
 
-#: admin/includes/emails/woocommerce-offer-countered.php:17
 #: admin/includes/emails/plain/woocommerce-offer-countered.php:25
+#: admin/includes/emails/woocommerce-offer-countered.php:18
 msgid "To make a counter offer use the following link:"
 msgstr "För att lämna ett motbud vänligen använd följande länk:"
 
-#: admin/includes/emails/woocommerce-offer-countered.php:17
-msgid "Click to Counter"
-msgstr "﻿Klicka för att lämna motbud"
-
-#: admin/includes/emails/woocommerce-offer-countered.php:49
-msgid "Counter Offer Notes:"
-msgstr "Noteringar på motbud:"
-
-#: admin/includes/emails/woocommerce-offer-declined.php:13
-#: admin/includes/emails/plain/woocommerce-offer-declined.php:14
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:15
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:20
+#: admin/includes/emails/woocommerce-offer-declined.php:15
+#: admin/includes/emails/woocommerce-offer-declined.php:18
 msgid "We have declined your offer on"
 msgstr "﻿Vi har nekat ditt erbjudande på"
 
-#: admin/includes/emails/woocommerce-offer-on-hold.php:12
+#: admin/includes/emails/plain/woocommerce-offer-declined.php:18
+#: admin/includes/emails/woocommerce-offer-declined.php:16
+msgid "Coupon Code: "
+msgstr ""
+"Kupongskod:\n"
+
 #: admin/includes/emails/plain/woocommerce-offer-on-hold.php:13
+#: admin/includes/emails/woocommerce-offer-on-hold.php:12
 msgid "Your offer has been placed on hold."
 msgstr "﻿Ditt bud har blivit placerat på vänt."
+
+#: admin/includes/emails/woocommerce-offer-accepted.php:15
+#: admin/includes/emails/woocommerce-offer-countered.php:14
+#: public/views/my-offers.php:161 public/views/my-offers.php:173
+msgid "Click to Pay"
+msgstr "﻿Klicka för att betala"
+
+#: admin/includes/emails/woocommerce-offer-countered.php:19
+#: public/views/my-offers.php:167
+msgid "Click to Counter"
+msgstr "﻿Klicka för att lämna motbud"
+
+#: admin/includes/emails/woocommerce-offer-countered.php:75
+msgid "Counter Offer Notes:"
+msgstr "Noteringar på motbud:"
+
+#: admin/partials/class-offers-for-woocommerce-html-output.php:321
+msgid "Select a page&hellip;"
+msgstr ""
+"Välj en sida &hellip;\n"
+
+#: admin/partials/class-offers-for-woocommerce-html-output.php:459
+msgid "Settings were saved successfully."
+msgstr "Inställningarna sparades framgångsrikt."
 
 #: admin/views/admin.php:23
 msgid "General Settings"
@@ -1033,106 +1321,182 @@ msgstr "﻿Bildskärmsinställningar"
 msgid "Tools"
 msgstr "﻿Verktyg"
 
-#: admin/views/admin.php:44
+#: admin/views/admin.php:47
 msgid "Bulk Edit Tool for Products"
 msgstr "Massredigeringsverktyg för produkter"
 
-#: admin/views/admin.php:45
+#: admin/views/admin.php:48
 msgid ""
-"Select from the options below to enable / disable offers on multiple products "
-"at once."
+"Select from the options below to enable / disable offers on multiple "
+"products at once."
 msgstr ""
 "﻿Välj bland alternativen nedan för att aktivera / inaktivare erbjudanden på "
 "flera produkter på en gång."
 
-#: admin/views/admin.php:48
+#: admin/views/admin.php:51 admin/views/admin.php:152 admin/views/admin.php:268
+#: public/views/my-offers.php:12
 msgid "Action"
 msgstr "﻿Åtgärd"
 
-#: admin/views/admin.php:51 admin/views/admin.php:61 admin/views/admin.php:72
-#: admin/views/admin.php:89 admin/views/admin.php:106
+#: admin/views/admin.php:54 admin/views/admin.php:66 admin/views/admin.php:77
+#: admin/views/admin.php:94 admin/views/admin.php:111 admin/views/admin.php:155
+#: admin/views/admin.php:179 admin/views/admin.php:190
+#: admin/views/admin.php:207 admin/views/admin.php:224
+#: admin/views/admin.php:271 admin/views/admin.php:288
+#: admin/views/admin.php:299 admin/views/admin.php:310
+#: admin/views/admin.php:327 admin/views/admin.php:344
 msgid "- Select option"
 msgstr "﻿-Välj alternativ"
 
+#: admin/views/admin.php:57
+msgid "Enable Offers On Exit"
+msgstr "Aktivera erbjudanden vid utträde"
+
 #: admin/views/admin.php:58
+msgid "Disable Offers On Exit"
+msgstr "Inaktivera erbjudanden vid avresa"
+
+#: admin/views/admin.php:63 admin/views/admin.php:176 admin/views/admin.php:296
 msgid "Target"
 msgstr "﻿Mål"
 
-#: admin/views/admin.php:62
+#: admin/views/admin.php:67 admin/views/admin.php:180 admin/views/admin.php:300
 msgid "All products"
 msgstr "﻿Alla produkter"
 
-#: admin/views/admin.php:63
+#: admin/views/admin.php:68 admin/views/admin.php:181 admin/views/admin.php:301
 msgid "Featured products"
 msgstr "﻿Utvalda produkter"
 
-#: admin/views/admin.php:64
+#: admin/views/admin.php:69 admin/views/admin.php:182 admin/views/admin.php:302
 msgid "Where..."
 msgstr "Var någonstans..."
 
-#: admin/views/admin.php:69
+#: admin/views/admin.php:74 admin/views/admin.php:187 admin/views/admin.php:307
 msgid "Where"
 msgstr "Var någonstans"
 
-#: admin/views/admin.php:73
+#: admin/views/admin.php:78 admin/views/admin.php:191 admin/views/admin.php:311
 msgid "Category..."
 msgstr "﻿Kategori"
 
-#: admin/views/admin.php:74
+#: admin/views/admin.php:79 admin/views/admin.php:192 admin/views/admin.php:312
 msgid "Product type..."
 msgstr "﻿Produkttyp"
 
-#: admin/views/admin.php:75
+#: admin/views/admin.php:80 admin/views/admin.php:193 admin/views/admin.php:313
 msgid "Price greater than..."
 msgstr "﻿Pris större än..."
 
-#: admin/views/admin.php:76
+#: admin/views/admin.php:81 admin/views/admin.php:194 admin/views/admin.php:314
 msgid "Price less than..."
 msgstr "﻿Pris mindre än..."
 
-#: admin/views/admin.php:77
+#: admin/views/admin.php:82 admin/views/admin.php:195 admin/views/admin.php:315
 msgid "Stock greater than..."
 msgstr "﻿Lager större än..."
 
-#: admin/views/admin.php:78
+#: admin/views/admin.php:83 admin/views/admin.php:196 admin/views/admin.php:316
 msgid "Stock less than..."
 msgstr "﻿Lager mindre än..."
 
-#: admin/views/admin.php:79
+#: admin/views/admin.php:84 admin/views/admin.php:197 admin/views/admin.php:317
 msgid "In-stock"
 msgstr "﻿I lager"
 
-#: admin/views/admin.php:80
+#: admin/views/admin.php:85 admin/views/admin.php:198 admin/views/admin.php:318
 msgid "Out-of-stock"
 msgstr "﻿Slut i lager"
 
-#: admin/views/admin.php:81
+#: admin/views/admin.php:86 admin/views/admin.php:199 admin/views/admin.php:319
 msgid "Sold individually"
 msgstr "﻿Säljes styckvis"
 
-#: admin/views/admin.php:86
+#: admin/views/admin.php:91 admin/views/admin.php:204 admin/views/admin.php:324
 msgid "Category"
 msgstr "﻿Kategori"
 
-#: admin/views/admin.php:107
+#: admin/views/admin.php:112 admin/views/admin.php:225
+#: admin/views/admin.php:345
 msgid "Simple"
 msgstr "﻿Enkel"
 
-#: admin/views/admin.php:108
+#: admin/views/admin.php:113 admin/views/admin.php:226
+#: admin/views/admin.php:346
 msgid "Variable"
 msgstr "﻿Variabel"
 
-#: admin/views/admin.php:109
+#: admin/views/admin.php:114 admin/views/admin.php:227
+#: admin/views/admin.php:347
 msgid "Grouped"
 msgstr "﻿Grupperade"
 
-#: admin/views/admin.php:110
+#: admin/views/admin.php:115 admin/views/admin.php:228
+#: admin/views/admin.php:348
 msgid "External"
 msgstr "﻿Utomstående"
 
-#: admin/views/admin.php:129
+#: admin/views/admin.php:134 admin/views/admin.php:248
+#: admin/views/admin.php:368
 msgid "Process"
 msgstr "﻿Process"
+
+#: admin/views/admin.php:148
+msgid "Bulk Edit Tool for Automatically Accepting or Declining Offers"
+msgstr ""
+"Bulk Redigera Verktyg för automatisk godkännande eller minskande erbjudanden"
+
+#: admin/views/admin.php:149
+msgid ""
+"Select from the options below to enable or disable automated acceptance or "
+"declining of offers on multiple products at once."
+msgstr ""
+"Välj från alternativen nedan för att aktivera eller inaktivera automatisk "
+"godkännande eller minskning av erbjudanden på flera produkter samtidigt."
+
+#: admin/views/admin.php:156
+msgid "Enable auto accept offer"
+msgstr "Aktivera automatisk acceptans erbjudande"
+
+#: admin/views/admin.php:157
+msgid "Disable auto accept offer"
+msgstr "Inaktivera automatisk acceptans erbjudande"
+
+#: admin/views/admin.php:158
+msgid "Enable auto decline offer"
+msgstr "Aktivera automatisk minskningstilbud"
+
+#: admin/views/admin.php:159
+msgid "Disable auto decline offer"
+msgstr "Inaktivera automatisk nedgång erbjudande"
+
+#: admin/views/admin.php:264 admin/views/admin.php:279
+msgid "Minimum Offer Price"
+msgstr "Minsta Erbjudande Pris"
+
+#: admin/views/admin.php:265
+msgid ""
+"Select from the options below to set Minimum Offer Price on multiple "
+"products at once."
+msgstr ""
+"Välj från alternativen nedan för att ange minimipriset för flera produkter "
+"på en gång."
+
+#: admin/views/admin.php:272
+msgid "Enable"
+msgstr "Gör det möjligt"
+
+#: admin/views/admin.php:273
+msgid "Disable"
+msgstr "inaktivera"
+
+#: admin/views/admin.php:285
+msgid "Offer Price Type"
+msgstr "Erbjudande Pris Typ"
+
+#: admin/views/admin.php:289
+msgid "Percentage"
+msgstr "Procentsats"
 
 #: admin/views/meta-panel-add-note.php:19
 msgid "Send to buyer"
@@ -1145,6 +1509,10 @@ msgstr "﻿Lägg till"
 #: admin/views/meta-panel-comments.php:31
 msgid "No Comments Found."
 msgstr "﻿Hittade inga Kommentarer."
+
+#: admin/views/meta-panel-summary.php:19
+msgid "Product Details"
+msgstr "Produktinformation"
 
 #: admin/views/meta-panel-summary.php:22
 msgid "Product not found"
@@ -1163,11 +1531,11 @@ msgid "Click to edit product"
 msgstr "﻿Klicka för att ändra produkt"
 
 #: admin/views/meta-panel-summary.php:27 admin/views/meta-panel-summary.php:31
-#: admin/views/meta-panel-summary.php:33 admin/views/meta-panel-summary.php:74
-#: admin/views/meta-panel-summary.php:75 admin/views/meta-panel-summary.php:76
-#: admin/views/meta-panel-summary.php:77 admin/views/meta-panel-summary.php:119
-#: admin/views/meta-panel-summary.php:123
-#: admin/views/meta-panel-summary.php:127
+#: admin/views/meta-panel-summary.php:33 admin/views/meta-panel-summary.php:76
+#: admin/views/meta-panel-summary.php:77 admin/views/meta-panel-summary.php:78
+#: admin/views/meta-panel-summary.php:79 admin/views/meta-panel-summary.php:152
+#: admin/views/meta-panel-summary.php:157
+#: admin/views/meta-panel-summary.php:162
 msgid "Missing Meta Value"
 msgstr "﻿Metavärde saknas"
 
@@ -1203,138 +1571,375 @@ msgstr "﻿Slut i lager"
 msgid "Not enough stock to fulfill offer"
 msgstr "﻿Inte tillräckligt lager för att slutföra bud"
 
-#: admin/views/meta-panel-summary.php:68
+#: admin/views/meta-panel-summary.php:70
 msgid "Buyer Details"
 msgstr "﻿Köparens Detaljer"
 
-#: admin/views/meta-panel-summary.php:70
+#: admin/views/meta-panel-summary.php:72
 msgid "View offer history"
 msgstr "Visa budhistorik"
 
-#: admin/views/meta-panel-summary.php:70
+#: admin/views/meta-panel-summary.php:72
 msgid "Buyer History"
 msgstr "Köparens Historik"
 
-#: admin/views/meta-panel-summary.php:74
-#: public/includes/emails/woocommerce-new-counter-offer.php:41
-#: public/includes/emails/woocommerce-new-offer.php:41
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:28
-#: public/includes/emails/plain/woocommerce-new-offer.php:28
+#: admin/views/meta-panel-summary.php:76
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:35
+#: public/includes/emails/plain/woocommerce-new-offer.php:29
+#: public/includes/emails/woocommerce-new-counter-offer.php:79
+#: public/includes/emails/woocommerce-new-offer.php:61
 msgid "Name:"
 msgstr "﻿Namn:"
 
-#: admin/views/meta-panel-summary.php:75
-#: public/includes/emails/woocommerce-new-counter-offer.php:43
-#: public/includes/emails/woocommerce-new-offer.php:43
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:30
-#: public/includes/emails/plain/woocommerce-new-offer.php:30
+#: admin/views/meta-panel-summary.php:77
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:37
+#: public/includes/emails/plain/woocommerce-new-offer.php:31
+#: public/includes/emails/woocommerce-new-counter-offer.php:81
+#: public/includes/emails/woocommerce-new-offer.php:63
 msgid "Email:"
 msgstr "﻿E-post:"
 
-#: admin/views/meta-panel-summary.php:76
-#: public/includes/emails/woocommerce-new-counter-offer.php:44
-#: public/includes/emails/woocommerce-new-offer.php:44
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:31
-#: public/includes/emails/plain/woocommerce-new-offer.php:31
+#: admin/views/meta-panel-summary.php:78
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:38
+#: public/includes/emails/plain/woocommerce-new-offer.php:32
+#: public/includes/emails/woocommerce-new-counter-offer.php:82
+#: public/includes/emails/woocommerce-new-offer.php:64
 msgid "Phone:"
 msgstr "﻿Telefon:"
 
-#: admin/views/meta-panel-summary.php:77
+#: admin/views/meta-panel-summary.php:79
 msgid "Company:"
 msgstr "﻿Företag:"
 
-#: admin/views/meta-panel-summary.php:83
+#: admin/views/meta-panel-summary.php:88
 msgid "Buyer Offer History"
 msgstr "﻿Köparens budhistorik"
 
-#: admin/views/meta-panel-summary.php:84
+#: admin/views/meta-panel-summary.php:89
 msgid "Close offer history"
 msgstr "Stäng budhistorik"
 
-#: admin/views/meta-panel-summary.php:84
+#: admin/views/meta-panel-summary.php:89
 msgid "close"
 msgstr "﻿stäng"
 
-#: admin/views/meta-panel-summary.php:96 admin/views/meta-panel-summary.php:98
+#: admin/views/meta-panel-summary.php:101
+#: admin/views/meta-panel-summary.php:103
 msgid "view"
 msgstr "﻿visa"
 
-#: admin/views/meta-panel-summary.php:115
+#: admin/views/meta-panel-summary.php:125
+msgid "Product Add-ons Data"
+msgstr "Produkttilläggsdata"
+
+#: admin/views/meta-panel-summary.php:148
 msgid "Original Offer"
 msgstr "﻿Ursprungligt Bud"
 
-#: admin/views/meta-panel-summary.php:117
+#: admin/views/meta-panel-summary.php:150
 msgid "Orig. Quantity"
 msgstr "﻿Orig. Kvantitet"
 
-#: admin/views/meta-panel-summary.php:121
+#: admin/views/meta-panel-summary.php:154
 msgid "Orig. Price Per"
 msgstr "﻿Orig. Pris Per"
 
-#: admin/views/meta-panel-summary.php:125
+#: admin/views/meta-panel-summary.php:159
 msgid "Orig. Amount"
 msgstr "﻿Orig. Belopp"
 
-#: admin/views/meta-panel-summary.php:134
+#: admin/views/meta-panel-summary.php:215
 msgid "Counter Offer"
 msgstr "Motbud"
 
-#: admin/views/meta-panel-summary.php:153
-msgid "Total"
-msgstr "﻿Totalt"
+#: admin/views/meta-panel-summary.php:235
+msgid "Original Price and Counter Price should not be same."
+msgstr "Originalpris och motpris bör inte vara samma."
 
-#: admin/views/meta-panel-summary.php:169
+#: admin/views/meta-panel-summary.php:237
+msgid "Include Shipping with Offer"
+msgstr "Inkludera frakt med erbjudande"
+
+#: admin/views/meta-panel-summary.php:264
 msgid "Offer Note to Buyer"
 msgstr "﻿Bud Anteckning till Köpare"
 
-#: admin/views/meta-panel-summary.php:171
+#: admin/views/meta-panel-summary.php:266
 msgid ""
 "Enter a note here to be included in the email notification to the buyer when "
 "the offer status is updated."
 msgstr ""
-"﻿Ange en notering här för att inkluderas i e-postmeddelandet till köparen när "
-"budets status uppdateras."
+"﻿Ange en notering här för att inkluderas i e-postmeddelandet till köparen "
+"när budets status uppdateras."
 
-#: admin/views/meta-panel-summary.php:176
+#: admin/views/meta-panel-summary.php:272
 msgid "Offer Status"
 msgstr "Bud Status:"
 
-#: admin/views/meta-panel-summary.php:181
+#: admin/views/meta-panel-summary.php:277
 msgid "- Select status"
 msgstr "﻿- Välj Status:"
 
-#: admin/views/meta-panel-summary.php:195
+#: admin/views/meta-panel-summary.php:282
+#: admin/views/meta-panel-summary.php:328
+msgid "Completed Offer"
+msgstr "Slutfört Bud"
+
+#: admin/views/meta-panel-summary.php:291
 msgid "Final Offer"
 msgstr "﻿Slutgiltligt Bud"
 
-#: admin/views/meta-panel-summary.php:202
+#: admin/views/meta-panel-summary.php:313
 msgid "Offer Expires"
 msgstr "﻿Bud Utgår"
 
-#: admin/views/meta-panel-summary.php:212
+#: admin/views/meta-panel-summary.php:323
 msgid "Expiration date has passed."
 msgstr "Utgångsdatum har passerats."
 
-#: admin/views/meta-panel-summary.php:219
+#: admin/views/meta-panel-summary.php:330
 msgid "Update"
 msgstr "﻿Uppdatera"
 
-#: admin/views/meta-panel-summary.php:225
+#: admin/views/meta-panel-summary.php:336
 msgid "Move to Trash"
 msgstr "﻿Flytta till Papperskorgen"
 
-#: admin/views/meta-panel-summary.php:230
+#: admin/views/meta-panel-summary.php:341
 msgid "Related Orders"
 msgstr "﻿Relaterade Beställningar"
 
-#: public/class-offers-for-woocommerce.php:171
-#: public/class-offers-for-woocommerce.php:235
-#: public/class-offers-for-woocommerce.php:309
-#: public/class-offers-for-woocommerce.php:376 public/views/public.php:60
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:106
+msgid "Constant Contact Integration"
+msgstr "Konstant kontaktintegration"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:108
+msgid "Enable Constant Contact"
+msgstr "Aktivera konstant kontakt"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:111
+msgid "Constant Contact API Key"
+msgstr "API för konstant kontakt API"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:112
+msgid ""
+"Enter your API Key. <a target=\"_blank\" href=\"https://constantcontact."
+"mashery.com/apps/mykeys\">Get your API key</a>"
+msgstr ""
+"Ange din API-nyckel. <a target=\"_blank\" href=\"https://constantcontact."
+"mashery.com/apps/mykeys\">Hämta din API-nyckel\n"
+"</a>"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:118
+msgid "Constant Contact Access Token"
+msgstr "Konstant kontaktåtkomsttoken"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:119
+msgid "Enter Your Access Token"
+msgstr "Ange din åtkomsttoken"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:126
+msgid "Constant Contact lists"
+msgstr "Konstant kontaktlistor"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:127
+msgid ""
+"After you add your Constant Contact API Key above and save it this list will "
+"be populated."
+msgstr ""
+"När du har lagt till din Konstant Kontakta API-nyckel ovan och spara den "
+"kommer listan att fyllas i.\n"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:135
+msgid "Force Constant Contact lists refresh"
+msgstr "Tvinga konstant kontaktlistor uppdatera"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:136
+msgid ""
+"Check and 'Save changes' this if you've added a new Constant Contact list "
+"and it's not showing in the list above."
+msgstr ""
+"Kontrollera och \"Spara ändringar\" här om du har lagt till en ny konstant "
+"kontaktlista och den visas inte i listan ovan."
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:142
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:109
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:106
+msgid "Debug Log"
+msgstr "Felsökningslogg"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:145
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:112
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:109
+msgid "Enable logging"
+msgstr "Aktivera loggning"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:147
+msgid "Log Constant Contact events, inside <code>%s</code>"
+msgstr "Logga Konstant Kontakta evenemang, inuti <code>%s</code>"
+
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:186
+#: includes/class-offers-for-woocommerce-constant-contact-helper.php:191
+msgid "Unable to load Constant Contact lists, check your API Key."
+msgstr "Det gick inte att ladda konstanta kontaktlistor, kolla din API-nyckel."
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:79
+msgid "MailChimp Integration"
+msgstr "MailChimp Integration"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:81
+msgid "Enable MailChimp"
+msgstr "Aktivera MailChimp"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:84
+msgid "MailChimp API Key"
+msgstr "MailChimp API-nyckel"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:85
+msgid ""
+"Enter your API Key. <a target=\"_blank\" href=\"http://admin.mailchimp."
+"com/account/api-key-popup\">Get your API key</a>"
+msgstr ""
+"Ange din API-nyckel. <a target=\"_blank\" href=\"http://admin.mailchimp."
+"com/account/api-key-popup\">Hämta din API-nyckel\n"
+"</a>"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:92
+msgid "MailChimp lists"
+msgstr "MailChimp lists"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:93
+msgid ""
+"After you add your MailChimp API Key above and save it this list will be "
+"populated."
+msgstr ""
+"När du har lagt till din MailChimp API-nyckel ovan och spara den kommer "
+"listan att fyllas i."
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:101
+msgid "Force MailChimp lists refresh"
+msgstr "Force MailChimp listar uppdatering"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:102
+msgid ""
+"Check and 'Save changes' this if you've added a new MailChimp list and it's "
+"not showing in the list above."
+msgstr ""
+"Kontrollera och \"Spara ändringar\" om du har lagt till en ny MailChimp-"
+"lista och den visas inte i listan ovan."
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:114
+msgid "Log MailChimp events, inside <code>%s</code>"
+msgstr "Logga Konstant Kontakta evenemang, inuti <code>%s</code>"
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:147
+msgid "Unable to load MailChimp lists, check your API Key."
+msgstr "Det gick inte att ladda konstanta kontaktlistor, kolla din API-nyckel."
+
+#: includes/class-offers-for-woocommerce-mailchimp-helper.php:157
+msgid "You have not created any lists at MailChimp"
+msgstr "Du har inte skapat några listor på MailChimp"
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:85
+msgid "MailPoet Integration"
+msgstr "MailPoet Integration"
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:87
+msgid "Enable MailPoet"
+msgstr "Aktivera MailPoet"
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:90
+msgid "MailPoet lists"
+msgstr "MailPoet listor"
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:91
+msgid ""
+"After you add your MailPoet API Key above and save it this list will be "
+"populated."
+msgstr ""
+"När du har lagt till din MailPoet API-nyckel ovan och spara den kommer den "
+"här listan att fyllas i."
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:99
+msgid "Force MailPoet lists refresh"
+msgstr "Force MailPoet listar uppdatering"
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:100
+msgid ""
+"Check and 'Save changes' this if you've added a new MailPoet list and it's "
+"not showing in the list above."
+msgstr ""
+"Kolla och \"Spara ändringar\" här om du har lagt till en ny MailPoet lista "
+"och den visas inte i listan ovan."
+
+#: includes/class-offers-for-woocommerce-mailpoet-helper.php:111
+msgid "Log MailPoet events, inside <code>%s</code>"
+msgstr "Logga MailPoet evenemang, inuti <code>%s</code>"
+
+#: includes/class-offers-for-woocommerce-recaptcha-helper.php:31
+msgid "Google reCAPTCHA Integration"
+msgstr "Google reCAPTCHA Integration"
+
+#: includes/class-offers-for-woocommerce-recaptcha-helper.php:33
+msgid "Enable Google reCAPTCHA"
+msgstr "Aktivera Google reCAPTCHA"
+
+#: includes/class-offers-for-woocommerce-recaptcha-helper.php:36
+msgid "Site Key"
+msgstr "Site Key"
+
+#: includes/class-offers-for-woocommerce-recaptcha-helper.php:37
+msgid ""
+"Enter site key. <a target=\"_blank\" href=\"https://www.google."
+"com/recaptcha/admin\">Get your site key</a>."
+msgstr ""
+"Ange webbplatsnyckel. <a target=\"_blank\" href=\"https://www.google."
+"com/recaptcha/admin\">Få din webbplats nyckel</a>."
+
+#: includes/class-offers-for-woocommerce-recaptcha-helper.php:44
+msgid "Secret Key"
+msgstr "Hemlig nyckel"
+
+#: includes/class-offers-for-woocommerce-recaptcha-helper.php:45
+msgid ""
+"Enter secret key. <a target=\"_blank\" href=\"https://www.google."
+"com/recaptcha/admin\">Get your secret key</a>."
+msgstr ""
+"Ange hemlig nyckel.<a target=\"_blank\" href=\"https://www.google."
+"com/recaptcha/admin\">Få din hemliga nyckel</a>.\n"
+"\n"
+
+#: includes/class-offers-for-woocommerce-shipping.php:13
+#: includes/class-offers-for-woocommerce-shipping.php:14
+msgid "Offers for WooCommerce Shipping"
+msgstr "Erbjudanden för WooCommerce-frakt"
+
+#: includes/class-offers-for-woocommerce-shipping.php:31
+msgid "Method Title"
+msgstr "Metodstitel"
+
+#: includes/class-offers-for-woocommerce-shipping.php:33
+msgid "This controls the title which the user sees during checkout."
+msgstr "Detta reglerar titeln som användaren ser vid utcheckningen."
+
+#: includes/class-offers-for-woocommerce-shipping.php:34
+msgid "Offer Shipping Cost"
+msgstr "Erbjuda fraktkostnad"
+
+#: includes/class-offers-for-woocommerce-shipping.php:66
+msgid " (Free)"
+msgstr "(Fri)"
+
+#: public/class-offers-for-woocommerce.php:239
+msgid "Please log in to make an offer."
+msgstr "Vänligen logga in för att göra ett erbjudande."
+
+#: public/class-offers-for-woocommerce.php:305
+#: public/class-offers-for-woocommerce.php:573 public/views/public.php:101
 msgid "Make Offer"
 msgstr "Ge ett Bud"
 
-#: public/class-offers-for-woocommerce.php:437
+#: public/class-offers-for-woocommerce.php:652
 msgid ""
 "You can not submit another counter offer at this time; Counter offer is "
 "currently being reviewed. You can submit a new offer using the form below."
@@ -1342,109 +1947,142 @@ msgstr ""
 "Du kan inte skicka ett motbud just nu; ditt förra motbud behandlas för "
 "tillfället. Du kan skicka ett nytt bud genom att använda formuläret nedan:"
 
-#: public/class-offers-for-woocommerce.php:443
+#: public/class-offers-for-woocommerce.php:656
 msgid "Invalid Parent Offer Id; See shop manager for assistance."
 msgstr "﻿Ogiltig Överordnat Bud; Gå till butiken för hjälp."
 
-#: public/class-offers-for-woocommerce.php:451
+#: public/class-offers-for-woocommerce.php:663
 msgid ""
 "You can not submit a counter offer at this time; Counter offer is a final "
 "offer. You can submit a new offer using the form below."
 msgstr ""
-"﻿Du kan inte skicka ett motbud vid detta tillfälle; Motbud är sista budet. Du "
-"kan skicka ett nytt bud via formuläret nedan."
+"﻿Du kan inte skicka ett motbud vid detta tillfälle; Motbud är sista budet. "
+"Du kan skicka ett nytt bud via formuläret nedan."
 
-#: public/class-offers-for-woocommerce.php:459
+#: public/class-offers-for-woocommerce.php:670
 msgid ""
 "Counter offer has expired; You can not submit a counter offer at this time. "
 "You can submit a new offer using the form below."
 msgstr ""
-"Motbud har löpt ut. Du kan inte skicka ett motbud vid detta tillfälle. Du kan "
-"skicka ett nytt bud via formuläret nedan."
+"Motbud har löpt ut. Du kan inte skicka ett motbud vid detta tillfälle. Du "
+"kan skicka ett nytt bud via formuläret nedan."
 
-#: public/class-offers-for-woocommerce.php:711
+#: public/class-offers-for-woocommerce.php:909
+msgid ""
+"Please select some product options before making offer for this product."
+msgstr ""
+"Var god välj några produktalternativ innan du gör en offert för denna "
+"produkt."
+
+#: public/class-offers-for-woocommerce.php:910
+msgid "Sorry, this product is unavailable. Please choose a different product."
+msgstr ""
+"Tyvärr, den här produkten är inte tillgänglig. Var god välj en annan produkt."
+
+#: public/class-offers-for-woocommerce.php:1033
+#: public/class-offers-for-woocommerce.php:1038
+#: public/class-offers-for-woocommerce.php:1043
+msgid "Please check the captcha."
+msgstr ""
+"Vänligen kolla captcha.\n"
+
+#: public/class-offers-for-woocommerce.php:1053
 msgid "Please enter a positive value for 'Offer Quantity'"
 msgstr "﻿Ange ett värde för det obligatoriska fältet \"Antal\""
 
-#: public/class-offers-for-woocommerce.php:717
+#: public/class-offers-for-woocommerce.php:1062
 msgid "Please enter a positive value for 'Offer Amount'"
 msgstr "﻿Vänligen ange ett positivt värde för \"Bud Belopp\""
 
-#: public/class-offers-for-woocommerce.php:768
+#: public/class-offers-for-woocommerce.php:1088
+msgid "Nothing return"
+msgstr "Ingenting återkommer"
+
+#: public/class-offers-for-woocommerce.php:1147
+msgid "Invalid Offer Submission; See shop manager for assistance"
+msgstr "Ogiltigt erbjudande Se butikschef för hjälp"
+
+#: public/class-offers-for-woocommerce.php:1171
 msgid "Invalid Parent Offer Id; See shop manager for assistance"
 msgstr "﻿Ogiltig erbjudande-Id för överordnad; Gå till butiken för hjälp"
 
-#: public/class-offers-for-woocommerce.php:805
+#: public/class-offers-for-woocommerce.php:1217
 msgid "Buyer Submitted Counter Offer"
 msgstr "﻿Köparen skickade Motbud"
 
-#: public/class-offers-for-woocommerce.php:867
+#: public/class-offers-for-woocommerce.php:1262
 msgid "Created New Offer"
 msgstr "﻿Skapat Nytt Erbjudande"
 
-#: public/class-offers-for-woocommerce.php:1078
+#: public/class-offers-for-woocommerce.php:1364
+msgid "%s &ndash; %s"
+msgstr "%s &ndash; %s"
+
+#: public/class-offers-for-woocommerce.php:1522
 msgid "Missing or Invalid Offer Id; See shop manager for assistance"
 msgstr "﻿Saknat eller är ogiltigt Bud-Id; Gå till butiken för hjälp"
 
-#: public/class-offers-for-woocommerce.php:1098
-#: public/class-offers-for-woocommerce.php:1461
+#: public/class-offers-for-woocommerce.php:1539
+#: public/class-offers-for-woocommerce.php:1801
 msgid "Invalid or Expired Offer Id; See shop manager for assistance"
 msgstr "﻿Ogiltigt eller Utgånget Bud-Id; Gå till butiken för hjälp"
 
-#: public/class-offers-for-woocommerce.php:1103
-#: public/class-offers-for-woocommerce.php:1126
-#: public/class-offers-for-woocommerce.php:1469
+#: public/class-offers-for-woocommerce.php:1543
+#: public/class-offers-for-woocommerce.php:1561
+#: public/class-offers-for-woocommerce.php:1809
 msgid ""
 "Invalid Offer Status or Expired Offer Id; See shop manager for assistance"
 msgstr "﻿Ogiltigt Bud Status eller utgånget Bud-Id; Gå till butiken för hjälp"
 
-#: public/class-offers-for-woocommerce.php:1109
+#: public/class-offers-for-woocommerce.php:1548
 msgid "Offer has expired; You can submit a new offer using the form below."
 msgstr "﻿Budet har löpt ut. Du kan skicka ett nytt bud via formuläret nedan."
 
-#: public/class-offers-for-woocommerce.php:1120
+#: public/class-offers-for-woocommerce.php:1556
 msgid ""
 "Offer is currently On Hold; We will notify you when offer status is updated."
 msgstr ""
 "﻿Erbjudande är för närvarande på vänt; Vi kommer att meddela dig när budets "
 "status har uppdateras."
 
-#: public/class-offers-for-woocommerce.php:1136
-#: public/class-offers-for-woocommerce.php:1146
+#: public/class-offers-for-woocommerce.php:1570
+#: public/class-offers-for-woocommerce.php:1580
 msgid "Error - Product Not Found; See shop manager for assistance"
 msgstr "﻿Fel - Produkten hittades inte; Gå till butiken för hjälp"
 
-#: public/class-offers-for-woocommerce.php:1162
-msgid ""
-"Error - Product does not have enough in stock to fulfill your order at this "
-"time."
-msgstr ""
-"﻿Fel - Produkten har inte tillräckligt lager att uppfylla ditt bud för "
-"tillfället."
-
-#: public/class-offers-for-woocommerce.php:1166
-msgid "Error - Product is out of stock; See shop manager for assistance"
-msgstr "﻿Fel - Produkten är slut i lager; Gå till butiken för hjälp"
-
-#: public/class-offers-for-woocommerce.php:1175
+#: public/class-offers-for-woocommerce.php:1587
 msgid "Successfully added Offer to cart"
 msgstr "﻿har lagts till i din varukorg"
 
-#: public/class-offers-for-woocommerce.php:1225
+#: public/class-offers-for-woocommerce.php:1627
 msgid "View Cart"
 msgstr "﻿Visa kundvagn"
 
-#: public/class-offers-for-woocommerce.php:1226
+#: public/class-offers-for-woocommerce.php:1627
 msgid "Offer already added to cart"
 msgstr "﻿Erbjudandet har redan lagts i kundvagnen"
 
-#: public/class-offers-for-woocommerce.php:1307
+#: public/class-offers-for-woocommerce.php:1715
 msgid "Offer quantity cannot be modified"
 msgstr "﻿Budets kvantitet inte kan ändras"
 
-#: public/class-offers-for-woocommerce.php:1400
-msgid "Related Order"
-msgstr "﻿Relaterad Beställning"
+#: public/class-offers-for-woocommerce.php:2142
+msgid "Join Our Mailing List"
+msgstr "Gå med i vår maillista"
+
+#: public/class-offers-for-woocommerce.php:2245
+msgid "%d offer is currently pending."
+msgid_plural "%d offers are currently pending."
+msgstr[0] "% d erbjudandet är aktuellt i väntan på."
+msgstr[1] "% d erbjudanden väntar för närvarande."
+
+#: public/class-offers-for-woocommerce.php:2304
+msgid "Highest Current Offer: %s%s"
+msgid_plural "Highest Current Offer: %s%s"
+msgstr[0] ""
+"Högsta nuvarande erbjudande:% s% s\n"
+msgstr[1] ""
+"Högsta nuvarande erbjudande:% s% s\n"
 
 #: public/includes/class-wc-new-counter-offer-email.php:32
 msgid "New counter offer"
@@ -1455,25 +2093,28 @@ msgid ""
 "New Counter Offer Notification emails are sent to the admin when customer "
 "submits a counter offer"
 msgstr ""
-"Information om Nytt Motbud skickas som e-post till admin när kunden lämnar in "
-"ett motbud"
+"Information om Nytt Motbud skickas som e-post till admin när kunden lämnar "
+"in ett motbud"
 
 #: public/includes/class-wc-new-counter-offer-email.php:38
-#: public/includes/class-wc-new-counter-offer-email.php:39
 msgid "New Counter Offer"
 msgstr "Nytt Motbud"
 
-#: public/includes/class-wc-new-counter-offer-email.php:134
-#: public/includes/class-wc-new-offer-email.php:134
-msgid "Recipient(s)"
-msgstr "﻿Mottagare"
+#: public/includes/class-wc-new-counter-offer-email.php:39
+msgid "[{site_title}] New Counter Offer ({offer_number}) - {offer_date}"
+msgstr "Nya Disken Erbjudande"
 
 #: public/includes/class-wc-new-counter-offer-email.php:136
 #: public/includes/class-wc-new-offer-email.php:136
+msgid "Recipient(s)"
+msgstr "﻿Mottagare"
+
+#: public/includes/class-wc-new-counter-offer-email.php:138
+#: public/includes/class-wc-new-offer-email.php:138
 msgid "Enter recipients (comma separated) for this email. Defaults to"
 msgstr ""
-"﻿Fyll i mottagare (separera med kommatecken) för det här mailet. Standardvärde "
-"är"
+"﻿Fyll i mottagare (separera med kommatecken) för det här mailet. "
+"Standardvärde är"
 
 #: public/includes/class-wc-new-offer-email.php:32
 msgid "New offer"
@@ -1488,9 +2129,12 @@ msgstr ""
 "bud"
 
 #: public/includes/class-wc-new-offer-email.php:38
-#: public/includes/class-wc-new-offer-email.php:39
 msgid "New Offer"
 msgstr "Nytt Bud"
+
+#: public/includes/class-wc-new-offer-email.php:39
+msgid "[{site_title}] New Offer ({offer_number}) - {offer_date}"
+msgstr "[{site_title}] Nytt erbjudande ({offer_number}) - {offer_date}"
 
 #: public/includes/class-wc-offer-received-email.php:32
 msgid "Offer received"
@@ -1505,52 +2149,13 @@ msgstr ""
 "ett bud"
 
 #: public/includes/class-wc-offer-received-email.php:38
-#: public/includes/class-wc-offer-received-email.php:39
 msgid "Offer Received"
 msgstr "Bud Mottaget"
 
-#: public/includes/emails/woocommerce-new-counter-offer.php:13
-msgid "New counter offer submitted on"
-msgstr "﻿Nytt motbud skickat den"
-
-#: public/includes/emails/woocommerce-new-counter-offer.php:13
-msgid "To manage this counter offer please use the following link:"
-msgstr "﻿För att hantera detta motbud vänligen använd följande länk:"
-
-#: public/includes/emails/woocommerce-new-counter-offer.php:13
-msgid "Manage Counter Offer"
-msgstr "﻿Hantera Motbud"
-
-#: public/includes/emails/woocommerce-new-counter-offer.php:40
-#: public/includes/emails/woocommerce-new-offer.php:40
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:27
-#: public/includes/emails/plain/woocommerce-new-offer.php:27
-msgid "Offer Contact Details:"
-msgstr "Bud Kontaktinformation:"
-
-#: public/includes/emails/woocommerce-new-counter-offer.php:42
-#: public/includes/emails/woocommerce-new-offer.php:42
-#: public/includes/emails/plain/woocommerce-new-counter-offer.php:29
-#: public/includes/emails/plain/woocommerce-new-offer.php:29
-msgid "Company Name:"
-msgstr "﻿Företagsnamn:"
-
-#: public/includes/emails/woocommerce-new-offer.php:13
-msgid "New offer submitted on"
-msgstr "﻿Nytt Bud skickat den"
-
-#: public/includes/emails/woocommerce-new-offer.php:13
-msgid "To manage this offer please use the following link:"
-msgstr "﻿För att hantera detta bud vänligen använd följande länk:"
-
-#: public/includes/emails/woocommerce-offer-received.php:13
-#: public/includes/emails/plain/woocommerce-offer-received.php:13
-msgid "We have received your offer on"
-msgstr "﻿Vi har fått ditt bud på"
-
-#: public/includes/emails/woocommerce-offer-received.php:13
-msgid "Your offer will be processed as soon as possible"
-msgstr "﻿Ditt bud kommer att behandlas så snart som möjligt"
+#: public/includes/class-wc-offer-received-email.php:39
+msgid "[{site_title}] Offer Received ({offer_number}) - {offer_date}"
+msgstr ""
+"[{site_title}] Erbjudet mottaget ({offer_number}) - {offer_date}\n"
 
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:13
 msgid "New Counter Offer submitted on"
@@ -1559,6 +2164,20 @@ msgstr "﻿Nytt motbud skickat den"
 #: public/includes/emails/plain/woocommerce-new-counter-offer.php:13
 msgid "To manage this counter offer please visit the following url:"
 msgstr "﻿För att hantera detta motbud vänligen besök följande url:"
+
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:34
+#: public/includes/emails/plain/woocommerce-new-offer.php:28
+#: public/includes/emails/woocommerce-new-counter-offer.php:78
+#: public/includes/emails/woocommerce-new-offer.php:60
+msgid "Offer Contact Details:"
+msgstr "Bud Kontaktinformation:"
+
+#: public/includes/emails/plain/woocommerce-new-counter-offer.php:36
+#: public/includes/emails/plain/woocommerce-new-offer.php:30
+#: public/includes/emails/woocommerce-new-counter-offer.php:80
+#: public/includes/emails/woocommerce-new-offer.php:62
+msgid "Company Name:"
+msgstr "﻿Företagsnamn:"
 
 #: public/includes/emails/plain/woocommerce-new-offer.php:13
 msgid "New Offer submitted on"
@@ -1569,30 +2188,85 @@ msgid "To manage this offer please visit the following url:"
 msgstr "﻿För att hantera detta bud vänligen besök följande url:"
 
 #: public/includes/emails/plain/woocommerce-offer-received.php:13
+#: public/includes/emails/woocommerce-offer-received.php:13
+msgid "We have received your offer on"
+msgstr "﻿Vi har fått ditt bud på"
+
+#: public/includes/emails/plain/woocommerce-offer-received.php:13
 msgid "Your offer will be processed as soon as possible."
 msgstr "﻿Ditt bud kommer att behandlas så snart som möjligt."
 
-#: public/views/public.php:18
+#: public/includes/emails/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:26
+msgid "New counter offer submitted on"
+msgstr "﻿Nytt motbud skickat den"
+
+#: public/includes/emails/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:26
+msgid "To manage this counter offer please use the following link:"
+msgstr "﻿För att hantera detta motbud vänligen använd följande länk:"
+
+#: public/includes/emails/woocommerce-new-counter-offer.php:23
+#: public/includes/emails/woocommerce-new-counter-offer.php:26
+msgid "Manage Counter Offer"
+msgstr "﻿Hantera Motbud"
+
+#: public/includes/emails/woocommerce-new-offer.php:23
+#: public/includes/emails/woocommerce-new-offer.php:26
+msgid "New offer submitted on"
+msgstr "﻿Nytt Bud skickat den"
+
+#: public/includes/emails/woocommerce-new-offer.php:23
+#: public/includes/emails/woocommerce-new-offer.php:26
+msgid "To manage this offer please use the following link:"
+msgstr "﻿För att hantera detta bud vänligen använd följande länk:"
+
+#: public/includes/emails/woocommerce-new-offer.php:28
+msgid "Decline Offer"
+msgstr "Avböja erbjudande"
+
+#: public/includes/emails/woocommerce-new-offer.php:29
+msgid "Approve Offer"
+msgstr "Godkänn Erbjudandet"
+
+#: public/includes/emails/woocommerce-offer-received.php:13
+msgid "Your offer will be processed as soon as possible"
+msgstr "﻿Ditt bud kommer att behandlas så snart som möjligt"
+
+#: public/views/my-offers.php:11
+msgid "Status"
+msgstr "Status"
+
+#: public/views/my-offers.php:24
+msgid "Recent Offers"
+msgstr "Senaste erbjudanden"
+
+#: public/views/my-offers.php:80 public/views/my-offers.php:86
+msgid "View Product"
+msgstr "Visa produkt"
+
+#: public/views/public.php:19
 msgid "Selection Required:"
 msgstr "﻿Val Krävs:"
 
-#: public/views/public.php:18
+#: public/views/public.php:19
 msgid "Select product options above before making new offer."
 msgstr "﻿Välj produktalternativ ovan innan du gör nytt bud."
 
-#: public/views/public.php:23
+#: public/views/public.php:24
 msgid "Offer Sent!"
 msgstr "Bud skickat !"
 
-#: public/views/public.php:23
+#: public/views/public.php:24
 msgid "Your offer has been received and will be processed as soon as possible."
-msgstr "﻿Ditt bud har tagits emot och kommer att behandlas så snart som möjligt."
+msgstr ""
+"﻿Ditt bud har tagits emot och kommer att behandlas så snart som möjligt."
 
-#: public/views/public.php:28 public/views/public.php:39
+#: public/views/public.php:29 public/views/public.php:40
 msgid "Error:"
 msgstr "﻿Fel:"
 
-#: public/views/public.php:28
+#: public/views/public.php:29
 msgid ""
 "There was an error sending your offer, please try again. If this problem "
 "persists, please contact us."
@@ -1600,38 +2274,51 @@ msgstr ""
 "﻿Det gick inte att skicka ditt bud, vänligen försök igen. Om problemet "
 "kvarstår, vänligen kontakta oss."
 
-#: public/views/public.php:65
-msgid "To make"
-msgstr "För att göra"
+#: public/views/public.php:108
+msgid "To make a counter offer please complete the form below:"
+msgstr "För att göra ett motbjudande, fyll i formuläret nedan:"
 
-#: public/views/public.php:65
-msgid "a counter"
-msgstr "ett motbud"
+#: public/views/public.php:111
+msgid ""
+"Wait! Before you go, feel free to send us an offer. We may decide to go "
+"ahead and accept it!"
+msgstr ""
+"Vänta! Innan du går kan du skicka oss ett erbjudande. Vi kan besluta att "
+"fortsätta och acceptera det!"
 
-#: public/views/public.php:65
-msgid "an"
-msgstr "ett"
+#: public/views/public.php:114
+msgid "To make an offer please complete the form below:"
+msgstr "För att göra ett erbjudande, fyll i formuläret nedan:"
 
-#: public/views/public.php:65
-msgid "offer please complete the form below:"
-msgstr "bud vänligen fyll i formuläret nedan:"
+#: public/views/public.php:214
+msgid "Invalid Phone number"
+msgstr "Ogiltigt telefonnummer"
 
-#: public/views/public.php:128
+#: public/views/public.php:225
 msgid "Offer Notes (optional)"
 msgstr "Anteckningar för ditt bud (valfritt)"
 
-#: public/views/public.php:135
-msgid "Submit"
-msgstr "Skicka"
+#: public/views/public.php:264
+msgid "Submit Counter Offer"
+msgstr ""
+"Skicka Disken Erbjudande\n"
 
-#: public/views/public.php:135
-msgid "Counter"
-msgstr "Mot"
+#: public/views/public.php:266
+msgid "Submit Offer"
+msgstr "Lämna erbjudande"
 
-#: public/views/public.php:135
-msgid "Offer"
-msgstr "Bud"
-
-#: public/views/public.php:136
+#: public/views/public.php:278
 msgid "Please wait..."
 msgstr "﻿Vänligen vänta..."
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.angelleye.com/product/offers-for-woocommerce"
+msgstr "http://www.angelleye.com/product/offers-for-woocommerce"
+
+#. Description of the plugin/theme
+msgid ""
+"Accept offers for products on your website.  Respond with accept, deny, or "
+"counter-offer, and manage all active offers/counters easily."
+msgstr ""
+"Acceptera erbjudanden för produkter på din webbplats. Reagera med acceptera, "
+"neka eller motbjudande, och hantera alla aktiva erbjudanden / räknare enkelt."
