@@ -290,7 +290,7 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 */
 @media (min-width: 1281px) {
   /* CSS */
-  .offers-for-woocommerce-make-offer-button-single-product{
+  .et_divi_theme  .offers-for-woocommerce-make-offer-button-single-product{
       position: absolute !important;
   }
 }
@@ -302,7 +302,7 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 @media (min-width: 1025px) and (max-width: 1280px) {
   
   /* CSS */
-  .offers-for-woocommerce-make-offer-button-single-product{
+  .et_divi_theme  .offers-for-woocommerce-make-offer-button-single-product{
       position: absolute !important;
   }
 }
