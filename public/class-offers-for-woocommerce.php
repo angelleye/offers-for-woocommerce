@@ -358,7 +358,7 @@ class Angelleye_Offers_For_Woocommerce {
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         $no_price_product_class = ( $_product->get_price() === '' ) ? 'ofwc_no_price_product' : '';
         $button_position = $button_options_display['display_setting_make_offer_button_position_single'];
-        $is_on_right = ($button_position == 'right_of_add') ? 'ofwc-button-right-of-add-to-cart' : '';
+        $is_on_right = (($button_position == 'right_of_add') || ($button_position == 'default') )? 'ofwc-button-right-of-add-to-cart' : '';
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         if($button_options_display['display_setting_make_offer_button_position_single'] == 'before_add'){
             echo $this->angelleye_ofwc_offer_button_output();
