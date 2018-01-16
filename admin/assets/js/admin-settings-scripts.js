@@ -99,20 +99,31 @@
                 }
             });
             
+            $('#ofw-minimum-offer-price-type').change(function(){
+                var selected = $(this).val();
+                if('percentage' === selected){
+                    $('#ae_offer_type_chnage_lable').html('Minimum Offer Percentage');
+                }
+                else{
+                    $('#ae_offer_type_chnage_lable').html('Minimum Offer Price');
+                }
+            });
+            
+            
             $('#ofw-minimum-offer-action-type').change(function(){
                 var selected = $(this).val();
                 if('ofwc_minimum_offer_price_enable' === selected){
                     $('.ofwc-minimun-offer-price-input').show();
                     $('.ofwc-minimun-offer-price-input').attr('required', 'required');
                     $('.ofw-minimum-offer-price-type').show();
-                    $('.ofw-minimum-offer-price-type').attr('required', 'required');
+                    $('.ofw-minimum-offer-price-type').attr('required', 'required');                    
                 }
                 else{
                     /* Disabled */
                     $('.ofwc-minimun-offer-price-input').hide();
                     $('.ofwc-minimun-offer-price-input').removeAttr('required');
                     $('.ofw-minimum-offer-price-type').hide();
-                    $('.ofw-minimum-offer-price-type').removeAttr('required');
+                    $('.ofw-minimum-offer-price-type').removeAttr('required');                    
                 }
             });
 
