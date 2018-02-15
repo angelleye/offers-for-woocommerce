@@ -1084,10 +1084,6 @@ class Angelleye_Offers_For_Woocommerce {
                                      "statusmsgDetail" => __('Minimum Offer price must be '.$return['percent'].'%. For '.$return['qty'].' quantity Minimum offer price is '.$symbol.$return['minimum_offer_price'], 'offers-for-woocommerce')));
                     exit;                 
                 }
-                else{
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Nothing return', 'offers-for-woocommerce')));
-                    exit;
-                }                
             }
             else{
                 //echo "in else odder condition";
