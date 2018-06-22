@@ -749,6 +749,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function angelleye_ofwc_exclude_cpt_from_comments_clauses( $clauses ) {
+            require_once(ABSPATH . 'wp-admin/includes/screen.php');
             $screen = get_current_screen();
             if ( !empty($screen->id) && $screen->id == 'edit-comments' ) {
                 global $wpdb;
