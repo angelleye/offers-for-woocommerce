@@ -276,7 +276,7 @@
             </div>
             
             <div class="angelleye-offers-tools-bulk-action-section ofwc-minimun-offer-price-input angelleye-hidden">
-                <label for="minimun-offer-price-input"><?php echo __('Minimum Offer Price', 'offers-for-woocommerce'); ?></label>
+                <label for="minimun-offer-price-input"><span id="ae_offer_type_chnage_lable"><?php echo __('Minimum Offer Price', 'offers-for-woocommerce'); ?></span></label>
                 <div>
                     <input type="number" name="minimun_offer_price_input" id="minimun-offer-price-input" min="0">
                 </div>
