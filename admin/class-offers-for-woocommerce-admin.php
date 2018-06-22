@@ -561,12 +561,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 * @since	0.1.0
 	 */
 	function process_product_meta_custom_tab( $post_id ) {
-            update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_POST['offers_for_woocommerce_enabled']) && $_POST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
-            update_post_meta( $post_id, 'offers_for_woocommerce_onexit_only', ( isset($_POST['offers_for_woocommerce_onexit_only']) && $_POST['offers_for_woocommerce_onexit_only'] ) ? 'yes' : 'no' );
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', ( isset($_POST['_offers_for_woocommerce_auto_accept_enabled']) && $_POST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', ( isset($_POST['_offers_for_woocommerce_auto_decline_enabled']) && $_POST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', ( isset($_POST['_offers_for_woocommerce_auto_accept_percentage']) && !empty($_POST['_offers_for_woocommerce_auto_accept_percentage']) ) ? $_POST['_offers_for_woocommerce_auto_accept_percentage'] : '' );
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', ( isset($_POST['_offers_for_woocommerce_auto_decline_percentage']) && !empty($_POST['_offers_for_woocommerce_auto_decline_percentage']) ) ? $_POST['_offers_for_woocommerce_auto_decline_percentage'] : '' );
+            update_post_meta( $post_id, 'offers_for_woocommerce_enabled', !empty($_POST['offers_for_woocommerce_enabled'])  ? 'yes' : 'no' );
+            update_post_meta( $post_id, 'offers_for_woocommerce_onexit_only', !empty($_POST['offers_for_woocommerce_onexit_only'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', !empty($_POST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', !empty($_POST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', !empty($_POST['_offers_for_woocommerce_auto_accept_percentage']) ? wc_clean($_POST['_offers_for_woocommerce_auto_accept_percentage']) : '' );
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', !empty($_POST['_offers_for_woocommerce_auto_decline_percentage']) ? wc_clean($_POST['_offers_for_woocommerce_auto_decline_percentage']) : '' );
 	}
 	
 	/**
@@ -1647,11 +1647,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
 
         // Save 'final offer' post meta
-        $offer_final_offer = (isset($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
+        $offer_final_offer = (!empty($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
         update_post_meta( $post_id, 'offer_final_offer', $offer_final_offer );
 
         // Save 'offer_expiration_date' post meta
-        $offer_expire_date = (isset($_POST['offer_expiration_date']) && $_POST['offer_expiration_date'] != '') ? $_POST['offer_expiration_date'] : '';
+        $offer_expire_date = !empty($_POST['offer_expiration_date']) ? wc_clean($_POST['offer_expiration_date']) : '';
         update_post_meta( $post_id, 'offer_expiration_date', $offer_expire_date );
 
         // Get current data for Offer after saved
@@ -1661,10 +1661,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
 
         // set update notes
-        $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
+        $offer_notes = !empty($_POST['angelleye_woocommerce_offer_status_notes']) ? wc_clean(wp_slash($_POST['angelleye_woocommerce_offer_status_notes'])) : '';
 
         $enable_shipping_cost = (isset($_POST['enable_shipping_cost']) && $_POST['enable_shipping_cost'] == 1) ? 1 : 0;
-        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $_POST['offer_shipping_cost'] : 0.00;
+        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
         if($enable_shipping_cost){
             update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
             update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
@@ -1682,12 +1682,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offer_email = $recipient;
 
         // if buyercountered-offer previous then use buyer counter values
-        $is_offer_buyer_countered_status = ( $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
+        $is_offer_buyer_countered_status = ( !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
         $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
         $template_name = '';
 
         // Accept Offer
-        if($post_data->post_status == 'accepted-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'accepted-offer'){
+        if($post_data->post_status == 'accepted-offer' && !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'accepted-offer'){
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'orig_offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'orig_offer_price_per', true);
             $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
@@ -1703,7 +1703,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         // Offer On Hold
-        if($post_data->post_status == 'on-hold-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'on-hold-offer')
+        if($post_data->post_status == 'on-hold-offer' && !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'on-hold-offer')
         {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);            
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
@@ -1716,9 +1716,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // Counter Offer
         if($post_data->post_status == 'countered-offer')
         {
-            $offer_quantity = (isset($_POST['offer_quantity']) && $_POST['offer_quantity'] != '') ? str_replace(",","", $_POST['offer_quantity']) : '';
-            $offer_price_per = (isset($_POST['offer_price_per']) && $_POST['offer_price_per'] != '') ? str_replace(",","", $_POST['offer_price_per']) : '';
-            $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? str_replace(",","", $_POST['offer_shipping_cost']) : 0.00;
+            $offer_quantity = !empty( $_POST['offer_quantity']) ? wc_clean(str_replace(",","", $_POST['offer_quantity'])) : '';
+            $offer_price_per = !empty($_POST['offer_price_per']) ? wc_clean(str_replace(",","", $_POST['offer_price_per'])) : '';
+            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean(str_replace(",","", $_POST['offer_shipping_cost'])) : 0.00;
             $offer_total = number_format(round($offer_quantity * $offer_price_per, 2), 2, '.', '');
 
             /**
@@ -1739,10 +1739,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         // Decline Offer
-        if($post_data->post_status == 'declined-offer' && isset($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'declined-offer')
+        if($post_data->post_status == 'declined-offer' && !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'declined-offer')
         {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
-            $coupon_code = ( isset($_POST["ofw_coupon_list"]) && !empty($_POST["ofw_coupon_list"]) ) ? $_POST["ofw_coupon_list"] : '';
+            $coupon_code = !empty($_POST["ofw_coupon_list"]) ? wc_clean($_POST["ofw_coupon_list"]) : '';
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
 
@@ -2820,7 +2820,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function ofw_manage_offer_admin($offer_id = null, $emails = null, $is_approve = true) {
         global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
-            $post_id = $_POST["targetID"];
+            $post_id = absint($_POST["targetID"]);
         } else {
             $post_id = $offer_id;
         }
@@ -2840,7 +2840,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $post_status_text = __('Declined', 'offers-for-woocommerce');
                 $email_class = 'WC_Declined_Offer_Email';
                 $template_name = 'woocommerce-offer-declined.php';
-                $coupon_code = ( isset($_POST["coupon_code"]) && !empty($_POST["coupon_code"]) ) ? $_POST["coupon_code"] : '';
+                $coupon_code = !empty($_POST["coupon_code"]) ? wc_clean($_POST["coupon_code"]) : '';
             }
             $data_array = array(
                 'post_status' => $post_status,
@@ -2849,7 +2849,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             );
             $where = array('ID' => $post_id);
             $wpdb->update($table, $data_array, $where);
-            $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
+            $offer_notes = !empty($_POST['angelleye_woocommerce_offer_status_notes']) ? wc_clean(wp_slash($_POST['angelleye_woocommerce_offer_status_notes'])) : '';
             $recipient = get_post_meta($post_id, 'offer_email', true);
             
             $offer_id = $post_id;
@@ -2944,11 +2944,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if(is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true)))
         {
             global $post, $wpdb; // this is how you get access to the database
+            $post_id = '';
             if( isset($_GET['targetID']) && !empty($_GET['targetID'])) {
-                $post_id = $_GET["targetID"];
-            } else {
-                $post_id = $_POST['targetID'];
-            }
+                $post_id = absint($_GET["targetID"]);
+            } 
             do_action('ofw_before_auto_approve_offer_admin', $post_id);
             $this->ofw_manage_offer_admin($post_id, '', true);
             do_action('ofw_after_auto_approve_offer_admin', $post_id);
@@ -2967,10 +2966,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if(is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true)))
         {
             global $wpdb; // this is how you get access to the database
+            $post_id = '';
             if( isset($_POST['targetID']) && !empty($_POST['targetID'])) {
-                $post_id = $_POST["targetID"];
-            } else {
-                $post_id = $targetID;
+                $post_id = absint($_POST["targetID"]);
             }
             do_action('ofw_before_auto_decline_offer_admin', $post_id);
             $this->ofw_manage_offer_admin($post_id, '', false);
@@ -2997,8 +2995,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
             $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
 
-            $noteSendToBuyer = (isset($_POST["noteSendToBuyer"]) && $_POST["noteSendToBuyer"] != '') ? '1' : '';
-            $offer_notes = $_POST['noteContent'];
+            $noteSendToBuyer = !empty($_POST["noteSendToBuyer"] != '') ? '1' : '';
+            $offer_notes = wc_clean(wp_slash($_POST['noteContent']));
 
             $current_user = wp_get_current_user();
 
@@ -3154,16 +3152,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 );
             $where_args['meta_query'] = array();
             
-            $ofwc_bulk_action_minimum_price = ( isset( $_POST["minimumPrice"] ) ) ? $_POST['minimumPrice'] : FALSE;
-            $ofwc_bulk_action_price_type = ( isset( $_POST["priceType"] ) ) ? $_POST['priceType'] : FALSE;
-            $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
-            $ofwc_bulk_action_target_type = ( isset( $_POST["actionTargetType"] ) ) ? $_POST['actionTargetType'] : FALSE;
-            $ofwc_bulk_action_target_where_type = ( isset( $_POST["actionTargetWhereType"] ) ) ? $_POST['actionTargetWhereType'] : FALSE;
-            $ofwc_bulk_action_target_where_category = ( isset( $_POST["actionTargetWhereCategory"] ) ) ? $_POST['actionTargetWhereCategory'] : FALSE;
-            $ofwc_bulk_action_target_where_product_type = ( isset( $_POST["actionTargetWhereProductType"] ) ) ? $_POST['actionTargetWhereProductType'] : FALSE;
-            $ofwc_bulk_action_target_where_price_value = ( isset( $_POST["actionTargetWherePriceValue"] ) ) ? $_POST['actionTargetWherePriceValue'] : FALSE;
-            $ofwc_bulk_action_target_where_stock_value = ( isset( $_POST["actionTargetWhereStockValue"] ) ) ? $_POST['actionTargetWhereStockValue'] : FALSE;
-            $ofw_meta_key_value = ( isset($_POST['ofw_meta_key_value']) && !empty($_POST["ofw_meta_key_value"]) ) ?  $_POST['ofw_meta_key_value'] : FALSE;
+            $ofwc_bulk_action_minimum_price = ( isset( $_POST["minimumPrice"] ) ) ? wc_clean($_POST['minimumPrice']) : FALSE;
+            $ofwc_bulk_action_price_type = ( isset( $_POST["priceType"] ) ) ? wc_clean($_POST['priceType']) : FALSE;
+            $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? wc_clean($_POST['actionType']) : FALSE;
+            $ofwc_bulk_action_target_type = ( isset( $_POST["actionTargetType"] ) ) ? wc_clean($_POST['actionTargetType']) : FALSE;
+            $ofwc_bulk_action_target_where_type = ( isset( $_POST["actionTargetWhereType"] ) ) ? wc_clean($_POST['actionTargetWhereType']) : FALSE;
+            $ofwc_bulk_action_target_where_category = ( isset( $_POST["actionTargetWhereCategory"] ) ) ? wc_clean($_POST['actionTargetWhereCategory']) : FALSE;
+            $ofwc_bulk_action_target_where_product_type = ( isset( $_POST["actionTargetWhereProductType"] ) ) ? wc_clean($_POST['actionTargetWhereProductType']) : FALSE;
+            $ofwc_bulk_action_target_where_price_value = ( isset( $_POST["actionTargetWherePriceValue"] ) ) ? wc_clean($_POST['actionTargetWherePriceValue']) : FALSE;
+            $ofwc_bulk_action_target_where_stock_value = ( isset( $_POST["actionTargetWhereStockValue"] ) ) ? wc_clean($_POST['actionTargetWhereStockValue']) : FALSE;
+            $ofw_meta_key_value = ( isset($_POST['ofw_meta_key_value']) && !empty($_POST["ofw_meta_key_value"]) ) ?  wc_clean($_POST['ofw_meta_key_value']) : FALSE;
             
             
             
@@ -3373,15 +3371,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 );
             $where_args['meta_query'] = array();
             $where_args['tax_query'] = array();
-            $ofwc_bulk_action_type = ( isset( $_POST["actionType"] ) ) ? $_POST['actionType'] : FALSE;
-            $ofwc_bulk_action_target_type = ( isset( $_POST["actionTargetType"] ) ) ? $_POST['actionTargetType'] : FALSE;
-            $ofwc_bulk_action_target_where_type = ( isset( $_POST["actionTargetWhereType"] ) ) ? $_POST['actionTargetWhereType'] : FALSE;
-            $ofwc_bulk_action_target_where_category = ( isset( $_POST["actionTargetWhereCategory"] ) ) ? $_POST['actionTargetWhereCategory'] : FALSE;
-            $ofwc_bulk_action_target_where_product_type = ( isset( $_POST["actionTargetWhereProductType"] ) ) ? $_POST['actionTargetWhereProductType'] : FALSE;
-            $ofwc_bulk_action_target_where_price_value = ( isset( $_POST["actionTargetWherePriceValue"] ) ) ? $_POST['actionTargetWherePriceValue'] : FALSE;
-            $ofwc_bulk_action_target_where_stock_value = ( isset( $_POST["actionTargetWhereStockValue"] ) ) ? $_POST['actionTargetWhereStockValue'] : FALSE;
-            $ofw_meta_key_value = ( isset($_POST['ofw_meta_key_value']) && !empty($_POST["ofw_meta_key_value"]) ) ?  $_POST['ofw_meta_key_value'] : FALSE;
-            $autoAcceptDeclinePercentage = ( isset($_POST['autoAcceptDeclinePercentage']) && !empty($_POST['autoAcceptDeclinePercentage']) ) ? $_POST['autoAcceptDeclinePercentage'] : FALSE;
+            $ofwc_bulk_action_type = !empty( $_POST["actionType"] ) ? wc_clean($_POST['actionType']) : FALSE;
+            $ofwc_bulk_action_target_type =  !empty( $_POST["actionTargetType"] ) ? wc_clean($_POST['actionTargetType']) : FALSE;
+            $ofwc_bulk_action_target_where_type = !empty( $_POST["actionTargetWhereType"] ) ? wc_clean($_POST['actionTargetWhereType']) : FALSE;
+            $ofwc_bulk_action_target_where_category = !empty( $_POST["actionTargetWhereCategory"] ) ? wc_clean($_POST['actionTargetWhereCategory']) : FALSE;
+            $ofwc_bulk_action_target_where_product_type = !empty( $_POST["actionTargetWhereProductType"] ) ? wc_clean($_POST['actionTargetWhereProductType']) : FALSE;
+            $ofwc_bulk_action_target_where_price_value = !empty( $_POST["actionTargetWherePriceValue"] ) ? wc_clean($_POST['actionTargetWherePriceValue']) : FALSE;
+            $ofwc_bulk_action_target_where_stock_value = !empty( $_POST["actionTargetWhereStockValue"] ) ? wc_clean($_POST['actionTargetWhereStockValue']) : FALSE;
+            $ofw_meta_key_value = !empty($_POST["ofw_meta_key_value"]) ?  wc_clean($_POST['ofw_meta_key_value']) : FALSE;
+            $autoAcceptDeclinePercentage = !empty($_POST['autoAcceptDeclinePercentage']) ? wc_clean($_POST['autoAcceptDeclinePercentage']) : FALSE;
 
             if (!$ofwc_bulk_action_type || !$ofwc_bulk_action_target_type){
                 $errors = TRUE;
@@ -4027,7 +4025,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }    
 
     public static function offers_for_woocommerce_setting_tab_content_save_own() {
-        if( isset($_POST['ofw_mailChimp_integration']) ) {
+        if( !empty($_POST['ofw_mailChimp_integration']) ) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
             $OFW_Woocommerce_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailChimp_Helper();
@@ -4035,7 +4033,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($mcapi_setting_fields);
         }
-        if( isset($_POST['ofw_constantContact_integration']) ) {
+        if( !empty($_POST['ofw_constantContact_integration']) ) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
             $OFW_Woocommerce_ConstantContact_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
@@ -4043,7 +4041,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($ccapi_setting_fields);
         }
-        if( isset($_POST['ofw_mailpoet_integration']) ) {
+        if( !empty($_POST['ofw_mailpoet_integration']) ) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
             $OFW_Woocommerce_MailPoet_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
@@ -4051,7 +4049,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($mailpoet_setting_fields);
         }
-        if( isset($_POST['ofw_recaptcha_integration']) ) {
+        if( !empty($_POST['ofw_recaptcha_integration']) ) {
             
             include_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-recaptcha-helper.php';
@@ -4064,15 +4062,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
     
     public function ofw_auto_accept_decline_from_email() {
-        if( isset($_GET['from_email_action']) && !empty($_GET['from_email_action']) && $_GET['ofw_from_email'] == true && ( isset($_GET['targetID']) && !empty($_GET['targetID']))) {
-            $targetID = $_GET['targetID'];
+        if( !empty($_GET['from_email_action']) && !empty($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true && !empty($_GET['targetID'])) {
+            $targetID = absint($_GET['targetID']);
             if($_GET['from_email_action'] == 'declineOfferFromGrid') {
                 do_action('declineOfferFromGrid', $targetID);
             }
             if($_GET['from_email_action'] == 'approveOfferFromGrid') {
                 do_action('approveOfferFromGrid', $targetID);
             }
-            wp_redirect( admin_url( 'post.php?post=' . $_GET['targetID'] . '&action=edit' ) );
+            wp_redirect( admin_url( 'post.php?post=' . absint($_GET['targetID']) . '&action=edit' ) );
             exit();
         }
     }
@@ -4464,7 +4462,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
            $newArray= array();
            foreach($_POST as $key => $value){
                if($key != 'action'){
-                   $newArray [$key] = $value;
+                   $newArray [$key] = wc_clean($value);
 }
            }
            update_option('angelleye_displaySettingFormFieldPosition', $newArray);
