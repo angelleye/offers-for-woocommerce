@@ -186,7 +186,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     public function angelleye_ofwc_after_add_to_cart_form(){
         global $post;
-        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
+        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
         $parent_post_status = get_post_status($parent_offer_id);
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
         $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
@@ -247,8 +247,8 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofw_login_redirect($redirect) {
         if(isset($_GET['backto']) && !empty($_GET['backto']) && $_GET['ref'] == 'make-offer'){
-            $join_url = (strpos($_GET['backto'], '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
-            return $_GET['backto'].$join_url;
+            $join_url = (strpos(esc_url_raw($_GET['backto']), '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+            return esc_url_raw($_GET['backto']).$join_url;
         }
         return $redirect;
     }
@@ -465,7 +465,7 @@ class Angelleye_Offers_For_Woocommerce {
             <script type="text/javascript">
                 jQuery( document ).ready(function($) {
                     <?php 
-                    $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
+                    $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
                     $parent_post_status = get_post_status($parent_offer_id);
             if ($parent_offer_id != '' && isset($parent_post_status) && $parent_post_status == 'countered-offer') {
                 ?>
@@ -627,10 +627,10 @@ class Angelleye_Offers_For_Woocommerce {
         $new_offer_quantity_limit = (!$is_backorders_allowed && $stock_quantity && $stock_quantity > 0 && $global_limit_quantity_to_stock) ? $stock_quantity : '';
 
         // set parent offer id if found in get var
-        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
-        $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? $_GET['offer-uid'] : '';
-        $offer_name = (isset($_GET['offer-name']) && $_GET['offer-name'] != '') ? $_GET['offer-name'] : '';
-        $offer_email = (isset($_GET['offer-email']) && $_GET['offer-email'] != '') ? $_GET['offer-email'] : '';
+        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
+        $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? wc_clean($_GET['offer-uid']) : '';
+        $offer_name = (isset($_GET['offer-name']) && $_GET['offer-name'] != '') ? wc_clean($_GET['offer-name']) : '';
+        $offer_email = (isset($_GET['offer-email']) && $_GET['offer-email'] != '') ? wc_clean($_GET['offer-email']) : '';
 
         // if having parent offer id, check for valid parent
         $parent_offer_error = false;

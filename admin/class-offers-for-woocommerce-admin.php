@@ -686,7 +686,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 			3  => __( 'Offer Details deleted.',  'offers-for-woocommerce'),
 			4  => __( 'Offer updated.',  'offers-for-woocommerce'),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Offer restored to revision from %s',  'offers-for-woocommerce'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Offer restored to revision from %s',  'offers-for-woocommerce'), wp_post_revision_title( (int) wc_clean($_GET['revision']), false ) ) : false,
 			6  => __( 'Offer set as Pending Status.',  'offers-for-woocommerce'),
 			7  => __( 'Offer saved.',  'offers-for-woocommerce'),
 			8  => __( 'Offer submitted.',  'offers-for-woocommerce'),
@@ -2988,7 +2988,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     {
         if(is_admin() && (defined('DOING_AJAX') || DOING_AJAX))
         {
-            $post_id = $_POST["targetID"];
+            $post_id = absint($_POST["targetID"]);
             // Get current data for Offer
             $post_data = get_post($post_id);
             // Filter Post Status Label
@@ -3606,7 +3606,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         // if filtering Offers edit page by 'author'
         if ( "edit-woocommerce_offer" == $screen->id && is_admin() ) {
-            $author_id = (isset($_GET['author']) && is_numeric($_GET['author'])) ? $_GET['author'] : '';
+            $author_id = (isset($_GET['author']) && is_numeric($_GET['author'])) ? wc_clean($_GET['author']) : '';
             if($author_id)
             {
                 $author_data = get_userdata($author_id);
@@ -3622,7 +3622,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if ( $this->plugin_screen_hook_suffix == $screen->id && is_admin() ) {
 
             // Tools - Bulk enable/disable offers
-            $processed = (isset($_GET['processed']) ) ? $_GET['processed'] : FALSE;
+            $processed = (isset($_GET['processed']) ) ? wc_clean($_GET['processed']) : FALSE;
             if($processed)
             {
                 if($processed == 'zero')
@@ -3789,7 +3789,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $wp_list_table = _get_list_table('WP_Posts_List_Table');
         $action = $wp_list_table->current_action();
 
-        $post_ids = (isset($_REQUEST['post']) ) ? $_REQUEST['post'] : FALSE;
+        $post_ids = (isset($_REQUEST['post']) ) ? wc_clean($_REQUEST['post']) : FALSE;
 
         if($post_ids) {
             switch ($action) {
@@ -3837,12 +3837,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $post_type, $pagenow;
 
         if($pagenow == 'edit.php' && $post_type == 'product' && isset($_REQUEST['enabled_offers']) && (int) $_REQUEST['enabled_offers'] && ($_REQUEST['enabled_offers'] > 0)) {
-            $message = sprintf( __( 'Offers enabled for %s products.', 'offers-for-woocommerce' ), number_format_i18n( $_REQUEST['enabled_offers'] ) );
+            $message = sprintf( __( 'Offers enabled for %s products.', 'offers-for-woocommerce' ), number_format_i18n( wc_clean($_REQUEST['enabled_offers']) ) );
             echo '<div class="updated"><p>'.$message.'</p></div>';
         }
 
         if($pagenow == 'edit.php' && $post_type == 'product' && isset($_REQUEST['disabled_offers']) && (int) $_REQUEST['disabled_offers'] && ($_REQUEST['disabled_offers'] > 0)) {
-            $message = sprintf( __( 'Offers disabled for %s products.', 'offers-for-woocommerce' ), number_format_i18n( $_REQUEST['disabled_offers'] ) );
+            $message = sprintf( __( 'Offers disabled for %s products.', 'offers-for-woocommerce' ), number_format_i18n( wc_clean($_REQUEST['disabled_offers']) ) );
             echo '<div class="updated"><p>'.$message.'</p></div>';
         }
     }
@@ -3896,14 +3896,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function woocommerce_product_quick_edit_save_own($product) {
         $post_id = $product->id;
-        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', ( isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
-        update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', ( isset($_REQUEST['_offers_for_woocommerce_auto_accept_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
-        update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', ( isset($_REQUEST['_offers_for_woocommerce_auto_decline_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
-        if( isset($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) && !empty($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) ) {
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', $_REQUEST['_offers_for_woocommerce_auto_accept_percentage']);
+        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', !empty($_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', !empty($_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', !empty($_REQUEST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
+        if( !empty($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) ) {
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', wc_clean($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']));
         }
-        if( isset($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) && !empty($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) ) {
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', $_REQUEST['_offers_for_woocommerce_auto_decline_percentage']);
+        if( !empty($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) ) {
+            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', wc_clean($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']));
         }
     } 
     
@@ -3942,7 +3942,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
     }
     public function offers_for_woocommerce_setting_tab_own() {
-        $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general_settings';
+        $active_tab = isset( $_GET[ 'tab' ] ) ? wc_clean($_GET[ 'tab' ]) : 'general_settings';
         ?>
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=recaptcha" class="nav-tab <?php echo $active_tab == 'recaptcha' ? 'nav-tab-active' : ''; ?>"><?php echo __('Google reCAPTCHA', 'offers-for-woocommerce'); ?></a>
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=mailchimp" class="nav-tab <?php echo $active_tab == 'mailchimp' ? 'nav-tab-active' : ''; ?>"><?php echo __('MailChimp', 'offers-for-woocommerce'); ?></a>
@@ -3953,7 +3953,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }   
        
     public function offers_for_woocommerce_setting_tab_content_own() {
-        $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general_settings';
+        $active_tab = isset( $_GET[ 'tab' ] ) ? wc_clean($_GET[ 'tab' ]) : 'general_settings';
         if( $active_tab == 'mailchimp' ) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
