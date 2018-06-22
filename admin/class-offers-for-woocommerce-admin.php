@@ -2625,8 +2625,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $this->my_enqueue_colour_picker();
 
             // Jquery UI js for Sortable.
-            wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-sortable', plugins_url( 'assets/js/jquery-ui.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
-                        
+            wp_enqueue_script('jquery-ui-core');
+            wp_enqueue_script( 'jquery-ui-sortable' );
             // Admin footer scripts
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-admin-footer-scripts', plugins_url( 'assets/js/admin-footer-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
@@ -2654,8 +2654,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ( "woocommerce_offer" == $screen->id && is_admin() )
             {
                 // Jquery datepicker.js
-                wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-datepicker', plugins_url( 'assets/js/jquery-ui.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
-
+                wp_enqueue_script( 'jquery-ui-datepicker' );
                 // autoNumeric js
                 wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url( '../public/assets/js/autoNumeric-1-9-24.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
 
