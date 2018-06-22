@@ -120,6 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 1.4.9 - xx.xx.2018 =
 * Tweak - Updates translation files to match latest version of plugin. ([OFW-8](https://github.com/angelleye/offers-for-woocommerce/pull/387))
+* Tweak - Adjustments to the use of get_permalink(). ([OFW-9](https://github.com/angelleye/offers-for-woocommerce/pull/388))
 
 = 1.4.8.3 - 12.20.2017 =
 * Tweak - Adjusts default translation file template. ([#367](https://github.com/angelleye/offers-for-woocommerce/issues/367))
