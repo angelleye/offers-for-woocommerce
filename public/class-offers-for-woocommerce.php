@@ -186,7 +186,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     public function angelleye_ofwc_after_add_to_cart_form(){
         global $post;
-        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
+        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
         $parent_post_status = get_post_status($parent_offer_id);
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
         $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
@@ -247,8 +247,8 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofw_login_redirect($redirect) {
         if(isset($_GET['backto']) && !empty($_GET['backto']) && $_GET['ref'] == 'make-offer'){
-            $join_url = (strpos($_GET['backto'], '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
-            return $_GET['backto'].$join_url;
+            $join_url = (strpos(esc_url_raw($_GET['backto']), '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+            return esc_url_raw($_GET['backto']).$join_url;
         }
         return $redirect;
     }
@@ -465,7 +465,7 @@ class Angelleye_Offers_For_Woocommerce {
             <script type="text/javascript">
                 jQuery( document ).ready(function($) {
                     <?php 
-                    $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
+                    $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
                     $parent_post_status = get_post_status($parent_offer_id);
             if ($parent_offer_id != '' && isset($parent_post_status) && $parent_post_status == 'countered-offer') {
                 ?>
@@ -627,10 +627,10 @@ class Angelleye_Offers_For_Woocommerce {
         $new_offer_quantity_limit = (!$is_backorders_allowed && $stock_quantity && $stock_quantity > 0 && $global_limit_quantity_to_stock) ? $stock_quantity : '';
 
         // set parent offer id if found in get var
-        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? $_GET['offer-pid'] : '';
-        $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? $_GET['offer-uid'] : '';
-        $offer_name = (isset($_GET['offer-name']) && $_GET['offer-name'] != '') ? $_GET['offer-name'] : '';
-        $offer_email = (isset($_GET['offer-email']) && $_GET['offer-email'] != '') ? $_GET['offer-email'] : '';
+        $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
+        $parent_offer_uid = (isset($_GET['offer-uid']) && $_GET['offer-uid'] != '') ? wc_clean($_GET['offer-uid']) : '';
+        $offer_name = (isset($_GET['offer-name']) && $_GET['offer-name'] != '') ? wc_clean($_GET['offer-name']) : '';
+        $offer_email = (isset($_GET['offer-email']) && $_GET['offer-email'] != '') ? wc_clean($_GET['offer-email']) : '';
 
         // if having parent offer id, check for valid parent
         $parent_offer_error = false;
@@ -957,7 +957,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function new_offer_form_submit() {        
         ob_start();
         $post_data = $formData = $newPostData = array();            
-        $arr_main_array = $_POST['value'];        
+        $arr_main_array = wc_clean($_POST['value']);        
         $nmArray = array();
         
         $active_plugins = (array) get_option( 'active_plugins', array() );        
@@ -989,20 +989,24 @@ class Angelleye_Offers_For_Woocommerce {
 
         if (is_ajax()) {
             if( isset($_POST['value']) && !empty($_POST['value']) ) {
-                $post_data = $_POST['value'];
-                foreach ($post_data as $key => $post_data_value) {
-                   if( isset($post_data_value['name']) && !empty($post_data_value['name']) ) {
-                        $post[$post_data_value['name']] = ( isset($post_data_value['value']) && !empty($post_data_value['value']) ) ? $post_data_value['value'] : '';
-                   }
+                $post_data = wc_clean($_POST['value']);
+                if( !empty($post_data) ) {
+                    foreach ($post_data as $key => $post_data_value) {
+                       if( !empty($post_data_value['name']) ) {
+                            $post[$post_data_value['name']] = !empty($post_data_value['value']) ? wc_clean($post_data_value['value']) : '';
+                       }
+                    }
                 }
             }
         } else {
             if( isset($_POST['value']) && !empty($_POST['value']) ) {
-                $post_data = $_POST['value'];
-                foreach ($post_data as $key => $post_data_value) {
-                   if( isset($post_data_value) && !empty($post_data_value) ) {
-                        $post[$key] = ( isset($post_data_value) && !empty($post_data_value) ) ? $post_data_value : '';
-                   }
+                $post_data = wc_clean($_POST['value']);
+                if( !empty($post_data)) {
+                    foreach ($post_data as $key => $post_data_value) {
+                       if( !empty($post_data_value) ) {
+                            $post[$key] = !empty($post_data_value) ? wc_clean($post_data_value) : '';
+                       }
+                    }
                 }
             }
         }
@@ -1012,19 +1016,19 @@ class Angelleye_Offers_For_Woocommerce {
                     // Check if form was posted and select task accordingly
         if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {            
             // set postmeta original vars
-            $formData['orig_offer_name'] = (isset($post['offer_name'])) ? $post['offer_name'] : '';
-            $formData['orig_offer_company_name'] = (isset($post['offer_company_name'])) ? $post['offer_company_name'] : '';
-            $formData['orig_offer_phone'] = (isset($post['offer_phone'])) ? $post['offer_phone'] : '';
-            $formData['orig_offer_email'] = (isset($post['offer_email'])) ? $post['offer_email'] : '';
-            $formData['orig_offer_product_id'] = (isset($post['offer_product_id'])) ? $post['offer_product_id'] : '';
-            $formData['orig_offer_variation_id'] = (isset($post['offer_variation_id'])) ? $post['offer_variation_id'] : '';
-            $formData['orig_offer_quantity'] = (isset($post['offer_quantity'])) ? $post['offer_quantity'] : '0';
-            $formData['orig_offer_price_per'] = (isset($post['offer_price_each'])) ? $post['offer_price_each'] : '0';
+            $formData['orig_offer_name'] = !empty($post['offer_name']) ? wc_clean($post['offer_name']) : '';
+            $formData['orig_offer_company_name'] = !empty($post['offer_company_name']) ? wc_clean($post['offer_company_name']) : '';
+            $formData['orig_offer_phone'] = !empty($post['offer_phone']) ? wc_clean($post['offer_phone']) : '';
+            $formData['orig_offer_email'] = !empty($post['offer_email']) ? wc_clean($post['offer_email']) : '';
+            $formData['orig_offer_product_id'] = !empty($post['offer_product_id']) ? wc_clean($post['offer_product_id']) : '';
+            $formData['orig_offer_variation_id'] = !empty($post['offer_variation_id']) ? wc_clean($post['offer_variation_id']) : '';
+            $formData['orig_offer_quantity'] = !empty($post['offer_quantity']) ? wc_clean($post['offer_quantity']) : '0';
+            $formData['orig_offer_price_per'] = !empty($post['offer_price_each']) ? wc_clean($post['offer_price_each']) : '0';
             $formData['orig_offer_amount'] = number_format(round($formData['orig_offer_quantity'] * $formData['orig_offer_price_per'], 2), 2, '.', '');
             $formData['orig_offer_uid'] = uniqid('aewco-');
-            $formData['parent_offer_uid'] = (isset($post['parent_offer_uid'])) ? $post['parent_offer_uid'] : '';
-            $formData['offer_product_price'] = (isset($post['offer_product_price'])) ? $post['offer_product_price'] : '';
-            $formData['offer_total'] = (isset($post['offer_total'])) ? $post['offer_total'] : '';
+            $formData['parent_offer_uid'] = !empty($post['parent_offer_uid']) ? wc_clean($post['parent_offer_uid']) : '';
+            $formData['offer_product_price'] = !empty($post['offer_product_price']) ? wc_clean($post['offer_product_price']) : '';
+            $formData['offer_total'] = !empty($post['offer_total']) ? wc_clean($post['offer_total']) : '';
             
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
@@ -1127,8 +1131,8 @@ class Angelleye_Offers_For_Woocommerce {
              */
             $akismet_api_key = '9a57112207be';
             $data = array('blog' => get_site_url(),
-                'user_ip' => $_SERVER['REMOTE_ADDR'],
-                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                'user_ip' => wc_clean(wp_unslash($_SERVER['REMOTE_ADDR'])),
+                'user_agent' => wc_clean($_SERVER['HTTP_USER_AGENT']),
                 'referrer' => '',
                 'permalink' => get_permalink($formData['offer_product_id']),
                 'comment_type' => 'woocommerce_offer',
@@ -1226,7 +1230,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'comment_type' => 'offers-history',
                     'comment_parent' => 0,
                     'user_id' => '',
-                    'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
+                    'comment_author_IP' => wc_clean($_SERVER['REMOTE_ADDR']),
                     'comment_agent' => '',
                     'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
                     'comment_approved' => 'post-trashed',
@@ -1406,7 +1410,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             // load the WooCommerce Emails
             if( isset($_POST['value']['emails_object']) && !empty($_POST['value']['emails_object']) ) {
-                $emails = $_POST['value']['emails_object'];
+                $emails = wc_clean($_POST['value']['emails_object']);
             } else {
                 $emails = $woocommerce->mailer()->get_emails();
             }
@@ -1868,7 +1872,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofw_auto_approve_offer($offer_id = null, $emails = null, $is_approve = true) {
         global $wpdb, $woocommerce;
         if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
-            $post_id = $_POST["targetID"];
+            $post_id = absint($_POST["targetID"]);
         } else {
             $post_id = $offer_id;
         }
@@ -1896,7 +1900,7 @@ class Angelleye_Offers_For_Woocommerce {
             );
             $where = array('ID' => $post_id);
             $wpdb->update($table, $data_array, $where);
-            $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? $_POST['angelleye_woocommerce_offer_status_notes'] : '';
+            $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? wc_clean($_POST['angelleye_woocommerce_offer_status_notes']) : '';
             $recipient = get_post_meta($post_id, 'offer_email', true);
             
             $offer_id = $post_id;

@@ -12,7 +12,7 @@
  * @link      http://www.angelleye.com
  */
 ?>
-<?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'general_settings';?>
+<?php $active_tab = isset( $_GET[ 'tab' ] ) ? wc_clean($_GET[ 'tab' ]) : 'general_settings';?>
 
 <div class="wrap">
 	<h2><?php echo esc_html( get_admin_page_title() ); ?>
