@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.9 - xx.xx.2018 =
+* Tweak - Data sanitization improvements for privacy and security. ([OFW-7](https://github.com/angelleye/offers-for-woocommerce/pull/386))
 * Tweak - Updates translation files to match latest version of plugin. ([OFW-8](https://github.com/angelleye/offers-for-woocommerce/pull/387))
 * Tweak - Adjustments to the use of get_permalink(). ([OFW-9](https://github.com/angelleye/offers-for-woocommerce/pull/388))
 * Tweak - Adjusts the verbiage on the Bulk Updater Tool options to avoid confusion with price settings. ([OFW-10](https://github.com/angelleye/offers-for-woocommerce/pull/389))
