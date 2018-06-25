@@ -2995,7 +2995,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $post_status_text = (strtolower($post_data->post_status) == 'publish') ? 'Pending' : $post_data->post_status;
             $post_status_text = ucwords(str_replace("-", " ", str_replace("offer", " ", strtolower($post_status_text))));
 
-            $noteSendToBuyer = !empty($_POST["noteSendToBuyer"] != '') ? '1' : '';
+            $noteSendToBuyer = !empty($_POST["noteSendToBuyer"]) ? '1' : '';
             $offer_notes = wc_clean(wp_slash($_POST['noteContent']));
 
             $current_user = wp_get_current_user();
