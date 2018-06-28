@@ -469,24 +469,32 @@
             }
             else
             {
-                if( $('.woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab').length > 0 ){
+               if( $('.woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab').length > 0 ){
                     $(".woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab a").click();
                 }
 
-                if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
-                {
-                    $("#woocommerce-make-offer-form-price-each").focus();
-                }
-                else
-                {
-                    $("#woocommerce-make-offer-form-quantity").focus();
-                }
-
-               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {
-                    var targetTab = $(".tab_custom_ofwc_offer_tab");
-                    $('html, body').animate({
-                        scrollTop: $(targetTab).offset().top - '100'
-                    }, 'fast');
+               var targetTab = $(".tab_custom_ofwc_offer_tab");
+               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {                   
+                    if($('.woocommerce-product-gallery__image').length == 1){
+                        
+                        $('html, body').animate({
+                            scrollTop: $(targetTab).offset().top - 150
+                        }, 'fast');
+                   }
+                   else{
+                       $('html, body').animate({
+                            scrollTop: $(targetTab).offset().top - ($('.woocommerce-product-gallery').height()-400)
+                        }, 'fast');
+                   }
+                   
+                    if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
+                    {
+                        $("#woocommerce-make-offer-form-price-each").focus();
+                    }
+                    else
+                    {
+                        $("#woocommerce-make-offer-form-quantity").focus();
+                    }
                 }
             }
 
