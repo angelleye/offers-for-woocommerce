@@ -474,7 +474,7 @@
                 }
 
                var targetTab = $(".tab_custom_ofwc_offer_tab");
-               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {                   
+               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {                                                               
                     if($('.woocommerce-product-gallery__image').length == 1){
                         
                         $('html, body').animate({
@@ -482,8 +482,10 @@
                         }, 'fast');
                    }
                    else{
+                       var gallery_height = $('.woocommerce-product-gallery').height();
+                       var minus_value = ((gallery_height*400)/2942);                       
                        $('html, body').animate({
-                            scrollTop: $(targetTab).offset().top - ($('.woocommerce-product-gallery').height()-400)
+                            scrollTop: targetTab.offset().top - (gallery_height - minus_value)
                         }, 'fast');
                    }
                    
