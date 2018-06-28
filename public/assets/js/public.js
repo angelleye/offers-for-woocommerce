@@ -478,7 +478,7 @@
                     if($('.woocommerce-product-gallery__image').length == 1){
                         
                         $('html, body').animate({
-                            scrollTop: $(targetTab).offset().top - 150
+                            scrollTop: targetTab.offset().top - 150
                         }, 'fast');
                    }
                    else{
