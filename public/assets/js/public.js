@@ -473,29 +473,20 @@
                 }
 
                var targetTab = $(".tab_custom_ofwc_offer_tab");
-               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {                                                               
-                    if($('.woocommerce-product-gallery__image').length == 1 || is_product_page == true){
-                        
-                        $('html, body').animate({
-                            scrollTop: targetTab.offset().top - 150
-                        }, 'fast');
-                   }
-                   else{
-                       var gallery_height = $('.woocommerce-product-gallery').height();
-                       var minus_value = ((gallery_height*400)/2942);                       
-                       $('html, body').animate({
-                            scrollTop: targetTab.offset().top - (gallery_height - minus_value)
-                        }, 'fast');
-                   }
-                   
-                    if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
-                    {
-                        $("#woocommerce-make-offer-form-price-each").focus();
-                    }
-                    else
-                    {
-                        $("#woocommerce-make-offer-form-quantity").focus();
-                    }
+               if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {                                      
+                    setTimeout(function(){
+                            $('html, body').animate({
+                                scrollTop: $(".tab_custom_ofwc_offer_tab").offset().top - 150
+                            }, 'fast');     
+                            if( $("#woocommerce-make-offer-form-quantity").attr('type') == 'hidden' )
+                            {
+                                $("#woocommerce-make-offer-form-price-each").focus();
+                            }
+                            else
+                            {
+                                $("#woocommerce-make-offer-form-quantity").focus();
+                            }
+                    }, 300);                                                      
                 }
             }
 
