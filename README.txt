@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.10 - xx.xx.2018 =
+* Tweak - Adjusts the anchor at the Offer form so links from shop pages land correctly on the offer form. ([OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/391))
 * Fix - Resolves PHP syntax problem. ([OFW-13](https://github.com/angelleye/offers-for-woocommerce/pull/390))
 
 = 1.4.9 - 06.22.2018 =
