@@ -20,8 +20,7 @@ jQuery(document).ready(function($){
             //find our row
             $row = $('#edit-' + post_id);
             var $ofw_inline_data = $( '#offers_for_woocommerce_inline_' + post_id );
-            var product_type = $ofw_inline_data.find('.wc_product_type_for_manage_offer').text();
-            console.log(product_type);
+            var product_type = $ofw_inline_data.find('.wc_product_type_for_manage_offer').text();            
             if(product_type === 'external'){                
                 $('.manage_offer_inline_edit_based_on_product_type','.inline-edit-row' ).addClass('hidden');
             }
