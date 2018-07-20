@@ -3936,15 +3936,22 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function woocommerce_product_quick_edit_save_own($product) {        
         $post_id = $product->id;
-        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', !empty($_REQUEST['offers_for_woocommerce_enabled'] ) ? 'yes' : 'no' );
-        update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', !empty($_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] ) ? 'yes' : 'no' );
-        update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', !empty($_REQUEST['_offers_for_woocommerce_auto_decline_enabled'] ) ? 'yes' : 'no' );
-        if( !empty($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) ) {
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', wc_clean($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']));
-        }
-        if( !empty($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) ) {
-            update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage', wc_clean($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']));
-        }
+        
+        $offers_for_woocommerce_enabled = (isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled']=='yes') ? 'yes' : 'no' ;
+        $offers_for_woocommerce_auto_accept_enabled = (isset($_REQUEST['_offers_for_woocommerce_auto_accept_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_accept_enabled']=='yes' ) ? 'yes' : 'no';
+        $offers_for_woocommerce_auto_decline_enabled = (isset($_REQUEST['_offers_for_woocommerce_auto_decline_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_decline_enabled']=='yes' ) ? 'yes' : 'no';        
+        $offers_for_woocommerce_onexit_only = (isset($_REQUEST['offers_for_woocommerce_onexit_only']) && $_REQUEST['offers_for_woocommerce_onexit_only']=='yes' ) ? 'yes' : 'no';
+        
+        $offers_for_woocommerce_auto_accept_percentage = (isset($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) && !empty($_REQUEST['_offers_for_woocommerce_auto_accept_percentage'])) ? wc_clean($_REQUEST['_offers_for_woocommerce_auto_accept_percentage']) : '';
+        $offers_for_woocommerce_auto_decline_percentage = (isset($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) && !empty($_REQUEST['_offers_for_woocommerce_auto_decline_percentage'])) ? wc_clean($_REQUEST['_offers_for_woocommerce_auto_decline_percentage']) : '';
+        
+        update_post_meta( $post_id, 'offers_for_woocommerce_enabled', $offers_for_woocommerce_enabled);
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_enabled', $offers_for_woocommerce_auto_accept_enabled);
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_enabled', $offers_for_woocommerce_auto_decline_enabled);
+        update_post_meta( $post_id, 'offers_for_woocommerce_onexit_only', $offers_for_woocommerce_onexit_only);        
+        
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_accept_percentage', $offers_for_woocommerce_auto_accept_percentage);
+        update_post_meta( $post_id, '_offers_for_woocommerce_auto_decline_percentage',$offers_for_woocommerce_auto_decline_percentage);
     }
 
     public function my_admin_footer_function() {
