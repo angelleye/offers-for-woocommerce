@@ -473,8 +473,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if( isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {
                     $ofw_enabled = 'yes';
                 }
-        
-                echo '<div class="hidden" id="offers_for_woocommerce_inline_'.$postid.'">
+                $_product = wc_get_product( $postid );
+                if( $_product->is_type( 'external' ) ) {
+                    echo '<div class="hidden" id="offers_for_woocommerce_inline_'.$postid.'">
+                            <div class="wc_product_type_for_manage_offer">external</div>
+                         </div>';
+                }
+                else{                                    
+                    echo '<div class="hidden" id="offers_for_woocommerce_inline_'.$postid.'">
+                        <div class="wc_product_type_for_manage_offer">other</div>
                         <div class="offers_for_woocommerce_enabled">'.$ofw_enabled.'</div>
                         <div class="offers_for_woocommerce_onexit_only">'.$ofw_onexit.'</div>
                         <div class="offers_for_woocommerce_auto_accept_enabled">'.$ofw_aae.'</div>
@@ -482,6 +489,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         <div class="offers_for_woocommerce_auto_accept_percentage">'.$ofw_aap.'</div>
                         <div class="offers_for_woocommerce_auto_decline_percentage">'.$ofw_adp.'</div>
                       </div>';
+                }
             }
             
         }
@@ -3891,31 +3899,33 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $post;        
         ?>
         <br class="clear" />
-        <h4><?php esc_html_e('Manage Offer','offers-for-woocommerce'); ?></h4>
-        <div class="inline-edit-group manage_offer">
-            <label>
-                <span class="checkbox-title"><?php _e( 'Enable Offers?', 'offers-for-woocommerce' ); ?></span>
-                <input type="checkbox" name="offers_for_woocommerce_enabled" value="">
-            </label>
-            <label>
-                <span class="checkbox-title"><?php _e( 'On Exit Only?', 'offers-for-woocommerce' ); ?></span>
-                <input type="checkbox" name="offers_for_woocommerce_onexit_only" value="">
-            </label>
-            <label>
-                <span class="checkbox-title"><?php _e( 'Enable Auto Accept Offers?', 'offers-for-woocommerce' ); ?></span>
-                <input type="checkbox" name="_offers_for_woocommerce_auto_accept_enabled" value="">
-            </label>
-            <label>
-                <?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?>                
-                <input type="text" class="offers_for_woocommerce_auto_accept_percentage" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="width:35%">
-            </label>
-            <label>
-                <span class="checkbox-title"><?php _e( 'Enable Auto Decline Offers?', 'offers-for-woocommerce' ); ?></span>
-                <input type="checkbox" name="_offers_for_woocommerce_auto_decline_enabled" value="">
-            </label>
-            <label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?>
-                <input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="width: 35%">
-            </label>
+        <div class="manage_offer_inline_edit_based_on_product_type">
+            <h4><?php esc_html_e('Manage Offer','offers-for-woocommerce'); ?></h4>
+            <div class="inline-edit-group manage_offer">
+                <label>
+                    <span class="checkbox-title"><?php _e( 'Enable Offers?', 'offers-for-woocommerce' ); ?></span>
+                    <input type="checkbox" name="offers_for_woocommerce_enabled" value="">
+                </label>
+                <label>
+                    <span class="checkbox-title"><?php _e( 'On Exit Only?', 'offers-for-woocommerce' ); ?></span>
+                    <input type="checkbox" name="offers_for_woocommerce_onexit_only" value="">
+                </label>
+                <label>
+                    <span class="checkbox-title"><?php _e( 'Enable Auto Accept Offers?', 'offers-for-woocommerce' ); ?></span>
+                    <input type="checkbox" name="_offers_for_woocommerce_auto_accept_enabled" value="">
+                </label>
+                <label>
+                    <?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?>                
+                    <input type="text" class="offers_for_woocommerce_auto_accept_percentage" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="width:35%">
+                </label>
+                <label>
+                    <span class="checkbox-title"><?php _e( 'Enable Auto Decline Offers?', 'offers-for-woocommerce' ); ?></span>
+                    <input type="checkbox" name="_offers_for_woocommerce_auto_decline_enabled" value="">
+                </label>
+                <label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?>
+                    <input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="width: 35%">
+                </label>
+            </div>
         </div>
         <?php
     }
