@@ -468,7 +468,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 
                 $ofw_adp = get_post_meta( $postid, '_offers_for_woocommerce_auto_decline_percentage',true);
                 $ofw_adp = ($ofw_adp) ? $ofw_adp : '';
-            
+                
+                $button_options_general = get_option('offers_for_woocommerce_options_general');                
+                if( isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {
+                    $ofw_enabled = 'yes';
+                }
+        
                 echo '<div class="hidden" id="offers_for_woocommerce_inline_'.$postid.'">
                         <div class="offers_for_woocommerce_enabled">'.$ofw_enabled.'</div>
                         <div class="offers_for_woocommerce_onexit_only">'.$ofw_onexit.'</div>
@@ -3883,15 +3888,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since   1.2
      */
     public function woocommerce_product_quick_edit_end_own() {
-        global $post;
-        $field_value = 'yes';
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
-        $is_default_enable = 'no';
-        if( isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {
-            $is_enable = 'yes';
-        } else {
-            $is_enable = 'no';
-        }
+        global $post;        
         ?>
         <br class="clear" />
         <h4><?php esc_html_e('Manage Offer','offers-for-woocommerce'); ?></h4>
@@ -3906,7 +3903,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             </label>
             <label>
                 <span class="checkbox-title"><?php _e( 'Enable Auto Accept Offers?', 'offers-for-woocommerce' ); ?></span>
-                <input type="checkbox" name="_offers_for_woocommerce_auto_accept_enabled" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
+                <input type="checkbox" name="_offers_for_woocommerce_auto_accept_enabled" value="">
             </label>
             <label>
                 <?php echo __( 'Auto Accept Percentage', 'offers-for-woocommerce' ) ; ?>                
@@ -3914,7 +3911,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             </label>
             <label>
                 <span class="checkbox-title"><?php _e( 'Enable Auto Decline Offers?', 'offers-for-woocommerce' ); ?></span>
-                <input type="checkbox" name="_offers_for_woocommerce_auto_decline_enabled" value="yes" <?php echo checked( $field_value, $is_default_enable, false ); ?>>
+                <input type="checkbox" name="_offers_for_woocommerce_auto_decline_enabled" value="">
             </label>
             <label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __( 'Auto Decline Percentage', 'offers-for-woocommerce' ) ; ?>
                 <input type="number" placeholder="<?php echo __( 'Enter Percentage', 'offers-for-woocommerce' ) ; ?>" value="" min="1" max="100" id="_offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="width: 35%">
