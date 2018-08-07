@@ -119,8 +119,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.10 - xx.xx.2018 =
-* Tweak - Adjusts the anchor at the Offer form so links from shop pages land correctly on the offer form. ([OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/391))
-* Fix - Resolves PHP syntax problem. ([OFW-13](https://github.com/angelleye/offers-for-woocommerce/pull/390))
+* [OFW-14](https://github.com/angelleye/offers-for-woocommerce/pull/394) - Feature - Adds Arabic translation file.
+* [OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/391) - Tweak - Adjusts the anchor at the Offer form so links from shop pages land correctly on the offer form.
+* [OFW-13](https://github.com/angelleye/offers-for-woocommerce/pull/390) - Fix - Resolves PHP syntax problem.
 
 = 1.4.9 - 06.22.2018 =
 * Tweak - Data sanitization improvements for privacy and security. ([OFW-7](https://github.com/angelleye/offers-for-woocommerce/pull/386))
