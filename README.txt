@@ -123,6 +123,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [OFW-15](https://github.com/angelleye/offers-for-woocommerce/pull/392) - Feature - Adds Quick Edit functionality for Offer data.
 * [OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/391) - Tweak - Adjusts the anchor at the Offer form so links from shop pages land correctly on the offer form.
 * [OFW-13](https://github.com/angelleye/offers-for-woocommerce/pull/390) - Fix - Resolves PHP syntax problem.
+* [OFW-16](https://github.com/angelleye/offers-for-woocommerce/pull/393) - Fix - Replaces deprecated WooCommerce functions with new versions.
 
 = 1.4.9 - 06.22.2018 =
 * Tweak - Data sanitization improvements for privacy and security. ([OFW-7](https://github.com/angelleye/offers-for-woocommerce/pull/386))
