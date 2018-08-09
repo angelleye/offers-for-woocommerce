@@ -1816,7 +1816,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'product_total' => $product_total,
             'offer_notes' => $offer_notes,
             'final_offer' => $offer_final_offer,
-            'coupon_code' => $coupon_code
+            'coupon_code' => isset($coupon_code) ? $coupon_code : ''
         );
 
         $offer_args['offer_expiration_date'] = ($offer_expire_date) ? $offer_expire_date : FALSE;
@@ -2929,7 +2929,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'product_shipping_cost' => $product_shipping_cost,
                 'product_total' => $product_total,
                 'offer_notes' => $offer_notes,
-                'coupon_code' => $coupon_code
+                'coupon_code' => isset($coupon_code) ? $coupon_code : ''
             );
             if ($variant_id) {
                 if ($product->get_sku()) {
