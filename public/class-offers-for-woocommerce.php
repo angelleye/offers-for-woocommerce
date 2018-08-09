@@ -1624,7 +1624,7 @@ class Angelleye_Offers_For_Woocommerce {
                 if (isset($cart_item['woocommerce_offer_id']) && $cart_item['woocommerce_offer_id'] == $offer->ID) {
                     $found = true;
                     $message = sprintf(
-                            '<a href="%s" class="button wc-forward">%s</a> %s', $woocommerce->cart->get_cart_url(), __('View Cart', 'offers-for-woocommerce'), __('Offer already added to cart', 'offers-for-woocommerce'));
+                            '<a href="%s" class="button wc-forward">%s</a> %s', wc_get_cart_url(), __('View Cart', 'offers-for-woocommerce'), __('Offer already added to cart', 'offers-for-woocommerce'));
                     $this->send_api_response($message);
                 }
             }
@@ -1667,7 +1667,7 @@ class Angelleye_Offers_For_Woocommerce {
             $response['pid'] = $pid;
             $response['type'] = 'success';
             wc_add_notice($response['message'], $response['type']);
-            wp_safe_redirect($woocommerce->cart->get_cart_url());
+            wp_safe_redirect(wc_get_cart_url());
             exit;
         }
 
