@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.9.6
-Stable tag: 1.4.9
+Tested up to: 4.9.8
+Stable tag: 1.4.10
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,12 +118,12 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.10 - xx.xx.2018 =
-* [OFW-14](https://github.com/angelleye/offers-for-woocommerce/pull/394) - Feature - Adds Arabic translation file.
-* [OFW-15](https://github.com/angelleye/offers-for-woocommerce/pull/392) - Feature - Adds Quick Edit functionality for Offer data.
-* [OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/391) - Tweak - Adjusts the anchor at the Offer form so links from shop pages land correctly on the offer form.
-* [OFW-13](https://github.com/angelleye/offers-for-woocommerce/pull/390) - Fix - Resolves PHP syntax problem.
-* [OFW-16](https://github.com/angelleye/offers-for-woocommerce/pull/393) - Fix - Replaces deprecated WooCommerce functions with new versions.
+= 1.4.10 - 08.18.2018 =
+* Feature - Adds Arabic translation file. ([OFW-14](https://github.com/angelleye/offers-for-woocommerce/pull/394))
+* Feature - Adds Quick Edit functionality for Offer data. ([OFW-15](https://github.com/angelleye/offers-for-woocommerce/pull/392))
+* Tweak - Adjusts the anchor at the Offer form so links from shop pages land correctly on the offer form. ([OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/391))
+* Fix - Resolves PHP syntax problem. ([OFW-13](https://github.com/angelleye/offers-for-woocommerce/pull/390))
+* Fix - Replaces deprecated WooCommerce functions with new versions. ([OFW-16](https://github.com/angelleye/offers-for-woocommerce/pull/393))
 
 = 1.4.9 - 06.22.2018 =
 * Tweak - Data sanitization improvements for privacy and security. ([OFW-7](https://github.com/angelleye/offers-for-woocommerce/pull/386))
