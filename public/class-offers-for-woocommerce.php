@@ -1018,7 +1018,7 @@ class Angelleye_Offers_For_Woocommerce {
             // set postmeta original vars
             $formData['orig_offer_name'] = !empty($post['offer_name']) ? wc_clean($post['offer_name']) : '';
             $formData['orig_offer_company_name'] = !empty($post['offer_company_name']) ? wc_clean($post['offer_company_name']) : '';
-            $formData['orig_offer_phone'] = !empty($post['offer_phone']) ? wc_clean($post['offer_phone']) : '';
+            $formData['orig_offer_phone'] = (!empty($post['offer_phone']) && WC_Validation::is_phone($post['offer_phone'])) ? wc_format_phone_number($post['offer_phone']) : '';
             $formData['orig_offer_email'] = !empty($post['offer_email']) ? wc_clean($post['offer_email']) : '';
             $formData['orig_offer_product_id'] = !empty($post['offer_product_id']) ? wc_clean($post['offer_product_id']) : '';
             $formData['orig_offer_variation_id'] = !empty($post['offer_variation_id']) ? wc_clean($post['offer_variation_id']) : '';
