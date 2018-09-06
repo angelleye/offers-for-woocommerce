@@ -117,6 +117,8 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+= 1.4.11 - xx.xx.2018 =
+* Fix - Resolves a JavaScript undefined variable. ([OFW-23](https://github.com/angelleye/offers-for-woocommerce/pull/397))
 
 = 1.4.10 - 08.18.2018 =
 * Feature - Adds Arabic translation file. ([OFW-14](https://github.com/angelleye/offers-for-woocommerce/pull/394))
