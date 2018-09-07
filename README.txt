@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.9.8
-Stable tag: 1.4.10
+Stable tag: 1.4.11
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,7 +117,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
-= 1.4.11 - xx.xx.2018 =
+= 1.4.11 - 09.06.2018 =
 * Fix - Resolves a JavaScript undefined variable. ([OFW-23](https://github.com/angelleye/offers-for-woocommerce/pull/397))
 
 = 1.4.10 - 08.18.2018 =
