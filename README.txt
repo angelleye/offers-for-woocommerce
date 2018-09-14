@@ -117,6 +117,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 1.4.12 - xx.xx.2018 =
+* Fix - Resolves an issue with phone number validation. ([OFW-20](https://github.com/angelleye/offers-for-woocommerce/pull/396))
+
 = 1.4.11 - 09.06.2018 =
 * Fix - Resolves a JavaScript undefined variable. ([OFW-23](https://github.com/angelleye/offers-for-woocommerce/pull/397))
 
