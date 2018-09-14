@@ -4,29 +4,8 @@
         var regex = {
                 phone:  /^1?(\d{3})(\d{3})(\d{4})$/  
         };
-        $(document).ready(function(){
+        $(document).ready(function(){            
             
-            $('#offer-phone').bind('blur', function (e) {                                                
-                var value;
-                value = $.trim($(this).val()).replace(/\D/g, '');
-                /* Validate! */
-                var el = $(this);
-                var re = regex.phone,
-                isValid = value.length > 7 && re.test(value);
-
-                if (isValid) {
-                    $('#error_phone_number').hide();
-                    /* Output nicely formatted phone number */
-                    el.value = value.replace(re, '$1-$2-$3');
-                    $('#offer-phone').val(el.value);
-                }
-                else{
-                    $('#offer-phone').focus();
-                    $('#error_phone_number').show();
-                }
-                return isValid;
-            });
-
             $('.ofwc_no_price_product').remove();
             function manage_button_for_variation(){
                 var variationId = $("input[name='variation_id']").val();                
