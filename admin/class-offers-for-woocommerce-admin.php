@@ -1070,6 +1070,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             elseif($post->post_status == 'on-hold-offer')
             {
                 $actions['counter-offer-link'] = '<a href="'.get_edit_post_link( $post->ID).'" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="'. __('Offer Details', 'offers-for-woocommerce'). '" id="woocommerce-offer-post-action-link-manage-id-'.$post->ID.'">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>';
+                $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="'. __('Set Offer Status to Accepted', 'offers-for-woocommerce'). '" id="woocommerce-offer-post-action-link-accept-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Accept', 'offers-for-woocommerce') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="'. __('Set Offer Status to Declined', 'offers-for-woocommerce'). '" id="woocommerce-offer-post-action-link-decline-id-'.$post->ID.'" data-target="'.$post->ID.'">' . __('Decline', 'offers-for-woocommerce') . '</a>';
             }
             elseif($post->post_status == 'expired-offer')
             {
