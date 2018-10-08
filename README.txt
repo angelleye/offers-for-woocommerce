@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 1.4.12 - xx.xx.2018 =
+* Tweak - Adds the ability to Accept/Decline/Counter from a record that is currently On Hold. ([OFW-26](https://github.com/angelleye/offers-for-woocommerce/pull/401))
 * Fix - Resolves an issue with phone number validation. ([OFW-20](https://github.com/angelleye/offers-for-woocommerce/pull/396))
 
 = 1.4.11 - 09.06.2018 =
