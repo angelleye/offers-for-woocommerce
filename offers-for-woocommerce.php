@@ -4,7 +4,7 @@
  * Plugin Name:       Offers for WooCommerce
  * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce
  * Description:       Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily.
- * Version:           1.4.11
+ * Version:           1.4.12
  * Author:            Angell EYE
  * Author URI:        http://www.angelleye.com/
  * License:           GNU General Public License v3.0
@@ -13,9 +13,9 @@
  * Domain Path:       /languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
  * Requires at least: 3.8
- * Tested up to: 4.9.6
+ * Tested up to: 4.9.8
  * WC requires at least: 3.0.0
- * WC tested up to: 3.4.3
+ * WC tested up to: 3.4.5
  *
 
 /**
