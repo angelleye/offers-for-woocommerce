@@ -293,3 +293,6 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 .et_divi_theme .offers-for-woocommerce-make-offer-button-single-product{
     position: absolute !important;
 }
+div#offers-for-woocommerce-add-to-cart-wrap .single_add_to_cart_button {
+    margin-bottom: 0px !important;
+}
