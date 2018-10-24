@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.13 - xx.xx.2018 =
+* Fix - Resolves CSS conflicts with some themes. ([OFW-25](https://github.com/angelleye/offers-for-woocommerce/pull/400))
+
 = 1.4.12 - 10.08.2018 =
 * Tweak - Adds the ability to Accept/Decline/Counter from a record that is currently On Hold. ([OFW-26](https://github.com/angelleye/offers-for-woocommerce/pull/401))
 * Fix - Resolves a PHP notice. ([OFW-19](https://github.com/angelleye/offers-for-woocommerce/pull/395))
