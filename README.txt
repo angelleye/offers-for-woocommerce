@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 4.9.8
-Stable tag: 1.4.12
+Stable tag: 1.4.13
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.13 - xx.xx.2018 =
+= 1.4.13 - 11.14.2018 =
 * Fix - Resolves CSS conflicts with some themes. ([OFW-25](https://github.com/angelleye/offers-for-woocommerce/pull/400))
 * Fix - Resolves a problem with Offer button functionality in IE 11 ([OFW-30](https://github.com/angelleye/offers-for-woocommerce/pull/404))
 
