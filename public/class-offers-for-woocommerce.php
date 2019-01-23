@@ -286,7 +286,11 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
                                         
-        $_product = wc_get_product($post->ID);        
+        $_product = wc_get_product($post->ID);   
+        if ( ! is_object( $_product ) ) {
+            return;
+        }        
+
         if(isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
             return;
         }
@@ -355,6 +359,9 @@ class Angelleye_Offers_For_Woocommerce {
     public function angelleye_ofwc_before_add_to_cart_button() {
         global $post;
         $_product = wc_get_product($post->ID);
+        if ( ! is_object( $_product ) ) {
+            return;
+        }
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         $no_price_product_class = ( $_product->get_price() === '' ) ? 'ofwc_no_price_product' : '';
         $button_position = $button_options_display['display_setting_make_offer_button_position_single'];
@@ -449,6 +456,9 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         $_product = wc_get_product($post->ID);
+        if ( ! is_object( $_product ) ) {
+            return;
+        }
         $is_external_product = version_compare(WC_VERSION, '3.0', '<') ? ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE : ( $_product->get_type() == 'external' ) ? TRUE : FALSE ;
         $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
@@ -555,6 +565,9 @@ class Angelleye_Offers_For_Woocommerce {
          * @author Chirag Ips <chiragc@itpathsolutions.co.in>
          */
         $_product = wc_get_product($post->ID);
+        if ( ! is_object( $_product ) ) {
+            return;
+        }
         if($_product == false) {
             return $tabs;
         }
@@ -618,6 +631,9 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         $_product = wc_get_product($post->ID);
+        if ( ! is_object( $_product ) ) {
+            return;
+        }
         $is_sold_individually = $_product->is_sold_individually();
         $is_backorders_allowed = $_product->backorders_allowed();
         $stock_quantity = $_product->get_stock_quantity();
