@@ -474,6 +474,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $ofw_enabled = 'yes';
                 }
                 $_product = wc_get_product( $postid );
+                if ( ! is_object( $_product ) ) {
+                    return;
+                }
                 if( $_product->is_type( 'external' ) ) {
                     echo '<div class="hidden" id="offers_for_woocommerce_inline_'.$postid.'">
                             <div class="wc_product_type_for_manage_offer">external</div>
@@ -616,6 +619,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	function custom_tab_options_tab_offers() {
         global $post;
         $_product = wc_get_product($post->ID);
+        if ( ! is_object( $_product ) ) {
+            return;
+        }
         if(version_compare(WC_VERSION, '3.0', '<')){
             $class_hidden = ( isset( $_product->product_type ) && $_product->product_type == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
         }
@@ -1437,7 +1443,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
             $postmeta['enable_shipping_cost'][0] = ( isset( $postmeta['enable_shipping_cost'][0] ) && $postmeta['enable_shipping_cost'][0] != '' ) ? $postmeta['enable_shipping_cost'][0] : 0;
             $_product = wc_get_product($product_id);
-
+            if ( ! is_object( $_product ) ) {
+                return;
+            }
             if($_product != false) {
 
                 if( $product_variant_id )
