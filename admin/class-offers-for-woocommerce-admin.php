@@ -1406,7 +1406,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $post, $wpdb;
 
 		do_action('before_offer_summary_meta_box', $post);
-
+                $currency_symbol = get_woocommerce_currency_symbol();
         if($post->ID)
         {
             $postmeta = get_post_meta($post->ID);
