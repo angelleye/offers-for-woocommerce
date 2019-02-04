@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 4.9.8
-Stable tag: 1.4.13
+Tested up to: 5.0.3
+Stable tag: 1.4.14
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 1.4.14 - xx.xx.2019 =
+= 1.4.14 - 02.03.2019 =
 * Tweak - Makes use of wc_price for price formatting. ([OFW-78](https://github.com/angelleye/offers-for-woocommerce/pull/408))
 * Fix - Resolves a bug in the MailChimp integration. ([OFW-75](https://github.com/angelleye/offers-for-woocommerce/pull/410))
 * Fix - Resolves conflicts with Elementor. ([OFW-79](https://github.com/angelleye/offers-for-woocommerce/pull/409))
