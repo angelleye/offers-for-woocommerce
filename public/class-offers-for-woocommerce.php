@@ -596,7 +596,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
-
+        $currency_symbol = get_woocommerce_currency_symbol();
         // enable offers for only logged in users
         if ($button_options_general && isset($button_options_general['general_setting_enable_offers_only_logged_in_users']) && $button_options_general['general_setting_enable_offers_only_logged_in_users'] != '') {
             if (!is_user_logged_in())

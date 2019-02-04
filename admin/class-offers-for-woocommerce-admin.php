@@ -881,7 +881,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $val = get_post_meta( $post_id , 'offer_price_per' , true );
                     }
                     $val = ($val != '') ? $val : '0';
-                    echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
+                    echo wc_price($val);
                     break;
 
                     case 'offer_amount' :
@@ -894,7 +894,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $val = get_post_meta( $post_id , 'offer_amount' , true );
                     }
                     $val = ($val != '') ? $val : '0';
-                    echo get_woocommerce_currency_symbol().number_format($val, 2, '.', '');
+                    echo wc_price($val);
                     break;
             }
 	}
@@ -1406,14 +1406,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $post, $wpdb;
 
 		do_action('before_offer_summary_meta_box', $post);
-
+                $currency_symbol = get_woocommerce_currency_symbol();
         if($post->ID)
         {
             $postmeta = get_post_meta($post->ID);
             /* Below line of code fetch the post meta that are set during submit offer */
             $offers_product_addon = get_post_meta($post->ID,'offers_product_addon',true);
             /* end */
-            $currency_symbol = get_woocommerce_currency_symbol();
 
             // Add an nonce field so we can check for it later.
             wp_nonce_field( 'woocommerce_offer_summary_metabox', 'woocommerce_offer_summary_metabox_noncename' );
@@ -4424,9 +4423,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             echo '<td class="title column-title" data-colname="title"><a href="'.get_edit_post_link().'">'.get_the_title().'</a></td>';
             echo '<td class="date column-date" data-colname="date"><abbr title="'.get_the_date().'">'.get_the_date().'</abbr></td>';
             echo '<td class="name column-name" data-colname="name">'.$name.'</td>';
-            echo '<td class="price_per column-price_per" data-colname="price_per">'.get_woocommerce_currency_symbol().number_format($offer_price_per, 2, '.', '').'</td>';
+            echo '<td class="price_per column-price_per" data-colname="price_per">'.wc_price($offer_price_per).'</td>';
             echo '<td class="quantity column-quantity" data-colname="quantity">'.$offer_quantity.'</td>';
-            echo '<td class="amount column-amount" data-colname="amount">'.get_woocommerce_currency_symbol().number_format($offer_amount, 2, '.', '').'</td>';
+            echo '<td class="amount column-amount" data-colname="amount">'.wc_price($offer_amount).'</td>';
             echo '<td class="status column-amount" data-colname="status">'.$status.'</td>';
             echo '</tr>';
 	endwhile;
