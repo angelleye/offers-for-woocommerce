@@ -150,14 +150,14 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                     }
                 } else {
                     unset($mailchimp_lists);
-                    if ($retval['total'] == 0) {
+                    if (count($retval) == false) {
                         if ('yes' == $mailchimp_debug_log) {
                             $log->add('MailChimp', 'You have not created any lists at MailChimp.');
                         }
                         $mailchimp_lists['false'] = __("You have not created any lists at MailChimp", 'doation-button');
                         return $mailchimp_lists;
                     }
-                    foreach ($retval['data'] as $list) {
+                    foreach ($retval['lists'] as $key => $list) {
                         $mailchimp_lists[$list['id']] = $list['name'];
                     }
                     if ('yes' == $mailchimp_debug_log) {

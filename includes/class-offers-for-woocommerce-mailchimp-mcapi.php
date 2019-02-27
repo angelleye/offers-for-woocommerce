@@ -12,7 +12,7 @@
  */
 class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
 
-    var $version = "1.3";
+    var $version = "3.0";
     var $errorMessage;
     var $errorCode;
 
@@ -48,8 +48,8 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
      * @param string $secure Whether or not this should use a secure connection
      */
     function __construct($apikey, $secure = false) {
-        $this->secure = $secure;
-        $this->apiUrl = parse_url("http://api.mailchimp.com/" . $this->version . "/?output=php");
+        $this->secure = true;
+        $this->apiUrl = 'https://<dc>.api.mailchimp.com/3.0/';
         $this->api_key = $apikey;
     }
 
@@ -70,6 +70,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
         } else {
             $this->secure = false;
         }
+        $this->secure = true;
     }
 
     /**
@@ -1311,7 +1312,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
      * @param bool $send_welcome optional if your double_optin is false and this is true, we will send your lists Welcome Email if this subscribe succeeds - this will *not* fire if we end up updating an existing subscriber. If double_optin is true, this has no effect. defaults to false.
      * @return boolean true on success, false on failure. When using MCAPI.class.php, the value can be tested and error messages pulled from the MCAPI object (see below)
      */
-    function listSubscribe($id, $email_address, $merge_vars = NULL, $email_type = 'html', $double_optin = false, $update_existing = false, $replace_interests = true, $send_welcome = false) {
+    function listSubscribe($id, $email_address, $merge_vars = NULL, $email_type = 'html', $double_optin = true, $update_existing = false, $replace_interests = true, $send_welcome = false) {
         $params = array();
         $params["id"] = $id;
         $params["email_address"] = $email_address;
@@ -2036,85 +2037,67 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
      * You should never have to call this function manually
      */
     function callServer($method, $params) {
+        $args = array();
         $dc = "us1";
         if (strstr($this->api_key, "-")) {
             list($key, $dc) = explode("-", $this->api_key, 2);
             if (!$dc)
                 $dc = "us1";
         }
-        $host = $dc . "." . $this->apiUrl["host"];
+        $host = $this->apiUrl = str_replace( '<dc>', $dc, $this->apiUrl );
+        if( $method == 'lists') {
+            $resource = $method;
+            $host = $host.$resource;
+            $method = 'GET';
+            $args = array('count' => 100);
+        } elseif($method == 'listSubscribe') {
+            $list_id = $params["id"];
+            $subscriber_hash = md5( strtolower( $params['email_address'] ) );
+            $resource = "lists/$list_id/members/$subscriber_hash";
+            $host = $host.$resource;
+            $method = 'PUT';
+            $args = array(
+                'email_address' => $params['email_address'],
+                'email_type'    => $params["email_type"],
+                'merge_fields'  => $params["merge_vars"],
+                'double_optin' => $params["double_optin"],
+                'update_existing' => $params["update_existing"],
+                'replace_interests' => $params["replace_interests"],
+                'send_welcome' => $params["send_welcome"],
+                'status' => 'pending'
+            );
+        }
         $params["apikey"] = $this->api_key;
-
         $this->errorMessage = "";
         $this->errorCode = "";
-        $sep_changed = false;
-        //sigh, apparently some distribs change this to &amp; by default
-        if (ini_get("arg_separator.output") != "&") {
-            $sep_changed = true;
-            $orig_sep = ini_get("arg_separator.output");
-            ini_set("arg_separator.output", "&");
-        }
-        $post_vars = http_build_query($params);
-        if ($sep_changed) {
-            ini_set("arg_separator.output", $orig_sep);
-        }
-
-        $payload = "POST " . $this->apiUrl["path"] . "?" . $this->apiUrl["query"] . "&method=" . $method . " HTTP/1.0\r\n";
-        $payload .= "Host: " . $host . "\r\n";
-        $payload .= "User-Agent: MCAPI/" . $this->version . "\r\n";
-        $payload .= "Content-type: application/x-www-form-urlencoded\r\n";
-        $payload .= "Content-length: " . strlen($post_vars) . "\r\n";
-        $payload .= "Connection: close \r\n\r\n";
-        $payload .= $post_vars;
-
-        ob_start();
-        if ($this->secure) {
-            $sock = fsockopen("ssl://" . $host, 443, $errno, $errstr, 30);
+        global $wp_version;
+        $request_args = array(
+                'method'        => $method,
+                'sslverify'     => false,
+                'timeout'       => 60,
+                'redirection'   => 5,
+                'httpversion'   => '1.1',
+                'headers'       => array(
+                        'Content-Type'   => 'application/json',
+                        'Accept'         => 'application/json',
+                        'Authorization'  => 'apikey ' . $this->api_key,
+                        'User-Agent'     => 'angelleye-mailchimp/' . $this->version . '; WordPress/' . $wp_version . '; ' . get_bloginfo( 'url' ),
+                ),
+        );
+        if( $method == 'GET') {
+            $url = add_query_arg( $args, $host );
         } else {
-            $sock = fsockopen($host, 80, $errno, $errstr, 30);
+            $url = $host;   
+            $request_args['body'] = json_encode( $args );
         }
-        if (!$sock) {
-            $this->errorMessage = "Could not connect (ERR $errno: $errstr)";
-            $this->errorCode = "-99";
-            ob_end_clean();
+        $response = wp_remote_request( $url, $request_args );
+        if ( is_wp_error( $response ) ) {
+            $errored = $response;
             return false;
-        }
-
-        $response = "";
-        fwrite($sock, $payload);
-        stream_set_timeout($sock, $this->timeout);
-        $info = stream_get_meta_data($sock);
-        while ((!feof($sock)) && (!$info["timed_out"])) {
-            $response .= fread($sock, $this->chunkSize);
-            $info = stream_get_meta_data($sock);
-        }
-        fclose($sock);
-        ob_end_clean();
-        if ($info["timed_out"]) {
-            $this->errorMessage = "Could not read response (timed out)";
-            $this->errorCode = -98;
-            return false;
-        }
-
-        list($headers, $response) = explode("\r\n\r\n", $response, 2);
-        $headers = explode("\r\n", $headers);
-        $errored = false;
-        foreach ($headers as $h) {
-            if (substr($h, 0, 26) === "X-MailChimp-API-Error-Code") {
-                $errored = true;
-                $error_code = trim(substr($h, 27));
-                break;
-            }
-        }
-
-        if (ini_get("magic_quotes_runtime"))
-            $response = stripslashes($response);
-
-        $serial = unserialize($response);
-        if ($response && $serial === false) {
-            $response = array("error" => "Bad Response.  Got This: " . $response, "code" => "-99");
         } else {
-            $response = $serial;
+            $json = wp_remote_retrieve_body( $response );
+            $result = json_decode( $json, true );
+            return $result;
         }
         if ($errored && is_array($response) && isset($response["error"])) {
             $this->errorMessage = $response["error"];
