@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 1.4.15 - xx.xx.2019 =
+* Tweak - Adjusts CSS related to offer section of product page. ([OFWA-1](https://github.com/angelleye/offers-for-woocommerce/pull/411))
+
 = 1.4.14 - 02.03.2019 =
 * Tweak - Makes use of wc_price for price formatting. ([OFW-78](https://github.com/angelleye/offers-for-woocommerce/pull/408))
 * Fix - Resolves a bug in the MailChimp integration. ([OFW-75](https://github.com/angelleye/offers-for-woocommerce/pull/410))
