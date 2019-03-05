@@ -1692,6 +1692,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
         }
 
+	    echo "<pre>";
+	    print_r($_POST);
+	    exit;
+
         /*
          * OK, its safe for us to save the data now
          */
@@ -2717,8 +2721,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if((isset($expiration_date) && !empty($expiration_date)) && ( strtotime($expiration_date) < strtotime($today_date) )){
                     $ofw_offer_expiration_date_show = 'true';
                 }
-                wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param', array(
-                    'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show
+                wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param',
+                    array(
+                        'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show,
+                        'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
+                        'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),
+                        'ofw_admin_js_decimal_separator' => wc_get_price_decimal_separator(),
+                        'ofw_admin_js_number_of_decimals' => wc_get_price_decimals(),
                 ));
             }
 
