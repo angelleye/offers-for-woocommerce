@@ -16,6 +16,42 @@
                 minDate: currentDate
             });
 
+            $('#original-offer-quantity').autoNumeric('init',
+                {
+                    vMin: '0',
+                    mDec: '0',
+                    lZero: 'deny',
+                    aForm: true,
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,
+                }
+            );
+
+            $('#original-offer-price-per').autoNumeric('init',
+                {
+                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    vMin : '0.00',    /* Enter the minimum value allowed */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'sign',   /* controls input display behavior. */
+                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                }
+            );
+
+            $('#original-offer-amount').autoNumeric('init',
+                {
+                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'zero',   /* controls input display behavior. */
+                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                }
+            );
+
             $('#offer-quantity').autoNumeric('init',
                 {
                     vMin: '0',
@@ -282,7 +318,7 @@
         });
         
         $(document).on('click','#meta-box-offers-submit',function() {
-            var original_price = $('#original-offer-amount').val();
+            var original_price = $('#original-offer-price-per').val();
             var countered_price = $('#offer-price-per').val();            
             var current_status = $('#woocommerce_offer_post_status').val();
             if(original_price === countered_price && current_status==='countered-offer'){
