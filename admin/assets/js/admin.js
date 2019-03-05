@@ -271,8 +271,6 @@
             $('#offer_shipping_cost').parent('.angelleye-input-group').show();
         } else {
             $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
-            $('#offer_shipping_cost').autoNumeric('set','');
-            updateTotal();
         }
 
         $("#ofwc_enable_shipping").click(function() {

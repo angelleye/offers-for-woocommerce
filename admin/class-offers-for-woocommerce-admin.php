@@ -1692,9 +1692,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
         }
 
-//	    echo "<pre>";
-//	    print_r($_POST);
-//	    exit;
         /*
          * OK, its safe for us to save the data now
          */
@@ -1718,10 +1715,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $enable_shipping_cost = (isset($_POST['enable_shipping_cost']) && $_POST['enable_shipping_cost'] == 1) ? 1 : 0;
         $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
-        if($enable_shipping_cost){
-            update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
-            update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
-        }
+
+        update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
+        update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
 
         $product_id = get_post_meta($post_id, 'offer_product_id', true);
         $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
