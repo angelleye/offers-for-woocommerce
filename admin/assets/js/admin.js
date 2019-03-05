@@ -35,7 +35,7 @@
                     //pSign : 'p',    /* Placement of the currency : p = left and s = right */
                     vMin : '0.00',    /* Enter the minimum value allowed */
                     lZero: 'allow',   /* Controls if leading zeros are allowed */
-                    wEmpty: 'zero',   /* controls input display behavior. */
+                    wEmpty: 'sign',   /* controls input display behavior. */
                     mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
                 }
             );
@@ -54,12 +54,13 @@
     
             $('#offer_shipping_cost').autoNumeric('init',
                 {
-                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
+                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
                     aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
                     //pSign : 'p',    /* Placement of the currency : p = left and s = right */
                     mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
                     lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'sign',   /* controls input display behavior. */
                 }
             );
 
@@ -270,6 +271,8 @@
             $('#offer_shipping_cost').parent('.angelleye-input-group').show();
         } else {
             $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
+            $('#offer_shipping_cost').autoNumeric('set','');
+            updateTotal();
         }
 
         $("#ofwc_enable_shipping").click(function() {
