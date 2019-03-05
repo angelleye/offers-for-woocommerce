@@ -21,7 +21,9 @@
                     vMin: '0',
                     mDec: '0',
                     lZero: 'deny',
-                    aForm: true
+                    aForm: true,
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,
                 }
             );
 
@@ -262,6 +264,7 @@
                 return false;
             }
         });
+
         if($('#ofwc_enable_shipping').is(":checked")) {
             $('#offer_shipping_cost').parent('.angelleye-input-group').show();
         } else {
@@ -284,9 +287,6 @@
                 $('#counter_offer_notice').show();
                 return false;
             }
-              
         });
-        
-        
 	});
 }(jQuery));
