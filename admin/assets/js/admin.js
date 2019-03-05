@@ -214,6 +214,7 @@
                         //pSign : 'p',    /* Placement of the currency : p = left and s = right */
                         lZero: 'allow',   /* Controls if leading zeros are allowed */
                         wEmpty: 'zero',   /* controls input display behavior. */
+                        mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
                     }
                 );
             }

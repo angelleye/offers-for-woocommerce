@@ -923,7 +923,11 @@ class Angelleye_Offers_For_Woocommerce {
                     'ajax_url' => admin_url('admin-ajax.php'),
                     'offers_for_woocommerce_params_nonce' => wp_create_nonce("offers_for_woocommerce_params_nonce"),
                     'i18n_make_a_selection_text' => esc_attr__( 'Please select some product options before making offer for this product.', 'offers-for-woocommerce' ),
-                    'i18n_unavailable_text' => esc_attr__( 'Sorry, this product is unavailable. Please choose a different product.', 'offers-for-woocommerce' )
+                    'i18n_unavailable_text' => esc_attr__( 'Sorry, this product is unavailable. Please choose a different product.', 'offers-for-woocommerce' ),
+                    'ofw_public_js_currency_position' => get_option('woocommerce_currency_pos'),
+                    'ofw_public_js_thousand_separator' => wc_get_price_thousand_separator(),
+                    'ofw_public_js_decimal_separator' => wc_get_price_decimal_separator(),
+                    'ofw_public_js_number_of_decimals' => wc_get_price_decimals(),
                 )));
             }
             if($this->is_recaptcha_enable()) {
