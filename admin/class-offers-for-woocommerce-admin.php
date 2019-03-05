@@ -2684,6 +2684,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Admin settings scripts
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-admin-settings-scripts', plugins_url( 'assets/js/admin-settings-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+	            wp_localize_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', 'ofw_param',
+		            array(
+			            'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
+			            'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),
+			            'ofw_admin_js_decimal_separator' => wc_get_price_decimal_separator(),
+			            'ofw_admin_js_number_of_decimals' => wc_get_price_decimals(),
+		            ));
 
             // Chosen js
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
