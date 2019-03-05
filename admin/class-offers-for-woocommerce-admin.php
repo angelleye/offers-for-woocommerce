@@ -874,7 +874,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $val = get_post_meta( $post_id , 'offer_quantity' , true );
                     }
                     $val = ($val != '') ? $val : '0';
-                    echo number_format($val, 2, '.', '');
+                    echo $val;
                     break;
 
                     case 'offer_price_per' :
@@ -1691,10 +1691,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 return;
             }
         }
-
-	    echo "<pre>";
-	    print_r($_POST);
-	    exit;
 
         /*
          * OK, its safe for us to save the data now
