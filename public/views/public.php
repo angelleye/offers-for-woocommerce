@@ -150,12 +150,11 @@
                 <?php } else { ?>
                     <div class="woocommerce-make-offer-form-part-left">
                         <label for="woocommerce-make-offer-form-quantity"><?php echo apply_filters( 'aeofwc_offer_form_label_quantity', __('Quantity', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                        <br /><input type="text" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" <?php echo ($new_offer_quantity_limit) ? ' data-v-max="'.$new_offer_quantity_limit.'"' : '';?> required="required" />
+                        <input type="text" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" <?php echo ($new_offer_quantity_limit) ? ' data-v-max="'.$new_offer_quantity_limit.'"' : '';?> required="required" />
                     </div>
                 <?php } ?>
                 <div class="woocommerce-make-offer-form-part-left">
                 	<label for="woocommerce-make-offer-form-price-each"><?php echo apply_filters( 'aeofwc_offer_form_label_price_each', __('Price Each', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                    <br />
                     <div class="angelleye-input-group">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                         <input type="text" name="offer_price_each" id="woocommerce-make-offer-form-price-each" pattern="([0-9]|\$|,|.)+" data-a-sign="$" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" />
@@ -170,7 +169,7 @@
                             <?php do_action('make_offer_form_before_your_name', 'add_custom_field_make_offer_form', $is_counter_offer); ?>
                             <div class="woocommerce-make-offer-form-section">
                                 <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc_offer_form_label_your_name', __('Your Name', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                                <br /><input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
+                                <input type="text" id="offer-name" name="offer_name" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_name)) ? $offer_name : ''; ?>" />
                             </div>
                             <?php do_action('make_offer_form_after_your_name', 'add_custom_field_make_offer_form', $is_counter_offer); ?>
                         <?php }
@@ -179,7 +178,7 @@
                             <?php do_action('make_offer_form_before_your_email_address', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
                             <div class="woocommerce-make-offer-form-section">
                                 <label for="woocommerce-make-offer-form-email"><?php echo apply_filters( 'aeofwc_offer_form_label_your_email_address', __('Your Email Address', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                                <br /><input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
+                                <input type="email" name="offer_email" id="woocommerce-make-offer-form-email" required="required" <?php echo ($is_counter_offer) ? ' disabled="disabled"' : '' ?> value="<?php echo (isset($offer_email)) ? $offer_email: ''; ?>" />
                             </div>
                             <?php do_action('make_offer_form_after_your_email_address', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>    
 
@@ -188,8 +187,7 @@
             <?php do_action('make_offer_form_before_company_name', 'add_custom_field_make_offer_form', $is_counter_offer); ?>
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_company_name'])) { ?>
                 <div class="woocommerce-make-offer-form-section">
-                    <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc_offer_form_label_company_name', __('Company Name', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                    <br />
+                    <label for="offer-company-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc_offer_form_label_company_name', __('Company Name', 'offers-for-woocommerce'), $is_counter_offer );?></label>
                     <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_company_name_required'])) { 
                             $company_name_required='required';
                           }
@@ -208,8 +206,7 @@
             <?php do_action('make_offer_form_before_phone_number', 'add_custom_field_make_offer_form', $is_counter_offer); ?>                
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_phone'])) { ?>
                 <div class="woocommerce-make-offer-form-section">
-                    <label for="offer-name" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc_offer_form_label_phone_number', __('Phone Number', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                    <br />
+                    <label for="offer-phone" class="woocommerce-make-offer-form-label"><?php echo apply_filters( 'aeofwc_offer_form_label_phone_number', __('Phone Number', 'offers-for-woocommerce'), $is_counter_offer );?></label>
                     <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_phone_required'])) {
                             $offer_phone_required='required';
                           }
@@ -229,7 +226,6 @@
             <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) && $is_anonymous_communication_enable == false ) { ?>
                 <div class="woocommerce-make-offer-form-section">
                     <label for="angelleye-offer-notes"><?php echo apply_filters( 'aeofwc_offer_form_label_offer_notes', __('Offer Notes (optional)', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                    <br />
                     <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes_required'])) {
                             $offer_notes_required='required';
                           }
@@ -252,7 +248,6 @@
                                     <input type="hidden" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
                                 <?php } else { ?>
                                 <label for="woocommerce-make-offer-form-total"><?php echo apply_filters( 'aeofwc_offer_form_label_total_offer_amount', __('Total Offer Amount', 'offers-for-woocommerce'), $is_counter_offer );?></label>
-                                    <br />
                                 <div class="angelleye-input-group">
                                     <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                                     <input type="text" name="offer_total" id="woocommerce-make-offer-form-total" class="form-control" data-currency-symbol="<?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?>" disabled="disabled" />
