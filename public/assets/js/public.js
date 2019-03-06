@@ -414,6 +414,19 @@
                                 $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
                                 $('#tab_custom_ofwc_offer_tab_inner fieldset').hide();
                                 $('#tab_custom_ofwc_offer_tab_alt_message_success').slideToggle('fast');
+                                if($('#lightbox_custom_ofwc_offer_form').length) {
+                                    $('#aeofwc-popup-counter-box').show();
+                                    var count = 5;
+                                    var counter = setInterval(function () {
+                                        if (count <= 0) {
+                                            clearInterval(counter);
+                                            $('#aeofwc-close-lightbox-link').trigger('click');
+                                        }
+                                        $('#aeofwc-lightbox-message-counter').html(count);
+                                        count -= 1;
+                                    }, 500);
+                                }
+
                             }
 
                         } else {
