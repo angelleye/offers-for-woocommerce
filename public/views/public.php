@@ -160,8 +160,7 @@
                         <input type="text" name="offer_price_each" id="woocommerce-make-offer-form-price-each" pattern="([0-9]|\$|,|.)+" data-a-sign="$" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" required="required" />
                     </div>
                 </div>
-                    </div>
-            
+            </div>
             <?php 
                     foreach ($button_display_position as $key => $value) {   
                         
