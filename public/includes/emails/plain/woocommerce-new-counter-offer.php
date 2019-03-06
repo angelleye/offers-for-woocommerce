@@ -25,7 +25,7 @@ echo __( 'Price', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['pro
 echo __( 'Subtotal', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product_total']) . "\n";
 
 if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
-    $product_total = number_format(round($offer_args['product_total'] + $offer_args['product_shipping_cost'], 2), 2, '.', '') . "\n";
+    $product_total = number_format(($offer_args['product_total'] + $offer_args['product_shipping_cost']), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()) . "\n";
     echo __( 'Shipping', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product_shipping_cost']). "\n";
     echo __( 'Total', 'offers-for-woocommerce' ) . ': ' . wc_price( $product_total) . "\n";
 }

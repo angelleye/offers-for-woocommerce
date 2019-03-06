@@ -54,7 +54,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
                         $enable_shipping_cost = get_post_meta($values['woocommerce_offer_id'], 'enable_shipping_cost', true);
                         $product_shipping_cost = get_post_meta($values['woocommerce_offer_id'], 'offer_shipping_cost', true);
                         if (isset($product_shipping_cost) && !empty($product_shipping_cost)) {
-                            $total_shipping_cost = $total_shipping_cost + number_format($product_shipping_cost, 2, '.', '');
+                            $total_shipping_cost = $total_shipping_cost + number_format($product_shipping_cost,wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
                         }
                     }
                 }
@@ -64,7 +64,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
                     $rate = array(
                         'id' => $this->id,
                         'label' => ($total_shipping_cost == 0) ? $this->title. __(" (Free)", "offers-for-woocommerce") : $this->title,
-                        'cost' => number_format($total_shipping_cost, 2, '.', ''),
+                        'cost' => number_format($total_shipping_cost, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                         'taxes' => false,
                         'package' => $package,
                     );
