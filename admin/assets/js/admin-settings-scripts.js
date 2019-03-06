@@ -15,6 +15,46 @@
                     aForm: false}
             );
 
+            $('#ofwc-bulk-action-target-where-price-value').autoNumeric('init',
+                {
+                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    vMin : '0.00',    /* Enter the minimum value allowed */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'sign',   /* controls input display behavior. */
+                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                }
+            );
+
+            $('#ofw-bulk-tool-action-target-where-price-value').autoNumeric('init',
+                {
+                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    vMin : '0.00',    /* Enter the minimum value allowed */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'sign',   /* controls input display behavior. */
+                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                }
+            );
+
+            $('input[name="ofw_minimum_offer_price_target_where_price_value"]').autoNumeric('init',
+                {
+                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    vMin : '0.00',    /* Enter the minimum value allowed */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'sign',   /* controls input display behavior. */
+                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                }
+            );
+
+
             /* Minimum Offer Price bulk toogle */            
             $('#ofw-minimum-offer-price-target-type').change(function(){
 

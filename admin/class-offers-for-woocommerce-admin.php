@@ -874,7 +874,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $val = get_post_meta( $post_id , 'offer_quantity' , true );
                     }
                     $val = ($val != '') ? $val : '0';
-                    echo number_format($val, 2, '.', '');
+                    echo $val;
                     break;
 
                     case 'offer_price_per' :
@@ -1715,10 +1715,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $enable_shipping_cost = (isset($_POST['enable_shipping_cost']) && $_POST['enable_shipping_cost'] == 1) ? 1 : 0;
         $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
-        if($enable_shipping_cost){
-            update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
-            update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
-        }
+
+        update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
+        update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
 
         $product_id = get_post_meta($post_id, 'offer_product_id', true);
         $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
@@ -1740,7 +1739,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if($post_data->post_status == 'accepted-offer' && !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'accepted-offer'){
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'orig_offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'orig_offer_price_per', true);
-            $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+            $product_total = number_format(($product_qty * $product_price_per),wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
 
             // Update qty/price/total meta values
             update_post_meta( $post_id, 'offer_quantity', $product_qty );
@@ -1766,10 +1765,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // Counter Offer
         if($post_data->post_status == 'countered-offer')
         {
-            $offer_quantity = !empty( $_POST['offer_quantity']) ? wc_clean(str_replace(",","", $_POST['offer_quantity'])) : '';
-            $offer_price_per = !empty($_POST['offer_price_per']) ? wc_clean(str_replace(",","", $_POST['offer_price_per'])) : '';
-            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean(str_replace(",","", $_POST['offer_shipping_cost'])) : 0.00;
-            $offer_total = number_format(round($offer_quantity * $offer_price_per, 2), 2, '.', '');
+            $offer_quantity = !empty( $_POST['offer_quantity']) ? wc_clean($_POST['offer_quantity']) : '';
+            $offer_price_per = !empty($_POST['offer_price_per']) ? wc_clean($_POST['offer_price_per']) : '';
+            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
+            $offer_total = ($offer_quantity * $offer_price_per);
 
             /**
              * Update Counter Offer post meta values
@@ -1794,7 +1793,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $coupon_code = !empty($_POST["ofw_coupon_list"]) ? wc_clean($_POST["ofw_coupon_list"]) : '';
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+            $product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
 
             $email_class = 'WC_Declined_Offer_Email';
             $template_name  = 'woocommerce-offer-declined.php';
@@ -2685,6 +2684,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             // Admin settings scripts
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-admin-settings-scripts', plugins_url( 'assets/js/admin-settings-scripts.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
+	            wp_localize_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', 'ofw_param',
+		            array(
+			            'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
+			            'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),
+			            'ofw_admin_js_decimal_separator' => wc_get_price_decimal_separator(),
+			            'ofw_admin_js_number_of_decimals' => wc_get_price_decimals(),
+		            ));
 
             // Chosen js
             wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-jquery-chosen', plugins_url( 'assets/js/chosen.jquery.min.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
@@ -2717,8 +2723,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if((isset($expiration_date) && !empty($expiration_date)) && ( strtotime($expiration_date) < strtotime($today_date) )){
                     $ofw_offer_expiration_date_show = 'true';
                 }
-                wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param', array(
-                    'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show
+                wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param',
+                    array(
+                        'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show,
+                        'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
+                        'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),
+                        'ofw_admin_js_decimal_separator' => wc_get_price_decimal_separator(),
+                        'ofw_admin_js_number_of_decimals' => wc_get_price_decimals(),
                 ));
             }
 
@@ -2916,7 +2927,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
-            $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+            $product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
             if ($is_offer_buyer_countered_status) {
                 update_post_meta($post_id, 'offer_quantity', $product_qty);
                 update_post_meta($post_id, 'offer_price_per', $product_price_per);
@@ -3265,7 +3276,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_price',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2, '.', '') ),
+                            'value' => number_format($ofwc_bulk_action_target_where_price_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '>',
                             'type' => 'DECIMAL(10,2)'
                         )
@@ -3277,7 +3288,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_price',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2, '.', '') ),
+                            'value' => number_format($ofwc_bulk_action_target_where_price_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '<',
                             'type' => 'DECIMAL(10,2)'
                         )
@@ -3295,7 +3306,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
+                            'value' => number_format($ofwc_bulk_action_target_where_stock_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '>',
                             'type' => 'NUMERIC'
                         )
@@ -3313,7 +3324,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
+                            'value' => number_format($ofwc_bulk_action_target_where_stock_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '<',
                             'type' => 'NUMERIC'
                         )
@@ -3478,7 +3489,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_price',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2, '.', '') ),
+                            'value' => number_format($ofwc_bulk_action_target_where_price_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '>',
                             'type' => 'DECIMAL(10,2)'
                         )
@@ -3490,7 +3501,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_price',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_price_value, 2, '.', '') ),
+                            'value' => number_format($ofwc_bulk_action_target_where_price_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '<',
                             'type' => 'DECIMAL(10,2)'
                         )
@@ -3508,7 +3519,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
+                            'value' => number_format($ofwc_bulk_action_target_where_stock_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '>',
                             'type' => 'NUMERIC'
                         )
@@ -3526,7 +3537,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     array_push($where_args['meta_query'],
                         array(
                             'key' => '_stock',
-                            'value' => str_replace(",", "", number_format($ofwc_bulk_action_target_where_stock_value, 0) ),
+                            'value' => number_format($ofwc_bulk_action_target_where_stock_value, wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator()),
                             'compare' => '<',
                             'type' => 'NUMERIC'
                         )
@@ -4257,7 +4268,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
                 $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
                 $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
-                $product_total = number_format(round($product_qty * $product_price_per, 2), 2, '.', '');
+                $product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
 
                 if ($is_offer_buyer_countered_status) {
                     update_post_meta($post_id, 'offer_quantity', $product_qty);
