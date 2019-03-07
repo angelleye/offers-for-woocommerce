@@ -1714,7 +1714,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offer_notes = !empty($_POST['angelleye_woocommerce_offer_status_notes']) ? wc_clean(wp_slash($_POST['angelleye_woocommerce_offer_status_notes'])) : '';
 
         $enable_shipping_cost = (isset($_POST['enable_shipping_cost']) && $_POST['enable_shipping_cost'] == 1) ? 1 : 0;
-        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
+        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? self::ofwc_format_localized_price(wc_clean($_POST['offer_shipping_cost'])) : 0.00;
 
         update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
         update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
@@ -1733,6 +1733,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // if buyercountered-offer previous then use buyer counter values
         $is_offer_buyer_countered_status = ( !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
         $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
+	    $product_shipping_cost = self::ofwc_format_localized_price($product_shipping_cost);
         $template_name = '';
 
         // Accept Offer
@@ -1766,8 +1767,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if($post_data->post_status == 'countered-offer')
         {
             $offer_quantity = !empty( $_POST['offer_quantity']) ? wc_clean($_POST['offer_quantity']) : '';
-            $offer_price_per = !empty($_POST['offer_price_per']) ?  $this->ofwc_format_localized_price(wc_clean($_POST['offer_price_per'])) : '';
-            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $this->ofwc_format_localized_price(wc_clean($_POST['offer_shipping_cost'])) : 0.00;
+            $offer_price_per = !empty($_POST['offer_price_per']) ?  self::ofwc_format_localized_price(wc_clean($_POST['offer_price_per'])) : '';
+            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? self::ofwc_format_localized_price(wc_clean($_POST['offer_shipping_cost'])) : 0.00;
             $offer_total = ($offer_quantity * $offer_price_per);
             /**
              * Update Counter Offer post meta values
