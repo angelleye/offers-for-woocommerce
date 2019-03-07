@@ -1766,12 +1766,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if($post_data->post_status == 'countered-offer')
         {
             $offer_quantity = !empty( $_POST['offer_quantity']) ? wc_clean($_POST['offer_quantity']) : '';
-            $offer_price_per = !empty($_POST['offer_price_per']) ? wc_clean($_POST['offer_price_per']) : '';
-            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
+            $offer_price_per = !empty($_POST['offer_price_per']) ?  $this->ofwc_format_localized_price(wc_clean($_POST['offer_price_per'])) : '';
+            $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? $this->ofwc_format_localized_price(wc_clean($_POST['offer_shipping_cost'])) : 0.00;
             $offer_total = ($offer_quantity * $offer_price_per);
-	        echo "<pre>";
-	        var_dump($offer_quantity,$offer_price_per,$offer_shipping_cost,$offer_total);
-	        exit;
             /**
              * Update Counter Offer post meta values
              */
@@ -4549,4 +4546,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         return in_array( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins ) || array_key_exists( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins );
     }
 
+    public function ofwc_format_localized_price($value){
+        return str_replace( wc_get_price_decimal_separator(),'.' , strval( $value ) );
+    }
 }
