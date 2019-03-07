@@ -4546,7 +4546,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         return in_array( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins ) || array_key_exists( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins );
     }
 
-    public function ofwc_format_localized_price($value){
+    public static function ofwc_format_localized_price($value){
         return str_replace( wc_get_price_decimal_separator(),'.' , strval( $value ) );
     }
 }

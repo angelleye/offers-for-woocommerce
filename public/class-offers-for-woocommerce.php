@@ -1044,12 +1044,12 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['orig_offer_product_id'] = !empty($post['offer_product_id']) ? wc_clean($post['offer_product_id']) : '';
             $formData['orig_offer_variation_id'] = !empty($post['offer_variation_id']) ? wc_clean($post['offer_variation_id']) : '';
             $formData['orig_offer_quantity'] = !empty($post['offer_quantity']) ? wc_clean($post['offer_quantity']) : '0';
-            $formData['orig_offer_price_per'] = !empty($post['offer_price_each']) ? wc_clean($post['offer_price_each']) : '0';
-            $formData['orig_offer_amount'] = number_format(($formData['orig_offer_quantity'] * $formData['orig_offer_price_per']),wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
+            $formData['orig_offer_price_per'] = !empty($post['offer_price_each']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($post['offer_price_each'])) : '0';
+            $formData['orig_offer_amount'] = ($formData['orig_offer_quantity'] * $formData['orig_offer_price_per']);
             $formData['orig_offer_uid'] = uniqid('aewco-');
             $formData['parent_offer_uid'] = !empty($post['parent_offer_uid']) ? wc_clean($post['parent_offer_uid']) : '';
             $formData['offer_product_price'] = !empty($post['offer_product_price']) ? wc_clean($post['offer_product_price']) : '';
-            $formData['offer_total'] = !empty($post['offer_total']) ? wc_clean($post['offer_total']) : '';
+            $formData['offer_total'] = !empty($post['offer_total']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($post['offer_total']))  : '';
             
             if($this->is_recaptcha_enable()) {
                 if( isset( $post['g-recaptcha-response'] ) && !empty($post['g-recaptcha-response']) ){
