@@ -1769,7 +1769,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $offer_price_per = !empty($_POST['offer_price_per']) ? wc_clean($_POST['offer_price_per']) : '';
             $offer_shipping_cost = (!empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? wc_clean($_POST['offer_shipping_cost']) : 0.00;
             $offer_total = ($offer_quantity * $offer_price_per);
-
+	        echo "<pre>";
+	        var_dump($offer_quantity,$offer_price_per,$offer_shipping_cost,$offer_total);
+	        exit;
             /**
              * Update Counter Offer post meta values
              */
