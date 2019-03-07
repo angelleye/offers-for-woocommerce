@@ -1739,7 +1739,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if($post_data->post_status == 'accepted-offer' && !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'accepted-offer'){
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'orig_offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'orig_offer_price_per', true);
-            $product_total = number_format(($product_qty * $product_price_per),wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
+            $product_total = ($product_qty * $product_price_per);
 
             // Update qty/price/total meta values
             update_post_meta( $post_id, 'offer_quantity', $product_qty );
@@ -1792,7 +1792,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $coupon_code = !empty($_POST["ofw_coupon_list"]) ? wc_clean($_POST["ofw_coupon_list"]) : '';
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-            $product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
+            $product_total = ($product_qty * $product_price_per);
 
             $email_class = 'WC_Declined_Offer_Email';
             $template_name  = 'woocommerce-offer-declined.php';
