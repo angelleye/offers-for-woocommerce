@@ -1713,8 +1713,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // set update notes
         $offer_notes = !empty($_POST['angelleye_woocommerce_offer_status_notes']) ? wc_clean(wp_slash($_POST['angelleye_woocommerce_offer_status_notes'])) : '';
 
+	    $product_qty = !empty( $_POST['offer_quantity']) ? wc_clean($_POST['offer_quantity']) : '';
+	    $product_price_per  = !empty($_POST['offer_price_per']) ?  self::ofwc_format_localized_price(wc_clean($_POST['offer_price_per'])) : '';
         $enable_shipping_cost = (isset($_POST['enable_shipping_cost']) && $_POST['enable_shipping_cost'] == 1) ? 1 : 0;
-        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? self::ofwc_format_localized_price(wc_clean($_POST['offer_shipping_cost'])) : 0.00;
+        $offer_shipping_cost = (isset($_POST['offer_shipping_cost']) && !empty($_POST['offer_shipping_cost']) && $_POST['offer_shipping_cost'] != '0.00') ? self::ofwc_format_localized_price(wc_clean($_POST['offer_shipping_cost'])) : 0.00;
+
+        $product_total = (($product_qty * $product_price_per) + $offer_shipping_cost);
 
         update_post_meta( $post_id, 'enable_shipping_cost', $enable_shipping_cost );
         update_post_meta( $post_id, 'offer_shipping_cost', $offer_shipping_cost );
@@ -1754,7 +1758,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         // Offer On Hold
         if($post_data->post_status == 'on-hold-offer' && !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] != 'on-hold-offer')
         {
-            $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
 
@@ -1844,9 +1847,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             $offer_args['product_title_formatted'] = $product->get_formatted_name();
         }
-//	    echo "<pre>";
-//	    print_r($offer_args);
-//	    exit;
 
         if(isset($email_class) && !empty($email_class)) {
             global $woocommerce;

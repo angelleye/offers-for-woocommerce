@@ -37,6 +37,27 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
             <th scope="row" colspan="3"  style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
             <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $offer_args['product_total']); ?></td>
         </tr>
+        <tr>
+	        <?php
+	        if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
+		        $product_total = ($offer_args['product_total'] + $offer_args['product_shipping_cost']);
+		        ?>
+                <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Shipping', 'offers-for-woocommerce' ); ?></th>
+                <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $offer_args['product_shipping_cost']); ?></td>
+		        <?php
+	        }
+	        ?>
+        </tr>
+        <tr>
+	        <?php
+	        if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
+		        ?>
+                <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Total', 'offers-for-woocommerce' ); ?></th>
+                <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $product_total); ?></td>
+		        <?php
+	        }
+	        ?>
+        </tr>
         </tfoot>
     </table>
 
