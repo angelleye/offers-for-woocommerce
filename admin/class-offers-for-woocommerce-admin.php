@@ -1732,8 +1732,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         // if buyercountered-offer previous then use buyer counter values
         $is_offer_buyer_countered_status = ( !empty($_POST['post_previous_status']) && $_POST['post_previous_status'] == 'buyercountered-offer' ) ? true : false;
-        $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
-	    $product_shipping_cost = self::ofwc_format_localized_price($product_shipping_cost);
+        $product_shipping_cost = $offer_shipping_cost;
         $template_name = '';
 
         // Accept Offer
@@ -1845,6 +1844,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         {
             $offer_args['product_title_formatted'] = $product->get_formatted_name();
         }
+//	    echo "<pre>";
+//	    print_r($offer_args);
+//	    exit;
 
         if(isset($email_class) && !empty($email_class)) {
             global $woocommerce;
