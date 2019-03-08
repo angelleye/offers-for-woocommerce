@@ -36,7 +36,7 @@ if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
     <tr>
         <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
         <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo wc_price( $offer_args['product']->get_regular_price()); ?></td>
-        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo number_format( $offer_args['product_qty'], 0 ); ?></td>
+        <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo $offer_args['product_qty']; ?></td>
         <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo wc_price( $offer_args['product_price_per']); ?></td>
     </tr>
     </tbody>
@@ -44,6 +44,27 @@ if( isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code']) ) {
     <tr>
         <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Subtotal', 'offers-for-woocommerce' ); ?></th>
         <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $offer_args['product_total']); ?></td>
+    </tr>
+    <tr>
+	    <?php
+	    if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
+		    $product_total = ($offer_args['product_total'] + $offer_args['product_shipping_cost']);
+		    ?>
+            <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Shipping', 'offers-for-woocommerce' ); ?></th>
+            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $offer_args['product_shipping_cost']); ?></td>
+		    <?php
+	    }
+	    ?>
+    </tr>
+    <tr>
+	    <?php
+	    if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
+		    ?>
+            <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Total', 'offers-for-woocommerce' ); ?></th>
+            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $product_total); ?></td>
+		    <?php
+	    }
+	    ?>
     </tr>
     </tfoot>
 </table>
