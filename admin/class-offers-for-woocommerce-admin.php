@@ -4548,6 +4548,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public static function ofwc_format_localized_price($value){
-        return str_replace( wc_get_price_decimal_separator(),'.' , strval( $value ) );
+
+        echo "<pre>";
+	    $newVal = str_replace( wc_get_price_thousand_separator(),'' , strval( $value ) );
+	    return str_replace( wc_get_price_decimal_separator(),'.' , strval( $newVal ) );
     }
 }
