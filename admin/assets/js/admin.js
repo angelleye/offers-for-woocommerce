@@ -16,16 +16,7 @@
                 minDate: currentDate
             });
 
-            $('#original-offer-quantity').autoNumeric('init',
-                {
-                    vMin: '0',
-                    mDec: '0',
-                    lZero: 'deny',
-                    aForm: true,
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,
-                }
-            );
+
 
             $('#original-offer-price-per').autoNumeric('init',
                 {
@@ -52,16 +43,6 @@
                 }
             );
 
-            $('#offer-quantity').autoNumeric('init',
-                {
-                    vMin: '0',
-                    mDec: '0',
-                    lZero: 'deny',
-                    aForm: true,
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,
-                }
-            );
 
             $('#offer-price-per').autoNumeric('init',
                 {
@@ -164,18 +145,6 @@
                     offerCheckMinValuesPassed = false;
                 }
 
-                if ($('#offer-quantity').autoNumeric('get') == '0') {
-                    $('#offer-quantity').autoNumeric('set', '');
-                    $('#offer-quantity').autoNumeric('update',
-                        {
-                            vMin: '0',
-                            mDec: '0',
-                            lZero: 'deny',
-                            aForm: true
-                        }
-                    );
-                    offerCheckMinValuesPassed = false;
-                }
 
                 if( offerCheckMinValuesPassed === false )
                 {
@@ -231,7 +200,7 @@
 
         // Update totals
         var updateTotal = function () {
-            var input1 = $('#offer-quantity').autoNumeric('get');
+            var input1 = $('#offer-quantity').val();
             var input2 = $('#offer-price-per').autoNumeric('get');
             var offer_shiipng_cost = $('#offer_shipping_cost').autoNumeric('get');
             if (isNaN(input1) || isNaN(input2)) {

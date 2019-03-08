@@ -149,7 +149,7 @@
                 <div class="offer-original-meta-values-wrap">
                     <label for="original-offer-quantity"><?php echo __('Orig. Quantity', 'offers-for-woocommerce'); ?></label>
                     <div>
-                        <input style="cursor: not-allowed" type="text" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
+                        <input style="cursor: not-allowed" type="number" id="original-offer-quantity" value="<?php echo (isset($postmeta['orig_offer_quantity'][0])) ? $postmeta['orig_offer_quantity'][0] : __('Missing Meta Value', 'offers-for-woocommerce'); ?>" disabled="disabled" />
                     </div>
                     <label for="original-offer-price-per"><?php echo __('Orig. Price Per', 'offers-for-woocommerce'); ?></label>
                     <div class="angelleye-input-group">
@@ -217,9 +217,9 @@
                     <label for="offer-quantity"><?php echo __('Quantity', 'offers-for-woocommerce'); ?></label>
                     <div>
                         <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
-                            <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_buyer_counter_quantity'][0])) ? $postmeta['offer_buyer_counter_quantity'][0] : ''; ?>" autocomplete="off" />
+                            <input type="number" class="offer-counter-value-input" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_buyer_counter_quantity'][0])) ? $postmeta['offer_buyer_counter_quantity'][0] : ''; ?>" />
                         <?php } else { ?>
-                            <input type="text" class="offer-counter-value-input" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : ''; ?>" autocomplete="off" />
+                            <input type="number" class="offer-counter-value-input" required="required" name="offer_quantity" id="offer-quantity" value="<?php echo (isset($postmeta['offer_quantity'][0])) ? $postmeta['offer_quantity'][0] : ''; ?>" autocomplete="off" />
                         <?php } ?>
                     </div>
                     <label for="offer-price-per"><?php echo __('Price Per', 'offers-for-woocommerce'); ?></label>
