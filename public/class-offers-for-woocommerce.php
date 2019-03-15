@@ -136,12 +136,6 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter('woocommerce_email_classes', array($this, 'add_woocommerce_email_classes'));
 
         /**
-         * Filter - ae_paypal_standard_additional_parameters
-         * @since   0.1.0
-         */
-        add_filter('woocommerce_paypal_args', array($this, 'ae_paypal_standard_additional_parameters'));
-
-        /**
          * Action - woocommerce_before_checkout_process
          * Checks for valid offer before checkout process
          * @since   0.1.0
@@ -1784,15 +1778,6 @@ class Angelleye_Offers_For_Woocommerce {
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
 
         return $email_classes;
-    }
-
-    /**
-     * Filter - ae_paypal_standard_additional_parameters
-     * @since   0.1.0
-     */
-    public function ae_paypal_standard_additional_parameters($paypal_args) {
-        $paypal_args['bn'] = 'AngellEYE_SP_WooCommerce';
-        return $paypal_args;
     }
 
     /**
