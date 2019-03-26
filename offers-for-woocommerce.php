@@ -40,6 +40,11 @@ if (!defined('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR')) {
     define('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR', dirname(__FILE__));
 }
 
+
+if (!defined('AEU_ZIP_URL')) {
+    define('AEU_ZIP_URL', 'https://github.com/angelleye/angelleye-updater/archive/master.zip');
+}
+
 /**
  *******************************
  * Public-Facing Functionality *
@@ -89,6 +94,14 @@ add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_in
  * Dashboard and Administrative Functionality *
  **********************************************
  */
+
+
+/**
+ * Required functions
+ */
+if (!function_exists('angelleye_queue_update')) {
+    require_once( 'includes/angelleye-functions.php' );
+}
 
 /**
  * Include plugin admin class
