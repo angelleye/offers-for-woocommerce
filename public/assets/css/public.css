@@ -119,16 +119,16 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section .woocommerce-make-offer-form-part-left { float:left; width:200px; margin:0px 0px 10px 0px; }
 
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section label { float:none; position:relative; padding:6px 0px; }
-div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input { float:none; padding:8px 10px; width:80%; max-width:384px;margin: 0px;}
+div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input { float:none; padding:8px 10px; width:80%; max-width:100%;margin: 0px;}
 
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='text']:disabled,
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section input[type='email']:disabled{ border:none!important; }
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section textarea { width:auto; resize: none!important; }
 
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-price-each { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; }
-div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-email { max-width:384px; width:100%; }
+
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-total {  border:1px solid #CCC!important; border-left:none!important; border-top-width:1px!important; background:#FFFFFF!important; cursor: not-allowed; }
-div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #angelleye-offer-notes { width:95%; }
+div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #angelleye-offer-notes { width:80%; }
 #woocommerce-make-offer-form-submit-button { float:left; margin-right:20px; margin-top:1px; width:auto!important; }
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section.woocommerce-make-offer-form-section-submit .offer-submit-loader { display:none; float:left; height:32px; width:auto; line-height:33px; padding-left:45px; font-style:italic; background:url('../images/offer-submit-loader.gif') left center no-repeat; }
 
@@ -296,4 +296,15 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 }
 div#offers-for-woocommerce-add-to-cart-wrap .single_add_to_cart_button {
     margin-bottom: 0px !important;
+}
+
+.woocommerce-make-offer-form-part-full{
+    float: left;
+    margin-bottom: 10px;
+    width: 100%;
+}
+div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section .woocommerce-make-offer-form-part-full input
+{
+   display: block;
+    max-width: 100%;
 }
