@@ -54,7 +54,7 @@ else{
     <tr>
         <?php 
         if( isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
-            $product_total = number_format(round($offer_args['product_total'] + $offer_args['product_shipping_cost'], 2), 2, '.', '');
+            $product_total = number_format(($offer_args['product_total'] + $offer_args['product_shipping_cost']), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
           ?>
             <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e( 'Shipping', 'offers-for-woocommerce' ); ?></th>
             <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price( $offer_args['product_shipping_cost'] ); ?></td>

@@ -112,17 +112,35 @@
                     vMin: '0',
                     mDec: '0',
                     lZero: 'deny',
-                    aForm: false
+                    aForm: false,
+                    aSep : offers_for_woocommerce_js_params.ofw_public_js_thousand_separator,
+                    aDec : offers_for_woocommerce_js_params.ofw_public_js_decimal_separator,
                 }
             );
 
             $('#woocommerce-make-offer-form-price-each').autoNumeric('init',
                 {
-                    mDec: '2',
+                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : offers_for_woocommerce_js_params.ofw_public_js_thousand_separator,       /* Thousand separator */
+                    aDec : offers_for_woocommerce_js_params.ofw_public_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    vMin : '0.00',    /* Enter the minimum value allowed */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'sign',   /* controls input display behavior. */
+                    mDec: offers_for_woocommerce_js_params.ofw_public_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
                     aSign: '',
-                    //wEmpty: 'sign',
-                    lZero: 'allow',
-                    aForm: false
+                }
+            );
+
+            $('#woocommerce-make-offer-form-total').autoNumeric('init',
+                {
+                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : offers_for_woocommerce_js_params.ofw_public_js_thousand_separator,       /* Thousand separator */
+                    aDec : offers_for_woocommerce_js_params.ofw_public_js_decimal_separator,       /* Decimal separator */
+                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'zero',   /* controls input display behavior. */
+                    mDec: offers_for_woocommerce_js_params.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
                 }
             );
 
@@ -152,11 +170,15 @@
                     $('#woocommerce-make-offer-form-price-each').autoNumeric('set', '' );
                     $('#woocommerce-make-offer-form-price-each').autoNumeric('update',
                         {
-                            mDec: '2',
+                            aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                            aSep : offers_for_woocommerce_js_params.ofw_public_js_thousand_separator,       /* Thousand separator */
+                            aDec : offers_for_woocommerce_js_params.ofw_public_js_decimal_separator,       /* Decimal separator */
+                            //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                            vMin : '0.00',    /* Enter the minimum value allowed */
+                            lZero: 'allow',   /* Controls if leading zeros are allowed */
+                            wEmpty: 'sign',   /* controls input display behavior. */
+                            mDec: offers_for_woocommerce_js_params.ofw_public_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
                             aSign: '',
-                            //wEmpty: 'sign',
-                            lZero: 'allow',
-                            aForm: false
                         }
                     );
                     offerCheckMinValuesPassed = false;
@@ -170,7 +192,9 @@
                             vMin: '0',
                             mDec: '0',
                             lZero: 'deny',
-                            aForm: false
+                            aForm: false,
+                            aSep : offers_for_woocommerce_js_params.ofw_public_js_thousand_separator,
+                            aDec : offers_for_woocommerce_js_params.ofw_public_js_decimal_separator,
                         }
                     );
                     offerCheckMinValuesPassed = false;
@@ -390,6 +414,19 @@
                                 $( offerForm ).find( ':submit' ).removeAttr( 'disabled','disabled' );
                                 $('#tab_custom_ofwc_offer_tab_inner fieldset').hide();
                                 $('#tab_custom_ofwc_offer_tab_alt_message_success').slideToggle('fast');
+                                if($('#lightbox_custom_ofwc_offer_form').length) {
+                                    $('#aeofwc-popup-counter-box').show();
+                                    var count = 5;
+                                    var counter = setInterval(function () {
+                                        if (count <= 0) {
+                                            clearInterval(counter);
+                                            $('#aeofwc-close-lightbox-link').trigger('click');
+                                        }
+                                        $('#aeofwc-lightbox-message-counter').html(count);
+                                        count -= 1;
+                                    }, 500);
+                                }
+
                             }
 
                         } else {
@@ -512,12 +549,26 @@
             if (isNaN(input1) || isNaN(input2)) {
                     $('#woocommerce-make-offer-form-total').val('');
             } else {
-                var theTotal = (input1 * input2);
+                var theTotal = ( input1 * input2);
                 var currencySymbol = $('#woocommerce-make-offer-form-total').attr('data-currency-symbol');
                 if(!currencySymbol) {
                     currencySymbol = '$';
                 }
-                $('#woocommerce-make-offer-form-total').val(parseFloat(theTotal, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+
+                $('#woocommerce-make-offer-form-total').autoNumeric('set',theTotal);
+
+                $('#woocommerce-make-offer-form-total').autoNumeric('update',
+                    {
+                        aForm: false,      /* Controls if default values are formatted on page ready (load) */
+                        aSep : offers_for_woocommerce_js_params.ofw_public_js_thousand_separator,       /* Thousand separator */
+                        aDec : offers_for_woocommerce_js_params.ofw_public_js_decimal_separator,       /* Decimal separator */
+                        //pSign : 'p',    /* Placement of the currency : p = left and s = right */
+                        lZero: 'allow',   /* Controls if leading zeros are allowed */
+                        wEmpty: 'zero',   /* controls input display behavior. */
+                        mDec: offers_for_woocommerce_js_params.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                    }
+                );
+
             }
         };
 

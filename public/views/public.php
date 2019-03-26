@@ -22,7 +22,14 @@
 <div id="tab_custom_ofwc_offer_tab_alt_message_success" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-message">
         <li><strong><?php echo __('Offer Sent!', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo __('Your offer has been received and will be processed as soon as possible.', 'offers-for-woocommerce'); ?></li>
-    </ul>        
+    </ul>
+    <ul class="woocommerce-message" id="aeofwc-popup-counter-box" style="display: none">
+        <li>
+            <strong>
+                <?php echo __('This popup will automatically close in <span id="aeofwc-lightbox-message-counter">5</span> seconds.', 'offers-for-woocommerce'); ?>&nbsp;
+            </strong>
+        </li>
+    </ul>
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_2" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
