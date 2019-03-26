@@ -123,6 +123,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Tweak - Removes BN code override. ([OFWA-10](https://github.com/angelleye/offers-for-woocommerce/pull/416))
 * Fix - Resolves errors in the MailChimp integration. ([OFWA-5](https://github.com/angelleye/offers-for-woocommerce/pull/412))
 * Fix - Resolves issues with price formatting causing some calculations to fail. ([OFWA-4](https://github.com/angelleye/offers-for-woocommerce/pull/413))
+* Fix - Resolves many small, random issues. ([OFWA-15](https://github.com/angelleye/offers-for-woocommerce/pull/415))
 
 = 1.4.14 - 02.03.2019 =
 * Tweak - Makes use of wc_price for price formatting. ([OFW-78](https://github.com/angelleye/offers-for-woocommerce/pull/408))
