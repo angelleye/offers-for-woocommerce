@@ -42,7 +42,7 @@ if (!defined('OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR')) {
 
 
 if (!defined('AEU_ZIP_URL')) {
-    define('AEU_ZIP_URL', 'https://github.com/angelleye/angelleye-updater/archive/master.zip');
+    define('AEU_ZIP_URL', 'https://updates.angelleye.com/ae-updater/angelleye-updater/angelleye-updater.zip');
 }
 
 /**
