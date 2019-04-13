@@ -1438,7 +1438,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
 
             // Lookup product data
-            $product_id = $postmeta['offer_product_id'][0];
+            $product_id = isset($postmeta['offer_product_id'][0]) ? $postmeta['offer_product_id'][0] : '';
             $product_variant_id = ( isset( $postmeta['offer_variation_id'][0] ) && $postmeta['offer_variation_id'][0] != '' ) ? $postmeta['offer_variation_id'][0] : '';
             $postmeta['enable_shipping_cost'][0] = ( isset( $postmeta['enable_shipping_cost'][0] ) && $postmeta['enable_shipping_cost'][0] != '' ) ? $postmeta['enable_shipping_cost'][0] : 0;
             $_product = wc_get_product($product_id);
