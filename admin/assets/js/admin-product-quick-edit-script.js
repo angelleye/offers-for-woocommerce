@@ -2,7 +2,11 @@
 
 jQuery(document).ready(function($){
         //Prepopulating our quick-edit post info
-    $( '#the-list' ).on( 'click', '.editinline', function() {        
+    $( '#the-list' ).on( 'click', '.editinline', function() {
+
+        if(typeof (inlineEditPost) == 'undefined'){
+            return false;
+        }
         var $inline_editor = inlineEditPost.edit;
         inlineEditPost.edit = function(id){
 
