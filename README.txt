@@ -118,8 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 2.0.0 - xx.xx.2019 =
+= 2.0.0 - 04.30.2019 =
 * Feature - Adds AE Updater compatibility for future notices and automated updates. [OFW-82] ([OFW-101](https://github.com/angelleye/offers-for-woocommerce/pull/418))
+* Tweak - Moves plugin from free to paid. ([OFW-102](https://github.com/angelleye/offers-for-woocommerce/pull/420))
 * Tweak - Adjusts CSS related to offer section of product page. ([OFWA-1](https://github.com/angelleye/offers-for-woocommerce/pull/411)) ([OFWA-7](https://github.com/angelleye/offers-for-woocommerce/pull/414))
 * Tweak - Removes BN code override. ([OFWA-10](https://github.com/angelleye/offers-for-woocommerce/pull/416))
 * Fix - Resolves errors in the MailChimp integration. ([OFWA-5](https://github.com/angelleye/offers-for-woocommerce/pull/412))
