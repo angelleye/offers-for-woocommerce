@@ -102,7 +102,7 @@ add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_in
 if (!function_exists('angelleye_queue_update')) {
     require_once( 'includes/angelleye-functions.php' );
 }
-
+angelleye_queue_update(plugin_basename(__FILE__), '101', 'offers-for-woocommerce');
 /**
  * Include plugin admin class
  *
