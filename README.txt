@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.0.3
-Stable tag: 1.4.14
+Tested up to: 5.1.1
+Stable tag: 2.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,10 +118,12 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 2.0.0 - xx.xx.2019 =
+= 2.0.0 - 04.30.2019 =
 * Feature - Adds AE Updater compatibility for future notices and automated updates. [OFW-82] ([OFW-101](https://github.com/angelleye/offers-for-woocommerce/pull/418))
+* Tweak - Moves plugin from free to paid. ([OFW-102](https://github.com/angelleye/offers-for-woocommerce/pull/420))
 * Tweak - Adjusts CSS related to offer section of product page. ([OFWA-1](https://github.com/angelleye/offers-for-woocommerce/pull/411)) ([OFWA-7](https://github.com/angelleye/offers-for-woocommerce/pull/414))
 * Tweak - Removes BN code override. ([OFWA-10](https://github.com/angelleye/offers-for-woocommerce/pull/416))
+* Tweak - Conditionally add markup. ([OFW-11](https://github.com/angelleye/offers-for-woocommerce/pull/403))
 * Fix - Resolves errors in the MailChimp integration. ([OFWA-5](https://github.com/angelleye/offers-for-woocommerce/pull/412))
 * Fix - Resolves issues with price formatting causing some calculations to fail. ([OFWA-4](https://github.com/angelleye/offers-for-woocommerce/pull/413))
 * Fix - Resolves many small, random issues. ([OFWA-15](https://github.com/angelleye/offers-for-woocommerce/pull/415))
