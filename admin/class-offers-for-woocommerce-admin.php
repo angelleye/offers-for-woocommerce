@@ -426,8 +426,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
              */
             add_action( 'trashed_post', array($this, 'ofw_before_offers_trash_action'), 10, 1);
             
-            add_action('wp_ajax_angelleye_paypal_here_adismiss_notice', array($this, 'angelleye_paypal_here_adismiss_notice'), 10);
-            add_action('admin_notices', array($this, 'angelleye_paypal_here_display_push_notification'), 10);
+            add_action('wp_ajax_angelleye_offers_for_woocommerce_adismiss_notice', array($this, 'angelleye_offers_for_woocommerce_adismiss_notice'), 10);
+            add_action('admin_notices', array($this, 'angelleye_offers_for_woocommerce_display_push_notification'), 10);
 
 	} // END - construct
 
@@ -4560,7 +4560,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	    return str_replace( wc_get_price_decimal_separator(),'.' , strval( $newVal ) );
     }
     
-    public function angelleye_paypal_here_display_push_notification() {
+    public function angelleye_offers_for_woocommerce_display_push_notification() {
         global $current_user;
         $user_id = $current_user->ID;
         $response = $this->angelleye_get_push_notifications();
@@ -4575,7 +4575,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function angelleye_get_push_notifications() {
         $args = array(
-            'plugin_name' => 'woo-paypal-here',
+            'plugin_name' => 'offers-for-woocommerce',
         );
         $api_url = PAYPAL_FOR_WOOCOMMERCE_PUSH_NOTIFICATION_WEB_URL . '?Wordpress_Plugin_Notification_Sender';
         $api_url .= '&action=angelleye_get_plugin_notification';
@@ -4617,10 +4617,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         . '</div>';
     }
     
-    public function angelleye_paypal_here_adismiss_notice() {
+    public function angelleye_offers_for_woocommerce_adismiss_notice() {
         global $current_user;
         $user_id = $current_user->ID;
-        if (!empty($_POST['action']) && $_POST['action'] == 'angelleye_paypal_here_adismiss_notice') {
+        if (!empty($_POST['action']) && $_POST['action'] == 'angelleye_offers_for_woocommerce_adismiss_notice') {
             add_user_meta($user_id, wc_clean($_POST['data']), 'true', true);
             wp_send_json_success();
         }
