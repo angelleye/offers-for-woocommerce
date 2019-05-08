@@ -425,6 +425,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
              * Action - Manage offers if product is deleted
              */
             add_action( 'trashed_post', array($this, 'ofw_before_offers_trash_action'), 10, 1);
+            
+            add_action('wp_ajax_angelleye_paypal_here_adismiss_notice', array($this, 'angelleye_paypal_here_adismiss_notice'), 10);
+            add_action('admin_notices', array($this, 'angelleye_paypal_here_display_push_notification'), 10);
 
 	} // END - construct
 
@@ -2629,6 +2632,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function enqueue_admin_styles()
 	{
+            wp_enqueue_style( 'offers-for-woocommerce-admin', plugins_url( 'assets/css/offers-for-woocommerce-admin.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
 		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
 			return;
 		}
@@ -2665,6 +2669,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	 */
 	public function enqueue_admin_scripts()
 	{
+            wp_enqueue_script( 'offers-for-woocommerce-admin', plugins_url( 'assets/js/offers-for-woocommerce-admin.js', __FILE__ ), array( 'jquery' ), Angelleye_Offers_For_Woocommerce::VERSION );
             if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
                     return;
             }
@@ -4553,4 +4558,71 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 	    $newVal = str_replace( wc_get_price_thousand_separator(),'' , strval( $value ) );
 	    return str_replace( wc_get_price_decimal_separator(),'.' , strval( $newVal ) );
     }
+    
+    public function angelleye_paypal_here_display_push_notification() {
+        global $current_user;
+        $user_id = $current_user->ID;
+        $response = $this->angelleye_get_push_notifications();
+        if (is_object($response)) {
+            foreach ($response->data as $key => $response_data) {
+                if (!get_user_meta($user_id, $response_data->id)) {
+                    $this->angelleye_display_push_notification($response_data);
+                }
+            }
+        }
+    }
+
+    public function angelleye_get_push_notifications() {
+        $args = array(
+            'plugin_name' => 'woo-paypal-here',
+        );
+        $api_url = PAYPAL_FOR_WOOCOMMERCE_PUSH_NOTIFICATION_WEB_URL . '?Wordpress_Plugin_Notification_Sender';
+        $api_url .= '&action=angelleye_get_plugin_notification';
+        $request = wp_remote_post($api_url, array(
+            'method' => 'POST',
+            'timeout' => 45,
+            'redirection' => 5,
+            'httpversion' => '1.0',
+            'blocking' => true,
+            'headers' => array('user-agent' => 'AngellEYE'),
+            'body' => $args,
+            'cookies' => array(),
+            'sslverify' => false
+        ));
+        if (is_wp_error($request) or wp_remote_retrieve_response_code($request) != 200) {
+            return false;
+        }
+        if ($request != '') {
+            $response = json_decode(wp_remote_retrieve_body($request));
+        } else {
+            $response = false;
+        }
+        return $response;
+    }
+
+    public function angelleye_display_push_notification($response_data) {
+        echo '<div class="notice notice-success angelleye-notice" style="display:none;" id="'.$response_data->id.'">'
+        . '<div class="angelleye-notice-logo-push"><span> <img src="' . $response_data->ans_company_logo . '"> </span></div>'
+        . '<div class="angelleye-notice-message">'
+        . '<h3>' . $response_data->ans_message_title . '</h3>'
+        . '<div class="angelleye-notice-message-inner">'
+        . '<p>' . $response_data->ans_message_description . '</p>'
+        . '<div class="angelleye-notice-action"><a target="_blank" href="' . $response_data->ans_button_url . '" class="button button-primary">' . $response_data->ans_button_label . '</a></div>'
+        . '</div>'
+        . '</div>'
+        . '<div class="angelleye-notice-cta">'
+        . '<button class="angelleye-notice-dismiss angelleye-dismiss-welcome" data-msg="' . $response_data->id . '">Dismiss</button>'
+        . '</div>'
+        . '</div>';
+    }
+    
+    public function angelleye_paypal_here_adismiss_notice() {
+        global $current_user;
+        $user_id = $current_user->ID;
+        if (!empty($_POST['action']) && $_POST['action'] == 'angelleye_paypal_here_adismiss_notice') {
+            add_user_meta($user_id, wc_clean($_POST['data']), 'true', true);
+            wp_send_json_success();
+        }
+    }
+
 }
