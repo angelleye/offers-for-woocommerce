@@ -4574,7 +4574,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function angelleye_get_push_notifications() {
         $args = array(
-            'plugin_name' => 'woo-paypal-here',
+            'plugin_name' => 'offers-for-woocommerce',
         );
         $api_url = PAYPAL_FOR_WOOCOMMERCE_PUSH_NOTIFICATION_WEB_URL . '?Wordpress_Plugin_Notification_Sender';
         $api_url .= '&action=angelleye_get_plugin_notification';
