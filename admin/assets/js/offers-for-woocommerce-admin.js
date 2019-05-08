@@ -11,7 +11,7 @@ jQuery(function () {
     });
     function notify_wordpress(message) {
         var param = {
-            action: 'angelleye_paypal_here_adismiss_notice',
+            action: 'angelleye_offers_for_woocommerce_adismiss_notice',
             data: message
         };
         jQuery.post(ajaxurl, param);
