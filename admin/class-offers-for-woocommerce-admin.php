@@ -1701,8 +1701,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         update_post_meta( $post_id, 'offer_final_offer', $offer_final_offer );
 
         // Save 'offer_expiration_date' post meta
-        $offer_expire_date = !empty($_POST['offer_expiration_date']) ? wc_clean($_POST['offer_expiration_date_hidden']) : '';                        
-        $offer_expiration_date_formatted = date("Y-m-d 23:59:59", strtotime($offer_expire_date));
+        $offer_expire_date = !empty($_POST['offer_expiration_date_hidden']) ? wc_clean($_POST['offer_expiration_date_hidden']) : '';                        
+        $offer_expiration_date_formatted = !empty($offer_expire_date) ? date("Y-m-d 23:59:59", strtotime($offer_expire_date)) : '';
                 
         update_post_meta( $post_id, 'offer_expiration_date', $offer_expiration_date_formatted );
 

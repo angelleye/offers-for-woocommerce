@@ -18,8 +18,14 @@
 
             $('#meta-box-offers-submit').click(function(){                               
                 var theDate = new Date(Date.parse($('.datepicker').datepicker('getDate')));
-                var dateFormatted = $.datepicker.formatDate('yy-mm-dd', theDate);
-                $("#offer_expiration_date_hidden").val(dateFormatted);
+                if (theDate == 'Invalid Date')
+                {
+                    $("#offer_expiration_date_hidden").val('');
+                }
+                else{
+                    var dateFormatted = $.datepicker.formatDate('yy-mm-dd', theDate);
+                    $("#offer_expiration_date_hidden").val(dateFormatted);                    
+                }
             });
 
             $('#original-offer-price-per').autoNumeric('init',
