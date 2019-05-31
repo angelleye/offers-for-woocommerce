@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.0.1 - 05.31.2019 =
+* Feature - Adds AE notification system. ([OFW-103](https://github.com/angelleye/offers-for-woocommerce/pull/423))
+
 = 2.0.0 - 04.30.2019 =
 * Feature - Adds AE Updater compatibility for future notices and automated updates. [OFW-82] ([OFW-101](https://github.com/angelleye/offers-for-woocommerce/pull/418))
 * Tweak - Moves plugin from free to paid. ([OFW-102](https://github.com/angelleye/offers-for-woocommerce/pull/420))
