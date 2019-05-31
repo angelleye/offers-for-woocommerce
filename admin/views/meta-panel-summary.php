@@ -311,7 +311,17 @@
                 
                 <div class="woocommerce-offer-expiration-wrap">
                     <label for="offer-expiration-date"><?php echo __('Offer Expires', 'offers-for-woocommerce'); ?></label>
-                    <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo(isset($postmeta['offer_expiration_date'][0]) && $postmeta['offer_expiration_date'][0] != '') ? date("m/d/Y", strtotime( $postmeta['offer_expiration_date'][0] )) : ''?>" autocomplete="off">
+                    <?php
+                        if(isset($postmeta['offer_expiration_date'][0]) && !empty($postmeta['offer_expiration_date'][0])){
+                            $date_format = get_option('date_format');
+                            $expiry_date_formated = date($date_format, strtotime($postmeta['offer_expiration_date'][0]));
+                        }
+                        else{
+                            $expiry_date_formated = '';
+                        }                        
+                    ?>
+                    <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo $expiry_date_formated; ?>" autocomplete="off">
+                    <input type="hidden" name="offer_expiration_date_hidden" id="offer_expiration_date_hidden" value="" />
                 </div>
 
                 <?php $show_notice_msg = ( isset($show_offer_inventory_msg) && $show_offer_inventory_msg ) ? TRUE : FALSE; ?>
