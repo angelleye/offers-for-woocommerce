@@ -120,7 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 2.0.1 - 05.31.2019 =
 * Feature - Adds AE notification system. ([OFW-103](https://github.com/angelleye/offers-for-woocommerce/pull/423))
-* Fix - Resolves issues with date formats on offer expiration display. ([OFW-106](https://github.com/angelleye/offers-for-woocommerce/pull/422))
+* Fix - Resolves issues with expiration date formatting. ([OFW-106](https://github.com/angelleye/offers-for-woocommerce/pull/422)) ([OFW-107](https://github.com/angelleye/offers-for-woocommerce/pull/424))
 
 = 2.0.0 - 04.30.2019 =
 * Feature - Adds AE Updater compatibility for future notices and automated updates. [OFW-82] ([OFW-101](https://github.com/angelleye/offers-for-woocommerce/pull/418))
