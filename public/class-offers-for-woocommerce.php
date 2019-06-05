@@ -261,7 +261,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @since	0.1.0
      */
-    public function angelleye_ofwc_offer_button_output($is_archive = false) {
+    public function angelleye_ofwc_offer_button_output($is_archive = false,$btn_position_class = '') {
         global $post, $wp;        
         global $current_user;
         $req_login = FALSE;
@@ -330,16 +330,16 @@ class Angelleye_Offers_For_Woocommerce {
                 $redirect_url = '';
                 if($is_archive){
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.get_permalink($post->ID);
-                    $button = '<a href="' . $redirect_url . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt '.$button_class.' " style="' . $custom_styles_override . '">' . $button_title . '</a>';
+                    $button = '<a href="' . $redirect_url . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt '.$button_class.' '.$btn_position_class.'" style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
                     $redirect_url = get_permalink( get_option('woocommerce_myaccount_page_id') ) . '?ref=make-offer&backto='.home_url(add_query_arg(array(),$wp->request));
-                    $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.'  ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
+                    $button = '<a href="'.$redirect_url.'"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.'  ' . $lightbox_class . ' button alt '.$btn_position_class.'" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
                 }
             } else {
                 if($is_archive){
-                    $button = '<a href="' . $permalink . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt  '.$button_class.' " style="' . $custom_styles_override . '">' . $button_title . '</a>';
+                    $button = '<a href="' . $permalink . '" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-catalog button alt  '.$button_class.' '.$btn_position_class.'" style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
-                    $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.' ' . $lightbox_class . ' button alt" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                    $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . $post->ID . '" class="offers-for-woocommerce-make-offer-button-single-product '.$button_class.' ' . $lightbox_class . ' button alt '.$btn_position_class.'" style="' . $custom_styles_override . '">' . $button_title . '</button>';
                 }
             }            
             
@@ -371,7 +371,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_on_right = ($button_position == 'right_of_add') ? 'ofwc-button-right-of-add-to-cart' : '';
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         if($button_options_display['display_setting_make_offer_button_position_single'] == 'before_add'){
-            echo $this->angelleye_ofwc_offer_button_output();
+            echo $this->angelleye_ofwc_offer_button_output(false,'before_add_class');
         }
         echo '<div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap '. $is_on_right . '" data-ofwc-position="' . $button_position . '"><div class="aofwc-first-div ' . $no_price_product_class . '">';
     }
@@ -383,14 +383,15 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function angelleye_ofwc_after_add_to_cart_button() {
         global $post;
-        echo '</div>'; // .aofwc-first-div
+        
         $button_options_display = get_option('offers_for_woocommerce_options_display');
         if($button_options_display['display_setting_make_offer_button_position_single'] == 'default' || $button_options_display['display_setting_make_offer_button_position_single'] == 'right_of_add'){
             //echo '<div class="angelleye-offers-clearfix"></div>';
-            echo $this->angelleye_ofwc_offer_button_output();
+            echo $this->angelleye_ofwc_offer_button_output(false,'default_add_class');
         }
         echo '</div>'; // #offers-for-woocommerce-add-to-cart-wrap
         echo '<div class="angelleye-offers-clearfix"></div>';
+        echo '</div>'; // .aofwc-first-div
     }
     
     /**
