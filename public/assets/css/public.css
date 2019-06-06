@@ -298,14 +298,14 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 .post-type-archive-product .single_variation_wrap_angelleye {
     margin-left: 5px;
 }
-.storefront-full-width-content .aofwc-first-div,
+/* .storefront-full-width-content .aofwc-first-div,
 .storefront-secondary-navigation .aofwc-first-div,
 .storefront-align-wide .aofwc-first-div,
 .fusion-body .aofwc-first-div{
     display: inline-block;
-}
+} */
 div#offers-for-woocommerce-add-to-cart-wrap .single_add_to_cart_button {
-    margin-bottom: 0px ;
+    margin-bottom: 5px ;
 }
 
 .woocommerce-make-offer-form-part-full{
