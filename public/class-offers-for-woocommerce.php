@@ -373,7 +373,7 @@ class Angelleye_Offers_For_Woocommerce {
         if($button_options_display['display_setting_make_offer_button_position_single'] == 'before_add'){
             echo $this->angelleye_ofwc_offer_button_output(false,'before_add_class');
         }
-        echo '<div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap '. $is_on_right . '" data-ofwc-position="' . $button_position . '"><div class="aofwc-first-div ' . $no_price_product_class . '">';
+        echo '<div id="offers-for-woocommerce-add-to-cart-wrap" class="offers-for-woocommerce-add-to-cart-wrap '. $is_on_right . '" data-ofwc-position="' . $button_position . '"><div class="aofwc-first-div ' .$button_position .' '. $no_price_product_class . '">';
     }
     
     /**
