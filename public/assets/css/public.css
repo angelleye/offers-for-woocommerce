@@ -318,3 +318,35 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
    display: block;
     max-width: 100%;
 }
+
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    div#offers-for-woocommerce-add-to-cart-wrap .angelleye_button_single{
+        margin-top : 55px;
+    }
+    html body.woocommerce div.product form.cart .default_add_class,
+    html body.woocommerce-page div.product form.cart .default_add_class,
+    html body.woocommerce div.product form.cart .default_add_class
+    {
+        position: absolute;
+        top: 55px;
+        left: 0;
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 480px) {
+    div#offers-for-woocommerce-add-to-cart-wrap .angelleye_button_single{
+        margin-top : 55px;
+    }
+    html body.woocommerce div.product form.cart .default_add_class,
+    html body.woocommerce-page div.product form.cart .default_add_class,
+    html body.woocommerce div.product form.cart .default_add_class
+    {
+        position: absolute;
+        top: 55px;
+        left: 0;
+        margin-left: 0px;
+    }
+}
