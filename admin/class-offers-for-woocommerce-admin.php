@@ -2811,8 +2811,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_links = array(
                 sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=offers-for-woocommerce' ), __( 'Configure', 'offers-for-woocommerce' ) ),
                 sprintf( '<a href="%s" target="_blank">%s</a>', 'http://www.angelleye.com/category/docs/offers-for-woocommerce/?utm_source=offers_for_woocommerce&utm_medium=docs_link&utm_campaign=offers_for_woocommerce', __( 'Docs', 'offers-for-woocommerce' ) ),
-                sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/plugin/offers-for-woocommerce/', __( 'Support', 'offers-for-woocommerce' ) ),
-                sprintf( '<a href="%s" target="_blank">%s</a>', 'http://wordpress.org/support/view/plugin-reviews/offers-for-woocommerce', __( 'Write a Review', 'offers-for-woocommerce' ) ),
+                sprintf( '<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/support', __( 'Support', 'offers-for-woocommerce' ) ),
+                sprintf( '<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/product/offers-for-woocommerce/#tab-reviews', __( 'Write a Review', 'offers-for-woocommerce' ) ),
             );
 
             $links = array_merge( $links, $new_links );
