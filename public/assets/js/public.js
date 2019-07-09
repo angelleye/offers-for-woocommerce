@@ -571,24 +571,5 @@
 
             }
         };
-
-        /**
-         * Adds bn code for PayPal Standard
-         * @since   0.1.0
-         */
-        var CheckPayPalStdBn = function () {
-            if ($('input[name="business"]').length > 0) {
-                if ($('input[name="bn"]').length > 0) {
-                    $('input[name="bn"]').val("AngellEYE_PHPClass");
-
-                }
-                else {
-                    $('input[name="business"]').after("<input type='hidden' name='bn' value='AngellEYE_PHPClass' />");
-                }
-            }
-        };
-
-        // Check for PayPal Standard bn
-        CheckPayPalStdBn();
     });
 }(jQuery));
