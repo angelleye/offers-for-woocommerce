@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.0.2 - XX.XX.2019 =
+* Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
+
 = 2.0.1 - 05.31.2019 =
 * Feature - Adds AE notification system. ([OFW-103](https://github.com/angelleye/offers-for-woocommerce/pull/423))
 * Fix - Resolves issues with expiration date formatting. ([OFW-106](https://github.com/angelleye/offers-for-woocommerce/pull/422)) ([OFW-107](https://github.com/angelleye/offers-for-woocommerce/pull/424))
