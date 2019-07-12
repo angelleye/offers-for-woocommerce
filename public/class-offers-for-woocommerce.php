@@ -153,6 +153,8 @@ class Angelleye_Offers_For_Woocommerce {
         /*this will add shortcode for recent offers */
         add_shortcode('aeofwc_recent_offers', array($this, 'angelleye_ofw_recent_offers'));
         
+        add_filter('woocommerce_order_item_display_meta_key', array($this, 'ofwc_translate_order_item_display_meta_key'), 99, 1 );
+        
         /* this will display the data of Product addon if plugin is activated - Start */
         
         $active_plugins = (array) get_option( 'active_plugins', array() );        
@@ -2434,6 +2436,13 @@ class Angelleye_Offers_For_Woocommerce {
         $productData['product_url'] = $product_url = $product->get_permalink();
         $productData['offer_uid'] = $offer_uid = get_post_meta($offer_id, 'offer_uid', true);
         return $productData;
-    }    
+    }
+
+    public function ofwc_translate_order_item_display_meta_key($display_key) {
+        if($display_key == 'Offer ID') {
+            return __($display_key.':', 'offers-for-woocommerce');
+        }
+        return $display_key;
+    }
 
 }
