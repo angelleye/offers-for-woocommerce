@@ -121,6 +121,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 = 2.0.2 - XX.XX.2019 =
 * Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
 * Feature - Adds push notification system. ([OFW-111](https://github.com/angelleye/offers-for-woocommerce/pull/426))
+* Tweak - Minor adjustment to JavaScript. ([OFW-112](https://github.com/angelleye/offers-for-woocommerce/pull/427))
 
 = 2.0.1.1 - 07.09.2019 =
 * Tweak - Minor adjustment to JavaScript
