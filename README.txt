@@ -122,6 +122,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Fix - Resolves a problem with the Offer ID localization/translation. ([OFW-116](https://github.com/angelleye/offers-for-woocommerce/pull/428))
 * Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
 * Tweak - Minor adjustment to JavaScript. ([OFW-112](https://github.com/angelleye/offers-for-woocommerce/pull/427))
+* Tweak - Updates plugin action links. ([OFW-110](https://github.com/angelleye/offers-for-woocommerce/pull/429))
 
 = 2.0.1.1 - 07.09.2019 =
 * Tweak - Minor adjustment to JavaScript
