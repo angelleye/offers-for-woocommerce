@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 5.2.2
-Stable tag: 2.0.1.1
+Stable tag: 2.0.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,11 +118,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 2.0.2 - XX.XX.2019 =
-* Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
-* Feature - Adds push notification system. ([OFW-111](https://github.com/angelleye/offers-for-woocommerce/pull/426))
-* Tweak - Minor adjustment to JavaScript. ([OFW-112](https://github.com/angelleye/offers-for-woocommerce/pull/427))
+= 2.0.2 - 07.18.2019 =
 * Fix - Resolves a problem with the Offer ID localization/translation. ([OFW-116](https://github.com/angelleye/offers-for-woocommerce/pull/428))
+* Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
+* Tweak - Minor adjustment to JavaScript. ([OFW-112](https://github.com/angelleye/offers-for-woocommerce/pull/427))
 
 = 2.0.1.1 - 07.09.2019 =
 * Tweak - Minor adjustment to JavaScript
