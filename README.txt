@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.0.3 - 10.30.2019 =
+* Fix - Resolves a PHP notice. ([OFW-117](https://github.com/angelleye/offers-for-woocommerce/pull/430))
+
 = 2.0.2 - 07.18.2019 =
 * Fix - Resolves a problem with the Offer ID localization/translation. ([OFW-116](https://github.com/angelleye/offers-for-woocommerce/pull/428))
 * Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
