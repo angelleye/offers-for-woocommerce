@@ -4221,7 +4221,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         return false;
     }
 
-    public function ofw_anonymous_title($title, $id) {
+    public function ofw_anonymous_title($title, $id = '') {
+        if( empty($id) ) {
+            return $title;
+        }
         if( get_post_type( $id ) == 'woocommerce_offer'  && $this->ofw_is_anonymous_communication_enable() ) {
             return 'Potential Buyer';
         } else {
