@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 2.0.2 - 07.18.2019 =
+= 2.0.2 - 01.11.2019 =
 * Fix - Resolves a problem with the Offer ID localization/translation. ([OFW-116](https://github.com/angelleye/offers-for-woocommerce/pull/428))
 * Fix - Resolves a PHP notice. ([OFW-117](https://github.com/angelleye/offers-for-woocommerce/pull/430))
 * Fix - Resolves a compatibility issue with Buddyboss forum plugin. ([OFW-119](https://github.com/angelleye/offers-for-woocommerce/pull/431))
