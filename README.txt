@@ -121,6 +121,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 = 2.0.2 - 07.18.2019 =
 * Fix - Resolves a problem with the Offer ID localization/translation. ([OFW-116](https://github.com/angelleye/offers-for-woocommerce/pull/428))
 * Fix - Resolves a PHP notice. ([OFW-117](https://github.com/angelleye/offers-for-woocommerce/pull/430))
+* Fix - Resolves a compatibility issue with Buddyboss forum plugin. ([OFW-119](https://github.com/angelleye/offers-for-woocommerce/pull/431))
 * Tweak - Adjusts the CSS for Offer Button. ([OFW-108](https://github.com/angelleye/offers-for-woocommerce/pull/425))
 * Tweak - Minor adjustment to JavaScript. ([OFW-112](https://github.com/angelleye/offers-for-woocommerce/pull/427))
 * Tweak - Updates plugin action links. ([OFW-110](https://github.com/angelleye/offers-for-woocommerce/pull/429))
