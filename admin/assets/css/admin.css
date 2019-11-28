@@ -667,3 +667,4 @@ form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #join_our_
 #angelleye-settings-ul-checkboxes-sortable li { margin: 0 5px 5px 5px; padding: 5px; }
 html>body #angelleye-settings-ul-checkboxes-sortable li { height: 1.5em; line-height: 1.2em; }
 .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+.updater-dismissible { padding-right: 38px; position: relative; }
