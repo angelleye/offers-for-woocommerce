@@ -318,7 +318,11 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
    display: block;
     max-width: 100%;
 }
-
+.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap.single_add_to_cart_button.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    display: none;
+}
 
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
