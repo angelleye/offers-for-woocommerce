@@ -2202,6 +2202,10 @@ class Angelleye_Offers_For_Woocommerce {
         if(!is_admin() && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
             foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
                 if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                    if( !empty(WC()->cart->get_applied_coupons()) ) {
+                        WC()->cart->set_applied_coupons(array());
+                        WC()->cart->calculate_totals();
+                    }
                     return false;
                 }
             }
