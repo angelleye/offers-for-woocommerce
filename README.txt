@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.0.4 - 12.10.2019 =
+* Tweak - Adjustment to Updater plugin notice dismissible. ([OFW-124](https://github.com/angelleye/offers-for-woocommerce/pull/432))
+
 = 2.0.3.1 - 11.20.2019 =
 * Verification - WordPress 5.3 compatibility.
 
