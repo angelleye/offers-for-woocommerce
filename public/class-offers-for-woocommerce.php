@@ -2204,6 +2204,7 @@ class Angelleye_Offers_For_Woocommerce {
                 if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
                     if( !empty(WC()->cart->get_applied_coupons()) ) {
                         WC()->cart->set_applied_coupons(array());
+                        WC()->cart->calculate_totals();
                     }
                     return false;
                 }
