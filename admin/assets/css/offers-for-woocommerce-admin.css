@@ -73,3 +73,11 @@
     -webkit-font-smoothing: antialiased;
 }
 .updater-dismissible { padding-right: 38px; position: relative; }
+
+.angelleye-form-field {
+    width: 300px;
+}
+.angelleye-form-field label {
+    display: block;
+    padding: 0 0 3px;
+}

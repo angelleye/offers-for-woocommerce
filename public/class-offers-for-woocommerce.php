@@ -899,7 +899,6 @@ class Angelleye_Offers_For_Woocommerce {
     public function enqueue_scripts() {
         global $post;
         if(is_object($post)) {
-           
             $is_product_type_variable = 'false';
             if (function_exists('wc_get_product')) {
                 $product = wc_get_product($post);
