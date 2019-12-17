@@ -4528,13 +4528,25 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             );
             wp_update_post($ofw_make_offer);
 
-            $ofw_make_offer_post_meta = array('offer_product_id', 'offer_quantity', 'offer_price_per', 'offer_name', 'offer_email', 'offer_name', 'offer_phone');
+            $ofw_make_offer_post_meta = array('offer_product_id', 'offer_quantity', 'offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
             foreach ($ofw_make_offer_post_meta as $key => $value) {
                 update_post_meta($post_id, $value, $_POST[$value]);
             }
             foreach ($ofw_make_offer_post_meta as $key => $value) {
                 update_post_meta($post_id, 'orig_'.$value, $_POST[$value]);
             }
+            if(!empty($_POST['offer_price_each'])) {
+                update_post_meta($post_id, 'offer_price_per', $_POST['offer_price_each']);
+                update_post_meta($post_id, 'orig_offer_price_per', $_POST['offer_price_each']);
+            }
+            if(!empty($_POST['offer_quantity'])) {
+                $product_total = $_POST['offer_quantity'] * $_POST['offer_price_each'];
+                update_post_meta($post_id, 'offer_total', $product_total);
+                update_post_meta($post_id, 'orig_offer_amount', $product_total);
+            }
+            
+            
+            
         }
     }
 
