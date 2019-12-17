@@ -4531,7 +4531,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if ($product->is_type('variation')) {
                     $offer_variation_id = $product->get_id();
                     update_post_meta($post_id, 'offer_variation_id', $offer_variation_id);
-                    update_post_meta($post_id, 'orig_offer_variation_id', $product_id);
+                    update_post_meta($post_id, 'orig_offer_variation_id', $offer_variation_id);
                 }
             }
             $uid = uniqid('aewco-');
