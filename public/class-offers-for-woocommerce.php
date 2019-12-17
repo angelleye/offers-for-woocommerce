@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '2.0.3.1';
+    const VERSION = '2.0.4';
 
     /**
      *
@@ -325,7 +325,7 @@ class Angelleye_Offers_For_Woocommerce {
             
             $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
             $button_class = (isset($button_options_display['display_setting_custom_make_offer_btn_class']) && $button_options_display['display_setting_custom_make_offer_btn_class'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_class'] : '';            
-            $btn_output = '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap">';
+            $btn_output = '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap single_add_to_cart_button">';
             $permalink = get_permalink($post->ID);
             $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
             if($req_login){
@@ -2202,6 +2202,10 @@ class Angelleye_Offers_For_Woocommerce {
         if(!is_admin() && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
             foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
                 if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                    if( !empty(WC()->cart->get_applied_coupons()) ) {
+                        WC()->cart->set_applied_coupons(array());
+                        WC()->cart->calculate_totals();
+                    }
                     return false;
                 }
             }
