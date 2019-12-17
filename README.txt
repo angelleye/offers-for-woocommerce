@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 5.3
-Stable tag: 2.0.3.1
+Stable tag: 2.0.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,11 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.0.4 - 12.10.2019 =
+* Tweak - Adjustment to Updater plugin notice dismissible. ([OFW-124](https://github.com/angelleye/offers-for-woocommerce/pull/432))
+* Fix - Resolves conflicts with Variable Product. ([OFW-125](https://github.com/angelleye/offers-for-woocommerce/pull/433))
+* Fix - Resolves a problem with Disable Coupon Codes option. ([OFW-126](https://github.com/angelleye/offers-for-woocommerce/pull/434))
 
 = 2.0.3.1 - 11.20.2019 =
 * Verification - WordPress 5.3 compatibility.
