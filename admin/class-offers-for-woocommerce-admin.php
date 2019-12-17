@@ -932,21 +932,25 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      */
 
-    public function my_pre_get_posts($query) {
-        $arg_post_type = get_query_var('post_type');
-        $arg_post_status = get_query_var('post_status');
-        $arg_orderby = get_query_var('orderby');
-
-        if (!$arg_post_status && $arg_post_type == 'woocommerce_offer') {
-            if (is_admin() && $query->is_main_query()) {
-                $query->set('post_status', array('publish', 'accepted-offer', 'countered-offer', 'buyercountered-offer', 'declined-offer', 'completed-offer', 'on-hold-offer'));
-                if (!$arg_orderby) {
-                    $query->set('orderby', 'post_date');
-                    $query->set('order', 'desc');
-                }
-            }
-        }
-    }
+    	public function my_pre_get_posts($query)
+	{ 
+	    if( is_admin() && $query->is_main_query() && $query->query['post_type']=='woocommerce_offer'){
+	        
+    		$arg_post_type = get_query_var( 'post_type' );
+    		$arg_post_status = get_query_var( 'post_status' );
+    		$arg_orderby = get_query_var( 'orderby' );
+    
+    		if ( !$arg_post_status && $arg_post_type == 'woocommerce_offer' )
+    		{  
+    			$query->set('post_status', array( 'publish','accepted-offer','countered-offer','buyercountered-offer','declined-offer','completed-offer','on-hold-offer' ) );
+    			if ( !$arg_orderby)
+    			{
+    				$query->set('orderby', 'post_date');
+    				$query->set('order', 'desc');
+    			} 
+    		}
+	    }
+	}
 
     /**
      * Join posts and postmeta tables

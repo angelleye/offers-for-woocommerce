@@ -8,21 +8,7 @@
             
             $('.ofwc_no_price_product').remove();
 
-            if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {                
-                $( ".variations_form" ).on( "woocommerce_variation_has_changed", function () {
-                    var variationId = $("input[name='variation_id']").val();                    
-                    $('#tab_custom_ofwc_offer_tab_alt_message_2').hide();
-                    $('#tab_custom_ofwc_offer_tab_alt_message_success').hide();
-                    $('#tab_custom_ofwc_offer_tab_inner fieldset').show();
-                    if(variationId > 0){
-                        $('#tab_custom_ofwc_offer_tab_inner').show();
-                        $('#tab_custom_ofwc_offer_tab_alt_message').hide();
-                    } else {
-                        $('#tab_custom_ofwc_offer_tab_inner').hide();
-                        $('#tab_custom_ofwc_offer_tab_alt_message').show();
-                    }
-                } );
-            }
+            
                 
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
@@ -518,7 +504,7 @@
                     $('#tab_custom_ofwc_offer_tab_inner').hide();
                 }
                 console.log('this is in');
-                $('#tab_custom_ofwc_offer_tab_alt_message').show();
+                
             }
         });
 
