@@ -1268,14 +1268,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      */
     public function add_meta_box_offer_comments() {
-        $screen = get_current_screen();
-        if (isset($screen->action) && $screen->action == 'edit') {
-            $screens = array('woocommerce_offer');
-            foreach ($screens as $screen) {
-                add_meta_box(
-                        'section_id_offer_comments', __('Offer Activity Log', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_comments_callback'), $screen, 'side', 'default'
-                );
-            }
+        $screens = array('woocommerce_offer');
+        foreach ($screens as $screen) {
+            add_meta_box(
+                    'section_id_offer_comments', __('Offer Activity Log', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_comments_callback'), $screen, 'side', 'default'
+            );
         }
     }
 
@@ -1524,14 +1521,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      */
     public function add_meta_box_offer_addnote() {
-        $screen = get_current_screen();
-        if (isset($screen->action) && $screen->action == 'edit') {
-            $screens = array('woocommerce_offer');
-            foreach ($screens as $screen) {
-                add_meta_box(
-                        'section_id_offer_addnote', __('Add Offer Note', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_addnote_callback'), $screen, 'side', 'low'
-                );
-            }
+        $screens = array('woocommerce_offer');
+        foreach ($screens as $screen) {
+            add_meta_box(
+                    'section_id_offer_addnote', __('Add Offer Note', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_addnote_callback'), $screen, 'side', 'low'
+            );
         }
     }
 
