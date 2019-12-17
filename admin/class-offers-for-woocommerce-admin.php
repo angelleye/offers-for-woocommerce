@@ -4516,7 +4516,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public function angelleye_offer_for_woocommerce_admin_save_offer() {
-        global $post_type, $post_type_object, $post;
         if (!empty($_POST['ofw-admin-makeoffer'])) {
             $post_id = $_POST['post_ID'];
             $ofw_make_offer = array(
@@ -4527,26 +4526,39 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_status' => 'publish'
             );
             wp_update_post($ofw_make_offer);
-
-            $ofw_make_offer_post_meta = array('offer_product_id', 'offer_quantity', 'offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
+            $ofw_make_product_id = $_POST['offer_product_id'];
+            if (!empty($ofw_make_product_id)) {
+                $product = wc_get_product($ofw_make_product_id);
+                $product_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();
+                if (!empty($product_id)) {
+                    update_post_meta($post_id, 'offer_product_id', $product_id);
+                    update_post_meta($post_id, 'offer_product_id', $product_id);
+                }
+                if ($product->is_type('variation')) {
+                    $offer_variation_id = $product->get_id();
+                    update_post_meta($post_id, 'offer_variation_id', $offer_variation_id);
+                    update_post_meta($post_id, 'orig_offer_variation_id', $product_id);
+                }
+            }
+            $uid = uniqid('aewco-');
+            update_post_meta($post_id, 'orig_offer_uid', $uid);
+            update_post_meta($post_id, 'offer_uid', $uid);
+            $ofw_make_offer_post_meta = array('offer_quantity', 'offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
             foreach ($ofw_make_offer_post_meta as $key => $value) {
                 update_post_meta($post_id, $value, $_POST[$value]);
             }
             foreach ($ofw_make_offer_post_meta as $key => $value) {
-                update_post_meta($post_id, 'orig_'.$value, $_POST[$value]);
+                update_post_meta($post_id, 'orig_' . $value, $_POST[$value]);
             }
-            if(!empty($_POST['offer_price_each'])) {
+            if (!empty($_POST['offer_price_each'])) {
                 update_post_meta($post_id, 'offer_price_per', $_POST['offer_price_each']);
                 update_post_meta($post_id, 'orig_offer_price_per', $_POST['offer_price_each']);
             }
-            if(!empty($_POST['offer_quantity'])) {
+            if (!empty($_POST['offer_quantity'])) {
                 $product_total = $_POST['offer_quantity'] * $_POST['offer_price_each'];
                 update_post_meta($post_id, 'offer_total', $product_total);
                 update_post_meta($post_id, 'orig_offer_amount', $product_total);
             }
-            
-            
-            
         }
     }
 
