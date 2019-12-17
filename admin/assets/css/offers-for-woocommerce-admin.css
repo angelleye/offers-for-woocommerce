@@ -75,9 +75,32 @@
 .updater-dismissible { padding-right: 38px; position: relative; }
 
 .angelleye-form-field {
-    width: 300px;
+    width: 545px;
+    clear: both;
 }
 .angelleye-form-field label {
     display: block;
     padding: 0 0 3px;
+}
+.angelleye-form-field-small {
+    width: 264px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 1em 0;
+
+}
+.angelleye-form-field-small label {
+    display: block;
+    padding: 0 0 3px;
+}
+
+.ofwleft {
+    float: left;
+}
+.ofwright {
+    float: right;
+}
+.ofw-product-filed {
+     width: 545px;
+    clear: both;
 }
