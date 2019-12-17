@@ -4411,20 +4411,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             <div class='wrap'>
                 <p class="form-field angelleye-form-field">
                     <label><?php _e('Products', 'woocommerce'); ?></label>
-                    <select class="wc-enhanced-select ofw-product-filed" name="abc" data-placeholder="<?php esc_attr_e('Search for a product&hellip;', 'woocommerce'); ?>" >
-                        <?php
-                        $args = array(
-                            'type' => array('simple', 'variable'),
-                        );
-                        $products = wc_get_products($args);
-                        foreach ($products as $product_id) {
-                            $product = wc_get_product($product_id);
-                            if (is_object($product)) {
-                                echo '<option value="' . esc_attr($product_id) . '"' . selected(true, true, false) . '>' . wp_kses_post($product->get_formatted_name()) . '</option>';
-                            }
-                        }
-                        ?>
-                    </select>
+                    <?php echo '<select class="wc-product-search ofw-product-filed" name="item_id" data-allow_clear="true" data-display_stock="true" data-placeholder="' . esc_attr__('Search for a product&hellip;', 'woocommerce') . '"></select>';
+                    ?>
                 </p>
                 <p class="form-field angelleye-form-field-small ofwleft">
                     <label for="woocommerce-make-offer-form-quantity"><?php echo apply_filters('aeofwc_offer_form_label_quantity', __('Quantity', 'offers-for-woocommerce'), 'no'); ?></label>
