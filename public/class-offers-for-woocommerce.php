@@ -155,6 +155,9 @@ class Angelleye_Offers_For_Woocommerce {
         
         add_filter('woocommerce_order_item_display_meta_key', array($this, 'ofwc_translate_order_item_display_meta_key'), 99, 1 );
         
+        // when admin create open offer from admin side and it will allow customer to buy.
+        add_filter('ofw_allow_invalid_offer_status', array($this, 'ofw_allow_invalid_offer_status'), 10, 2);
+        
         /* this will display the data of Product addon if plugin is activated - Start */
         
         $active_plugins = (array) get_option( 'active_plugins', array() );        
@@ -1583,9 +1586,12 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 // Error - Offer Not Accepted/Countered
                 elseif ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
-                    $request_error = true;
-                    $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
+                    if ( apply_filters( 'ofw_allow_invalid_offer_status', false,  $offer) ) {
+                        $request_error = true;
+                        $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
+                    }
                 }
+            
 
                 // Define product id
                 $product_id = (isset($offer_meta['orig_offer_product_id'][0]) && is_numeric($offer_meta['orig_offer_product_id'][0]) ) ? $offer_meta['orig_offer_product_id'][0] : '';
@@ -1824,8 +1830,10 @@ class Angelleye_Offers_For_Woocommerce {
 
                     // Error - Offer Not Accepted/Countered
                     if ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
-                        $request_error = true;
-                        $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'), '0');
+                        if ( apply_filters( 'ofw_allow_invalid_offer_status', false,  $offer) ) {
+                            $request_error = true;
+                            $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'), '0');
+                        }
                     }
                 }
             }
@@ -2448,6 +2456,23 @@ class Angelleye_Offers_For_Woocommerce {
             return __($display_key.':', 'offers-for-woocommerce');
         }
         return $display_key;
+    }
+    
+    public function ofw_allow_invalid_offer_status($bool,  $offer) {
+        if( isset($offer->post_author) && !empty($offer->post_author) && isset($offer->post_status) && $offer->post_status == 'publish') {
+            $user = get_userdata( $offer->post_author );
+            $user_roles = $user->roles;
+            if ( in_array( 'vendor', $user_roles, true ) ) {
+                return true;
+            } elseif ( in_array( 'administrator', $user_roles, true ) ) {
+                return true;
+            } elseif ( in_array( 'shop_manager', $user_roles, true ) ) {
+                return true;
+            } else {
+                return $bool;
+            }
+        }
+        return $bool;
     }
 
 }
