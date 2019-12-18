@@ -4526,13 +4526,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $product_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();
                 if (!empty($product_id)) {
                     update_post_meta($post_id, 'offer_product_id', $product_id);
-                    update_post_meta($post_id, 'offer_product_id', $product_id);
+                    update_post_meta($post_id, 'orig_offer_product_id', $product_id);
                 }
                 if ($product->is_type('variation')) {
                     $offer_variation_id = $product->get_id();
                     update_post_meta($post_id, 'offer_variation_id', $offer_variation_id);
                     update_post_meta($post_id, 'orig_offer_variation_id', $offer_variation_id);
                 }
+                update_post_meta($post_id, 'offer_product_price', $product->get_price());
             }
             $uid = uniqid('aewco-');
             update_post_meta($post_id, 'orig_offer_uid', $uid);
@@ -4551,6 +4552,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if (!empty($_POST['offer_quantity'])) {
                 $product_total = $_POST['offer_quantity'] * $_POST['offer_price_each'];
                 update_post_meta($post_id, 'offer_total', $product_total);
+                update_post_meta($post_id, 'offer_amount', $product_total);
                 update_post_meta($post_id, 'orig_offer_amount', $product_total);
             }
         }
