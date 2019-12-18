@@ -4545,6 +4545,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $uid = uniqid('aewco-');
             update_post_meta($post_id, 'orig_offer_uid', $uid);
             update_post_meta($post_id, 'offer_uid', $uid);
+            $current_time = current_time('Y-m-d H:i:s');
+            $date = date_create($current_time);
+            date_modify($date, '+365 day');
+            $offer_expiration_date = date_format($date, "Y-m-d H:i:s");
+            update_post_meta($post_id, 'offer_expiration_date', $offer_expiration_date);            
             $ofw_make_offer_post_meta = array('offer_quantity', 'offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
             foreach ($ofw_make_offer_post_meta as $key => $value) {
                 update_post_meta($post_id, $value, wc_clean($_POST[$value]));
