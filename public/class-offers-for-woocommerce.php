@@ -1569,6 +1569,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
             // check for valid uid match
             elseif (( $offer_uid != $wp->query_vars['woocommerce-offer-uid'])) {
+                error_log("1572");
                 $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
             }
             // If offer counter 'offer_expiration_date' is past
@@ -1587,6 +1588,7 @@ class Angelleye_Offers_For_Woocommerce {
                 // Error - Offer Not Accepted/Countered
                 elseif ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
                     if ( apply_filters( 'ofw_allow_invalid_offer_status', false,  $offer) ) {
+                        error_log("1591");
                         $request_error = true;
                         $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
                     }
@@ -1831,6 +1833,7 @@ class Angelleye_Offers_For_Woocommerce {
                     // Error - Offer Not Accepted/Countered
                     if ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
                         if ( apply_filters( 'ofw_allow_invalid_offer_status', false,  $offer) ) {
+                            error_log("1836");
                             $request_error = true;
                             $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'), '0');
                         }
