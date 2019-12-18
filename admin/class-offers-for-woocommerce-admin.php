@@ -4513,16 +4513,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function angelleye_offer_for_woocommerce_admin_save_offer() {
         if (!empty($_POST['ofw-admin-makeoffer'])) {
+            $author_data = (!is_user_logged_in() ) ? get_user_by('email', wc_clean($_POST['offer_email'])) : false;
             $post_id = $_POST['post_ID'];
             $ofw_make_offer = array(
                 'ID' => $post_id,
-                'post_author' => $_POST['user_ID'],
-                'post_title' => $_POST['offer_email'],
+                'post_title' => wc_clean($_POST['offer_email']),
                 'post_content' => '',
                 'post_status' => 'publish'
             );
+            if ($author_data) {
+                $ofw_make_offer['post_author'] = $author_data->ID;
+            }
             $offer_id = wp_update_post($ofw_make_offer);
-            $ofw_make_product_id = $_POST['offer_product_id'];
+            $ofw_make_product_id = wc_clean($_POST['offer_product_id']);
             $variant_id = '';
             $product_shipping_cost = '';
             if (!empty($ofw_make_product_id)) {
@@ -4544,14 +4547,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             update_post_meta($post_id, 'offer_uid', $uid);
             $ofw_make_offer_post_meta = array('offer_quantity', 'offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
             foreach ($ofw_make_offer_post_meta as $key => $value) {
-                update_post_meta($post_id, $value, $_POST[$value]);
+                update_post_meta($post_id, $value, wc_clean($_POST[$value]));
             }
             foreach ($ofw_make_offer_post_meta as $key => $value) {
-                update_post_meta($post_id, 'orig_' . $value, $_POST[$value]);
+                update_post_meta($post_id, 'orig_' . $value, wc_clean($_POST[$value]));
             }
             if (!empty($_POST['offer_price_each'])) {
-                update_post_meta($post_id, 'offer_price_per', $_POST['offer_price_each']);
-                update_post_meta($post_id, 'orig_offer_price_per', $_POST['offer_price_each']);
+                update_post_meta($post_id, 'offer_price_per', wc_clean($_POST['offer_price_each']));
+                update_post_meta($post_id, 'orig_offer_price_per', wc_clean($_POST['offer_price_each']));
             }
             if (!empty($_POST['offer_quantity'])) {
                 $product_total = $_POST['offer_quantity'] * $_POST['offer_price_each'];
@@ -4559,7 +4562,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 update_post_meta($post_id, 'offer_amount', $product_total);
                 update_post_meta($post_id, 'orig_offer_amount', $product_total);
             }
-
+            update_post_meta($post_id, 'ofw_created_by', 'admin');
+            update_post_meta($post_id, 'ofw_created_by_id', wc_clean($_POST['user_ID']));
             $email_class = 'WC_Open_Offer_Email';
             $template_name = 'woocommerce-offer-open.php';
 

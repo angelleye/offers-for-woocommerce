@@ -2463,16 +2463,9 @@ class Angelleye_Offers_For_Woocommerce {
     
     public function ofw_not_allow_invalid_offer_status($bool,  $offer) {
         if( isset($offer->post_author) && !empty($offer->post_author) && isset($offer->post_status) && $offer->post_status == 'publish') {
-            $user = get_userdata( $offer->post_author );
-            $user_roles = $user->roles;
-            if ( in_array( 'vendor', $user_roles, true ) ) {
+            $ofw_created_by = get_post_meta($offer->ID, 'ofw_created_by', true);
+            if($ofw_created_by == 'admin') {
                 return false;
-            } elseif ( in_array( 'administrator', $user_roles, true ) ) {
-                return false;
-            } elseif ( in_array( 'shop_manager', $user_roles, true ) ) {
-                return false;
-            } else {
-                return $bool;
             }
         }
         return $bool;
