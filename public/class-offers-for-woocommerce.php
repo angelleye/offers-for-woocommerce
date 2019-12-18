@@ -158,6 +158,9 @@ class Angelleye_Offers_For_Woocommerce {
         // when admin create open offer from admin side and it will allow customer to buy.
         add_filter('ofw_not_allow_invalid_offer_status', array($this, 'ofw_not_allow_invalid_offer_status'), 10, 2);
         
+        add_filter('ofw_admin_created_offer_status', array($this, 'ofw_admin_created_offer_status'), 10, 2);
+        
+        
         /* this will display the data of Product addon if plugin is activated - Start */
         
         $active_plugins = (array) get_option( 'active_plugins', array() );        
@@ -2469,6 +2472,14 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
         return $bool;
+    }
+    
+    public function ofw_admin_created_offer_status($post_status, $post_id) {
+        $ofw_created_by = get_post_meta($post_id, 'ofw_created_by', true);
+        if($ofw_created_by == 'admin') {
+            return 'countered-offer';
+        }
+        return $post_status;
     }
 
 }
