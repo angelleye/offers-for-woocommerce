@@ -4506,6 +4506,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         ?>
         <p class="form-field angelleye-form-field">
             <input type="hidden" name="ofw-admin-makeoffer" value="yes">
+            <input type="hidden" id="user-id" name="user_ID" value="">
             <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo $submit_offer_text; ?>" value="<?php echo $submit_offer_text; ?>" />
         </p>
         <?php
