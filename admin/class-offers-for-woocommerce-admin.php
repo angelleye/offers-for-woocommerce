@@ -4570,6 +4570,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'recipient' => $recipient,
                     'offer_email' => $recipient,
                     'offer_name' => wc_clean($_POST['offer_name']),
+                    'product_title_formatted' => $product->get_formatted_name(),
                     'offer_id' => $offer_id,
                     'offer_uid' => $uid,
                     'product_id' => $product_id,
