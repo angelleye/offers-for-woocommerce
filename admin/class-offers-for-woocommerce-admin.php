@@ -4513,7 +4513,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function angelleye_offer_for_woocommerce_admin_save_offer() {
         if (!empty($_POST['ofw-admin-makeoffer'])) {
-            $author_data = (!is_user_logged_in() ) ? get_user_by('email', wc_clean($_POST['offer_email'])) : false;
+            $author_data = get_user_by('email', wc_clean($_POST['offer_email']));
             $post_id = $_POST['post_ID'];
             $ofw_make_offer = array(
                 'ID' => $post_id,
