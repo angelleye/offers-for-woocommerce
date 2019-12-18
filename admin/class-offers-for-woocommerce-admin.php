@@ -3398,6 +3398,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         require( 'includes/class-wc-countered-offer-email.php' );
         require( 'includes/class-wc-offer-on-hold-email.php' );
         require( 'includes/class-wc-offer-note-email.php' );
+        require( 'includes/class-wc-open-offer-email.php' );
 
         // add the email class to the list of email classes that WooCommerce loads
         $email_classes['WC_Accepted_Offer_Email'] = new WC_Accepted_Offer_Email();
@@ -3405,6 +3406,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
         $email_classes['WC_Offer_On_Hold_Email'] = new WC_Offer_On_Hold_Email();
         $email_classes['WC_Offer_Note_Email'] = new WC_Offer_Note_Email();
+        $email_classes['WC_Open_Offer_Email'] = new WC_Open_Offer_Email();
 
         return $email_classes;
     }
