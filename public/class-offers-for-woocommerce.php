@@ -1786,11 +1786,13 @@ class Angelleye_Offers_For_Woocommerce {
         include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-accepted-offer-email.php' );
         include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-declined-offer-email.php' );
         include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-countered-offer-email.php' );
+        include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-open-offer-email.php' );
 
         // add the email class to the list of email classes that WooCommerce loads
         $email_classes['WC_Accepted_Offer_Email'] = new WC_Accepted_Offer_Email();
         $email_classes['WC_Declined_Offer_Email'] = new WC_Declined_Offer_Email();
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
+        $email_classes['WC_Open_Offer_Email'] = new WC_Open_Offer_Email();
 
         return $email_classes;
     }
