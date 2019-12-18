@@ -4521,8 +4521,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_content' => '',
                 'post_status' => 'publish'
             );
-            wp_update_post($ofw_make_offer);
+            $offer_id = wp_update_post($ofw_make_offer);
             $ofw_make_product_id = $_POST['offer_product_id'];
+            $variant_id = '';
+            $product_shipping_cost = '';
             if (!empty($ofw_make_product_id)) {
                 $product = wc_get_product($ofw_make_product_id);
                 $product_id = $product->is_type('variation') ? $product->get_parent_id() : $product->get_id();
@@ -4531,9 +4533,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     update_post_meta($post_id, 'orig_offer_product_id', $product_id);
                 }
                 if ($product->is_type('variation')) {
-                    $offer_variation_id = $product->get_id();
-                    update_post_meta($post_id, 'offer_variation_id', $offer_variation_id);
-                    update_post_meta($post_id, 'orig_offer_variation_id', $offer_variation_id);
+                    $variant_id = $product->get_id();
+                    update_post_meta($post_id, 'offer_variation_id', $variant_id);
+                    update_post_meta($post_id, 'orig_offer_variation_id', $variant_id);
                 }
                 update_post_meta($post_id, 'offer_product_price', $product->get_price());
             }
@@ -4556,6 +4558,51 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 update_post_meta($post_id, 'offer_total', $product_total);
                 update_post_meta($post_id, 'offer_amount', $product_total);
                 update_post_meta($post_id, 'orig_offer_amount', $product_total);
+            }
+
+            $email_class = 'WC_Open_Offer_Email';
+            $template_name = 'woocommerce-offer-open.php';
+
+            if (isset($email_class) && !empty($email_class)) {
+                global $woocommerce;
+                $recipient = wc_clean($_POST['offer_email']);
+                $offer_args = array(
+                    'recipient' => $recipient,
+                    'offer_email' => $recipient,
+                    'offer_name' => wc_clean($_POST['offer_name']),
+                    'offer_id' => $offer_id,
+                    'offer_uid' => $uid,
+                    'product_id' => $product_id,
+                    'product_url' => $product->get_permalink(),
+                    'variant_id' => $variant_id,
+                    'product' => $product,
+                    'product_qty' => wc_clean($_POST['offer_quantity']),
+                    'product_price_per' => wc_clean($_POST['offer_price_each']),
+                    'product_shipping_cost' => $product_shipping_cost,
+                    'product_total' => $product_total,
+                    'offer_notes' => wc_clean($_POST['offer_notes']),
+                    'final_offer' => 0,
+                    'coupon_code' => ''
+                );
+                // load the WooCommerce Emails
+                $emails = $woocommerce->mailer()->get_emails();
+
+                // select the email we want & trigger it to send
+                $new_email = $emails[$email_class];
+                $new_email->recipient = $recipient;
+
+                // set plugin slug in email class
+                $new_email->plugin_slug = 'offers-for-woocommerce';
+
+                // define email template/path (html)
+                $new_email->template_html = $template_name;
+                $new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+
+                // define email template/path (plain)
+                $new_email->template_plain = $template_name;
+                $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+
+                $new_email->trigger($offer_args);
             }
         }
     }
