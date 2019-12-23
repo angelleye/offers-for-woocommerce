@@ -4570,6 +4570,34 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
             update_post_meta($post_id, 'ofw_created_by', 'admin');
             update_post_meta($post_id, 'ofw_created_by_id', wc_clean($_POST['user_ID']));
+            
+            $comment_text = "<span>" . __('Created New Offer', 'offers-for-woocommerce') . "</span>";
+
+            $data = array(
+                'comment_post_ID' => '',
+                'comment_author' => 'admin',
+                'comment_author_email' => '',
+                'comment_author_url' => '',
+                'comment_content' => $comment_text,
+                'comment_type' => 'offers-history',
+                'comment_parent' => 0,
+                'user_id' => 1,
+                'comment_author_IP' => '127.0.0.1',
+                'comment_agent' => '',
+                'comment_date' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
+                'comment_approved' => 'post-trashed',
+            );
+            $new_comment_id = wp_insert_comment($data);
+
+            // insert comment meta
+            if ($new_comment_id) {
+                add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
+                add_comment_meta($new_comment_id, 'offer_quantity', wc_clean($_POST['offer_quantity']), true);
+                add_comment_meta($new_comment_id, 'offer_amount', $product_total, true);
+                add_comment_meta($new_comment_id, 'offer_price_per', wc_clean($_POST['offer_price_per']), true);
+                add_comment_meta($new_comment_id, 'offer_status', '1', true);
+            }
+            
             $email_class = 'WC_Open_Offer_Email';
             $template_name = 'woocommerce-offer-open.php';
 
