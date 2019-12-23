@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) exit;
 ?>
 
 <?php do_action('woocommerce_email_header', $email_heading, $email); ?>
-<?php printf('<strong>' . _e('We have provided you with a open offer on', 'offers-for-woocommerce') . ' %s.</strong><br />', get_bloginfo('name')); ?>
+<?php printf('<strong>' . _e('We have provided you with an open offer on', 'offers-for-woocommerce') . ' %s.</strong><br />', get_bloginfo('name')); ?>
 <br>
 <p style="font-size: 16px;text-align: center;font-family: inherit;"><?php _e('To pay for this order please use the following link:', 'offers-for-woocommerce'); ?></p>
 <br>
