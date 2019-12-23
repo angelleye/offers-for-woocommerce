@@ -679,9 +679,12 @@ class Angelleye_Offers_For_Woocommerce {
                     $parent_offer_error = true;
                     $parent_offer_error_message = __('You can not submit another counter offer at this time; Counter offer is currently being reviewed. You can submit a new offer using the form below.', 'offers-for-woocommerce');
                 } else {
-                    $parent_offer_id = '';
-                    $parent_offer_error = true;
-                    $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'offers-for-woocommerce');
+                    $offer = get_post($parent_offer_id);
+                    if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
+                        $parent_offer_id = '';
+                        $parent_offer_error = true;
+                        $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'offers-for-woocommerce');
+                    }
                 }
             }
             // If offer counter was set to 'final offer'
