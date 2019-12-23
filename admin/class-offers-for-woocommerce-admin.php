@@ -4570,7 +4570,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
             update_post_meta($post_id, 'ofw_created_by', 'admin');
             update_post_meta($post_id, 'ofw_created_by_id', wc_clean($_POST['user_ID']));
-            $comments = (isset($post['offer_notes']) && $post['offer_notes'] != '') ? strip_tags(nl2br($post['offer_notes']), '<br><p>') : '';
+            $comments = (isset($_POST['offer_notes']) && $_POST['offer_notes'] != '') ? strip_tags(nl2br($_POST['offer_notes']), '<br><p>') : '';
             $comment_text = "<span>" . __('Created New Offer', 'offers-for-woocommerce') . "</span>";
             if ($comments != '') {
                 $comment_text.= '<br />' . $comments;
