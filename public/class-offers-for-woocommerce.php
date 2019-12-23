@@ -1202,12 +1202,15 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
                 if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
-                    if (is_ajax()) {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
-                        exit;
-                    } else {
-                        $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
-                        return false;
+                    $offer = get_post($parent_offer_id);
+                    if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
+                        if (is_ajax()) {
+                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
+                            exit;
+                        } else {
+                            $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
+                            return false;
+                        }
                     }
                 }
 
