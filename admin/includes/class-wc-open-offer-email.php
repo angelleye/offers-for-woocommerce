@@ -32,7 +32,7 @@ class WC_Open_Offer_Email extends WC_Email {
         $this->title = __('Open offer', 'offers-for-woocommerce');
 
         // this is the description in WooCommerce email settings
-        $this->description = __('Open Offer Notification emails are sent when a customer offer is countered by the store admin', 'offers-for-woocommerce');
+        $this->description = __('Open Offer Notification emails are sent when the store admin sent Offer', 'offers-for-woocommerce');
 
         // these are the default heading and subject lines that can be overridden using the settings
         $this->heading = __('Open Offer', 'offers-for-woocommerce');
