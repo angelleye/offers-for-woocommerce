@@ -187,6 +187,8 @@
                             $offer_status_value = 'Seller counter-offers';
                         } elseif ( $offer_status == '4' ) {
                             $offer_status_value = 'Buyer completes the purchase';
+                        } elseif ( $offer_status == '5' ) {
+                            $offer_status_value = 'Seller original offer';
                         }
                             
                         if( !empty($offer_amount) ) {

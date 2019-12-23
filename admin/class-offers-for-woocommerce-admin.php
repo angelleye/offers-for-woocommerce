@@ -4595,7 +4595,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 add_comment_meta($new_comment_id, 'offer_quantity', wc_clean($_POST['offer_quantity']), true);
                 add_comment_meta($new_comment_id, 'offer_amount', $product_total, true);
                 add_comment_meta($new_comment_id, 'offer_price_per', wc_clean($_POST['offer_price_per']), true);
-                add_comment_meta($new_comment_id, 'offer_status', '1', true);
+                add_comment_meta($new_comment_id, 'offer_status', '5', true);
             }
             $email_class = 'WC_Open_Offer_Email';
             $template_name = 'woocommerce-offer-open.php';
