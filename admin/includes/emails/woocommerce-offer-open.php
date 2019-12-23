@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) exit;
 ?>
 
 <?php do_action('woocommerce_email_header', $email_heading, $email); ?>
-<?php printf('<strong>' . _e('We have provided you with a open offer on', 'offers-for-woocommerce') . ' %s.</strong><br />', get_bloginfo('name')); ?>
+<?php printf('<strong>' . _e('We have provided you with an open offer on', 'offers-for-woocommerce') . ' %s.</strong><br />', get_bloginfo('name')); ?>
 <br>
 <p style="font-size: 16px;text-align: center;font-family: inherit;"><?php _e('To pay for this order please use the following link:', 'offers-for-woocommerce'); ?></p>
 <br>
@@ -78,7 +78,7 @@ if (!defined('ABSPATH')) exit;
 </table>
 
 <?php if (isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') {
-    echo '<h4>' . __('Counter Offer Notes:', 'offers-for-woocommerce') . '</h4>' . stripslashes($offer_args['offer_notes']);
+    echo '<h4>' . __('Offer Notes:', 'offers-for-woocommerce') . '</h4>' . stripslashes($offer_args['offer_notes']);
 } ?>
 
 <?php do_action('woocommerce_email_footer'); ?>
