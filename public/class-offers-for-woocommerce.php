@@ -684,6 +684,11 @@ class Angelleye_Offers_For_Woocommerce {
                         $parent_offer_id = '';
                         $parent_offer_error = true;
                         $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'offers-for-woocommerce');
+                    } else {
+                        $offer_name = get_post_meta($parent_offer_id, 'offer_name', true);
+                        $offer_company_name = get_post_meta($parent_offer_id, 'offer_company_name', true);
+                        $offer_phone = get_post_meta($parent_offer_id, 'offer_phone', true);
+                        $offer_email = get_post_meta($parent_offer_id, 'offer_email', true);
                     }
                 }
             }
