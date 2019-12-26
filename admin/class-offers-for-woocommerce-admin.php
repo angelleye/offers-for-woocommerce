@@ -52,7 +52,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         // Load admin style sheet and JavaScript.
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_styles'));
-        // add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         // Add the options page and menu item.
         add_action('admin_menu', array($this, 'add_plugin_admin_menu'));
 
@@ -4377,7 +4377,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public function angelleye_offer_for_woocommerce_admin_add_offer($post) {
-        $custom_css = '#poststuff #post-body.columns-2 { margin-right: 0px; } #post-body.columns-2 #postbox-container-1 { display: none; }';
+        $custom_css = '#poststuff #post-body.columns-2 { margin-right: 0px; } #post-body.columns-2 #postbox-container-1 { display: none; } #postbox-container-2 { width: 580px !important; }';
         wp_register_style('ofw-make-offer', false);
         wp_enqueue_style('ofw-make-offer');
         wp_add_inline_style('ofw-make-offer', $custom_css);

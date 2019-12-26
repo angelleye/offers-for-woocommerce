@@ -160,6 +160,8 @@ class Angelleye_Offers_For_Woocommerce {
         
         add_filter('ofw_admin_created_offer_status', array($this, 'ofw_admin_created_offer_status'), 10, 2);
         
+        add_filter('woocommerce_cart_item_quantity', array($this, 'ofw_woocommerce_cart_item_quantity'), 10, 3);
+        
         
         /* this will display the data of Product addon if plugin is activated - Start */
         
@@ -2495,6 +2497,17 @@ class Angelleye_Offers_For_Woocommerce {
             return 'countered-offer';
         }
         return $post_status;
+    }
+    
+    public function ofw_woocommerce_cart_item_quantity($product_quantity, $cart_item_key, $cart_item) {
+        if (isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
+            foreach (WC()->cart->get_cart() as $cart_key => $cart_item) {
+                if( isset($cart_item['woocommerce_offer_id']) && $cart_item_key == $cart_key) {
+                    $product_quantity = sprintf( '%s <input type="hidden" name="cart[%s][qty]" value="%s" />', $cart_item['quantity'], $cart_item_key, $cart_item['quantity']);
+                }
+            }
+        }
+        return $product_quantity;
     }
 
 }
