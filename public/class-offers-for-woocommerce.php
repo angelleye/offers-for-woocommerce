@@ -1649,7 +1649,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             $quantity = $offer_meta['offer_quantity'][0];
             $product_id = $offer_meta['orig_offer_product_id'][0];
-            $product_variation_id = $offer_meta['orig_offer_variation_id'][0];
+            $product_variation_id = isset($offer_meta['orig_offer_variation_id'][0]) ? $offer_meta['orig_offer_variation_id'][0] : '';
 
             $_product = ( $product_variation_id ) ? wc_get_product($product_variation_id) : wc_get_product($product_id);
             $_product_stock = version_compare(WC_VERSION, '3.0', '<') ? $_product->get_total_stock() : $_product->get_stock_quantity();
@@ -1667,14 +1667,18 @@ class Angelleye_Offers_For_Woocommerce {
 
             $found = false;
            
-            foreach ($woocommerce->cart->get_cart() as $cart_item) {
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                 // check if offer id already in cart
                 if (isset($cart_item['woocommerce_offer_id']) && $cart_item['woocommerce_offer_id'] == $offer->ID) {
-                    $found = true;
-                    $message = sprintf(
-                            '<a href="%s" class="button wc-forward">%s</a> %s', wc_get_cart_url(), __('View Cart', 'offers-for-woocommerce'), __('Offer already added to cart', 'offers-for-woocommerce'));
-                    $this->send_api_response($message);
-                }
+                    if(isset($cart_item['woocommerce_offer_quantity']) && isset($cart_item['woocommerce_offer_price_per'])){
+                        WC()->cart->remove_cart_item( $cart_item_key );
+                    } else {
+                        $found = true;
+                        $message = sprintf(
+                                '<a href="%s" class="button wc-forward">%s</a> %s', wc_get_cart_url(), __('View Cart', 'offers-for-woocommerce'), __('Offer already added to cart', 'offers-for-woocommerce'));
+                        $this->send_api_response($message);
+                    }
+                } 
             }
             
             if (!$found) {
