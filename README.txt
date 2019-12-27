@@ -121,6 +121,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 = 2.0.6 - 12.XX.2019 =
 * Feature - Adds Create New Offer from Admin. ([OFW-122](https://github.com/angelleye/offers-for-woocommerce/pull/439))
 * Tweak - Adjustment to QTY field on cart page. ([OFW-131](https://github.com/angelleye/offers-for-woocommerce/pull/440))
+* Tweak - Updates Cart data when user submit counter-offer and product is already in cart. ([OFW-132](https://github.com/angelleye/offers-for-woocommerce/pull/441))
 
 = 2.0.5 - 12.17.2019 =
 * Fix - Resolves conflicts with WPForms plugin. ([OFW-128](https://github.com/angelleye/offers-for-woocommerce/pull/436))
