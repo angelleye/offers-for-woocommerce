@@ -41,10 +41,10 @@ if ($customer_offers) :
                             $offer_args = array();
                             $post_id = $customer_order->ID;
                             $offer_status = get_post_status($post_id);
-                            $post_status = $offer_status;
                             if (empty($offer_status)) {
                                 return false;
                             }
+                            $post_status = $offer_status;
                             $product_id = get_post_meta($post_id, 'orig_offer_product_id', true);
                             $variant_id = get_post_meta($post_id, 'orig_offer_variation_id', true);
                             $offer_uid = get_post_meta($post_id, 'offer_uid', true);
@@ -156,6 +156,7 @@ if ($customer_offers) :
                                         if (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp', 0))) )) {
 
                                         } else {
+                                            $post_status = apply_filters('ofw_admin_created_offer_status', $post_status, $post_id);
                                             switch ($post_status) {
                                                 case 'countered-offer' :
                                                     ?>

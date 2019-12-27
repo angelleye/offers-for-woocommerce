@@ -155,6 +155,12 @@ class Angelleye_Offers_For_Woocommerce {
         
         add_filter('woocommerce_order_item_display_meta_key', array($this, 'ofwc_translate_order_item_display_meta_key'), 99, 1 );
         
+        // when admin create open offer from admin side and it will allow customer to buy.
+        add_filter('ofw_not_allow_invalid_offer_status', array($this, 'ofw_not_allow_invalid_offer_status'), 10, 2);
+        
+        add_filter('ofw_admin_created_offer_status', array($this, 'ofw_admin_created_offer_status'), 10, 2);
+        
+        
         /* this will display the data of Product addon if plugin is activated - Start */
         
         $active_plugins = (array) get_option( 'active_plugins', array() );        
@@ -673,9 +679,17 @@ class Angelleye_Offers_For_Woocommerce {
                     $parent_offer_error = true;
                     $parent_offer_error_message = __('You can not submit another counter offer at this time; Counter offer is currently being reviewed. You can submit a new offer using the form below.', 'offers-for-woocommerce');
                 } else {
-                    $parent_offer_id = '';
-                    $parent_offer_error = true;
-                    $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'offers-for-woocommerce');
+                    $offer = get_post($parent_offer_id);
+                    if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
+                        $parent_offer_id = '';
+                        $parent_offer_error = true;
+                        $parent_offer_error_message = __('Invalid Parent Offer Id; See shop manager for assistance.', 'offers-for-woocommerce');
+                    } else {
+                        $offer_name = get_post_meta($parent_offer_id, 'offer_name', true);
+                        $offer_company_name = get_post_meta($parent_offer_id, 'offer_company_name', true);
+                        $offer_phone = get_post_meta($parent_offer_id, 'offer_phone', true);
+                        $offer_email = get_post_meta($parent_offer_id, 'offer_email', true);
+                    }
                 }
             }
             // If offer counter was set to 'final offer'
@@ -899,7 +913,6 @@ class Angelleye_Offers_For_Woocommerce {
     public function enqueue_scripts() {
         global $post;
         if(is_object($post)) {
-           
             $is_product_type_variable = 'false';
             if (function_exists('wc_get_product')) {
                 $product = wc_get_product($post);
@@ -1194,12 +1207,15 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
                 if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
-                    if (is_ajax()) {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
-                        exit;
-                    } else {
-                        $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
-                        return false;
+                    $offer = get_post($parent_offer_id);
+                    if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
+                        if (is_ajax()) {
+                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
+                            exit;
+                        } else {
+                            $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
+                            return false;
+                        }
                     }
                 }
 
@@ -1567,6 +1583,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
             // check for valid uid match
             elseif (( $offer_uid != $wp->query_vars['woocommerce-offer-uid'])) {
+                error_log("1572");
                 $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
             }
             // If offer counter 'offer_expiration_date' is past
@@ -1584,9 +1601,13 @@ class Angelleye_Offers_For_Woocommerce {
                 }
                 // Error - Offer Not Accepted/Countered
                 elseif ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
-                    $request_error = true;
-                    $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
+                    if ( apply_filters( 'ofw_not_allow_invalid_offer_status', true,  $offer) ) {
+                        error_log("1591");
+                        $request_error = true;
+                        $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
+                    }
                 }
+            
 
                 // Define product id
                 $product_id = (isset($offer_meta['orig_offer_product_id'][0]) && is_numeric($offer_meta['orig_offer_product_id'][0]) ) ? $offer_meta['orig_offer_product_id'][0] : '';
@@ -1787,11 +1808,13 @@ class Angelleye_Offers_For_Woocommerce {
         include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-accepted-offer-email.php' );
         include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-declined-offer-email.php' );
         include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-countered-offer-email.php' );
+        include_once( untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/class-wc-open-offer-email.php' );
 
         // add the email class to the list of email classes that WooCommerce loads
         $email_classes['WC_Accepted_Offer_Email'] = new WC_Accepted_Offer_Email();
         $email_classes['WC_Declined_Offer_Email'] = new WC_Declined_Offer_Email();
         $email_classes['WC_Countered_Offer_Email'] = new WC_Countered_Offer_Email();
+        $email_classes['WC_Open_Offer_Email'] = new WC_Open_Offer_Email();
 
         return $email_classes;
     }
@@ -1823,8 +1846,11 @@ class Angelleye_Offers_For_Woocommerce {
 
                     // Error - Offer Not Accepted/Countered
                     if ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
-                        $request_error = true;
-                        $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'), '0');
+                        if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
+                            error_log("1836");
+                            $request_error = true;
+                            $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'), '0');
+                        }
                     }
                 }
             }
@@ -2447,6 +2473,24 @@ class Angelleye_Offers_For_Woocommerce {
             return __($display_key.':', 'offers-for-woocommerce');
         }
         return $display_key;
+    }
+    
+    public function ofw_not_allow_invalid_offer_status($bool,  $offer) {
+        if( isset($offer->post_author) && !empty($offer->post_author) && isset($offer->post_status) && $offer->post_status == 'publish') {
+            $ofw_created_by = get_post_meta($offer->ID, 'ofw_created_by', true);
+            if($ofw_created_by == 'admin') {
+                return false;
+            }
+        }
+        return $bool;
+    }
+    
+    public function ofw_admin_created_offer_status($post_status, $post_id) {
+        $ofw_created_by = get_post_meta($post_id, 'ofw_created_by', true);
+        if($ofw_created_by == 'admin') {
+            return 'countered-offer';
+        }
+        return $post_status;
     }
 
 }
