@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.3.1
-Stable tag: 2.0.5
+Tested up to: 5.3.2
+Stable tag: 2.0.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 2.0.6 - 12.XX.2019 =
+= 2.0.6 - 12.30.2019 =
 * Feature - Adds Create New Offer from Admin. ([OFW-122](https://github.com/angelleye/offers-for-woocommerce/pull/439))
 * Tweak - Adjustment to QTY field on cart page. ([OFW-131](https://github.com/angelleye/offers-for-woocommerce/pull/440))
 * Tweak - Updates Cart data when user submit counter-offer and product is already in cart. ([OFW-132](https://github.com/angelleye/offers-for-woocommerce/pull/441))
