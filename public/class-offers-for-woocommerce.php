@@ -501,7 +501,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $(window).on('mouseout', function(e) {
                         var from = e.relatedTarget || e.toElement;
                         var onexit_cookie = 'onexit_cookie_<?php echo $post->ID; ?>';
-                        var visited = $.cookie(onexit_cookie);
+                        var visited = Cookies.get(onexit_cookie);
                         if (visited === '1') {
                             return false;
                         } else if ((!from || from.nodeName == "HTML") && e.pageY < $(window).scrollTop()) {
@@ -512,7 +512,7 @@ class Angelleye_Offers_For_Woocommerce {
                             $("#aeofwc-close-lightbox-link").css('display','block');
                             var date = new Date();
                             date.setTime(date.getTime() + (60 * 1000)); //60 secounds time for cookie
-                            $.cookie(onexit_cookie, '1', {
+                            Cookies.set(onexit_cookie, '1', {
                               expires: date,
                               path    : '<?php echo COOKIEPATH ? COOKIEPATH : "/"; ?>',
                             });
@@ -934,7 +934,8 @@ class Angelleye_Offers_For_Woocommerce {
                 $is_woo_variations_table_installed='0';
             }
             /* End */
-            
+            $suffix       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+            wp_enqueue_script( 'js-cookie', WC()->plugin_url() . '/assets/js/js-cookie/js.cookie' . $suffix . '.js', array(), '2.1.4', true );
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
             wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', plugins_url('assets/js/autoNumeric-1-9-24.js', __FILE__), self::VERSION);
             if (wp_script_is('offers-for-woocommerce-plugin-script')) {
