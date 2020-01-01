@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.0.7 - 01.XX.2020 =
+* Fix - Resolves conflicts with cookie JS. ([OFW-134](https://github.com/angelleye/offers-for-woocommerce/pull/442))
+
 = 2.0.6 - 12.30.2019 =
 * Feature - Adds Create New Offer from Admin. ([OFW-122](https://github.com/angelleye/offers-for-woocommerce/pull/439))
 * Tweak - Adjustment to QTY field on cart page. ([OFW-131](https://github.com/angelleye/offers-for-woocommerce/pull/440))
