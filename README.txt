@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 5.3.2
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -120,6 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 2.0.7 - 01.XX.2020 =
 * Fix - Resolves conflicts with cookie JS. ([OFW-134](https://github.com/angelleye/offers-for-woocommerce/pull/442))
+* Fix - Resolves updater message dismiss action. ([OFW-139](https://github.com/angelleye/offers-for-woocommerce/pull/443))
 
 = 2.0.6 - 12.30.2019 =
 * Feature - Adds Create New Offer from Admin. ([OFW-122](https://github.com/angelleye/offers-for-woocommerce/pull/439))
