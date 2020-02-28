@@ -118,7 +118,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 2.0.7 - 01.XX.2020 =
+= 2.0.7 - 02.28.2020 =
 * Fix - Resolves conflicts with cookie JS. ([OFW-134](https://github.com/angelleye/offers-for-woocommerce/pull/442))
 * Fix - Resolves updater message dismiss action. ([OFW-139](https://github.com/angelleye/offers-for-woocommerce/pull/443))
 
