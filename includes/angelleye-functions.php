@@ -86,6 +86,7 @@ if (!class_exists('AngellEYE_Updater') && !function_exists('angell_updater_notic
     }
     if ( false === ( $angelleye_updater_notice_hide = get_transient( 'angelleye_updater_notice_hide' ) ) ) {
         add_action('admin_notices', 'angell_updater_notice');
+	    wp_enqueue_script('angelleye-updater-script', plugins_url('../admin/assets/js/update_handler.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
     }
     add_action( 'wp_ajax_angelleye_updater_dismissible_admin_notice', 'angelleye_updater_dismissible_admin_notice' );
 }
