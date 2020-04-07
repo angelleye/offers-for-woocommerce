@@ -463,6 +463,8 @@
                if( $('.woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab').length > 0 ){
                     $(".woocommerce-tabs .tabs li.tab_custom_ofwc_offer_tab a").click();
                 }
+                
+                $('.tab_custom_ofwc_offer_tab').click();
 
                var targetTab = $(".tab_custom_ofwc_offer_tab");
                if ( $( ".tab_custom_ofwc_offer_tab" ).length > 0 ) {                                      
