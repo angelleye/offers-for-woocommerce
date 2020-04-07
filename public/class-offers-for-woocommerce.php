@@ -262,7 +262,7 @@ class Angelleye_Offers_For_Woocommerce {
             /* Add "Lighbox Make Offer Form" before single product content */
             add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_lightbox_make_offer_form'));
             /* Add "Make Offer" product tab on product single view */
-            add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'),99);
+            add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'),9, 1);
         }
     }
     
@@ -603,11 +603,9 @@ class Angelleye_Offers_For_Woocommerce {
             // Add new tab "Make Offer"
             $tabs['tab_custom_ofwc_offer'] = array(
                 'title' => $tab_title,
-                'priority' => 50,
+                'priority' => 9,
                 'callback' => array($this, 'angelleye_ofwc_display_custom_woocommerce_product_tab_content'));
 
-            // Set priority of the new tab to 20 -- second place
-            $tabs['tab_custom_ofwc_offer']['priority'] = 20;
         }
         return $tabs;
     }
@@ -745,7 +743,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
         // Set html content for output
         $is_recaptcha_enable = $this->is_recaptcha_enable();
-        include_once( 'views/public.php' );
+        include(OFW_PLUGIN_URL . 'public/views/public.php');
     }
 
     /**
