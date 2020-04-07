@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.0.9 - 04.07.2020 =
+* Fix - Resolves conflicts with divi theme page builder. ([OFW-142](https://github.com/angelleye/offers-for-woocommerce/pull/444))
+
 = 2.0.8 - 03.27.2020 =
 * Verification - WooCommerce 4.0.1 compatibility.
 
