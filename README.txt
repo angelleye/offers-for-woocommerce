@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.3.2
-Stable tag: 2.0.8
+Tested up to: 5.4.0
+Stable tag: 2.0.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -120,6 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 2.0.9 - 04.07.2020 =
 * Fix - Resolves conflicts with divi theme page builder. ([OFW-142](https://github.com/angelleye/offers-for-woocommerce/pull/444))
+* Verification - WordPress 5.4 compatibility.
 
 = 2.0.8 - 03.27.2020 =
 * Verification - WooCommerce 4.0.1 compatibility.
