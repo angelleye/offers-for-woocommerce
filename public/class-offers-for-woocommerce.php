@@ -603,7 +603,7 @@ class Angelleye_Offers_For_Woocommerce {
             // Add new tab "Make Offer"
             $tabs['tab_custom_ofwc_offer'] = array(
                 'title' => $tab_title,
-                'priority' => 9,
+                'priority' => 20,
                 'callback' => array($this, 'angelleye_ofwc_display_custom_woocommerce_product_tab_content'));
 
         }
