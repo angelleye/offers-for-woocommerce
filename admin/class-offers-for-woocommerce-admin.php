@@ -1306,7 +1306,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'section_id_offer_summary', ( isset($screen->action) && $screen->action == 'add' ) ? __('Make Offer', 'offers-for-woocommerce') : __('Offer Details', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_summary_callback'), $screens_value, 'normal', 'high'
             );
         }
-        add_meta_box('ofwc_product_offers', __('Offer History', 'offers-for-woocommerce'), array($this, 'add_meta_box_product_offers_callback'), 'product', 'normal');
+      add_meta_box('ofwc_product_offers', __('Offer History', 'offers-for-woocommerce'), array($this, 'add_meta_box_product_offers_callback'), 'product', 'normal');
     }
 
     /**
@@ -4145,8 +4145,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         endif;
     }
 
-    public function add_meta_box_product_offers_callback($post) {
-        $product_id = $post->ID;
+    public function add_meta_box_product_offers_callback($post_data) {
+        global $post;
+        $original_post = $post;
+        $product_id = $post_data->ID;
         $args = array(
             'post_type' => 'woocommerce_offer',
             'post_status' => array('publish', 'accepted-offer', 'countered-offer', 'buyercountered-offer', 'on-hold-offer', 'expired-offer', 'declined-offer'),
@@ -4206,6 +4208,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             echo '<p>No offers for this product.</p>';
         endif;
         wp_reset_postdata();
+        $post = $original_post;
     }
 
     public function ofwc_custom_style() {
