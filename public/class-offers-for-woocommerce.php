@@ -999,7 +999,7 @@ class Angelleye_Offers_For_Woocommerce {
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = wc_clean($_POST['value']);        
         $nmArray = array();
-        
+        $arr_main_array = apply_filters('angelleye_ofw_pre_offer_request', $arr_main_array);
         $active_plugins = (array) get_option( 'active_plugins', array() );        
         if (is_multisite())
             $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
@@ -1387,6 +1387,8 @@ class Angelleye_Offers_For_Woocommerce {
                 'product_total' => $product_total,
                 'offer_notes' => $comments
             );
+            
+            $offer_args['offer_email'] = apply_filters('angelleye_ofw_pre_email_sent', $offer_email, $offer_args);
 
             if ($variant_id) {
                 if ($product->get_sku()) {
@@ -1459,7 +1461,8 @@ class Angelleye_Offers_For_Woocommerce {
                 $emails = $woocommerce->mailer()->get_emails();
             }
 
-
+            
+            
             // select the email we want & trigger it to send
             $new_email = $emails[$email_class];
 
@@ -1509,6 +1512,8 @@ class Angelleye_Offers_For_Woocommerce {
             // define email template/path (plain)
             $new_email->template_plain = 'woocommerce-offer-received.php';
             $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+            
+            
 
             if($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == ''){
                 $new_email->trigger($offer_args);
@@ -1518,6 +1523,8 @@ class Angelleye_Offers_For_Woocommerce {
                 do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
             }
             do_action('woocommerce_after_offer_submit', $is_counter_offer, $post);
+            
+            do_action('angelleye_ofw_offer_received', $offer_args, $post);
 
             // Success
             if (is_ajax()) {
