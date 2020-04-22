@@ -1576,6 +1576,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 return;
             }
         }
+        do_action('angelleye_ofw_before_offer_action', $post_id, wc_clean($_POST));
 
         /*
          * OK, its safe for us to save the data now
@@ -1695,7 +1696,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $offer_args = array(
             'recipient' => $recipient,
-            'offer_email' => $offer_email,
+            'offer_email' => $recipient,
             'offer_name' => $offer_name,
             'offer_id' => $offer_id,
             'offer_uid' => $offer_uid,
@@ -1711,6 +1712,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'final_offer' => $offer_final_offer,
             'coupon_code' => isset($coupon_code) ? $coupon_code : ''
         );
+        
+        $offer_email = apply_filters('angelleye_ofw_pre_email_sent', $offer_email, $offer_args);
+        
+        $offer_args['recipient'] = $offer_email;
+        
+        $offer_args['offer_email'] = $offer_email;
 
         $offer_args['offer_expiration_date'] = ($offer_expire_date) ? $offer_expire_date : FALSE;
 
@@ -1786,6 +1793,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 add_comment_meta($new_comment_id, 'offer_status', '3', true);
             }
         }
+        
+        do_action('angelleye_ofw_offer_updated', $offer_args, $post_data);
+        
     }
 
     /**
