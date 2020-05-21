@@ -999,7 +999,7 @@ class Angelleye_Offers_For_Woocommerce {
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = wc_clean($_POST['value']);        
         $nmArray = array();
-        
+        $arr_main_array = apply_filters('angelleye_ofw_pre_offer_request', $arr_main_array);
         $active_plugins = (array) get_option( 'active_plugins', array() );        
         if (is_multisite())
             $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
@@ -1208,7 +1208,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
                 if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
-                    $offer = get_post($parent_offer_id);
+                    $offer = get_post($parent_post_id);
                     if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
                         if (is_ajax()) {
                             echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
@@ -1387,6 +1387,8 @@ class Angelleye_Offers_For_Woocommerce {
                 'product_total' => $product_total,
                 'offer_notes' => $comments
             );
+            
+            $offer_args['offer_email'] = apply_filters('angelleye_ofw_pre_email_sent', $offer_email, $offer_args);
 
             if ($variant_id) {
                 if ($product->get_sku()) {
@@ -2229,8 +2231,11 @@ class Angelleye_Offers_For_Woocommerce {
     }
     
     public function ofw_coupons_enabled($boolean) {
+	    if ( !did_action( 'wp_loaded' ) )
+	        return $boolean;
+
         $button_options_general = get_option('offers_for_woocommerce_options_general');
-        if(!is_admin() && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
+        if(!is_admin() && !empty(WC()->cart) && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
             foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
                 if( isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
                     if( !empty(WC()->cart->get_applied_coupons()) ) {
