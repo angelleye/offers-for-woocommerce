@@ -94,7 +94,7 @@ register_deactivation_hook( __FILE__ , array('Angelleye_Offers_For_Woocommerce',
  *
  * @since	0.1.0
  */
-add_action( 'wp_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_instance' ) );
+add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_instance' ) );
 
 /**
  **********************************************

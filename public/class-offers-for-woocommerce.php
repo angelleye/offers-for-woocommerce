@@ -1208,7 +1208,7 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // check for valid parent offer ( must be a offer post type and accepted/countered and uid must match
                 if ((isset($parent_post_status) && $parent_post_status != 'countered-offer') || ($post_parent_type != 'woocommerce_offer') || ($parent_post_offer_uid != $formData['parent_offer_uid'])) {
-                    $offer = get_post($parent_offer_id);
+                    $offer = get_post($parent_post_id);
                     if ( apply_filters( 'ofw_not_allow_invalid_offer_status', false,  $offer) ) {
                         if (is_ajax()) {
                             echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
@@ -2236,6 +2236,9 @@ class Angelleye_Offers_For_Woocommerce {
     }
     
     public function ofw_coupons_enabled($boolean) {
+	    if ( !did_action( 'wp_loaded' ) )
+	        return $boolean;
+
         $button_options_general = get_option('offers_for_woocommerce_options_general');
         if(!is_admin() && !empty(WC()->cart) && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
             foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
