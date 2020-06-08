@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '2.0.9';
+    const VERSION = '2.1.0';
 
     /**
      *
@@ -1522,9 +1522,7 @@ class Angelleye_Offers_For_Woocommerce {
             if (is_ajax()) {
                 do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
             }
-            do_action('woocommerce_after_offer_submit', $is_counter_offer, $post);
-            
-            do_action('angelleye_ofw_offer_received', $offer_args, $post);
+            do_action('woocommerce_after_offer_submit', $is_counter_offer, $post, $offer_args);
 
             // Success
             if (is_ajax()) {
