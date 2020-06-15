@@ -1332,9 +1332,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $offers_product_addon = get_post_meta($post->ID, 'offers_product_addon', true);
                 /* end */
 
-                // Add an nonce field so we can check for it later.
-                wp_nonce_field('woocommerce_offer_summary_metabox', 'woocommerce_offer_summary_metabox_noncename');
-
                 /*
                  * Use get_post_meta() to retrieve an existing value
                  * from the database and use the value for the form.
