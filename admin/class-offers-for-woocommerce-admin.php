@@ -3491,24 +3491,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if ( ! $screen ||  "woocommerce_offer" != $screen->id ) {
                 return;
         }
+        $content = '<ul>'
+                . '<li>' . sprintf('<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/offers-woocommerce-install-setup-guide/', 'Install Guide') . '</li>'
+                . '<li>' . sprintf('<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/offers-for-woocommerce-user-guide/', 'User Guide') . '</li>'
+                . '<li>' . sprintf('<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/offers-for-woocommerce-developer-hooks-guide/', 'Developer Hooks Guide') . '</li>'
+                . '</ul>';
         $screen->add_help_tab(array(
             'id' => 'angelleye-offers-for-woocommerce-overview-tab_01',
-            'title' => __('Overview', 'offers-for-woocommerce'),
-            'content' => '<p>' . __('This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'offers-for-woocommerce') . '</p>',
+            'title' => __('Documentation', 'offers-for-woocommerce'),
+            'content' => $content,
         ));
-
-        $screen->add_help_tab(array(
-            'id' => 'angelleye-offers-for-woocommerce-overview-tab_02',
-            'title' => __('Help Tab', 'offers-for-woocommerce'),
-            'content' => '<p>' . __('This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'offers-for-woocommerce') . '</p>',
-        ));
-
-        $screen->add_help_tab(array(
-            'id' => 'angelleye-offers-for-woocommerce-overview-tab_03',
-            'title' => __('Help Tab', 'offers-for-woocommerce'),
-            'content' => '<p>' . __('This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'offers-for-woocommerce') . '</p>',
-        ));
-        
        
     }
 
