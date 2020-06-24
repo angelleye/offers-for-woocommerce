@@ -822,7 +822,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $product_id = get_post_meta($post_id, 'orig_offer_product_id', true);
                 $product_variant_id = get_post_meta($post_id, 'orig_offer_product_id', true);
                 $wc_prd_vendor_options = get_option('wc_prd_vendor_options');
+                if(!empty($wc_prd_vendor_options)) {
                 $can_edit_opt = $wc_prd_vendor_options['can_edit_published_products'];
+                } else {
+                    $can_edit_opt = false;
+                }
                 $user = wp_get_current_user();
 
                 if ($product_id > 0) {

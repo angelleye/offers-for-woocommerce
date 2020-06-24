@@ -307,8 +307,16 @@ class Angelleye_Offers_For_Woocommerce {
         if(isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()){
             return;
         }
-        
-        $is_external_product = version_compare(WC_VERSION, '3.0', '<') ? ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE : ( $_product->get_type() == 'external' ) ? TRUE : FALSE ;
+        $is_external_product = FALSE;
+        if(version_compare(WC_VERSION, '3.0', '<')) {
+            if(isset($_product->product_type) && $_product->product_type == 'external') {
+                $is_external_product = TRUE;
+            }
+        } else {
+            if($_product->get_type() == 'external') {
+                $is_external_product = TRUE;
+            }
+        }
         $is_instock = $_product->is_in_stock();
         
         $custom_tab_options_offers = array(
@@ -473,7 +481,16 @@ class Angelleye_Offers_For_Woocommerce {
         if ( ! is_object( $_product ) ) {
             return;
         }
-        $is_external_product = version_compare(WC_VERSION, '3.0', '<') ? ( isset($_product->product_type) && $_product->product_type == 'external' ) ? TRUE : FALSE : ( $_product->get_type() == 'external' ) ? TRUE : FALSE ;
+        $is_external_product = FALSE;
+        if(version_compare(WC_VERSION, '3.0', '<')) {
+            if(isset($_product->product_type) && $_product->product_type == 'external') {
+                $is_external_product = TRUE;
+            }
+        } else {
+            if($_product->get_type() == 'external') {
+                $is_external_product = TRUE;
+            }
+        }
         $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
         $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled != '') ? $on_exit_enabled : 'no';
@@ -1910,10 +1927,11 @@ class Angelleye_Offers_For_Woocommerce {
             $response = explode("\r\n\r\n", $response, 2);
         }
 
-        if ('true' == $response[1])
+        if (isset($response[1]) && 'true' == $response[1]) {
             return true;
-        else
+        } else {
             return false;
+    }
     }
 
     /**
