@@ -333,7 +333,8 @@ class Angelleye_Offers_For_Woocommerce {
             
             $lightbox_class = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? ' offers-for-woocommerce-make-offer-button-single-product-lightbox' : '';
             $button_class = (isset($button_options_display['display_setting_custom_make_offer_btn_class']) && $button_options_display['display_setting_custom_make_offer_btn_class'] != '') ? $button_options_display['display_setting_custom_make_offer_btn_class'] : '';            
-            $btn_output = '<div class="single_variation_wrap_angelleye ofwc_offer_tab_form_wrap single_offer_button">';
+            $aeofwc_offer_button_wrap_class = apply_filters('aeofwc_offer_button_wrap_class', 'single_variation_wrap_angelleye ofwc_offer_tab_form_wrap single_offer_button');
+            $btn_output = '<div class=" ' . $aeofwc_offer_button_wrap_class.'">';
             $permalink = get_permalink($post->ID);
             $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
             if($req_login){
