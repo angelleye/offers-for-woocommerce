@@ -1394,7 +1394,7 @@ class Angelleye_Offers_For_Woocommerce {
                 if ($product->get_sku()) {
                     $identifier = $product->get_sku();
                 } else {
-                    $identifier = '#' . $product->variation_id;
+                    $identifier = '#' . $product->get_id();
                 }
 
                 $attributes = $product->get_variation_attributes();
@@ -1995,7 +1995,7 @@ class Angelleye_Offers_For_Woocommerce {
                 if ($product->get_sku()) {
                     $identifier = $product->get_sku();
                 } else {
-                    $identifier = '#' . $product->variation_id;
+                    $identifier = '#' . $product->get_id();
                 }
                 $attributes = $product->get_variation_attributes();
                 $extra_data = ' &ndash; ' . implode(', ', $attributes);
