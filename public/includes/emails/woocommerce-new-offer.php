@@ -23,6 +23,7 @@ if (!defined('ABSPATH')) exit;
     );
 } ?>
 <br>
+<br>
 <h2 style="text-align:center"><?php echo __('Offer ID:', 'offers-for-woocommerce') . ' ' . $offer_args['offer_id']; ?> (<?php printf('<time datetime="%s">%s</time>', date_i18n('c', time()), date_i18n(wc_date_format(), time())); ?>)</h2>
 <br>
 <br>
