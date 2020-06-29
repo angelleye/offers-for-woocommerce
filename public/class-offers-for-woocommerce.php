@@ -57,6 +57,8 @@ class Angelleye_Offers_For_Woocommerce {
          */
         define('OFWC_PUBLIC_EMAIL_TEMPLATE_PATH', untrailingslashit(plugin_dir_path(__FILE__)) . '/includes/emails/');
         
+        include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/angelleye-offers-for-woocommerce-function.php';
+        
         if (!defined('OFWC_EMAIL_TEMPLATE_PATH')) {
             define('OFWC_EMAIL_TEMPLATE_PATH', untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/');
         }
@@ -171,6 +173,8 @@ class Angelleye_Offers_For_Woocommerce {
         if(in_array( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins ) || array_key_exists( 'woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins )){
             add_filter( 'woocommerce_cart_item_name', array($this,'render_meta_on_cart_item'), 1, 3 );    
         }
+        
+        
         /* this will display the data of Product addon if plugin is activated - End */
     }       
 
