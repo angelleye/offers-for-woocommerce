@@ -11,25 +11,26 @@ if (!defined('ABSPATH')) exit;
 
 <?php do_action('woocommerce_email_header', $email_heading, $email); ?>
 <?php if (is_plugin_active('offers-for-woocommerce-wc-vendors/offers-for-woocommerce-wc-vendors.php')  && is_plugin_active('wc-vendors-pro/wcvendors-pro.php')) {
-    $wc_prd_vendor_options = get_option('wc_prd_vendor_options');
-    if (class_exists('WCVendors_Pro')) {
-        $pro_dashboard_id = $wc_prd_vendor_options['dashboard_page_id'];
-        $dashboard_page_slug   = get_post($pro_dashboard_id)->post_name;
-    } else {
-        $vendor_dashbaord_id = $wc_prd_vendor_options['vendor_dashboard_page'];
-        $vendor_dashboard_slug = get_post($vendor_dashbaord_id)->post_name;
-        $dashboard_page_slug =  $vendor_dashboard_slug;
-    }
-    printf('<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s', get_bloginfo('name'), '<a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . site_url($dashboard_page_slug . '/woocommerce_offer/edit/' . $offer_args['offer_id']) . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>');
+
+    $accept_url = WCVendors_Pro_Dashboard::get_dashboard_page_url( 'woocommerce_offer/accept/' . $offer_args['offer_id'] );
+	$decline_url = WCVendors_Pro_Dashboard::get_dashboard_page_url( 'woocommerce_offer/decline/' . $offer_args['offer_id'] );
+	$offer_edit_page_url = WCVendors_Pro_Dashboard::get_dashboard_page_url( 'woocommerce_offer/edit/' . $offer_args['offer_id'] );
+    printf('<div style="text-align: center;">
+<p style="font-size: 16px;text-align: center;font-family: inherit;">
+<strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' .
+           __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s',
+        get_bloginfo('name'),
+        '<a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $offer_edit_page_url . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a> <a style="background-color: #f44336;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $decline_url . '">' . __('Decline Offer', 'offers-for-woocommerce') . '</a> <a style="background-color: #4CAF50;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $accept_url . '">' . __('Approve Offer', 'offers-for-woocommerce') . '</a>');
 } else {
     printf(
-        '<p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s',
+        '<div style="text-align: center;"><p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s',
         get_bloginfo('name'),
         '<p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . admin_url('post.php?post=' . $offer_args['offer_id']  . '&action=edit') . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>
 							 <a style="background-color: #f44336;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . admin_url('post.php?post=' . $offer_args['offer_id']  . '&action=edit&from_email_action=declineOfferFromGrid&ofw_from_email=true&targetID=' . $offer_args['offer_id']) . '">' . __('Decline Offer', 'offers-for-woocommerce') . '</a>
-							 <a style="background-color: #4CAF50;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . admin_url('post.php?post=' . $offer_args['offer_id']  . '&action=edit&from_email_action=approveOfferFromGrid&ofw_from_email=true&targetID=' . $offer_args['offer_id']) . '">' . __('Approve Offer', 'offers-for-woocommerce') . '</a><p>'
+							 <a style="background-color: #4CAF50;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . admin_url('post.php?post=' . $offer_args['offer_id']  . '&action=edit&from_email_action=approveOfferFromGrid&ofw_from_email=true&targetID=' . $offer_args['offer_id']) . '">' . __('Approve Offer', 'offers-for-woocommerce') . '</a><p></div>'
     );
 } ?>
+<br>
 <br>
 <h2 style="text-align:center"><?php echo __('Offer ID:', 'offers-for-woocommerce') . ' ' . $offer_args['offer_id']; ?> (<?php printf('<time datetime="%s">%s</time>', date_i18n('c', time()), date_i18n(wc_date_format(), time())); ?>)</h2>
 <br>
