@@ -335,7 +335,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * Adds help tab content for manage offer screen
          * @since   0.1.0
          */
-        add_filter('contextual_help', array($this, 'ae_ofwc_contextual_help'), 10, 3);
+        add_action('current_screen', array($this, 'ae_ofwc_contextual_help'), 50);
 
         /**
          * Check for WooCommerce plugin
@@ -3488,31 +3488,24 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @param $screen
      * @return mixed
      */
-    function ae_ofwc_contextual_help($contextual_help, $screen_id, $screen) {
-
+    function ae_ofwc_contextual_help() {
+        $screen = get_current_screen();
         // Only add to certain screen(s). The add_help_tab function for screen was introduced in WordPress 3.3.
-        if ("edit-woocommerce_offer" != $screen->id || !method_exists($screen, 'add_help_tab'))
-            return $contextual_help;
-
+       
+        if ( ! $screen ||  "woocommerce_offer" != $screen->id ) {
+                return;
+        }
+        $content = '<ul>'
+                . '<li>' . sprintf('<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/offers-woocommerce-install-setup-guide/', 'Install Guide') . '</li>'
+                . '<li>' . sprintf('<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/offers-for-woocommerce-user-guide/', 'User Guide') . '</li>'
+                . '<li>' . sprintf('<a href="%s" target="_blank">%s</a>', 'https://www.angelleye.com/offers-for-woocommerce-developer-hooks-guide/', 'Developer Hooks Guide') . '</li>'
+                . '</ul>';
         $screen->add_help_tab(array(
             'id' => 'angelleye-offers-for-woocommerce-overview-tab_01',
-            'title' => __('Overview', 'offers-for-woocommerce'),
-            'content' => '<p>' . __('This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'offers-for-woocommerce') . '</p>',
+            'title' => __('Documentation', 'offers-for-woocommerce'),
+            'content' => $content,
         ));
-
-        $screen->add_help_tab(array(
-            'id' => 'angelleye-offers-for-woocommerce-overview-tab_02',
-            'title' => __('Help Tab', 'offers-for-woocommerce'),
-            'content' => '<p>' . __('This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'offers-for-woocommerce') . '</p>',
-        ));
-
-        $screen->add_help_tab(array(
-            'id' => 'angelleye-offers-for-woocommerce-overview-tab_03',
-            'title' => __('Help Tab', 'offers-for-woocommerce'),
-            'content' => '<p>' . __('This plugin is currently in development. Please send any feedback or bug reports to andrew@angelleye.com. Thank you.', 'offers-for-woocommerce') . '</p>',
-        ));
-
-        return $contextual_help;
+       
     }
 
     /*
