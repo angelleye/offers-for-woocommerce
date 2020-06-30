@@ -1726,7 +1726,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ($product->get_sku()) {
                 $identifier = $product->get_sku();
             } else {
-                $identifier = '#' . $product->variation_id;
+                $identifier = '#' . $product->get_id();
             }
 
             $attributes = $product->get_variation_attributes();
@@ -2798,7 +2798,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if ($product->get_sku()) {
                     $identifier = $product->get_sku();
                 } else {
-                    $identifier = '#' . $product->variation_id;
+                    $identifier = '#' . $product->get_id();
                 }
                 $attributes = $product->get_variation_attributes();
                 $extra_data = ' &ndash; ' . implode(', ', $attributes);
@@ -2982,7 +2982,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         if ($product->get_sku()) {
                             $identifier = $product->get_sku();
                         } else {
-                            $identifier = '#' . $product->variation_id;
+                            $identifier = '#' . $product->get_id();
                         }
 
                         $attributes = $product->get_variation_attributes();
@@ -3700,8 +3700,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since   1.2
      */
     public function woocommerce_product_quick_edit_save_own($product) {
-        $post_id = $product->id;
-
+        
+        $post_id = version_compare(WC_VERSION, '3.0', '<') ? $product->id : $product->get_id();
+        
         $offers_for_woocommerce_enabled = (isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] == 'yes') ? 'yes' : 'no';
         $offers_for_woocommerce_auto_accept_enabled = (isset($_REQUEST['_offers_for_woocommerce_auto_accept_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] == 'yes' ) ? 'yes' : 'no';
         $offers_for_woocommerce_auto_decline_enabled = (isset($_REQUEST['_offers_for_woocommerce_auto_decline_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_decline_enabled'] == 'yes' ) ? 'yes' : 'no';
@@ -4043,7 +4044,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     if ($product->get_sku()) {
                         $identifier = $product->get_sku();
                     } else {
-                        $identifier = '#' . $product->variation_id;
+                        $identifier = '#' . $product->get_id();
                     }
                     $attributes = $product->get_variation_attributes();
                     $extra_data = ' &ndash; ' . implode(', ', $attributes);
