@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 5.4.0
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,8 +117,17 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.2.0 - 06.30.2020 =
+* Fix - Dual Nonce issue resolved. ([OFW-162](https://github.com/angelleye/offers-for-woocommerce/pull/453))
+* Tweak - Added Approve and Decline buttons for WC Vendors New Offer Email. ([OFW-166](https://github.com/angelleye/offers-for-woocommerce/pull/452))
+* Fix - Offers button bug resolved. ([OFW-148](https://github.com/angelleye/offers-for-woocommerce/pull/451))
+* Tweak - PHP 7.4 Compatibility. ([OFW-161](https://github.com/angelleye/offers-for-woocommerce/pull/450))
+* Tweak - Updated the help tab contents on Edit offer page. ([OFW-157](https://github.com/angelleye/offers-for-woocommerce/pull/449))
+* Fix - Zapier plugin Compatibility (Call ofw_coupons_enabled filter after wp_loaded hook). ([OFW-153](https://github.com/angelleye/offers-for-woocommerce/pull/448))
+
 = 2.1.0 - 04.22.2020 =
-* Tweak - Added new Hooks on Offer Submission (Actions and Filters) . ([OFW-143](https://github.com/angelleye/offers-for-woocommerce/pull/446))
+* Tweak - Added new Hooks on Offer Submission (Actions and Filters). ([OFW-143](https://github.com/angelleye/offers-for-woocommerce/pull/446))
 
 = 2.0.10 - 04.16.2020 =
 * Fix - Resolves global post mixing issue with local scope post. ([OFW-145](https://github.com/angelleye/offers-for-woocommerce/pull/445))
