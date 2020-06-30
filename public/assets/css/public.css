@@ -9,7 +9,7 @@
 .offers-for-woocommerce-make-offer-button-catalog { margin: 0 0 7px 0; }
 .offers-for-woocommerce-make-offer-button-single-product {margin:0 0 0 5px ; width: fit-content;}
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart { height:70px; }
-.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .single_add_to_cart_button { float:left; }
+.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .single_offer_button { float:left; }
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .offers-for-woocommerce-make-offer-button-single-product { margin:0 0 0 5px ; float:left; }
 
 html body.woocommerce div.product form.cart .default_add_class,
@@ -304,7 +304,7 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
 .fusion-body .aofwc-first-div{
     display: inline-block;
 } */
-div#offers-for-woocommerce-add-to-cart-wrap .single_add_to_cart_button {
+div#offers-for-woocommerce-add-to-cart-wrap .single_offer_button {
     margin-bottom: 5px ;
 }
 
@@ -318,7 +318,7 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
    display: block;
     max-width: 100%;
 }
-.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap.single_add_to_cart_button.disabled {
+.single_variation_wrap_angelleye.ofwc_offer_tab_form_wrap.single_offer_button.disabled {
     opacity: 0.4;
     cursor: not-allowed;
     display: none;

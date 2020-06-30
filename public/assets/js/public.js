@@ -8,7 +8,21 @@
             
             $('.ofwc_no_price_product').remove();
 
+            $( ".variations_form" ).on( "hide_variation", function() {
+                if( $('.single_add_to_cart_button').hasClass('disabled') ) {
+                    $('.single_offer_button').addClass('disabled');
+                } else {
+                    $('.single_offer_button').removeClass('disabled');
+                }
+            });
             
+            $( ".variations_form" ).on( "show_variation", function() {
+                if( $('.single_add_to_cart_button').hasClass('disabled') ) {
+                    $('.single_offer_button').addClass('disabled');
+                } else {
+                    $('.single_offer_button').removeClass('disabled');
+                }
+            });
                 
             var get = [];
             location.search.replace('?', '').split('&').forEach(function (val) {
