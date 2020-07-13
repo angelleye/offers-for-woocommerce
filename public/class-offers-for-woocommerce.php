@@ -2546,7 +2546,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
     
     public function ofw_add_offer_endpoint() {
-        add_rewrite_endpoint( 'offers', EP_ROOT | EP_PAGES );
+        add_rewrite_endpoint( 'offers', EP_PAGES );
     }
 
     public function ofw_woocommerce_account_menu_items($items) {
