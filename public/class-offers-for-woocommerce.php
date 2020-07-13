@@ -140,7 +140,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         add_filter( 'woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled' ), 10, 1);
         
-        add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
+        //add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
         
         add_filter( 'woocommerce_shipping_methods', array($this, 'add_your_shipping_method' ), 10, 1);
         add_action( 'woocommerce_shipping_init', array($this, 'your_shipping_method_init' ));
@@ -164,6 +164,11 @@ class Angelleye_Offers_For_Woocommerce {
         
         add_filter('woocommerce_cart_item_quantity', array($this, 'ofw_woocommerce_cart_item_quantity'), 10, 3);
         
+        add_filter('woocommerce_account_menu_items', array($this, 'ofw_woocommerce_account_menu_items'), 10);
+        add_filter('woocommerce_get_query_vars', array($this, 'ofw_woocommerce_get_query_vars'), 10, 1);
+        add_action( 'init', array($this, 'ofw_add_offer_endpoint') );
+        add_action( 'woocommerce_account_offers_endpoint', array($this, 'ofw_my_offer_content') );
+        add_filter( 'woocommerce_endpoint_offers_title', array($this, 'ofw_woocommerce_endpoint_offers_title'), 10, 2);
         
         /* this will display the data of Product addon if plugin is activated - Start */
         
@@ -811,7 +816,7 @@ class Angelleye_Offers_For_Woocommerce {
         } else {
             self::single_activate();
         }
-        flush_rewrite_rules();
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
 
         /**
          * Log activation in Angell EYE database via web service.
@@ -851,7 +856,7 @@ class Angelleye_Offers_For_Woocommerce {
         } else {
             self::single_deactivate();
         }
-        flush_rewrite_rules();
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
 
         /**
          * Log deactivation in Angell EYE database via web service.
@@ -2538,6 +2543,39 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
         return $product_quantity;
+    }
+    
+    public function ofw_add_offer_endpoint() {
+        add_rewrite_endpoint( 'offers', EP_PAGES );
+    }
+
+    public function ofw_woocommerce_account_menu_items($items) {
+        if( !empty($items)) {
+             $items['offers'] = __('Offers', 'offers-for-woocommerce');
+        }
+        return $items;
+    }
+    
+    public function ofw_woocommerce_get_query_vars($query_vars) {
+        if( !empty($query_vars) ) {
+            $query_vars['offers'] = 'offers';
+        }
+        return $query_vars;
+    }
+    
+    public function ofw_my_offer_content() {
+        try {
+            include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
+        } catch (Exception $ex) {
+
+        }
+    }
+    
+    public function ofw_woocommerce_endpoint_offers_title($title, $endpoint) {
+        if($endpoint === 'offers') {
+            $title = __('Offers', 'offers-for-woocommerce');
+        }
+        return $title;
     }
 
 }
