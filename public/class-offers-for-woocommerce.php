@@ -816,7 +816,7 @@ class Angelleye_Offers_For_Woocommerce {
         } else {
             self::single_activate();
         }
-        flush_rewrite_rules();
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
 
         /**
          * Log activation in Angell EYE database via web service.
@@ -856,7 +856,7 @@ class Angelleye_Offers_For_Woocommerce {
         } else {
             self::single_deactivate();
         }
-        flush_rewrite_rules();
+        update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
 
         /**
          * Log deactivation in Angell EYE database via web service.

@@ -120,7 +120,7 @@ angelleye_queue_update(plugin_basename(__FILE__), '101', 'offers-for-woocommerce
  * @since	0.1.0
  */
 function ofwc_get_active_plugins(){ 
-    flush_rewrite_rules();
+    update_option( 'woocommerce_queue_flush_rewrite_rules', 'yes' );
     $active_plugins = (array) get_option( 'active_plugins', array() );
     if ( is_multisite() ) $active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
     return $active_plugins; 
