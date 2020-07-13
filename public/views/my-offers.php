@@ -188,4 +188,6 @@ if ($customer_offers) :
             ?>
         </tbody>
     </table>
-<?php endif; ?>
+<?php else : ?>
+    <h2 class="entry-title"><?php _e( 'No Offers found', 'offers-for-woocommerce' ); ?></h2>
+<?php endif;
