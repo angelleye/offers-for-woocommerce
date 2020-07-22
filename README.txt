@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.4.0
-Stable tag: 2.2.0
+Tested up to: 5.4.2
+Stable tag: 2.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.2.1 - 07.13.2020 =
+* Tweak - Moved Recent offers link to My Account page. ([OFW-154](https://github.com/angelleye/offers-for-woocommerce/pull/454))
+* Fix - Resolved few PHP Notices with the functions. ([OFW-165](https://github.com/angelleye/offers-for-woocommerce/pull/455))
 
 = 2.2.0 - 06.30.2020 =
 * Fix - Dual Nonce issue resolved. ([OFW-162](https://github.com/angelleye/offers-for-woocommerce/pull/453))
