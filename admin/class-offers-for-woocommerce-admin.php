@@ -4558,23 +4558,34 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $date = date_create($current_time);
             date_modify($date, '+365 day');
             $offer_expiration_date = date_format($date, "Y-m-d H:i:s");
-            update_post_meta($post_id, 'offer_expiration_date', $offer_expiration_date);            
-            $ofw_make_offer_post_meta = array('offer_quantity', 'offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
+            update_post_meta($post_id, 'offer_expiration_date', $offer_expiration_date);  
+            
+            $offer_quantity = !empty($_POST['offer_quantity']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($_POST['offer_quantity']))  : '';
+            $offer_price_each = !empty($_POST['offer_price_each']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($_POST['offer_price_each']))  : '';
+            $offer_total = $offer_quantity * $offer_price_each;
+            
+            $ofw_make_offer_post_meta = array('offer_name', 'offer_company_name', 'offer_email', 'offer_name', 'offer_phone');
             foreach ($ofw_make_offer_post_meta as $key => $value) {
                 update_post_meta($post_id, $value, wc_clean($_POST[$value]));
             }
             foreach ($ofw_make_offer_post_meta as $key => $value) {
                 update_post_meta($post_id, 'orig_' . $value, wc_clean($_POST[$value]));
             }
+            
+            if(!empty($_POST['offer_quantity'])) {
+                update_post_meta($post_id, 'offer_quantity', $offer_quantity);
+                update_post_meta($post_id, 'orig_offer_quantity', $offer_quantity);
+            }
+            
             if (!empty($_POST['offer_price_each'])) {
-                update_post_meta($post_id, 'offer_price_per', wc_clean($_POST['offer_price_each']));
-                update_post_meta($post_id, 'orig_offer_price_per', wc_clean($_POST['offer_price_each']));
+                update_post_meta($post_id, 'offer_price_per', $offer_price_each);
+                update_post_meta($post_id, 'orig_offer_price_per', $offer_price_each);
             }
             if (!empty($_POST['offer_quantity'])) {
-                $product_total = $_POST['offer_quantity'] * $_POST['offer_price_each'];
-                update_post_meta($post_id, 'offer_total', $product_total);
-                update_post_meta($post_id, 'offer_amount', $product_total);
-                update_post_meta($post_id, 'orig_offer_amount', $product_total);
+                
+                update_post_meta($post_id, 'offer_total', $offer_total);
+                update_post_meta($post_id, 'offer_amount', $offer_total);
+                update_post_meta($post_id, 'orig_offer_amount', $offer_total);
             }
             update_post_meta($post_id, 'ofw_created_by', 'admin');
             update_post_meta($post_id, 'ofw_created_by_id', wc_clean($_POST['user_ID']));
@@ -4600,9 +4611,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_comment_id = wp_insert_comment($data);
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
-                add_comment_meta($new_comment_id, 'offer_quantity', wc_clean($_POST['offer_quantity']), true);
-                add_comment_meta($new_comment_id, 'offer_amount', $product_total, true);
-                add_comment_meta($new_comment_id, 'offer_price_per', wc_clean($_POST['offer_price_per']), true);
+                add_comment_meta($new_comment_id, 'offer_quantity', $offer_quantity, true);
+                add_comment_meta($new_comment_id, 'offer_amount', $offer_total, true);
+                add_comment_meta($new_comment_id, 'offer_price_per', $offer_price_each, true);
                 add_comment_meta($new_comment_id, 'offer_status', '5', true);
             }
             $email_class = 'WC_Open_Offer_Email';
@@ -4621,10 +4632,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'product_url' => $product->get_permalink(),
                     'variant_id' => $variant_id,
                     'product' => $product,
-                    'product_qty' => wc_clean($_POST['offer_quantity']),
-                    'product_price_per' => wc_clean($_POST['offer_price_each']),
+                    'product_qty' => $offer_quantity,
+                    'product_price_per' => $offer_price_each,
                     'product_shipping_cost' => $product_shipping_cost,
-                    'product_total' => $product_total,
+                    'product_total' => $offer_total,
                     'offer_notes' => wc_clean($_POST['offer_notes']),
                     'final_offer' => 0,
                     'coupon_code' => ''
