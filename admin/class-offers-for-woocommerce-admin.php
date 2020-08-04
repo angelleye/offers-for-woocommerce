@@ -4297,11 +4297,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public static function checkForProActive() {
-        $active_plugins = (array) get_option('active_plugins', array());
-        if (is_multisite()) {
-            $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
+        if ( class_exists( 'WCVendors_Pro' ) ) {
+            return true;
         }
-        return in_array('wc-vendors-pro/wcvendors-pro.php', $active_plugins) || array_key_exists('wc-vendors-pro/wcvendors-pro.php', $active_plugins);
+        return false;
     }
 
     public static function ofwc_format_localized_price($value) {
