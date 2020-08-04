@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) exit;
 ?>
 
 <?php do_action('woocommerce_email_header', $email_heading, $email); ?>
-<?php if (is_plugin_active('offers-for-woocommerce-wc-vendors/offers-for-woocommerce-wc-vendors.php')  && is_plugin_active('wc-vendors-pro/wcvendors-pro.php')) {
+<?php if (class_exists( 'Angelleye_Offers_For_Woocommerce_WCVendors' )  && class_exists( 'WCVendors_Pro' )) {
 
     $accept_url = WCVendors_Pro_Dashboard::get_dashboard_page_url( 'woocommerce_offer/accept/' . $offer_args['offer_id'] );
 	$decline_url = WCVendors_Pro_Dashboard::get_dashboard_page_url( 'woocommerce_offer/decline/' . $offer_args['offer_id'] );
