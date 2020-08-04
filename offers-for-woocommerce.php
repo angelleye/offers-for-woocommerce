@@ -127,8 +127,13 @@ function ofwc_get_active_plugins(){
 }
 
 function ofwc_is_wcvendors_pro_active() {
-    if ( class_exists( 'WCVendors_Pro' ) ) {
-        return true;
+    $active_plugins = ofwc_get_active_plugins(); 
+    if( !empty($active_plugins)) {
+        foreach ($active_plugins as $key => $value) {
+            if (strpos($value, 'wcvendors-pro.php') !== false) {
+                return true;
+            }
+        }
     }
     return false;
 }
