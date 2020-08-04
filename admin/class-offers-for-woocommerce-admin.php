@@ -3516,12 +3516,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $current_user;
             $user_id = $current_user->ID;
 
-            if (!function_exists('is_plugin_active_for_network')) {
-                require_once(ABSPATH . '/wp-admin/includes/plugin.php');
-            }
-
-            if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && !is_plugin_active_for_network('woocommerce/woocommerce.php')) {
-                if (in_array('offers-for-woocommerce/offers-for-woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) || is_plugin_active_for_network('offers-for-woocommerce/offers-for-woocommerce.php')) {
+            if (!function_exists('WC')) {
+                if ( class_exists( 'Angelleye_Offers_For_Woocommerce' ) ) {
 
                     // deactivate offers for woocommerce plugin
                     deactivate_plugins(plugin_dir_path(realpath(dirname(__FILE__))) . 'offers-for-woocommerce.php');
