@@ -253,19 +253,10 @@
             }
         };
 
-        // offer quantity input keyup
-        $('#offer-quantity').keyup(function() {
-            updateTotal();
-        });
-
-        // offer price each input keyup
-        $('#offer-price-per').keyup(function() {
+        $(document).on('keyup click', '#offer-quantity, #offer-price-per, #offer_shipping_cost', function (event) {
             updateTotal();
         });
         
-        $('#offer_shipping_cost').keyup(function() {
-            updateTotal();
-        });
 
         // toggle buyer offer history panel
         $('.angelleye-offer-buyer-stats-toggle').click(function(){
