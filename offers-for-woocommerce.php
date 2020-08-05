@@ -127,8 +127,15 @@ function ofwc_get_active_plugins(){
 }
 
 function ofwc_is_wcvendors_pro_active() {
-    $active_plugins = ofwc_get_active_plugins(); 		
-    return in_array( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins ) || array_key_exists( 'wc-vendors-pro/wcvendors-pro.php', $active_plugins );
+    $active_plugins = ofwc_get_active_plugins(); 
+    if( !empty($active_plugins)) {
+        foreach ($active_plugins as $key => $value) {
+            if (strpos($value, 'wcvendors-pro.php') !== false) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 if( is_admin() || ofwc_is_wcvendors_pro_active() )
 {
