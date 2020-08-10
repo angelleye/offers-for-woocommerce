@@ -20,7 +20,7 @@
     </ul>        
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_success" class="tab_custom_ofwc_offer_tab_inner_content">
-    <ul class="woocommerce-message">
+    <ul class="woocommerce-message" style="display: block !important;">
         <li><strong><?php echo __('Offer Sent!', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo __('Your offer has been received and will be processed as soon as possible.', 'offers-for-woocommerce'); ?></li>
     </ul>
     <ul class="woocommerce-message" id="aeofwc-popup-counter-box" style="display: none">
