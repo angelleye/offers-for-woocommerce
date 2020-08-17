@@ -118,6 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.2.4 - 08.17.2020 =
+* Fix - Resolves a compatibility issue with The7 Theme. ([OFW-125](https://github.com/angelleye/offers-for-woocommerce/pull/459))
+
 = 2.2.3 - 08.05.2020 =
 * Fix - Fixes the Offer Total Calculation on Admin Offer Edit Page. ([OFW-175](https://github.com/angelleye/offers-for-woocommerce/pull/456))
 * Fix - Slug Compatibility issue with WC Vendors Pro Plugin. ([OFW-174](https://github.com/angelleye/offers-for-woocommerce/pull/457))
