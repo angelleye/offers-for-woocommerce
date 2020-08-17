@@ -28,7 +28,7 @@ html body.woocommerce div.product form.cart .default_add_class
 #lightbox_custom_ofwc_offer_form {
     display: none;
     position:fixed;
-    z-index:9999;
+    z-index:999999;
     top:0;
     bottom:0;
     left:0;
