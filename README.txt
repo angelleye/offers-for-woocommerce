@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 5.5.1
-Stable tag: 2.2.7
+Stable tag: 2.2.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.2.8 - 10.01.2020 =
+* Fix - Resolves compatibility issue with Premmerce WooCommerce Permalink Manager plugin. ([OFW-179](https://github.com/angelleye/offers-for-woocommerce/pull/460))
 
 = 2.2.7 - 09.24.2020 =
 * Verification - WooCommerce 4.5.2 compatibility.
