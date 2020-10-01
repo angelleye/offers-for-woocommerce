@@ -1584,6 +1584,11 @@ class Angelleye_Offers_For_Woocommerce {
         global $wp;
         if (isset($wp->query_vars['__aewcoapi'])) {
             $this->handle_request();
+        } elseif(isset($_GET['__aewcoapi']) && isset ($_GET['woocommerce-offer-id']) && isset ($_GET['woocommerce-offer-uid'])) {
+            $wp->query_vars['woocommerce-offer-id'] = $_GET['woocommerce-offer-id'];
+            $wp->query_vars['woocommerce-offer-uid'] = $_GET['woocommerce-offer-uid'];
+            $wp->query_vars['__aewcoapi'] = 1;
+            $this->handle_request();
         }
     }
 
