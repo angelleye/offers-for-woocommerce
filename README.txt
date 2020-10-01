@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.4.2
-Stable tag: 2.2.3
+Tested up to: 5.5.1
+Stable tag: 2.2.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,18 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.2.7 - 09.24.2020 =
+* Verification - WooCommerce 4.5.2 compatibility.
+
+= 2.2.6 - 09.09.2020 =
+* Verification - WooCommerce 4.5.0 compatibility.
+
+= 2.2.5 - 09.04.2020 =
+* Verification - WooCommerce 4.4.1 and WordPress 5.5.1 compatibility.
+
+= 2.2.4 - 08.17.2020 =
+* Fix - Resolves a compatibility issue with The7 Theme. ([OFW-125](https://github.com/angelleye/offers-for-woocommerce/pull/459))
 
 = 2.2.3 - 08.05.2020 =
 * Fix - Fixes the Offer Total Calculation on Admin Offer Edit Page. ([OFW-175](https://github.com/angelleye/offers-for-woocommerce/pull/456))
