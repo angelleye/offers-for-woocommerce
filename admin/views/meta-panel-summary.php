@@ -58,6 +58,7 @@
                         <?php } ?>
                         <input id="offer-max-stock-available" type="hidden" value="<?php echo ( isset($_product_stock) ) ? $_product_stock : '' ?>">
                         <input id="offer-backorders-allowed" type="hidden" value="<?php echo ( $_product_backorders_allowed ) ? 'true' : 'false';?>">
+                        
                     </ul>
                 <?php } ?>
             </div>
@@ -366,6 +367,7 @@
         </div>
     </div>
     <div class="angelleye-clearfix"></div>
+    <?php do_action('angelleye_display_extra_product_details', $post->ID); ?>
 </div>
 <div class="angelleye-clearfix"></div>
 <?php } ?>
