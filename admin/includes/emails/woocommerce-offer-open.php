@@ -76,7 +76,11 @@ if (!defined('ABSPATH')) exit;
         </tr>
     </tfoot>
 </table>
-
+<?php 
+if( !empty($offer_args['offer_id']) ) {
+    do_action('angelleye_display_extra_product_details_email', $offer_args['offer_id']); 
+}
+?>
 <?php if (isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '') {
     echo '<h4>' . __('Offer Notes:', 'offers-for-woocommerce') . '</h4>' . stripslashes($offer_args['offer_notes']);
 } ?>

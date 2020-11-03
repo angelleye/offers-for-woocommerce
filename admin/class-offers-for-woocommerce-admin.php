@@ -427,6 +427,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('angelleye_offer_for_woocommerce_admin_add_offer', array($this, 'angelleye_offer_for_woocommerce_admin_add_offer'), 10, 1);
         add_action('admin_action_editpost', array($this, 'angelleye_offer_for_woocommerce_admin_save_offer'), 10);
         add_action('angelleye_display_extra_product_details', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details'), 10, 1);
+        add_action('angelleye_display_extra_product_details_email', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details_email'), 10, 1);
+        
     }
 
 // END - construct
@@ -4668,7 +4670,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $tmproduct_data = get_post_meta($offer_id, 'tmproduct_data', true);
             if (!empty($tmproduct_data['tmcartepo'])) {
                 foreach ($tmproduct_data['tmcartepo'] as $key => $value) {
-                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : 'N/A';
+                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
                     $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
                     $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
                     if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
@@ -4682,7 +4684,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
             if (!empty($tmproduct_data['tmcartfee'])) {
                 foreach ($tmproduct_data['tmcartfee'] as $key => $value) {
-                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : 'N/A';
+                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
                     $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
                     $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
                     if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
@@ -4694,25 +4696,44 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $i = $i + 1;
                 }
             }
+            if (!empty($tmproduct_data['tmproducts'])) {
+                foreach ($tmproduct_data['tmproducts'] as $key => $value) {
+                    if(isset($value['product_id']) && !empty($value['product_id']) ) {
+                        $_product = wc_get_product($value['product_id']);
+                        $product_permalink = $_product->get_permalink( $value['product_id'] );
+                        $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
+                        $product_extra_data[$i]['Value'] = sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() );
+                        $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
+                        $price = $_product->get_regular_price();
+                        $product_extra_data[$i]['Cost'] = number_format($price , 2);
+                        $product_extra_data[$i]['Total'] = number_format($price * $product_extra_data[$i]['Qty'], 2);
+                        $i = $i + 1;
+                    }
+                    
+                }
+            }
+            
             if (!empty($product_extra_data)) {
                 ?>
-                <h3>Product Options</h3>
+                <h3><?php echo __('Product Options', 'offers-for-woocommerce'); ?></h3>
                 <table class="widefat" id="angelleye_offer_for_woocommerce_extra_option">
                     <thead>
                         <tr>
-                            <th><?php echo __('Option', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Value', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Cost', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Qty', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Total', 'offers-for-woocommerce'); ?></th>
+                            <th><?php echo __('Product', 'offers-for-woocommerce'); ?></th>
+                            <th><?php echo __('Price', 'offers-for-woocommerce'); ?></th>
+                            <th><?php echo __('Quantity', 'offers-for-woocommerce'); ?></th>
+                            <th><?php echo __('Subtotal', 'offers-for-woocommerce'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         foreach ($product_extra_data as $key => $value) {
                             echo '<tr>';
-                            echo '<td>' . $value['Option'] . '</td>';
-                            echo '<td>' . $value['Value'] . '</td>';
+                            if(!empty($value['Option'])) {
+                                echo '<td>' . '<b>' . $value['Option'] . '</b><br>'. $value['Value'] . '</td>';
+                            } else {
+                                echo '<td>' . $value['Value'] . '</td>';
+                            }
                             echo '<td>' . wc_price($value['Cost']) . '</td>';
                             echo '<td>' . $value['Qty'] . '</td>';
                             echo '<td>' . wc_price($value['Total']) . '</td>';
@@ -4721,6 +4742,98 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         ?>
                     </tbody>
                 </table>
+                <?php
+            }
+        }
+    }
+    
+    public function angelleye_offer_for_woocommerce_display_product_extra_details_email($offer_id){
+        $product_extra_data = array();
+        $i = 0;
+        if (!empty($offer_id)) {
+            $tmproduct_data = get_post_meta($offer_id, 'tmproduct_data', true);
+            if (!empty($tmproduct_data['tmcartepo'])) {
+                foreach ($tmproduct_data['tmcartepo'] as $key => $value) {
+                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
+                    $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
+                    $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
+                    if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
+                        $product_extra_data[$i]['Cost'] = number_format($value['price'] / $product_extra_data[$i]['Qty'], 2);
+                    } else {
+                        $product_extra_data[$i]['Cost'] = 0;
+                    }
+                    $product_extra_data[$i]['Total'] = !empty($value['price']) ? $value['price'] : '';
+                    $i = $i + 1;
+                }
+            }
+            if (!empty($tmproduct_data['tmcartfee'])) {
+                foreach ($tmproduct_data['tmcartfee'] as $key => $value) {
+                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
+                    $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
+                    $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
+                    if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
+                        $product_extra_data[$i]['Cost'] = number_format($value['price'] / $product_extra_data[$i]['Qty'], 2);
+                    } else {
+                        $product_extra_data[$i]['Cost'] = 0;
+                    }
+                    $product_extra_data[$i]['Total'] = !empty($value['price']) ? $value['price'] : '';
+                    $i = $i + 1;
+                }
+            }
+            if (!empty($tmproduct_data['tmproducts'])) {
+                foreach ($tmproduct_data['tmproducts'] as $key => $value) {
+                    if(isset($value['product_id']) && !empty($value['product_id']) ) {
+                        $_product = wc_get_product($value['product_id']);
+                        $product_permalink = $_product->get_permalink( $value['product_id'] );
+                        $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
+                        $product_extra_data[$i]['Value'] = sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() );
+                        $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
+                        $price = $_product->get_regular_price();
+                        $product_extra_data[$i]['Cost'] = number_format($price , 2);
+                        $product_extra_data[$i]['Total'] = number_format($price * $product_extra_data[$i]['Qty'], 2);
+                        $i = $i + 1;
+                    }
+                    
+                }
+            }
+            
+            if (!empty($product_extra_data)) {
+                ?>
+                <h3><?php echo __('Product Options', 'offers-for-woocommerce'); ?></h3>
+                <div style="margin-bottom: 40px;">
+                <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
+                    <thead>
+                        <tr>
+                            <th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo __('Product', 'offers-for-woocommerce'); ?></th>
+                            <th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo __('Price', 'offers-for-woocommerce'); ?></th>
+                            <th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo __('Quantity', 'offers-for-woocommerce'); ?></th>
+                            <th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo __('Subtotal', 'offers-for-woocommerce'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($product_extra_data as $key => $value) {
+                            echo '<tr>';
+                            if(!empty($value['Option'])) {
+                                ?><td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"> <?php
+                                echo '<b>' . $value['Option'] . '</b><br>'. $value['Value'] . '</td>';
+                            } else {
+                                ?> <td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"> <?php
+                                echo $value['Value'] . '</td>';
+                            }
+                            ?>
+                            <td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"> <?php
+                            echo wc_price($value['Cost']) . '</td>';
+                            ?> <td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"> <?php
+                            echo $value['Qty'] . '</td>';
+                            ?> <td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;"> <?php
+                            echo wc_price($value['Total']) . '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                </div>
                 <?php
             }
         }

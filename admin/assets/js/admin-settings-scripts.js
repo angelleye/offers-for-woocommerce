@@ -206,11 +206,6 @@
                     if ( 'failed' !== response )
                     {
                         var redirectUrl = response;
-
-                        /** Debug **/
-                        /** console.log(redirectUrl);
-                         ** return false; **/
-
                         top.location.replace(redirectUrl);
                         return true;
                     }
@@ -347,11 +342,6 @@
                     if ( 'failed' !== response )
                     {
                         var redirectUrl = response;
-
-                        /** Debug **/
-                        /** console.log(redirectUrl);
-                         ** return false; **/
-
                         top.location.replace(redirectUrl);
                         return true;
                     }
@@ -522,11 +512,6 @@
                     if ( 'failed' !== response )
                     {
                         var redirectUrl = response;
-
-                        /** Debug **/
-                        /*console.log(redirectUrl);*/
-                        /*return false;*/
-
                         top.location.replace(redirectUrl);
                         return true;
                     }
@@ -578,7 +563,6 @@
                     });                   
                    
                     $.post(ajaxurl, data, function(response) {
-                        console.log(response);
                         return true;  
                     });
                 }
