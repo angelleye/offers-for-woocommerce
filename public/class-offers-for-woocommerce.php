@@ -353,7 +353,9 @@ class Angelleye_Offers_For_Woocommerce {
             $aeofwc_offer_button_wrap_class = apply_filters('aeofwc_offer_button_wrap_class', 'single_variation_wrap_angelleye ofwc_offer_tab_form_wrap single_offer_button');
             $btn_output = '<div class=" ' . $aeofwc_offer_button_wrap_class.'">';
             $permalink = get_permalink($post->ID);
-            $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+            if(!function_exists('THEMECOMPLETE_EPO_CART')) {
+                $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+            }
             if($req_login){
                 $redirect_url = '';
                 if($is_archive){
