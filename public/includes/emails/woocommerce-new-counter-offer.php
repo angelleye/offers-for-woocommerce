@@ -65,6 +65,11 @@ if (!defined('ABSPATH')) exit;
         </tr>
     </tfoot>
 </table>
+<?php 
+if( !empty($offer_args['offer_id']) ) {
+    do_action('angelleye_display_extra_product_details_email', $offer_args['offer_id']); 
+}
+?>
 <?php if (!$offer_args['is_anonymous_communication_enable']) { ?>
     <h4><?php echo __('Offer Contact Details:', 'offers-for-woocommerce'); ?></h4>
     <?php echo (isset($offer_args['offer_name']) && $offer_args['offer_name'] != '') ? '<strong>' . __('Name:', 'offers-for-woocommerce') . '&nbsp;</strong>' . stripslashes($offer_args['offer_name']) : ''; ?>
