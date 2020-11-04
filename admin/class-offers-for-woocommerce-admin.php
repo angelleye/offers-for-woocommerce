@@ -4748,6 +4748,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
     
     public function angelleye_offer_for_woocommerce_display_product_extra_details_email($offer_id){
+        $text_align = is_rtl() ? 'right' : 'left';
         $product_extra_data = array();
         $i = 0;
         if (!empty($offer_id)) {
