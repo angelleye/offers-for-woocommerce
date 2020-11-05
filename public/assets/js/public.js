@@ -4,8 +4,9 @@
         var regex = {
             phone: /^1?(\d{3})(\d{3})(\d{4})$/
         };
+
         var is_ready_to_submit = function () {
-            var form_product = $('.cart');
+            var form_product = $('.cart').last();
             if (form_product.data('tc_validator')) {
                 if (form_product.tc_valid() === true) {
                     return true;
@@ -170,6 +171,9 @@
             /* Submit offer form */
             $("form[name='woocommerce-make-offer-form']").submit(function ()
             {
+                if (is_ready_to_submit() === false) {
+                    return false;
+                }
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
                 var offerCheckMinValuesPassed = true;
 
