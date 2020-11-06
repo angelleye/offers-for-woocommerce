@@ -17,8 +17,35 @@
             }
             return true;
         };
+        
+        function angelleye_populate_form(frm, data) {   
+            $.each(data, function(key, value){  
+                var $ctrl = $('[name='+key+']', frm); 
+                if($ctrl.is('select')){
+                    $("option",$ctrl).each(function(){
+                        if (this.value==value) { this.selected=true; }
+                    });
+                }
+                else {
+                    switch($ctrl.attr("type"))  
+                    {  
+                        case "text" :   case "hidden":  case "textarea":  
+                            $ctrl.val(value);   
+                            break;   
+                        case "radio" : case "checkbox":   
+                            $ctrl.each(function(){
+                               if($(this).attr('value') == value) {  $(this).attr("checked",value); } });   
+                            break;
+                    } 
+                } 
+            });  
+         };
 
         $(document).ready(function () {
+            
+            if( offers_for_woocommerce_js_params.angelleye_post_data !== '' ) {
+                angelleye_populate_form($('.cart'), offers_for_woocommerce_js_params.angelleye_post_data);
+            }
 
             $('.ofwc_no_price_product').remove();
 
