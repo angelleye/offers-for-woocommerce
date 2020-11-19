@@ -2405,7 +2405,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofw_get_highest_current_offer_data() {
         global $post, $wpdb;
         $total_result = $wpdb->get_results($wpdb->prepare("
-            SELECT MAX( postmeta.meta_value ) AS max_offer, posts.ID as post_id
+            SELECT MAX( CAST(postmeta.meta_value AS decimal(11,4)) ) AS max_offer, posts.ID as post_id
             FROM $wpdb->postmeta AS postmeta
             JOIN $wpdb->postmeta pm2 ON pm2.post_id = postmeta.post_id
             INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'woocommerce_offer' AND posts.post_status IN ('publish'))
