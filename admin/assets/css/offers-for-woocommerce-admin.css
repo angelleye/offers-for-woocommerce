@@ -104,3 +104,7 @@
      width: 545px;
     clear: both;
 }
+#angelleye_offer_for_woocommerce_extra_option thead tr th {
+    color: #32373c !important;
+    background: #f8f8f8;
+}

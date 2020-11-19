@@ -71,4 +71,9 @@ if (isset($offer_args['coupon_code']) && !empty($offer_args['coupon_code'])) {
         </tr>
     </tfoot>
 </table>
+<?php 
+if( !empty($offer_args['offer_id']) ) {
+    do_action('angelleye_display_extra_product_details_email', $offer_args['offer_id']); 
+}
+?>
 <?php do_action('woocommerce_email_footer'); ?>

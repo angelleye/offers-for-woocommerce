@@ -353,7 +353,9 @@ class Angelleye_Offers_For_Woocommerce {
             $aeofwc_offer_button_wrap_class = apply_filters('aeofwc_offer_button_wrap_class', 'single_variation_wrap_angelleye ofwc_offer_tab_form_wrap single_offer_button');
             $btn_output = '<div class=" ' . $aeofwc_offer_button_wrap_class.'">';
             $permalink = get_permalink($post->ID);
-            $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+            if(!function_exists('THEMECOMPLETE_EPO_CART')) {
+                $permalink.= (strpos($permalink, '?') !== false) ? '&aewcobtn=1' : '?aewcobtn=1';
+            }
             if($req_login){
                 $redirect_url = '';
                 if($is_archive){
@@ -959,6 +961,12 @@ class Angelleye_Offers_For_Woocommerce {
                 $is_woo_variations_table_installed='0';
             }
             /* End */
+            $angelleye_post_data = array();
+            if(isset($_GET['offer-pid']) && !empty($_GET['offer-pid'])) {
+                $tmproduct_data = get_post_meta($_GET['offer-pid'], 'tmproduct_data', true);
+                $angelleye_post_data = isset($tmproduct_data['post_data']) ? $tmproduct_data['post_data'] : array();
+            }
+            
             $suffix       = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
             wp_enqueue_script( 'js-cookie', WC()->plugin_url() . '/assets/js/js-cookie/js.cookie' . $suffix . '.js', array(), '2.1.4', true );
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
@@ -975,6 +983,7 @@ class Angelleye_Offers_For_Woocommerce {
                     'ofw_public_js_thousand_separator' => wc_get_price_thousand_separator(),
                     'ofw_public_js_decimal_separator' => wc_get_price_decimal_separator(),
                     'ofw_public_js_number_of_decimals' => wc_get_price_decimals(),
+                    'angelleye_post_data' => $angelleye_post_data
                 )));
             }
             if($this->is_recaptcha_enable()) {
@@ -1023,10 +1032,28 @@ class Angelleye_Offers_For_Woocommerce {
 
     public function new_offer_form_submit() {
         ob_start();
+        $product_post_data = array();
         $post_data = $formData = $newPostData = array();            
         $arr_main_array = wc_clean($_POST['value']);        
         $nmArray = array();
         $arr_main_array = apply_filters('angelleye_ofw_pre_offer_request', $arr_main_array);
+        if(function_exists('THEMECOMPLETE_EPO_CART')) {
+            if( !empty($arr_main_array)) {
+                foreach ($arr_main_array as $key => $value) {
+                    if(!empty($value['name']) && 'offer_product_id' === $value['name']) {
+                        $product_id = $value['value'];
+                    }
+                    if(!empty($value['product_data'])) {
+                        foreach ($value['product_data'] as $key => $value) {
+                            $_POST[$key] = $value;
+                            $product_post_data[$key] = $value;
+                        }
+                        $epos = THEMECOMPLETE_EPO_CART()->add_cart_item_data_helper( array(), $product_id, $_POST );
+                        $epos['post_data'] = $product_post_data;
+                    }
+                }
+            }
+        }
         $active_plugins = (array) get_option( 'active_plugins', array() );        
         if (is_multisite())
             $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
@@ -1375,6 +1402,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             do_action('make_offer_after_save_form_data', $parent_post_id, $post);
             
+            
                       
             /**
              * Email Out - admin email notification of new or countered offer
@@ -1414,6 +1442,12 @@ class Angelleye_Offers_For_Woocommerce {
                 'product_total' => $product_total,
                 'offer_notes' => $comments
             );
+            
+            if(function_exists('THEMECOMPLETE_EPO_CART')) {
+                if( !empty($epos)) {
+                    update_post_meta($offer_id, 'tmproduct_data', $epos);
+                }
+            }
             
             $offer_args['offer_email'] = apply_filters('angelleye_ofw_pre_email_sent', $offer_email, $offer_args);
 
@@ -1545,6 +1579,7 @@ class Angelleye_Offers_For_Woocommerce {
             if($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == ''){
                 $new_email->trigger($offer_args);
             }
+            
             
             if (is_ajax()) {
                 do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
@@ -1721,6 +1756,12 @@ class Angelleye_Offers_For_Woocommerce {
             
             if (!$found) {
                // WC()->cart->empty_cart();
+                $tmproduct_data = get_post_meta($offer->ID, 'tmproduct_data', true);
+                if(isset($tmproduct_data['post_data']) && !empty($tmproduct_data['post_data'])) {
+                    foreach ($tmproduct_data['post_data'] as $key => $value) {
+                        $_POST[$key] = $value;
+                    }
+                }
                 $item_id = $woocommerce->cart->add_to_cart($product_id, $quantity, $product_variation_id, $product_variation_data, $product_meta);
             }
 
