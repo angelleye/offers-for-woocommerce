@@ -23,7 +23,7 @@ class WC_New_Counter_Offer_Email extends WC_Email {
          * Set plugin slug
          * @since	1.1.2
          */
-      
+
 
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_new_counter_offer';
@@ -63,11 +63,11 @@ class WC_New_Counter_Offer_Email extends WC_Email {
         {
             return;
         }
-        
+
         $this->offer_args = $offer_args;
-        
+
         $this->recipient = apply_filters('aeofwc_seller_email_address', $this->recipient, $offer_args);
-        
+
         $this->find['offer_date']      = '{offer_date}';
         $this->find['offer_number']    = '{offer_number}';
 
@@ -87,11 +87,11 @@ class WC_New_Counter_Offer_Email extends WC_Email {
     public function get_content_html() {
         ob_start();
         wc_get_template( $this->template_html, array(
-                'offer_args'         => $this->offer_args,
+                'offer_args'    => $this->offer_args,
                 'email_heading' => $this->get_heading(),
-                'sent_to_admin'    => false,
+                'sent_to_admin' => false,
                 'plain_text'    => false,
-                'email'              => $this,
+                'email'         => $this
             ),
             '',
             $this->template_html_path
@@ -108,10 +108,11 @@ class WC_New_Counter_Offer_Email extends WC_Email {
     public function get_content_plain() {
         ob_start();
         wc_get_template( $this->template_plain, array(
-                'offer_args'         => $this->offer_args,
+                'offer_args'    => $this->offer_args,
                 'email_heading' => $this->get_heading(),
-                'sent_to_admin'    => false,
-                'plain_text'    => true
+                'sent_to_admin' => false,
+                'plain_text'    => true,
+                'email'         => $this
             ),
             '',
             $this->template_plain_path
