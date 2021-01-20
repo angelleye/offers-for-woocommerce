@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.5.3
-Stable tag: 2.2.9
+Tested up to: 5.6.0
+Stable tag: 2.3.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.0 - 01.20.2021 =
+* Feature - WooCommerce 4.9.0 compatibility. ([OFW-198](https://github.com/angelleye/offers-for-woocommerce/issues/463))
 
 = 2.2.9 - 11.19.2020 =
 * Feature - Adds Woo Extra Product Options Compatibility. ([OFW-181](https://github.com/angelleye/offers-for-woocommerce/pull/461))
