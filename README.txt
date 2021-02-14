@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 2.3.1 - 02.14.2021 =
+* Fix - Resolves offer data is getting mixed up during checkout. ([OFW-194](https://github.com/angelleye/offers-for-woocommerce/issues/464))
 
 = 2.3.0 - 01.20.2021 =
 * Feature - WooCommerce 4.9.0 compatibility. ([OFW-198](https://github.com/angelleye/offers-for-woocommerce/issues/463))
