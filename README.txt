@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
-Tested up to: 5.6.1
-Stable tag: 2.3.1
+Tested up to: 5.7
+Stable tag: 2.3.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.2 - 03.11.2021 =
+* Fix - Resolves conflict with WC Vendors and Product Catalog Pagination.([OFW-199](https://github.com/angelleye/offers-for-woocommerce/pull/466))
 
 = 2.3.1 - 02.14.2021 =
 * Fix - Resolves offer data is getting mixed up during checkout. ([OFW-194](https://github.com/angelleye/offers-for-woocommerce/issues/464))
