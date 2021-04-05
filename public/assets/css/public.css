@@ -9,7 +9,6 @@
 .offers-for-woocommerce-make-offer-button-catalog { margin: 0 0 7px 0; }
 .offers-for-woocommerce-make-offer-button-single-product {margin:0 0 0 5px ; width: fit-content;}
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart { height:70px; }
-.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .single_offer_button { float:left; }
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .offers-for-woocommerce-make-offer-button-single-product { margin:0 0 0 5px ; float:left; }
 
 html body.woocommerce div.product form.cart .default_add_class,
