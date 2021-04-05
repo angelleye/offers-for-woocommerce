@@ -902,6 +902,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
 
     public function woocommerce_offers_list_orderby($vars) {
+
+        if(!is_admin()) {
+            return $vars;
+        }
+
         /**
          * Below if condition will check for the $vars retrun while they are empty array.
          * Reason behind adding this Line is Static Fron page will be redirect to Blog page.
