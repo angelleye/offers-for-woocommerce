@@ -1355,6 +1355,7 @@ class Angelleye_Offers_For_Woocommerce {
                         $newPostMetaData['meta_value'] = $v;
                         add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
                     }
+                    add_post_meta($newPostMetaData['post_id'], 'offer_currency', get_woocommerce_currency());
 
                     // Insert WP comment
                     $comment_text = "<span>" . __('Created New Offer', 'offers-for-woocommerce') . "</span>";
