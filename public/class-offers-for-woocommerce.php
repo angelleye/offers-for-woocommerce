@@ -947,6 +947,18 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function enqueue_scripts() {
         global $post;
+        if( class_exists('WC_Aelia_CurrencyPrices_Manager') && (is_cart() || is_checkout_pay_page() || is_checkout()) ) {
+            $multi_currency_data = $this->angelleye_get_multi_currency_data();
+            if( isset($multi_currency_data['is_offer_in_cart']) && isset($multi_currency_data['offer_currency']) ) {
+                wp_enqueue_script('offers-for-woocommerce-multi-currency', plugins_url('assets/js/cart-checkout-multi-currency.js', __FILE__), array('jquery'), self::VERSION);
+                wp_localize_script('offers-for-woocommerce-multi-currency', 'ofw_multi_currency_js', apply_filters('ofw_multi_currency_js', array(
+                    'is_offer_in_cart' => $multi_currency_data['is_offer_in_cart'],
+                    'offer_currency' => $multi_currency_data['offer_currency'],
+                )));
+            }
+                    
+            
+        }
         if(is_object($post)) {
             $is_product_type_variable = 'false';
             if (function_exists('wc_get_product')) {
@@ -2636,7 +2648,7 @@ class Angelleye_Offers_For_Woocommerce {
             if (did_action( 'wp_loaded' ) && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
                 foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                     if( isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
-                        $offer_currency = get_post_meta($offer_args['offer_id'], 'offer_currency', true);
+                        $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
                         if (!empty($offer_currency)) {
                             return $offer_currency;
                         }
@@ -2657,5 +2669,22 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
     }
-
+    
+    public function angelleye_get_multi_currency_data() {
+        $multi_currency_data = array();
+        if (did_action( 'wp_loaded' ) && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                if( isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
+                    $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
+                    if (empty($offer_currency)) {
+                        $offer_currency = get_woocommerce_currency();
+                    }
+                    $multi_currency_data['is_offer_in_cart'] = 'yes';
+                    $multi_currency_data['offer_currency'] = $offer_currency;
+                    return $multi_currency_data;
+                }
+            }
+            return $multi_currency_data;
+        }
+    }
 }
