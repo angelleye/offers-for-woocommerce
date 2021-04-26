@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 3.8
 Tested up to: 5.7
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.3 - 04.26.2021 =
+* Tweak - Adjusts the CSS for Offer Button. ([OFW-115](https://github.com/angelleye/offers-for-woocommerce/pull/467))
 
 = 2.3.2 - 03.11.2021 =
 * Fix - Resolves conflict with WC Vendors and Product Catalog Pagination.([OFW-199](https://github.com/angelleye/offers-for-woocommerce/pull/466))
