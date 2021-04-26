@@ -110,6 +110,8 @@ class Angelleye_Offers_For_Woocommerce {
          * @since   0.1.0
          */
         add_action('woocommerce_before_calculate_totals', array($this, 'my_woocommerce_before_calculate_totals'),99,1);
+        add_action('woocommerce_cart_contents_total', array($this, 'angelleye_set_offer_price_qty'), 99);
+        add_action('woocommerce_before_cart_table', array($this, 'angelleye_set_offer_price_qty'), 99);
 
         /*
          * Filter - get_cart_items_from_session
@@ -169,6 +171,9 @@ class Angelleye_Offers_For_Woocommerce {
         add_action( 'init', array($this, 'ofw_add_offer_endpoint') );
         add_action( 'woocommerce_account_offers_endpoint', array($this, 'ofw_my_offer_content') );
         add_filter( 'woocommerce_endpoint_offers_title', array($this, 'ofw_woocommerce_endpoint_offers_title'), 10, 2);
+        
+        // Set Offer currency when offer product in the cart.
+        add_filter( 'wc_aelia_cs_selected_currency', array('wc_aelia_cs_selected_currency'), 99, 1);
         
         /* this will display the data of Product addon if plugin is activated - Start */
         
@@ -2623,6 +2628,33 @@ class Angelleye_Offers_For_Woocommerce {
             $title = __('Offers', 'offers-for-woocommerce');
         }
         return $title;
+    }
+    
+    public function wc_aelia_cs_selected_currency($aelia_currency) {
+        if(is_checkout() || is_cart()) {
+            if (did_action( 'wp_loaded' ) && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
+                foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                    if( isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
+                        $offer_currency = get_post_meta($offer_args['offer_id'], 'offer_currency', true);
+                        if (!empty($offer_currency)) {
+                            return $offer_currency;
+                        }
+                    }
+                }
+            }
+        }
+        return $aelia_currency;
+        
+    }
+    
+    public function angelleye_set_offer_price_qty() {
+        foreach (WC()->cart->cart_contents as $key => $value) {
+            if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                $value['data']->set_price($value['woocommerce_offer_price_per']);
+                WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+            }
+        }
+
     }
 
 }

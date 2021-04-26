@@ -1528,11 +1528,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                  * Output html for Offer Comments loop
                  */
                 $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
-                if(class_exists('WC_Aelia_CurrencyPrices_Manager')) {
-                    $aelia_manager = new WC_Aelia_CurrencyPrices_Manager();
-                    $_product_regular_price = $aelia_manager->convert_from_base($_product_regular_price, $offer_currency);
-                    $_product_sale_price = $aelia_manager->convert_from_base($_product_sale_price, $offer_currency);
-                }
+                $_product_regular_price = angelleye_ofw_get_product_price_multi_currency($_product_regular_price, $offer_currency);
+                $_product_sale_price = angelleye_ofw_get_product_price_multi_currency($_product_sale_price, $offer_currency);
                 include_once('views/meta-panel-summary.php');
             }
 
