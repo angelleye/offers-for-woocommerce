@@ -29,7 +29,6 @@ if (!function_exists('angelleye_get_vendor_dashboard_page_url')) {
 if (!function_exists('angelleye_ofw_get_product_price_multi_currency')) {
 
     function angelleye_ofw_get_product_price_multi_currency($price, $currency) {
-        return $price;
         if (class_exists('WC_Aelia_CurrencyPrices_Manager')) {
             $aelia_manager = new WC_Aelia_CurrencyPrices_Manager();
             $woocommerce_currency = get_woocommerce_currency();
