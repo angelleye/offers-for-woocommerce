@@ -9,7 +9,6 @@
 .offers-for-woocommerce-make-offer-button-catalog { margin: 0 0 7px 0; }
 .offers-for-woocommerce-make-offer-button-single-product {margin:0 0 0 5px ; width: fit-content;}
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart { height:70px; }
-.offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .single_offer_button { float:left; }
 .offers-for-woocommerce-add-to-cart-wrap.ofwc-button-right-of-add-to-cart .offers-for-woocommerce-make-offer-button-single-product { margin:0 0 0 5px ; float:left; }
 
 html body.woocommerce div.product form.cart .default_add_class,
@@ -328,6 +327,14 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
 
 /* Portrait tablets and small desktops */
 @media (min-width: 768px) and (max-width: 991px) {
+    .single_variation_wrap_angelleye {
+        display: block;
+    }
+    
+    html body.woocommerce div.product form.cart .default_add_class, html body.woocommerce-page div.product form.cart .default_add_class, html body.woocommerce div.product form.cart .default_add_class {
+        display: block;
+        position: unset !important;
+    }
     div#offers-for-woocommerce-add-to-cart-wrap .angelleye_button_single{
         margin-top : 55px;
     }
@@ -338,7 +345,7 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
         position: absolute;
         top: 55px;
         left: 0;
-        margin-left: 0px;
+        margin-left: 10px;
     }
 
     div#offers-for-woocommerce-add-to-cart-wrap .before_add  .angelleye_button_single,
@@ -351,6 +358,16 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
 }
 
 @media (max-width: 480px) {
+    .single_variation_wrap_angelleye {
+        display: block;
+    }
+    .single_add_to_cart_button.button.alt {
+        margin-bottom: 15px;
+    }
+    html body.woocommerce div.product form.cart .default_add_class, html body.woocommerce-page div.product form.cart .default_add_class, html body.woocommerce div.product form.cart .default_add_class {
+        display: block;
+        position: unset !important;
+    }
     div#offers-for-woocommerce-add-to-cart-wrap .angelleye_button_single{
         margin-top : 55px;
     }
@@ -361,7 +378,8 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
         position: absolute;
         top: 55px;
         left: 0;
-        margin-left: 0px;
+        margin-left: 10px;
+        
     }
 
     div#offers-for-woocommerce-add-to-cart-wrap .before_add  .angelleye_button_single,
