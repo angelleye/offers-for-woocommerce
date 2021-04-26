@@ -173,6 +173,7 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter( 'woocommerce_endpoint_offers_title', array($this, 'ofw_woocommerce_endpoint_offers_title'), 10, 2);
         
         // Set Offer currency when offer product in the cart.
+
         add_filter( 'wc_aelia_cs_selected_currency', array($this, 'wc_aelia_cs_selected_currency'), 99, 1);
         
         /* this will display the data of Product addon if plugin is activated - Start */
