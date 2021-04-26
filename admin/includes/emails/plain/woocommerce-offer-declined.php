@@ -8,6 +8,12 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+$offer_currency = get_post_meta($offer_args['offer_id'], 'offer_currency', true);
+if (empty($offer_currency)) {
+    $offer_currency = get_woocommerce_currency();
+}
+$product_price = angelleye_ofw_get_product_price_multi_currency($offer_args['product']->get_regular_price(), $offer_currency);
+
 echo $email_heading . "\n\n";
 
 $link_insert = ( strpos( $offer_args['product_url'], '?') ) ? '&' : '?';
@@ -27,10 +33,10 @@ echo sprintf( __( 'Offer ID:', 'offers-for-woocommerce') .' %s', $offer_args['of
 echo "\n";
 
 echo __( 'Product', 'offers-for-woocommerce' ) . ': ' . stripslashes($offer_args['product_title_formatted']) . "\n";
-echo __( 'Regular Price', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product']->get_regular_price()) . "\n";
+echo __( 'Regular Price', 'offers-for-woocommerce' ) . ': ' . wc_price( $product_price, array('currency' => $offer_currency)) . "\n";
 echo __( 'Quantity', 'offers-for-woocommerce' ) . ': ' . $offer_args['product_qty'] . "\n";
-echo __( 'Price', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product_price_per']) . "\n";
-echo __( 'Subtotal', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product_total']);
+echo __( 'Price', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product_price_per'], array('currency' => $offer_currency)) . "\n";
+echo __( 'Subtotal', 'offers-for-woocommerce' ) . ': ' . wc_price( $offer_args['product_total'], array('currency' => $offer_currency));
 
 if(isset($offer_args['offer_notes']) && $offer_args['offer_notes'] != '')
 {

@@ -815,7 +815,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function get_woocommerce_offer_column($column, $post_id) {
         $post_status = get_post_status($post_id);
-
+        $offer_currency = get_post_meta($post_id, 'offer_currency', true);
+        if( empty($offer_currency) ) {
+            $offer_currency = get_woocommerce_currency();
+        } 
         switch ($column) {
             case 'offer_name' :
                 $val = get_post_meta($post_id, 'offer_name', true);
@@ -867,7 +870,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $val = get_post_meta($post_id, 'offer_price_per', true);
                 }
                 $val = ($val != '') ? $val : '0';
-                echo wc_price($val);
+                echo wc_price($val, array('currency' => $offer_currency));
                 break;
 
             case 'offer_amount' :
@@ -877,7 +880,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $val = get_post_meta($post_id, 'offer_amount', true);
                 }
                 $val = ($val != '') ? $val : '0';
-                echo wc_price($val);
+                echo wc_price($val, array('currency' => $offer_currency));
                 break;
         }
     }
@@ -1337,7 +1340,14 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             do_action('angelleye_offer_for_woocommerce_admin_add_offer', $post);
         } else {
             do_action('before_offer_summary_meta_box', $post);
-            $currency_symbol = get_woocommerce_currency_symbol();
+            $offer_currency = get_post_meta($post->ID, 'offer_currency', true);
+            if( !empty($offer_currency) ) {
+                $currency_symbol = get_woocommerce_currency_symbol($offer_currency);
+            } else {
+                $offer_currency = get_woocommerce_currency();
+                $currency_symbol = get_woocommerce_currency_symbol();
+            }
+            
             if ($post->ID) {
                 $postmeta = get_post_meta($post->ID);
                 /* Below line of code fetch the post meta that are set during submit offer */
@@ -1518,6 +1528,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                  * Output html for Offer Comments loop
                  */
                 $is_anonymous_communication_enable = $this->ofw_is_anonymous_communication_enable();
+                $_product_regular_price = angelleye_ofw_get_product_price_multi_currency($_product_regular_price, $offer_currency);
+                $_product_sale_price = angelleye_ofw_get_product_price_multi_currency($_product_sale_price, $offer_currency);
                 include_once('views/meta-panel-summary.php');
             }
 
@@ -4171,6 +4183,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             echo '</thead><tbody id="the-list">';
             while ($the_query->have_posts()) : $the_query->the_post();
                 $id = get_the_ID();
+                $offer_currency = get_post_meta($id, 'offer_currency', true);
+                if( empty($offer_currency) ) {
+                    $offer_currency = get_woocommerce_currency();
+                } 
                 $name = get_post_meta($id, 'offer_name', true);
                 $name = ($name != '') ? $name : '-';
                 $offer_price_per = get_post_meta($id, 'offer_price_per', true);
@@ -4204,9 +4220,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 echo '<td class="title column-title" data-colname="title"><a href="' . get_edit_post_link() . '">' . get_the_title() . '</a></td>';
                 echo '<td class="date column-date" data-colname="date"><abbr title="' . get_the_date() . '">' . get_the_date() . '</abbr></td>';
                 echo '<td class="name column-name" data-colname="name">' . $name . '</td>';
-                echo '<td class="price_per column-price_per" data-colname="price_per">' . wc_price($offer_price_per) . '</td>';
+                echo '<td class="price_per column-price_per" data-colname="price_per">' . wc_price($offer_price_per, array('currency' => $offer_currency)) . '</td>';
                 echo '<td class="quantity column-quantity" data-colname="quantity">' . $offer_quantity . '</td>';
-                echo '<td class="amount column-amount" data-colname="amount">' . wc_price($offer_amount) . '</td>';
+                echo '<td class="amount column-amount" data-colname="amount">' . wc_price($offer_amount, array('currency' => $offer_currency)) . '</td>';
                 echo '<td class="status column-amount" data-colname="status">' . $status . '</td>';
                 echo '</tr>';
             endwhile;

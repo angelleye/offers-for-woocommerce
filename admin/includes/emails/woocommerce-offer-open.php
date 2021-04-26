@@ -7,6 +7,11 @@
  * @author  AngellEYE <andrew@angelleye.com>
  */
 if (!defined('ABSPATH')) exit; 
+$offer_currency = get_post_meta($offer_args['offer_id'], 'offer_currency', true);
+if (empty($offer_currency)) {
+    $offer_currency = get_woocommerce_currency();
+}
+$product_price = angelleye_ofw_get_product_price_multi_currency($offer_args['product']->get_regular_price(), $offer_currency);
 ?>
 
 <?php do_action('woocommerce_email_header', $email_heading, $email); ?>
@@ -42,15 +47,15 @@ if (!defined('ABSPATH')) exit;
     <tbody>
         <tr>
             <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo stripslashes($offer_args['product_title_formatted']); ?></td>
-            <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo wc_price($offer_args['product']->get_regular_price()); ?></td>
+            <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo wc_price($product_price, array('currency' => $offer_currency)); ?></td>
             <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo $offer_args['product_qty']; ?></td>
-            <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo wc_price($offer_args['product_price_per']); ?></td>
+            <td style="text-align:left; vertical-align:middle;  padding:12px; border-bottom: 1px solid #ddd;"><?php echo wc_price($offer_args['product_price_per'], array('currency' => $offer_currency)); ?></td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
             <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e('Subtotal', 'offers-for-woocommerce'); ?></th>
-            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price($offer_args['product_total']); ?></td>
+            <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price($offer_args['product_total'], array('currency' => $offer_currency)); ?></td>
 
         </tr>
         <tr>
@@ -59,7 +64,7 @@ if (!defined('ABSPATH')) exit;
                 $product_total = ($offer_args['product_total'] + $offer_args['product_shipping_cost']);
                 ?>
                 <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e('Shipping', 'offers-for-woocommerce'); ?></th>
-                <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price($offer_args['product_shipping_cost']); ?></td>
+                <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price($offer_args['product_shipping_cost'], array('currency' => $offer_currency)); ?></td>
             <?php
         }
         ?>
@@ -69,7 +74,7 @@ if (!defined('ABSPATH')) exit;
             if (isset($offer_args['product_shipping_cost']) && $offer_args['product_shipping_cost'] != '0.00' && !empty($offer_args['product_shipping_cost'])) {
                 ?>
                 <th scope="row" colspan="3" style="text-align:left; border-bottom: 1px solid #ddd;"><?php _e('Total', 'offers-for-woocommerce'); ?></th>
-                <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price($product_total); ?></td>
+                <td style="border-bottom: 1px solid #ddd; text-align:center"><?php echo wc_price($product_total, array('currency' => $offer_currency)); ?></td>
             <?php
         }
         ?>
