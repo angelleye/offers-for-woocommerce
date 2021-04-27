@@ -44,6 +44,8 @@ class Angelleye_Offers_For_Woocommerce {
      * @var      object
      */
     protected static $instance = null;
+    
+    public $is_notice_set = false;
 
     /**
      * Initialize the plugin by setting localization and loading public scripts
@@ -947,7 +949,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function enqueue_scripts() {
         global $post;
-        if( class_exists('WC_Aelia_CurrencyPrices_Manager') && (is_cart() || is_checkout_pay_page() || is_checkout()) ) {
+        /*if( class_exists('WC_Aelia_CurrencyPrices_Manager') && (is_cart() || is_checkout_pay_page() || is_checkout()) ) {
             $multi_currency_data = $this->angelleye_get_multi_currency_data();
             if( isset($multi_currency_data['is_offer_in_cart']) && isset($multi_currency_data['offer_currency']) ) {
                 wp_enqueue_script('offers-for-woocommerce-multi-currency', plugins_url('assets/js/cart-checkout-multi-currency.js', __FILE__), array('jquery'), self::VERSION);
@@ -958,7 +960,7 @@ class Angelleye_Offers_For_Woocommerce {
             }
                     
             
-        }
+        }*/
         if(is_object($post)) {
             $is_product_type_variable = 'false';
             if (function_exists('wc_get_product')) {
@@ -2644,11 +2646,17 @@ class Angelleye_Offers_For_Woocommerce {
     }
     
     public function wc_aelia_cs_selected_currency($aelia_currency) {
+        
         if(is_checkout() || is_cart()) {
             if (did_action( 'wp_loaded' ) && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
                 foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                     if( isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
                         $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
+                        if($aelia_currency !== $offer_currency && $this->is_notice_set === false) {
+                            $this->is_notice_set = true;
+                            $message = sprintf(__('Aelia Currency Switcher is temporarily disabled as the cart contains an offer product linked to %s currency and make %s dynamic as per offer product currency', 'offers-for-woocommerce'), $offer_currency, $offer_currency);
+                            wc_add_notice($message, 'notice');
+                        }
                         if (!empty($offer_currency)) {
                             return $offer_currency;
                         }
