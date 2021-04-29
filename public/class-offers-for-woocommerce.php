@@ -177,6 +177,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         add_filter('wc_aelia_cs_selected_currency', array($this, 'wc_aelia_cs_selected_currency'), 99, 1);
         add_action('wp_loaded', array($this, 'ofw_changed_currency'), 10);
+        add_action('before_add_offer_to_cart', array($this, 'before_add_offer_to_cart'), 10, 1);
 
         /* this will display the data of Product addon if plugin is activated - Start */
 
@@ -1705,7 +1706,7 @@ class Angelleye_Offers_For_Woocommerce {
                     do_action('before_add_offer_to_cart', $offer->ID);
                     // Add offer to cart
                     if ($this->add_offer_to_cart($offer, $offer_meta)) {
-                        $this->send_api_response(__('Successfully added Offer to cart', 'offers-for-woocommerce'), json_decode($pid));
+                        $this->send_api_response(__('Successfully added Offer to cart.', 'offers-for-woocommerce'), json_decode($pid));
                     }
                 }
             }
@@ -2635,7 +2636,7 @@ class Angelleye_Offers_For_Woocommerce {
                         if ($aelia_currency !== $offer_currency && $this->is_notice_set === false) {
                             $this->is_notice_set = true;
                             wc_clear_notices();
-                            $message = apply_filters('ofw_aelia_notice', sprintf(__('Aelia Currency Switcher is temporarily disabled as the cart contains an offer product linked to %s currency.', 'offers-for-woocommerce'), $offer_currency), $offer_currency);;
+                            $message = apply_filters('ofw_aelia_notice', sprintf(__('Aelia Currency Switcher is temporarily disabled as the cart contains an offer product linked to %s currency.', 'offers-for-woocommerce'), $offer_currency), $offer_currency);
                             wc_add_notice($message, 'notice');
                         }
                         if (!empty($offer_currency)) {
@@ -2653,23 +2654,22 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     public function ofw_changed_currency() {
-        
-            if (did_action('wp_loaded') && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
-                foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-                    if (isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
-                        $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
-                        if (!empty($offer_currency)) {
-                            $_POST['aelia_cs_currency'] = $offer_currency;
-                            $user_id = get_current_user_id();
-                            if (!empty($user_id)) {
-                                update_user_meta($user_id, 'aelia_cs_selected_currency', $offer_currency);
-                                wc_setcookie('aelia_cs_selected_currency', $offer_currency);
-                            }
+
+        if (did_action('wp_loaded') && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                if (isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
+                    $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
+                    if (!empty($offer_currency)) {
+                        $_POST['aelia_cs_currency'] = $offer_currency;
+                        $user_id = get_current_user_id();
+                        if (!empty($user_id)) {
+                            update_user_meta($user_id, 'aelia_cs_selected_currency', $offer_currency);
+                            wc_setcookie('aelia_cs_selected_currency', $offer_currency);
                         }
                     }
                 }
             }
-        
+        }
     }
 
     public function angelleye_set_offer_price_qty() {
@@ -2678,6 +2678,25 @@ class Angelleye_Offers_For_Woocommerce {
                 if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
                     $value['data']->set_price($value['woocommerce_offer_price_per']);
                     WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                }
+            }
+        }
+    }
+
+    public function before_add_offer_to_cart($offer_id) {
+        if (!empty(WC()->cart) || !WC()->cart->is_empty()) {
+            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                if (isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
+                    $cart_offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
+                    if (!empty($cart_offer_currency)) {
+                        $offer_currency = get_post_meta($offer_id, 'offer_currency', true);
+                        if($offer_currency !== $cart_offer_currency) {
+                            $message = apply_filters('ofw_aelia_mix_currency_notice', sprintf(__('Cannot add the Offer to Cart as the Cart already contains an Offer product linked to a different (%s) currency. Please clear the cart or complete the current order and try again.', 'offers-for-woocommerce'), $cart_offer_currency), $offer_currency, $cart_offer_currency);
+                            wc_add_notice($message, 'notice');
+                            wp_safe_redirect(wc_get_cart_url());
+                            exit;
+                        }
+                    }
                 }
             }
         }
