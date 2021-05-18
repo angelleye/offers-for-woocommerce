@@ -48,7 +48,11 @@ if ($customer_offers) :
                             $product_id = get_post_meta($post_id, 'orig_offer_product_id', true);
                             $variant_id = get_post_meta($post_id, 'orig_offer_variation_id', true);
                             $offer_uid = get_post_meta($post_id, 'offer_uid', true);
-                            $offer_final_offer = get_post_meta($post_id, 'offer_final_offer', true);                            
+                            $offer_final_offer = get_post_meta($post_id, 'offer_final_offer', true);   
+                            $offer_currency = get_post_meta($post_id, 'offer_currency', true);
+                            if( empty($offer_currency) ) {
+                                $offer_currency = get_woocommerce_currency();
+                            } 
                             if('product' === get_post_type($product_id)){
                                 $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);                            
                                 $product_title = get_the_title($product_id);
@@ -107,7 +111,7 @@ if ($customer_offers) :
                                             $val = get_post_meta($post_id, 'offer_price_per', true);
                                         }
                                         $val = ($val != '') ? $val : '0';
-                                        echo wc_price($val);
+                                        echo wc_price($val, array('currency' => $offer_currency));
                                         break;
                                     case 'offer_amount' :
                                         if ($post_status == 'buyercountered-offer') {
@@ -116,7 +120,7 @@ if ($customer_offers) :
                                             $val = get_post_meta($post_id, 'offer_amount', true);
                                         }
                                         $val = ($val != '') ? $val : '0';
-                                        echo wc_price($val);
+                                        echo wc_price($val, array('currency' => $offer_currency));
                                         break;
                                     case 'offer-status' :
                                         switch ($post_status) {

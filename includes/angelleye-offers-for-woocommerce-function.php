@@ -18,10 +18,35 @@ if (!function_exists('angelleye_get_vendor_dashboard_page_url')) {
                 $dashbaord_id = get_option('wcvendors_vendor_dashboard_page_id');
             }
         }
-        
+
         $vendor_dashboard_page_url = get_permalink($dashbaord_id);
-        
+
         return apply_filters('aeofwc_offer_vendor_dashboard_page_url', $vendor_dashboard_page_url, $dashbaord_id);
+    }
+
+}
+
+if (!function_exists('angelleye_ofw_get_product_price_multi_currency')) {
+
+    function angelleye_ofw_get_product_price_multi_currency($price, $currency) {
+        if (class_exists('WC_Aelia_CurrencyPrices_Manager')) {
+            $aelia_manager = new WC_Aelia_CurrencyPrices_Manager();
+            $woocommerce_currency = get_woocommerce_currency();
+            if(empty($woocommerce_currency)) {
+                return $price;
+            }
+            if(empty($currency)) {
+                return $price;
+            }
+            try {
+                $converted_price = $aelia_manager->convert_from_base($price, $currency, $woocommerce_currency);
+            } catch (Exception $ex) {
+                return $price;
+            }
+            return $converted_price;
+        } else {
+            return $price;
+        }
     }
 
 }
