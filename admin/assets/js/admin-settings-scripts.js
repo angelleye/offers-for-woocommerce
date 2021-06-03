@@ -7,7 +7,7 @@
 
             $('.chosen-select').chosen({width: "100%"});
 
-            $('#general_setting_default_expire_days').autoNumeric('init',
+            $('#general_setting_default_expire_days').autoNumerics('init',
                 {
                     vMin: '0',
                     mDec: '0',
@@ -15,7 +15,7 @@
                     aForm: false}
             );
 
-            $('#ofwc-bulk-action-target-where-price-value').autoNumeric('init',
+            $('#ofwc-bulk-action-target-where-price-value').autoNumerics('init',
                 {
                     aForm: false,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -28,7 +28,7 @@
                 }
             );
 
-            $('#ofw-bulk-tool-action-target-where-price-value').autoNumeric('init',
+            $('#ofw-bulk-tool-action-target-where-price-value').autoNumerics('init',
                 {
                     aForm: false,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -41,7 +41,7 @@
                 }
             );
 
-            $('input[name="ofw_minimum_offer_price_target_where_price_value"]').autoNumeric('init',
+            $('input[name="ofw_minimum_offer_price_target_where_price_value"]').autoNumerics('init',
                 {
                     aForm: false,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
