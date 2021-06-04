@@ -144,7 +144,7 @@
                 $("#lightbox_custom_ofwc_offer_form_close_btn").hide();
             });
 
-            $('#woocommerce-make-offer-form-quantity').autoNumeric('init',
+            $('#woocommerce-make-offer-form-quantity').autoNumerics('init',
                     {
                         vMin: '0',
                         mDec: '0',
@@ -155,7 +155,7 @@
                     }
             );
 
-            $('#woocommerce-make-offer-form-price-each').autoNumeric('init',
+            $('#woocommerce-make-offer-form-price-each').autoNumerics('init',
                     {
                         aForm: false, /* Controls if default values are formatted on page ready (load) */
                         aSep: offers_for_woocommerce_js_params.ofw_public_js_thousand_separator, /* Thousand separator */
@@ -169,7 +169,7 @@
                     }
             );
 
-            $('#woocommerce-make-offer-form-total').autoNumeric('init',
+            $('#woocommerce-make-offer-form-total').autoNumerics('init',
                     {
                         aForm: false, /* Controls if default values are formatted on page ready (load) */
                         aSep: offers_for_woocommerce_js_params.ofw_public_js_thousand_separator, /* Thousand separator */
@@ -204,10 +204,10 @@
                 $('.tab_custom_ofwc_offer_tab_alt_message_2').hide();
                 var offerCheckMinValuesPassed = true;
 
-                if ($('#woocommerce-make-offer-form-price-each').autoNumeric('get') == '0')
+                if ($('#woocommerce-make-offer-form-price-each').autoNumerics('get') == '0')
                 {
-                    $('#woocommerce-make-offer-form-price-each').autoNumeric('set', '');
-                    $('#woocommerce-make-offer-form-price-each').autoNumeric('update',
+                    $('#woocommerce-make-offer-form-price-each').autoNumerics('set', '');
+                    $('#woocommerce-make-offer-form-price-each').autoNumerics('update',
                             {
                                 aForm: false, /* Controls if default values are formatted on page ready (load) */
                                 aSep: offers_for_woocommerce_js_params.ofw_public_js_thousand_separator, /* Thousand separator */
@@ -223,10 +223,10 @@
                     offerCheckMinValuesPassed = false;
                 }
 
-                if ($('#woocommerce-make-offer-form-quantity').autoNumeric('get') == '0')
+                if ($('#woocommerce-make-offer-form-quantity').autoNumerics('get') == '0')
                 {
-                    $('#woocommerce-make-offer-form-quantity').autoNumeric('set', '');
-                    $('#woocommerce-make-offer-form-quantity').autoNumeric('update',
+                    $('#woocommerce-make-offer-form-quantity').autoNumerics('set', '');
+                    $('#woocommerce-make-offer-form-quantity').autoNumerics('update',
                             {
                                 vMin: '0',
                                 mDec: '0',
@@ -300,8 +300,8 @@
                     }
                 }
 
-                var offerQuantity = $("input[name='offer_quantity']").autoNumeric('get');
-                var offerPriceEach = $("input[name='offer_price_each']").autoNumeric('get');
+                var offerQuantity = $("input[name='offer_quantity']").autoNumerics('get');
+                var offerPriceEach = $("input[name='offer_price_each']").autoNumerics('get');
                 var offerTotal = $("input[name='offer_total']").val();
                 var offerForm = $('#woocommerce-make-offer-form');
 
@@ -589,8 +589,8 @@
 
         // Update totals
         var updateTotal = function () {
-            var input1 = $('#woocommerce-make-offer-form-quantity').autoNumeric('get');
-            var input2 = $('#woocommerce-make-offer-form-price-each').autoNumeric('get');
+            var input1 = $('#woocommerce-make-offer-form-quantity').autoNumerics('get');
+            var input2 = $('#woocommerce-make-offer-form-price-each').autoNumerics('get');
             if (isNaN(input1) || isNaN(input2)) {
                 $('#woocommerce-make-offer-form-total').val('');
             } else {
@@ -600,9 +600,9 @@
                     currencySymbol = '$';
                 }
 
-                $('#woocommerce-make-offer-form-total').autoNumeric('set', theTotal);
+                $('#woocommerce-make-offer-form-total').autoNumerics('set', theTotal);
 
-                $('#woocommerce-make-offer-form-total').autoNumeric('update',
+                $('#woocommerce-make-offer-form-total').autoNumerics('update',
                         {
                             aForm: false, /* Controls if default values are formatted on page ready (load) */
                             aSep: offers_for_woocommerce_js_params.ofw_public_js_thousand_separator, /* Thousand separator */

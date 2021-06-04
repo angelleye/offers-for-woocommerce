@@ -28,7 +28,7 @@
                 }
             });
 
-            $('#original-offer-price-per').autoNumeric('init',
+            $('#original-offer-price-per').autoNumerics('init',
                 {
                     aForm: true,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -41,7 +41,7 @@
                 }
             );
 
-            $('#original-offer-amount').autoNumeric('init',
+            $('#original-offer-amount').autoNumerics('init',
                 {
                     aForm: true,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -54,7 +54,7 @@
             );
 
 
-            $('#offer-price-per').autoNumeric('init',
+            $('#offer-price-per').autoNumerics('init',
                 {
                     aForm: true,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -67,7 +67,7 @@
                 }
             );
 
-            $('#offer-total').autoNumeric('init',
+            $('#offer-total').autoNumerics('init',
                 {
                     aForm: true,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -79,7 +79,7 @@
                 }
             );
     
-            $('#offer_shipping_cost').autoNumeric('init',
+            $('#offer_shipping_cost').autoNumerics('init',
                 {
                     aForm: false,      /* Controls if default values are formatted on page ready (load) */
                     aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
@@ -138,9 +138,9 @@
             {
                 var offerCheckMinValuesPassed = true;
 
-                if ($('#offer-price-per').autoNumeric('get') == '0') {
-                    $('#offer-price-per').autoNumeric('set', '');
-                    $('#offer-price-per').autoNumeric('update',
+                if ($('#offer-price-per').autoNumerics('get') == '0') {
+                    $('#offer-price-per').autoNumerics('set', '');
+                    $('#offer-price-per').autoNumerics('update',
                         {
                             mDec: ofw_param.ofw_admin_js_number_of_decimals,
                             aForm: true,      /* Controls if default values are formatted on page ready (load) */
@@ -211,18 +211,18 @@
         // Update totals
         var updateTotal = function () {
             var input1 = $('#offer-quantity').val();
-            var input2 = $('#offer-price-per').autoNumeric('get');
-            var offer_shiipng_cost = $('#offer_shipping_cost').autoNumeric('get');
+            var input2 = $('#offer-price-per').autoNumerics('get');
+            var offer_shiipng_cost = $('#offer_shipping_cost').autoNumerics('get');
             if (isNaN(input1) || isNaN(input2)) {
-                $('#offer-total').autoNumeric('set','');
+                $('#offer-total').autoNumerics('set','');
             } else {
                 var theTotal = (input1 * input2);
                 
                 var theTotal = (parseFloat(theTotal) + parseFloat(offer_shiipng_cost));
 
-                $('#offer-total').autoNumeric('set',theTotal);
+                $('#offer-total').autoNumerics('set',theTotal);
 
-                $('#offer-total').autoNumeric('update',
+                $('#offer-total').autoNumerics('update',
                     {
                         aForm: true,      /* Controls if default values are formatted on page ready (load) */
                         aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
