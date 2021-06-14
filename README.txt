@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 5.7.2
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.5 - 06.14.2021 =
+* Fix - Auctions for WooCommerce Compatibility compatibility. ([OFW-216](https://github.com/angelleye/offers-for-woocommerce/pull/469))
 
 = 2.3.4 - 05.18.2021 =
 * Feature - Adds Aelia Currency Switcher Compatibility. ([OFW-156](https://github.com/angelleye/offers-for-woocommerce/pull/468))
