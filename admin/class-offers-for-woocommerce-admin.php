@@ -2565,7 +2565,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-admin-footer-scripts', plugins_url('assets/js/admin-footer-scripts.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
             // autoNumeric js
-            wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url('../public/assets/js/autoNumeric-1-9-24.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
+            wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric', plugins_url('../public/assets/js/autoNumeric.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
             // Admin settings scripts
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', plugins_url('assets/js/admin-settings-scripts.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
@@ -2593,7 +2593,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // Jquery datepicker.js
             wp_enqueue_script('jquery-ui-datepicker');
             // autoNumeric js
-            wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric-1-9-24', plugins_url('../public/assets/js/autoNumeric-1-9-24.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
+            wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric', plugins_url('../public/assets/js/autoNumeric.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
             // admin scripts
             wp_enqueue_script('offers-for-woocommerce-admin-script', plugins_url('assets/js/admin.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
@@ -4407,7 +4407,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         wp_enqueue_style('ofw-make-offer');
         wp_add_inline_style('ofw-make-offer', $custom_css);
         wp_enqueue_script('offers-for-woocommerce-plugin-script', OFFERS_FOR_WOOCOMMERCE_ASSET_URL . 'public/assets/js/public.js', array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
-        wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', OFFERS_FOR_WOOCOMMERCE_ASSET_URL . 'public/assets/js/autoNumeric-1-9-24.js', Angelleye_Offers_For_Woocommerce::VERSION);
+        wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric', OFFERS_FOR_WOOCOMMERCE_ASSET_URL . 'public/assets/js/autoNumeric.js', Angelleye_Offers_For_Woocommerce::VERSION);
         if (wp_script_is('offers-for-woocommerce-plugin-script')) {
             wp_localize_script('offers-for-woocommerce-plugin-script', 'offers_for_woocommerce_js_params', apply_filters('offers_for_woocommerce_js_params', array(
                 'is_product_type_variable' => 'No',

@@ -981,7 +981,7 @@ class Angelleye_Offers_For_Woocommerce {
             $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
             wp_enqueue_script('js-cookie', WC()->plugin_url() . '/assets/js/js-cookie/js.cookie' . $suffix . '.js', array(), '2.1.4', true);
             wp_enqueue_script('offers-for-woocommerce-plugin-script', plugins_url('assets/js/public.js', __FILE__), array('jquery'), self::VERSION);
-            wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric-1-9-24', plugins_url('assets/js/autoNumeric-1-9-24.js', __FILE__), self::VERSION);
+            wp_enqueue_script('offers-for-woocommerce-plugin-script-jquery-auto-numeric', plugins_url('assets/js/autoNumeric.js', __FILE__), self::VERSION);
             if (wp_script_is('offers-for-woocommerce-plugin-script')) {
                 wp_localize_script('offers-for-woocommerce-plugin-script', 'offers_for_woocommerce_js_params', apply_filters('offers_for_woocommerce_js_params', array(
                     'is_product_type_variable' => $is_product_type_variable,
