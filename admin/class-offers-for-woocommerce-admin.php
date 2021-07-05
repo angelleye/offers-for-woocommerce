@@ -1776,7 +1776,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_email->template_plain = $template_name;
             $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
-            $new_email->trigger($offer_args);
+            $authorization_payment = get_post_meta( $offer_id ,'_authorization_payment_order_id', true);
+
+            if( empty($authorization_payment)) {
+	            $new_email->trigger( $offer_args );
+            } elseif ( !empty($authorization_payment) && $post_data->post_status != 'countered-offer') {
+	            $new_email->trigger( $offer_args );
+            }
         }
 
         // Insert WP comment
@@ -1816,6 +1822,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         do_action('angelleye_ofw_offer_updated', $offer_args, $post_data);
+
+	    do_action('angelleye_ofw_capture_authorization_payment', $offer_id, $post_data->post_status, true );
     }
 
     /**
@@ -2151,6 +2159,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'description' => __('Disable the "Make Offer" button for products that are on sale.', 'offers-for-woocommerce'),
                 )
         );
+
+	    add_settings_field(
+		    'enable_make_offer_payment_authorization', // ID
+		    __('Enable for Payment Authorization', 'offers-for-woocommerce'), // Title
+		    array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
+		    'offers_for_woocommerce_general_settings', // Page
+		    'general_settings', // Section
+		    array(
+			    'option_name' => 'offers_for_woocommerce_options_general',
+			    'input_label' => 'enable_make_offer_payment_authorization',
+			    'input_required' => FALSE,
+			    'description' => __('Require payment authorization to make an offer.', 'offers-for-woocommerce'),
+		    )
+	    );
         /**
          * Add section - 'Display Settings'
          */
@@ -2745,8 +2767,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function ofw_manage_offer_admin($offer_id = null, $emails = null, $is_approve = true) {
         global $wpdb, $woocommerce;
-        if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
-            $post_id = absint($_POST["targetID"]);
+        if (isset($_REQUEST["targetID"]) && !empty($_REQUEST["targetID"])) {
+            $post_id = absint($_REQUEST["targetID"]);
         } else {
             $post_id = $offer_id;
         }
@@ -2773,6 +2795,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
                 'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1))
             );
+
             $where = array('ID' => $post_id);
             $wpdb->update($table, $data_array, $where);
             $offer_notes = !empty($_POST['angelleye_woocommerce_offer_status_notes']) ? wc_clean(wp_slash($_POST['angelleye_woocommerce_offer_status_notes'])) : '';
@@ -2858,6 +2881,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
             }
+
+	        do_action('angelleye_ofw_capture_authorization_payment', $post_id, $post_status, true );
         }
     }
 
@@ -2891,8 +2916,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if (is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
             global $wpdb; // this is how you get access to the database
             $post_id = '';
-            if (isset($_POST['targetID']) && !empty($_POST['targetID'])) {
-                $post_id = absint($_POST["targetID"]);
+            if (isset($_REQUEST['targetID']) && !empty($_REQUEST['targetID'])) {
+                $post_id = absint($_REQUEST["targetID"]);
             }
             do_action('ofw_before_auto_decline_offer_admin', $post_id);
             $this->ofw_manage_offer_admin($post_id, '', false);

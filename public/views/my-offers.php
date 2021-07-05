@@ -161,11 +161,12 @@ if ($customer_offers) :
 
                                         } else {
                                             $post_status = apply_filters('ofw_admin_created_offer_status', $post_status, $post_id);
+	                                        $payment_authorization = get_post_meta($post_id, '_payment_authorization_make_offer' ,true );
                                             switch ($post_status) {
                                                 case 'countered-offer' :
-                                                    ?>
-                                                    <a class="button" href="<?php echo $offer_args['product_url']; ?><?php echo ( strpos($offer_args['product_url'], '?') ) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a>
-                                                    <?php
+                                                    if( empty($payment_authorization)) { ?>
+                                                        <a class="button" href="<?php echo $offer_args['product_url']; ?><?php echo ( strpos($offer_args['product_url'], '?') ) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a>
+                                                <?php }
                                                     if (isset($offer_args['final_offer']) && $offer_args['final_offer'] == '1') {
                                                         //echo '<strong>' . __('This is a final offer.', 'offers-for-woocommerce') . '</strong>';
                                                     } else {
@@ -175,9 +176,9 @@ if ($customer_offers) :
                                                     <?php
                                                     break;
                                                 case 'accepted-offer' :
-                                                    ?>
-                                                    <a class="button" href="<?php echo $offer_args['product_url']; ?><?php echo ( strpos($offer_args['product_url'], '?') ) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a>
-                                                    <?php
+                                                    if(empty($payment_authorization)) { ?>
+                                                        <a class="button" href="<?php echo $offer_args['product_url']; ?><?php echo ( strpos($offer_args['product_url'], '?') ) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a>
+                                                    <?php }
                                                     break;
                                             }
                                     }

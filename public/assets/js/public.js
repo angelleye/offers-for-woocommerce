@@ -425,16 +425,14 @@
                             var responseStatus = myObject['statusmsg'];
                             var responseStatusDetail = myObject['statusmsgDetail'];
 
-                            if (responseStatus == 'failed')
-                            {
+                            if (responseStatus == 'failed')  {
                                 //console.log('failed');
                                 // Hide loader image
                                 $('#offer-submit-loader').hide();
                                 // Show error message DIV
                                 $('#tab_custom_ofwc_offer_tab_alt_message_2').slideToggle('fast');
                                 $(offerForm).find(':submit').removeAttr('disabled', 'disabled');
-                            } else if (responseStatus == 'failed-custom')
-                            {
+                            } else if (responseStatus == 'failed-custom') {
                                 //console.log('failed-custom-msg');
                                 // Hide loader image
                                 $('#offer-submit-loader').hide();
@@ -442,8 +440,7 @@
                                 $('#tab_custom_ofwc_offer_tab_alt_message_custom ul #alt-message-custom').html("<strong>Error: </strong>" + responseStatusDetail);
                                 $('#tab_custom_ofwc_offer_tab_alt_message_custom').slideToggle('fast');
                                 $(offerForm).find(':submit').removeAttr('disabled', 'disabled');
-                            } else if (responseStatus == 'failed-spam')
-                            {
+                            } else if (responseStatus == 'failed-spam') {
                                 //console.log('failed-custom-msg');
                                 // Hide loader image
                                 $('#offer-submit-loader').hide();
@@ -454,8 +451,9 @@
                                 $('#tab_custom_ofwc_offer_tab_inner fieldset').hide();
                             } else if (responseStatus == 'accepted-offer') {
                                 window.location = decodeURI(myObject['redirect']);
-                            } else
-                            {
+                            } else if (responseStatus == 'payment_authorization') {
+                                window.location = decodeURI(myObject['redirect']);
+                            } else {
                                 // SUCCESS
                                 // Hide loader image
                                 $('#offer-submit-loader').hide();
