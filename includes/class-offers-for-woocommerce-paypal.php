@@ -43,7 +43,7 @@ class Angelleye_Offers_For_Woocommerce_Paypal{
 			'APISignature' => $this->api_signature
 		);
 
-		if (!class_exists('Angelleye_PayPal_WC')) {
+		if ( !class_exists('Angelleye_PayPal_WC') ) {
 			require_once( OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/lib/paypal-php-library/paypal.class.php' );
 		}
 
