@@ -1568,7 +1568,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
             }
             $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
-            if ( $offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization)) ) {
+            if ( $offer_is_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization)) ) {
                 $new_email->trigger($offer_args);
             }
             /**
@@ -1594,7 +1594,7 @@ class Angelleye_Offers_For_Woocommerce {
             $new_email->template_plain = 'woocommerce-offer-received.php';
             $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
-            if ($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization) )) {
+            if ($offer_is_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization) )) {
                 $new_email->trigger($offer_args);
             }
 
@@ -2639,7 +2639,7 @@ class Angelleye_Offers_For_Woocommerce {
 
 				$offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
 
-				if ($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '' ) {
+				if ($offer_is_auto_decline == '' ) {
 					$new_email->trigger( $offer_args);
 				}
 
@@ -2654,7 +2654,7 @@ class Angelleye_Offers_For_Woocommerce {
 				$new_email->template_plain = 'woocommerce-offer-received.php';
 				$new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
-				if ($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '') {
+				if ($offer_is_auto_decline == '' ) {
 					$new_email->trigger($offer_args);
 				}
 
@@ -2769,7 +2769,7 @@ class Angelleye_Offers_For_Woocommerce {
 					$new_email->template_plain_path = $template_html_path.'plain/';
 					$new_email->template_html = $template_name;
 					$new_email->template_plain = $template_name;
-					if ($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '') {
+					if ($offer_is_auto_decline == '' ) {
 						$new_email->trigger( $offer_args );
 					}
 				}
