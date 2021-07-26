@@ -2310,6 +2310,8 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
 	    $general_options = get_option('offers_for_woocommerce_options_general');
+
+       if( isset($general_options['enable_binding_offer_authorization']) && $general_options['enable_binding_offer_authorization'] == 1 ) {
 	    ?>
         <div class="woocommerce-make-offer-form-section">
             <?php if( isset($general_options['enable_make_offer_payment_authorization']) && $general_options['enable_make_offer_payment_authorization'] == 1 ) { ?>
@@ -2327,6 +2329,7 @@ class Angelleye_Offers_For_Woocommerce {
             <?php } ?>
         </div>
         <?php
+       }
     }
 
     /**
