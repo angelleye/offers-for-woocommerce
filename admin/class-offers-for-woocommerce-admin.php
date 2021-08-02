@@ -2160,33 +2160,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 )
         );
 
-	    add_settings_field(
-		    'enable_binding_offer_authorization', // ID
-		    __('Enable Binding Offers', 'offers-for-woocommerce'), // Title
-		    array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
-		    'offers_for_woocommerce_general_settings', // Page
-		    'general_settings', // Section
-		    array(
-			    'option_name' => 'offers_for_woocommerce_options_general',
-			    'input_label' => 'enable_binding_offer_authorization',
-			    'input_required' => FALSE,
-			    'description' => __('Provide an option for potential buyers to authorize their offer amount, so that you can process the payment instantly when accepting the offer.', 'offers-for-woocommerce'),
-		    )
-	    );
-
-	    add_settings_field(
-		    'enable_make_offer_payment_authorization', // ID
-		    __('Require Binding Offer', 'offers-for-woocommerce'), // Title
-		    array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
-		    'offers_for_woocommerce_general_settings', // Page
-		    'general_settings', // Section
-		    array(
-			    'option_name' => 'offers_for_woocommerce_options_general',
-			    'input_label' => 'enable_make_offer_payment_authorization',
-			    'input_required' => FALSE,
-			    'description' => __('Enable this to require a payment authorization with all offers.', 'offers-for-woocommerce'),
-		    )
-	    );
         /**
          * Add section - 'Display Settings'
          */

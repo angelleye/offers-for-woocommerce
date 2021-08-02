@@ -26,6 +26,19 @@ $product_price = angelleye_ofw_get_product_price_multi_currency($offer_args['pro
            __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s',
         get_bloginfo('name'),
         '<a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $offer_edit_page_url . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a> <a style="background-color: #f44336;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $decline_url . '">' . __('Decline Offer', 'offers-for-woocommerce') . '</a> <a style="background-color: #4CAF50;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $accept_url . '">' . __('Approve Offer', 'offers-for-woocommerce') . '</a>');
+} elseif ( class_exists( 'Angelleye_Offers_For_Woocommerce_Dokan') ){
+
+	$accept_url = dokan_get_navigation_url('woocommerce_offer/accept/' . $offer_args['offer_id']);
+	$decline_url = dokan_get_navigation_url('woocommerce_offer/decline/' . $offer_args['offer_id']);
+	$offer_edit_page_url = trim(dokan_get_navigation_url('woocommerce_offer/?action=edit&id=' . $offer_args['offer_id']),'/');
+
+	printf('<div style="text-align: center;">
+<p style="font-size: 16px;text-align: center;font-family: inherit;">
+<strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' .
+	       __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s',
+		get_bloginfo('name'),
+		'<a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $offer_edit_page_url . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a> <a style="background-color: #f44336;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $decline_url . '">' . __('Decline Offer', 'offers-for-woocommerce') . '</a> <a style="background-color: #4CAF50;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="' . $accept_url . '">' . __('Approve Offer', 'offers-for-woocommerce') . '</a>');
+
 } else {
     printf(
         '<div style="text-align: center;"><p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' . __('To manage this offer please use the following link:', 'offers-for-woocommerce') . '</p> %s',

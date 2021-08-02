@@ -17,13 +17,6 @@ jQuery(function ($) {
             notify_wordpress(jQuery(this).data("msg"));
         });
 
-        jQuery("#enable_binding_offer_authorization").change(function () {
-            if (jQuery(this).is(':checked')) {
-                jQuery('#enable_make_offer_payment_authorization').closest('tr').show();
-            } else{
-                jQuery('#enable_make_offer_payment_authorization').closest('tr').hide();
-            }
-        }).change();
     });
 
     function notify_wordpress(message) {
