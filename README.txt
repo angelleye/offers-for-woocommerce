@@ -120,7 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 2.3.6 - 08.12.2021 =
 * Feature - Additional hooks added in plugin. ([OFW-232](https://github.com/angelleye/offers-for-woocommerce/pull/470))
-* Fix - property ‘post_type’ of no-object ([OFW-232](https://github.com/angelleye/offers-for-woocommerce/pull/471))
+* Fix - property ‘post_type’ of no-object ([OFW-233](https://github.com/angelleye/offers-for-woocommerce/pull/471))
 
 = 2.3.5 - 06.14.2021 =
 * Fix - Auctions for WooCommerce Compatibility compatibility. ([OFW-216](https://github.com/angelleye/offers-for-woocommerce/pull/469))
