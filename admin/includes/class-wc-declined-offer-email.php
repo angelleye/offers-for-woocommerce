@@ -73,6 +73,8 @@ class WC_Declined_Offer_Email extends WC_Email {
         $this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( date( 'Y-m-d H:i:s') ));
         $this->replace['offer_number'] = $this->offer_args['offer_id'];
 
+	    do_action('angelleye_offer_for_woocommerce_before_email_send', $offer_args, $this );
+
         // woohoo, send the email!
         $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
     }
