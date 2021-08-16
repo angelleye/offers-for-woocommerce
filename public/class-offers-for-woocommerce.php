@@ -1782,7 +1782,12 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
         if ($purchasable === false && $_product->get_price() === '') {
-            return true;
+            $product_id = $_product->is_type('variation') ? $_product->get_parent_id() : $_product->get_id();
+            if ('yes' == $_product->get_meta('offers_for_woocommerce_enabled', true)) {
+                return true;
+            } else {
+                return $purchasable;
+            }
         } else {
             return $purchasable;
         }
