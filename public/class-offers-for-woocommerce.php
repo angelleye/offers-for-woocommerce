@@ -1820,11 +1820,13 @@ class Angelleye_Offers_For_Woocommerce {
         global $woocommerce;
         // loop cart contents to find offers -- force price to offer price per
         foreach ($cart_object->cart_contents as $key => $value) {
-            if (get_post_status($value['woocommerce_offer_id'])) {
-                // if offer item found
-                if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
-                    $value['data']->set_price($value['woocommerce_offer_price_per']);
-                    $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+            if(isset($value['woocommerce_offer_id'])) {
+                if (get_post_status($value['woocommerce_offer_id'])) {
+                    // if offer item found
+                    if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                        $value['data']->set_price($value['woocommerce_offer_price_per']);
+                        $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                    }
                 }
             }
         }
@@ -2679,10 +2681,12 @@ class Angelleye_Offers_For_Woocommerce {
 
     public function angelleye_set_offer_price_qty() {
         foreach (WC()->cart->cart_contents as $key => $value) {
-            if (get_post_status($value['woocommerce_offer_id'])) {
-                if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
-                    $value['data']->set_price($value['woocommerce_offer_price_per']);
-                    WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+            if(isset($value['woocommerce_offer_price_per'])) {
+                if (get_post_status($value['woocommerce_offer_id'])) {
+                    if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                        $value['data']->set_price($value['woocommerce_offer_price_per']);
+                        WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                    }
                 }
             }
         }
