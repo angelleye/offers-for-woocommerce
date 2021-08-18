@@ -393,7 +393,7 @@ class Angelleye_Offers_For_Woocommerce {
             $btn_output .= '</div>';
         }
 
-        return $btn_output;
+        return apply_filters( 'angelleye_offers_for_woocommerce_button_output', $btn_output);
     }
 
     /**
@@ -647,7 +647,8 @@ class Angelleye_Offers_For_Woocommerce {
                 'priority' => 20,
                 'callback' => array($this, 'angelleye_ofwc_display_custom_woocommerce_product_tab_content'));
         }
-        return $tabs;
+
+        return apply_filters( 'angelleye_offers_for_woocommerce_add_product_tab' ,$tabs);
     }
 
     /**
