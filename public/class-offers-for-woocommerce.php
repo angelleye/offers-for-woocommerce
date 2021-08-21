@@ -1816,7 +1816,7 @@ class Angelleye_Offers_For_Woocommerce {
         // loop cart contents to find offers -- force price to offer price per
         foreach ($cart_object->cart_contents as $key => $value) {
             if(isset($value['woocommerce_offer_id'])) {
-                if (get_post_status($value['woocommerce_offer_id'])) {
+                if (!empty($value['woocommerce_offer_id']) && get_post_status($value['woocommerce_offer_id'])) {
                     // if offer item found
                     if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
                         $value['data']->set_price($value['woocommerce_offer_price_per']);
