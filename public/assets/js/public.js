@@ -402,6 +402,10 @@
                         data[ field_pairs[ i ].name ] = field_pairs[ i ].value;
                     }
 
+                    jQuery('.tmcp-field').each(function(){
+                        data[ this.name ] = this.value;
+                    });
+                    
                     post_data_array.push({product_data: data});
                     post_data_array.push({product_addon_array: product_addon_array_js});
                     var data_make_offer = {
