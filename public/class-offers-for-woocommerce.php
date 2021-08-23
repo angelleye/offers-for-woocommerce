@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 /**
  * Offers for WooCommerce - public
@@ -652,7 +653,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Callback - Display "Make Offer" front-end form parts 
+     * Callback - Display "Make Offer" front-end form parts
      *
      * @since	0.1.0
      */
@@ -1997,7 +1998,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $offer_id
      * @param type $emails
@@ -2123,7 +2124,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * 
+     *
      * @param type $offer_id
      * @param type $product_id
      * @param type $variant_id
@@ -2170,7 +2171,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * 
+     *
      * @param type $num_amount
      * @param type $num_total
      * @return type
@@ -2571,7 +2572,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     /*
      * Fetch product variant price or regular/sale price.
-     *  @since	1.4.8      
+     *  @since	1.4.8
      */
 
     public function ofwc_get_product_detail($offer_id, $product_id, $variant_id) {
@@ -2652,7 +2653,7 @@ class Angelleye_Offers_For_Woocommerce {
         try {
             include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
         } catch (Exception $ex) {
-            
+
         }
     }
 

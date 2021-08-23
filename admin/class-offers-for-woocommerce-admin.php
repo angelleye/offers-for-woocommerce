@@ -428,7 +428,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_action_editpost', array($this, 'angelleye_offer_for_woocommerce_admin_save_offer'), 10);
         add_action('angelleye_display_extra_product_details', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details'), 10, 1);
         add_action('angelleye_display_extra_product_details_email', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details_email'), 10, 1);
-        
     }
 
 // END - construct
@@ -818,7 +817,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offer_currency = get_post_meta($post_id, 'offer_currency', true);
         if( empty($offer_currency) ) {
             $offer_currency = get_woocommerce_currency();
-        } 
+        }
         switch ($column) {
             case 'offer_name' :
                 $val = get_post_meta($post_id, 'offer_name', true);
@@ -974,7 +973,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $screen = get_current_screen();
 
-        if (is_search() && $screen->post_type == 'woocommerce_offer') {
+        if (is_search() && !empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
 
             $found_blank_s = (isset($_GET['s']) && isset($_GET['orderby'])) ? TRUE : FALSE;
             if ($found_blank_s) {
@@ -999,7 +998,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $screen = get_current_screen();
 
-        if (is_search() && $screen->post_type == 'woocommerce_offer') {
+        if (is_search() && !empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
             $where = preg_replace(
                     "/\(\s*" . $wpdb->posts . ".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/", "(" . $wpdb->posts . ".post_title LIKE $1) OR (" . $wpdb->postmeta . ".meta_value LIKE $1)", $where);
         }
@@ -1016,7 +1015,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $screen = get_current_screen();
 
-        if (is_search() && $screen->post_type == 'woocommerce_offer') {
+        if (is_search() && !empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
             return "DISTINCT";
         }
 
@@ -1052,7 +1051,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             } elseif ($post->post_status == 'completed-offer') {
                 unset($actions['trash']);
             } elseif ($post->post_status == 'trash') {
-                
+
             } elseif ($post->post_status == 'publish' || $post->post_status == 'buyercountered-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="' . __('Offer Details', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Make Counter Offer', 'offers-for-woocommerce') . '</a>';
                 $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="' . __('Set Offer Status to Accepted', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-accept-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Accept', 'offers-for-woocommerce') . '</a>';
@@ -1183,7 +1182,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $screen = get_current_screen();
 
-        if (!empty($screen) && $screen->post_type == 'woocommerce_offer') {
+        if (!empty($screen) && !empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
             if ($post->post_status == 'accepted-offer') {
                 $states = array('<br><div id="woocommerce-offer-post-status-grid-icon-id-' . $post->ID . '" class="woocommerce-offer-post-status-grid-icon-div"><i class="woocommerce-offer-post-status-grid-icon accepted" title="' . __('Offer Status: Accepted', 'offers-for-woocommerce') . '">' . __('Accepted', 'offers-for-woocommerce') . '</i></div>');
             } elseif ($post->post_status == 'countered-offer') {
@@ -1227,7 +1226,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      */
     public function translate_published_post_label($screen) {
-        if ($screen->post_type == 'woocommerce_offer') {
+        if (!empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
             add_filter('gettext', array($this, 'my_get_translated_text_publish'));
             add_filter('ngettext', array($this, 'my_get_translated_text_publish'));
         }
@@ -1347,7 +1346,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $offer_currency = get_woocommerce_currency();
                 $currency_symbol = get_woocommerce_currency_symbol();
             }
-            
+
             if ($post->ID) {
                 $postmeta = get_post_meta($post->ID);
                 /* Below line of code fetch the post meta that are set during submit offer */
@@ -3748,7 +3747,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function my_admin_footer_function() {
         $screen = get_current_screen();
-        if ($screen->post_type == 'woocommerce_offer') {
+        if ( !empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
             add_thickbox();
             $coupon_list = get_posts('post_type=shop_coupon');
             ?>
