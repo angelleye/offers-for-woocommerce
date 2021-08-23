@@ -21,7 +21,11 @@ $product_price = angelleye_ofw_get_product_price_multi_currency($offer_args['pro
 <br>
 <p style="font-size: 16px;text-align: center;font-family: inherit;"><?php _e('To pay for this order please use the following link:', 'offers-for-woocommerce'); ?></p>
 <br>
-<p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['product_url']; ?><?php echo (strpos($offer_args['product_url'], '?')) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a></p>
+<?php if( !empty($offer_args['authorization']) ) { ?>
+    <p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['capture_redirect']; ?>"><?php echo __('Accept Offer', 'offers-for-woocommerce'); ?></a></p>
+<?php } else { ?>
+    <p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['product_url']; ?><?php echo (strpos($offer_args['product_url'], '?')) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a></p>
+<?php } ?>
 <?php if (isset($offer_args['final_offer']) && $offer_args['final_offer'] == '1') {
     echo '<br><br><p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('This is a final offer.', 'offers-for-woocommerce') . '</strong></p>';
 } else { ?>

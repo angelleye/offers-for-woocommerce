@@ -428,7 +428,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_action_editpost', array($this, 'angelleye_offer_for_woocommerce_admin_save_offer'), 10);
         add_action('angelleye_display_extra_product_details', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details'), 10, 1);
         add_action('angelleye_display_extra_product_details_email', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details_email'), 10, 1);
-        
     }
 
 // END - construct
@@ -818,7 +817,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offer_currency = get_post_meta($post_id, 'offer_currency', true);
         if( empty($offer_currency) ) {
             $offer_currency = get_woocommerce_currency();
-        } 
+        }
         switch ($column) {
             case 'offer_name' :
                 $val = get_post_meta($post_id, 'offer_name', true);
@@ -1052,7 +1051,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             } elseif ($post->post_status == 'completed-offer') {
                 unset($actions['trash']);
             } elseif ($post->post_status == 'trash') {
-                
+
             } elseif ($post->post_status == 'publish' || $post->post_status == 'buyercountered-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="' . __('Offer Details', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Make Counter Offer', 'offers-for-woocommerce') . '</a>';
                 $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="' . __('Set Offer Status to Accepted', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-accept-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Accept', 'offers-for-woocommerce') . '</a>';
@@ -1227,7 +1226,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      */
     public function translate_published_post_label($screen) {
-        if ( !empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
+        if (!empty($screen->post_type) && $screen->post_type == 'woocommerce_offer') {
             add_filter('gettext', array($this, 'my_get_translated_text_publish'));
             add_filter('ngettext', array($this, 'my_get_translated_text_publish'));
         }
@@ -1347,7 +1346,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $offer_currency = get_woocommerce_currency();
                 $currency_symbol = get_woocommerce_currency_symbol();
             }
-            
+
             if ($post->ID) {
                 $postmeta = get_post_meta($post->ID);
                 /* Below line of code fetch the post meta that are set during submit offer */
@@ -1776,7 +1775,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $new_email->template_plain = $template_name;
             $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
-            $new_email->trigger($offer_args);
+            $authorization_payment = get_post_meta( $offer_id ,'_authorization_payment_order_id', true);
+
+            if( empty($authorization_payment)) {
+	            $new_email->trigger( $offer_args );
+            } elseif ( !empty($authorization_payment) && $post_data->post_status != 'countered-offer') {
+	            $new_email->trigger( $offer_args );
+            }
         }
 
         // Insert WP comment
@@ -1816,6 +1821,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
 
         do_action('angelleye_ofw_offer_updated', $offer_args, $post_data);
+
+	    do_action('angelleye_ofw_capture_authorization_payment', $offer_id, $post_data->post_status, true );
     }
 
     /**
@@ -2151,6 +2158,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             'description' => __('Disable the "Make Offer" button for products that are on sale.', 'offers-for-woocommerce'),
                 )
         );
+
         /**
          * Add section - 'Display Settings'
          */
@@ -2745,8 +2753,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function ofw_manage_offer_admin($offer_id = null, $emails = null, $is_approve = true) {
         global $wpdb, $woocommerce;
-        if (isset($_POST["targetID"]) && !empty($_POST["targetID"])) {
-            $post_id = absint($_POST["targetID"]);
+        if (isset($_REQUEST["targetID"]) && !empty($_REQUEST["targetID"])) {
+            $post_id = absint($_REQUEST["targetID"]);
         } else {
             $post_id = $offer_id;
         }
@@ -2773,6 +2781,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
                 'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1))
             );
+
             $where = array('ID' => $post_id);
             $wpdb->update($table, $data_array, $where);
             $offer_notes = !empty($_POST['angelleye_woocommerce_offer_status_notes']) ? wc_clean(wp_slash($_POST['angelleye_woocommerce_offer_status_notes'])) : '';
@@ -2858,6 +2867,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
             }
+
+	        do_action('angelleye_ofw_capture_authorization_payment', $post_id, $post_status, true );
         }
     }
 
@@ -2891,8 +2902,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if (is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
             global $wpdb; // this is how you get access to the database
             $post_id = '';
-            if (isset($_POST['targetID']) && !empty($_POST['targetID'])) {
-                $post_id = absint($_POST["targetID"]);
+            if (isset($_REQUEST['targetID']) && !empty($_REQUEST['targetID'])) {
+                $post_id = absint($_REQUEST["targetID"]);
             }
             do_action('ofw_before_auto_decline_offer_admin', $post_id);
             $this->ofw_manage_offer_admin($post_id, '', false);
