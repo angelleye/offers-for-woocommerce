@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 /**
  * Offers for WooCommerce - public
