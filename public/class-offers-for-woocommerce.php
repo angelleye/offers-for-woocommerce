@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '2.3.6';
+    const VERSION = '2.3.8';
 
     /**
      *
@@ -139,7 +139,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         add_action('woocommerce_make_offer_form_end', array($this, 'woocommerce_make_offer_form_end_own'), 10, 1);
 
-        add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
+	    add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
 
         add_filter('woocommerce_coupons_enabled', array($this, 'ofw_coupons_enabled'), 10, 1);
 
@@ -393,7 +393,7 @@ class Angelleye_Offers_For_Woocommerce {
             $btn_output .= '</div>';
         }
 
-        return $btn_output;
+        return apply_filters( 'angelleye_offers_for_woocommerce_button_output', $btn_output);
     }
 
     /**
@@ -647,11 +647,12 @@ class Angelleye_Offers_For_Woocommerce {
                 'priority' => 20,
                 'callback' => array($this, 'angelleye_ofwc_display_custom_woocommerce_product_tab_content'));
         }
-        return $tabs;
+
+        return apply_filters( 'angelleye_offers_for_woocommerce_add_product_tab' ,$tabs);
     }
 
     /**
-     * Callback - Display "Make Offer" front-end form parts 
+     * Callback - Display "Make Offer" front-end form parts
      *
      * @since	0.1.0
      */
@@ -1042,6 +1043,7 @@ class Angelleye_Offers_For_Woocommerce {
         $post_data = $formData = $newPostData = array();
         $arr_main_array = wc_clean($_POST['value']);
         $nmArray = array();
+
         $arr_main_array = apply_filters('angelleye_ofw_pre_offer_request', $arr_main_array);
         if (function_exists('THEMECOMPLETE_EPO_CART')) {
             if (!empty($arr_main_array)) {
@@ -1115,6 +1117,9 @@ class Angelleye_Offers_For_Woocommerce {
         global $wpdb, $woocommerce; // this is how you get access to the database
         // Check if form was posted and select task accordingly
         if (isset($post["offer_product_id"]) && $post["offer_product_id"] != '') {
+
+	        $payment_authorization = !empty($post['make_offer_payment_authorization']) ? $post['make_offer_payment_authorization'] : '';
+
             // set postmeta original vars
             $formData['orig_offer_name'] = !empty($post['offer_name']) ? wc_clean($post['offer_name']) : '';
             $formData['orig_offer_company_name'] = !empty($post['offer_company_name']) ? wc_clean($post['offer_company_name']) : '';
@@ -1366,7 +1371,7 @@ class Angelleye_Offers_For_Woocommerce {
                     }
 
                     $data = array(
-                        'comment_post_ID' => '',
+                        'comment_post_ID' => $parent_post_id,
                         'comment_author' => 'admin',
                         'comment_author_email' => '',
                         'comment_author_url' => '',
@@ -1549,7 +1554,7 @@ class Angelleye_Offers_For_Woocommerce {
                 $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
             }
             $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
-            if ($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '') {
+            if ( $offer_is_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization)) ) {
                 $new_email->trigger($offer_args);
             }
             /**
@@ -1575,9 +1580,7 @@ class Angelleye_Offers_For_Woocommerce {
             $new_email->template_plain = 'woocommerce-offer-received.php';
             $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
 
-
-
-            if ($offer_is_auto_decline == '' && $option_for_admin_disable_email_auto_decline == '') {
+            if ($offer_is_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization) )) {
                 $new_email->trigger($offer_args);
             }
 
@@ -1585,6 +1588,7 @@ class Angelleye_Offers_For_Woocommerce {
             if (is_ajax()) {
                 do_action('auto_accept_auto_decline_handler', $offer_id, $product_id, $variant_id, $emails);
             }
+
             do_action('woocommerce_after_offer_submit', $is_counter_offer, $post, $offer_args);
 
             // Success
@@ -1782,12 +1786,7 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
         if ($purchasable === false && $_product->get_price() === '') {
-            $product_id = $_product->is_type('variation') ? $_product->get_parent_id() : $_product->get_id();
-            if ('yes' == $_product->get_meta('offers_for_woocommerce_enabled', true)) {
-                return true;
-            } else {
-                return $purchasable;
-            }
+            return true;
         } else {
             return $purchasable;
         }
@@ -1820,13 +1819,11 @@ class Angelleye_Offers_For_Woocommerce {
         global $woocommerce;
         // loop cart contents to find offers -- force price to offer price per
         foreach ($cart_object->cart_contents as $key => $value) {
-            if(isset($value['woocommerce_offer_id'])) {
-                if (get_post_status($value['woocommerce_offer_id'])) {
-                    // if offer item found
-                    if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
-                        $value['data']->set_price($value['woocommerce_offer_price_per']);
-                        $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
-                    }
+            if ( isset($value['woocommerce_offer_id']) && get_post_status($value['woocommerce_offer_id'])) {
+                // if offer item found
+                if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                    $value['data']->set_price($value['woocommerce_offer_price_per']);
+                    $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
                 }
             }
         }
@@ -2000,7 +1997,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $offer_id
      * @param type $emails
@@ -2035,8 +2032,10 @@ class Angelleye_Offers_For_Woocommerce {
                 'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
                 'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1))
             );
+
             $where = array('ID' => $post_id);
             $wpdb->update($table, $data_array, $where);
+
             $offer_notes = (isset($_POST['angelleye_woocommerce_offer_status_notes']) && $_POST['angelleye_woocommerce_offer_status_notes'] != '') ? wc_clean($_POST['angelleye_woocommerce_offer_status_notes']) : '';
             $recipient = get_post_meta($post_id, 'offer_email', true);
 
@@ -2094,6 +2093,7 @@ class Angelleye_Offers_For_Woocommerce {
             $new_email->template_html = $template_name;
             $new_email->template_plain = $template_name;
             $new_email->trigger($offer_args);
+
             $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "&nbsp;</span>";
             $comment_text .= $post_status_text;
             if (isset($offer_notes) && $offer_notes != '') {
@@ -2117,11 +2117,13 @@ class Angelleye_Offers_For_Woocommerce {
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
             }
+
+	        do_action('angelleye_ofw_capture_authorization_payment', $post_id, $post_status, false );
         }
     }
 
     /**
-     * 
+     *
      * @param type $offer_id
      * @param type $product_id
      * @param type $variant_id
@@ -2168,7 +2170,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * 
+     *
      * @param type $num_amount
      * @param type $num_total
      * @return type
@@ -2311,6 +2313,33 @@ class Angelleye_Offers_For_Woocommerce {
             return true;
         }
     }
+
+	public function get_paypal_order( $raw_custom ) {
+
+		$custom = json_decode( $raw_custom );
+		if ( $custom && is_object( $custom ) ) {
+			$order_id  = $custom->order_id;
+			$order_key = $custom->order_key;
+		} else {
+			// Nothing was found.
+			WC_Gateway_Paypal::log( 'Order ID and key were not found in "custom".', 'error' );
+			return false;
+		}
+
+		$order = wc_get_order( $order_id );
+
+		if ( ! $order ) {
+			$order_id = wc_get_order_id_by_order_key( $order_key );
+			$order    = wc_get_order( $order_id );
+		}
+
+		if ( ! $order || ! hash_equals( $order->get_order_key(), $order_key ) ) {
+			WC_Gateway_Paypal::log( 'Order Keys do not match.', 'error' );
+			return false;
+		}
+
+		return $order;
+	}
 
     public function set_session($key, $value) {
         WC()->session->$key = $value;
@@ -2542,7 +2571,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     /*
      * Fetch product variant price or regular/sale price.
-     *  @since	1.4.8      
+     *  @since	1.4.8
      */
 
     public function ofwc_get_product_detail($offer_id, $product_id, $variant_id) {
@@ -2623,7 +2652,7 @@ class Angelleye_Offers_For_Woocommerce {
         try {
             include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
         } catch (Exception $ex) {
-            
+
         }
     }
 
@@ -2681,12 +2710,10 @@ class Angelleye_Offers_For_Woocommerce {
 
     public function angelleye_set_offer_price_qty() {
         foreach (WC()->cart->cart_contents as $key => $value) {
-            if(isset($value['woocommerce_offer_price_per'])) {
-                if (get_post_status($value['woocommerce_offer_id'])) {
-                    if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
-                        $value['data']->set_price($value['woocommerce_offer_price_per']);
-                        WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
-                    }
+            if ( isset($value['woocommerce_offer_id']) && get_post_status($value['woocommerce_offer_id'])) {
+                if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
+                    $value['data']->set_price($value['woocommerce_offer_price_per']);
+                    WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
                 }
             }
         }
@@ -2710,5 +2737,4 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
     }
-
 }

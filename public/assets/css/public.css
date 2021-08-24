@@ -323,6 +323,11 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
     display: none;
 }
 
+div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section .woocommerce-make-offer-form-part-full label input {
+    display: inline-block;
+    max-width: 100%;
+    width: auto;
+}
 
 
 /* Portrait tablets and small desktops */

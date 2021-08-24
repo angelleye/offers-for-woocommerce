@@ -28,9 +28,9 @@
                         <?php if( isset($_product_attributes) && is_array($_product_attributes) && !empty($_product_attributes) ) { ?>
                         <li><span><?php echo __('Attributes:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo ucwords( implode( ", ", array_values($_product_attributes)) ); ?></li>
                         <?php } ?>
-                        <li><span><?php echo __('Regular Price:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ?  wc_price($_product_regular_price, array('currency' => array('currency' => $offer_currency))) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Regular Price:', 'offers-for-woocommerce'); ?>&nbsp;</span><?php echo (!empty($_product_regular_price)) ?  wc_price($_product_regular_price, array('currency' => $offer_currency)) : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php if($_product_sale_price) { ?>
-                        <li><span><?php echo __('Sale Price:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (!empty($_product_sale_price)) ? wc_price($_product_sale_price, array('currency' => array('currency' => $offer_currency)))  : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
+                        <li><span><?php echo __('Sale Price:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (!empty($_product_sale_price)) ? wc_price($_product_sale_price, array('currency' => $offer_currency))  : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
                         <?php } ?>
                         <?php if(isset($_product_stock) && $_product_stock == 0  && $_product_managing_stock ) { ?>
                             <li>
@@ -195,7 +195,7 @@
                         if( !empty($offer_amount) ) {
 
                             $offer_quantity_value = (isset($offer_quantity) && !empty($offer_quantity)) ? 'QTY '. $offer_quantity : 'QTY 0';
-                            $offer_amount_value = ( isset($offer_amount) && !empty($offer_amount) ) ? wc_price($offer_amount, array('currency' => array('currency' => $offer_currency))) : '';
+                            $offer_amount_value = ( isset($offer_amount) && !empty($offer_amount) ) ? wc_price($offer_amount, array('currency' => $offer_currency)) : '';
 
                             $offer_signle_entry = $offer_status_value .' '. $offer_quantity_value .' at '. $offer_amount_value;
                             $offer_history .= '<li>'. $offer_signle_entry .'</li>';
