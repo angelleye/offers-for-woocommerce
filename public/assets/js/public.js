@@ -403,7 +403,13 @@
                     }
 
                     jQuery('.tmcp-field').each(function(){
-                        data[ this.name ] = this.value;
+                            if (jQuery(this).is(':checkbox') || jQuery(this).is(':radio')) {
+                                if (jQuery(this).is(':checked')) {
+                                    data[ this.name ] = this.value;
+                                }
+                            } else  {
+                                data[ this.name ] = this.value;
+                            }
                     });
                     
                     post_data_array.push({product_data: data});
