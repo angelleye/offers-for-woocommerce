@@ -9,7 +9,7 @@
 if (!defined('ABSPATH'))
     exit;
 
-$offer_currency = get_post_meta($post_id, 'offer_currency', true);
+$offer_currency = get_post_meta($offer_args['offer_id'], 'offer_currency', true);
 if (empty($offer_currency)) {
     $offer_currency = get_woocommerce_currency();
 }
