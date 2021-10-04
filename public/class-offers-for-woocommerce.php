@@ -999,7 +999,13 @@ class Angelleye_Offers_For_Woocommerce {
                 )));
             }
             if ($this->is_recaptcha_enable()) {
-                wp_enqueue_script('offers-for-woocommerce-recaptcha', 'https://www.google.com/recaptcha/api.js', array('jquery'), self::VERSION);
+                $ofw_recaptcha_version = get_option('ofw_recaptcha_version', 'v2');
+                if($ofw_recaptcha_version === 'v2') {
+                    wp_enqueue_script('offers-for-woocommerce-recaptcha', 'https://www.google.com/recaptcha/api.js', array('jquery'), self::VERSION);
+                } else {
+                    $ofw_recaptcha_site_key_v3 = get_option('ofw_recaptcha_site_key_v3');
+                    wp_enqueue_script('offers-for-woocommerce-recaptcha', 'https://www.google.com/recaptcha/api.js?render='.$ofw_recaptcha_site_key_v3, array('jquery'), '', true);
+                }
             }
         }
     }
@@ -1137,21 +1143,47 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['offer_total'] = !empty($post['offer_total']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($post['offer_total'])) : '';
 
             if ($this->is_recaptcha_enable()) {
-                if (isset($post['g-recaptcha-response']) && !empty($post['g-recaptcha-response'])) {
-                    $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
-                    if (empty($response)) {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                        exit;
-                    } else {
-                        $response_array = json_decode($response, true);
-                        if ($response_array['success'] != true) {
+                $ofw_recaptcha_version = get_option('ofw_recaptcha_version', 'v2');
+                if($ofw_recaptcha_version === 'v2') {
+                    if (isset($post['g-recaptcha-response']) && !empty($post['g-recaptcha-response'])) {
+                        $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
+                        if (empty($response)) {
                             echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
                             exit;
+                        } else {
+                            $response_array = json_decode($response, true);
+                            if ($response_array['success'] != true) {
+                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
+                                exit;
+                            }
                         }
+                    } else {
+                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
+                        exit;
                     }
                 } else {
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                    exit;
+                    if(isset($post['ofw_google']) && !empty($post['ofw_google']) ) {
+                        $ofw_recaptcha_secret_key_v3 = get_option('ofw_recaptcha_secret_key_v3');
+                        $response_data = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
+                                'body'    => array('secret' => $ofw_recaptcha_secret_key_v3, 'response' => $post['ofw_google'])
+                            ) );
+                        if (is_wp_error($response_data)) {
+                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Google recaptcha verification Failed.', 'offers-for-woocommerce')));
+                            exit;
+                        }
+                        $body = wp_remote_retrieve_body($response_data);
+                        if( !empty($body)) {
+                            $response = json_decode($body);
+                            if(!$response->success ) {
+                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Google recaptcha verification Failed.', 'offers-for-woocommerce')));
+                                exit;
+                            }
+                            if($response->score < 0.2) {
+                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Very likely a bot.', 'offers-for-woocommerce')));
+                                exit;
+                            }
+                        } 
+                    }
                 }
             }
             /**
@@ -2381,13 +2413,25 @@ class Angelleye_Offers_For_Woocommerce {
         if (empty($ofw_enable_recaptcha) || $ofw_enable_recaptcha == 'no') {
             return false;
         }
-        $ofw_recaptcha_site_key = get_option('ofw_recaptcha_site_key');
-        if (empty($ofw_recaptcha_site_key)) {
-            return false;
-        }
-        $ofw_recaptcha_secret_key = get_option('ofw_recaptcha_secret_key');
-        if (empty($ofw_recaptcha_secret_key)) {
-            return false;
+        $ofw_recaptcha_version = get_option('ofw_recaptcha_version', 'v2');
+        if($ofw_recaptcha_version === 'v2') {
+            $ofw_recaptcha_site_key = get_option('ofw_recaptcha_site_key');
+            if (empty($ofw_recaptcha_site_key)) {
+                return false;
+            }
+            $ofw_recaptcha_secret_key = get_option('ofw_recaptcha_secret_key');
+            if (empty($ofw_recaptcha_secret_key)) {
+                return false;
+            }
+        } else {
+            $ofw_recaptcha_site_key_v3 = get_option('ofw_recaptcha_site_key_v3');
+            if (empty($ofw_recaptcha_site_key_v3)) {
+                return false;
+            }
+            $ofw_recaptcha_secret_key_v3 = get_option('ofw_recaptcha_secret_key_v3');
+            if (empty($ofw_recaptcha_secret_key_v3)) {
+                return false;
+            }
         }
         return true;
     }
