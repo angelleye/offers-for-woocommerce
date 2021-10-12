@@ -36,7 +36,7 @@ class AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper {
             'label' => __('Where to display PayPal Express Checkout button(s).', 'paypal-for-woocommerce'),
             'id' => 'ofw_recaptcha_version',
             'type' => 'select',
-            'class' => 'wc-enhanced-select angelleye_g_captch',
+            'class' => 'angelleye_g_captch',
             'options' => array(
                 'v2' => 'reCAPTCHA v2',
                 'v3' => 'reCAPTCHA v3',
