@@ -280,7 +280,31 @@
             do_action('make_offer_form_before_submit_button', $is_counter_offer, $on_exit_enabled);
             
             if($is_recaptcha_enable) {
-                 printf( '<div class="woocommerce-make-offer-form-section"><div class="g-recaptcha" data-sitekey="%s"></div></div>', get_option('ofw_recaptcha_site_key') );
+                 $ofw_recaptcha_version = get_option('ofw_recaptcha_version', 'v2');
+                 if($ofw_recaptcha_version === 'v2') {
+                    printf( '<div class="woocommerce-make-offer-form-section"><div class="g-recaptcha" data-sitekey="%s"></div></div>', get_option('ofw_recaptcha_site_key') );
+                 } else {
+                     echo '<input type="hidden" id="ofw_google" name="ofw_google" value="">';
+                     $ofw_recaptcha_site_key_v3 = get_option('ofw_recaptcha_site_key_v3');
+                      ?>
+                    <script>
+                        jQuery(document).ready(function(){
+                            var pfw_grecaptcha = function(  ) {
+                                grecaptcha.ready(function() {
+                                        grecaptcha.execute('<?php echo $ofw_recaptcha_site_key_v3; ?>', {action: 'submit'}).then(function(token) {
+                                            console.log('jignesh' + token);
+                                        document.getElementById("ofw_google").value = token;
+                                    });
+                                });
+                            };
+                            pfw_grecaptcha();
+                            setInterval(function(){ 
+                                pfw_grecaptcha();
+                            }, 110000);
+                        });
+                    </script>
+                    <?php
+                 }
             }
             ?>
             <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">

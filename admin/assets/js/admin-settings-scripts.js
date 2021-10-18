@@ -568,7 +568,55 @@
                 }
             });
             $( "#angelleye-settings-ul-checkboxes-sortable" ).disableSelection();
-            
+            $('#ofw_enable_recaptcha').change(function(){
+                if ($(this).is(':checked')) {
+                    $('#ofw_recaptcha_version').show();
+                    $('#ofw_recaptcha_version').closest('tr').show();
+                    if ($('#ofw_recaptcha_version').val() === 'v3') {
+                        $('#ofw_recaptcha_site_key').hide();
+                        $('#ofw_recaptcha_site_key').closest('tr').hide();
+                        $('#ofw_recaptcha_secret_key').hide();
+                        $('#ofw_recaptcha_secret_key').closest('tr').hide();
+                        $('#ofw_recaptcha_site_key_v3').show();
+                        $('#ofw_recaptcha_site_key_v3').closest('tr').show();
+                        $('#ofw_recaptcha_secret_key_v3').show();
+                        $('#ofw_recaptcha_secret_key_v3').closest('tr').show();
+                    } else {
+                        $('#ofw_recaptcha_site_key').show();
+                        $('#ofw_recaptcha_site_key').closest('tr').show();
+                        $('#ofw_recaptcha_secret_key').show();
+                        $('#ofw_recaptcha_secret_key').closest('tr').show();
+                        $('#ofw_recaptcha_site_key_v3').hide();
+                        $('#ofw_recaptcha_site_key_v3').closest('tr').hide();
+                        $('#ofw_recaptcha_secret_key_v3').hide();
+                        $('#ofw_recaptcha_secret_key_v3').closest('tr').hide();
+                    }
+                } else {
+                    $('.angelleye_g_captch').hide();
+                    $('.angelleye_g_captch').closest('tr').hide();
+                }
+            }).change();
+            $('#ofw_recaptcha_version').change(function () {
+                if ($(this).val() === 'v3') {
+                    $('#ofw_recaptcha_site_key').hide();
+                    $('#ofw_recaptcha_site_key').closest('tr').hide();
+                    $('#ofw_recaptcha_secret_key').hide();
+                    $('#ofw_recaptcha_secret_key').closest('tr').hide();
+                    $('#ofw_recaptcha_site_key_v3').show();
+                    $('#ofw_recaptcha_site_key_v3').closest('tr').show();
+                    $('#ofw_recaptcha_secret_key_v3').show();
+                    $('#ofw_recaptcha_secret_key_v3').closest('tr').show();
+                } else {
+                    $('#ofw_recaptcha_site_key').show();
+                    $('#ofw_recaptcha_site_key').closest('tr').show();
+                    $('#ofw_recaptcha_secret_key').show();
+                    $('#ofw_recaptcha_secret_key').closest('tr').show();
+                    $('#ofw_recaptcha_site_key_v3').hide();
+                    $('#ofw_recaptcha_site_key_v3').closest('tr').hide();
+                    $('#ofw_recaptcha_secret_key_v3').hide();
+                    $('#ofw_recaptcha_secret_key_v3').closest('tr').hide();
+                }
+            }).change();
         });
     });
 
