@@ -20,7 +20,7 @@ if( isset($offer_comments) ){
         echo '<li class="offer-comment-entry">';
             echo '<div class="offer-comment-entry-inner">';
                 echo '<div class="offer-comment-date">'.date('Y-m-d @ h:i:s A', strtotime($comment->comment_date)).'</div>';
-                echo '<div class="offer-comment-content">'.$comment->comment_content.'</div>';
+                echo '<div class="offer-comment-content">'.apply_filters( 'aeofw_meta_offer_activity_log', $comment->comment_content).'</div>';
             echo '</div>';
         echo '</li>';
     }
