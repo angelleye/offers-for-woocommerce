@@ -16,12 +16,12 @@
 <div id="aeofwc-close-lightbox-link"><a href="javascript:void(0);">&times;</a></div>
 <div id="tab_custom_ofwc_offer_tab_alt_message" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
-        <li><strong><?php echo __('Selection Required:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo __('Select product options above before making new offer.', 'offers-for-woocommerce'); ?></li>
+        <li><strong><?php echo __('Selection Required:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_option_required', __('Select product options above before making new offer.', 'offers-for-woocommerce')); ?></li>
     </ul>        
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_success" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-message" style="display: block !important;">
-        <li><strong><?php echo __('Offer Sent!', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo __('Your offer has been received and will be processed as soon as possible.', 'offers-for-woocommerce'); ?></li>
+        <li><strong><?php echo apply_filters('aeofwc_offer_success_heading',__('Offer Sent!', 'offers-for-woocommerce')); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_success_message', __('Your offer has been received and will be processed as soon as possible.', 'offers-for-woocommerce')); ?></li>
     </ul>
     <ul class="woocommerce-message" id="aeofwc-popup-counter-box" style="display: none">
         <li>
@@ -33,7 +33,7 @@
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_2" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
-        <li><strong><?php echo __('Error:', 'offers-for-woocommerce');?>&nbsp;</strong><?php echo __('There was an error sending your offer, please try again. If this problem persists, please contact us.', 'offers-for-woocommerce'); ?></li>
+        <li><strong><?php echo __('Error:', 'offers-for-woocommerce');?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_error_message',__('There was an error sending your offer, please try again. If this problem persists, please contact us.', 'offers-for-woocommerce')); ?></li>
     </ul>
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_custom" class="tab_custom_ofwc_offer_tab_inner_content">
@@ -44,7 +44,7 @@
 <?php if($parent_offer_error && $parent_offer_error_message) { ?>
 <div id="tab_custom_ofwc_offer_tab_alt_message_3" class="tab_custom_ofwc_offer_tab_inner_content tab_custom_ofwc_offer_tab_alt_message_2">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
-        <li><strong><?php echo __('Error:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo $parent_offer_error_message;?></li>
+        <li><strong><?php echo __('Error:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_parent_offer_error_message',$parent_offer_error_message); ?></li>
     </ul>
 </div>
 <?php } ?>

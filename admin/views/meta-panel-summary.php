@@ -16,10 +16,10 @@
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Product Details', 'offers-for-woocommerce'); ?></h5>
+                <h5><?php echo apply_filters( 'aeofw_meta_product_detail_title', __('Product Details', 'offers-for-woocommerce')); ?></h5>
                 <?php
                 if(!isset($_product)) {
-                    echo __('Product not found', 'offers-for-woocommerce');
+                    echo apply_filters( 'aeofw_meta_product_not_found_title', __('Product not found', 'offers-for-woocommerce'));
                 } else { ?>                    
                         
                     <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="<?php echo __('Click to view product', 'offers-for-woocommerce'); ?>"><?php echo $_product_image; ?></a></ul>
@@ -68,7 +68,7 @@
             if(!$is_anonymous_communication_enable) { ?>
                 <div class="angelleye-col-container">
                     <h5>
-                        <?php echo __('Buyer Details', 'offers-for-woocommerce'); ?>
+                        <?php echo apply_filters( 'aeofw_meta_buyer_detail_title', __('Buyer Details', 'offers-for-woocommerce')); ?>
                         <?php if( $author_data ) { ?>
                             <a id="angelleye-offer-buyer-stats-toggle" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('View offer history', 'offers-for-woocommerce');?>"><span id="angelleye-offer-buyer-stats-counter"><?php echo __('Buyer History', 'offers-for-woocommerce'). ': <span class="total-offers-count">'. $author_data->offer_counts['all'] . '</span>'; ?></span></a>
                         <?php } ?>
@@ -86,7 +86,7 @@
             <?php } ?>
             <div class="angelleye-col-container" id="angelleye-offer-buyer-history">
                 <?php if( $author_data ) { ?>
-                <h5><?php echo __('Buyer Offer History', 'offers-for-woocommerce'); ?>
+                <h5><?php echo apply_filters( 'aeofw_meta_buyer_history_title', __('Buyer Offer History', 'offers-for-woocommerce')); ?>
                     <a id="angelleye-offer-buyer-stats-close" class="angelleye-offer-buyer-stats-toggle" href="javascript:;" title="<?php echo __('Close offer history', 'offers-for-woocommerce');?>"><?php echo __('close', 'offers-for-woocommerce');?></a>
                 </h5>
                 <ul class="offer-buyer-history-values-wrap">
@@ -146,7 +146,7 @@
     <div class="angelleye-col-m-1-1">
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Original Offer', 'offers-for-woocommerce');?></h5>
+                <h5><?php echo apply_filters( 'aeofw_meta_original_offer_title', __('Original Offer', 'offers-for-woocommerce'));?></h5>
                 <div class="offer-original-meta-values-wrap">
                     <label for="original-offer-quantity"><?php echo __('Orig. Quantity', 'offers-for-woocommerce'); ?></label>
                     <div>
@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 <?php if( isset($query_counter_offers_history_result) && !empty($query_counter_offers_history_result) ) { ?>
-                <h5><?php echo __('Offer History', 'offers-for-woocommerce');?></h5>
+                <h5><?php echo apply_filters( 'aeofw_meta_offer_history_title', __('Offer History', 'offers-for-woocommerce')); ?></h5>
                 <?php 
                 
                 $offer_history = '<ul class="counter-offers-history-wrap">';
@@ -191,6 +191,8 @@
                         } elseif ( $offer_status == '5' ) {
                             $offer_status_value = 'Seller original offer';
                         }
+
+	                    $offer_status_value = apply_filters('aeofw_meta_offer_history_status', $offer_status_value);
                             
                         if( !empty($offer_amount) ) {
 
@@ -215,7 +217,7 @@
         </div>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Counter Offer', 'offers-for-woocommerce'); ?></h5>
+                <h5><?php echo apply_filters( 'aeofw_meta_counter_offer_title',__('Counter Offer', 'offers-for-woocommerce')); ?></h5>
                 <div class="offer-counter-offer-values-wrap">
                     <label for="offer-quantity"><?php echo __('Quantity', 'offers-for-woocommerce'); ?></label>
                     <div>
@@ -237,7 +239,7 @@
                     <div style="display: none" id="counter_offer_notice" class="note_content">
                         <p style="color: red;background: whitesmoke;border: solid 1px #f1f1f1;padding: 7px;"><?php _e('Original Price and Counter Price should not be same.','offers-for-woocommerce') ?></p>
                     </div>
-                    <label for="offer-shipping-cost"><input type="checkbox" id="ofwc_enable_shipping" name="enable_shipping_cost" value="1" style="width: auto !important;" <?php if( $postmeta['enable_shipping_cost'][0] == 1) echo 'checked'; ?>><?php echo __('Include Shipping with Offer', 'offers-for-woocommerce'); ?></label>
+                    <label for="offer-shipping-cost"><input type="checkbox" id="ofwc_enable_shipping" name="enable_shipping_cost" value="1" style="width: auto !important;" <?php if( $postmeta['enable_shipping_cost'][0] == 1) echo 'checked'; ?>><?php echo apply_filters('aeofw_meta_include_shipping_title', __('Include Shipping with Offer', 'offers-for-woocommerce')); ?></label>
                     <div class="angelleye-input-group offer_shipping">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                         <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
@@ -264,15 +266,15 @@
        <?php if(!$is_anonymous_communication_enable) { ?>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Offer Note to Buyer', 'offers-for-woocommerce'); ?></h5>
+                <h5><?php echo apply_filters( 'aeofw_meta_buyer_offer_note_title', __('Offer Note to Buyer', 'offers-for-woocommerce')); ?></h5>
                 <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class="" autocomplete="off"></textarea>
-                <p class="description"><?php echo __('Enter a note here to be included in the email notification to the buyer when the offer status is updated.', 'offers-for-woocommerce'); ?></p>
+                <p class="description"><?php echo apply_filters( 'aeofw_meta_buyer_offer_note_description', __('Enter a note here to be included in the email notification to the buyer when the offer status is updated.', 'offers-for-woocommerce')); ?></p>
             </div>
         </div>
         <?php } ?>
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
-                <h5><?php echo __('Offer Status', 'offers-for-woocommerce'); ?></h5>
+                <h5><?php echo apply_filters( 'aeofw_meta_offer_status_title', __('Offer Status', 'offers-for-woocommerce')); ?></h5>
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
                         <select id="woocommerce_offer_post_status" name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
@@ -291,7 +293,7 @@
                 <input type="hidden" name="post_previous_status" id="post_previous_status" value="<?php echo (isset($current_status_value)) ? $current_status_value : ''; ?>">
 
                 <div class="woocommerce-offer-final-offer-wrap">
-                    <label for="offer-final-offer"><?php echo __('Final Offer', 'offers-for-woocommerce'); ?></label>
+                    <label for="offer-final-offer"><?php echo apply_filters( 'aeofw_meta_final_offer_title',__('Final Offer', 'offers-for-woocommerce')); ?></label>
                     <div>
                         <input type="checkbox" name="offer_final_offer" id="offer-final-offer" value="1" <?php echo(isset($postmeta['offer_final_offer'][0]) && $postmeta['offer_final_offer'][0] == '1') ? 'checked="checked"' : ''?> autocomplete="off">
                     </div>
@@ -313,7 +315,7 @@
                 </div>
                 
                 <div class="woocommerce-offer-expiration-wrap">
-                    <label for="offer-expiration-date"><?php echo __('Offer Expires', 'offers-for-woocommerce'); ?></label>
+                    <label for="offer-expiration-date"><?php echo apply_filters( 'aeofw_meta_offer_expiry_title', __('Offer Expires', 'offers-for-woocommerce')); ?></label>
                     <?php
                         if(isset($postmeta['offer_expiration_date'][0]) && !empty($postmeta['offer_expiration_date'][0])){
                             $date_format = get_option('date_format');

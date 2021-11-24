@@ -571,6 +571,18 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     function add_offers_submenu_children() {
         $offers_manage_link_href = admin_url('edit.php?post_type=woocommerce_offer');
         $offers_settings_link_href = admin_url('options-general.php?page=offers-for-woocommerce');
+
+	    $li_html = array();
+	    $li_html['manage_offer'] = '<li class="woocommerce-offer-admin-submenu-item"><a href="'.$offers_manage_link_href.'">&nbsp;&#8211;&nbsp; '.__('Manage Offers', 'offers-for-woocommerce').'</a></li>';
+	    $li_html['ofw_settings'] = '<li class="woocommerce-offer-admin-submenu-item"><a id="woocommerce-offers-settings-link" href="'.$offers_settings_link_href.'">&nbsp;&#8211;&nbsp; '.__('Offers Settings', 'offers-for-woocommerce').'</a></li>';
+
+	    $li_html = apply_filters( 'aeofwc_offer_submenu_link_html', $li_html );
+        $html = '<ul id="woocommerce-offer-admin-submenu" class="">';
+        if( !empty($li_html) && is_array($li_html)) {
+	        $html .= implode('', $li_html );
+        }
+	    $html .='</ul>';
+
         global $submenu;
         if (isset($submenu['woocommerce']) && !empty($submenu['woocommerce'])) {
             foreach ($submenu['woocommerce'] as $key => $value) {
@@ -578,7 +590,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     // Add child submenu html
                     $submenu['woocommerce'][$key][0] .= "<script type='text/javascript'>
                             jQuery(window).load(function($){
-                                    jQuery('#woocommerce-offers-count').parent('a').after('<ul id=\'woocommerce-offer-admin-submenu\' class=\'\'><li class=\'woocommerce-offer-admin-submenu-item\'><a href=\'" . $offers_manage_link_href . "\'>&nbsp;&#8211;&nbsp;" . __('Manage Offers', 'offers-for-woocommerce') . "</a></li><li class=\'woocommerce-offer-admin-submenu-item\'><a id=\'woocommerce-offers-settings-link\' class=\'woocommerce-offer-submenu-link\' href=\'" . $offers_settings_link_href . "\'>&nbsp;&#8211;&nbsp;" . __('Offers Settings', 'offers-for-woocommerce') . "</a></li></ul>');
+                                    jQuery('#woocommerce-offers-count').parent('a').after('$html');
                             });</script>";
                 }
             }
@@ -688,6 +700,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 <?php woocommerce_wp_checkbox(array('value' => $field_value_auto_decline_enabled, 'cbvalue' => $field_callback_auto_decline_enabled, 'id' => '_offers_for_woocommerce_auto_decline_enabled', 'label' => __('Enable Auto Decline Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically decline offers based on the percentage set.', 'offers-for-woocommerce'))); ?>
                 <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __('Auto Decline Percentage', 'offers-for-woocommerce'); ?></label><input type="number" placeholder="<?php echo __('Enter Percentage', 'offers-for-woocommerce'); ?>" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr('Any offer below the percentage entered here will be automatically declined.') . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
             </div>
+
+            <?php do_action('aeofw_offers_tab_options', $post->ID, $post ); ?>
+
         </div>
         <?php
     }
@@ -1285,7 +1300,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $screens = array('woocommerce_offer');
         foreach ($screens as $screen) {
             add_meta_box(
-                    'section_id_offer_comments', __('Offer Activity Log', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_comments_callback'), $screen, 'side', 'default'
+                    'section_id_offer_comments', apply_filters('aeofw_offer_activity_log_heading_label', __('Offer Activity Log', 'offers-for-woocommerce')), array($this, 'add_meta_box_offer_comments_callback'), $screen, 'side', 'default'
             );
         }
     }
@@ -1316,11 +1331,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $screen = get_current_screen();
         $screens = array('woocommerce_offer');
         foreach ($screens as $screens_value) {
-            add_meta_box(
-                    'section_id_offer_summary', ( isset($screen->action) && $screen->action == 'add' ) ? __('Make Offer', 'offers-for-woocommerce') : __('Offer Details', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_summary_callback'), $screens_value, 'normal', 'high'
-            );
+            add_meta_box( 'section_id_offer_summary', ( isset($screen->action) && $screen->action == 'add' ) ? apply_filters( 'aeofw_offer_detail_heading_label', __('Make Offer', 'offers-for-woocommerce')) : apply_filters( 'aeofw_offer_detail_heading_label', __('Offer Details', 'offers-for-woocommerce')), array($this, 'add_meta_box_offer_summary_callback'), $screens_value, 'normal', 'high' );
         }
-        add_meta_box('ofwc_product_offers', __('Offer History', 'offers-for-woocommerce'), array($this, 'add_meta_box_product_offers_callback'), 'product', 'normal');
+        add_meta_box('ofwc_product_offers', apply_filters( 'aeofw_product_offer_history_heading_label', __('Offer History', 'offers-for-woocommerce')), array($this, 'add_meta_box_product_offers_callback'), 'product', 'normal');
     }
 
     /**
@@ -1544,7 +1557,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $screens = array('woocommerce_offer');
         foreach ($screens as $screen) {
             add_meta_box(
-                    'section_id_offer_addnote', __('Add Offer Note', 'offers-for-woocommerce'), array($this, 'add_meta_box_offer_addnote_callback'), $screen, 'side', 'low'
+                    'section_id_offer_addnote', apply_filters('aeofw_offer_add_note_heading_label', __('Add Offer Note', 'offers-for-woocommerce')), array($this, 'add_meta_box_offer_addnote_callback'), $screen, 'side', 'low'
             );
         }
     }
