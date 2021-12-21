@@ -178,6 +178,9 @@ class Angelleye_Offers_For_Woocommerce {
         add_filter('wc_aelia_cs_selected_currency', array($this, 'wc_aelia_cs_selected_currency'), 99, 1);
         add_action('wp_loaded', array($this, 'ofw_changed_currency'), 10);
         add_action('before_add_offer_to_cart', array($this, 'before_add_offer_to_cart'), 10, 1);
+        add_filter('rp_wcdpd_process_cart_discounts', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
+        add_filter('rp_wcdpd_process_product_pricing', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
+
 
         /* this will display the data of Product addon if plugin is activated - Start */
 
@@ -2789,5 +2792,21 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+    }
+    
+    public function angelleye_ofw_remove_discount_calculation($boolean) {
+        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        if (!is_admin() && !empty(WC()->cart) && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
+            foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
+                if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
+                    if (!empty(WC()->cart->get_applied_coupons())) {
+                        WC()->cart->set_applied_coupons(array());
+                        WC()->cart->calculate_totals();
+                    }
+                    return false;
+                }
+            }
+        }
+        return $boolean;
     }
 }
