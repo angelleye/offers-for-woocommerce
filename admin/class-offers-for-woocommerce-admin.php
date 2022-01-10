@@ -3584,7 +3584,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         // Check that the user hasn't already clicked to ignore the message
         if (!get_user_meta($user_id, 'angelleye_offers_for_woocommerce_ignore_01')) {
-            printf('<div class="updated"> <p> %s  | <a href="%2$s">Hide Notice</a></p> </div>', __('<strong>Offers for WooCommerce has been deactivated; WooCommerce is required.</strong><br />Please make sure that WooCommerce is installed and activated before activating Offers for WooCommerce.', 'offers-for-woocommerce'), '?angelleye_offers_for_woocommerce_ignore_01=0');
+            printf('<div class="updated error"> <p> %s  | <a href="%2$s">Hide Notice</a></p> </div>', __('<strong>Offers for WooCommerce has been deactivated; WooCommerce is required.</strong><br />Please make sure that WooCommerce is installed and activated before activating Offers for WooCommerce.', 'offers-for-woocommerce'), '?angelleye_offers_for_woocommerce_ignore_01=0');
         }
     }
 
