@@ -1230,7 +1230,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     echo "<span class='post-state'>$state$sep</span>";
                 }
             }
-            return;
+            return array();
         } else {
             return $states;
         }
