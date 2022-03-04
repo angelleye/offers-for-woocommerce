@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 2.3.15 - 03.04.2022 =
+* Fix - Resolves display_post_states filter issue. ([OFW-254](https://github.com/angelleye/offers-for-woocommerce/pull/492))
 
 = 2.3.14 - 01.10.2022 =
 * Tweak - Resolves PHP fatal error when WC plugin is not active. ([OFW-244](https://github.com/angelleye/offers-for-woocommerce/pull/486))
