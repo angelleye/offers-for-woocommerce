@@ -183,6 +183,7 @@ class Angelleye_Offers_For_Woocommerce {
             add_action('before_add_offer_to_cart', array($this, 'before_add_offer_to_cart'), 10, 1);
             add_filter('rp_wcdpd_process_cart_discounts', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
             add_filter('rp_wcdpd_process_product_pricing', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
+            add_filter('adp_product_get_price', array($this, 'ofw_adp_product_get_price'), 10, 5);
 
             /* this will display the data of Product addon if plugin is activated - Start */
 
@@ -2805,6 +2806,13 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
         return $boolean;
+    }
+    
+    public function ofw_adp_product_get_price($price, $product, $variation, $qty, $thirdPartyData) {
+        if (isset($thirdPartyData['woocommerce_offer_price_per'])) {        
+            $price = floatval($thirdPartyData['woocommerce_offer_price_per']);    
+        }
+        return $price;
     }
 
 }
