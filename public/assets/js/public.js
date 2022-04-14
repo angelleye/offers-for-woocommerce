@@ -564,8 +564,7 @@
 
             return false;
         }
-
-        $(window).load(function () {
+        $(window).on('load', function() {
             if ($(".offers-for-woocommerce-make-offer-button-single-product").hasClass("offers-for-woocommerce-make-offer-button-single-product-lightbox"))
             {
                 $("#aeofwc-close-lightbox-link").css('display', 'block');

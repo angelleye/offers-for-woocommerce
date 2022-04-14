@@ -589,7 +589,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if ($submenu['woocommerce'][$key][2] == 'edit.php?post_type=woocommerce_offer') {
                     // Add child submenu html
                     $submenu['woocommerce'][$key][0] .= "<script type='text/javascript'>
-                            jQuery(window).load(function($){
+                            jQuery(window).on('load', function($) {
                                     jQuery('#woocommerce-offers-count').parent('a').after('$html');
                             });</script>";
                 }
@@ -963,7 +963,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
 
     public function my_pre_get_posts($query) {
-        if (is_admin() && $query->is_main_query() && $query->query['post_type'] == 'woocommerce_offer') {
+        if (is_admin() && $query->is_main_query() && isset($query->query['post_type']) && $query->query['post_type'] == 'woocommerce_offer') {
 
             $arg_post_type = get_query_var('post_type');
             $arg_post_status = get_query_var('post_status');
