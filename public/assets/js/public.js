@@ -47,7 +47,7 @@
                 angelleye_populate_form($('.cart'), offers_for_woocommerce_js_params.angelleye_post_data);
             }
 
-            $('.ofwc_no_price_product').remove();
+            $('.ofwc_no_price_product .quantity, .ofwc_no_price_product .single_add_to_cart_button').remove();
 
             $(".variations_form").on("hide_variation", function () {
                 if ($('.single_add_to_cart_button').hasClass('disabled')) {
