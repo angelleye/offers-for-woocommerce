@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 5.9.1
-Stable tag: 2.3.16
+Tested up to: 5.9.3
+Stable tag: 2.3.17
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,11 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.17 - 05.19.2022 =
+* Tweak - Display offer button for empty product price. ([OFW-263](https://github.com/angelleye/offers-for-woocommerce/pull/495))
+* Fix - Resolves a PHP notice. ([OFW-256](https://github.com/angelleye/offers-for-woocommerce/pull/494))
+
 
 = 2.3.16 - 03.07.2022 =
 * Feature - Adds Advanced Dynamic Pricing for WooCommerce (Pro) Compatibility. ([OFW-252](https://github.com/angelleye/offers-for-woocommerce/pull/493))
