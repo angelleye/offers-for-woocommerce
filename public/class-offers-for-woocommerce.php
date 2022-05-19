@@ -1830,28 +1830,43 @@ class Angelleye_Offers_For_Woocommerce {
      * https://github.com/angelleye/offers-for-woocommerce/issues/156
      */
     public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $product) {
-        if ($purchasable === false && $product->exists() && ( 'publish' === $product->get_status() || current_user_can( 'edit_post', $product->get_id() ) ) && 'yes' == $product->get_meta('offers_for_woocommerce_enabled', true)) {
-            return true;
-        } else {
-            return $purchasable;
+        try {
+            if ($purchasable === false && $product->exists() && ( 'publish' === $product->get_status() || current_user_can( 'edit_post', $product->get_id() ) ) && 'yes' == $product->get_meta('offers_for_woocommerce_enabled', true)) {
+                return true;
+            } else {
+                return $purchasable;
+            }
+        } catch (Exception $ex) {
+
         }
+        
     }
     
     public function angelleye_ofwc_woocommerce_variation_is_purchasable($purchasable, $variable) {
-        if ($purchasable === false && 'yes' == get_post_meta($variable->get_parent_id(), 'offers_for_woocommerce_enabled', true)) {
-            return true;
-        } else {
-            return $purchasable;
+        try {
+            if ($purchasable === false && 'yes' == get_post_meta($variable->get_parent_id(), 'offers_for_woocommerce_enabled', true)) {
+                return true;
+            } else {
+                return $purchasable;
+            }
+        } catch (Exception $ex) {
+
         }
+        
     }
 
 
     public function angelleye_ofwc_woocommerce_hide_invisible_variations($hide, $product_id) {
-        if($hide === true && 'yes' == get_post_meta($product_id, 'offers_for_woocommerce_enabled', true)) {
-            return false;
-        } else {
-            return true;
+        try {
+            if($hide === true && 'yes' == get_post_meta($product_id, 'offers_for_woocommerce_enabled', true)) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception $ex) {
+
         }
+        
     }
 
     /** API Response Handler
