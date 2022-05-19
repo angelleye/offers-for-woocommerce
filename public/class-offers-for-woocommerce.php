@@ -152,7 +152,10 @@ class Angelleye_Offers_For_Woocommerce {
             add_action('woocommerce_shipping_init', array($this, 'your_shipping_method_init'));
             add_filter('woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2);
             add_shortcode('aeofwc_highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10);
+            
+            add_filter('woocommerce_hide_invisible_variations', array($this, 'angelleye_ofwc_woocommerce_hide_invisible_variations'), 999, 2);
             add_filter('woocommerce_is_purchasable', array($this, 'angelleye_ofwc_woocommerce_is_purchasable'), 999, 2);
+            add_filter('woocommerce_variation_is_purchasable', array($this, 'angelleye_ofwc_woocommerce_variation_is_purchasable'), 999, 2);
             add_action('woocommerce_before_customer_login_form', array($this, 'ofw_before_customer_login_form'));
             add_filter('woocommerce_login_redirect', array($this, 'ofw_login_redirect'), 10, 1);
             add_filter('woocommerce_registration_redirect', array($this, 'ofw_login_redirect'), 10, 1);
@@ -1826,11 +1829,28 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * https://github.com/angelleye/offers-for-woocommerce/issues/156
      */
-    public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $_product) {
-        if ($purchasable === false && $_product->get_price() === '') {
+    public function angelleye_ofwc_woocommerce_is_purchasable($purchasable, $product) {
+        if ($purchasable === false && $product->exists() && ( 'publish' === $product->get_status() || current_user_can( 'edit_post', $product->get_id() ) ) && 'yes' == $product->get_meta('offers_for_woocommerce_enabled', true)) {
             return true;
         } else {
             return $purchasable;
+        }
+    }
+    
+    public function angelleye_ofwc_woocommerce_variation_is_purchasable($purchasable, $variable) {
+        if ($purchasable === false && 'yes' == get_post_meta($variable->get_parent_id(), 'offers_for_woocommerce_enabled', true)) {
+            return true;
+        } else {
+            return $purchasable;
+        }
+    }
+
+
+    public function angelleye_ofwc_woocommerce_hide_invisible_variations($hide, $variable) {
+        if($hide === true && 'yes' == get_post_meta($variable->get_parent_id(), 'offers_for_woocommerce_enabled', true)) {
+            return false;
+        } else {
+            return true;
         }
     }
 

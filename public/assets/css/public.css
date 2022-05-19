@@ -289,7 +289,7 @@ body.archive.woocommerce-page.ofwc-shop-page a.button.add_to_cart_button { float
     position: absolute;
     top: 1em;
 }
-.ofwc_no_price_product{display: none;}
+
 .single-product .button.offers-for-woocommerce-make-offer-button-single-product.disabled {opacity: .2;}
 .single_variation_wrap_angelleye{
     display: inline-block;
