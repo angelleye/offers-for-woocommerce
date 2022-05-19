@@ -1846,8 +1846,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
 
-    public function angelleye_ofwc_woocommerce_hide_invisible_variations($hide, $variable) {
-        if($hide === true && 'yes' == get_post_meta($variable->get_parent_id(), 'offers_for_woocommerce_enabled', true)) {
+    public function angelleye_ofwc_woocommerce_hide_invisible_variations($hide, $product_id) {
+        if($hide === true && 'yes' == get_post_meta($product_id, 'offers_for_woocommerce_enabled', true)) {
             return false;
         } else {
             return true;
