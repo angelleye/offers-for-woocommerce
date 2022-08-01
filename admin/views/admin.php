@@ -23,6 +23,7 @@
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=general_settings" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('General Settings', 'offers-for-woocommerce'); ?></a>
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('Display Settings', 'offers-for-woocommerce'); ?></a>
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=tools" class="nav-tab <?php echo $active_tab == 'tools' ? 'nav-tab-active' : ''; ?>"><?php echo __('Tools', 'offers-for-woocommerce'); ?></a>
+        <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=email_reminders" class="nav-tab <?php echo $active_tab == 'email_reminders' ? 'nav-tab-active' : ''; ?>"><?php echo __( 'Email Reminders', 'offers-for-woocommerce' ); ?></a>
         <?php do_action('offers_for_woocommerce_setting_tab_content_save'); ?>
         <?php do_action('offers_for_woocommerce_setting_tab'); ?>
     </h2>
@@ -381,6 +382,199 @@
         submit_button();
     ?>
         </form>
-    <?php } ?>
+    <?php } elseif ( $active_tab == "email_reminders" ) {
+        require_once( 'class-offers-for-woocommerce-email-reminder.php' );
+        $email_reminder_class = new AngellEYE_Offers_for_Woocommerce_Email_reminder();
+
+        if ( ! empty( $_GET['is_form'] ) && sanitize_text_field( $_GET['is_form'] ) == 1 ) {
+            global $woocommerce;
+            $form_title              = __( 'Add New Email Reminder', 'offers-for-woocommerce' );
+            $action_value            = ! empty( $_GET['id'] ) ? 'update' : 'edit';
+            $is_form_template_update = ! empty( $_GET['id'] ) ? sanitize_text_field( $_GET['id'] ) : '';
+            if ( ! empty( $is_form_template_update ) ) {
+                $current_email_template = $email_reminder_class->get_template_by_id( sanitize_text_field( $_GET['id'] ) );
+                $template_id            = ! empty( $_GET['id'] ) ? sanitize_text_field( $_GET['id'] ) : '';
+                $template_name          = ! empty( $current_email_template['ofw_template_name'] ) ? sanitize_text_field( $current_email_template['ofw_template_name'] ) : ' ';
+                $product_ids            = $email_reminder_class->get_product_ids( sanitize_text_field( $current_email_template['id'] ) );
+                $subject_edit           = !empty( $current_email_template['ofw_email_subject'] ) ? sanitize_text_field( $current_email_template['ofw_email_subject'] ) : "";
+                $frequency_edit         = !empty( $current_email_template['ofw_email_frequency'] ) ? sanitize_text_field( $current_email_template['ofw_email_frequency'] ) : "";
+                $initial_data           = !empty( $current_email_template['ofw_email_body'] ) ? wp_kses_post( $current_email_template['ofw_email_body'] ) : "";
+                $frequency_unit         = !empty( $current_email_template['ofw_email_frequency_unit'] ) ? sanitize_text_field( $current_email_template['ofw_email_frequency_unit'] ) : "";
+            }
+            ?>
+            <form method="post"
+                  action="<?php echo admin_url( 'options-general.php?page=offers-for-woocommerce&tab=email_reminders' ); ?>"
+                  id="ofw_email_reminders_options_form">
+                <?php
+                if ( ! empty( $is_form_template_update ) ) {
+                    ?>
+                    <input type="hidden" name="template_id" value="<?php echo $template_id; ?>">
+                <?php } ?>
+                <input type="hidden" name="email_reminder_action" value="<?php echo $action_value; ?>">
+                <div id="poststuff">
+                    <div> <!-- <div class="postbox" > -->
+                        <h3><?php esc_html_e( $form_title, 'offers-for-woocommerce' ); // phpcs:ignore ?></h3>
+                        <hr/>
+                        <div>
+                            <table class="form-table" id="add_edit_template">
+                                <tr>
+                                    <th>
+                                        <label for="ofw_email_reminder_is_active"><b><?php esc_html_e( 'Activate Template Now?', 'offers-for-woocommerce' ); ?></b></label>
+                                    </th>
+                                    <td>
+                                        <label class="toggler-switch">
+                                            <input type="checkbox" name="ofw_email_reminder_is_active"
+                                                   value="true" <?php isset( $current_email_template['ofw_email_reminder_is_active'] ) ? checked( $current_email_template['ofw_email_reminder_is_active'], true ) : false ?> />
+                                            <span class="er-toggler"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="ofw_template_name"><b><?php esc_html_e( 'Template Name:', 'offers-for-woocommerce' ); ?></b></label>
+                                    </th>
+                                    <td>
+                                        <input required type="text" name="ofw_template_name" id="ofw_template_name"
+                                               class="ofw-ca-trigger-input"
+                                               value="<?php echo !empty( $template_name ) ? esc_attr( $template_name ) : ""; ?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="ofw_email_reminders_product_list"
+                                               id=""><b><?php esc_html_e( 'Send For Only:', 'offers-for-woocommerce' ); ?></b>
+                                        </label>
+                                    </th>
+                                    <td>
+                                        <p class="form-field">
+                                            <select class="wc-product-search" multiple="multiple"
+                                                    style="width: 100% !important;" name="product_ids[]"
+                                                    data-placeholder="<?php esc_attr_e( 'Search for a product:', 'woocommerce' ); ?>"
+                                                    data-action="woocommerce_json_search_products_and_variations" >
+                                                <?php if( !empty( $product_ids ) ){
+                                                    foreach ( $product_ids as $product_id ) {
+                                                        $product = wc_get_product( $product_id );
+                                                        if ( is_object( $product ) ) {
+                                                            echo '<option value="' . esc_attr( $product_id ) . '"' . selected( true, true, false ) . '>' . esc_html( wp_strip_all_tags( $product->get_formatted_name() ) ) . '</option>';
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                            <span class="required-warning"></span>
+                                            <?php echo wc_help_tip( __( 'Products that the coupon will be applied to, or that need to be in the cart in order for the "Fixed cart discount" to be applied.', 'woocommerce' ) ); ?>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="ofw_email_subject"><b><?php esc_html_e( 'Email Subject:', 'offers-for-woocommerce' ); ?></b></label>
+                                    </th>
+                                    <td>
+                                        <input required type="text" name="ofw_email_subject" id="ofw_email_subject"
+                                               class="ofw-ca-trigger-input"
+                                               value=" <?php echo !empty( $subject_edit ) ? esc_attr( $subject_edit ) : ""; ?> ">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="ofw_email_body"><b><?php esc_html_e( 'Email Body:', 'offers-for-woocommerce' ); ?></b></label>
+                                    </th>
+                                    <td>
+                                        <?php
+                                        $initial_data = !empty( $initial_data ) ? wp_kses_post( $initial_data ) : "";
+                                        wp_editor(
+                                            $initial_data,
+                                            'ofw_email_body',
+                                            array(
+                                                'media_buttons' => true,
+                                                'textarea_rows' => 15,
+                                                'tabindex'      => 4,
+                                                'tinymce'       => array(
+                                                    'theme_advanced_buttons1' => 'bold,italic,underline,|,bullist,numlist,blockquote,|,link,unlink,|,spellchecker,fullscreen,|,formatselect,styleselect',
+                                                ),
+                                            )
+                                        );
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="ofw_email_frequency"><b><?php esc_html_e( 'Send This Email:', 'offers-for-woocommerce' ); ?></b></label>
+                                    </th>
+                                    <td>
+                                        <input required style="width:15%" type="number" name="ofw_email_frequency"
+                                               min="0" id="ofw_email_frequency" class="ofw-ca-trigger-input"
+                                               value="<?php echo esc_attr( $frequency_edit ); ?>">
+                                        <select name="ofw_email_frequency_unit" id="ofw_email_frequency_unit" required>
+                                            <?php
+                                            $days_or_hours = array(
+                                                'minute' => esc_html__( 'Minute(s)', 'offers-for-woocommerce' ),
+                                                'hour'   => esc_html__( 'Hour(s)', 'offers-for-woocommerce' ),
+                                                'day'    => esc_html__( 'Day(s)', 'offers-for-woocommerce' ),
+                                            );
+                                            foreach ( $days_or_hours as $key => $value ) {
+                                                printf(
+                                                    "<option %s value='%s'>%s</option>\n",
+                                                    selected( $key, $frequency_unit, false ),
+                                                    esc_attr( $key ),
+                                                    esc_attr( $value )
+                                                );
+                                            }
+                                            ?>
+                                        </select>
+                                        <span class="description">
+		                                    <?php esc_html_e( 'before offer is expired.', 'offers-for-woocommerce' ); ?>
+										</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php
+                                    $current_user = wp_get_current_user(); ?>
+                                    <th>
+                                        <label for="ofw_email_preview"><b><?php esc_html_e( 'Send Test Email To:', 'offers-for-woocommerce' ); ?></b></label>
+                                    </th>
+                                    <td>
+                                        <input class="ofw-ca-trigger-input" type="text" id="ofw_send_test_email"
+                                               name="send_test_email"
+                                               value="<?php echo esc_attr( $current_user->user_email ); ?>"
+                                               class="ofw-ca-trigger-input">
+                                        <input class="button" type="button"
+                                               value=" <?php esc_html_e( 'Send a test email', 'offers-for-woocommerce' ); ?>"
+                                               id="ofw_preview_email"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label id="mail_response_msg"> </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                wp_nonce_field( 'submit_email-reminder', 'email_reminder_nonce' );
+                ?>
+                <input type="submit" name="Submit" class="button-primary" value="Save Email Reminder"/>
+
+            </form>
+            <?php
+        } else {
+            ?>
+
+            <?php
+            require_once( 'class-offers-for-woocommerce-email-reminder-table.php' );
+            $email_reminder_table = new AngellEYE_Offers_for_Woocommerce_Email_reminder_table();
+            echo '<div class="wrap" style="padding: 0;"><h2>Email Reminders</h2>';
+            ?>
+            <div class="btn-cont">
+                <a class="button button-primary add-new-template" href="<?php echo admin_url( 'options-general.php?page=offers-for-woocommerce&tab=email_reminders&add_new=1&is_form=1' ); ?>"><?php esc_html_e( 'Add New Template', 'offers-for-woocommerce' ); ?></a>
+            </div>
+            <?php
+            $email_reminder_table->prepare_items();
+            $email_reminder_table->display();
+        }
+    }  ?>
     <?php do_action('offers_for_woocommerce_setting_tab_content'); ?>
 </div>

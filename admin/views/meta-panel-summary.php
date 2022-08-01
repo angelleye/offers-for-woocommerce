@@ -319,7 +319,8 @@
                     <?php
                         if(isset($postmeta['offer_expiration_date'][0]) && !empty($postmeta['offer_expiration_date'][0])){
                             $date_format = get_option('date_format');
-                            $expiry_date_formated = date($date_format, strtotime($postmeta['offer_expiration_date'][0]));
+                            $time_format = get_option('time_format');
+                            $expiry_date_formated = date($date_format . ' '. $time_format, strtotime($postmeta['offer_expiration_date'][0]));
                         }
                         else{
                             $expiry_date_formated = '';

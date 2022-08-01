@@ -84,13 +84,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * XXX
          * @since	0.1.0
          */
-        add_action('manage_woocommerce_offer_posts_custom_column', array($this, 'get_woocommerce_offer_column'), 2, 10);
+        add_action('manage_woocommerce_offer_posts_custom_column', array(
+                $this,
+            'get_woocommerce_offer_column'
+        ), 2, 10);
 
         /**
          * XXX
          * @since	0.1.0
          */
-        add_filter('manage_edit-woocommerce_offer_sortable_columns', array($this, 'woocommerce_offer_sortable_columns'));
+        add_filter('manage_edit-woocommerce_offer_sortable_columns', array(
+                $this,
+            'woocommerce_offer_sortable_columns'
+        ));
 
         /**
          * XXX
@@ -428,6 +434,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_action_editpost', array($this, 'angelleye_offer_for_woocommerce_admin_save_offer'), 10);
         add_action('angelleye_display_extra_product_details', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details'), 10, 1);
         add_action('angelleye_display_extra_product_details_email', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details_email'), 10, 1);
+        /**
+         * Email Reminders
+         */
+        add_action( 'admin_enqueue_scripts', __class__ . '::load_email_templates_script', 15 );
     }
 
 // END - construct
@@ -2536,6 +2546,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function enqueue_admin_styles() {
         wp_enqueue_style('offers-for-woocommerce-admin', plugins_url('assets/css/offers-for-woocommerce-admin.css', __FILE__), array(), Angelleye_Offers_For_Woocommerce::VERSION);
+        wp_enqueue_style( 'datetimepicker', plugins_url( 'assets/css/jquery.datetimepicker.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
         if (!isset($this->plugin_screen_hook_suffix)) {
             return;
         }
@@ -2561,6 +2572,42 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // admin styles - edit product
             wp_enqueue_style('offers-for-woocommerce-angelleye-offers-edit-product-styles', plugins_url('assets/css/edit-product.css', __FILE__), array(), Angelleye_Offers_For_Woocommerce::VERSION);
         }
+        if ( "settings_page_offers-for-woocommerce" == $screen->id && is_admin() ){
+            wp_enqueue_style( 'woocommerce_admin_styles' );
+        }
+    }
+
+    public static function load_email_templates_script() {
+        //Send Test Emails
+        wp_enqueue_script( 'offers-for-woocommerce-angelleye-offers-admin-settings-test-email-scripts',
+            plugins_url( '/assets/js/admin-settings-test-email-scripts.js', __FILE__ ),
+            array( 'jquery' ),
+            Angelleye_Offers_For_Woocommerce::VERSION,
+            false );
+        $current_user = wp_get_current_user();
+        $local_vars   = array(
+            'email'                           => $current_user->user_email,
+            'name'                            => $current_user->user_firstname,
+            'surname'                         => $current_user->user_lastname,
+            'phone'                           => get_user_meta( $current_user->ID, 'billing_phone', true ),
+            'billing_company'                 => get_user_meta( $current_user->ID, 'billing_company', true ),
+            'billing_address_1'               => get_user_meta( $current_user->ID, 'billing_address_1', true ),
+            'billing_address_2'               => get_user_meta( $current_user->ID, 'billing_address_2', true ),
+            'billing_state'                   => get_user_meta( $current_user->ID, 'billing_state', true ),
+            'billing_postcode'                => get_user_meta( $current_user->ID, 'billing_postcode', true ),
+            'shipping_first_name'             => $current_user->user_firstname,
+            'shipping_last_name'              => $current_user->user_lastname,
+            'shipping_company'                => get_user_meta( $current_user->ID, 'shipping_company', true ),
+            'shipping_address_1'              => get_user_meta( $current_user->ID, 'shipping_address_1', true ),
+            'shipping_address_2'              => get_user_meta( $current_user->ID, 'shipping_address_2', true ),
+            'shipping_city'                   => get_user_meta( $current_user->ID, 'shipping_city', true ),
+            'shipping_state'                  => get_user_meta( $current_user->ID, 'shipping_state', true ),
+            'shipping_postcode'               => get_user_meta( $current_user->ID, 'shipping_postcode', true ),
+            'woo_currency_symbol'             => get_woocommerce_currency_symbol(),
+            'email_toggle_button_nonce'       => wp_create_nonce( 'activate_email_templates' ),
+            'field_required'                 => __( 'Please fill in this field.', 'offers-for-woocommerce' ),
+        );
+        wp_localize_script( 'offers-for-woocommerce-angelleye-offers-admin-settings-test-email-scripts', 'ofw_er', $local_vars );
     }
 
     /**
@@ -2589,7 +2636,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric', plugins_url('../public/assets/js/autoNumeric.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
             // Admin settings scripts
-            wp_enqueue_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', plugins_url('assets/js/admin-settings-scripts.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
+            wp_enqueue_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', plugins_url('assets/js/admin-settings-scripts.js', __FILE__), array(
+                'jquery',
+                'jquery-ui-core',
+				'jquery-ui-sortable',
+				'wc-enhanced-select'), Angelleye_Offers_For_Woocommerce::VERSION);
             wp_localize_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', 'ofw_param', array(
                 'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
                 'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),
@@ -2612,7 +2663,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         if ("woocommerce_offer" == $screen->id && is_admin()) {
             // Jquery datepicker.js
-            wp_enqueue_script('jquery-ui-datepicker');
+            wp_enqueue_script( 'jquery-ui' );
+            wp_enqueue_script( 'jquery-ui-datepicker' );
+            wp_enqueue_script( 'timepicker', plugins_url( 'assets/js/jquery.datetimepicker.full.min.js', __FILE__ ), array( 'jquery' ), '1.2' );
             // autoNumeric js
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric', plugins_url('../public/assets/js/autoNumeric.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
@@ -4601,7 +4654,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             date_modify($date, '+365 day');
             $offer_expiration_date = date_format($date, "Y-m-d H:i:s");
             update_post_meta($post_id, 'offer_expiration_date', $offer_expiration_date);
-
+            update_post_meta( $post_id, 'ofw_email_reminders', '' );
             $offer_quantity = !empty($_POST['offer_quantity']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($_POST['offer_quantity'])) : '';
             $offer_price_each = !empty($_POST['offer_price_each']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($_POST['offer_price_each'])) : '';
             $offer_total = $offer_quantity * $offer_price_each;
@@ -4884,6 +4937,16 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 <?php
             }
         }
+    }
+
+
+    public function email_reminder_table() {
+        esc_html_e( 'Email Reminders', 'offers-for-woocommerce' );
+        require_once( 'views/class-offers-for-woocommerce-email-reminder-table.php' );
+        $email_reminder_table = new AngellEYE_Offers_for_Woocommerce_Email_reminder_table();
+        echo '<div class="wrap"><h2 style="padding:0;">' . esc_html_e( 'Email Reminders', 'offers-for-woocommerce' ) . '</h2>';
+        $email_reminder_table->prepare_items();
+        $email_reminder_table->display();
     }
 
 }
