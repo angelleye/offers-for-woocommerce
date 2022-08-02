@@ -255,7 +255,6 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	public function create_session_for_preview_email() {
 		$email_data                    = new stdClass();
 		$current_user                  = wp_get_current_user();
-		$email_data->email_template_id = ! empty( $_POST['email_template_id'] ) ? sanitize_text_field( $_POST['email_template_id'] ) : "";
 		$email_send_to                 = ! empty( $_POST['email_send_to'] ) ? sanitize_text_field( $_POST['email_send_to'] ) : "";
 		$email_data->email_body        = !empty( $_POST['email_body'] ) ? wp_kses_post( $_POST['email_body'] ) : "";
 		$email_data->email_subject     = ! empty( $_POST['email_subject'] ) ? sanitize_text_field( $_POST['email_subject'] ) : "";

@@ -85,7 +85,7 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 			case 'email_subject':
 				return ! empty( $item['ofw_email_subject'] ) ? $item['ofw_email_subject'] : '';
 			case 'trigger_time':
-				return ( ! empty( $item['ofw_email_frequency'] ) && ! empty( $item['ofw_email_frequency_unit'] ) ) ? $item['ofw_email_frequency'] . ' - ' . $item['ofw_email_frequency_unit'] : '';
+				return ( ! empty( $item['ofw_email_frequency'] ) && ! empty( $item['ofw_email_frequency_unit'] ) ) ? $item['ofw_email_frequency'] . ' ' . ucfirst( $item['ofw_email_frequency_unit'] ) : '';
 			case 'is_activated':
 				return ! empty( $item['ofw_email_reminder_is_active'] ) ? __( 'Active', 'offers-for-woocommerce' ) : '';
 			case 'actions' :

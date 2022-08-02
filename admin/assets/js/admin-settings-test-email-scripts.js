@@ -22,15 +22,12 @@ jQuery(document).ready(function($){
 
         const email_subject = $( '#ofw_email_subject' ).val();
         const email_send_to = $( '#ofw_send_test_email' ).val();
-        const email_template_id = document.getElementsByName( 'template_id' )[ 0 ]
-            .value;
         const wp_nonce = $( '#email_reminder_nonce' ).val();
 
         const data = {
             email_subject,
             email_body,
             email_send_to,
-            email_template_id,
             action: 'ofw_er_preview_email_send',
             security: wp_nonce,
         };
