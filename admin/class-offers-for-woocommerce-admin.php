@@ -428,9 +428,40 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('admin_action_editpost', array($this, 'angelleye_offer_for_woocommerce_admin_save_offer'), 10);
         add_action('angelleye_display_extra_product_details', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details'), 10, 1);
         add_action('angelleye_display_extra_product_details_email', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details_email'), 10, 1);
+	    /**
+	     * Change SEO Title for Woocommerce_Offers when Anonymous Communication is enabled
+	     * @since   2.3.18
+	     */
+	    add_filter( 'wpseo_title', array( $this, 'change_woocommerce_offer_seo_title' ) );
+
     }
 
 // END - construct
+
+    /**
+	 * Change SEO Title for Woocommerce_Offers when Anonymous Communication is enabled
+	 *
+	 * @param $title
+	 *
+	 * @return string
+	 * @since 2.3.18
+	 */
+	function change_woocommerce_offer_seo_title( $title ) {
+		$post_type = get_post_type();
+		if ( isset( $post_type ) && 'woocommerce_offer' == $post_type && $this->ofw_is_anonymous_communication_enable() ) {
+			$id         = get_the_ID();
+			$product_id = get_post_meta( $id, 'orig_offer_product_id', true );
+			$new_title = '';
+			if( !empty( $product_id ) ){
+				$product    = wc_get_product( $product_id );
+				$new_title  = $product->get_name();
+			}
+			$title      = ! empty( $new_title ) ? $new_title . '-Offer' : 'Offer';
+		}
+
+		return $title;
+	}
+
 
     function ofw_before_offers_trash_action($offer_id) {
         if ('woocommerce_offer' !== get_post_type($offer_id)) {
