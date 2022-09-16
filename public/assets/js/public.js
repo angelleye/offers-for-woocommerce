@@ -1,4 +1,39 @@
+document.addEventListener("DOMContentLoaded", function(event) {
+    cells = document.getElementsByClassName('timer');
+    var timeleft = [];
+    for(var i = 0; i<cells.length;i++){
+        timeleft[i] = cells[i].getAttribute('data-date');
+    }
+    function convertToTimer(){
+        cells = document.getElementsByClassName('timer');
+        for(var i = 0; i<cells.length;i++){
+            var day_text='';
+            timeleft[i] = timeleft[i] -1 ;
+            t = timeleft[i] ;
+            let days = Math.floor(t / (3600*24));
+            if(days>1){
+                day_text = ' days';
+                var countdown_text = 'in ' + days + day_text;
+                cells[i].innerText = countdown_text;
+            }
+            else{
+                day_text = ' day';
+                cells[i].style.color = 'red';
+                let hours = ('0' + Math.floor((t % (3600*24)) / ( 3600))).slice(-2);
+                let mins = ('0' + Math.floor((t % 3600 ) / (  60))).slice(-2);
+                let secs = ('0' + Math.floor((t %  60) )).slice(-2);
+                var countdown = hours + ':' + mins +':' + secs ;
+                cells[i].innerText = countdown;
+            }
+        }
+    }
+    if(cells.length>0){
+        setInterval(convertToTimer,1000);
+    }});
 (function ($) {
+
+
+
     "use strict";
     $(function () {
         var regex = {
