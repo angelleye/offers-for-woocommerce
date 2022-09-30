@@ -62,7 +62,7 @@ if ($customer_offers) :
                                 $offer_args['offer_uid'] = $offer_uid;
                                 $offer_args['final_offer'] = $offer_final_offer;
                                 $expiration_date = get_post_meta($post_id, 'offer_expiration_date', true);
-                                $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 23:59:59", strtotime($expiration_date)) : FALSE;
+                                $expiration_date_formatted = ($expiration_date) ? $expiration_date : FALSE;
                                 switch ($column_id) {
                                     case 'offer_name' :
                                         $val = get_post_meta($post_id, 'offer_name', true);
