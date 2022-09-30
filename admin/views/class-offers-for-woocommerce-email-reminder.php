@@ -77,12 +77,16 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
                     $offer_expiry_epoch = strtotime( $offer_expiry );
 
                     $offer_expiry_formatted = date("Y-m-d H:i:s",$offer_expiry_epoch);
-                    $trigger_time_formatted = date("Y-m-d H:i:s",time() + $trigger_time_in_secs);
-
+                    $trigger_time_formatted = date("Y-m-d H:i:s",$offer_expiry_epoch - $trigger_time_in_secs);
                     if ( empty( $offer_expiry_epoch ) ) {
-                        return ;
+                        return;
                     }
-                    if ( $offer_expiry_formatted < $trigger_time_formatted && time() < $offer_expiry_formatted ) {
+					$send_mail_bool = time() < strtotime($trigger_time_formatted);
+					//var_dump($send_mail_bool);
+
+//                    if(strtotime($offer_expiry_formatted) < strtotime($trigger_time_formatted) && time() < strtotime($offer_expiry_formatted) ){
+                    //if ( $offer_expiry_formatted < $trigger_time_formatted && time() < $offer_expiry_formatted ) {
+                    if (  $send_mail_bool ) {
                         $email_data        = new stdClass();
                         $email_data->email = get_post_meta( $offer_id, 'orig_offer_email', true );
                         $email_data->email_template_id = $current_template_id;
@@ -104,7 +108,8 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
                             update_post_meta($offer_id,'ofw_email_reminders',$email_reminders_sent_data);
                         }
                     }
-                }
+
+                } //
 			}
 		}
 	}
@@ -362,36 +367,41 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	 *
 	 * @return void
 	 */
-	public function create_cron_job( $ofw_email_frequency, $trigger_time_unit, $template_id, $product_ids = array() ){
+    public function create_cron_job( $ofw_email_frequency, $trigger_time_unit, $template_id, $product_ids = array() ){
 
-		$offers = get_posts( [
-			'post_type'      => 'woocommerce_offer',
-			'post_status'    => array( 'countered-offer', 'accepted-offer'),
-			'fields'         => 'ids',
-			'posts_per_page' => -1,
-		] );
+        $offers = get_posts( [
+            'post_type'      => 'woocommerce_offer',
+            'post_status'    => array( 'countered-offer', 'accepted-offer'),
+            'fields'         => 'ids',
+            'posts_per_page' => -1,
+        ] );
 
-		if( !empty( $offers ) && is_array( $offers ) ){
-			foreach( $offers as $offer ){
-				$orig_offer_product_id = get_post_meta( $offer, 'orig_offer_product_id', true );
-				if( !empty( $product_ids ) && in_array( $orig_offer_product_id, $product_ids ) ){
-					$offer_expiration_date = get_post_meta( $offer, 'offer_expiration_date', true );
-					$trigger_time_in_secs = $this->get_time_in_sec($ofw_email_frequency, $trigger_time_unit);
-					$trigger_time_formatted = date("Y-m-d H:i:s",strtotime( $offer_expiration_date ) - $trigger_time_in_secs);
+        if( !empty( $offers ) && is_array( $offers ) ){
+            foreach( $offers as $offer ){
+                $orig_offer_product_id = get_post_meta( $offer, 'orig_offer_product_id', true );
+                $new_product_ids = !empty( $product_ids ) ? $product_ids : array();
+                if( empty( $new_product_ids ) ){
+                    $new_product_ids = (array)$orig_offer_product_id;
+                }
 
-					$args = array(
-						'offer_id' => $offer,
-						'product_id'	=> $product_ids,
-						'template_id'	=> $template_id
-					);
+                if( !empty( $new_product_ids ) && in_array( $orig_offer_product_id, $new_product_ids ) ){
+                    $offer_expiration_date = get_post_meta( $offer, 'offer_expiration_date', true );
+                    $trigger_time_in_secs = $this->get_time_in_sec($ofw_email_frequency, $trigger_time_unit);
+                    $trigger_time_formatted = date("Y-m-d H:i:s",strtotime( $offer_expiration_date ) - $trigger_time_in_secs);
 
-					wp_schedule_single_event( strtotime($trigger_time_formatted ),'ofw_email_cron_hook', $args );
+                    $args = array(
+                        'offer_id' => $offer,
+                        'product_id'   => $new_product_ids,
+                        'template_id'  => $template_id
+                    );
 
-				}
+                    wp_schedule_single_event( strtotime($trigger_time_formatted ),'ofw_email_cron_hook', $args );
 
-			}
-		}
-	}
+                }
+
+            }
+        }
+    }
 
 
 	/**

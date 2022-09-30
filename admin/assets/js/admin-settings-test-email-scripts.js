@@ -1,13 +1,5 @@
 jQuery(document).ready(function($){
 
-    $('#ofw_email_reminders_options_form').submit(function (e){
-        $("#ofw_email_reminders_options_form .required-warning").html('');
-        if( $("#ofw_email_reminders_options_form .wc-product-search").val().length < 1){
-            e.preventDefault();
-            $("#ofw_email_reminders_options_form .required-warning").html(ofw_er.field_required);
-        }
-    });
-
     $('#ofw_preview_email').click(function (){
 
         let email_body = '';

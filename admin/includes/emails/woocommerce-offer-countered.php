@@ -36,8 +36,7 @@ $product_price = angelleye_ofw_get_product_price_multi_currency($offer_args['pro
 <?php } ?>
 
 <?php if (isset($offer_args['offer_expiration_date']) && $offer_args['offer_expiration_date']) {
-    printf('<br><br>' . __('Offer expires on:', 'offers-for-woocommerce') . ' %s', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])));
-} ?>
+    printf('<br><br><p style="margin: 0 0 16px;font-size: 16px;text-align: center;font-family: inherit" align="center">' . __('Offer expires on:', 'offers-for-woocommerce') . ' %s', date("m-d-Y", strtotime($offer_args['offer_expiration_date'])) . '</p>');} ?>
 
 <h2 style="text-align:center"><?php echo __('Offer ID:', 'offers-for-woocommerce') . ' ' . $offer_args['offer_id']; ?> (<?php printf('<time datetime="%s">%s</time>', date_i18n('c', time()), date_i18n(wc_date_format(), time())); ?>)</h2>
 

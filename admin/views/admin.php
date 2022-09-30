@@ -436,6 +436,7 @@
                                     <td>
                                         <input required type="text" name="ofw_template_name" id="ofw_template_name"
                                                class="ofw-ca-trigger-input"
+                                               style="margin: 5px 5px 0 0; padding:2px 6px;
                                                value="<?php echo !empty( $template_name ) ? esc_attr( $template_name ) : ""; ?>">
                                     </td>
                                 </tr>
@@ -473,6 +474,7 @@
                                     <td>
                                         <input required type="text" name="ofw_email_subject" id="ofw_email_subject"
                                                class="ofw-ca-trigger-input"
+                                               style="margin: 5px 5px 0 0; padding:2px 6px;
                                                value=" <?php echo !empty( $subject_edit ) ? esc_attr( $subject_edit ) : ""; ?> ">
                                     </td>
                                 </tr>
