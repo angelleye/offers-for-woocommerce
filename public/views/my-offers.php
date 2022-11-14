@@ -7,6 +7,7 @@ $my_offers_columns = apply_filters('ofw_my_account_my_offers_columns', array(
     'offer_product_title' => __('Product', 'offers-for-woocommerce'),
     'offer_amount' => __('Amount', 'offers-for-woocommerce'),
     'offer_price_per' => __('Price Per', 'offers-for-woocommerce'),
+    'offer-expiry' => __('Expires In', 'offers-for-woocommerce'),
     'offer_quantity' => __('Quantity', 'offers-for-woocommerce'),
     'offer-status' => __('Status', 'offers-for-woocommerce'),
     'offer-action' => __('Action', 'offers-for-woocommerce'),
@@ -61,7 +62,7 @@ if ($customer_offers) :
                                 $offer_args['offer_uid'] = $offer_uid;
                                 $offer_args['final_offer'] = $offer_final_offer;
                                 $expiration_date = get_post_meta($post_id, 'offer_expiration_date', true);
-                                $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 23:59:59", strtotime($expiration_date)) : FALSE;
+                                $expiration_date_formatted = ($expiration_date) ? $expiration_date : FALSE;
                                 switch ($column_id) {
                                     case 'offer_name' :
                                         $val = get_post_meta($post_id, 'offer_name', true);
@@ -113,6 +114,18 @@ if ($customer_offers) :
                                         $val = ($val != '') ? $val : '0';
                                         echo wc_price($val, array('currency' => $offer_currency));
                                         break;
+	                                    case 'offer-expiry' :
+		                                if (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp', 0))) )) {
+			                                echo __('Expired','offers-for-woocommerce');
+		                                } elseif ('completed-offer' == $post_status || 'declined-offer' == $post_status ){
+			                                echo __('Not Applicable','offers-for-woocommerce');
+		                                } else{
+			                                $time_left = wc_string_to_timestamp($expiration_date_formatted) - time() ;
+			                                if($time_left>0){
+				                                echo __("<span class='timer' data-date='$time_left'></span>" ,'offers-for-woocommerce');
+			                                }
+		                                }
+		                                break;
                                     case 'offer_amount' :
                                         if ($post_status == 'buyercountered-offer') {
                                             $val = get_post_meta($post_id, 'offer_buyer_counter_amount', true);
