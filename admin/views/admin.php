@@ -450,7 +450,7 @@
                                         <p class="form-field">
                                             <select class="wc-product-search" multiple="multiple"
                                                     style="width: 100% !important;" name="product_ids[]"
-                                                    data-placeholder="<?php esc_attr_e( 'Search Products', 'woocommerce' ); ?>"
+                                                    data-placeholder="<?php esc_attr_e( 'Select a product or send Email to all products.', 'woocommerce' ); ?>"
                                                     data-action="woocommerce_json_search_products_and_variations" >
                                                 <?php if( !empty( $product_ids ) ){
                                                     foreach ( $product_ids as $product_id ) {
