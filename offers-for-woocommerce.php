@@ -142,6 +142,7 @@ function ofwc_is_wcvendors_pro_active() {
 
 if( is_admin() || ofwc_is_wcvendors_pro_active() || class_exists('Angelleye_Offers_For_Woocommerce_Dokan') )
 {
+    require_once(plugin_dir_path(__FILE__). 'admin/views/class-offers-for-woocommerce-email-reminder.php');
     require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
     add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
 }
