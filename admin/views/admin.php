@@ -23,7 +23,7 @@
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=general_settings" class="nav-tab <?php echo $active_tab == 'general_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('General Settings', 'offers-for-woocommerce'); ?></a>
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=display_settings" class="nav-tab <?php echo $active_tab == 'display_settings' ? 'nav-tab-active' : ''; ?>"><?php echo __('Display Settings', 'offers-for-woocommerce'); ?></a>
         <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=tools" class="nav-tab <?php echo $active_tab == 'tools' ? 'nav-tab-active' : ''; ?>"><?php echo __('Tools', 'offers-for-woocommerce'); ?></a>
-        <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=email_reminders" class="nav-tab <?php echo $active_tab == 'email_reminders' ? 'nav-tab-active' : ''; ?>"><?php echo __( 'Email Reminders', 'offers-for-woocommerce' ); ?></a>
+        <a href="?page=<?php echo 'offers-for-woocommerce'; ?>&tab=email_reminders" class="nav-tab <?php echo $active_tab == 'email_reminders' ? 'nav-tab-active' : ''; ?>"><?php echo __( 'Reminder Email', 'offers-for-woocommerce' ); ?></a>
         <?php do_action('offers_for_woocommerce_setting_tab_content_save'); ?>
         <?php do_action('offers_for_woocommerce_setting_tab'); ?>
     </h2>
