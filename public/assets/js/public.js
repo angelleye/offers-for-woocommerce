@@ -1,4 +1,49 @@
+document.addEventListener("DOMContentLoaded", function (event) {
+    var cells = document.getElementsByClassName("timer");
+    var timeleft = [];
+    for (var i = 0; i < cells.length; i++) {
+        timeleft[i] = cells[i].getAttribute("data-date");
+    }
+    function convertToTimer() {
+        var cells = document.getElementsByClassName("timer");
+        for (var i = 0; i < cells.length; i++) {
+            var day_text = "";
+            timeleft[i] = timeleft[i] - 1;
+            let days = Math.floor(timeleft[i] / (3600 * 24));
+            if (days >= 1) {
+                day_text = days === 1 ? " day" : " days";
+                var countdown_text = "in " + days + day_text;
+                cells[i].innerText = countdown_text;
+            } else {
+                var h = Math.floor(timeleft[i] / 3600);
+                var m = Math.floor((timeleft[i] % 3600) / 60);
+                var s = Math.floor((timeleft[i] % 3600) % 60);
+                if (m < 10) {
+                    m = "0" + m;
+                }
+                if (h < 10) {
+                    h = "0" + h;
+                }
+                if (s < 10) {
+                    s = "0" + s;
+                }
+
+                day_text = " day";
+                cells[i].style.color = "red";
+                var countdown = h + ":" + m + ":" + s;
+                cells[i].innerText = countdown;
+            }
+        }
+    }
+    if (cells.length > 0) {
+        setInterval(convertToTimer, 1000);
+    }
+});
+
 (function ($) {
+
+
+
     "use strict";
     $(function () {
         var regex = {
@@ -17,32 +62,32 @@
             }
             return true;
         };
-        
-        function angelleye_populate_form(frm, data) {   
-            $.each(data, function(key, value){  
-                var $ctrl = $('[name='+key+']', frm); 
+
+        function angelleye_populate_form(frm, data) {
+            $.each(data, function(key, value){
+                var $ctrl = $('[name='+key+']', frm);
                 if($ctrl.is('select')){
                     $("option",$ctrl).each(function(){
                         if (this.value==value) { this.selected=true; }
                     });
                 }
                 else {
-                    switch($ctrl.attr("type"))  
-                    {  
-                        case "text" :   case "hidden":  case "textarea":  
-                            $ctrl.val(value);   
-                            break;   
-                        case "radio" : case "checkbox":   
-                            $ctrl.each(function(){
-                               if($(this).attr('value') == value) {  $(this).attr("checked",value); } });   
+                    switch($ctrl.attr("type"))
+                    {
+                        case "text" :   case "hidden":  case "textarea":
+                            $ctrl.val(value);
                             break;
-                    } 
-                } 
-            });  
+                        case "radio" : case "checkbox":
+                            $ctrl.each(function(){
+                               if($(this).attr('value') == value) {  $(this).attr("checked",value); } });
+                            break;
+                    }
+                }
+            });
          };
 
         $(document).ready(function () {
-            
+
             if( offers_for_woocommerce_js_params.angelleye_post_data !== '' ) {
                 angelleye_populate_form($('.cart'), offers_for_woocommerce_js_params.angelleye_post_data);
             }
@@ -72,7 +117,7 @@
             });
 
             if (get["aewcobtn"] && !($("div.woocommerce-message").length > 0)) {
-               
+
                 if($('.tm-epo-counter').length > 0) {
                    // return false;
                 }
@@ -138,7 +183,7 @@
 
             $("#lightbox_custom_ofwc_offer_form_close_btn, #aeofwc-close-lightbox-link").on('click', function ()
             {
-                
+
                 $("#lightbox_custom_ofwc_offer_form").removeClass('active');
                 $("#lightbox_custom_ofwc_offer_form").hide();
                 $("#lightbox_custom_ofwc_offer_form_close_btn").hide();
@@ -411,7 +456,7 @@
                                 data[ this.name ] = this.value;
                             }
                     });
-                    
+
                     post_data_array.push({product_data: data});
                     post_data_array.push({product_addon_array: product_addon_array_js});
                     var data_make_offer = {
