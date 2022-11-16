@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 6.0
-Stable tag: 2.3.19
+Stable tag: 2.3.20
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,8 +118,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 2.3.20 - 11.16.2022 =
+* Feature - Adds expiration countdown to My Account - Offers page. ([OFW-265](https://github.com/angelleye/offers-for-woocommerce/pull/498))
+
 = 2.3.19 - 11.15.2022 =
-* Feature - Adds expiration countdown to My Account - Offers page. ([OFW-269](https://github.com/angelleye/offers-for-woocommerce/pull/496))
 * Feature - Adds options for sending email drip reminders based on merchant configuration. ([OFW-269](https://github.com/angelleye/offers-for-woocommerce/pull/496))
 
 = 2.3.18 - 07.01.2022 =
