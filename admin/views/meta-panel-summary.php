@@ -243,8 +243,9 @@
                     <div class="angelleye-input-group offer_shipping">
                         <span class="angelleye-input-group-addon"><?php echo (isset($currency_symbol)) ? $currency_symbol : '$';?></span>
                         <?php if( isset( $current_status_value ) && $current_status_value == 'buyercountered-offer' ) { ?>
-                            <input type="text" name="offer_shipping_cost" id="offer_shipping_cost" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" value="<?php echo (isset($postmeta['offer_shipping_cost'][0])) ? number_format($postmeta['offer_shipping_cost'][0],wc_get_price_decimals(),wc_get_price_decimal_separator(),wc_get_price_thousand_separator()) : ''; ?>" autocomplete="off" />
-                        <?php } else { ?>
+                            <label for="offer_shipping_cost"></label>
+                            <input type="text" name="offer_shipping_cost" id="offer_shipping_cost" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" value="<?php echo (isset($postmeta['offer_shipping_cost'][0])) ? number_format($postmeta['offer_shipping_cost'][0],wc_get_price_decimals(),wc_get_price_decimal_separator(),wc_get_price_thousand_separator()) : ''; ?>" autocomplete="off" /><?php } else { ?>
+                            <label for="offer_shipping_cost"></label>
                             <input type="text" name="offer_shipping_cost" id="offer_shipping_cost" pattern="([0-9]|\$|,|.)+" data-a-sign="" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" value="<?php echo (isset($postmeta['offer_shipping_cost'][0])) ? number_format($postmeta['offer_shipping_cost'][0],wc_get_price_decimals(),wc_get_price_decimal_separator(),wc_get_price_thousand_separator()) : ''; ?>" autocomplete="off" />
                         <?php } ?>
                     </div>
@@ -267,6 +268,7 @@
         <div class="angelleye-col-1-4 angelleye-col-m-1-2 angelleye-col-s-1-1">
             <div class="angelleye-col-container">
                 <h5><?php echo apply_filters( 'aeofw_meta_buyer_offer_note_title', __('Offer Note to Buyer', 'offers-for-woocommerce')); ?></h5>
+                <label for="angelleye_woocommerce_offer_status_notes"></label>
                 <textarea name="angelleye_woocommerce_offer_status_notes" id="angelleye_woocommerce_offer_status_notes" class="" autocomplete="off"></textarea>
                 <p class="description"><?php echo apply_filters( 'aeofw_meta_buyer_offer_note_description', __('Enter a note here to be included in the email notification to the buyer when the offer status is updated.', 'offers-for-woocommerce')); ?></p>
             </div>
@@ -277,6 +279,7 @@
                 <h5><?php echo apply_filters( 'aeofw_meta_offer_status_title', __('Offer Status', 'offers-for-woocommerce')); ?></h5>
                 <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { } else { ?>
                     <div class="offer-post-status-input-wrap">
+                        <label for="woocommerce_offer_post_status"></label>
                         <select id="woocommerce_offer_post_status" name="post_status" autocomplete="off" required="required" <?php if (isset($current_status_value) && $current_status_value == 'completed-offer') echo ' disabled="disabled"'; ?>>
                             <?php if ( (isset($current_status_value) && ( $current_status_value == 'publish' || $current_status_value == 'buyercountered-offer' || $current_status_value == 'expired-offer' ) ) || ( !isset($current_status_value) ) ) { ?>
                             <option value=""><?php echo __('- Select status', 'offers-for-woocommerce'); ?></option>

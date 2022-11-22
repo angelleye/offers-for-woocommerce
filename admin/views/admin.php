@@ -43,7 +43,6 @@
         <!--<p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
         </p>-->
-        <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
             <h3><?php echo __('Bulk Edit Tool for Products', 'offers-for-woocommerce'); ?></h3>
             <div><?php echo __('Select from the options below to enable / disable offers on multiple products at once.', 'offers-for-woocommerce'); ?></div>
@@ -144,7 +143,6 @@
         <!--<p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
         </p>-->
-        <a name="ofwc-t1"></a>
         <div class="ofw-enable-auto-accept-decline">
             <h3><?php echo __('Bulk Edit Tool for Automatically Accepting or Declining Offers', 'offers-for-woocommerce'); ?></h3>
             <div><?php echo __('Select from the options below to enable or disable automated acceptance or declining of offers on multiple products at once.', 'offers-for-woocommerce'); ?></div>
@@ -260,7 +258,6 @@
     */
     ?>
     <form id="ofw_tool_minimun_offer_price_form" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
-        <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
             <h3><?php echo __('Minimum Offer Price', 'offers-for-woocommerce'); ?></h3>
             <div><?php echo __('Select from the options below to set Minimum Offer Price on multiple products at once.', 'offers-for-woocommerce'); ?></div>
@@ -294,7 +291,7 @@
             </div>
             
             <div class="angelleye-offers-tools-bulk-action-section ofw-minimum-offer-price-target-type">
-                <label for="ofw-bulk-tool-action-target-type"><?php echo __('Target', 'offers-for-woocommerce'); ?></label>
+                <label for="ofw-minimum-offer-price-target-type"><?php echo __('Target', 'offers-for-woocommerce'); ?></label>
                 <div>
                     <select name="ofw_minimum_offer_price_target-type" id="ofw-minimum-offer-price-target-type" required="required">
                         <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
@@ -305,7 +302,7 @@
                 </div>
             </div>
             <div class="angelleye-offers-tools-bulk-action-section ofw-minimum-offer-price-target-where-type angelleye-hidden">
-                <label for="ofw-bulk-tool-action-target-where-type"><?php echo __('Where', 'offers-for-woocommerce'); ?></label>
+                <label for="ofw-minimum-offer-price-target-where-type"><?php echo __('Where', 'offers-for-woocommerce'); ?></label>
                 <div>
                     <select name="ofw_minimum_offer_price_target_where_type" id="ofw-minimum-offer-price-target-where-type">
                         <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
@@ -322,7 +319,7 @@
                 </div>
             </div>
             <div class="angelleye-offers-tools-bulk-action-section ofw-minimum-offer-price-target-where-category angelleye-hidden">
-                <label for="ofw-bulk-tool-target-where-category"><?php echo __('Category', 'offers-for-woocommerce'); ?></label>
+                <label for="ofw-minimum-offer-price-target-where-category"><?php echo __('Category', 'offers-for-woocommerce'); ?></label>
                 <div>
                     <select name="ofw_minimum_offer_price_target_where_category" id="ofw-minimum-offer-price-target-where-category">
                         <option value=""><?php echo __('- Select option', 'offers-for-woocommerce'); ?></option>
@@ -357,7 +354,7 @@
                 </div>
             </div>
             <div class="angelleye-offers-tools-bulk-action-section ofw-minimum-offer-price-target-where-stock-value angelleye-hidden">
-                <label for="ofw-bulk-tool-target-where-stock-value"></label>
+                <label for="ofw-minimum-offer-price-target-where-stock-value"></label>
                 <div>
                     <input type="text" name="ofw_minimum_offer_price_target_where_stock_value" id="ofw-minimum-offer-price-target-where-stock-value">
                 </div>
@@ -436,14 +433,14 @@
                                     <td>
                                         <input required type="text" name="ofw_template_name" id="ofw_template_name"
                                                class="ofw-ca-trigger-input"
-                                               style="margin: 5px 5px 0 0; padding:2px 6px";
+                                               style="margin: 5px 5px 0 0; padding:2px 6px;"
                                                value="<?php echo !empty( $template_name ) ? esc_attr( $template_name ) : ""; ?>">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        <label for="ofw_email_reminders_product_list"
-                                               id=""><b><?php esc_html_e( 'Send For Only:', 'offers-for-woocommerce' ); ?></b>
+                                        <label for="ofw_email_reminders_product_list">
+                                            <b><?php esc_html_e( 'Send For Only:', 'offers-for-woocommerce' ); ?></b>
                                         </label>
                                     </th>
                                     <td>
@@ -451,7 +448,8 @@
                                             <select class="wc-product-search" multiple="multiple"
                                                     style="width: 100% !important;" name="product_ids[]"
                                                     data-placeholder="<?php esc_attr_e( 'Select a product or send Email to all products.', 'woocommerce' ); ?>"
-                                                    data-action="woocommerce_json_search_products_and_variations" >
+                                                    data-action="woocommerce_json_search_products_and_variations"
+                                                    id="ofw_email_reminders_product_list">
                                                 <?php if( !empty( $product_ids ) ){
                                                     foreach ( $product_ids as $product_id ) {
                                                         $product = wc_get_product( $product_id );
@@ -508,6 +506,7 @@
                                         <input required style="width:15%" type="number" name="ofw_email_frequency"
                                                min="0" id="ofw_email_frequency" class="ofw-ca-trigger-input"
                                                value="<?php echo esc_attr( $frequency_edit ); ?>">
+                                        <label for="ofw_email_frequency_unit"></label>
                                         <select name="ofw_email_frequency_unit" id="ofw_email_frequency_unit" required>
                                             <?php
                                             $days_or_hours = array(
@@ -537,10 +536,11 @@
                                         <label for="ofw_email_preview"><b><?php esc_html_e( 'Send Test Email To:', 'offers-for-woocommerce' ); ?></b></label>
                                     </th>
                                     <td>
+                                        <label for="ofw_send_test_email" style="display: none;"></label>
                                         <input class="ofw-ca-trigger-input" type="text" id="ofw_send_test_email"
-                                               name="send_test_email"
-                                               value="<?php echo esc_attr( $current_user->user_email ); ?>"
-                                               class="ofw-ca-trigger-input">
+                                                                                        name="send_test_email"
+                                                                                        value="<?php echo esc_attr( $current_user->user_email ); ?>"
+                                                                                        class="ofw-ca-trigger-input">
                                         <input class="button" type="button"
                                                value=" <?php esc_html_e( 'Send a test email', 'offers-for-woocommerce' ); ?>"
                                                id="ofw_preview_email"/>
