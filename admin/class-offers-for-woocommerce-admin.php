@@ -812,10 +812,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb;
             $clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
             $clauses['where'] .= $wpdb->prepare(" AND $wpdb->posts.post_type <> '%s'", 'woocommerce_offer');
-            return $clauses;
-        } else {
-            return $clauses;
         }
+
+	    return $clauses;
     }
 
     /**
@@ -1480,8 +1479,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         // Get Order
                         $order = new WC_Order($order_id);
                         if ($order->post) {
-                            $offer_order_meta['Order Date'] = $order->post->post_date;
-                            $offer_order_meta['Order Status'] = ucwords($order->get_status());
                         } else {
                             $offer_order_meta['Order ID'] .= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                         }
@@ -3549,15 +3546,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // Tools - Bulk enable/disable offers
             $processed = (isset($_GET['processed']) ) ? wc_clean($_GET['processed']) : FALSE;
             if ($processed) {
-                if ($processed == 'zero') {
-                    echo '<div class="updated">';
-                    echo '<p>' . sprintf(__('Action completed; %s records processed.', 'offers-for-woocommerce'), '0');
-                    echo '</div>';
-                } else {
-                    echo '<div class="updated">';
-                    echo '<p>' . sprintf(__('Action completed; %s records processed. ', 'offers-for-woocommerce'), $processed);
-                    echo '</div>';
-                }
+	            echo '<div class="updated">';
+	            if ( $processed == 'zero') {
+		            echo '<p>' . sprintf(__('Action completed; %s records processed.', 'offers-for-woocommerce'), '0');
+	            } else {
+		            echo '<p>' . sprintf(__('Action completed; %s records processed. ', 'offers-for-woocommerce'), $processed);
+	            }
+	            echo '</div>';
             }
         }
 
@@ -4083,78 +4078,76 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $post_id = $offer_id;
         if (isset($post_id) && !empty($post_id)) {
             $post_data = get_post($post_id);
-            if (in_array($post_data->post_status, array('expired-offer', 'declined-offer'))) {
-                $deleted_post = wp_trash_post($post_id);
-            } else {
-                $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
-                $table = $wpdb->prefix . "posts";
-                $data_array = array(
-                    'post_status' => 'declined-offer',
-                    'post_modified' => date("Y-m-d H:i:s", current_time('timestamp', 0)),
-                    'post_modified_gmt' => date("Y-m-d H:i:s", current_time('timestamp', 1))
-                );
-                $where = array('ID' => $post_id);
-                $wpdb->update($table, $data_array, $where);
-                $post_status_text = __('Declined', 'offers-for-woocommerce');
-                $offer_notes = '';
-                $recipient = get_post_meta($post_id, 'offer_email', true);
-                $offer_uid = get_post_meta($post_id, 'offer_uid', true);
-                $offer_name = get_post_meta($post_id, 'offer_name', true);
-                $offer_email = $recipient;
-                $product_id = get_post_meta($post_id, 'offer_product_id', true);
-                $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
+            if ( ! in_array( $post_data->post_status, array( 'expired-offer', 'declined-offer' ) ) ) {
+	            $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+	            $table                           = $wpdb->prefix . "posts";
+	            $data_array                      = array(
+		            'post_status'       => 'declined-offer',
+		            'post_modified'     => date( "Y-m-d H:i:s", current_time( 'timestamp', 0 ) ),
+		            'post_modified_gmt' => date( "Y-m-d H:i:s", current_time( 'timestamp', 1 ) )
+	            );
+	            $where                           = array( 'ID' => $post_id );
+	            $wpdb->update( $table, $data_array, $where );
+	            $post_status_text = __( 'Declined', 'offers-for-woocommerce' );
+	            $offer_notes      = '';
+	            $recipient        = get_post_meta( $post_id, 'offer_email', true );
+	            $offer_uid        = get_post_meta( $post_id, 'offer_uid', true );
+	            $offer_name       = get_post_meta( $post_id, 'offer_name', true );
+	            $offer_email      = $recipient;
+	            $product_id       = get_post_meta( $post_id, 'offer_product_id', true );
+	            $variant_id       = get_post_meta( $post_id, 'offer_variation_id', true );
 
-                $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
-                $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
-                $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
-                $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);
-                //$product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
-                $product_total = ($product_qty * $product_price_per);
-                if ($is_offer_buyer_countered_status) {
-                    update_post_meta($post_id, 'offer_quantity', $product_qty);
-                    update_post_meta($post_id, 'offer_price_per', $product_price_per);
-                    update_post_meta($post_id, 'offer_shipping_cost', $product_shipping_cost);
-                    update_post_meta($post_id, 'offer_amount', $product_total);
-                }
-                $offer_args = array(
-                    'recipient' => $recipient,
-                    'offer_email' => $offer_email,
-                    'offer_name' => $offer_name,
-                    'offer_id' => $offer_id,
-                    'offer_uid' => $offer_uid,
-                    'product_id' => $product_id,
-                    'product_url' => $product->get_permalink(),
-                    'variant_id' => $variant_id,
-                    'product' => $product,
-                    'product_qty' => $product_qty,
-                    'product_price_per' => $product_price_per,
-                    'product_shipping_cost' => $product_shipping_cost,
-                    'product_total' => $product_total,
-                    'offer_notes' => $offer_notes
-                );
-                if ($variant_id) {
-                    if ($product->get_sku()) {
-                        $identifier = $product->get_sku();
-                    } else {
-                        $identifier = '#' . $product->get_id();
-                    }
-                    $attributes = $product->get_variation_attributes();
-                    $extra_data = ' &ndash; ' . implode(', ', $attributes);
-                    $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s%s', 'offers-for-woocommerce'), $identifier, $product->get_title(), $extra_data);
-                } else {
-                    $offer_args['product_title_formatted'] = $product->get_formatted_name();
-                }
-                $email_class = 'WC_Declined_Offer_Email';
-                $new_email = WC()->mailer()->emails[$email_class];
-                $new_email->recipient = $recipient;
-                $new_email->plugin_slug = 'offers-for-woocommerce';
-                $new_email->template_html = 'woocommerce-offer-declined.php';
-                $new_email->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
-                $new_email->template_plain = 'woocommerce-offer-declined.php';
-                $new_email->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
-                $new_email->trigger($offer_args);
-                $deleted_post = wp_trash_post($post_id);
+	            $product               = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
+	            $product_qty           = ( $is_offer_buyer_countered_status ) ? get_post_meta( $post_id, 'offer_buyer_counter_quantity', true ) : get_post_meta( $post_id, 'offer_quantity', true );
+	            $product_price_per     = ( $is_offer_buyer_countered_status ) ? get_post_meta( $post_id, 'offer_buyer_counter_price_per', true ) : get_post_meta( $post_id, 'offer_price_per', true );
+	            $product_shipping_cost = get_post_meta( $post_id, 'offer_shipping_cost', true );
+	            //$product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
+	            $product_total = ( $product_qty * $product_price_per );
+	            if ( $is_offer_buyer_countered_status ) {
+		            update_post_meta( $post_id, 'offer_quantity', $product_qty );
+		            update_post_meta( $post_id, 'offer_price_per', $product_price_per );
+		            update_post_meta( $post_id, 'offer_shipping_cost', $product_shipping_cost );
+		            update_post_meta( $post_id, 'offer_amount', $product_total );
+	            }
+	            $offer_args = array(
+		            'recipient'             => $recipient,
+		            'offer_email'           => $offer_email,
+		            'offer_name'            => $offer_name,
+		            'offer_id'              => $offer_id,
+		            'offer_uid'             => $offer_uid,
+		            'product_id'            => $product_id,
+		            'product_url'           => $product->get_permalink(),
+		            'variant_id'            => $variant_id,
+		            'product'               => $product,
+		            'product_qty'           => $product_qty,
+		            'product_price_per'     => $product_price_per,
+		            'product_shipping_cost' => $product_shipping_cost,
+		            'product_total'         => $product_total,
+		            'offer_notes'           => $offer_notes
+	            );
+	            if ( $variant_id ) {
+		            if ( $product->get_sku() ) {
+			            $identifier = $product->get_sku();
+		            } else {
+			            $identifier = '#' . $product->get_id();
+		            }
+		            $attributes                            = $product->get_variation_attributes();
+		            $extra_data                            = ' &ndash; ' . implode( ', ', $attributes );
+		            $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'offers-for-woocommerce' ), $identifier, $product->get_title(), $extra_data );
+	            } else {
+		            $offer_args['product_title_formatted'] = $product->get_formatted_name();
+	            }
+	            $email_class                    = 'WC_Declined_Offer_Email';
+	            $new_email                      = WC()->mailer()->emails[ $email_class ];
+	            $new_email->recipient           = $recipient;
+	            $new_email->plugin_slug         = 'offers-for-woocommerce';
+	            $new_email->template_html       = 'woocommerce-offer-declined.php';
+	            $new_email->template_html_path  = untrailingslashit( OFW_PLUGIN_URL ) . '/admin/includes/emails/';
+	            $new_email->template_plain      = 'woocommerce-offer-declined.php';
+	            $new_email->template_plain_path = untrailingslashit( OFW_PLUGIN_URL ) . '/admin/includes/emails/plain/';
+	            $new_email->trigger( $offer_args );
             }
+	        $deleted_post = wp_trash_post($post_id);
         }
     }
 
@@ -4330,8 +4323,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $order_items = $order->get_items();
         // Check for offer id
         foreach ($order_items as $key => $value) {
-            $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
-
+            $item_offer_id = wc_get_order_item_meta( $key, 'Offer ID',true );
             /**
              * Update offer
              * Add postmeta value 'offer_order_id' for this order id

@@ -231,16 +231,14 @@ class Angelleye_Offers_For_Woocommerce {
     public function render_meta_on_cart_item($title = null, $cart_item = null, $cart_item_key = null) {
         if ($cart_item_key && is_cart()) {
             $offers_product_addon = get_post_meta($cart_item['woocommerce_offer_id'], 'offers_product_addon', true);
-            if (!empty($offers_product_addon)) {
-                echo $title;
-                foreach ($offers_product_addon as $key => $offerProducts) {
+	        echo $title;
+	        if (!empty($offers_product_addon)) {
+		        foreach ($offers_product_addon as $key => $offerProducts) {
                     foreach ($offerProducts['options'] as $labelPrices) {
                         echo "<dl class='variation'><dt class=''><p>{$offerProducts['group']} - {$labelPrices['label']} ({$labelPrices['price']})</p></dt></dl>";
                         echo "<dl><dd><p>{$labelPrices['value']}</p></dd></dl>";
                     }
                 }
-            } else {
-                echo $title;
             }
         } else {
             echo $title;
@@ -1588,7 +1586,6 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // define email template/path (plain)
                 $new_email->template_plain = 'woocommerce-new-counter-offer.php';
-                $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
             } else {
                 // define email template/path (html)
                 $new_email->template_html = 'woocommerce-new-offer.php';
@@ -1596,9 +1593,9 @@ class Angelleye_Offers_For_Woocommerce {
 
                 // define email template/path (plain)
                 $new_email->template_plain = 'woocommerce-new-offer.php';
-                $new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
             }
-            $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
+	        $new_email->template_plain_path                  = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+	        $offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
             if ($offer_is_auto_decline == '' && ( $is_counter_offer || empty($payment_authorization))) {
                 $new_email->trigger($offer_args);
             }
