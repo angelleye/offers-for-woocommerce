@@ -43,9 +43,9 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
         $apikey = get_option('ofw_mailchimp_api_key');
         $listId = get_option('ofw_mailchimp_lists');
 
-        $first_name = isset($posted['offer_name']) ? $posted['offer_name'] : '';
+        $first_name = $posted['offer_name'] ?? '';
         $last_name = '';
-        $offer_email = isset($posted['offer_email']) ? $posted['offer_email'] : '';
+        $offer_email = $posted['offer_email'] ?? '';
         $merge_vars = array('FNAME' => $first_name, 'LNAME' => $last_name);
 
         if (isset($apikey) && !empty($apikey)) {
@@ -68,6 +68,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 $log->add('MailChimp', 'MailChimp API Key not exist');
             }
         }
+	    return null;
     }
 
     /**
@@ -150,7 +151,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                     }
                 } else {
                     unset($mailchimp_lists);
-                    if (count($retval) == false) {
+                    if ( ! count( $retval ) ) {
                         if ('yes' == $mailchimp_debug_log) {
                             $log->add('MailChimp', 'You have not created any lists at MailChimp.');
                         }

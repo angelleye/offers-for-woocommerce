@@ -60,9 +60,9 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
         $constantcontact_access_token = get_option('ofw_constantcontact_access_token');
         $cclistsid = get_option('ofw_constantcontact_lists');
 
-        $first_name = isset($posted['offer_name']) ? $posted['offer_name'] : '';
+        $first_name = $posted['offer_name'] ?? '';
         $last_name = '';
-        $offer_email = isset($posted['offer_email']) ? $posted['offer_email'] : '';
+        $offer_email = $posted['offer_email'] ?? '';
 
 
         if ((isset($concontact_api_key) && !empty($concontact_api_key)) && ( isset($constantcontact_access_token) && !empty($constantcontact_access_token))) {
@@ -77,7 +77,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 $Contact->first_name = $first_name;
                 $Contact->last_name = $last_name;
                 $Contact->addList($cclistsid);
-                $NewContact = $ConstantContact->addContact($constantcontact_access_token, $Contact, false);
+                $NewContact = $ConstantContact->addContact($constantcontact_access_token, $Contact );
                 if ('yes' == $debug) {
                     $log->add('ConstantContact', 'ConstantContact new contact ' . $offer_email . ' added to selected contact list');
                 }
@@ -86,7 +86,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 $Contact->first_name = $first_name;
                 $Contact->last_name = $last_name;
                 $Contact->addList($cclistsid);
-                $new_contact = $ConstantContact->updateContact($constantcontact_access_token, $Contact, false);
+                $new_contact = $ConstantContact->updateContact($constantcontact_access_token, $Contact );
                 $log->add('ConstantContact', 'ConstantContact update contact ' . $offer_email . ' to selected contact list');
             }
         } else {
@@ -94,6 +94,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 $log->add('ConstantContact', 'Constant Contact API Key OR Constant Contact Access Token does not set');
             }
         }
+	    return null;
     }
 
     /**
@@ -194,6 +195,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
             }
             return $constantcontact_lists;
         }
+	    return null;
     }
 
 }

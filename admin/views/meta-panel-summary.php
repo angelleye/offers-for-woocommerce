@@ -329,7 +329,7 @@
                     <input type="hidden" name="offer_expiration_date_hidden" id="offer_expiration_date_hidden" value="" />
                 </div>
 
-                <?php $show_notice_msg = ( isset($show_offer_inventory_msg) && $show_offer_inventory_msg ) ? TRUE : FALSE; ?>
+                <?php $show_notice_msg = isset($show_offer_inventory_msg) && $show_offer_inventory_msg; ?>
                 <div id="angelleye-woocommerce-offer-meta-summary-notice-msg" <?php echo (!$show_notice_msg) ? ' class="angelleye-hidden"' : '';?>">
                     <div class="aeofwc-notice-msg-inner"><?php echo (isset($offer_inventory_msg)) ? $offer_inventory_msg : '';?></div>
                 </div>

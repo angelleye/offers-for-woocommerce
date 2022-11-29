@@ -99,9 +99,9 @@
             
             ?>
             <?php
-                $is_counter_offer = (isset($parent_offer_id) && $parent_offer_id != '') ? true : false;
+                $is_counter_offer = isset($parent_offer_id) && $parent_offer_id != '';
                 $on_exit_enabled = get_post_meta($product_id, 'offers_for_woocommerce_onexit_only', true);
-                $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
+                $on_exit_enabled = isset($on_exit_enabled) && $on_exit_enabled == 'yes';
                 if(isset($button_display_options['display_setting_custom_make_offer_btn_text']) && !empty($button_display_options['display_setting_custom_make_offer_btn_text'])) {
                     $tab_title = apply_filters('woocommerce_make_offer_form_tab_title', __($button_display_options['display_setting_custom_make_offer_btn_text'],'offers-for-woocommerce'), $is_counter_offer, $on_exit_enabled);
                 } else {
@@ -230,7 +230,7 @@
             <?php       }
                         if($value=='display_setting_make_offer_form_field_offer_notes'){ ?>
             <?php do_action('make_offer_form_before_offer_notes', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
-            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) && $is_anonymous_communication_enable == false ) { ?>
+            <?php if( !empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) && ! $is_anonymous_communication_enable ) { ?>
                 <div class="woocommerce-make-offer-form-section">
                     <div class="woocommerce-make-offer-form-part-full">
                         <label for="angelleye-offer-notes"><?php echo apply_filters( 'aeofwc_offer_form_label_offer_notes', __('Offer Notes (optional)', 'offers-for-woocommerce'), $is_counter_offer );?></label>
