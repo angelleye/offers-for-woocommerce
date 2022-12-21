@@ -12,19 +12,20 @@
              */
 
             var currentDate = new Date();
-            $('.datepicker').datepicker({
-                minDate: currentDate
+            $('.datepicker').datetimepicker({
+                minDate: currentDate,
+                format: 'M d, Y H:i'
             });
 
-            $('#meta-box-offers-submit').click(function(){                               
-                var theDate = new Date(Date.parse($('.datepicker').datepicker('getDate')));
+            $('#meta-box-offers-submit').click(function(){
+                var theDate = new Date(Date.parse($('.datepicker').datetimepicker('getValue')));
                 if (theDate == 'Invalid Date')
                 {
                     $("#offer_expiration_date_hidden").val('');
                 }
                 else{
-                    var dateFormatted = $.datepicker.formatDate('yy-mm-dd', theDate);
-                    $("#offer_expiration_date_hidden").val(dateFormatted);                    
+                    var dateFormatted = customDateFormat(theDate);
+                    $("#offer_expiration_date_hidden").val(dateFormatted);
                 }
             });
 
@@ -301,3 +302,16 @@
 	});
 }(jQuery));
 
+function customDateFormat( dateobj = new Date() ){
+
+    var year = dateobj.getFullYear();
+    var month = ("0" + (dateobj.getMonth() + 1)).slice(-2);
+    var date = ("0" + dateobj.getDate()).slice(-2);
+    var hours =  ("0" + dateobj.getHours()).slice(-2);
+    var minutes = ("0" + dateobj.getMinutes()).slice(-2);
+
+    var full_date = year + '-' + month + '-' + date + ' ' + hours + ':' + minutes;
+
+    return full_date;
+
+}
