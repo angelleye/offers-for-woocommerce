@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 6.1.1
-Stable tag: 2.3.21
+Stable tag: 2.3.22
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.22 - 01.09.2023 =
+* Fix - Resolves issue with Offer notes field.([OFW-273](https://github.com/angelleye/offers-for-woocommerce/pull/499))
 
 = 2.3.21 - 12.21.2022 =
 * Fix - Resolves conflict with Yoast SEO.([OFW-266](https://github.com/angelleye/offers-for-woocommerce/pull/497))
