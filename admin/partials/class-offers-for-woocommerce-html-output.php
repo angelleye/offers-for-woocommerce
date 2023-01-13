@@ -27,7 +27,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                     $value['id'] = '';
                 }
                 if (!isset($value['title'])) {
-                    $value['title'] = $value['name'] ?? '';
+                    $value['title'] = isset($value['name']) ? $value['name'] : '';
                 }
                 if (!isset($value['class'])) {
                     $value['class'] = '';

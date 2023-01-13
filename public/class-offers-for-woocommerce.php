@@ -206,7 +206,7 @@ class Angelleye_Offers_For_Woocommerce {
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
         $parent_post_status = get_post_status($parent_offer_id);
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
-        $on_exit_enabled = isset($on_exit_enabled) && $on_exit_enabled == 'yes';
+	    $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
         if ($on_exit_enabled) {
             if ($parent_offer_id > 0 && isset($parent_post_status) && $parent_post_status == 'countered-offer') {
                 $this->ofw_display_highest_current_offer();
@@ -472,8 +472,8 @@ class Angelleye_Offers_For_Woocommerce {
     public function angelleye_ofwc_after_show_loop_item($post) {
         //$button_options_display = get_option('offers_for_woocommerce_options_display');
         $button_options_general = get_option('offers_for_woocommerce_options_general');
-        $button_global_onoff_frontpage = $button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '';
-        $button_global_onoff_catalog = $button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '';
+	    $button_global_onoff_frontpage = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_frontpage']) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] != '') ? true : false;
+	    $button_global_onoff_catalog = ($button_options_general && isset($button_options_general['general_setting_enable_make_offer_btn_catalog']) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] != '') ? true : false;
         if (!((is_front_page() && !$button_global_onoff_frontpage) || (!is_front_page() && !$button_global_onoff_catalog))) {
             echo $this->angelleye_ofwc_offer_button_output(true);
         }
@@ -526,7 +526,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_type = $_product->get_type();
         }
 
-        $is_lightbox = isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox';
+        $is_lightbox = ( isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] == 'lightbox') ? TRUE : FALSE;
         $on_exit_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true);
         $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled != '') ? $on_exit_enabled : 'no';
 
@@ -572,7 +572,7 @@ class Angelleye_Offers_For_Woocommerce {
                                 date.setTime(date.getTime() + (60 * 1000)); //60 secounds time for cookie
                                 Cookies.set(onexit_cookie, '1', {
                                     expires: date,
-                                    path: '<?php echo COOKIEPATH ?: "/"; ?>',
+                                    path: '<?php echo COOKIEPATH ? COOKIEPATH : "/"; ?>',
                                 });
                             }
                         });
@@ -645,8 +645,8 @@ class Angelleye_Offers_For_Woocommerce {
         if (isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()) {
             return $tabs;
         }
-        $is_external_product = $_product->get_type() == 'external';
-        $is_instock = $_product->is_in_stock();
+	    $is_external_product = ( $_product->get_type() == 'external' ) ? TRUE : FALSE;
+	    $is_instock = ( $_product->is_in_stock() ) ? TRUE : FALSE;
 
         // if post has offers button enabled
         if ($custom_tab_options_offers['enabled'] == 'yes' && !$is_external_product && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
@@ -706,7 +706,7 @@ class Angelleye_Offers_For_Woocommerce {
         $is_backorders_allowed = $_product->backorders_allowed();
         $stock_quantity = $_product->get_stock_quantity();
 
-        $global_limit_quantity_to_stock = $button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '';
+	    $global_limit_quantity_to_stock = ($button_options_general && isset($button_options_general['general_setting_limit_offer_quantity_by_stock']) && $button_options_general['general_setting_limit_offer_quantity_by_stock'] != '') ? true : false;
 
         $new_offer_quantity_limit = (!$is_backorders_allowed && $stock_quantity && $stock_quantity > 0 && $global_limit_quantity_to_stock) ? $stock_quantity : '';
 
@@ -991,7 +991,7 @@ class Angelleye_Offers_For_Woocommerce {
             $angelleye_post_data = array();
             if (isset($_GET['offer-pid']) && !empty($_GET['offer-pid'])) {
                 $tmproduct_data = get_post_meta($_GET['offer-pid'], 'tmproduct_data', true);
-                $angelleye_post_data = $tmproduct_data['post_data'] ?? array();
+	            $angelleye_post_data = isset($tmproduct_data['post_data']) ? $tmproduct_data['post_data'] : array();
             }
 
             $suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
@@ -1305,7 +1305,7 @@ class Angelleye_Offers_For_Woocommerce {
             $post_parent_type = get_post_type($parent_post_id);
 
             // If has valid parent offer id post
-            $is_counter_offer = $parent_post_id != '';
+	        $is_counter_offer = ( $parent_post_id != '' ) ? true : false;
             do_action('woocommerce_before_offer_submit', $is_counter_offer, $post, $formData, $newPostData);
 
             if ($is_counter_offer) {
@@ -1529,7 +1529,7 @@ class Angelleye_Offers_For_Woocommerce {
              *  Start
              */
             $button_options_general = get_option('offers_for_woocommerce_options_general');
-            $option_for_admin_disable_email_auto_decline = $button_options_general['general_setting_admin_disable_email_auto_decline'] ?? '';
+	        $option_for_admin_disable_email_auto_decline = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
             $offer_is_auto_decline = '';
             if ($option_for_admin_disable_email_auto_decline == '1') {
                 $productData = $this->ofwc_get_product_detail($offer_id, $product_id, $variant_id);
@@ -1773,7 +1773,7 @@ class Angelleye_Offers_For_Woocommerce {
 
             $quantity = $offer_meta['offer_quantity'][0];
             $product_id = $offer_meta['orig_offer_product_id'][0];
-            $product_variation_id = $offer_meta['orig_offer_variation_id'][0] ?? '';
+	        $product_variation_id = isset($offer_meta['orig_offer_variation_id'][0]) ? $offer_meta['orig_offer_variation_id'][0] : '';
 
             $_product = ( $product_variation_id ) ? wc_get_product($product_variation_id) : wc_get_product($product_id);
             $_product_stock = version_compare(WC_VERSION, '3.0', '<') ? $_product->get_total_stock() : $_product->get_stock_quantity();
@@ -2124,7 +2124,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_id = get_post_meta($post_id, 'offer_product_id', true);
             $variant_id = get_post_meta($post_id, 'offer_variation_id', true);
             $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
-            $is_offer_buyer_countered_status = $post_data->post_status == 'buyercountered-offer';
+	        $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
             $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
             $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
             $product_shipping_cost = get_post_meta($post_id, 'offer_shipping_cost', true);

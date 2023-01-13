@@ -99,9 +99,9 @@
             
             ?>
             <?php
-                $is_counter_offer = isset($parent_offer_id) && $parent_offer_id != '';
+                $is_counter_offer = (isset($parent_offer_id) && $parent_offer_id != '') ? true : false;
                 $on_exit_enabled = get_post_meta($product_id, 'offers_for_woocommerce_onexit_only', true);
-                $on_exit_enabled = isset($on_exit_enabled) && $on_exit_enabled == 'yes';
+                $on_exit_enabled = (isset($on_exit_enabled) && $on_exit_enabled == 'yes') ? true : false;
                 if(isset($button_display_options['display_setting_custom_make_offer_btn_text']) && !empty($button_display_options['display_setting_custom_make_offer_btn_text'])) {
                     $tab_title = apply_filters('woocommerce_make_offer_form_tab_title', __($button_display_options['display_setting_custom_make_offer_btn_text'],'offers-for-woocommerce'), $is_counter_offer, $on_exit_enabled);
                 } else {

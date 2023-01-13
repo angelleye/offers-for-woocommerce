@@ -468,19 +468,19 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $ofw_enabled = ($ofw_enabled) ? $ofw_enabled : 'no';
 
             $ofw_onexit = get_post_meta($postid, 'offers_for_woocommerce_onexit_only', true);
-            $ofw_onexit = ($ofw_onexit) ?: 'no';
+	        $ofw_onexit = ($ofw_onexit) ? $ofw_onexit : 'no';
 
             $ofw_aae = get_post_meta($postid, '_offers_for_woocommerce_auto_accept_enabled', true);
-            $ofw_aae = ($ofw_aae) ?: 'no';
+	        $ofw_aae = ($ofw_aae) ? $ofw_aae : 'no';
 
             $ofw_ade = get_post_meta($postid, '_offers_for_woocommerce_auto_decline_enabled', true);
-            $ofw_ade = ($ofw_ade) ?: 'no';
+	        $ofw_ade = ($ofw_ade) ? $ofw_ade : 'no';
 
             $ofw_aap = get_post_meta($postid, '_offers_for_woocommerce_auto_accept_percentage', true);
-            $ofw_aap = ($ofw_aap) ?: '';
+	        $ofw_aap = ($ofw_aap) ? $ofw_aap : '';
 
             $ofw_adp = get_post_meta($postid, '_offers_for_woocommerce_auto_decline_percentage', true);
-            $ofw_adp = ($ofw_adp) ?: '';
+	        $ofw_adp = ($ofw_adp) ? $ofw_adp : '';
 
             $button_options_general = get_option('offers_for_woocommerce_options_general');
             if (isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {

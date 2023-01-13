@@ -60,9 +60,9 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
         $constantcontact_access_token = get_option('ofw_constantcontact_access_token');
         $cclistsid = get_option('ofw_constantcontact_lists');
 
-        $first_name = $posted['offer_name'] ?? '';
+        $first_name = isset($posted['offer_name']) ? $posted['offer_name'] : '';
         $last_name = '';
-        $offer_email = $posted['offer_email'] ?? '';
+        $offer_email = isset($posted['offer_email']) ? $posted['offer_email'] : '';
 
 
         if ((isset($concontact_api_key) && !empty($concontact_api_key)) && ( isset($constantcontact_access_token) && !empty($constantcontact_access_token))) {
