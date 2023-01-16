@@ -168,7 +168,7 @@
             });
 
             /* AJAX - Bulk enable/disable tool */
-            $('#ofw_tool_minimun_offer_price_form').submit(function(){                
+            $('#ofw_tool_minimum_offer_price_form').submit(function(){
                 /* show processing status */
                 $('#ofw-minimum-offer-price-tool-submit').attr('disabled', 'disabled');
                 $('#ofw-minimum-offer-price-tool-submit').removeClass('button-primary');
@@ -185,7 +185,8 @@
                 var actionTargetWhereProductType = $('#ofw-minimum-offer-price-target-where-product-type').val();
                 var actionTargetWherePriceValue = $('#ofw-minimum-offer-price-target-where-price-value').val();
                 var actionTargetWhereStockValue = $('#ofw-minimum-offer-price-target-where-stock-value').val();
-                var meta_value = 'ofwc_minimum_offer_price';                                
+                var _offer_minimum_price_nonce = $('#_offer_minimum_price_nonce').val();
+                var meta_value = 'ofwc_minimum_offer_price';
 
                 var data = {
                     'action': 'adminToolSetMinimumOfferPrice',
@@ -198,6 +199,7 @@
                     'actionTargetWhereProductType': actionTargetWhereProductType,
                     'actionTargetWherePriceValue': actionTargetWherePriceValue,
                     'actionTargetWhereStockValue': actionTargetWhereStockValue,
+                    '_offer_minimum_price_nonce': _offer_minimum_price_nonce,
                     'ofw_meta_key_value': meta_value
                 };
                 
@@ -319,6 +321,7 @@
                 var actionTargetWhereProductType = $('#ofwc-bulk-action-target-where-product-type').val();
                 var actionTargetWherePriceValue = $('#ofwc-bulk-action-target-where-price-value').val();
                 var actionTargetWhereStockValue = $('#ofwc-bulk-action-target-where-stock-value').val();
+                var _angelly_auto_decline_nonce = $('#_angelly_auto_decline_nonce').val();
                 var meta_value = 'offers_for_woocommerce_enabled';
                 
                 if(actionType == 'enable_onexit' || actionType == 'disable_onexit'){
@@ -334,6 +337,7 @@
                     'actionTargetWhereProductType': actionTargetWhereProductType,
                     'actionTargetWherePriceValue': actionTargetWherePriceValue,
                     'actionTargetWhereStockValue': actionTargetWhereStockValue,
+                    '_angelly_auto_decline_nonce': _angelly_auto_decline_nonce,
                     'ofw_meta_key_value': meta_value
                 };
 
@@ -471,7 +475,8 @@
                 var actionTargetWhereProductType = $('#ofw-bulk-tool-target-where-product-type').val();
                 var actionTargetWherePriceValue = $('#ofw-bulk-tool-action-target-where-price-value').val();
                 var actionTargetWhereStockValue = $('#ofw-bulk-tool-target-where-stock-value').val();
-                
+                var _angelly_auto_decline_nonce = $('#_angelly_auto_decline_nonce').val();
+
                 var auto_accept_or_decline_enable = "";
                 var auto_accept_or_decline_percentage = "";
                 
@@ -504,6 +509,7 @@
                     'actionTargetWherePriceValue': actionTargetWherePriceValue,
                     'actionTargetWhereStockValue': actionTargetWhereStockValue,
                     'ofw_meta_key_value': auto_accept_or_decline_enable,
+                    '_angelly_auto_decline_nonce': _angelly_auto_decline_nonce,
                     'autoAcceptDeclinePercentage': auto_accept_or_decline_percentage
                 };
 

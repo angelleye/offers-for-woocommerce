@@ -150,7 +150,12 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 
 		$status  = false;
 		$message = __( 'Mail sending failed!', 'offers-for-woocommerce' );
-
+		if ( ! isset( $_POST['email_reminder_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['email_reminder_nonce'] ), 'submit_email-reminder' ) ) {
+            wp_send_json( array(
+                'status'  => $status,
+                'message' => $message,
+            ) );
+        }
 		$mail_result = $this->send_email_templates( null, true );
 
 		if ( $mail_result ) {

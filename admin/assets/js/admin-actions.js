@@ -94,16 +94,19 @@
 
                 var ofw_current_id = $(this).attr('id');
                 var targetID = $("#offer-id").val();
+                var coupon_nonce = $("#_offer_coupon_nonce").val();
 
-                if (ofw_current_id == 'decline_offer') {
+                if (ofw_current_id === 'decline_offer') {
                          var data = {
                             'action': 'declineOfferFromGrid',
+                             '_offer_coupon_nonce': coupon_nonce,
                             'targetID': targetID
                          };
                 } else {
                         var data = {
                             'action': 'declineOfferFromGrid',
                             'targetID': targetID,
+                            '_offer_coupon_nonce': coupon_nonce,
                             'coupon_code': $("#ofw_coupon_list").val()
                         };
                 }                    

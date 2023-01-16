@@ -132,6 +132,7 @@
             <div class="angelleye-offers-tools-bulk-action-section">
                 <label for="ofwc-bulk-action-target-where-stock-value"></label>
                 <div>
+                    <input type="hidden" name="_angelly_auto_decline_nonce" id="_angelly_auto_decline_nonce" value="<?php echo wp_create_nonce('_angelly_auto_decline_nonce'); ?>" >
                     <button class="button button-primary" id="bulk-enable-tool-submit" name="bulk_enable_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
                 </div>
             </div>
@@ -246,6 +247,7 @@
             <div class="ofw-tool-auto-accept-decline-action-section">
                 <label for="bulk_enable_auto_accept_decline_tool_submit"></label>
                 <div>
+                    <input type="hidden" name="_angelly_auto_decline_nonce" id="_angelly_auto_decline_nonce" value="<?php echo wp_create_nonce('_angelly_auto_decline_nonce'); ?>" >
                     <button class="button button-primary" id="ofw_bulk-acd_enable-tool-submit" name="bulk_enable_auto_accept_decline_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
                 </div>
             </div>
@@ -507,9 +509,10 @@
                                     <td>
                                         <input required style="width:15%" type="number" name="ofw_email_frequency"
                                                min="0" id="ofw_email_frequency" class="ofw-ca-trigger-input"
-                                               value="<?php echo esc_attr( $frequency_edit ); ?>">
+                                               value="<?php echo !empty( $frequency_edit ) ? esc_attr( $frequency_edit ) : ''; ?>">
                                         <select name="ofw_email_frequency_unit" id="ofw_email_frequency_unit" required>
                                             <?php
+                                            $frequency_unit = !empty( $frequency_unit ) ? esc_attr( $frequency_unit ) : "";
                                             $days_or_hours = array(
                                                 'minute' => esc_html__( 'Minute(s)', 'offers-for-woocommerce' ),
                                                 'hour'   => esc_html__( 'Hour(s)', 'offers-for-woocommerce' ),
@@ -531,8 +534,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php
-                                    $current_user = wp_get_current_user(); ?>
+                                    <?php $current_user = wp_get_current_user(); ?>
                                     <th>
                                         <label for="ofw_email_preview"><b><?php esc_html_e( 'Send Test Email To:', 'offers-for-woocommerce' ); ?></b></label>
                                     </th>

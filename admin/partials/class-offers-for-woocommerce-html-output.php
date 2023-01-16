@@ -323,6 +323,28 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         </tr><?php
                         break;
 
+                    // Hidden input
+                    case 'hidden' :
+                        $type = $value['type'];
+                        $option_value = !empty( $value['value'] ) ? esc_attr( $value['value'] ) : '';
+
+                        ?><tr valign="top">
+                            <th scope="row" class="titledesc">
+                            </th>
+                            <td class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
+                                <input
+                                    name="<?php echo esc_attr($value['id']); ?>"
+                                    id="<?php echo esc_attr($value['id']); ?>"
+                                    type="<?php echo esc_attr($type); ?>"
+                                    style="<?php echo esc_attr($value['css']); ?>"
+                                    value="<?php echo esc_attr($option_value); ?>"
+                                    class="<?php echo esc_attr($value['class']); ?>"
+                                    <?php echo implode(' ', $custom_attributes); ?>
+                                    />
+                            </td>
+                        </tr><?php
+                        break;
+
                     // Default: run an action
                     default:
                         break;
