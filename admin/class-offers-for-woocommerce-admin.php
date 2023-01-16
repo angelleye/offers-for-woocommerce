@@ -704,11 +704,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             </div>
             <div class="options_group">
                 <?php woocommerce_wp_checkbox(array('value' => $field_value_auto_accept_enabled, 'cbvalue' => $field_callback_auto_accept_enabled, 'id' => '_offers_for_woocommerce_auto_accept_enabled', 'label' => __('Enable Auto Accept Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically accept offers based on the percentage set.', 'offers-for-woocommerce'))); ?>
-                <p class="form-field offers_for_woocommerce_auto_accept_percentage "><label for="offers_for_woocommerce_auto_accept_percentage"><?php echo __('Auto Accept Percentage', 'offers-for-woocommerce'); ?></label><input type="number" placeholder="<?php echo __('Enter Percentage', 'offers-for-woocommerce'); ?>" value="<?php echo $post_meta_auto_accept_percentage_value; ?>" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr('Any offer above the percentage entered here will be automatically accepted.') . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
+                <p class="form-field offers_for_woocommerce_auto_accept_percentage "><label for="_offers_for_woocommerce_auto_accept_percentage"><?php echo __('Auto Accept Percentage', 'offers-for-woocommerce'); ?></label><input type="number" placeholder="<?php echo __('Enter Percentage', 'offers-for-woocommerce'); ?>" value="<?php echo $post_meta_auto_accept_percentage_value; ?>" min="1" max="100" id="_offers_for_woocommerce_auto_accept_percentage" name="_offers_for_woocommerce_auto_accept_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr('Any offer above the percentage entered here will be automatically accepted.') . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
             </div>
             <div class="options_group">
                 <?php woocommerce_wp_checkbox(array('value' => $field_value_auto_decline_enabled, 'cbvalue' => $field_callback_auto_decline_enabled, 'id' => '_offers_for_woocommerce_auto_decline_enabled', 'label' => __('Enable Auto Decline Offers?', 'offers-for-woocommerce'), 'desc_tip' => 'true', 'description' => __('Enable this option to automatically decline offers based on the percentage set.', 'offers-for-woocommerce'))); ?>
-                <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="_offers_for_woocommerce_auto_decline_percentage"><?php echo __('Auto Decline Percentage', 'offers-for-woocommerce'); ?></label><input type="number" placeholder="<?php echo __('Enter Percentage', 'offers-for-woocommerce'); ?>" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr('Any offer below the percentage entered here will be automatically declined.') . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
+                <p class="form-field offers_for_woocommerce_auto_decline_percentage "><label for="offers_for_woocommerce_auto_decline_percentage"><?php echo __('Auto Decline Percentage', 'offers-for-woocommerce'); ?></label><input type="number" placeholder="<?php echo __('Enter Percentage', 'offers-for-woocommerce'); ?>" value="<?php echo $post_meta_auto_decline_percentage_value; ?>" min="1" max="100" id="offers_for_woocommerce_auto_decline_percentage" name="_offers_for_woocommerce_auto_decline_percentage" style="" class="short"> <?php echo '<img class="help_tip" data-tip="' . esc_attr('Any offer below the percentage entered here will be automatically declined.') . '" src="' . esc_url(WC()->plugin_url()) . '/assets/images/help.png" height="16" width="16" />'; ?> </p>
             </div>
 
             <?php do_action('aeofw_offers_tab_options', $post->ID, $post ); ?>
@@ -4328,7 +4328,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public function ofwc_custom_style() {
-        echo '<style type="text/css">div#ofwc_product_offers .inside {overflow-y: auto;max-height: 350px;}</style>';
+        echo '<style>div#ofwc_product_offers .inside {overflow-y: auto;max-height: 350px;}</style>';
     }
 
     /**
@@ -4471,7 +4471,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function angelleye_display_push_notification($response_data) {
         echo '<div class="notice notice-success angelleye-notice" style="display:none;" id="' . $response_data->id . '">'
-        . '<div class="angelleye-notice-logo-push"><span> <img src="' . $response_data->ans_company_logo . '"> </span></div>'
+        . '<div class="angelleye-notice-logo-push"><span> <img alt="company-logo" src="' . $response_data->ans_company_logo . '"> </span></div>'
         . '<div class="angelleye-notice-message">'
         . '<h3>' . $response_data->ans_message_title . '</h3>'
         . '<div class="angelleye-notice-message-inner">'
@@ -4916,7 +4916,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 ?>
                 <h3><?php echo __('Product Options', 'offers-for-woocommerce'); ?></h3>
                 <div style="margin-bottom: 40px;">
-                <table class="td" cellspacing="0" cellpadding="6" style="width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;" border="1">
+                <table class="td" style=" padding:0; border-collapse: separate; border-spacing: 0px; width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; border:1px;" >
                     <thead>
                         <tr>
                             <th class="td" scope="col" style="text-align:<?php echo esc_attr( $text_align ); ?>;"><?php echo __('Product', 'offers-for-woocommerce'); ?></th>

@@ -116,7 +116,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                             $value['class'] .= 'colorpick';
                             $description .= '<div id="colorPickerDiv_' . esc_attr($value['id']) . '" class="colorpickdiv" style="z-index: 100;background:#eee;border:1px solid #ccc;position:absolute;display:none;"></div>';
                         }
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -139,7 +139,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                     case 'textarea':
 
                         $option_value = self::get_option($value['id'], $value['default']);
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -163,7 +163,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                     case 'multiselect' :
 
                         $option_value = self::get_option($value['id'], $value['default']);
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -201,7 +201,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                     case 'radio' :
 
                         $option_value = self::get_option($value['id'], $value['default']);
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -257,7 +257,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
 
                         if (!isset($value['checkboxgroup']) || 'start' == $value['checkboxgroup']) {
                             ?>
-                            <tr valign="top" class="<?php echo esc_attr(implode(' ', $visbility_class)); ?>">
+                            <tr style="vertical-align: top;" class="<?php echo esc_attr(implode(' ', $visbility_class)); ?>">
                                 <th scope="row" class="titledesc"><?php echo esc_html($value['title']) ?></th>
                                 <td class="forminp forminp-checkbox">
                                     <fieldset>
@@ -315,7 +315,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         if (isset($value['args'])) {
                             $args = wp_parse_args($value['args'], $args);
                         }
-                        ?><tr valign="top" class="single_select_page">
+                        ?><tr style="vertical-align: top;" class="single_select_page">
                             <th scope="row" class="titledesc"><?php echo esc_html($value['title']) ?> <?php echo $tip; ?></th>
                             <td class="forminp">
                                 <?php echo str_replace(' id=', " data-placeholder='" . __('Select a page&hellip;', 'paypal-ipn') . "' style='" . $value['css'] . "' class='" . $value['class'] . "' id=", wp_dropdown_pages($args)); ?> <?php echo $description; ?>
