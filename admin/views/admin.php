@@ -45,6 +45,13 @@
         </p>-->
         <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
+
+	        <?php
+	        $woocommerce_offers_options_form_bulk_tool_enable_offersNonce = wp_create_nonce('adminToolBulkEnableDisable','$woocommerce_offers_options_form_bulk_tool_enable_offersNonce');
+
+	        ?>
+            <input type="hidden" id="woocommerce_offers_options_form_bulk_tool_enable_offersNonce" value="<?php echo $woocommerce_offers_options_form_bulk_tool_enable_offersNonce; ?>">
+
             <h3><?php echo __('Bulk Edit Tool for Products', 'offers-for-woocommerce'); ?></h3>
             <div><?php echo __('Select from the options below to enable / disable offers on multiple products at once.', 'offers-for-woocommerce'); ?></div>
 
@@ -141,7 +148,15 @@
     
         
         <form id="ofw_tool_enable_auto_accept_decline" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
-        <!--<p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
+
+            <?php
+
+            $ofw_tool_enable_auto_accept_declineNonce = wp_nonce_url(admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'),'ofw_tool_enable_auto_accept_decline');
+
+            ?>
+            <input type="hidden" id="ofw_tool_enable_auto_accept_declineNonce" value="<?php echo $ofw_tool_enable_auto_accept_declineNonce; ?>">
+
+            <!--<p><strong>Here we have provided useful tools for managing Offers for WooCommerce.</strong>
             <br>Available Tools: <a href="#ofwc-t1">Bulk enable/disable offers</a>
         </p>-->
         <a name="ofwc-t1"></a>
@@ -260,6 +275,13 @@
     */
     ?>
     <form id="ofw_tool_minimun_offer_price_form" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
+
+	    <?php
+	    $adminToolSetMinimumOfferPriceNonce = wp_create_nonce('adminToolSetMinimumOfferPrice','adminToolSetMinimumOfferPriceNonce');
+
+	    ?>
+        <input type="hidden" id="adminToolSetMinimumOfferPriceNonce" value="<?php echo $adminToolSetMinimumOfferPriceNonce; ?>">
+
         <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
             <h3><?php echo __('Minimum Offer Price', 'offers-for-woocommerce'); ?></h3>
@@ -507,7 +529,7 @@
                                     <td>
                                         <input required style="width:15%" type="number" name="ofw_email_frequency"
                                                min="0" id="ofw_email_frequency" class="ofw-ca-trigger-input"
-                                               value="<?php echo esc_attr( $frequency_edit ); ?>">
+                                               value="<?php echo !empty( $frequency_edit ) ? esc_attr( $frequency_edit ) : ''; ?>">
                                         <select name="ofw_email_frequency_unit" id="ofw_email_frequency_unit" required>
                                             <?php
                                             $days_or_hours = array(
@@ -515,13 +537,16 @@
                                                 'hour'   => esc_html__( 'Hour(s)', 'offers-for-woocommerce' ),
                                                 'day'    => esc_html__( 'Day(s)', 'offers-for-woocommerce' ),
                                             );
-                                            foreach ( $days_or_hours as $key => $value ) {
-                                                printf(
-                                                    "<option %s value='%s'>%s</option>\n",
-                                                    selected( $key, $frequency_unit, false ),
-                                                    esc_attr( $key ),
-                                                    esc_attr( $value )
-                                                );
+                                            if( !empty( $days_or_hours ) ) {
+                                                $frequency_unit = !empty( $frequency_unit ) ? $frequency_unit : '';
+                                                foreach ($days_or_hours as $key => $value) {
+                                                    printf(
+                                                        "<option %s value='%s'>%s</option>\n",
+                                                        selected($key, $frequency_unit, false),
+                                                        esc_attr($key),
+                                                        esc_attr($value)
+                                                    );
+                                                }
                                             }
                                             ?>
                                         </select>
