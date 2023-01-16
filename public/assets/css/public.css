@@ -138,7 +138,7 @@ div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #woocommerce-make-offer-form-total {  border:1px solid #CCC; border-left:none; background:#FFFFFF; cursor: not-allowed; }
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section #angelleye-offer-notes { width:80%; }
 #woocommerce-make-offer-form-submit-button { float:left; margin-right:20px; margin-top:1px; width:auto; }
-div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section.woocommerce-make-offer-form-section-submit .offer-submit-loader { display:none; float:left; height:32px; width:auto; line-height:33px; padding-left:45px; font-style:italic; background:url('../images/offer-submit-loader.gif') left center no-repeat; }
+div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section-submit .offer-submit-loader { display:none; float:left; height:32px; width:auto; line-height:33px; padding-left:45px; font-style:italic; background:url('../images/offer-submit-loader.gif') left center no-repeat; }
 
 div.tab_custom_ofwc_offer_tab_inner_content fieldset form#woocommerce-make-offer-form .woocommerce-make-offer-form-section div.woocommerce-make-offer-form-sym { float:left; font-weight:bold; padding:0 8px 8px 8px; }
 
