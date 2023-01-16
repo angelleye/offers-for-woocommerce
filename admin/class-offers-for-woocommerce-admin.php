@@ -2945,6 +2945,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
 
     public function approveOfferFromGridCallback() {
+        
         if (is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
             global $post, $wpdb; // this is how you get access to the database
             $post_id = '';
@@ -2966,7 +2967,11 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
 
     public function declineOfferFromGridCallback() {
-        if (is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
+
+        $offer_nonce = !empty( $_POST['_offer_coupon_nonce'] ) ? sanitize_text_field($_POST['_offer_coupon_nonce']) : "";
+
+        if (is_admin() && ( ( is_ajax() && !empty( $offer_nonce ) && wp_verify_nonce($offer_nonce, '_offer_coupon_nonce') ) || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
+            global $wpdb; // this is how you get access to the database
             $post_id = '';
             if (isset($_REQUEST['targetID']) && !empty($_REQUEST['targetID'])) {
                 $post_id = absint($_REQUEST["targetID"]);
@@ -3123,8 +3128,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public function adminToolSetMinimumOfferPriceCallback() {
-        if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX)) {
-            check_ajax_referer('adminToolSetMinimumOfferPrice','security');
+        if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX) && !empty($_POST['_offer_minimum_price_nonce']) && wp_verify_nonce(sanitize_text_field($_POST['_offer_minimum_price_nonce'] ), '_offer_minimum_price_nonce')) {
             global $wpdb;
             $processed_product_id = array();
             $errors = FALSE;
@@ -3309,8 +3313,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
 
     public function adminToolBulkEnableDisableCallback() {
-        if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX)) {
-            check_ajax_referer( 'adminToolBulkEnableDisable', 'security' );
+        if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX) && !empty( $_POST['_angelly_auto_decline_nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['_angelly_auto_decline_nonce'] ), '_angelly_auto_decline_nonce') ) {
             global $wpdb;
             $processed_product_id = array();
             $errors = FALSE;
@@ -3838,6 +3841,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     ?>
                     <br><br>
                     <input type="hidden" name="offer-id" id="offer-id" value="">
+                    <input type="hidden" name="_offer_coupon_nonce" id="_offer_coupon_nonce" value="<?php echo wp_create_nonce('offer_coupon_nonce'); ?>">
                     <?php if ($coupon_list) { ?>
                         <input type="button" value="<?php _e('Send coupon & Decline', 'offers-for-woocommerce'); ?>" class="button ofw-decline-popup" id="send_coupon_decline_offer" name="send_coupon_decline_offer">
                     <?php } ?>
@@ -3936,10 +3940,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     }
 
     public static function offers_for_woocommerce_setting_tab_content_save_own() {
-        if (!empty($_POST['ofw_mailChimp_integration'])) {
-            if(!isset($_POST['save_mailChimp_integration_nonce']) || !wp_verify_nonce($_POST['save_mailChimp_integration_nonce'],'save_mailChimp_integration')){
-		        exit;
-	        }
+        if (!empty($_POST['ofw_mailChimp_integration']) && !empty( $_POST['_ofw_mailChimp_integration_nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['_ofw_mailChimp_integration_nonce'] ), '_ofw_mailChimp_integration_nonce' )) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
             $OFW_Woocommerce_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailChimp_Helper();
@@ -3947,10 +3948,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($mcapi_setting_fields);
         }
-        if (!empty($_POST['ofw_constantContact_integration'])) {
-            if(!isset($_POST['save_constantContact_integration_nonce']) || !wp_verify_nonce($_POST['save_constantContact_integration_nonce'],'save_constantContact_integration')){
-		        exit;
-	        }
+
+        if (!empty($_POST['ofw_constantContact_integration']) && !empty( $_POST['_constantContact_integration_nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['_constantContact_integration_nonce'] ), '_constantContact_integration_nonce' )) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
             $OFW_Woocommerce_ConstantContact_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
@@ -3969,11 +3968,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             $Html_output->save_fields($mailpoet_setting_fields);
         }
-        if (!empty($_POST['ofw_recaptcha_integration'])) {
-            if(!isset($_POST['save_recaptcha_integration_nonce']) || !wp_verify_nonce($_POST['save_recaptcha_integration_nonce'],'save_recaptcha_integration')){
-                exit;
-            }
-            
+
+        if (!empty($_POST['ofw_recaptcha_integration']) && !empty( $_POST['_recaptcha_integration_nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['_recaptcha_integration_nonce'] ), '_recaptcha_integration_nonce' )) {
+
             include_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-recaptcha-helper.php';
             $OFW_Woocommerce_Recaptcha_Helper = new AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper();

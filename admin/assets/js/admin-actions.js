@@ -94,17 +94,22 @@
         /*AJAX - Update Offer Status - Declined Offer*/
         document.querySelectorAll('.ofw-decline-popup').forEach((object) => {
             object.addEventListener('click', function () {
+
                 var ofw_current_id = this.getAttribute('id');
                 var targetID = document.getElementById('offer-id').value;
+                var coupon_nonce = document.getElementById("_offer_coupon_nonce").value;
+
                 if (ofw_current_id === 'decline_offer') {
                     var data = {
                         'action': 'declineOfferFromGrid',
+                        '_offer_coupon_nonce': coupon_nonce,
                         'targetID': targetID
                     };
                 } else {
                     var data = {
                         'action': 'declineOfferFromGrid',
                         'targetID': targetID,
+                        '_offer_coupon_nonce': coupon_nonce,
                         'coupon_code': document.getElementById('ofw_coupon_list').value
                     };
                 }

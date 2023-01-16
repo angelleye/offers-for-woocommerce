@@ -117,6 +117,12 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
 
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
 
+        $fields[] = array(
+            'type' => 'hidden',
+            'id' => '_ofw_mailChimp_integration_nonce',
+            'value' => wp_create_nonce('_ofw_mailChimp_integration_nonce')
+        );
+
         return $fields;
     }
 
@@ -162,6 +168,9 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                     }
                     if ('yes' == $mailchimp_debug_log) {
                         $log->add('MailChimp', 'MailChimp Get List Success..');
+                    }
+                    if( empty($mailchimp_lists) ){
+                        $mailchimp_lists = array();
                     }
                     set_transient('ofw_mailchimp_mailinglist', serialize($mailchimp_lists), 86400);
                     update_option('ofw_mailchimp_force_refresh', 'no');

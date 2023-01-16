@@ -111,6 +111,11 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
             'desc' => sprintf(__('Log MailPoet events, inside <code>%s</code>', 'offers-for-woocommerce'), OFFERS_FOR_WOOCOMMERCE_LOG_DIR)
         );
 
+        $fields[] = array(
+            'type' => 'hidden',
+            'id' => '_constantContact_integration_nonce',
+            'value' => wp_create_nonce('_constantContact_integration_nonce')
+        );
 
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
 

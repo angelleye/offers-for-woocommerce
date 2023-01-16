@@ -65,6 +65,7 @@
                     } else {
                         document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').style.display = 'none';
                         document.getElementById('ofw-minimum-offer-price-target-where-type').removeAttribute('required');
+
                     }
 
                 });
