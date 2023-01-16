@@ -1771,8 +1771,8 @@ class Angelleye_Offers_For_Woocommerce {
         if (!is_admin()) {
             global $woocommerce;
 
-            $quantity = $offer_meta['offer_quantity'][0];
-            $product_id = $offer_meta['orig_offer_product_id'][0];
+            $quantity = !empty( $offer_meta['offer_quantity'][0] ) ? $offer_meta['offer_quantity'][0] : '';
+            $product_id = !empty( $offer_meta['orig_offer_product_id'][0] ) ? $offer_meta['orig_offer_product_id'][0] : '';
 	        $product_variation_id = isset($offer_meta['orig_offer_variation_id'][0]) ? $offer_meta['orig_offer_variation_id'][0] : '';
 
             $_product = ( $product_variation_id ) ? wc_get_product($product_variation_id) : wc_get_product($product_id);
