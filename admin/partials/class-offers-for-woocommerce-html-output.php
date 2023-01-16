@@ -183,7 +183,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                                                 ?>
                                             <option value="<?php echo esc_attr($key); ?>" <?php
                                             if (is_array($option_value)) {
-                                                selected(in_array($key, $option_value), true);
+                                                selected(in_array($key, $option_value));
                                             } else {
                                                 selected($option_value, $key);
                                             }
@@ -373,11 +373,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
 
             $key = key($option_array[$option_name]);
 
-            if (isset($option_values[$key])) {
-                $option_value = $option_values[$key];
-            } else {
-                $option_value = null;
-            }
+            $option_value=$option_values[$key] ?? null;
 
             // Single value
         } else {

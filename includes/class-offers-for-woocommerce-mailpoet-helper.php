@@ -32,7 +32,7 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
         @ini_set( 'display_errors', '0' );
         error_reporting(0);
         if (!isset($posted) || empty($posted)) {
-            return;
+            return null;
         }
         $debug = (get_option('ofw_log_enable_mailpoet') == 'yes') ? 'yes' : 'no';
         if ('yes' == $debug) {
@@ -74,6 +74,7 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
                 $log->add('MailPoet', 'MailPoet List not selected');
             }
         }
+	    return null;
     }
 
     /**
@@ -135,7 +136,7 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
         if (empty($mailpoet_lists_array) || get_option('ofw_mailpoet_force_refresh') == 'yes') {
 
             if (!( class_exists('WYSIJA') )) {
-                return;
+                return null;
             }
 
             unset($mailpoet_lists_array);

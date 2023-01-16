@@ -115,7 +115,7 @@ if ($customer_offers) :
                                         echo wc_price($val, array('currency' => $offer_currency));
                                         break;
 	                                    case 'offer-expiry' :
-		                                if (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp', 0))) )) {
+		                                if (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp' ))) )) {
 			                                echo __('Expired','offers-for-woocommerce');
 		                                } elseif ('completed-offer' == $post_status || 'declined-offer' == $post_status ){
 			                                echo __('Not Applicable','offers-for-woocommerce');
@@ -170,7 +170,7 @@ if ($customer_offers) :
                                         }
                                         break;
                                     case 'offer-action' :
-                                        if (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp', 0))) )) {
+                                        if (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp' ))) )) {
 
                                         } else {
                                             $post_status = apply_filters('ofw_admin_created_offer_status', $post_status, $post_id);
