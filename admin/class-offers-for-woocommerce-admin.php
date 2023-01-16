@@ -1060,17 +1060,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             if ($post->post_status == 'accepted-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:void(0);" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
             }
             if ($post->post_status == 'countered-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="Offer Details" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Manage&nbsp;Offer') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:void(0);" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
             } elseif ($post->post_status == 'declined-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="' . __('Offer Details', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>';
             } elseif ($post->post_status == 'on-hold-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="' . __('Offer Details', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>';
-                $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="' . __('Set Offer Status to Accepted', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-accept-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Accept', 'offers-for-woocommerce') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
+                $actions['accept-offer-link'] = '<a href="javascript:void(0);" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="' . __('Set Offer Status to Accepted', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-accept-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Accept', 'offers-for-woocommerce') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:void(0);" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
             } elseif ($post->post_status == 'expired-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="' . __('Offer Details', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Manage Offer', 'offers-for-woocommerce') . '</a>';
             } elseif ($post->post_status == 'completed-offer') {
@@ -1079,8 +1079,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
             } elseif ($post->post_status == 'publish' || $post->post_status == 'buyercountered-offer') {
                 $actions['counter-offer-link'] = '<a href="' . get_edit_post_link($post->ID) . '" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-manage" title="' . __('Offer Details', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-manage-id-' . $post->ID . '">' . __('Make Counter Offer', 'offers-for-woocommerce') . '</a>';
-                $actions['accept-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="' . __('Set Offer Status to Accepted', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-accept-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Accept', 'offers-for-woocommerce') . '</a>';
-                $actions['decline-offer-link'] = '<a href="javascript:;" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
+                $actions['accept-offer-link'] = '<a href="javascript:void(0);" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-accept" title="' . __('Set Offer Status to Accepted', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-accept-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Accept', 'offers-for-woocommerce') . '</a>';
+                $actions['decline-offer-link'] = '<a href="javascript:void(0);" class="woocommerce-offer-post-action-link woocommerce-offer-post-action-link-decline" title="' . __('Set Offer Status to Declined', 'offers-for-woocommerce') . '" id="woocommerce-offer-post-action-link-decline-id-' . $post->ID . '" data-target="' . $post->ID . '">' . __('Decline', 'offers-for-woocommerce') . '</a>';
             }
         }
         return $actions;
@@ -2948,7 +2948,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if (is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
             global $post, $wpdb; // this is how you get access to the database
             $post_id = '';
-            if (isset($_GET['targetID']) && !empty($_GET['targetID'])) {
+            if (isset($_REQUEST['targetID']) && !empty($_REQUEST['targetID'])) {
                 $post_id = absint($_GET["targetID"]);
             }
             do_action('ofw_before_auto_approve_offer_admin', $post_id);
@@ -2967,7 +2967,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function declineOfferFromGridCallback() {
         if (is_admin() && ( is_ajax() || (isset($_GET['ofw_from_email']) && $_GET['ofw_from_email'] == true))) {
-            global $wpdb; // this is how you get access to the database
             $post_id = '';
             if (isset($_REQUEST['targetID']) && !empty($_REQUEST['targetID'])) {
                 $post_id = absint($_REQUEST["targetID"]);
@@ -3125,6 +3124,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function adminToolSetMinimumOfferPriceCallback() {
         if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX)) {
+            check_ajax_referer('adminToolSetMinimumOfferPrice','security');
             global $wpdb;
             $processed_product_id = array();
             $errors = FALSE;
@@ -3310,6 +3310,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public function adminToolBulkEnableDisableCallback() {
         if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX)) {
+            check_ajax_referer( 'adminToolBulkEnableDisable', 'security' );
             global $wpdb;
             $processed_product_id = array();
             $errors = FALSE;
@@ -3868,7 +3869,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             ?>
             <form id="ofw_mailChimp_integration_form" enctype="multipart/form-data" action="" method="post">
-                <?php $Html_output->init($mcapi_setting_fields); ?>
+                <?php $Html_output->init($mcapi_setting_fields);
+                wp_nonce_field('save_mailChimp_integration', 'save_mailChimp_integration_nonce');
+                ?>
                 <p class="submit">
                     <input type="submit" name="ofw_mailChimp_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
                 </p>
@@ -3884,7 +3887,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             ?>
             <form id="constantContact_integration_form" enctype="multipart/form-data" action="" method="post">
-                <?php $Html_output->init($ccapi_setting_fields); ?>
+                <?php $Html_output->init($ccapi_setting_fields);
+                wp_nonce_field('save_constantContact_integration', 'save_constantContact_integration_nonce'); ?>
                 <p class="submit">
                     <input type="submit" name="ofw_constantContact_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
                 </p>
@@ -3901,14 +3905,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
                 ?>
                 <form id="constantContact_integration_form" enctype="multipart/form-data" action="" method="post">
-                    <?php $Html_output->init($mailpoet_setting_fields); ?>
+                    <?php $Html_output->init($mailpoet_setting_fields);
+                    wp_nonce_field('save_mailpoet_integration_nonce', 'save_mailpoet_integration'); ?>
                     <p class="submit">
                         <input type="submit" name="ofw_mailpoet_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
                     </p>
                 </form>
                 <?php
             } else {
-                echo "<br><br><strong>MailPoet subscribe</strong> requires <strong><a target='_blank' href='http://wordpress.org/plugins/wysija-newsletters/' rel='nofollow'>MailPoet plugin</a></strong> plugin to work normally. Please activate it or install it.<br /><br />Back to the WordPress <a href='" . admin_url('plugin-install.php?tab=search&s=MailPoet') . "'>Plugins page</a>.";
+                echo "<br><br>Back to the WordPress <a href='" . admin_url('plugin-install.php?tab=search&s=MailPoet') . "'>Plugins page</a>.";
             }
         }
 
@@ -3920,7 +3925,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output = new AngellEYE_Offers_for_Woocommerce_Html_output();
             ?>
             <form id="recaptcha_integration_form" enctype="multipart/form-data" action="" method="post">
-                <?php $Html_output->init($recaptcha_setting_field); ?>
+                <?php $Html_output->init($recaptcha_setting_field);
+                wp_nonce_field('save_recaptcha_integration', 'save_recaptcha_integration_nonce'); ?>
                 <p class="submit">
                     <input type="submit" name="ofw_recaptcha_integration" class="button-primary" value="<?php esc_attr_e('Save changes', 'Option'); ?>" />
                 </p>
@@ -3931,6 +3937,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
     public static function offers_for_woocommerce_setting_tab_content_save_own() {
         if (!empty($_POST['ofw_mailChimp_integration'])) {
+            if(!isset($_POST['save_mailChimp_integration_nonce']) || !wp_verify_nonce($_POST['save_mailChimp_integration_nonce'],'save_mailChimp_integration')){
+		        exit;
+	        }
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailchimp-helper.php';
             $OFW_Woocommerce_MailChimp_Helper = new AngellEYE_Offers_for_Woocommerce_MailChimp_Helper();
@@ -3939,6 +3948,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output->save_fields($mcapi_setting_fields);
         }
         if (!empty($_POST['ofw_constantContact_integration'])) {
+            if(!isset($_POST['save_constantContact_integration_nonce']) || !wp_verify_nonce($_POST['save_constantContact_integration_nonce'],'save_constantContact_integration')){
+		        exit;
+	        }
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-constant-contact-helper.php';
             $OFW_Woocommerce_ConstantContact_Helper = new AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper();
@@ -3947,6 +3959,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output->save_fields($ccapi_setting_fields);
         }
         if (!empty($_POST['ofw_mailpoet_integration'])) {
+            if(!isset($_POST['save_mailpoet_integration_nonce']) || !wp_verify_nonce($_POST['save_mailpoet_integration_nonce'],'save_mailpoet_integration')){
+		        exit;
+	        }
             require_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-mailpoet-helper.php';
             $OFW_Woocommerce_MailPoet_Helper = new AngellEYE_Offers_for_Woocommerce_MailPoet_Helper();
@@ -3955,7 +3970,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $Html_output->save_fields($mailpoet_setting_fields);
         }
         if (!empty($_POST['ofw_recaptcha_integration'])) {
-
+            if(!isset($_POST['save_recaptcha_integration_nonce']) || !wp_verify_nonce($_POST['save_recaptcha_integration_nonce'],'save_recaptcha_integration')){
+                exit;
+            }
+            
             include_once plugin_dir_path(dirname(__FILE__)) . 'admin/partials/class-offers-for-woocommerce-html-output.php';
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-recaptcha-helper.php';
             $OFW_Woocommerce_Recaptcha_Helper = new AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper();

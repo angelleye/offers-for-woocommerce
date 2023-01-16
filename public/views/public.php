@@ -292,7 +292,6 @@
                             var pfw_grecaptcha = function(  ) {
                                 grecaptcha.ready(function() {
                                         grecaptcha.execute('<?php echo $ofw_recaptcha_site_key_v3; ?>', {action: 'submit'}).then(function(token) {
-                                            console.log('jignesh' + token);
                                         document.getElementById("ofw_google").value = token;
                                     });
                                 });
@@ -307,8 +306,8 @@
                  }
             }
             ?>
-            <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
-                <input type="submit" class="button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo $submit_offer_text; ?>" value="<?php echo $submit_offer_text; ?>" />
+            <div class="<?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
+                <input type="submit" class="wp-element-button button" id="woocommerce-make-offer-form-submit-button" data-orig-val="<?php echo $submit_offer_text; ?>" value="<?php echo $submit_offer_text; ?>" />
                 <div class="offer-submit-loader" id="offer-submit-loader"><?php echo __('Please wait...', 'offers-for-woocommerce'); ?></div>
             </div>
         </form>

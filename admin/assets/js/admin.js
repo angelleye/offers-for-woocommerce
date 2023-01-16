@@ -1,187 +1,183 @@
 (function ( $ ) {
-	"use strict";
+    "use strict";
+    $(function () {
+        let offer_price_per = document.getElementById('offer-price-per');
 
-	$(function () {
+        /*Place your administration-specific JavaScript here*/
+        let original_offer_price_per = document.getElementById('original-offer-price-per');
+        let original_offer_amount = document.getElementById('original-offer-amount');
+        let offer_shipping_cost = document.getElementById('offer_shipping_cost');
+        let offer_expiration_date = document.getElementById('offer_expiration_date_hidden');
+        let offer_total = document.getElementById('offer-total');
+        let final_offer_wrap = getElementFirstClass('woocommerce-offer-final-offer-wrap');
+        let send_coupon_wrap = getElementFirstClass('woocommerce-offer-send-coupon-wrap');
+        let expiration_wrap = getElementFirstClass('woocommerce-offer-expiration-wrap');
+        let post_status = document.getElementById('woocommerce_offer_post_status');
 
-		// Place your administration-specific JavaScript here
-        $(document).ready(function(){
+        /**
+         * Init datepicker for offer expiration date
+         * @since   1.0.1
+         */
+        var currentDate = new Date();
+        $('.datepicker').datetimepicker({
+            minDate: currentDate,
+            format: 'M d, Y H:i'
+        });
 
-            /**
-             * Init datepicker for offer expiration date
-             * @since   1.0.1
-             */
-
-            var currentDate = new Date();
-            $('.datepicker').datetimepicker({
-                minDate: currentDate,
-                format: 'M d, Y H:i'
-            });
-
-            $('#meta-box-offers-submit').click(function(){
-                var theDate = new Date(Date.parse($('.datepicker').datetimepicker('getValue')));
-                if (theDate == 'Invalid Date')
-                {
-                    $("#offer_expiration_date_hidden").val('');
+        var meta_box_offers_submit = document.getElementById('meta-box-offers-submit');
+        if( undefined !== meta_box_offers_submit && meta_box_offers_submit !== null ){
+            meta_box_offers_submit.addEventListener('click' ,function(){
+                var theDate = new Date(Date.parse(jQuery('.datepicker').datetimepicker('getValue')));
+                if (theDate === 'Invalid Date') {
+                    offer_expiration_date.value = '';
                 }
                 else{
-                    var dateFormatted = customDateFormat(theDate);
-                    $("#offer_expiration_date_hidden").val(dateFormatted);
+                    offer_expiration_date.value = customDateFormat(theDate);
                 }
             });
 
-            $('#original-offer-price-per').autoNumerics('init',
-                {
-                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                    vMin : '0.00',    /* Enter the minimum value allowed */
-                    lZero: 'allow',   /* Controls if leading zeros are allowed */
-                    wEmpty: 'sign',   /* controls input display behavior. */
-                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
-                }
-            );
+        }
 
-            $('#original-offer-amount').autoNumerics('init',
-                {
-                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                    lZero: 'allow',   /* Controls if leading zeros are allowed */
-                    wEmpty: 'zero',   /* controls input display behavior. */
-                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
-                }
-            );
+        $(original_offer_price_per).autoNumerics('init', {
+            aForm: true,      /* Controls if default values are formatted on page ready (load) */
+            aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+            aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+            /*pSign : 'p',    // Placement of the currency : p = left and s = right */
+            vMin : '0.00',    /* Enter the minimum value allowed */
+            lZero: 'allow',   /* Controls if leading zeros are allowed */
+            wEmpty: 'sign',   /* controls input display behavior. */
+            mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+        });
 
+        $(original_offer_amount).autoNumerics('init', {
+            aForm: true,      /* Controls if default values are formatted on page ready (load) */
+            aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+            aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+            /*pSign : 'p',     //Placement of the currency : p = left and s = right */
+            lZero: 'allow',   /* Controls if leading zeros are allowed */
+            wEmpty: 'zero',   /* controls input display behavior. */
+            mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+        });
 
-            $('#offer-price-per').autoNumerics('init',
-                {
-                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                    vMin : '0.00',    /* Enter the minimum value allowed */
-                    lZero: 'allow',   /* Controls if leading zeros are allowed */
-                    wEmpty: 'sign',   /* controls input display behavior. */
-                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
-                }
-            );
+        $(offer_price_per).autoNumerics('init', {
+            aForm: true,      /* Controls if default values are formatted on page ready (load) */
+            aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+            aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+            /*pSign : 'p',    // Placement of the currency : p = left and s = right */
+            vMin : '0.00',    /* Enter the minimum value allowed */
+            lZero: 'allow',   /* Controls if leading zeros are allowed */
+            wEmpty: 'sign',   /* controls input display behavior. */
+            mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+        });
 
-            $('#offer-total').autoNumerics('init',
-                {
-                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                    lZero: 'allow',   /* Controls if leading zeros are allowed */
-                    wEmpty: 'zero',   /* controls input display behavior. */
-                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
-                }
-            );
-    
-            $('#offer_shipping_cost').autoNumerics('init',
-                {
-                    aForm: false,      /* Controls if default values are formatted on page ready (load) */
-                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                    //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
-                    lZero: 'allow',   /* Controls if leading zeros are allowed */
-                    wEmpty: 'zero',   /* controls input display behavior. */
-                }
-            );
+        $(offer_total).autoNumerics('init', {
+            aForm: true,      /* Controls if default values are formatted on page ready (load) */
+            aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+            aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+            /*pSign : 'p',    // Placement of the currency : p = left and s = right */
+            lZero: 'allow',   /* Controls if leading zeros are allowed */
+            wEmpty: 'zero',   /* controls input display behavior. */
+            mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+        });
 
-            var currentPostStatus = $('#woocommerce_offer_post_status').val();
-            
+        $(offer_shipping_cost).autoNumerics('init', {
+            aForm: false,      /* Controls if default values are formatted on page ready (load) */
+            aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+            aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+            /*pSign : 'p',    // Placement of the currency : p = left and s = right */
+            mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+            lZero: 'allow',   /* Controls if leading zeros are allowed */
+            wEmpty: 'zero',   /* controls input display behavior. */
+        });
+
+        /*var currentPostStatus = $('#woocommerce_offer_post_status').val();*/
+        let currentPostStatus = document.getElementById("woocommerce_offer_post_status").value;
+
+        if( undefined !== currentPostStatus && currentPostStatus !== null ){
             if(currentPostStatus !== 'countered-offer') {
-                $('.woocommerce-offer-final-offer-wrap').hide();
+                getElementFirstClass("woocommerce-offer-final-offer-wrap").style.display = 'none';
             } else {
-                $('.woocommerce-offer-final-offer-wrap').show();
+                getElementFirstClass("woocommerce-offer-final-offer-wrap").style.display = "";
             }
-            
+
             if(currentPostStatus === 'declined-offer') {
-                $('.woocommerce-offer-send-coupon-wrap').show();
-                $('.woocommerce-offer-expiration-wrap').hide();
+                getElementFirstClass("woocommerce-offer-send-coupon-wrap").style.display = "";
+                getElementFirstClass("woocommerce-offer-expiration-wrap").style.display = 'none';
             } else {
-                $('.woocommerce-offer-send-coupon-wrap').hide();
+                getElementFirstClass("woocommerce-offer-send-coupon-wrap").style.display = 'none';
                 if(currentPostStatus === 'completed-offer') {
-                    $('.woocommerce-offer-expiration-wrap').hide();
-                } 
-            }
-
-            $('#woocommerce_offer_post_status').change(function(){
-                if( $(this).val() == 'countered-offer') {
-                    $('.woocommerce-offer-final-offer-wrap').fadeIn('fast');
-                } else {
-                    $('.woocommerce-offer-final-offer-wrap').slideUp();
+                    getElementFirstClass("woocommerce-offer-expiration-wrap").style.display = 'none';
                 }
-                if( $(this).val() == 'declined-offer') { 
-                    $('.woocommerce-offer-send-coupon-wrap').fadeIn('fast');
-                    $('.woocommerce-offer-expiration-wrap').hide();
-                } else {
-                    $('.woocommerce-offer-send-coupon-wrap').slideUp();
-                    if( $(this).val() !== 'completed-offer') {
-                        $('.woocommerce-offer-expiration-wrap').show();
-                    }
-                }
-                return false;
-            });
-            if(ofw_param.ofw_offer_expiration_date_show === 'true')
-            {
-                $('#angelleye-woocommerce-offer-meta-summary-expire-notice-msg').show();
             }
+        }
+        if( undefined !==  post_status && post_status !== null ){
+            post_status.addEventListener('change',offerStatusChanged);
+        }
 
-            updateTotal();
+        function offerStatusChanged(e){
 
-            // Submit post
-            $('body.wp-admin.post-php.post-type-woocommerce_offer #post').submit(function()
-            {
+            if(this.value === 'countered-offer'){
+                $(final_offer_wrap).fadeIn('fast');
+            } else {
+                $(final_offer_wrap).slideUp();
+            }
+            if(this.value === 'declined-offer'){
+                $(send_coupon_wrap).fadeIn('fast');
+                expiration_wrap.style.display = "none";
+            } else {
+                if(this.value !== 'completed-offer'){
+                    expiration_wrap.style.display = "";
+                }
+            }
+        }
+
+        if( undefined !== ofw_param.ofw_offer_expiration_date_show && ofw_param.ofw_offer_expiration_date_show !== null && ofw_param.ofw_offer_expiration_date_show === 'true') {
+            document.getElementById('angelleye-woocommerce-offer-meta-summary-expire-notice-msg').classList.remove("angelleye-hidden");
+        }
+
+        /*Submit post*/
+        var offer_post = document.querySelector('body.wp-admin.post-php.post-type-woocommerce_offer #post');
+        if(undefined !== offer_post && offer_post !== null){
+            offer_post.addEventListener( 'submit', function (){
                 var offerCheckMinValuesPassed = true;
 
-                if ($('#offer-price-per').autoNumerics('get') == '0') {
+                if ( $('#offer-price-per').autoNumerics('get') === '0') {
                     $('#offer-price-per').autoNumerics('set', '');
-                    $('#offer-price-per').autoNumerics('update',
-                        {
-                            mDec: ofw_param.ofw_admin_js_number_of_decimals,
-                            aForm: true,      /* Controls if default values are formatted on page ready (load) */
-                            aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                            aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                            //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                            vMin : '0.00',    /* Enter the minimum value allowed */
-                            lZero: 'allow',   /* Controls if leading zeros are allowed */
-                            wEmpty: 'zero',   /* controls input display behavior. */
-                        }
-                    );
+                    $('#offer-price-per').autoNumerics('update', {
+                        mDec: ofw_param.ofw_admin_js_number_of_decimals,
+                        aForm: true,      /* Controls if default values are formatted on page ready (load) */
+                        aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                        aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                        /*pSign : 'p',    // Placement of the currency : p = left and s = right */
+                        vMin : '0.00',    /* Enter the minimum value allowed */
+                        lZero: 'allow',   /* Controls if leading zeros are allowed */
+                        wEmpty: 'zero',   /* controls input display behavior. */
+                    });
                     offerCheckMinValuesPassed = false;
                 }
 
-
-                if( offerCheckMinValuesPassed === false )
-                {
+                if( offerCheckMinValuesPassed === false ) {
                     return false;
                 }
             });
+        }
 
-            // AJAX - Add Offer Note
-            $('#angelleye-woocommerce-offers-ajax-addnote-btn').click(function()
-            {
-                var targetID = $(this).attr('data-target');
-                var noteContent = $('#angelleye-woocommerce-offers-ajax-addnote-text').val();
+        /*AJAX - Add Offer Note*/
+        var wc_addnote_button = document.getElementById('angelleye-woocommerce-offers-ajax-addnote-btn');
+        if( undefined !== wc_addnote_button && wc_addnote_button !== null ) {
+            wc_addnote_button.addEventListener('click', function () {
+                var targetID = this.getAttribute('data-target');
+                var noteContent = document.getElementById('angelleye-woocommerce-offers-ajax-addnote-text').value
 
-                if(noteContent.length < 3)
-                {
+                if (noteContent.length < 3) {
                     alert('Your note is not long enough!');
                     return false;
                 }
 
-                if( $('#angelleye-woocommerce-offers-ajax-addnote-send-to-buyer').is(':checked') )
-                {
-                    var noteSendToBuyer = $('#angelleye-woocommerce-offers-ajax-addnote-send-to-buyer').val();
-                }
-                else
-                {
-                    var noteSendToBuyer = '';
+                var noteSendToBuyer = '';
+                const sendToBuyer = document.getElementById("angelleye-woocommerce-offers-ajax-addnote-send-to-buyer");
+                if (sendToBuyer.checked) {
+                    noteSendToBuyer = sendToBuyer.value;
                 }
 
                 var data = {
@@ -191,116 +187,124 @@
                     'noteSendToBuyer': noteSendToBuyer
                 };
 
-                // post it
-                $.post(ajaxurl, data, function(response) {
-                    if ( 'failed' !== response )
-                    {
+                /*post it*/
+                $.post(ajaxurl, data, function (response) {
+                    if ('failed' !== response) {
                         var redirectUrl = response;
                         top.location.replace(redirectUrl);
                         return true;
-                    }
-                    else
-                    {
+                    } else {
                         alert('add note failed');
                         return false;
                     }
                 });
                 /*End Post*/
             });
-        });
+        }
 
-        // Update totals
-        var updateTotal = function () {
-            var input1 = $('#offer-quantity').val();
-            var input2 = $('#offer-price-per').autoNumerics('get');
-            var offer_shiipng_cost = $('#offer_shipping_cost').autoNumerics('get');
-            if (isNaN(input1) || isNaN(input2)) {
-                $('#offer-total').autoNumerics('set','');
+        let updateTotal = function () {
+            let input1 = document.getElementById('offer-quantity');
+            let input2 = document.getElementById('offer-price-per');
+            input2 = $(input2).autoNumerics('get');
+            let offer_total = document.getElementById('offer-total');
+            let offer_shipping_cost = document.getElementById('offer_shipping_cost');
+            offer_shipping_cost = $(offer_shipping_cost).autoNumerics('get');
+            let offer_meta_summary_notice_msg = document.getElementById('angelleye-woocommerce-offer-meta-summary-notice-msg');
+            if (isNaN(input1.value) || isNaN(input2)){
+                $(offer_total).autoNumerics('set','');
             } else {
-                var theTotal = (input1 * input2);
-                
-                var theTotal = (parseFloat(theTotal) + parseFloat(offer_shiipng_cost));
-
-                $('#offer-total').autoNumerics('set',theTotal);
-
-                $('#offer-total').autoNumerics('update',
-                    {
-                        aForm: true,      /* Controls if default values are formatted on page ready (load) */
-                        aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
-                        aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
-                        //pSign : 'p',    /* Placement of the currency : p = left and s = right */
-                        lZero: 'allow',   /* Controls if leading zeros are allowed */
-                        wEmpty: 'zero',   /* controls input display behavior. */
-                        mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
-                    }
-                );
+                let theTotal = (input1.value * input2) ;
+                theTotal = (parseFloat(theTotal) + parseFloat(offer_shipping_cost));
+                $(offer_total).autoNumerics('set',theTotal);
+                $(offer_total).autoNumerics('update', {
+                    aForm: true,      /* Controls if default values are formatted on page ready (load) */
+                    aSep : ofw_param.ofw_admin_js_thousand_separator,       /* Thousand separator */
+                    aDec : ofw_param.ofw_admin_js_decimal_separator,       /* Decimal separator */
+                    lZero: 'allow',   /* Controls if leading zeros are allowed */
+                    wEmpty: 'zero',   /* controls input display behavior. */
+                    mDec: ofw_param.ofw_admin_js_number_of_decimals, /* enter the number of decimal places - this will over ides values set by vMin & vMax */
+                });
             }
 
-            // show notice if offer quantity exceeds stock and backorders not allowed
-            var maxStockAvailable = $('#offer-max-stock-available').val();
-            var backordersAllowed = $('#offer-backorders-allowed').val();
-            if( backordersAllowed !== 'true' )
-            {
-                if(parseInt(maxStockAvailable) != '')
-                {
-                    if ( parseInt(maxStockAvailable) < parseInt(input1) ) {
-                        $('#angelleye-woocommerce-offer-meta-summary-notice-msg').show();
-                    }
-                    else
-                    {
-                        $('#angelleye-woocommerce-offer-meta-summary-notice-msg').hide();
-                    }
+            updateTotal();
+
+            /*show notice if offer quantity exceeds stock and backorders not allowed*/
+            let maxStockAvailable = document.getElementById('offer-max-stock-available');
+            let backordersAllowed = document.getElementById('offer-backorders-allowed');
+            if (backordersAllowed !== 'true'){
+                if ( parseInt( maxStockAvailable.value) < parseInt( input1.value)){
+                    offer_meta_summary_notice_msg.classList.remove("angelleye-hidden");
+                } else {
+                    offer_meta_summary_notice_msg.classList.add("angelleye-hidden");
                 }
             }
-        };
+        }
 
         $(document).on('keyup click', '#offer-quantity, #offer-price-per, #offer_shipping_cost', function (event) {
             updateTotal();
         });
-        
 
-        // toggle buyer offer history panel
-        $('.angelleye-offer-buyer-stats-toggle').click(function(){
-            $('#angelleye-offer-buyer-history').slideToggle('800');
-            return false;
+        /*toggle buyer offer history panel*/
+        document.querySelectorAll('.angelleye-offer-buyer-stats-toggle').forEach((object) => {
+            object.addEventListener('click', function () {
+                $('#angelleye-offer-buyer-history').slideToggle('800');
+                return false;
+            });
         });
 
         // Move to Trash confirmation
-        $('#aeofwc-delete-action .deletion').click(function(){
-
-            if(!confirm('are you sure?'))
-            {
-                return false;
-            }
+        document.querySelectorAll('#aeofwc-delete-action .deletion').forEach((object) => {
+            object.addEventListener('click', function () {
+                if(!confirm('are you sure?')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
         });
 
-        if($('#ofwc_enable_shipping').is(":checked")) {
+        if(document.getElementById('ofwc_enable_shipping').checked) {
             $('#offer_shipping_cost').parent('.angelleye-input-group').show();
         } else {
             $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
         }
 
-        $("#ofwc_enable_shipping").click(function() {
-            if($(this).is(":checked")) {
-                $('#offer_shipping_cost').parent('.angelleye-input-group').show();
-            } else {
-                $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
-            }
-        });
-        
-        $(document).on('click','#meta-box-offers-submit',function() {
-            var original_price = $('#original-offer-price-per').val();
-            var countered_price = $('#offer-price-per').val();            
-            var current_status = $('#woocommerce_offer_post_status').val();
-            if(original_price === countered_price && current_status==='countered-offer'){
-                $('#counter_offer_notice').show();
-                return false;
-            }
-        });
+        var ofwc_enable_shipping = document.getElementById('ofwc_enable_shipping');
+        if( undefined !== ofwc_enable_shipping && ofwc_enable_shipping !== null ){
+            ofwc_enable_shipping.addEventListener('click', function() {
+                let ofwc_enable_shipping = document.getElementById('ofwc_enable_shipping');
+                if(ofwc_enable_shipping.checked) {
+                    $('#offer_shipping_cost').parent('.angelleye-input-group').show();
+                } else {
+                    $('#offer_shipping_cost').parent('.angelleye-input-group').hide();
+                }
+            });
+        }
 
+        if( undefined !== meta_box_offers_submit && meta_box_offers_submit !== null ) {
+            meta_box_offers_submit.addEventListener('click', function (e) {
+                let original_price = document.getElementById("original-offer-price-per").value;
+                let countered_price = document.getElementById("offer-price-per").value;
+                let current_status = document.getElementById("woocommerce_offer_post_status").value;
 
-	});
+                if (original_price === countered_price && current_status === 'countered-offer') {
+                    document.getElementById("counter_offer_notice").style.display = "";
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+    });
 }(jQuery));
+
+function getElementFirstClass(classname){
+    let elements = document.getElementsByClassName(classname);
+    if (elements.length === 1){
+        return elements[0];
+    } else {
+        return null;
+    }
+}
 
 function customDateFormat( dateobj = new Date() ){
 
