@@ -26,7 +26,7 @@
 }
 .angelleye-notice-logo-push span {
     display: block;
-    margin: 0px 10px 0px 10px;
+    margin: 0 10px 0 10px;
 }
 .notice.notice-success.angelleye-notice {
     font: 13px "Open Sans", sans-serif;
@@ -42,14 +42,14 @@
     width: 100%;
 }
 .angelleye-notice-message h3 {
-    margin: 4px 0px !important;
+    margin: 4px 0 !important;
 }
 .angelleye-notice-message-inner {
     margin-bottom: 10px;
 }
 .angelleye-notice-message p {
-    margin: 3px 0px !important;
-    padding: 0px;
+    margin: 3px 0 !important;
+    padding: 0;
 }
 .angelleye-notice-action {
     padding-top: 5px;
