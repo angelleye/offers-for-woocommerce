@@ -50,20 +50,32 @@
             if( document.getElementById('ofw-minimum-offer-price-target-type') !== null ){
 
                 document.getElementById('ofw-minimum-offer-price-target-type').addEventListener('change' ,function(){
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'none';
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
                     document.getElementById('ofw-minimum-offer-price-target-where-category').removeAttribute('required');
                     document.getElementById('ofw-minimum-offer-price-target-where-product-type').removeAttribute('required');
                     document.getElementById('ofw-minimum-offer-price-target-where-price-value').removeAttribute('required');
                     document.getElementById('ofw-minimum-offer-price-target-where-stock-value').removeAttribute('required');
 
                     if( this.value === 'where' ) {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').style.display = 'block';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-type').setAttribute('required', 'required');
                     } else {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-type').removeAttribute('required');
 
                     }
@@ -73,58 +85,98 @@
         /* change target where type -- toggle categories/value inputs */
             if( document.getElementById('ofw-minimum-offer-price-target-where-type') !== null ) {
                 document.getElementById('ofw-minimum-offer-price-target-where-type').addEventListener('change', function () {
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'none';
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
                     document.getElementById('ofw-minimum-offer-price-target-where-category').removeAttribute('required');
                     document.getElementById('ofw-minimum-offer-price-target-where-product-type').removeAttribute('required');
                     document.getElementById('ofw-minimum-offer-price-target-where-price-value').removeAttribute('required');
                     document.getElementById('ofw-minimum-offer-price-target-where-stock-value').removeAttribute('required');
 
                     if (this.value === 'category') {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').style.display = 'block';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-category').setAttribute('required', 'required');
 
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-product-type').removeAttribute('required');
                         document.getElementById('ofw-minimum-offer-price-target-where-price-value').removeAttribute('required');
                         document.getElementById('ofw-minimum-offer-price-target-where-stock-value').removeAttribute('required');
                     } else if (this.value === 'product_type') {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').style.display = 'block';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-product-type').setAttribute('required', 'required');
 
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-category').removeAttribute('required');
                         document.getElementById('ofw-minimum-offer-price-target-where-price-value').removeAttribute('required');
                         document.getElementById('ofw-minimum-offer-price-target-where-stock-value').removeAttribute('required');
                     } else {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-product-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-minimum-offer-price-target-where-category').removeAttribute('required');
                         document.getElementById('ofw-minimum-offer-price-target-where-product-type').removeAttribute('required');
 
                         if (this.value === 'price_greater' || this.value === 'price_less') {
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'block';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                                object.style.display = 'block';
+                            });
                             document.getElementById('ofw-minimum-offer-price-target-where-price-value').setAttribute('required', 'required');
 
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-minimum-offer-price-target-where-stock-value').removeAttribute('required');
                         } else if (this.value === 'stock_greater' || this.value === 'stock_less') {
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-minimum-offer-price-target-where-price-value').removeAttribute('required');
 
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'block';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'block';
+                            });
                             document.getElementById('ofw-minimum-offer-price-target-where-stock-value').setAttribute('required', 'required');
                         } else {
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-price-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-minimum-offer-price-target-where-price-value').removeAttribute('required');
 
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofw-minimum-offer-price-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-minimum-offer-price-target-where-stock-value').removeAttribute('required');
                         }
                     }
@@ -166,7 +218,9 @@
                     document.getElementById('ofw-minimum-offer-price-tool-submit').setAttribute('disabled', 'disabled');
                     document.getElementById('ofw-minimum-offer-price-tool-submit').classList.remove('button-primary');
                     document.getElementById("ofw-minimum-offer-price-tool-submit").innerHTML = '<i class="ofwc-spinner"></i> Processing, please wait...';
-                    document.querySelectorAll('#ofw-minimum-offer-price-tool-submit i.spinner').style.display = 'block';
+                    document.querySelectorAll('#ofw-minimum-offer-price-tool-submit i.spinner').forEach((object) => {
+                        object.style.display = 'block';
+                    });
 
                     var minimum_price = document.getElementById('minimun-offer-price-input').value;
                     var price_type = document.getElementById('ofw-minimum-offer-price-type').value;
@@ -215,10 +269,18 @@
             if( document.getElementById('ofwc-bulk-action-target-type') !== null ) {
                 document.getElementById('ofwc-bulk-action-target-type').addEventListener('change', function () {
                     /* show processing status */
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').style.display = 'none';
-                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').style.display = 'none';
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
 
                     document.getElementById('ofwc-bulk-action-target-where-category').removeAttribute('required');
                     document.getElementById('ofwc-bulk-action-target-where-product-type').removeAttribute('required');
@@ -226,10 +288,14 @@
                     document.getElementById('ofwc-bulk-action-target-where-stock-value').removeAttribute('required');
 
                     if (this.value === 'where') {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-type').style.display = 'block';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-type').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-type').setAttribute('required', 'required');
                     } else {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-type').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-type').removeAttribute('required');
                     }
                 });
@@ -240,49 +306,81 @@
                 document.getElementById('ofwc-bulk-action-target-where-type').addEventListener('change', function () {
                     /* show processing status */
                     if (this.value === 'category') {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').style.display = 'block';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-category').setAttribute('required', 'required');
 
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-product-type').removeAttribute('required');
                         document.getElementById('ofwc-bulk-action-target-where-price-value').removeAttribute('required');
                         document.getElementById('ofwc-bulk-action-target-where-stock-value').removeAttribute('required');
 
                     } else if (this.value === 'product_type') {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').style.display = 'block';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-product-type').setAttribute('required', 'required');
 
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-category').removeAttribute('required');
                         document.getElementById('ofwc-bulk-action-target-where-price-value').removeAttribute('required');
                         document.getElementById('ofwc-bulk-action-target-where-stock-value').removeAttribute('required');
                     } else {
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').style.display = 'none';
-                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').style.display = 'none';
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-product-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofwc-bulk-action-target-where-category').removeAttribute('required');
                         document.getElementById('ofwc-bulk-action-target-where-product-type').removeAttribute('required');
 
                         if (this.value === 'price_greater' || this.value === 'price_less') {
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').style.display = 'block';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').forEach((object) => {
+                                object.style.display = 'block';
+                            });
                             document.getElementById('ofwc-bulk-action-target-where-price-value').setAttribute('required', 'required');
 
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofwc-bulk-action-target-where-stock-value').removeAttribute('required');
                         } else if (this.value === 'stock_greater' || this.value === 'stock_less') {
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofwc-bulk-action-target-where-price-value').removeAttribute('required');
 
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').style.display = 'block';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'block';
+                            });
                             document.getElementById('ofwc-bulk-action-target-where-stock-value').setAttribute('required', 'required');
                         } else {
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-price-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofwc-bulk-action-target-where-price-value').removeAttribute('required');
 
-                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').style.display = 'none';
+                            document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofwc-bulk-action-target-where-stock-value').removeAttribute('required');
                         }
                     }
@@ -296,7 +394,9 @@
                     document.getElementById('bulk-enable-tool-submit').setAttribute('disabled', 'disabled');
                     document.getElementById('bulk-enable-tool-submit').classList.remove('button-primary');
                     document.getElementById('bulk-enable-tool-submit').innerHTML = '<i class="ofwc-spinner"></i> Processing, please wait...';
-                    document.querySelectorAll('#bulk-enable-tool-submit i.spinner').style.display = 'block';
+                    document.querySelectorAll('#bulk-enable-tool-submit i.spinner').forEach((object) => {
+                        object.style.display = 'block';
+                    });
 
                     var actionType = document.getElementById('ofwc-bulk-action-type').value;
                     var actionTargetType = document.getElementById('ofwc-bulk-action-target-type').value;
@@ -361,20 +461,32 @@
 
             if( document.getElementById('ofw-bulk-tool-action-target-type') !== null ) {
                 document.getElementById('ofw-bulk-tool-action-target-type').addEventListener('change', function () {
-                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').style.display = 'none';
-                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').style.display = 'none';
-                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').style.display = 'none';
-                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').style.display = 'none';
+                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
+                    document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').forEach((object) => {
+                        object.style.display = 'none';
+                    });
                     document.getElementById('ofw-bulk-tool-target-where-category').removeAttribute('required');
                     document.getElementById('ofw-bulk-tool-target-where-product-type').removeAttribute('required');
                     document.getElementById('ofw-bulk-tool-action-target-where-price-value').removeAttribute('required');
                     document.getElementById('ofw-bulk-tool-target-where-stock-value').removeAttribute('required');
 
                     if (this.value === 'where') {
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-type').style.display = 'block';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-type').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofw-bulk-tool-action-target-where-type').setAttribute('required', 'required');
                     } else {
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-type').style.display = 'none';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-bulk-tool-action-target-where-type').removeAttribute('required');
                     }
                 });
@@ -384,49 +496,81 @@
             if( document.getElementById('ofw-bulk-tool-action-target-where-type') !== null ) {
                 document.getElementById('ofw-bulk-tool-action-target-where-type').addEventListener('change', function () {
                     if (this.value === 'category') {
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').style.display = 'block';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofw-bulk-tool-target-where-category').setAttribute('required', 'required');
 
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').style.display = 'none';
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').style.display = 'none';
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').style.display = 'none';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-bulk-tool-target-where-product-type').removeAttribute('required');
                         document.getElementById('ofw-bulk-tool-action-target-where-price-value').removeAttribute('required');
                         document.getElementById('ofw-bulk-tool-target-where-stock-value').removeAttribute('required');
 
                     } else if (this.value === 'product_type') {
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').style.display = 'block';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').forEach((object) => {
+                            object.style.display = 'block';
+                        });
                         document.getElementById('ofw-bulk-tool-target-where-product-type').setAttribute('required', 'required');
 
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').style.display = 'none';
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').style.display = 'none';
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').style.display = 'none';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-bulk-tool-target-where-category').removeAttribute('required');
                         document.getElementById('ofw-bulk-tool-action-target-where-price-value').removeAttribute('required');
                         document.getElementById('ofw-bulk-tool-target-where-stock-value').removeAttribute('required');
                     } else {
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').style.display = 'none';
-                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').style.display = 'none';
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-category').forEach((object) => {
+                            object.style.display = 'none';
+                        });
+                        document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-product-type').forEach((object) => {
+                            object.style.display = 'none';
+                        });
                         document.getElementById('ofw-bulk-tool-target-where-category').removeAttribute('required');
                         document.getElementById('ofw-bulk-tool-target-where-product-type').removeAttribute('required');
 
                         if (this.value === 'price_greater' || this.value === 'price_less') {
-                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').style.display = 'block';
+                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').forEach((object) => {
+                                object.style.display = 'block';
+                            });
                             document.getElementById('ofw-bulk-tool-action-target-where-price-value').setAttribute('required', 'required');
 
-                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').style.display = 'none';
+                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-bulk-tool-target-where-stock-value').removeAttribute('required');
                         } else if (this.value === 'stock_greater' || this.value === 'stock_less') {
-                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').style.display = 'none';
+                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-bulk-tool-action-target-where-price-value').removeAttribute('required');
 
-                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').style.display = 'block';
+                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'block';
+                            });
                             document.getElementById('ofw-bulk-tool-target-where-stock-value').setAttribute('required', 'required');
                         } else {
-                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').style.display = 'none';
+                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-action-target-where-price-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-bulk-tool-action-target-where-price-value').removeAttribute('required');
 
-                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').style.display = 'none';
+                            document.querySelectorAll('.ofw-tool-auto-accept-decline-action-section.ofw-bulk-tool-target-where-stock-value').forEach((object) => {
+                                object.style.display = 'none';
+                            });
                             document.getElementById('ofw-bulk-tool-target-where-stock-value').removeAttribute('required');
                         }
                     }
@@ -440,7 +584,9 @@
                     document.getElementById('ofw_bulk-acd_enable-tool-submit').setAttribute('disabled', 'disabled');
                     document.getElementById('ofw_bulk-acd_enable-tool-submit').classList.remove('button-primary');
                     document.getElementById('ofw_bulk-acd_enable-tool-submit').innerHTML = '<i class="ofwc-spinner"></i> Processing, please wait...';
-                    document.querySelectorAll('#ofw_bulk-acd_enable-tool-submit i.spinner').style.display = 'block';
+                    document.querySelectorAll('#ofw_bulk-acd_enable-tool-submit i.spinner').forEach((object) => {
+                        object.style.display = 'block';
+                    });
 
                     var actionType = document.getElementById('ofw-bulk-tool-action-type').value;
                     var actionTargetType = document.getElementById('ofw-bulk-tool-action-target-type').value;
