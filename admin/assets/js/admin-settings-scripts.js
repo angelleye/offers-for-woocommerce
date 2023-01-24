@@ -231,8 +231,8 @@
                     var actionTargetWhereProductType = document.getElementById('ofw-minimum-offer-price-target-where-product-type').value;
                     var actionTargetWherePriceValue = document.getElementById('ofw-minimum-offer-price-target-where-price-value').value;
                     var actionTargetWhereStockValue = document.getElementById('ofw-minimum-offer-price-target-where-stock-value').value;
+                    var _offer_minimum_price_nonce = $('#_offer_minimum_price_nonce').val();
                     var meta_value = 'ofwc_minimum_offer_price';
-                    var adminToolSetMinimumOfferPriceNonce = document.getElementById('adminToolSetMinimumOfferPriceNonce').value;
                     var data = {
                         'action': 'adminToolSetMinimumOfferPrice',
                         'actionType': actionType,
@@ -244,8 +244,8 @@
                         'actionTargetWhereProductType': actionTargetWhereProductType,
                         'actionTargetWherePriceValue': actionTargetWherePriceValue,
                         'actionTargetWhereStockValue': actionTargetWhereStockValue,
+                        '_offer_minimum_price_nonce': _offer_minimum_price_nonce,
                         'ofw_meta_key_value': meta_value,
-                        'security': adminToolSetMinimumOfferPriceNonce
                     };
 
                     /* post it */
@@ -405,12 +405,12 @@
                     var actionTargetWhereProductType = document.getElementById('ofwc-bulk-action-target-where-product-type').value;
                     var actionTargetWherePriceValue = document.getElementById('ofwc-bulk-action-target-where-price-value').value;
                     var actionTargetWhereStockValue = document.getElementById('ofwc-bulk-action-target-where-stock-value').value;
+                    var _angelly_auto_decline_nonce = $('#_angelly_auto_decline_nonce').val();
                     var meta_value = 'offers_for_woocommerce_enabled';
 
                     if (actionType === 'enable_onexit' || actionType === 'disable_onexit') {
                         meta_value = 'offers_for_woocommerce_onexit_only';
                     }
-                    var woocommerce_offers_options_form_bulk_tool_enable_offersNonce = document.getElementById('woocommerce_offers_options_form_bulk_tool_enable_offersNonce').value;
                     var data = {
                         'action': 'adminToolBulkEnableDisable',
                         'actionType': actionType,
@@ -420,8 +420,8 @@
                         'actionTargetWhereProductType': actionTargetWhereProductType,
                         'actionTargetWherePriceValue': actionTargetWherePriceValue,
                         'actionTargetWhereStockValue': actionTargetWhereStockValue,
+                        '_angelly_auto_decline_nonce': _angelly_auto_decline_nonce,
                         'ofw_meta_key_value': meta_value,
-                        'security': woocommerce_offers_options_form_bulk_tool_enable_offersNonce
                     };
 
                     /* post it */
@@ -595,6 +595,7 @@
                     var actionTargetWhereProductType = document.getElementById('ofw-bulk-tool-target-where-product-type').value;
                     var actionTargetWherePriceValue = document.getElementById('ofw-bulk-tool-action-target-where-price-value').value;
                     var actionTargetWhereStockValue = document.getElementById('ofw-bulk-tool-target-where-stock-value').value;
+                    var _angelly_auto_decline_nonce = $('#_angelly_auto_decline_nonce').val();
 
                     var auto_accept_or_decline_enable = "";
                     var auto_accept_or_decline_percentage = "";
@@ -626,6 +627,7 @@
                         'actionTargetWherePriceValue': actionTargetWherePriceValue,
                         'actionTargetWhereStockValue': actionTargetWhereStockValue,
                         'ofw_meta_key_value': auto_accept_or_decline_enable,
+                        '_angelly_auto_decline_nonce': _angelly_auto_decline_nonce,
                         'autoAcceptDeclinePercentage': auto_accept_or_decline_percentage
                     };
 
