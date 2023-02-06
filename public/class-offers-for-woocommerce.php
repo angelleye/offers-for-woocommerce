@@ -78,7 +78,8 @@ class Angelleye_Offers_For_Woocommerce {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
             add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
-            /*             * *****************************
+            /**
+             * ******************************
              * Define custom functionality *
              * ******************************
              */
@@ -148,11 +149,11 @@ class Angelleye_Offers_For_Woocommerce {
 
             //add_action( 'woocommerce_after_my_account', array($this, 'ofw_woocommerce_after_my_account'));
 
-            add_filter('woocommerce_shipping_methods', array($this, 'add_your_shipping_method'), 10, 1);
-            add_action('woocommerce_shipping_init', array($this, 'your_shipping_method_init'));
+            add_filter('woocommerce_shipping_methods', array($this, 'add_angelleye_shipping_method'), 10, 1);
+            add_action('woocommerce_shipping_init', array($this, 'angelleye_shipping_method_init'));
             add_filter('woocommerce_package_rates', array($this, 'hide_shipping_when_offer_for_woocommerce_is_available'), 10, 2);
             add_shortcode('aeofwc_highest_current_offer', array($this, 'ofw_display_highest_current_offer_shortcode'), 10);
-            
+
             add_filter('woocommerce_hide_invisible_variations', array($this, 'angelleye_ofwc_woocommerce_hide_invisible_variations'), 999, 2);
             add_filter('woocommerce_is_purchasable', array($this, 'angelleye_ofwc_woocommerce_is_purchasable'), 999, 2);
             add_filter('woocommerce_variation_is_purchasable', array($this, 'angelleye_ofwc_woocommerce_variation_is_purchasable'), 999, 2);
@@ -201,6 +202,13 @@ class Angelleye_Offers_For_Woocommerce {
         /* this will display the data of Product addon if plugin is activated - End */
     }
 
+    /**
+     * Add extra details after add to cart form.
+     *
+     * @since 0.1.0
+     *
+     * @return void
+     */
     public function angelleye_ofwc_after_add_to_cart_form() {
         global $post;
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
@@ -210,16 +218,21 @@ class Angelleye_Offers_For_Woocommerce {
         if ($on_exit_enabled) {
             if ($parent_offer_id > 0 && isset($parent_post_status) && $parent_post_status == 'countered-offer') {
                 $this->ofw_display_highest_current_offer();
-                $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
+                $this->ofw_display_pending_offer_label_product_details_page($post->ID);
             }
         } else {
             $this->ofw_display_highest_current_offer();
-            $this->ofw_display_pending_offer_lable_product_details_page($post->ID);
+            $this->ofw_display_pending_offer_label_product_details_page($post->ID);
         }
     }
 
-    /* Below function works as shortcode to display recent offers table */
-
+    /**
+     * Below function works as shortcode to display recent offers table.
+     *
+     * @since 0.1.0
+     *
+     * @return void
+     */
     public function angelleye_ofw_recent_offers() {
         include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
     }
@@ -227,7 +240,16 @@ class Angelleye_Offers_For_Woocommerce {
     /* Below function works as shortcode to display recent offers table End */
 
     /* this will display the data of Product addon if plugin is activated - Start */
-
+    /**
+     * Display meta value on cart items.
+     *
+     * @since 0.1.0
+     *
+     * @param $title
+     * @param $cart_item
+     * @param $cart_item_key
+     * @return void
+     */
     public function render_meta_on_cart_item($title = null, $cart_item = null, $cart_item_key = null) {
         if ($cart_item_key && is_cart()) {
             $offers_product_addon = get_post_meta($cart_item['woocommerce_offer_id'], 'offers_product_addon', true);
@@ -261,9 +283,12 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Redirect back to product page after login
+     * Redirect back to product page after login.
      *
      * @since	0.1.0
+     *
+     * @param $redirect
+     * @return mixed|string
      */
     public function ofw_login_redirect($redirect) {
         if (isset($_GET['backto']) && !empty($_GET['backto']) && $_GET['ref'] == 'make-offer') {
@@ -300,6 +325,10 @@ class Angelleye_Offers_For_Woocommerce {
      * Generates output of offer button
      *
      * @since	0.1.0
+     *
+     * @param $is_archive
+     * @param $btn_position_class
+     * @return mixed|void|null
      */
     public function angelleye_ofwc_offer_button_output($is_archive = false, $btn_position_class = '') {
         global $post, $wp;
@@ -465,9 +494,12 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Callback - Add Make Offer button after add to cart button on Catalog view
+     * Callback - Add Make Offer button after add to cart button on Catalog view.
      *
      * @since	0.1.0
+     *
+     * @param $post
+     * @return void
      */
     public function angelleye_ofwc_after_show_loop_item($post) {
         //$button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -584,9 +616,12 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Filter - Add new tab on woocommerce product single view
+     * Filter - Add new tab on woocommerce product single view.
      *
      * @since	0.1.0
+     *
+     * @param $tabs
+     * @return mixed|void|null
      */
     public function angelleye_ofwc_add_custom_woocommerce_product_tab($tabs) {
         global $post;
@@ -671,6 +706,8 @@ class Angelleye_Offers_For_Woocommerce {
      * Callback - Display "Make Offer" front-end form parts
      *
      * @since	0.1.0
+     *
+     * @return void
      */
     public function angelleye_ofwc_display_custom_woocommerce_product_tab_content() {
         global $post;
@@ -807,7 +844,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @since    0.1.0
      *
-     * @return    object    A single instance of this class
+     * @return Angelleye_Offers_For_Woocommerce|object|null
      */
     public static function get_instance() {
         // If the single instance hasn't been set, set it now
@@ -965,6 +1002,8 @@ class Angelleye_Offers_For_Woocommerce {
      * Register and enqueues public-facing JavaScript files
      *
      * @since    0.1.0
+     *
+     * @return void
      */
     public function enqueue_scripts() {
         global $post;
@@ -1025,6 +1064,17 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Check the minimum offer price.
+     *
+     * @since 0.1.0
+     *
+     * @param $product_id
+     * @param $product_price
+     * @param $offer_total
+     * @param $offer_quantity
+     * @return array|bool|int
+     */
     public function ofwc_minimum_offer($product_id, $product_price, $offer_total, $offer_quantity) {
         if (empty($product_price) || empty($product_id)) {
             return 3;
@@ -1058,6 +1108,13 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Callback function of wp_ajax_new_offer_form_submit hook.
+     *
+     * @since 0.1.0
+     *
+     * @return false|string|void
+     */
     public function new_offer_form_submit() {
         ob_start();
         $product_post_data = array();
@@ -1677,7 +1734,11 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    /** Handle API Requests
+    /**
+     * Handle API Requests
+     *
+     * @since 0.1.0
+     *
      * @return void
      */
     protected function handle_request() {
@@ -1763,8 +1824,13 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Add offer to cart
+     * Add the offer in cart
+     *
      * @since   0.1.0
+     *
+     * @param $offer
+     * @param $offer_meta
+     * @return bool
      */
     protected function add_offer_to_cart($offer = array(), $offer_meta = array()) {
         if (!is_admin()) {
@@ -1823,9 +1889,11 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Check whether the WooCommerce product is purchasable or not.
+     *
      * @param $purchasable
-     * @param $_product
-     * @return bool
+     * @param $product
+     * @return bool|mixed|void
      *
      * https://github.com/angelleye/offers-for-woocommerce/issues/156
      */
@@ -1839,9 +1907,16 @@ class Angelleye_Offers_For_Woocommerce {
         } catch (Exception $ex) {
 
         }
-        
+
     }
-    
+
+    /**
+     * Define whether the variation product is purchasable or not.
+     *
+     * @param $purchasable
+     * @param $variable
+     * @return bool|mixed|void
+     */
     public function angelleye_ofwc_woocommerce_variation_is_purchasable($purchasable, $variable) {
         try {
             if ($purchasable === false && 'yes' == get_post_meta($variable->get_parent_id(), 'offers_for_woocommerce_enabled', true)) {
@@ -1852,10 +1927,16 @@ class Angelleye_Offers_For_Woocommerce {
         } catch (Exception $ex) {
 
         }
-        
+
     }
 
-
+    /**
+     * Hide invisible product variations.
+     *
+     * @param $hide
+     * @param $product_id
+     * @return bool|void
+     */
     public function angelleye_ofwc_woocommerce_hide_invisible_variations($hide, $product_id) {
         try {
             if($hide === true && 'yes' == get_post_meta($product_id, 'offers_for_woocommerce_enabled', true)) {
@@ -1866,10 +1947,15 @@ class Angelleye_Offers_For_Woocommerce {
         } catch (Exception $ex) {
 
         }
-        
+
     }
 
-    /** API Response Handler
+    /**
+     * API Response Handler
+     *
+     * @param $msg
+     * @param $pid
+     * @return void
      */
     public function send_api_response($msg, $pid = '') {
         global $woocommerce;
@@ -1934,6 +2020,7 @@ class Angelleye_Offers_For_Woocommerce {
 
     /**
      * Set cart items extra meta from session data
+     *
      * @param $item
      * @param $values
      * @param $key
@@ -2074,6 +2161,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Offer auto approve on the offer request submit.
      *
      * @global type $wpdb
      * @param type $offer_id
@@ -2200,6 +2288,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Offer auto decline on offer request submit.
      *
      * @param type $offer_id
      * @param type $product_id
@@ -2247,6 +2336,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Get the percentage.
      *
      * @param type $num_amount
      * @param type $num_total
@@ -2261,7 +2351,11 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Create required files.
+     *
      * @since   1.2.0
+     *
+     * @return void
      */
     public function ofw_create_required_files() {
         // Install files and folders for uploading files and prevent hotlinking
@@ -2291,6 +2385,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Check Mailchimp is active or not.
+     *
      * @since   1.2.0
      * @return boolean
      */
@@ -2306,6 +2402,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Check constant content is active or not.
+     *
      * @since   1.2.0
      * @return boolean
      */
@@ -2322,6 +2420,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Check Mailpoet is active or not.
+     *
      * @since   1.2.0
      * @return boolean
      */
@@ -2336,6 +2436,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Check Mailling list is active or not.
+     *
      * @since   1.2.0
      * @return boolean
      */
@@ -2348,6 +2450,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Callback function of woocommerce_make_offer_form_end hook.
+     *
      * @since   1.2.0
      * @param type $is_counter_offer
      */
@@ -2365,6 +2469,8 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Callback function of woocommerce_after_offer_submit hook.
+     *
      * @since   1.2.0
      * @param type $is_counter_offer
      */
@@ -2391,6 +2497,12 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Get paypal order details.
+     *
+     * @param $raw_custom
+     * @return bool|WC_Order|WC_Order_Refund
+     */
     public function get_paypal_order($raw_custom) {
 
         $custom = json_decode($raw_custom);
@@ -2418,10 +2530,23 @@ class Angelleye_Offers_For_Woocommerce {
         return $order;
     }
 
+    /**
+     * WooCommerce product order values are set in the session.
+     *
+     * @param $key
+     * @param $value
+     * @return void
+     */
     public function set_session($key, $value) {
         WC()->session->$key = $value;
     }
 
+    /**
+     * Check coupon is active or not.
+     *
+     * @param $boolean
+     * @return false|mixed
+     */
     public function ofw_coupons_enabled($boolean) {
         if (!did_action('wp_loaded'))
             return $boolean;
@@ -2441,10 +2566,20 @@ class Angelleye_Offers_For_Woocommerce {
         return $boolean;
     }
 
+    /**
+     * WooCommerce after my account page content.
+     *
+     * @return void
+     */
     public function ofw_woocommerce_after_my_account() {
         include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
     }
 
+    /**
+     * Check anonymous communication is active or not.
+     *
+     * @return bool
+     */
     public function ofw_is_anonymous_communication_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
         if (isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1) {
@@ -2453,6 +2588,11 @@ class Angelleye_Offers_For_Woocommerce {
         return false;
     }
 
+    /**
+     * Check recaptcha is active or not.
+     *
+     * @return bool
+     */
     public function is_recaptcha_enable() {
         $ofw_enable_recaptcha = get_option('ofw_enable_recaptcha');
         if (empty($ofw_enable_recaptcha) || $ofw_enable_recaptcha == 'no') {
@@ -2481,6 +2621,12 @@ class Angelleye_Offers_For_Woocommerce {
         return true;
     }
 
+    /**
+     * Verify the Recaptcha response.
+     *
+     * @param $response
+     * @return string|void
+     */
     public function recaptcha_verify_response($response) {
         if ($this->is_recaptcha_enable()) {
             $recaptcha_url = add_query_arg(array('secret' => get_option('ofw_recaptcha_secret_key'), 'response' => $response, 'remoteip' => $_SERVER['REMOTE_ADDR']), 'https://www.google.com/recaptcha/api/siteverify');
@@ -2488,7 +2634,13 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    public function ofw_display_pending_offer_lable_product_details_page($product_id) {
+    /**
+     * Display the pending offer label on the product page.
+     *
+     * @param $product_id
+     * @return void
+     */
+    public function ofw_display_pending_offer_label_product_details_page($product_id) {
         if ($this->ofw_is_show_pending_offer_enable()) {
             global $wpdb;
             $args = array(
@@ -2511,6 +2663,11 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Check show pending offer is active or not.
+     *
+     * @return bool
+     */
     public function ofw_is_show_pending_offer_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
         if (isset($offers_for_woocommerce_options_general['general_setting_show_pending_offer']) && $offers_for_woocommerce_options_general['general_setting_show_pending_offer'] == 1) {
@@ -2519,17 +2676,35 @@ class Angelleye_Offers_For_Woocommerce {
         return false;
     }
 
-    public function add_your_shipping_method($methods) {
+    /**
+     * Add angelleye shipping method.
+     *
+     * @param $methods
+     * @return mixed
+     */
+    public function add_angelleye_shipping_method($methods) {
         $methods[] = 'Angelleye_Offers_For_Woocommerce_Shipping_Method';
         return $methods;
     }
 
-    public function your_shipping_method_init() {
+    /**
+     * Initialise Angelleye shipping method.
+     *
+     * @return void
+     */
+    public function angelleye_shipping_method_init() {
         if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             include_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-shipping.php';
         }
     }
 
+    /**
+     * Hide shipping if the Offer is available.
+     *
+     * @param $rates
+     * @param $package
+     * @return array|mixed
+     */
     public function hide_shipping_when_offer_for_woocommerce_is_available($rates, $package) {
         if ($this->is_offer_product_in_cart()) {
             if (isset($rates['offer_for_woocommerce_shipping'])) {
@@ -2541,6 +2716,11 @@ class Angelleye_Offers_For_Woocommerce {
         return $rates;
     }
 
+    /**
+     * Check offer product is in cart or not.
+     *
+     * @return bool
+     */
     public function is_offer_product_in_cart() {
         $count = 0;
         $has_product = FALSE;
@@ -2558,6 +2738,11 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Display the highest current offer.
+     *
+     * @return void
+     */
     public function ofw_display_highest_current_offer() {
         global $post, $wpdb;
         if ($this->ofw_is_highest_current_bid_enable()) {
@@ -2570,6 +2755,11 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Get the highest current offer data.
+     *
+     * @return mixed|stdClass
+     */
     public function ofw_get_highest_current_offer_data() {
         global $post, $wpdb;
         $total_result = $wpdb->get_results($wpdb->prepare("
@@ -2583,11 +2773,21 @@ class Angelleye_Offers_For_Woocommerce {
         return $total_result[0];
     }
 
+    /**
+     * Display the highest current offer shortcode.
+     *
+     * @return void
+     */
     public function ofw_display_highest_current_offer_shortcode() {
         global $post, $wpdb;
         $this->ofw_display_highest_current_offer();
     }
 
+    /**
+     * Check whether the highest current bid is active or not.
+     *
+     * @return bool
+     */
     public function ofw_is_highest_current_bid_enable() {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
         if (isset($offers_for_woocommerce_options_general['general_setting_show_highest_current_bid']) && $offers_for_woocommerce_options_general['general_setting_show_highest_current_bid'] == 1) {
@@ -2596,6 +2796,12 @@ class Angelleye_Offers_For_Woocommerce {
         return false;
     }
 
+    /**
+     * Add the class in the body element.
+     *
+     * @param $classes
+     * @return mixed
+     */
     public function ofwc_body_class($classes) {
         $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
         if (isset($offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog']) && $offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog'] == 1 && is_shop()) {
@@ -2608,6 +2814,10 @@ class Angelleye_Offers_For_Woocommerce {
      * Wrap add to cart button with our div to hide it from products loop.
      *
      * @since	0.1.0
+     *
+     * @param $link
+     * @param $product
+     * @return mixed|string
      */
     public function ofw_woocommerce_loop_add_to_cart_link($link, $product) {
         if ($product->get_price() === '') {
@@ -2616,6 +2826,13 @@ class Angelleye_Offers_For_Woocommerce {
         return $link;
     }
 
+    /**
+     * Get the pending offer count using the product id.
+     *
+     * @param $product_id
+     * @param $count_only
+     * @return int|WP_Query
+     */
     public function ofwc_get_pending_offer_count_by_product_id($product_id, $count_only = false) {
         global $wpdb;
         $args = array(
@@ -2633,6 +2850,12 @@ class Angelleye_Offers_For_Woocommerce {
         return $query;
     }
 
+    /**
+     * The callback function of admin_bar_menu.
+     *
+     * @param $wp_admin_bar
+     * @return void
+     */
     function ofwc_manage_offer_admin_bar_callback($wp_admin_bar) {
         if (!is_user_logged_in())
             return;
@@ -2658,11 +2881,16 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
-    /*
+    /**
      * Fetch product variant price or regular/sale price.
-     *  @since	1.4.8
+     *
+     * @since	1.4.8
+     *
+     * @param $offer_id
+     * @param $product_id
+     * @param $variant_id
+     * @return array
      */
-
     public function ofwc_get_product_detail($offer_id, $product_id, $variant_id) {
         $productData = array();
         if (isset($variant_id) && !empty($variant_id)) {
@@ -2683,6 +2911,12 @@ class Angelleye_Offers_For_Woocommerce {
         return $productData;
     }
 
+    /**
+     * Translate the order item display meta key.
+     *
+     * @param $display_key
+     * @return mixed|string|null
+     */
     public function ofwc_translate_order_item_display_meta_key($display_key) {
         if ($display_key == 'Offer ID') {
             return __($display_key . ':', 'offers-for-woocommerce');
@@ -2690,6 +2924,13 @@ class Angelleye_Offers_For_Woocommerce {
         return $display_key;
     }
 
+    /**
+     * Check offer status is valid or not.
+     *
+     * @param $bool
+     * @param $offer
+     * @return false|mixed
+     */
     public function ofw_not_allow_invalid_offer_status($bool, $offer) {
         if (isset($offer->post_author) && !empty($offer->post_author) && isset($offer->post_status) && $offer->post_status == 'publish') {
             $ofw_created_by = get_post_meta($offer->ID, 'ofw_created_by', true);
@@ -2700,6 +2941,13 @@ class Angelleye_Offers_For_Woocommerce {
         return $bool;
     }
 
+    /**
+     * Callback function of ofw_admin_created_offer_status hook.
+     *
+     * @param $post_status
+     * @param $post_id
+     * @return mixed|string
+     */
     public function ofw_admin_created_offer_status($post_status, $post_id) {
         $ofw_created_by = get_post_meta($post_id, 'ofw_created_by', true);
         if ($ofw_created_by == 'admin') {
@@ -2708,6 +2956,14 @@ class Angelleye_Offers_For_Woocommerce {
         return $post_status;
     }
 
+    /**
+     * Callback function of woocommerce_cart_item_quantity hook.
+     *
+     * @param $product_quantity
+     * @param $cart_item_key
+     * @param $cart_item
+     * @return mixed|string
+     */
     public function ofw_woocommerce_cart_item_quantity($product_quantity, $cart_item_key, $cart_item) {
         if (isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
             foreach (WC()->cart->get_cart() as $cart_key => $cart_item) {
@@ -2719,10 +2975,21 @@ class Angelleye_Offers_For_Woocommerce {
         return $product_quantity;
     }
 
+    /**
+     * Add the offer endpoint.
+     *
+     * @return void
+     */
     public function ofw_add_offer_endpoint() {
         add_rewrite_endpoint('offers', EP_PAGES);
     }
 
+    /**
+     * Add the WooCommerce account menu item.
+     *
+     * @param $items
+     * @return mixed
+     */
     public function ofw_woocommerce_account_menu_items($items) {
         if (!empty($items)) {
             $items['offers'] = __('Offers', 'offers-for-woocommerce');
@@ -2730,6 +2997,12 @@ class Angelleye_Offers_For_Woocommerce {
         return $items;
     }
 
+    /**
+     * Callback function of woocommerce_get_query_vars hook.
+     *
+     * @param $query_vars
+     * @return mixed
+     */
     public function ofw_woocommerce_get_query_vars($query_vars) {
         if (!empty($query_vars)) {
             $query_vars['offers'] = 'offers';
@@ -2737,14 +3010,26 @@ class Angelleye_Offers_For_Woocommerce {
         return $query_vars;
     }
 
+    /**
+     * Display content of my-offers page.
+     *
+     * @return void
+     */
     public function ofw_my_offer_content() {
         try {
             include_once(OFW_PLUGIN_URL . 'public/views/my-offers.php');
         } catch (Exception $ex) {
-            
+
         }
     }
 
+    /**
+     * Register the offer endpoint title.
+     *
+     * @param $title
+     * @param $endpoint
+     * @return mixed|string|null
+     */
     public function ofw_woocommerce_endpoint_offers_title($title, $endpoint) {
         if ($endpoint === 'offers') {
             $title = __('Offers', 'offers-for-woocommerce');
@@ -2752,6 +3037,12 @@ class Angelleye_Offers_For_Woocommerce {
         return $title;
     }
 
+    /**
+     * WC gets the angelleye selected currency.
+     *
+     * @param $aelia_currency
+     * @return mixed
+     */
     public function wc_aelia_cs_selected_currency($aelia_currency) {
         if (did_action('wp_loaded') && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
             foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
@@ -2778,6 +3069,11 @@ class Angelleye_Offers_For_Woocommerce {
         return $aelia_currency;
     }
 
+    /**
+     * WC update the cookie on currency change.
+     *
+     * @return void
+     */
     public function ofw_changed_currency() {
 
         if (did_action('wp_loaded') && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
@@ -2797,6 +3093,11 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Set the offer price and quantity in the WC cart.
+     *
+     * @return void
+     */
     public function angelleye_set_offer_price_qty() {
         foreach (WC()->cart->cart_contents as $key => $value) {
             if (isset($value['woocommerce_offer_id']) && get_post_status($value['woocommerce_offer_id'])) {
@@ -2808,6 +3109,12 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Callback function of before_add_offer_to_cart hook.
+     *
+     * @param $offer_id
+     * @return void
+     */
     public function before_add_offer_to_cart($offer_id) {
         if (!empty(WC()->cart) || !WC()->cart->is_empty()) {
             foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
@@ -2827,6 +3134,12 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Remove the discount calculation.
+     *
+     * @param $boolean
+     * @return false|mixed
+     */
     public function angelleye_ofw_remove_discount_calculation($boolean) {
         $button_options_general = get_option('offers_for_woocommerce_options_general');
         if (!is_admin() && !empty(WC()->cart) && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
@@ -2842,10 +3155,20 @@ class Angelleye_Offers_For_Woocommerce {
         }
         return $boolean;
     }
-    
+
+    /**
+     * Get the product price.
+     *
+     * @param $price
+     * @param $product
+     * @param $variation
+     * @param $qty
+     * @param $thirdPartyData
+     * @return float|mixed
+     */
     public function ofw_adp_product_get_price($price, $product, $variation, $qty, $thirdPartyData) {
-        if (isset($thirdPartyData['woocommerce_offer_price_per'])) {        
-            $price = floatval($thirdPartyData['woocommerce_offer_price_per']);    
+        if (isset($thirdPartyData['woocommerce_offer_price_per'])) {
+            $price = floatval($thirdPartyData['woocommerce_offer_price_per']);
         }
         return $price;
     }

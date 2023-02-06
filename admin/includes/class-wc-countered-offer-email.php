@@ -24,7 +24,6 @@ class WC_Countered_Offer_Email extends WC_Email {
          * @since	1.1.2
          */
 
-
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_countered_offer';
 

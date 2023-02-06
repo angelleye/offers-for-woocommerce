@@ -12,14 +12,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+/**
+ *
+ * This class defines all code necessary to Email reminder functionality
+ *
+ * @since       1.0.0
+ * @package     offers-for-woocommerce
+ * @subpackage  offers-for-woocommerce
+ * @author      Angell EYE <service@angelleye.com>
+ */
 class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 
+    /**
+     * Return the product ids array.
+     *
+     * @var array[]
+     */
 	protected $data = array(
 		'product_ids' => array(),
 	);
 
 	protected $changes = array();
 
+    /**
+     * Constructor for the Email reminder.
+     *
+     * @access public
+     * @return void
+     */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'ofw_save_template' ), 10 );
 		add_action( 'wp_ajax_ofw_er_preview_email_send', array( $this, 'preview_email_send' ) );
@@ -358,15 +378,16 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 		}
 	}
 
-	/**
-	 * Schedule cron job on add template.
-	 *
-	 * @param $ofw_email_frequency
-	 * @param $trigger_time_unit
-	 * @param $product_ids
-	 *
-	 * @return void
-	 */
+    /**
+     * Schedule cron job on add template.
+     *
+     * @param $ofw_email_frequency
+     * @param $trigger_time_unit
+     * @param $template_id
+     * @param $product_ids
+     *
+     * @return void
+     */
     public function create_cron_job( $ofw_email_frequency, $trigger_time_unit, $template_id, $product_ids = array() ){
 
         $offers = get_posts( [
