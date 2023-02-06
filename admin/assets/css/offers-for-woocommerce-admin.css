@@ -108,3 +108,85 @@
     color: #32373c !important;
     background: #f8f8f8;
 }
+.toggler-switch{
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.toggler-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.er-toggler {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+.er-toggler:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.toggler-switch input:checked + .er-toggler {
+    background-color: #2196F3;
+}
+input:focus + .er-toggler {
+    box-shadow: 0 0 1px #2196F3;
+}
+#ofw_email_reminders_options_form  .er-toggler:before {
+    border-radius: 50%;
+}
+input:checked + .er-toggler:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+#ofw_email_reminders_options_form .select2-search__field,#ofw_template_name, #ofw_email_subject{
+    width:100%;
+}
+.select2-container{
+    z-index: 1;
+}
+ul.select2-results__options{
+    background-color: white;
+    padding:10px;
+    border-radius: 2px;
+}
+li.select2-selection__choice{
+    background-color: white;
+    border-radius: 10px;
+    margin: 5px 10px;
+}
+#ofw_email_reminders_options_form select.wc-product-search.select2-hidden-accessible.enhanced{
+    display: none;
+}
+#ofw_send_test_email{
+    width: 100%;
+    margin: 0 0 5px 0;
+}
+.add-new-template{
+    margin:5px!important;
+}
+#ofw_email_reminders_options_form  .btn-cont {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+}
+.form-field .required-warning {
+    color: red;
+}

@@ -16,12 +16,12 @@
 <div id="aeofwc-close-lightbox-link"><a href="javascript:void(0);">&times;</a></div>
 <div id="tab_custom_ofwc_offer_tab_alt_message" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
-        <li><strong><?php echo __('Selection Required:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo __('Select product options above before making new offer.', 'offers-for-woocommerce'); ?></li>
+        <li><strong><?php echo __('Selection Required:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_option_required', __('Select product options above before making new offer.', 'offers-for-woocommerce')); ?></li>
     </ul>        
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_success" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-message" style="display: block !important;">
-        <li><strong><?php echo __('Offer Sent!', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo __('Your offer has been received and will be processed as soon as possible.', 'offers-for-woocommerce'); ?></li>
+        <li><strong><?php echo apply_filters('aeofwc_offer_success_heading',__('Offer Sent!', 'offers-for-woocommerce')); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_success_message', __('Your offer has been received and will be processed as soon as possible.', 'offers-for-woocommerce')); ?></li>
     </ul>
     <ul class="woocommerce-message" id="aeofwc-popup-counter-box" style="display: none">
         <li>
@@ -33,7 +33,7 @@
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_2" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
-        <li><strong><?php echo __('Error:', 'offers-for-woocommerce');?>&nbsp;</strong><?php echo __('There was an error sending your offer, please try again. If this problem persists, please contact us.', 'offers-for-woocommerce'); ?></li>
+        <li><strong><?php echo __('Error:', 'offers-for-woocommerce');?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_error_message',__('There was an error sending your offer, please try again. If this problem persists, please contact us.', 'offers-for-woocommerce')); ?></li>
     </ul>
 </div>
 <div id="tab_custom_ofwc_offer_tab_alt_message_custom" class="tab_custom_ofwc_offer_tab_inner_content">
@@ -44,7 +44,7 @@
 <?php if($parent_offer_error && $parent_offer_error_message) { ?>
 <div id="tab_custom_ofwc_offer_tab_alt_message_3" class="tab_custom_ofwc_offer_tab_inner_content tab_custom_ofwc_offer_tab_alt_message_2">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
-        <li><strong><?php echo __('Error:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo $parent_offer_error_message;?></li>
+        <li><strong><?php echo __('Error:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_parent_offer_error_message',$parent_offer_error_message); ?></li>
     </ul>
 </div>
 <?php } ?>
@@ -230,7 +230,7 @@
             <?php       }
                         if($value=='display_setting_make_offer_form_field_offer_notes'){ ?>
             <?php do_action('make_offer_form_before_offer_notes', 'add_custom_field_make_offer_form', $is_counter_offer, $on_exit_enabled); ?>
-            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) && $is_anonymous_communication_enable == false ) { ?>
+            <?php if(!empty($button_display_options['display_setting_make_offer_form_field_offer_notes']) ) { ?>
                 <div class="woocommerce-make-offer-form-section">
                     <div class="woocommerce-make-offer-form-part-full">
                         <label for="angelleye-offer-notes"><?php echo apply_filters( 'aeofwc_offer_form_label_offer_notes', __('Offer Notes (optional)', 'offers-for-woocommerce'), $is_counter_offer );?></label>
@@ -280,7 +280,31 @@
             do_action('make_offer_form_before_submit_button', $is_counter_offer, $on_exit_enabled);
             
             if($is_recaptcha_enable) {
-                 printf( '<div class="woocommerce-make-offer-form-section"><div class="g-recaptcha" data-sitekey="%s"></div></div>', get_option('ofw_recaptcha_site_key') );
+                 $ofw_recaptcha_version = get_option('ofw_recaptcha_version', 'v2');
+                 if($ofw_recaptcha_version === 'v2') {
+                    printf( '<div class="woocommerce-make-offer-form-section"><div class="g-recaptcha" data-sitekey="%s"></div></div>', get_option('ofw_recaptcha_site_key') );
+                 } else {
+                     echo '<input type="hidden" id="ofw_google" name="ofw_google" value="">';
+                     $ofw_recaptcha_site_key_v3 = get_option('ofw_recaptcha_site_key_v3');
+                      ?>
+                    <script>
+                        jQuery(document).ready(function(){
+                            var pfw_grecaptcha = function(  ) {
+                                grecaptcha.ready(function() {
+                                        grecaptcha.execute('<?php echo $ofw_recaptcha_site_key_v3; ?>', {action: 'submit'}).then(function(token) {
+                                            console.log('jignesh' + token);
+                                        document.getElementById("ofw_google").value = token;
+                                    });
+                                });
+                            };
+                            pfw_grecaptcha();
+                            setInterval(function(){ 
+                                pfw_grecaptcha();
+                            }, 110000);
+                        });
+                    </script>
+                    <?php
+                 }
             }
             ?>
             <div class="woocommerce-make-offer-form-section <?php echo apply_filters( 'woocommerce_make_offer_form_submit_section_class', 'woocommerce-make-offer-form-section-submit' );?>">
