@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 5.7.2
-Stable tag: 2.3.5
+Tested up to: 6.1.1
+Stable tag: 2.3.22
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,62 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.22 - 01.09.2023 =
+* Fix - Resolves issue with Offer notes field.([OFW-273](https://github.com/angelleye/offers-for-woocommerce/pull/499))
+
+= 2.3.21 - 12.21.2022 =
+* Fix - Resolves conflict with Yoast SEO.([OFW-266](https://github.com/angelleye/offers-for-woocommerce/pull/497))
+
+= 2.3.20 - 11.16.2022 =
+* Feature - Adds expiration countdown to My Account - Offers page. ([OFW-265](https://github.com/angelleye/offers-for-woocommerce/pull/498))
+
+= 2.3.19 - 11.15.2022 =
+* Feature - Adds options for sending email drip reminders based on merchant configuration. ([OFW-269](https://github.com/angelleye/offers-for-woocommerce/pull/496))
+
+= 2.3.18 - 07.01.2022 =
+* Tweak - Remove PayPal Lib. ([OFW-248](https://github.com/angelleye/offers-for-woocommerce/pull/487))
+
+= 2.3.17 - 05.19.2022 =
+* Tweak - Display offer button for empty product price. ([OFW-263](https://github.com/angelleye/offers-for-woocommerce/pull/495))
+* Fix - Resolves a PHP notice. ([OFW-256](https://github.com/angelleye/offers-for-woocommerce/pull/494))
+
+
+= 2.3.16 - 03.07.2022 =
+* Feature - Adds Advanced Dynamic Pricing for WooCommerce (Pro) Compatibility. ([OFW-252](https://github.com/angelleye/offers-for-woocommerce/pull/493))
+
+= 2.3.15 - 03.04.2022 =
+* Fix - Resolves display_post_states filter issue. ([OFW-254](https://github.com/angelleye/offers-for-woocommerce/pull/492))
+
+= 2.3.14 - 01.10.2022 =
+* Tweak - Resolves PHP fatal error when WC plugin is not active. ([OFW-244](https://github.com/angelleye/offers-for-woocommerce/pull/486))
+
+= 2.3.13 - 12.31.2021 =
+* Feature - Adds WooCommerce Dynamic Pricing & Discounts Compatibility. ([OFW-195](https://github.com/angelleye/offers-for-woocommerce/pull/485))
+
+= 2.3.12 - 11.24.2021 =
+* Feature - Adds hooks and Adjustment Text and Menu Related Changes. ([OFW-242](https://github.com/angelleye/offers-for-woocommerce/pull/484))
+
+= 2.3.11 - 18.10.2021 =
+* Feature - Adds Google reCAPTCHA V3 Integration. 
+* Tweak - OFW button only display for simple and variable product. ([OFW-238](https://github.com/angelleye/offers-for-woocommerce/pull/482))
+* Fix - Resolves Subtotal Incorrect issue for Accepted Offer Email Notice. ([OFW-195](https://github.com/angelleye/offers-for-woocommerce/pull/483))
+
+= 2.3.10 - 08.30.2021 =
+* Fix - Resolves a PHP notice. ([OFW-235](https://github.com/angelleye/offers-for-woocommerce/pull/480))
+
+= 2.3.9 - 08.27.2021 =
+* Fix - Resolves Woo Extra Product Options Compatibility issue. ([OFW-181](https://github.com/angelleye/offers-for-woocommerce/pull/479))
+
+= 2.3.8 - 08.23.2021 =
+* Tweak - Update Plugin version.
+
+= 2.3.7 - 08.23.2021 =
+* Feature - Additional hooks added in plugin. ([OFW-159](https://github.com/angelleye/offers-for-woocommerce/pull/477))
+
+= 2.3.6 - 08.12.2021 =
+* Feature - Additional hooks added in plugin. ([OFW-232](https://github.com/angelleye/offers-for-woocommerce/pull/470))
+* Fix - property ‘post_type’ of no-object ([OFW-233](https://github.com/angelleye/offers-for-woocommerce/pull/471))
 
 = 2.3.5 - 06.14.2021 =
 * Fix - Auctions for WooCommerce Compatibility compatibility. ([OFW-216](https://github.com/angelleye/offers-for-woocommerce/pull/469))

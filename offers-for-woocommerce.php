@@ -4,7 +4,7 @@
  * Plugin Name:       Offers for WooCommerce
  * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce
  * Description:       Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily.
- * Version:           2.3.5
+ * Version:           2.3.22
  * Author:            Angell EYE
  * Author URI:        http://www.angelleye.com/
  * License:           GNU General Public License v3.0
@@ -13,9 +13,9 @@
  * Domain Path:       /languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
  * Requires at least: 5.5
- * Tested up to: 5.7.2
+ * Tested up to: 6.1.1
  * WC requires at least: 3.0.0
- * WC tested up to: 5.4.1
+ * WC tested up to: 6.6.1
  *
 
 /**
@@ -94,7 +94,9 @@ register_deactivation_hook( __FILE__ , array('Angelleye_Offers_For_Woocommerce',
  *
  * @since	0.1.0
  */
+
 add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_instance' ) );
+
 
 /**
  **********************************************
@@ -140,6 +142,7 @@ function ofwc_is_wcvendors_pro_active() {
 
 if( is_admin() || ofwc_is_wcvendors_pro_active() || class_exists('Angelleye_Offers_For_Woocommerce_Dokan') )
 {
+    require_once(plugin_dir_path(__FILE__). 'admin/views/class-offers-for-woocommerce-email-reminder.php');
     require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
     add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
 }
