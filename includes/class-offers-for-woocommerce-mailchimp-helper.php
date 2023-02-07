@@ -19,14 +19,23 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
      */
     public $plugin_slug = null;
 
+    /**
+     * Constructor for the Mailchimp.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
        
     }
 
     /**
+     * Handle the mailchimp functionality.
+     *
      * @since    1.2.0
+     *
      * @param type $posted
-     * @return type
+     * @return void
      */
     public function ofw_mailchimp_handler($posted) {
 
@@ -72,6 +81,8 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
     }
 
     /**
+     * Display the mailchimp settings fields.
+     *
      * @since    1.2.0
      * @return string
      */
@@ -114,8 +125,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
             'default' => 'no',
             'desc' => sprintf(__('Log MailChimp events, inside <code>%s</code>', 'offers-for-woocommerce'), OFFERS_FOR_WOOCOMMERCE_LOG_DIR)
         );
-
-
+        
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
 
         $fields[] = array(
@@ -128,8 +138,12 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
     }
 
     /**
-     *  @since    1.2.0
-     *  Get List from MailChimp
+     * Get List from MailChimp
+     *
+     * @since    1.2.0
+     *
+     * @param $apikey
+     * @return array|mixed
      */
     public function angelleye_get_ofw_mailchimp_lists($apikey) {
         $mailchimp_lists = array();

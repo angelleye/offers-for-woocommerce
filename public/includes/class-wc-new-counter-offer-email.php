@@ -59,6 +59,9 @@ class WC_New_Counter_Offer_Email extends WC_Email {
      * Determine if the email should actually be sent and setup email merge variables
      *
      * @since 0.1.0
+     *
+     * @param $offer_args
+     * @return void
      */
     public function trigger( $offer_args ) {
 

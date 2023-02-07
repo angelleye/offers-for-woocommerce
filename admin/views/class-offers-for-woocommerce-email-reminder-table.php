@@ -34,7 +34,6 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 	 * @return array
 	 * @since 2.3.19
 	 */
-
 	public function __construct() {
 		parent::__construct();
 	}
@@ -52,8 +51,9 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 		return $columns;
 	}
 
-
 	/**
+     * Prepare the items.
+     *
 	 * @return void
 	 * @since 2.3.19
 	 */
@@ -76,6 +76,15 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 		$this->items = $all_email_reminders;
 	}
 
+    /**
+     * Add Default column with value.
+     *
+     * @since 0.1.0
+     *
+     * @param $item
+     * @param $column_name
+     * @return mixed|string|void|null
+     */
 	function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'id':

@@ -53,6 +53,12 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
         $this->api_key = $apikey;
     }
 
+    /**
+     * Set the timeout.
+     *
+     * @param $seconds
+     * @return bool|void
+     */
     function setTimeout($seconds) {
         if (is_int($seconds)) {
             $this->timeout = $seconds;
@@ -61,10 +67,18 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
 	    return null;
     }
 
+    /**
+     * Get the timeout.
+     * @return int|mixed
+     */
     function getTimeout() {
         return $this->timeout;
     }
 
+    /**
+     * @param $val
+     * @return void
+     */
     function useSecure($val) {
         if ($val === true) {
             $this->secure = true;
@@ -2036,6 +2050,10 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
     /**
      * Actually connect to the server and call the requested methods, parsing the result
      * You should never have to call this function manually
+     *
+     * @param $method
+     * @param $params
+     * @return false|mixed
      */
     function callServer($method, $params) {
         $args = array();

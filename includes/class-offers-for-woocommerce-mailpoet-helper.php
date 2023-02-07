@@ -19,14 +19,21 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
      */
     public $plugin_slug = null;
 
+    /**
+     * Constructor for the mailpoet.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
        
     }
 
     /**
      * @since    1.2.0
+     *
      * @param type $posted
-     * @return type
+     * @return false|void
      */
     public function ofw_mailpoet_handler($posted) {
         @ini_set( 'display_errors', '0' );
@@ -78,6 +85,8 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
     }
 
     /**
+     * Display mailpoet settings fields
+     *
      * @since    1.2.0
      * @return string
      */
@@ -124,8 +133,11 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
     }
 
     /**
+     * Get List from MailPoet
+     *
      * @since    1.2.0
-     *  Get List from MailPoet
+     *
+     * @return mixed|void
      */
     public function angelleye_get_ofw_mailpoet_lists() {
         $mailpoet_lists_array = array();

@@ -24,6 +24,15 @@ if (!class_exists('ConstantContact')) {
     require_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/Ctct/ConstantContact.php';
 }
 
+/**
+ *
+ * This class defines all code necessary to ConstantContact functionality
+ *
+ * @since       1.0.0
+ * @package     offers-for-woocommerce
+ * @subpackage  offers-for-woocommerce
+ * @author      Angell EYE <service@angelleye.com>
+ */
 class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
 
     /**
@@ -34,14 +43,22 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
      */
     public $plugin_slug = null;
 
+    /**
+     * Constructor for the ConstantContact.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         
     }
 
     /**
+     * Handle the constant contact functionality.
+     *
      * @since   1.2.0
-     * @param type $posted
-     * @return type
+     * @param $posted
+     * @return void
      */
     public static function ofw_constantcontact_handler($posted) {
 
@@ -98,8 +115,10 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
     }
 
     /**
+     * Display the constant contact settings fields.
+     *
      * @since   1.2.0
-     * @return string
+     * @return array
      */
     public function ofw_ccapi_setting_field() {
 
@@ -160,8 +179,10 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
     }
 
     /**
+     * Get the constant contact lists.
+     *
      * @since    1.2.0
-     * @return type
+     * @return array|mixed|void
      */
     public function angelleye_get_constantcontact_lists() {
         $constantcontact_lists = array();

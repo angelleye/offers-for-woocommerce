@@ -75,8 +75,7 @@ add_action('plugins_loaded', 'angelleye_ofwc_load_plugin_textdomain');
  *
  * @since    1.1.3
  */
-function angelleye_ofwc_load_plugin_textdomain()
-{
+function angelleye_ofwc_load_plugin_textdomain(){
     load_plugin_textdomain( 'offers-for-woocommerce', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 
@@ -94,7 +93,6 @@ register_deactivation_hook( __FILE__ , array('Angelleye_Offers_For_Woocommerce',
  *
  * @since	0.1.0
  */
-
 add_action( 'plugins_loaded', array( 'Angelleye_Offers_For_Woocommerce', 'get_instance' ) );
 
 
@@ -112,6 +110,7 @@ if (!function_exists('angelleye_queue_update')) {
     require_once( 'includes/angelleye-functions.php' );
 }
 angelleye_queue_update(plugin_basename(__FILE__), '101', 'offers-for-woocommerce');
+
 /**
  * Include plugin admin class
  *
@@ -128,6 +127,12 @@ function ofwc_get_active_plugins(){
     return $active_plugins; 
 }
 
+/**
+ * Check WC Vendor pro plugin is active oe not.
+ *
+ * @since	0.1.0
+ * @return bool
+ */
 function ofwc_is_wcvendors_pro_active() {
     $active_plugins = ofwc_get_active_plugins(); 
     if( !empty($active_plugins)) {
@@ -140,8 +145,7 @@ function ofwc_is_wcvendors_pro_active() {
     return false;
 }
 
-if( is_admin() || ofwc_is_wcvendors_pro_active() || class_exists('Angelleye_Offers_For_Woocommerce_Dokan') )
-{
+if( is_admin() || ofwc_is_wcvendors_pro_active() || class_exists('Angelleye_Offers_For_Woocommerce_Dokan') ) {
     require_once(plugin_dir_path(__FILE__). 'admin/views/class-offers-for-woocommerce-email-reminder.php');
     require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
     add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
