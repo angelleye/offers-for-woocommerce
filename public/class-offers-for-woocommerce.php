@@ -2391,32 +2391,733 @@ class Angelleye_Offers_For_Woocommerce {
 	    return null;
     }
 
-    public function get_paypal_order($raw_custom) {
+    public function wc_before_calculate_totals( $cart_object ) {
 
-        $custom = json_decode($raw_custom);
-        if ($custom && is_object($custom)) {
-            $order_id = $custom->order_id;
-            $order_key = $custom->order_key;
-        } else {
-            // Nothing was found.
-            WC_Gateway_Paypal::log('Order ID and key were not found in "custom".', 'error');
-            return false;
+        if( !empty($cart_object->cart_contents) && is_array($cart_object->cart_contents) ) {
+
+            $cart_contents = $cart_object->cart_contents;
+
+            $payment_authorization = false;
+            $cart_count = !empty($cart_contents) ? count($cart_contents) : 0;
+            foreach ( $cart_contents as $key => $item_value ) {
+
+                if( !empty($item_value['payment_authorization']) && $item_value['payment_authorization'] == 1 ) {
+                    $product_price = !empty($item_value['offer_product_price']) ? $item_value['offer_product_price'] :'';
+	                $product_qty = !empty($item_value['offer_product_qty']) ? $item_value['offer_product_qty'] :'';
+
+	                if( !empty($product_price) && $product_price > 0 ) {
+		                $item_value['data']->set_price( $product_price );
+	                }
+	                $payment_authorization = true;
+                }
+            }
+
+            if( !empty($payment_authorization) && $cart_count > 1) {
+	            wc_clear_notices();
+	            wc_add_notice( __( "You have already added the offer product to your cart. So, you can't add another product to the cart with it.", "offers-for-woocommerce" ), 'error' );
+            }
         }
 
-        $order = wc_get_order($order_id);
-
-        if (!$order) {
-            $order_id = wc_get_order_id_by_order_key($order_key);
-            $order = wc_get_order($order_id);
-        }
-
-        if (!$order || !hash_equals($order->get_order_key(), $order_key)) {
-            WC_Gateway_Paypal::log('Order Keys do not match.', 'error');
-            return false;
-        }
-
-        return $order;
+        return true;
     }
+
+    public function wc_checkout_order_processed( $order_id, $posted_data, $order ) {
+
+        global $woocommerce;
+
+        if( !empty($woocommerce->cart->cart_contents) ) {
+
+            foreach ( $woocommerce->cart->cart_contents as $key => $cart_content ) {
+
+                if( !empty($cart_content['payment_authorization'])) {
+                    $offer_id = !empty($cart_content['offer_id']) ? $cart_content['offer_id'] : '';
+	                $order->update_meta_data('_offer_id', $offer_id);
+	                $order->update_meta_data('_payment_authorization', 1);
+	                $order->save();
+                }
+            }
+        }
+    }
+
+    public function wc_paypal_args( $args, $order ) {
+
+	    $order_id = $order->get_id();
+	    $payment_authorization = get_post_meta( $order_id, '_payment_authorization', true );
+
+	    if( !empty($payment_authorization) && $payment_authorization == 1 ) {
+		    $args['paymentaction'] = 'authorization';
+		    $is_counter_offer = get_post_meta( $order_id, '_is_counter_offer', true );
+		    if(!empty($is_counter_offer)) {
+			   $args['invoice'] = $args['invoice'] . '-authorized-countered-' . rand(1000,9999);
+		    }
+	    }
+
+        return $args;
+    }
+
+	public function wc_before_thankyou( $order_id ) {
+
+		global $wpdb, $woocommerce;
+
+		$payment_authorization = get_post_meta( $order_id, '_payment_authorization', true );
+
+		if( !empty($payment_authorization)) {
+			$order = wc_get_order($order_id);
+			$payment_method = $order->get_payment_method();
+			$get_order_status = $order->get_status();
+		    $is_counter_offer = get_post_meta($order_id,'_is_counter_offer',true);
+			$mail_send = get_post_meta( $order_id, '_mail_send', true );
+			$offer_id = get_post_meta( $order_id, '_offer_id', true );
+
+			if( !empty($payment_method) && $payment_method == 'paypal' ){
+
+				$offer_name = get_post_meta($offer_id, 'offer_name', true);
+				$offer_phone = get_post_meta($offer_id, 'offer_phone', true);
+				$offer_company_name = get_post_meta($offer_id, 'offer_company_name', true);
+				$offer_email = get_post_meta($offer_id, 'offer_email', true);
+
+				$product_id = get_post_meta($offer_id, 'offer_product_id', true);
+				$variant_id = get_post_meta($offer_id, 'offer_variation_id', true);
+
+				$product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+
+				$product_qty = get_post_meta($offer_id, 'offer_quantity', true);
+				$product_price_per = get_post_meta($offer_id, 'offer_price_per', true);
+				$product_total = get_post_meta($offer_id, 'offer_amount', true);
+
+				$product_shipping_cost = get_post_meta($offer_id, 'product_shipping_cost', true);
+
+				$comments = get_comments( array( 'post_ID' => $offer_id ) );
+				$comment = !empty($comments[0]->comment_content) ? $comments[0]->comment_content :'';
+
+				$offer_args = array(
+					'offer_email' => $offer_email,
+					'offer_name' => $offer_name,
+					'offer_phone' => $offer_phone,
+					'offer_company_name' => $offer_company_name,
+					'offer_id' => $offer_id,
+					'product_id' => $product_id,
+					'product_url' => get_permalink($product_id),
+					'variant_id' => $variant_id,
+					'product' => $product,
+					'product_qty' => $product_qty,
+					'product_price_per' => $product_price_per,
+					'product_shipping_cost' => $product_shipping_cost,
+					'product_total' => $product_total,
+					'offer_notes' => !empty($comment) ? strip_tags(nl2br($comment), '<br><p>') : '',
+				);
+
+				$offer_args['offer_email'] = apply_filters('angelleye_ofw_pre_email_sent', $offer_email, $offer_args);
+
+				if ($variant_id) {
+					if ($product->get_sku()) {
+						$identifier = $product->get_sku();
+					} else {
+						$identifier = '#' . $product->get_id();
+					}
+
+					$attributes = $product->get_variation_attributes();
+					$extra_data = ' &ndash; ' . implode(', ', $attributes);
+					$offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s%s', 'offers-for-woocommerce'), $identifier, $product->get_title(), $extra_data);
+				} else {
+					if (!empty($product) && $product->get_sku()) {
+						$identifier = $product->get_sku();
+					} else {
+						$identifier = '#' . $product_id;
+					}
+
+					$offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s', 'offers-for-woocommerce'), $identifier, $product->get_title());
+				}
+
+				$button_options_general = get_option('offers_for_woocommerce_options_general');
+				$option_for_admin_disable_email_auto_decline = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
+				$offer_is_auto_decline = '';
+				if ($option_for_admin_disable_email_auto_decline == '1') {
+					$productData = $this->ofwc_get_product_detail($offer_id, $product_id, $variant_id);
+					$offer_price = $productData['offer_price'];
+					$user_offer_percentage = $productData['user_offer_percentage'];
+					$product_url = $productData['product_url'];
+					$offer_uid = $productData['offer_uid'];
+					if (isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
+						$auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+						if (isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage)) {
+							if ((int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+								$offer_is_auto_decline = 'yes';
+							}
+						}
+					}
+				}
+
+				if ($is_counter_offer) {
+					$offer_args['is_counter_offer'] = true;
+					$email_class = 'WC_New_Counter_Offer_Email';
+				} else {
+					$offer_args['is_counter_offer'] = false;
+					$email_class = 'WC_New_Offer_Email';
+				}
+
+				$emails = $woocommerce->mailer()->get_emails();
+				$new_email = $emails[$email_class];
+				$new_email->plugin_slug = 'offers-for-woocommerce';
+
+				if ($is_counter_offer) {
+					$new_email->template_html = 'woocommerce-new-counter-offer.php';
+					$new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+					$new_email->template_plain = 'woocommerce-new-counter-offer.php';
+					$new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+				} else {
+					$new_email->template_html = 'woocommerce-new-offer.php';
+					$new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+					$new_email->template_plain = 'woocommerce-new-offer.php';
+					$new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+				}
+
+				$offer_args['is_anonymous_communication_enable'] = $this->ofw_is_anonymous_communication_enable();
+
+				if ($offer_is_auto_decline == '' ) {
+					$new_email->trigger( $offer_args);
+				}
+
+				$email_class = 'WC_Offer_Received_Email';
+				$recipient = $offer_email;
+				$offer_args['recipient'] = $offer_email;
+				$new_email = $emails[$email_class];
+				$new_email->recipient = $recipient;
+				$new_email->plugin_slug = 'offers-for-woocommerce';
+				$new_email->template_html = 'woocommerce-offer-received.php';
+				$new_email->template_html_path = plugin_dir_path(__FILE__) . 'includes/emails/';
+				$new_email->template_plain = 'woocommerce-offer-received.php';
+				$new_email->template_plain_path = plugin_dir_path(__FILE__) . 'includes/emails/plain/';
+
+				if ($offer_is_auto_decline == '' ) {
+					$new_email->trigger($offer_args);
+				}
+
+				update_post_meta( $order_id, '_mail_send', 1 );
+				update_post_meta( $offer_id, '_authorization_payment_order_id', $order_id );
+
+			} elseif ( !empty($payment_method) && $payment_method == 'paypal_express' ){
+
+				$post_status = '';
+				$email_class = '';
+				$template_name = '';
+				$template_html_path =  '';
+
+				$accepted_offer_mail_send = get_post_meta($order_id, '_accepted_offer_mail_send', true);
+				$new_counter_offer_mail_send = get_post_meta($order_id, '_new_counter_offer_mail_send', true);
+				$new_offer_mail_send = get_post_meta($order_id, '_new_offer_mail_send', true);
+
+				if( !empty($get_order_status) && $get_order_status == 'processing' && empty($accepted_offer_mail_send)) {
+					$post_status = 'accepted-offer';
+					$email_class = 'WC_Accepted_Offer_Email';
+					$template_name = 'woocommerce-offer-accepted.php';
+					$template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
+					update_post_meta( $order_id, '_accepted_offer_mail_send', 1 );
+				} elseif( !empty($get_order_status) && $get_order_status == 'on-hold' && $is_counter_offer && empty($new_counter_offer_mail_send)) {
+					$post_status = 'countered-offer';
+					$email_class = 'WC_New_Counter_Offer_Email';
+					$template_name = 'woocommerce-new-counter-offer.php';
+					$template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/public/includes/emails/';
+					update_post_meta( $order_id, '_new_counter_offer_mail_send', 1 );
+				} elseif( !empty($get_order_status) && $get_order_status == 'on-hold' && !$is_counter_offer && empty($new_offer_mail_send)) {
+					$post_status = 'publish';
+					$email_class = 'WC_New_Offer_Email';
+					$template_name = 'woocommerce-new-offer.php';
+					$template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/public/includes/emails/';
+					update_post_meta( $order_id, '_new_offer_mail_send', 1 );
+				}
+
+				if( !empty($post_status)) {
+					wp_update_post( array(
+						'ID'          => $offer_id,
+						'post_status' => $post_status,
+						'post_date'   => date( "Y-m-d H:i:s", current_time( 'timestamp', 0 ) ),
+					) );
+				}
+
+				$post_data = get_post($offer_id);
+
+				$recipient   = get_post_meta( $offer_id, 'offer_email', true );
+				$offer_email = $recipient;
+				$offer_name = get_post_meta($offer_id, 'offer_name', true);
+				$offer_uid = get_post_meta($offer_id, 'offer_uid', true);
+				$product_id = get_post_meta($offer_id, 'offer_product_id', true);
+				$variant_id = get_post_meta($offer_id, 'offer_variation_id', true);
+				$product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+				$is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
+				$product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($offer_id, 'offer_buyer_counter_quantity', true) : get_post_meta($offer_id, 'offer_quantity', true);
+				$product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($offer_id, 'offer_buyer_counter_price_per', true) : get_post_meta($offer_id, 'offer_price_per', true);
+				$product_shipping_cost = get_post_meta($offer_id, 'offer_shipping_cost', true);
+				$product_total = number_format(($product_qty * $product_price_per), wc_get_price_decimals(), wc_get_price_decimal_separator(), wc_get_price_thousand_separator());
+				if ($is_offer_buyer_countered_status) {
+					update_post_meta($offer_id, 'offer_quantity', $product_qty);
+					update_post_meta($offer_id, 'offer_price_per', $product_price_per);
+					update_post_meta($offer_id, 'offer_shipping_cost', $product_shipping_cost);
+					update_post_meta($offer_id, 'offer_amount', $product_total);
+				}
+
+				$button_options_general = get_option('offers_for_woocommerce_options_general');
+				$option_for_admin_disable_email_auto_decline = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
+				$offer_is_auto_decline = '';
+				if ($option_for_admin_disable_email_auto_decline == '1') {
+					$productData = $this->ofwc_get_product_detail($offer_id, $product_id, $variant_id);
+					$offer_price = $productData['offer_price'];
+					$user_offer_percentage = $productData['user_offer_percentage'];
+					$product_url = $productData['product_url'];
+					$offer_uid = $productData['offer_uid'];
+					if (isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
+						$auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+						if (isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage)) {
+							if ((int) $auto_decline_percentage >= (int) $user_offer_percentage) {
+								$offer_is_auto_decline = 'yes';
+							}
+						}
+					}
+				}
+
+				$offer_notes ='';
+
+				$offer_args = array(
+					'recipient' => $recipient,
+					'offer_email' => $offer_email,
+					'offer_name' => $offer_name,
+					'offer_id' => $offer_id,
+					'offer_uid' => $offer_uid,
+					'product_id' => $product_id,
+					'product_url' => $product->get_permalink(),
+					'variant_id' => $variant_id,
+					'product' => $product,
+					'product_qty' => $product_qty,
+					'product_price_per' => $product_price_per,
+					'product_shipping_cost' => $product_shipping_cost,
+					'product_total' => $product_total,
+					'offer_notes' => $offer_notes,
+					'coupon_code' => isset($coupon_code) ? $coupon_code : ''
+				);
+
+				if (isset($email_class) && !empty($email_class)) {
+					$emails = $woocommerce->mailer()->get_emails();
+					$new_email = $emails[$email_class];
+					$new_email->recipient = $recipient;
+					$new_email->plugin_slug = 'offers-for-woocommerce';
+					$new_email->template_html_path = $template_html_path;
+					$new_email->template_plain_path = $template_html_path.'plain/';
+					$new_email->template_html = $template_name;
+					$new_email->template_plain = $template_name;
+					if ($offer_is_auto_decline == '' ) {
+						$new_email->trigger( $offer_args );
+					}
+				}
+
+				if( !empty($post_status)) {
+					$email_class                    = 'WC_Offer_Received_Email';
+					$recipient                      = $offer_email;
+					$offer_args['recipient']        = $offer_email;
+					$new_email                      = $emails[ $email_class ];
+					$new_email->recipient           = $recipient;
+					$new_email->plugin_slug         = 'offers-for-woocommerce';
+					$new_email->template_html       = 'woocommerce-offer-received.php';
+					$new_email->template_html_path  = untrailingslashit( OFW_PLUGIN_URL ) . '/public/includes/emails/';
+					$new_email->template_plain      = 'woocommerce-offer-received.php';
+					$new_email->template_plain_path = untrailingslashit( OFW_PLUGIN_URL ) . '/public/includes/emails/plain/';
+
+					if ( $offer_is_auto_decline == '' ) {
+						$new_email->trigger( $offer_args );
+					}
+				}
+
+				update_post_meta( $offer_id, '_authorization_payment_order_id', $order_id );
+			}
+		}
+	}
+
+    public function ofw_capture_authorization_payment( $offer_id, $post_status, $is_admin = false ) {
+
+        $payment_authorization = get_post_meta($offer_id, '_payment_authorization_make_offer' ,true );
+
+        if( isset($payment_authorization) && !empty($payment_authorization)) {
+
+            $order_id = get_post_meta($offer_id, '_authorization_payment_order_id', true);
+	        $order = wc_get_order( $order_id );
+	        $payment_method = $order->get_payment_method();
+
+	        if( !class_exists('AngellEYE_Utility')) {
+		        include_once PAYPAL_FOR_WOOCOMMERCE_DIR_PATH . '/angelleye-includes/angelleye-utility.php';
+	        }
+
+	        $AngellEYE_Utility = new AngellEYE_Utility( 'paypal-for-woocommerce',VERSION_PFW);
+	        $AngellEYE_Utility->payment_method = $payment_method;
+
+	        if( !class_exists('Angelleye_Offers_For_Woocommerce_Paypal')) {
+		        require_once( OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/class-offers-for-woocommerce-paypal.php' );
+	        }
+
+	        $ofw_paypal = new Angelleye_Offers_For_Woocommerce_Paypal();
+
+	        $WC_Gateway_Paypal = new WC_Gateway_Paypal();
+
+            if( $post_status == 'accepted-offer' ) {
+
+                if(!empty($order_id) && $order_id > 0 ) {
+
+                    if( !empty($payment_method) && $payment_method =="paypal" && class_exists('WC_Gateway_Paypal')) {
+	                    $WC_Gateway_Paypal->capture_payment($order_id);
+                    } elseif ( !empty($payment_method) && $payment_method =="paypal_express" ) {
+	                    $AngellEYE_Utility->angelleye_wc_paypal_express_docapture($order_id);
+                    }
+
+	                $order->update_status('processing');
+                }
+
+            } elseif ( $post_status == 'declined-offer' ) {
+
+	            if(!empty($order_id) && $order_id > 0 ) {
+		            if ( !empty($payment_method) && $payment_method == "paypal" && ! class_exists( 'Angelleye_Offers_For_Woocommerce_Paypal' ) ) {
+			            $ofw_paypal->do_void( $order_id );
+		            } elseif ( !empty($payment_method) && $payment_method == "paypal_express" ) {
+			            $AngellEYE_Utility->angelleye_wc_paypal_express_dovoid($order_id);
+		            }
+
+		            $order->update_status('cancelled');
+	            }
+
+            } elseif ( $post_status == 'countered-offer' ) {
+
+	            if( !empty($order_id) && $order_id > 0 ) {
+
+		            $offer_qty = !empty($_POST['offer_quantity']) ? wc_clean($_POST['offer_quantity']) : '';
+		            $offer_subtotal = !empty($_POST['offer_price_per']) ? wc_clean($_POST['offer_price_per']) : '';
+		            $offer_total    = $offer_subtotal * $offer_qty;
+
+		            if( !empty($order) ) {
+
+			            $get_items = !empty($order->get_items()) ? $order->get_items() : '';
+
+			            foreach ( $get_items as $item_id => $item ) {
+				            $item->set_quantity( $offer_qty );
+				            $item->set_subtotal( $offer_subtotal );
+				            $item->set_total( $offer_total );
+				            $item->save();
+			            }
+
+			            $order->set_total( $offer_total );
+			            $order->calculate_totals();
+			            $order->update_meta_data( '_is_counter_offer', 1 );
+			            $order->save();
+
+			            $authorization = false;
+			            $authorization_redirect_url = '';
+			            if (  !empty($payment_method) && $payment_method == "paypal" && !class_exists( 'Angelleye_Offers_For_Woocommerce_Paypal' ) ) {
+
+			                $ofw_paypal->do_void( $order_id );
+				            $process_payment   = $WC_Gateway_Paypal->process_payment( $order_id );
+				            if ( ! empty( $process_payment['result'] ) && $process_payment['result'] == 'success' ) {
+					            $authorization = true;
+					            $authorization_redirect_url = !empty($process_payment['redirect']) ? $process_payment['redirect'] : '';
+				            }
+			            } elseif ( !empty($payment_method) && $payment_method == "paypal_express" ) {
+
+				            $AngellEYE_Utility->angelleye_wc_paypal_express_dovoid($order_id);
+				            $order->update_status('pending');
+
+				            $get_checkout_payment_url = $order->get_checkout_payment_url().'&offer_authorization=true&offer_status=counter&order_id='.$order_id;
+
+				            $process_payment   = array(
+				               'result' => 'success',
+                               'redirect' => $get_checkout_payment_url,
+                               'payment_method' => 'paypal_express',
+				               'is_counter' => true,
+                            );
+
+				            if ( ! empty( $process_payment['result'] ) && $process_payment['result'] == 'success' ) {
+					            $authorization = true;
+					            $authorization_redirect_url = !empty($process_payment['redirect']) ? $process_payment['redirect'] : '';
+				            }
+			            }
+
+                        if ( ! is_admin() ) {
+                            if ( ! empty( $authorization ) ) {
+                                echo json_encode( array(
+                                    "statusmsg" => 'countered-offer',
+                                    'redirect'  => $authorization_redirect_url
+                                ) );
+                                exit;
+                            }
+                        } else {
+
+                            $recipient   = get_post_meta( $offer_id, 'offer_email', true );
+                            $offer_uid   = get_post_meta( $offer_id, 'offer_uid', true );
+                            $offer_name  = get_post_meta( $offer_id, 'offer_name', true );
+                            $offer_email = $recipient;
+                            $product_id  = get_post_meta( $offer_id, 'offer_product_id', true );
+                            $variant_id  = get_post_meta( $offer_id, 'offer_variation_id', true );
+                            $product     = ( $variant_id ) ? wc_get_product( $variant_id ) : wc_get_product( $product_id );
+
+                            $offer_quantity      = ! empty( $_POST['offer_quantity'] ) ? wc_clean( $_POST['offer_quantity'] ) : '';
+                            $offer_price_per     = ! empty( $_POST['offer_price_per'] ) ? wc_clean( $_POST['offer_price_per'] ) : '';
+                            $offer_shipping_cost = ( ! empty( $_POST['offer_shipping_cost'] ) && $_POST['offer_shipping_cost'] != '0.00' ) ? self::ofwc_format_localized_price( wc_clean( $_POST['offer_shipping_cost'] ) ) : 0.00;
+                            $offer_total         = ( $offer_quantity * $offer_price_per );
+
+                            $offer_final_offer = ( ! empty( $_POST['offer_final_offer'] ) && $_POST['offer_final_offer'] == '1' ) ? '1' : '0';
+
+                            $offer_notes = ! empty( $_POST['angelleye_woocommerce_offer_status_notes'] ) ? wc_clean( wp_slash( $_POST['angelleye_woocommerce_offer_status_notes'] ) ) : '';
+
+                            $offer_expire_date = ! empty( $_POST['offer_expiration_date_hidden'] ) ? wc_clean( $_POST['offer_expiration_date_hidden'] ) : '';
+
+                            $product_qty           = $offer_quantity;
+                            $product_price_per     = $offer_price_per;
+                            $product_shipping_cost = $offer_shipping_cost;
+                            $product_total         = $offer_total;
+
+                            $email_class   = 'WC_Countered_Offer_Email';
+                            $template_name = 'woocommerce-offer-countered.php';
+                            $offer_args    = array(
+                                'recipient'             => $recipient,
+                                'offer_email'           => $recipient,
+                                'offer_name'            => $offer_name,
+                                'offer_id'              => $offer_id,
+                                'offer_uid'             => $offer_uid,
+                                'product_id'            => $product_id,
+                                'product_url'           => $product->get_permalink(),
+                                'variant_id'            => $variant_id,
+                                'product'               => $product,
+                                'product_qty'           => $product_qty,
+                                'product_price_per'     => $product_price_per,
+                                'product_shipping_cost' => $product_shipping_cost,
+                                'product_total'         => $product_total,
+                                'offer_notes'           => $offer_notes,
+                                'final_offer'           => $offer_final_offer,
+                                'coupon_code'           => isset( $coupon_code ) ? $coupon_code : '',
+                            );
+
+                            if ( ! empty( $authorization ) ) {
+                                $offer_args['authorization']          = $authorization;
+                                $offer_args['authorization_redirect'] = $authorization_redirect_url;
+                                if( !empty($payment_method) && $payment_method == "paypal" ) {
+	                                $offer_args['capture_redirect']  = ! empty( $authorization_redirect_url ) ? str_replace( 'paymentaction=authorization', 'paymentaction=sale', $authorization_redirect_url ) : '';
+                                } elseif( !empty($payment_method) && $payment_method == "paypal_express" ) {
+	                                $offer_args['capture_redirect'] = $authorization_redirect_url.'&payment_action=Sale';
+                                }
+                            }
+
+                            $offer_email = apply_filters( 'angelleye_ofw_pre_email_sent', $offer_email, $offer_args );
+
+                            $offer_args['recipient'] = $offer_email;
+
+                            $offer_args['offer_email'] = $offer_email;
+
+                            $offer_args['offer_expiration_date'] = ! empty( $offer_expire_date ) ? $offer_expire_date : false;
+
+                            if ( $variant_id ) {
+                                if ( $product->get_sku() ) {
+                                    $identifier = $product->get_sku();
+                                } else {
+                                    $identifier = '#' . $product->get_id();
+                                }
+
+                                $attributes                            = $product->get_variation_attributes();
+                                $extra_data                            = ' &ndash; ' . implode( ', ', $attributes );
+                                $offer_args['product_title_formatted'] = sprintf( __( '%s &ndash; %s%s', 'offers-for-woocommerce' ), $identifier, $product->get_title(), $extra_data );
+                            } else {
+                                $offer_args['product_title_formatted'] = $product->get_formatted_name();
+                            }
+
+                            if ( isset( $email_class ) && ! empty( $email_class ) ) {
+                                global $woocommerce;
+                                $emails                         = $woocommerce->mailer()->get_emails();
+                                $new_email                      = $emails[ $email_class ];
+                                $new_email->recipient           = $recipient;
+                                $new_email->plugin_slug         = 'offers-for-woocommerce';
+                                $new_email->template_html       = $template_name;
+                                $new_email->template_html_path  = OFW_PLUGIN_URL . 'admin/includes/emails/';
+                                $new_email->template_plain      = $template_name;
+                                $new_email->template_plain_path = OFW_PLUGIN_URL . 'admin/includes/emails/';
+                                $new_email->trigger( $offer_args );
+                            }
+                        }
+		            }
+	            }
+            }
+        }
+    }
+
+	public function wc_before_order_save( $order ) {
+
+		$order_id = $order->get_id();
+		$payment_status = !empty($_POST['payment_status']) ? $_POST['payment_status'] :'';
+		$payment_authorization = get_post_meta( $order_id, '_payment_authorization', true );
+
+		if( !empty($payment_authorization) && !empty($payment_status) && strtolower($payment_status) == 'voided') {
+			exit();
+		}
+	}
+
+	public function ae_paypal_express_payment_action( $gateways, $request = null, $order_id = null ) {
+
+		if( is_null( WC()->cart ) ) {
+			return true;
+		}
+
+		if ($request == null) {
+			$gateway_setting = $gateways;
+		} else {
+			$gateway_setting = $request;
+		}
+
+		global $woocommerce;
+
+		$payment_authorization = false;
+		if( !empty($woocommerce->cart->cart_contents) ) {
+			foreach ( $woocommerce->cart->cart_contents as $cart_item_key => $cart_item ) {
+				if( isset($cart_item['payment_authorization']) && !empty($cart_item['payment_authorization']) ) {
+					$payment_authorization = true;
+				}
+			}
+		}
+
+		if(!empty($_GET['pay_for_order']) && $_GET['pay_for_order'] == true && !empty($_GET['offer_authorization']) && $_GET['offer_authorization'] == true && !empty($_GET['offer_status'] == "counter") ) {
+			$payment_authorization = true;
+		}
+
+		if( !empty($_GET['order_id']) && $_GET['order_id'] > 0 ) {
+			$is_payment_authorization = get_post_meta( $_GET['order_id'], '_payment_authorization', true );
+			$is_counter_offer = get_post_meta( $_GET['order_id'], '_is_counter_offer', true );
+			if(!empty($is_payment_authorization) && !empty($is_counter_offer)) {
+				$payment_authorization = true;
+			}
+		}
+
+		if( !empty($_GET['payment_action']) && $_GET['payment_action'] == 'Sale' ) {
+			$payment_authorization = false;
+			$gateway_setting->settings['payment_action'] = 'Sale';
+			$gateway_setting->payment_action = 'Sale';
+		}
+
+		if(!empty($payment_authorization)) {
+			$gateway_setting->settings['payment_action'] = 'Authorization';
+			$gateway_setting->payment_action = 'Authorization';
+		}
+	}
+
+	public function ae_paypal_express_checkout_intent_payment_action( $sdk_intend, $gateways ) {
+
+		global $woocommerce;
+
+		$payment_authorization = false;
+		if( !empty($woocommerce->cart->cart_contents) ) {
+			foreach ( $woocommerce->cart->cart_contents as $cart_item_key => $cart_item ) {
+				if( isset($cart_item['payment_authorization']) && !empty($cart_item['payment_authorization']) ) {
+					$payment_authorization = true;
+				}
+			}
+		}
+
+		if(!empty($_GET['pay_for_order']) && $_GET['pay_for_order'] == true && !empty($_GET['offer_authorization']) && $_GET['offer_authorization'] == true && !empty($_GET['offer_status']) && $_GET['offer_status']  == "counter") {
+			$payment_authorization = true;
+			$sdk_intend = 'capture';
+		}
+
+		if( !empty($_GET['pay_for_order']) && $_GET['pay_for_order'] && !empty($_GET['payment_action']) && $_GET['payment_action'] == 'Sale' ) {
+			$payment_authorization = false;
+			$sdk_intend = 'authorize';
+		}
+
+		if(!empty($payment_authorization)) {
+			$sdk_intend = 'authorize';
+		}
+
+        return $sdk_intend;
+	}
+
+	public function ae_paypal_express_checkout_payment_request_args( $paypal_request, $payment_gateway, $PP_express, $confirm_order_id ) {
+
+        if( !empty($confirm_order_id) &&  $confirm_order_id > 0 ) {
+	        $is_payment_authorization = get_post_meta( $confirm_order_id, '_payment_authorization', true );
+	        $is_counter_offer         = get_post_meta( $confirm_order_id, '_is_counter_offer', true );
+	        if( !empty($is_payment_authorization) && !empty($is_counter_offer)) {
+		        $invoice_id                              = ! empty( $paypal_request['Payments'][0]['invnum'] ) ? $paypal_request['Payments'][0]['invnum'] : '';
+		        $invoice_id                              = $invoice_id . '-authorized-countered-' . rand( 1000, 9999 );
+		        $paypal_request['Payments'][0]['invnum'] = $invoice_id;
+		        update_post_meta($confirm_order_id, '_offer_order_invoice_id' ,$invoice_id);
+	        }
+        }
+        return $paypal_request;
+	}
+
+	public function ae_paypal_express_checkout_request_args( $paypal_request, $payment_gateway, $PP_express, $confirm_order_id ) {
+
+		if( !empty($confirm_order_id) &&  $confirm_order_id > 0 ) {
+			$is_payment_authorization = get_post_meta( $confirm_order_id, '_payment_authorization', true );
+			$is_counter_offer         = get_post_meta( $confirm_order_id, '_is_counter_offer', true );
+			if( !empty($is_payment_authorization) && !empty($is_counter_offer)) {
+
+			    if(!empty($_GET['pay_for_order']) && !empty($_GET['payment_action'])) {
+			        $returnurl = !empty($paypal_request['SECFields']['returnurl']) ? $paypal_request['SECFields']['returnurl'] : '';
+				    $paypal_request['SECFields']['returnurl'] = $returnurl.'&payment_action='.$_GET['payment_action'];
+			    }
+			}
+		}
+		return $paypal_request;
+	}
+
+	public function ae_paypal_express_order_invoice_id( $invoice_id, $order_id ) {
+
+        if( !empty($order_id) && $order_id > 0 ) {
+	        $is_payment_authorization = get_post_meta( $order_id, '_payment_authorization', true );
+	        $is_counter_offer         = get_post_meta( $order_id, '_is_counter_offer', true );
+	        $offer_invoice_id         = get_post_meta( $order_id, '_offer_order_invoice_id', true );
+	        if( !empty($is_payment_authorization) && !empty($is_counter_offer) && !empty($offer_invoice_id)) {
+	            $invoice_id = $offer_invoice_id;
+	        }
+        }
+
+        return $invoice_id;
+	}
+
+	public function ae_wc_checkout_order_created( $order ) {
+
+		global $woocommerce;
+
+		if( !empty($woocommerce->cart->cart_contents) ) {
+
+			foreach ( $woocommerce->cart->cart_contents as $key => $cart_content ) {
+
+				if( !empty($cart_content['payment_authorization'])) {
+					$offer_id = !empty($cart_content['offer_id']) ? $cart_content['offer_id'] : '';
+					$order->update_meta_data('_offer_id', $offer_id);
+					$order->update_meta_data('_payment_authorization', 1);
+					$order->save();
+				}
+			}
+		}
+	}
+
+	public function get_paypal_order( $raw_custom ) {
+
+		$custom = json_decode( $raw_custom );
+		if ( $custom && is_object( $custom ) ) {
+			$order_id  = $custom->order_id;
+			$order_key = $custom->order_key;
+		} else {
+			// Nothing was found.
+			WC_Gateway_Paypal::log( 'Order ID and key were not found in "custom".', 'error' );
+			return false;
+		}
+
+		$order = wc_get_order( $order_id );
+
+		if ( ! $order ) {
+			$order_id = wc_get_order_id_by_order_key( $order_key );
+			$order    = wc_get_order( $order_id );
+		}
+
+		if ( ! $order || ! hash_equals( $order->get_order_key(), $order_key ) ) {
+			WC_Gateway_Paypal::log( 'Order Keys do not match.', 'error' );
+			return false;
+		}
+
+		return $order;
+	}
 
     public function set_session($key, $value) {
         WC()->session->$key = $value;
