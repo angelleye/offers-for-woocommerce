@@ -2497,6 +2497,14 @@ class Angelleye_Offers_For_Woocommerce {
 	    return null;
     }
 
+    /**
+     * Check cart items is exists or not.
+     *
+     * @param object $cart_object
+     * @return bool
+     *
+     * @since   1.2.0
+     */
     public function wc_before_calculate_totals( $cart_object ) {
 
         if( !empty($cart_object->cart_contents) && is_array($cart_object->cart_contents) ) {
@@ -2527,6 +2535,17 @@ class Angelleye_Offers_For_Woocommerce {
         return true;
     }
 
+    /**
+     * update meta on payment.
+     *
+     *
+     * @param int $order_id
+     * @param object $posted_data
+     * @param object $order
+     * @return void
+     *
+     * @since   1.2.0
+     */
     public function wc_checkout_order_processed( $order_id, $posted_data, $order ) {
 
         global $woocommerce;
@@ -2545,6 +2564,15 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * WooCommerce paypal arguments.
+     *
+     * @param array $args
+     * @param object $order
+     * @return mixed
+     *
+     * @since   1.2.0
+     */
     public function wc_paypal_args( $args, $order ) {
 
 	    $order_id = $order->get_id();
@@ -2561,6 +2589,14 @@ class Angelleye_Offers_For_Woocommerce {
         return $args;
     }
 
+    /**
+     * WooCommerce paypal order data update.
+     *
+     * @param int $order_id
+     * @return void
+     *
+     * @since   1.2.0
+     */
 	public function wc_before_thankyou( $order_id ) {
 
 		global $wpdb, $woocommerce;
@@ -2837,6 +2873,17 @@ class Angelleye_Offers_For_Woocommerce {
 		}
 	}
 
+    /**
+     * Capture authorization payment.
+     *
+     * @param int $offer_id
+     * @param string $post_status
+     * @param boolean $is_admin
+     * @return void
+     * @throws WC_Data_Exception
+     *
+     * @since   1.2.0
+     */
     public function ofw_capture_authorization_payment( $offer_id, $post_status, $is_admin = false ) {
 
         $payment_authorization = get_post_meta($offer_id, '_payment_authorization_make_offer' ,true );
@@ -3047,6 +3094,14 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Update payment status before order save.
+     *
+     * @param object $order
+     * @return void
+     *
+     * @since   1.2.0
+     */
 	public function wc_before_order_save( $order ) {
 
 		$order_id = $order->get_id();
@@ -3058,6 +3113,16 @@ class Angelleye_Offers_For_Woocommerce {
 		}
 	}
 
+    /**
+     * Paypal express payment action.
+     *
+     * @param array $gateways
+     * @param array $request
+     * @param int $order_id
+     * @return bool|void
+     *
+     * @since   1.2.0
+     */
 	public function ae_paypal_express_payment_action( $gateways, $request = null, $order_id = null ) {
 
 		if( is_null( WC()->cart ) ) {
@@ -3105,6 +3170,15 @@ class Angelleye_Offers_For_Woocommerce {
 		}
 	}
 
+    /**
+     * Paypal express checkout intent payment action.
+     *
+     * @param string $sdk_intend
+     * @param array $gateways
+     * @return mixed|string
+     *
+     * @since   1.2.0
+     */
 	public function ae_paypal_express_checkout_intent_payment_action( $sdk_intend, $gateways ) {
 
 		global $woocommerce;
@@ -3135,6 +3209,17 @@ class Angelleye_Offers_For_Woocommerce {
         return $sdk_intend;
 	}
 
+    /**
+     * Paypal express checkout payment request arguments.
+     *
+     * @param array $paypal_request
+     * @param array $payment_gateway
+     * @param $PP_express
+     * @param int $confirm_order_id
+     * @return array
+     *
+     * @since   1.2.0
+     */
 	public function ae_paypal_express_checkout_payment_request_args( $paypal_request, $payment_gateway, $PP_express, $confirm_order_id ) {
 
         if( !empty($confirm_order_id) &&  $confirm_order_id > 0 ) {
@@ -3150,6 +3235,17 @@ class Angelleye_Offers_For_Woocommerce {
         return $paypal_request;
 	}
 
+    /**
+     * Paypal express checkout payment request arguments prepare.
+     *
+     * @param array $paypal_request
+     * @param array $payment_gateway
+     * @param $PP_express
+     * @param int $confirm_order_id
+     * @return array
+     *
+     * @since   1.2.0
+     */
 	public function ae_paypal_express_checkout_request_args( $paypal_request, $payment_gateway, $PP_express, $confirm_order_id ) {
 
 		if( !empty($confirm_order_id) &&  $confirm_order_id > 0 ) {
@@ -3166,6 +3262,15 @@ class Angelleye_Offers_For_Woocommerce {
 		return $paypal_request;
 	}
 
+    /**
+     * Get paypal express order invoice id.
+     *
+     * @param int $invoice_id
+     * @param int $order_id
+     * @return mixed
+     *
+     * @since   1.2.0
+     */
 	public function ae_paypal_express_order_invoice_id( $invoice_id, $order_id ) {
 
         if( !empty($order_id) && $order_id > 0 ) {
@@ -3180,6 +3285,14 @@ class Angelleye_Offers_For_Woocommerce {
         return $invoice_id;
 	}
 
+    /**
+     * update order id and payment authorization.
+     *
+     * @param object $order
+     * @return void
+     *
+     * @since   1.2.0
+     */
 	public function ae_wc_checkout_order_created( $order ) {
 
 		global $woocommerce;
