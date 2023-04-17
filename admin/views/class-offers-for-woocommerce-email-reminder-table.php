@@ -38,6 +38,13 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 		parent::__construct();
 	}
 
+    /**
+     * Get table columns title.
+     *
+     * @return array
+     *
+     * @since 2.3.19
+     */
 	public function get_columns() {
 		$columns = array(
 			'id'            => __( 'ID', 'offers-for-woocommerce' ),

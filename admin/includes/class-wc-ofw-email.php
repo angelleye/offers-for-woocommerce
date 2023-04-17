@@ -4,26 +4,30 @@ if (! defined('ABSPATH') ) {
 	exit; // Exit if accessed directly
 }
 
-
-
+/**
+ * Check WC_Accepted_Offer_Email and WC_Email class exists or not.
+ */
 if (! class_exists('WC_Accepted_Offer_Email') && class_exists('WC_Email') ) :
 
-	abstract class OFW_Email extends WC_Email
-	{
-		/**
-		 * Set email defaults
-		 *
+    /**
+     * A custom Offer for WooCommerce Email class
+     *
+     * @since 1.0.1
+     * @extends WC_Email
+     */
+	abstract class OFW_Email extends WC_Email{
+
+        /**
+		 * Set email defaults.
 		 */
-		public function __construct() {
+		public function __construct(){
 
 		}
 
-		/**
-		 * Initialize Settings Form Fields
-		 *
-		 */
-		public function init_form_fields()
-		{
+        /**
+         * Initialize Settings Form Fields
+         */
+		public function init_form_fields(){
 
 			$this->form_fields = array(
 				'enabled'    => array(
