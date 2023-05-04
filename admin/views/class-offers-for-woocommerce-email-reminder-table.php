@@ -38,6 +38,13 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 		parent::__construct();
 	}
 
+    /**
+     * Get the all columns.
+     *
+     * @since 2.3.22
+     *
+     * @return array
+     */
 	public function get_columns() {
 		$columns = array(
 			'id'            => __( 'ID', 'offers-for-woocommerce' ),
@@ -79,10 +86,11 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
     /**
      * Add Default column with value.
      *
+     * @param array $item Get the item.
+     * @param string $column_name Get the column name.
+     *
      * @since 0.1.0
      *
-     * @param $item
-     * @param $column_name
      * @return mixed|string|void|null
      */
 	function column_default( $item, $column_name ) {

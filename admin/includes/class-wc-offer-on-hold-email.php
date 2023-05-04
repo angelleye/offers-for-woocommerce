@@ -19,11 +19,6 @@ class WC_Offer_On_Hold_Email extends WC_Email {
      * @since 1.0.1
      */
     public function __construct() {
-        /**
-         * Set plugin slug
-         * @since	1.1.2
-         */
-
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_offer_on_hold';
 
@@ -47,14 +42,17 @@ class WC_Offer_On_Hold_Email extends WC_Email {
         // Set the recipient
         $this->recipient = $this->get_option( 'recipient' );
 
-        // Other settings
         $this->template_base = OFWC_EMAIL_TEMPLATE_PATH;
     }
 
     /**
      * Determine if the email should actually be sent and setup email merge variables
      *
+     * @param array $offer_args Get the offer on hold email arguments.
+     *
      * @since 1.0.1
+     *
+     * @return void
      */
     public function trigger( $offer_args ) {
 
@@ -162,6 +160,6 @@ class WC_Offer_On_Hold_Email extends WC_Email {
             )
         );
     }
-} // end \WC_Offer_On_Hold Email class
+}
 
 endif;

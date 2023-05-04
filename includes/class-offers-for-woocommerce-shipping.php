@@ -20,6 +20,9 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
          * Constructor for the Shipping method extend.
          *
          * @access public
+         *
+         * @since 0.1.0
+         *
          * @return void
          */
         public function __construct() {
@@ -60,7 +63,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
          *
          * @since 0.1.0
          *
-         * @param $package
+         * @param object $packages Get the packages object.
          * @return bool|mixed|null
          */
         public function is_available($package) {
@@ -77,7 +80,7 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
          *
          * @since 0.1.0
          *
-         * @param $package
+         * @param object $package Get the packages object.
          * @return void
          */
         public function calculate_shipping($package = Array()) {

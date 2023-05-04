@@ -57,7 +57,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
      * Handle the constant contact functionality.
      *
      * @since   1.2.0
-     * @param $posted
+     * @param array $posted Get offer data.
      * @return void
      */
     public static function ofw_constantcontact_handler($posted) {

@@ -19,12 +19,6 @@ class WC_Offer_Received_Email extends WC_Email {
      * @since 0.1.0
      */
     public function __construct() {
-        /**
-         * Set plugin slug
-         * @since	1.1.2
-         */
-
-
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_offer_received';
 
@@ -48,7 +42,6 @@ class WC_Offer_Received_Email extends WC_Email {
         // Set the recipient
         $this->recipient = $this->get_option( 'recipient' );
 
-        // Other settings
         $this->template_base = OFWC_PUBLIC_EMAIL_TEMPLATE_PATH;
     }
 
@@ -57,7 +50,7 @@ class WC_Offer_Received_Email extends WC_Email {
      *
      * @since 0.1.0
      *
-     * @param $offer_args
+     * @param array $offer_args Get the offer_args.
      * @return void
      */
     public function trigger( $offer_args ) {
@@ -78,7 +71,6 @@ class WC_Offer_Received_Email extends WC_Email {
 
 	    do_action('angelleye_offer_for_woocommerce_before_email_send', $offer_args, $this );
 
-        // woohoo, send the email!
         $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
     }
 
@@ -128,6 +120,8 @@ class WC_Offer_Received_Email extends WC_Email {
      * Initialize Settings Form Fields
      *
      * @since 0.1.0
+     *
+     * @return void
      */
     public function init_form_fields() {
 
@@ -166,6 +160,6 @@ class WC_Offer_Received_Email extends WC_Email {
             )
         );
     }
-} // end \WC_Offer_Received_Email class
+}
 
 endif;
