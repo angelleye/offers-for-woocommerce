@@ -23,6 +23,9 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
      * Constructor for the Mailchimp.
      *
      * @access public
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
     public function __construct() {
@@ -34,7 +37,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
      *
      * @since    1.2.0
      *
-     * @param type $posted
+     * @param array $posted Get the offer posted data.
      * @return void
      */
     public function ofw_mailchimp_handler($posted) {

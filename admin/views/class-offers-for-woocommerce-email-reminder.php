@@ -38,6 +38,9 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
      * Constructor for the Email reminder.
      *
      * @access public
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
 	public function __construct() {
@@ -51,12 +54,13 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
     /**
      * Send offer reminder email using cron job.
      *
-     * @param $template_id
-     * @param $product_id
-     * @param $offer_id
-     * @return void
+     * @param string $template_id Get the template_id.
+     * @param int $product_id Get the product_id.
+     * @param int $offer_id Get the offer_id.
      *
      * @since 2.3.19
+     *
+     * @return void
      */
 	public function ofw_send_email_reminder_cron( $template_id, $product_id, $offer_id ) {
 
@@ -137,8 +141,10 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	/**
 	 * Get time in seconds.
 	 *
-	 * @param $trigger_time
-	 * @param $trigger_time_unit
+	 * @param string $trigger_time Get the trigger time.
+	 * @param string $trigger_time_unit Get the Trigger time unit(minutes, hours, day).
+     *
+     * @since 2.3.22
 	 *
 	 * @return float|int
 	 */
@@ -162,9 +168,9 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	/**
 	 * Send email preview of template
 	 *
-	 * @return void
-	 *
 	 * @since 2.3.19
+     *
+     * @return void
 	 */
 	public function preview_email_send() {
 
@@ -194,12 +200,12 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	/**
 	 * Callback function to send email templates.
 	 *
-	 * @param array $email_data email data  .
+	 * @param object $email_data email data.
 	 * @param boolean $preview_email preview email.
 	 *
-	 * @return bool
-	 *
 	 * @since 2.3.19
+     *
+     * @return bool
 	 */
 	public function send_email_templates( $email_data, $preview_email = false ) {
 
@@ -265,7 +271,7 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 			wc_get_template( 'emails/email-footer.php' );
 			$email_body_template_footer = ob_get_clean();
 
-			$site_title                 = get_bloginfo( 'name' );
+			$site_title                 = get_bloginfo('name');
 			$email_body_template_footer = str_ireplace( '{site_title}', $site_title, $email_body_template_footer );
 			$final_email_body           = $email_body_template_header . $body_email_preview . $email_body_template_footer;
 			wc_mail( $email_data->email, $subject_email_preview, stripslashes( $final_email_body ), $headers );
@@ -279,8 +285,9 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	/**
 	 * Create a dummy object for the preview email.
 	 *
-	 * @return stdClass
 	 * @since 2.3.19
+     *
+     * @return stdClass
 	 */
 	public function create_session_for_preview_email() {
 		$email_data                    = new stdClass();
@@ -301,8 +308,9 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	/**
 	 * Save the new template.
 	 *
-	 * @return void
 	 * @since 2.3.19
+     *
+     * @return void
 	 */
 	public function ofw_save_template() {
 		$email_reminder_action = ! empty( $_POST['email_reminder_action'] ) ? sanitize_text_field( $_POST['email_reminder_action'] ) : "";
@@ -386,10 +394,12 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
     /**
      * Schedule cron job on add template.
      *
-     * @param $ofw_email_frequency
-     * @param $trigger_time_unit
-     * @param $template_id
-     * @param $product_ids
+     * @param string $ofw_email_frequency Get the email trigger frequency.
+     * @param string $trigger_time_unit Get the email trigger time.
+     * @param string $template_id Get the email template_id.
+     * @param array $product_ids Get the offer product_ids.
+     *
+     * @since 2.3.22
      *
      * @return void
      */
@@ -429,13 +439,14 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
         }
     }
 
-
 	/**
 	 * Get product IDs this Email Reminder can apply to.
 	 *
-	 * @param $id
-	 * @return mixed|string
+	 * @param int $id Get the product_id.
+     *
 	 * @since 2.3.19
+     *
+     * @return mixed|string
 	 */
 	public function get_product_ids( $id ) {
 		$template = $this->get_template_by_id( $id );
@@ -446,9 +457,11 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	/**
 	 * Returns Template on basis of ID, return false in case of no template found
 	 *
-	 * @param $id
-	 * @return false|mixed
+	 * @param string $id Get the template_id.
+	 *
 	 * @since 2.3.19
+     *
+     * @return false|mixed
 	 */
 	public function get_template_by_id( $id ) {
 		$all_templates = get_option( 'ofw_email_reminders_templates', array() );

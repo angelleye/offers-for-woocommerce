@@ -39,8 +39,8 @@ if (!function_exists('angelleye_ofw_get_product_price_multi_currency')) {
      *
      * @since 0.1.0
      *
-     * @param $price
-     * @param $currency
+     * @param float $price Get the price.
+     * @param string $currency Get the currency.
      * @return mixed
      */
     function angelleye_ofw_get_product_price_multi_currency($price, $currency) {
