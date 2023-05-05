@@ -3181,7 +3181,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             }
             do_action('angelleye_ofw_capture_authorization_payment', $post_id, $post_status, true);
         }
-        die(); // this is required to return a proper result
     }
 
     /**
