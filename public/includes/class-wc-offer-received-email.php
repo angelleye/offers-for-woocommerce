@@ -33,6 +33,8 @@ class WC_Offer_Received_Email extends WC_Email {
         $this->subject = __('[{site_title}] Offer Received ({offer_number}) - {offer_date}', 'offers-for-woocommerce');
 
         // Set email template paths
+        $this->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/public/includes/emails/';
+        $this->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/public/includes/emails/plain/';
         $this->template_html 	= 'woocommerce-offer-received.php';
         $this->template_plain 	= 'plain/woocommerce-offer-received.php';
 
