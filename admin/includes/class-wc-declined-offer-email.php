@@ -33,6 +33,8 @@ class WC_Declined_Offer_Email extends WC_Email {
         $this->subject = __('[{site_title}] Declined Offer ({offer_number}) - {offer_date}', 'offers-for-woocommerce');
 
         // Set email template paths
+        $this->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
+        $this->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
         $this->template_html 	= 'woocommerce-offer-declined.php';
         $this->template_plain 	= 'plain/woocommerce-offer-declined.php';
 	    $this->placeholders   = array(

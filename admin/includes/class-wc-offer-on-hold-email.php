@@ -33,6 +33,8 @@ class WC_Offer_On_Hold_Email extends WC_Email {
         $this->subject = __('[{site_title}] Offer On Hold ({offer_number}) - {offer_date}', 'offers-for-woocommerce');
 
         // Set email template paths
+        $this->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/';
+        $this->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
         $this->template_html 	= 'woocommerce-offer-on-hold.php';
         $this->template_plain 	= 'plain/woocommerce-offer-on-hold.php';
 	    $this->placeholders   = array(
