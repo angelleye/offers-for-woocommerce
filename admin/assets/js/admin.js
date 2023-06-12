@@ -97,9 +97,9 @@
         if( undefined !== currentPostStatus && currentPostStatus !== null ){
 
             if( currentPostStatus === 'accepted-offer' || currentPostStatus === 'countered-offer' ) {
-                single_use_offer_wrap.style.display = 'none';
-            } else {
                 single_use_offer_wrap.style.display = '';
+            } else {
+                single_use_offer_wrap.style.display = 'none';
             }
 
             if(currentPostStatus !== 'countered-offer') {
@@ -141,9 +141,9 @@
             }
 
             if( this.value === 'accepted-offer' || this.value === 'countered-offer' ) {
-                single_use_offer_wrap.style.display = 'none';
-            } else {
                 single_use_offer_wrap.style.display = '';
+            } else {
+                single_use_offer_wrap.style.display = 'none';
             }
         }
 
