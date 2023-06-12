@@ -299,6 +299,13 @@
                         </div>
                     </div>
 
+                    <div class="woocommerce-offer-single-use-wrap">
+                        <label for="offer-single-use"><?php echo apply_filters( 'aeofw_meta_single_use_title',__('Single-Use', 'offers-for-woocommerce')); ?></label>
+                        <div>
+                            <input type="checkbox" name="offer_single_use" id="offer-single-use" value="1" <?php checked($postmeta['offer_single_use'][0], '1'); ?> autocomplete="off">
+                        </div>
+                    </div>
+
                     <div class="woocommerce-offer-send-coupon-wrap angelleye-hidden">
                         <?php
                         $coupon_list = get_posts('post_type=shop_coupon');

@@ -10,6 +10,7 @@
         let offer_expiration_date = document.getElementById('offer_expiration_date_hidden');
         let offer_total = document.getElementById('offer-total');
         let final_offer_wrap = getElementFirstClass('woocommerce-offer-final-offer-wrap');
+        let single_use_offer_wrap = getElementFirstClass('woocommerce-offer-single-use-wrap');
         let send_coupon_wrap = getElementFirstClass('woocommerce-offer-send-coupon-wrap');
         let expiration_wrap = getElementFirstClass('woocommerce-offer-expiration-wrap');
         let post_status = document.getElementById('woocommerce_offer_post_status');
@@ -94,6 +95,13 @@
         let currentPostStatus = document.getElementById("woocommerce_offer_post_status").value;
 
         if( undefined !== currentPostStatus && currentPostStatus !== null ){
+
+            if( currentPostStatus === 'accepted-offer' || currentPostStatus === 'countered-offer' ) {
+                single_use_offer_wrap.style.display = 'none';
+            } else {
+                single_use_offer_wrap.style.display = '';
+            }
+
             if(currentPostStatus !== 'countered-offer') {
                 getElementFirstClass("woocommerce-offer-final-offer-wrap").style.display = 'none';
             } else {
@@ -110,6 +118,7 @@
                 }
             }
         }
+
         if( undefined !==  post_status && post_status !== null ){
             post_status.addEventListener('change',offerStatusChanged);
         }
@@ -121,6 +130,7 @@
             } else {
                 $(final_offer_wrap).slideUp();
             }
+
             if(this.value === 'declined-offer'){
                 $(send_coupon_wrap).fadeIn('fast');
                 expiration_wrap.style.display = "none";
@@ -128,6 +138,12 @@
                 if(this.value !== 'completed-offer'){
                     expiration_wrap.style.display = "";
                 }
+            }
+
+            if( this.value === 'accepted-offer' || this.value === 'countered-offer' ) {
+                single_use_offer_wrap.style.display = 'none';
+            } else {
+                single_use_offer_wrap.style.display = '';
             }
         }
 
