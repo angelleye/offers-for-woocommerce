@@ -299,8 +299,15 @@
                     </div>
                 </div>
 
+                <div class="woocommerce-offer-single-use-wrap">
+                    <label for="offer-single-use"><?php echo apply_filters( 'aeofw_meta_single_use_title',__('Single-Use', 'offers-for-woocommerce')); ?></label>
+                    <div>
+                        <input type="checkbox" name="offer_single_use" id="offer-single-use" value="1" <?php checked($postmeta['offer_single_use'][0], '1'); ?> autocomplete="off">
+                    </div>
+                </div>
+
                 <div class="woocommerce-offer-send-coupon-wrap angelleye-hidden">
-                    <?php 
+                    <?php
                         $coupon_list = get_posts('post_type=shop_coupon');
                         if($coupon_list) { ?>
                         <label for="ofw_coupon_list"><?php _e( 'Coupon List', 'offers-for-woocommerce' ); ?></label>
@@ -313,7 +320,7 @@
                         <?php }
                      ?>
                 </div>
-                
+
                 <div class="woocommerce-offer-expiration-wrap">
                     <label for="offer-expiration-date"><?php echo apply_filters( 'aeofw_meta_offer_expiry_title', __('Offer Expires', 'offers-for-woocommerce')); ?></label>
                     <?php
@@ -323,7 +330,7 @@
                         }
                         else{
                             $expiry_date_formated = '';
-                        }                        
+                        }
                     ?>
                     <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo $expiry_date_formated; ?>" autocomplete="off">
                     <input type="hidden" name="offer_expiration_date_hidden" id="offer_expiration_date_hidden" value="" />
