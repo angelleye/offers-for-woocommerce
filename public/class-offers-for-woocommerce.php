@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var string
      */
-    const VERSION = '2.3.23';
+    const VERSION = '2.3.24';
 
     /**
      * Unique pluginidentifier
