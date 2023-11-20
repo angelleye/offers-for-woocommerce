@@ -159,15 +159,15 @@ input:checked + .er-toggler:before {
 #ofw_email_reminders_options_form .select2-search__field,#ofw_template_name, #ofw_email_subject{
     width:100%;
 }
-.select2-container{
+#ofw_email_reminders_options_form .select2-container{
     z-index: 1;
 }
-ul.select2-results__options{
+#ofw_email_reminders_options_form ul.select2-results__options{
     background-color: white;
     padding:10px;
     border-radius: 2px;
 }
-li.select2-selection__choice{
+#ofw_email_reminders_options_form li.select2-selection__choice{
     background-color: white;
     border-radius: 10px;
     margin: 5px 10px;

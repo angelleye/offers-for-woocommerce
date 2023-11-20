@@ -414,6 +414,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since   0.1.0
          */
         add_action('woocommerce_order_status_completed', array($this, 'ofwc_woocommerce_checkout_order_processed'));
+
         /**
          * END - custom functions
          */
@@ -4398,6 +4399,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true);
                         add_comment_meta($new_comment_id, 'offer_status', '4', true);
                     }
+
+                    ofw_manage_offer_single_use($item_offer_id);
                 }
             }
         }
