@@ -109,26 +109,40 @@
                     getElementFirstClass("woocommerce-offer-expiration-wrap").style.display = 'none';
                 }
             }
+
+            if( currentPostStatus === 'accepted-offer' || currentPostStatus === 'countered-offer' ) {
+                $('.woocommerce-offer-single-use-wrap').fadeIn('fast');
+            } else {
+                $('.woocommerce-offer-single-use-wrap').slideUp();
+            }
         }
+
         if( undefined !==  post_status && post_status !== null ){
-            post_status.addEventListener('change',offerStatusChanged);
-        }
-
-        function offerStatusChanged(e){
-
-            if(this.value === 'countered-offer'){
-                $(final_offer_wrap).fadeIn('fast');
-            } else {
-                $(final_offer_wrap).slideUp();
-            }
-            if(this.value === 'declined-offer'){
-                $(send_coupon_wrap).fadeIn('fast');
-                expiration_wrap.style.display = "none";
-            } else {
-                if(this.value !== 'completed-offer'){
-                    expiration_wrap.style.display = "";
+            post_status.addEventListener('change', function ( event ) {
+                let offerStatus = this.value;
+                if( offerStatus === 'countered-offer') {
+                    $('.woocommerce-offer-final-offer-wrap').fadeIn('fast');
+                } else {
+                    $('.woocommerce-offer-final-offer-wrap').slideUp();
                 }
-            }
+
+                if( offerStatus === 'declined-offer') {
+                    $('.woocommerce-offer-send-coupon-wrap').fadeIn('fast');
+                    $('.woocommerce-offer-expiration-wrap').hide();
+                } else {
+                    $('.woocommerce-offer-send-coupon-wrap').slideUp();
+                    if( offerStatus !== 'completed-offer') {
+                        $('.woocommerce-offer-expiration-wrap').show();
+                    }
+                }
+
+                if( offerStatus === 'accepted-offer' || offerStatus === 'countered-offer' ) {
+                    $('.woocommerce-offer-single-use-wrap').fadeIn('fast');
+                } else {
+                    $('.woocommerce-offer-single-use-wrap').slideUp();
+                }
+                return false;
+            });
         }
 
         if( undefined !== ofw_param.ofw_offer_expiration_date_show && ofw_param.ofw_offer_expiration_date_show !== null && ofw_param.ofw_offer_expiration_date_show === 'true') {
