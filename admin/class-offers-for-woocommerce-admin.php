@@ -996,15 +996,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 echo wc_price($val, array('currency' => $offer_currency));
                 break;
 
-        case 'offer_amount' :
-            if ($post_status == 'buyercountered-offer') {
-                $val = get_post_meta($post_id, 'offer_buyer_counter_amount', true);
-            } else {
-                $val = get_post_meta($post_id, 'offer_amount', true);
-            }
-            $val = ($val != '') ? $val : '0';
-            echo wc_price($val, array('currency' => $offer_currency));
-            break;
+            case 'offer_amount' :
+                if ($post_status == 'buyercountered-offer') {
+                    $val = get_post_meta($post_id, 'offer_buyer_counter_amount', true);
+                } else {
+                    $val = get_post_meta($post_id, 'offer_amount', true);
+                }
+                $val = ($val != '') ? $val : '0';
+                echo wc_price($val, array('currency' => $offer_currency));
+                break;
         }
     }
 
@@ -1031,6 +1031,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * ADMIN COLUMN - SORTING - ORDERBY
      * http://scribu.net/wordpress/custom-sortable-columns.html#comment-4732
      */
+
     /**
      * WooCommerce offers list sorting
      *
@@ -1584,6 +1585,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 if (!is_object($_product)) {
                     return;
                 }
+
                 if ( $_product ) {
 
                     if ($product_variant_id) {
@@ -1890,6 +1892,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $template_name = 'woocommerce-offer-on-hold.php';
         }
 
+        // Counter Offer
         if ($post_data->post_status == 'countered-offer') {
             $offer_quantity = !empty($_POST['offer_quantity']) ? wc_clean($_POST['offer_quantity']) : '';
             $offer_price_per = !empty($_POST['offer_price_per']) ? self::ofwc_format_localized_price(wc_clean($_POST['offer_price_per'])) : '';
@@ -2293,87 +2296,87 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * Disable coupons when checking out with accepted offer
          */
         add_settings_field(
-            'general_setting_disable_coupon', // ID
-            __('Disable Coupons', 'offers-for-woocommerce'), // Title
-            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
-            'offers_for_woocommerce_general_settings', // Page
-            'general_settings', // Section
-            array(
-                'option_name' => 'offers_for_woocommerce_options_general',
-                'input_label' => 'general_setting_disable_coupon',
-                'input_required' => FALSE,
-                'description' => __('Check this option to disable coupons when checking out with an accepted offer included in the shopping cart.', 'offers-for-woocommerce'),
-            )
+                'general_setting_disable_coupon', // ID
+                __('Disable Coupons', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_label' => 'general_setting_disable_coupon',
+                    'input_required' => FALSE,
+                    'description' => __('Check this option to disable coupons when checking out with an accepted offer included in the shopping cart.', 'offers-for-woocommerce'),
+                )
         );
 
         add_settings_field(
-            'general_setting_enable_anonymous_communication', // ID
-            __('Enable Anonymous Communication', 'offers-for-woocommerce'), // Title
-            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
-            'offers_for_woocommerce_general_settings', // Page
-            'general_settings', // Section
-            array(
-                'option_name' => 'offers_for_woocommerce_options_general',
-                'input_required' => FALSE,
-                'input_label' => 'general_setting_enable_anonymous_communication',
-                'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', 'offers-for-woocommerce'),
-            )
+                'general_setting_enable_anonymous_communication', // ID
+                __('Enable Anonymous Communication', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_enable_anonymous_communication',
+                    'description' => __('Check this option to hide the contact information for potential buyers while negotiation is going on.  This can be useful when working with vendors who would be paying you a commission.', 'offers-for-woocommerce'),
+                )
         );
 
         add_settings_field(
-            'general_setting_show_pending_offer', // ID
-            __('Show Pending Offer Details to Buyers', 'offers-for-woocommerce'), // Title
-            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
-            'offers_for_woocommerce_general_settings', // Page
-            'general_settings', // Section
-            array(
-                'option_name' => 'offers_for_woocommerce_options_general',
-                'input_required' => FALSE,
-                'input_label' => 'general_setting_show_pending_offer',
-                'description' => __('Check this option to display pending offer(s) on front end.', 'offers-for-woocommerce'),
-            )
+                'general_setting_show_pending_offer', // ID
+                __('Show Pending Offer Details to Buyers', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_show_pending_offer',
+                    'description' => __('Check this option to display pending offer(s) on front end.', 'offers-for-woocommerce'),
+                )
         );
 
         add_settings_field(
-            'general_setting_show_highest_current_bid', // ID
-            __('Display Highest Offer', 'offers-for-woocommerce'), // Title
-            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
-            'offers_for_woocommerce_general_settings', // Page
-            'general_settings', // Section
-            array(
-                'option_name' => 'offers_for_woocommerce_options_general',
-                'input_required' => FALSE,
-                'input_label' => 'general_setting_show_highest_current_bid',
-                'description' => __('Check this option to display the highest current offer on product page for potential buyers to see.', 'offers-for-woocommerce'),
-            )
+                'general_setting_show_highest_current_bid', // ID
+                __('Display Highest Offer', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_show_highest_current_bid',
+                    'description' => __('Check this option to display the highest current offer on product page for potential buyers to see.', 'offers-for-woocommerce'),
+                )
         );
 
         add_settings_field(
-            'general_setting_admin_disable_email_auto_decline', // ID
-            __('Disable Admin Email on Auto Declined Offers', 'offers-for-woocommerce'), // Title
-            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
-            'offers_for_woocommerce_general_settings', // Page
-            'general_settings', // Section
-            array(
-                'option_name' => 'offers_for_woocommerce_options_general',
-                'input_required' => FALSE,
-                'input_label' => 'general_setting_admin_disable_email_auto_decline',
-                'description' => __('Disable the email notification for the admin user when offers are automatically declined.', 'offers-for-woocommerce'),
-            )
+                'general_setting_admin_disable_email_auto_decline', // ID
+                __('Disable Admin Email on Auto Declined Offers', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_admin_disable_email_auto_decline',
+                    'description' => __('Disable the email notification for the admin user when offers are automatically declined.', 'offers-for-woocommerce'),
+                )
         );
 
         add_settings_field(
-            'general_setting_disabled_make_offer_on_product_sale', // ID
-            __('Disable for Sale Items', 'offers-for-woocommerce'), // Title
-            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
-            'offers_for_woocommerce_general_settings', // Page
-            'general_settings', // Section
-            array(
-                'option_name' => 'offers_for_woocommerce_options_general',
-                'input_label' => 'general_setting_disabled_make_offer_on_product_sale',
-                'input_required' => FALSE,
-                'description' => __('Disable the "Make Offer" button for products that are on sale.', 'offers-for-woocommerce'),
-            )
+                'general_setting_disabled_make_offer_on_product_sale', // ID
+                __('Disable for Sale Items', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_label' => 'general_setting_disabled_make_offer_on_product_sale',
+                    'input_required' => FALSE,
+                    'description' => __('Disable the "Make Offer" button for products that are on sale.', 'offers-for-woocommerce'),
+                )
         );
 
         /**
@@ -2573,6 +2576,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         printf(
                 '<input ' . $field_required . ' type="text" id="' . $field_label . '" name="' . $args['option_name'] . '[' . $field_label . ']" value="%s" />', isset($options[$field_label]) ? esc_attr($options[$field_label]) : ''
         );
+
         echo '<div class="angelleye-settings-description">' . $description . '</div>';
     }
 
@@ -2755,6 +2759,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public function enqueue_admin_styles() {
         wp_enqueue_style('offers-for-woocommerce-admin', plugins_url('assets/css/offers-for-woocommerce-admin.css', __FILE__), array(), Angelleye_Offers_For_Woocommerce::VERSION);
         wp_enqueue_style( 'datetimepicker', plugins_url( 'assets/css/jquery.datetimepicker.min.css', __FILE__ ), array(), Angelleye_Offers_For_Woocommerce::VERSION );
+
         if (!isset($this->plugin_screen_hook_suffix)) {
             return;
         }
@@ -2780,6 +2785,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // admin styles - edit product
             wp_enqueue_style('offers-for-woocommerce-angelleye-offers-edit-product-styles', plugins_url('assets/css/edit-product.css', __FILE__), array(), Angelleye_Offers_For_Woocommerce::VERSION);
         }
+
         if ( "settings_page_offers-for-woocommerce" == $screen->id && is_admin() ){
             wp_enqueue_style( 'woocommerce_admin_styles' );
         }
@@ -2857,6 +2863,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 'jquery-ui-core',
 				'jquery-ui-sortable',
 				'wc-enhanced-select'), Angelleye_Offers_For_Woocommerce::VERSION);
+
             wp_localize_script('offers-for-woocommerce-angelleye-offers-admin-settings-scripts', 'ofw_param', array(
                 'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
                 'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),
@@ -2882,6 +2889,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             wp_enqueue_script( 'jquery-ui' );
             wp_enqueue_script( 'jquery-ui-datepicker' );
             wp_enqueue_script( 'timepicker', plugins_url( 'assets/js/jquery.datetimepicker.full.min.js', __FILE__ ), array( 'jquery' ), '1.2' );
+
             // autoNumeric js
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric', plugins_url('../public/assets/js/autoNumeric.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
@@ -3141,7 +3149,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 } else {
                     $identifier = '#' . $product->get_id();
                 }
-
                 $attributes = $product->get_variation_attributes();
                 $extra_data = ' &ndash; ' . implode(', ', $attributes);
                 $offer_args['product_title_formatted'] = sprintf(__('%s &ndash; %s%s', 'offers-for-woocommerce'), $identifier, $product->get_title(), $extra_data);
@@ -3164,7 +3171,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if (isset($offer_notes) && $offer_notes != '') {
                 $comment_text .= '</br>' . nl2br($offer_notes);
             }
-
             $data = array(
                 'comment_post_ID' => '',
                 'comment_author' => 'admin',
@@ -3183,6 +3189,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ($new_comment_id) {
                 add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $post_id, true);
             }
+
             do_action('angelleye_ofw_capture_authorization_payment', $post_id, $post_status, true);
         }
     }
@@ -3195,7 +3202,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @return void
      */
     public function adminToolSetMinimumOfferPriceCallback(){
-        if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX)) {
+        if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX) && !empty($_POST['_offer_minimum_price_nonce']) && wp_verify_nonce(sanitize_text_field($_POST['_offer_minimum_price_nonce'] ), '_offer_minimum_price_nonce')) {
             global $wpdb;
             $processed_product_id = array();
             $errors = FALSE;
@@ -5244,66 +5251,81 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $i = 0;
 
         if (!empty($offer_id)) {
-            $tmproduct_data = get_post_meta($offer_id, 'tmproduct_data', true);
-            if (!empty($tmproduct_data['tmcartepo'])) {
-                foreach ($tmproduct_data['tmcartepo'] as $key => $value) {
+        $tmproduct_data = get_post_meta($offer_id, 'tmproduct_data', true);
+        if (!empty($tmproduct_data['tmcartepo'])) {
+            foreach ($tmproduct_data['tmcartepo'] as $key => $value) {
+                $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
+                $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
+                $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
+                if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
+                    $product_extra_data[$i]['Cost'] = number_format($value['price'] / $product_extra_data[$i]['Qty'], 2);
+                } else {
+                    $product_extra_data[$i]['Cost'] = 0;
+                }
+                $product_extra_data[$i]['Total'] = !empty($value['price']) ? $value['price'] : '';
+                $i = $i + 1;
+            }
+        }
+        if (!empty($tmproduct_data['tmcartfee'])) {
+            foreach ($tmproduct_data['tmcartfee'] as $key => $value) {
+                $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
+                $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
+                $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
+                if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
+                    $product_extra_data[$i]['Cost'] = number_format($value['price'] / $product_extra_data[$i]['Qty'], 2);
+                } else {
+                    $product_extra_data[$i]['Cost'] = 0;
+                }
+                $product_extra_data[$i]['Total'] = !empty($value['price']) ? $value['price'] : '';
+                $i = $i + 1;
+            }
+        }
+        if (!empty($tmproduct_data['tmproducts'])) {
+            foreach ($tmproduct_data['tmproducts'] as $key => $value) {
+                if (isset($value['product_id']) && !empty($value['product_id'])) {
+                    $_product = wc_get_product($value['product_id']);
+                    $product_permalink = $_product->get_permalink($value['product_id']);
                     $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
-                    $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
+                    $product_extra_data[$i]['Value'] = sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name());
                     $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
-                    if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
-                        $product_extra_data[$i]['Cost'] = number_format($value['price'] / $product_extra_data[$i]['Qty'], 2);
-                    } else {
-                        $product_extra_data[$i]['Cost'] = 0;
-                    }
-                    $product_extra_data[$i]['Total'] = !empty($value['price']) ? $value['price'] : '';
+                    $price = $_product->get_regular_price();
+                    $product_extra_data[$i]['Cost'] = number_format($price, 2);
+                    $product_extra_data[$i]['Total'] = number_format($price * $product_extra_data[$i]['Qty'], 2);
                     $i = $i + 1;
                 }
             }
+        }
 
-            if (!empty($tmproduct_data['tmcartfee'])) {
-                foreach ($tmproduct_data['tmcartfee'] as $key => $value) {
-                    $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
-                    $product_extra_data[$i]['Value'] = !empty($value['value']) ? $value['value'] : '';
-                    $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
-                    if (!empty($product_extra_data[$i]['Qty']) && !empty($value['price'])) {
-                        $product_extra_data[$i]['Cost'] = number_format($value['price'] / $product_extra_data[$i]['Qty'], 2);
-                    } else {
-                        $product_extra_data[$i]['Cost'] = 0;
-                    }
-                    $product_extra_data[$i]['Total'] = !empty($value['price']) ? $value['price'] : '';
-                    $i = $i + 1;
+        if (!empty($product_extra_data)) {
+            ?>
+            <h3><?php echo __('Product Options', 'offers-for-woocommerce'); ?></h3>
+            <table class="widefat" id="angelleye_offer_for_woocommerce_extra_option">
+                <thead>
+                    <tr>
+                        <th><?php echo __('Product', 'offers-for-woocommerce'); ?></th>
+                        <th><?php echo __('Price', 'offers-for-woocommerce'); ?></th>
+                        <th><?php echo __('Quantity', 'offers-for-woocommerce'); ?></th>
+                        <th><?php echo __('Subtotal', 'offers-for-woocommerce'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+            <?php
+            foreach ($product_extra_data as $key => $value) {
+                echo '<tr>';
+                if (!empty($value['Option'])) {
+                    echo '<td>' . '<b>' . $value['Option'] . '</b><br>' . $value['Value'] . '</td>';
+                } else {
+                    echo '<td>' . $value['Value'] . '</td>';
                 }
+                echo '<td>' . wc_price($value['Cost']) . '</td>';
+                echo '<td>' . $value['Qty'] . '</td>';
+                echo '<td>' . wc_price($value['Total']) . '</td>';
+                echo '</tr>';
             }
-
-            if (!empty($tmproduct_data['tmproducts'])) {
-                foreach ($tmproduct_data['tmproducts'] as $key => $value) {
-                    if (isset($value['product_id']) && !empty($value['product_id'])) {
-                        $_product = wc_get_product($value['product_id']);
-                        $product_permalink = $_product->get_permalink($value['product_id']);
-                        $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
-                        $product_extra_data[$i]['Value'] = sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name());
-                        $product_extra_data[$i]['Qty'] = !empty($value['quantity']) ? $value['quantity'] : 1;
-                        $price = $_product->get_regular_price();
-                        $product_extra_data[$i]['Cost'] = number_format($price, 2);
-                        $product_extra_data[$i]['Total'] = number_format($price * $product_extra_data[$i]['Qty'], 2);
-                        $i = $i + 1;
-                    }
-                }
-            }
-
-            if (!empty($product_extra_data)) { ?>
-                <h3><?php echo __('Product Options', 'offers-for-woocommerce'); ?></h3>
-                <table class="widefat" id="angelleye_offer_for_woocommerce_extra_option">
-                    <thead>
-                        <tr>
-                            <th><?php echo __('Product', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Price', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Quantity', 'offers-for-woocommerce'); ?></th>
-                            <th><?php echo __('Subtotal', 'offers-for-woocommerce'); ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                <?php
+            ?>
+                </tbody>
+            </table>
+                    <?php
             }
         }
     }
@@ -5405,7 +5427,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         </tbody>
                     </table>
                 </div>
-                    <?php
+                <?php
             }
         }
     }
@@ -5429,5 +5451,4 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $email_reminder_table->prepare_items();
         $email_reminder_table->display();
     }
-
 }

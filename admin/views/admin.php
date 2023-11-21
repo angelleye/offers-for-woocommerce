@@ -138,7 +138,7 @@
             <div class="angelleye-offers-tools-bulk-action-section">
                 <label for="ofwc-bulk-action-target-where-stock-value"></label>
                 <div>
-                    <input type="hidden" name="_angelly_auto_decline_nonce" id="_angelly_auto_decline_nonce" value="<?php echo wp_create_nonce('_angelly_auto_decline_nonce'); ?>" >
+                    <input type="hidden" name="_angelleye_auto_decline_nonce" id="_angelleye_auto_decline_nonce" value="<?php echo wp_create_nonce('_angelleye_auto_decline_nonce'); ?>" >
                     <button class="button button-primary" id="bulk-enable-tool-submit" name="bulk_enable_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
                 </div>
             </div>
@@ -260,7 +260,7 @@
             <div class="ofw-tool-auto-accept-decline-action-section">
                 <label for="bulk_enable_auto_accept_decline_tool_submit"></label>
                 <div>
-                    <input type="hidden" name="_angelly_auto_decline_nonce" id="_angelly_auto_decline_nonce" value="<?php echo wp_create_nonce('_angelly_auto_decline_nonce'); ?>" >
+                    <input type="hidden" name="_angelleye_auto_decline_nonce" id="_angelleye_auto_decline_nonce" value="<?php echo wp_create_nonce('_angelleye_auto_decline_nonce'); ?>" >
                     <button class="button button-primary" id="ofw_bulk-acd_enable-tool-submit" name="bulk_enable_auto_accept_decline_tool_submit"><?php echo __('Process', 'offers-for-woocommerce'); ?></button>
                 </div>
             </div>
