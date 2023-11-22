@@ -110,6 +110,12 @@
                 } 
             }
 
+            if( currentPostStatus == 'accepted-offer' || currentPostStatus == 'countered-offer' ) {
+                $('.woocommerce-offer-single-use-wrap').fadeIn('fast');
+            } else {
+                $('.woocommerce-offer-single-use-wrap').slideUp();
+            }
+
             $('#woocommerce_offer_post_status').change(function(){
                 if( $(this).val() == 'countered-offer') {
                     $('.woocommerce-offer-final-offer-wrap').fadeIn('fast');
@@ -124,6 +130,12 @@
                     if( $(this).val() !== 'completed-offer') {
                         $('.woocommerce-offer-expiration-wrap').show();
                     }
+                }
+
+                if( $(this).val() == 'accepted-offer' || $(this).val() == 'countered-offer' ) {
+                    $('.woocommerce-offer-single-use-wrap').fadeIn('fast');
+                } else {
+                    $('.woocommerce-offer-single-use-wrap').slideUp();
                 }
                 return false;
             });

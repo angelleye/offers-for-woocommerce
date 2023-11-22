@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 6.1.1
-Stable tag: 2.3.22
+Tested up to: 6.2.2
+Stable tag: 2.3.25
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,15 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 2.3.25 - 07.18.2023 =
+* Fix - Resolves Counter Offer / Shop Page Offer - Variable Product Fails to Display Properly. ([OFW-294](https://github.com/angelleye/offers-for-woocommerce/pull/508))
+
+= 2.3.24 - 07.13.2023 =
+* Feature - Adds option for Offer Single-Use functionality for Admin. ([OFW-292](https://github.com/angelleye/offers-for-woocommerce/pull/507))
+
+= 2.3.23 - 03.03.2023 =
+* Fix - Resolves issue with Admin side order details page design.([OFW-280](https://github.com/angelleye/offers-for-woocommerce/pull/500))
 
 = 2.3.22 - 01.09.2023 =
 * Fix - Resolves issue with Offer notes field.([OFW-273](https://github.com/angelleye/offers-for-woocommerce/pull/499))
