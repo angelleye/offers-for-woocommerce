@@ -436,6 +436,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          * @since   0.1.0
          */
         add_action('woocommerce_order_status_completed', array($this, 'ofwc_woocommerce_checkout_order_processed'));
+
         /**
          * END - custom functions
          */
@@ -1826,6 +1827,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             // Save 'final offer' post meta
             $offer_final_offer = (!empty($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
             update_post_meta($post_id, 'offer_final_offer', $offer_final_offer);
+
+            $offer_single_use = (!empty($_POST['offer_single_use']) && $_POST['offer_single_use'] == '1') ? '1' : '0';
+            update_post_meta($post_id, 'offer_single_use', $offer_single_use);
 
             // Save 'offer_expiration_date' post meta
             $offer_expire_date = !empty($_POST['offer_expiration_date_hidden']) ? wc_clean($_POST['offer_expiration_date_hidden']) : '';
@@ -4771,6 +4775,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true);
                         add_comment_meta($new_comment_id, 'offer_status', '4', true);
                     }
+
+                    ofw_manage_offer_single_use($item_offer_id);
                 }
             }
         }

@@ -132,3 +132,24 @@ if (!class_exists('AngellEYE_Updater') && !function_exists('angell_updater_notic
 	}
     add_action( 'wp_ajax_angelleye_updater_dismissible_admin_notice', 'angelleye_updater_dismissible_admin_notice' );
 }
+
+/**
+ * Update offer single use purchase status.
+ *
+ * since 2.3.23
+ *
+ * @param int $offer_id Get offer id.
+ * @return void
+ */
+function ofw_manage_offer_single_use( $offer_id ) {
+
+    if( empty( $offer_id ) || $offer_id <= 0 ) {
+        return;
+    }
+
+    $offer_single_use = get_post_meta($offer_id,'offer_single_use', true);
+
+    if( !empty($offer_single_use) && '1' === $offer_single_use ) {
+        update_post_meta($offer_id,'_offer_single_use_purchase', true);
+    }
+}

@@ -21,7 +21,6 @@
                     if(!isset($_product)) {
                         echo apply_filters( 'aeofw_meta_product_not_found_title', __('Product not found', 'offers-for-woocommerce'));
                     } else { ?>
-
                         <ul class="offer-product-meta-image-wrap"><a href="<?php echo $_product_permalink; ?>" target="_blank" title="<?php echo __('Click to view product', 'offers-for-woocommerce'); ?>"><?php echo $_product_image; ?></a></ul>
                         <ul class="offer-product-meta-values-wrap">
                             <li><span><?php echo __('Product:', 'offers-for-woocommerce');?>&nbsp;</span><?php echo (isset($_product_formatted_name)) ? '<a href="'.$_product_permalink.'" target="_blank" title="' . __('Click to view product', 'offers-for-woocommerce') . '">'.$_product_formatted_name.'</a>&nbsp;-&nbsp;<a href="post.php?post='.$_product->get_id().'&action=edit" title="' . __('Click to edit product', 'offers-for-woocommerce') . '"><span>('.$_product->get_id().')</span></a>' : __('Missing Meta Value', 'offers-for-woocommerce'); ?></li>
@@ -296,6 +295,13 @@
                         <label for="offer-final-offer"><?php echo apply_filters( 'aeofw_meta_final_offer_title',__('Final Offer', 'offers-for-woocommerce')); ?></label>
                         <div>
                             <input type="checkbox" name="offer_final_offer" id="offer-final-offer" value="1" <?php echo(isset($postmeta['offer_final_offer'][0]) && $postmeta['offer_final_offer'][0] == '1') ? 'checked="checked"' : ''?> autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="woocommerce-offer-single-use-wrap">
+                        <label for="offer-single-use"><?php echo apply_filters( 'aeofw_meta_single_use_title',__('Single-Use', 'offers-for-woocommerce')); ?></label>
+                        <div>
+                            <input type="checkbox" name="offer_single_use" id="offer-single-use" value="1" <?php checked($postmeta['offer_single_use'][0], '1'); ?> autocomplete="off">
                         </div>
                     </div>
 
