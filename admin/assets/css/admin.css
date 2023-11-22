@@ -545,9 +545,9 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 #aeofwc-delete-action .deletion { color:#A00; text-decoration: none; }
 #aeofwc-delete-action .deletion:hover { color:#FF0000; }
 
-.woocommerce-offer-final-offer-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
-.woocommerce-offer-final-offer-wrap label { float:left; margin-right:8px; }
-.woocommerce-offer-final-offer-wrap input { margin-top:-2px; }
+.woocommerce-offer-final-offer-wrap, .woocommerce-offer-single-use-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
+.woocommerce-offer-final-offer-wrap label, .woocommerce-offer-single-use-wrap label { float:left; margin-right:8px; }
+.woocommerce-offer-final-offer-wrap input, .woocommerce-offer-single-use-wrap input { margin-top:-2px; }
 
 .woocommerce-offer-expiration-wrap { margin:10px 0; background:#f0f0f0; padding:6px; }
 .woocommerce-offer-expiration-wrap label { float:left; margin:5px 8px 3px 0; }
@@ -558,8 +558,8 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-
 body.wp-admin.post-type-woocommerce_offer form#post .offer_shipping {padding-top: 3px !important;}
 
 @media screen and (max-width:782px){
-    .woocommerce-offer-final-offer-wrap label { margin-top:3px; }
-    .woocommerce-offer-final-offer-wrap input {
+    .woocommerce-offer-final-offer-wrap label, .woocommerce-offer-single-use-wrap label { margin-top:3px; }
+    .woocommerce-offer-final-offer-wrap input, .woocommerce-offer-single-use-wrap input {
         /* larger-sized Checkboxes */
         -ms-transform: scale(1.15); /* IE */
         -moz-transform: scale(1.15); /* FF */
@@ -569,7 +569,8 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer_shipping {padding-top
         margin:0;
     }
     .woocommerce-offer-final-offer-wrap label,
-    .woocommerce-offer-expiration-wrap label {
+    .woocommerce-offer-expiration-wrap label,
+    .woocommerce-offer-single-use-wrap label{
         font-size:14px;
     }
     .woocommerce-offer-expiration-wrap label { margin-top:10px; }

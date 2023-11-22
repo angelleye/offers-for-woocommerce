@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var     string
      */
-    const VERSION = '2.3.20';
+    const VERSION = '2.3.25';
 
     /**
      *
@@ -196,6 +196,13 @@ class Angelleye_Offers_For_Woocommerce {
             if (in_array('woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins) || array_key_exists('woocommerce-product-addons/woocommerce-product-addons.php', $active_plugins)) {
                 add_filter('woocommerce_cart_item_name', array($this, 'render_meta_on_cart_item'), 1, 3);
             }
+
+            /**
+             * Action - woocommerce_order_status_processing
+             *
+             * @since 2.3.23
+             */
+            add_action('woocommerce_order_status_processing', array($this, 'ofwc_woocommerce_checkout_order_processing'));
         }
 
         /* this will display the data of Product addon if plugin is activated - End */
@@ -1731,7 +1738,6 @@ class Angelleye_Offers_For_Woocommerce {
                     }
                 }
 
-
                 // Define product id
                 $product_id = (isset($offer_meta['orig_offer_product_id'][0]) && is_numeric($offer_meta['orig_offer_product_id'][0]) ) ? $offer_meta['orig_offer_product_id'][0] : '';
 
@@ -1749,6 +1755,13 @@ class Angelleye_Offers_For_Woocommerce {
                 if (!isset($product->post) || $invalid_if_product_id == '' || !is_numeric($product_id)) {
                     $request_error = true;
                     $this->send_api_response(__('Error - Product Not Found; See shop manager for assistance', 'offers-for-woocommerce'));
+                }
+
+                $offer_single_use = get_post_meta($offer->ID,'_offer_single_use_purchase', true);
+
+                if(!empty( $offer_single_use ) && !$request_error ) {
+                    $request_error = true;
+                    $this->send_api_response(__('This accepted offer price is no longer valid.  Please submit a new offer.', 'offers-for-woocommerce'));
                 }
 
                 if (!$request_error) {
@@ -2848,6 +2861,29 @@ class Angelleye_Offers_For_Woocommerce {
             $price = floatval($thirdPartyData['woocommerce_offer_price_per']);    
         }
         return $price;
+    }
+
+    /**
+     * Manage offer single use on order processing.
+     *
+     * @since 2.3.23
+     *
+     * @param int $order_id Get woocommerce order id.
+     * @return void
+     */
+    public function ofwc_woocommerce_checkout_order_processing( $order_id ) {
+
+        $order = new WC_Order($order_id);
+        $order_items = $order->get_items();
+
+        if( !empty( $order_items ) ) {
+
+            foreach ($order_items as $key => $value) {
+                $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
+
+                ofw_manage_offer_single_use($item_offer_id);
+            }
+        }
     }
 
 }

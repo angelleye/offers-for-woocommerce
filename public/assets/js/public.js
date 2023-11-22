@@ -127,12 +127,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 } else
                 {
                     if (offers_for_woocommerce_js_params.is_product_type_variable === 'true') {
-                        var variationId = $("input[name='variation_id']").val();
-                        if (variationId > 0) {
-                            angelleyeOpenMakeOfferForm(false);
-                        } else {
-                            alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
-                        }
+
+                        const variationTimeout = setTimeout( function () {
+
+                            const isVariation = isVariationAttributes();
+
+                            if( isVariation && isVariation.length > 0) {
+                                var variationId = $("input[name='variation_id']").val();
+
+                                if (variationId > 0) {
+                                    angelleyeOpenMakeOfferForm(false);
+                                } else {
+                                    alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
+                                }
+                            }
+                            clearTimeout(variationTimeout);
+                        }, 800);
                     } else {
                         //var productId = $("button[name='add-to-cart']").val();
                         if ($("input[name='add-to-cart']").val() > 0 || $("button[name='add-to-cart']").val() > 0) {
@@ -668,5 +678,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             }
         };
+
+        var isVariationAttributes = function () {
+
+            let url = window.location.href;
+            const queryString = url.split('?')[1];
+            return  queryString.split('&')
+                .filter(pair => pair.includes('attribute_'))
+                .map(pair => {
+                    const [name, value] = pair.split('=');
+                    const attributeName = name;
+                    const attributeValue = decodeURIComponent(value);
+                    return { name: attributeName, value: attributeValue };
+                });
+        }
     });
 }(jQuery));
