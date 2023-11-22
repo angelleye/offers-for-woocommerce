@@ -2681,7 +2681,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function offers_for_woocommerce_options_page_output_input_colorpicker($args) {
         $options = get_option($args['option_name']);
-        $description = $args['description'] ?? '';
+        $description = isset($args['description']) ? $args['description'] : '';
         $field_label = $args['input_label'];
         $field_required = ($args['input_required']) ? ' required="required" ' : '';
 
@@ -3083,6 +3083,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if (empty($emails)) {
                 $emails = $woocommerce->mailer()->get_emails();
             }
+
             if ($is_approve) {
                 $post_status = 'accepted-offer';
                 $post_status_text = __('Accepted', 'offers-for-woocommerce');
@@ -3494,7 +3495,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
 
                     // if buyercountered-offer previous then use buyer counter values
-                    $is_offer_buyer_countered_status = $post_data->post_status == 'buyercountered-offer';
+                    $is_offer_buyer_countered_status = ( $post_data->post_status == 'buyercountered-offer' ) ? true : false;
 
                     $product_qty = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_quantity', true) : get_post_meta($post_id, 'offer_quantity', true);
                     $product_price_per = ( $is_offer_buyer_countered_status ) ? get_post_meta($post_id, 'offer_buyer_counter_price_per', true) : get_post_meta($post_id, 'offer_price_per', true);
@@ -3875,6 +3876,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function ae_ofwc_check_woocommerce_available() {
         if (is_admin()) {
+
             global $current_user;
             $user_id = $current_user->ID;
 
@@ -5379,6 +5381,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 foreach ($tmproduct_data['tmproducts'] as $key => $value) {
                     if (isset($value['product_id']) && !empty($value['product_id'])) {
                         $_product = wc_get_product($value['product_id']);
+
                         $product_permalink = $_product->get_permalink($value['product_id']);
                         $product_extra_data[$i]['Option'] = !empty($value['name']) ? $value['name'] : '';
                         $product_extra_data[$i]['Value'] = sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name());
