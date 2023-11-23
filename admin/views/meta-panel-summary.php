@@ -302,7 +302,8 @@
                 <div class="woocommerce-offer-single-use-wrap">
                     <label for="offer-single-use"><?php echo apply_filters( 'aeofw_meta_single_use_title',__('Single-Use', 'offers-for-woocommerce')); ?></label>
                     <div>
-                        <input type="checkbox" name="offer_single_use" id="offer-single-use" value="1" <?php checked($postmeta['offer_single_use'][0], '1'); ?> autocomplete="off">
+                        <?php $offer_single_use = !empty( $postmeta['offer_single_use'][0] ) ? $postmeta['offer_single_use'][0] : ''; ?>
+                        <input type="checkbox" name="offer_single_use" id="offer-single-use" value="1" <?php checked($offer_single_use, '1'); ?> autocomplete="off">
                     </div>
                 </div>
 
