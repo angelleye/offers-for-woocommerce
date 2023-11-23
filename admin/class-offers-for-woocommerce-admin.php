@@ -3331,7 +3331,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @since	0.1.0
      */
     public function adminToolBulkEnableDisableCallback() {
-         if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX) && !empty( $_POST['_angelleye_auto_decline_nonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['_angelleye_auto_decline_nonce'] ), '_angelleye_auto_decline_nonce') ) {
+         if (is_admin() && (defined('DOING_AJAX') || DOING_AJAX) && !empty($_POST['_angelleye_auto_decline_nonce']) && wp_verify_nonce( sanitize_text_field($_POST['_angelleye_auto_decline_nonce']), '_angelleye_auto_decline_nonce') ) {
             global $wpdb;
             $processed_product_id = array();
             $errors = FALSE;
