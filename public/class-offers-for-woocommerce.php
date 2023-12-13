@@ -2881,6 +2881,10 @@ class Angelleye_Offers_For_Woocommerce {
             foreach ($order_items as $key => $value) {
                 $item_offer_id = $order->get_item_meta($key, 'Offer ID', true);
 
+                if( !function_exists('ofw_manage_offer_single_use')) {
+                    require_once( OFW_PLUGIN_URL.'/includes/angelleye-functions.php' );
+                }
+
                 ofw_manage_offer_single_use($item_offer_id);
             }
         }

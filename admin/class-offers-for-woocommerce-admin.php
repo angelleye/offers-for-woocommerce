@@ -4403,6 +4403,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         add_comment_meta($new_comment_id, 'offer_status', '4', true);
                     }
 
+                    if( !function_exists('ofw_manage_offer_single_use')) {
+                        require_once( OFW_PLUGIN_URL.'/includes/angelleye-functions.php' );
+                    }
+
                     ofw_manage_offer_single_use($item_offer_id);
                 }
             }
