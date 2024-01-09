@@ -96,11 +96,18 @@ class Angelleye_Offers_For_Woocommerce {
              */
             add_action('wp_ajax_new_offer_form_submit', array($this, 'new_offer_form_submit'));
             add_action('wp_ajax_nopriv_new_offer_form_submit', array($this, 'new_offer_form_submit'));
-
-            /**
-             * Maybe Add "Make Offer" to Single Product Page.
-             */
-            add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_maybe_add_make_offer_to_single_product'), 1);
+            
+            /* Add "Make Offer" button code parts - Before add to cart */
+            add_action('woocommerce_before_add_to_cart_button', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
+            add_action('woocommerce_after_add_to_cart_form', array($this, 'angelleye_ofwc_after_add_to_cart_form'));
+            /* Add "Make Offer" button code parts - After add to cart */
+            add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
+            /* Add "Make Offer" button code parts - After summary for products without price */
+            add_action('woocommerce_after_single_product_summary', array($this, 'angelleye_ofwc_woocommerce_after_single_product_summary'), 11);
+            /* Add "Lighbox Make Offer Form" before single product content */
+            add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_lightbox_make_offer_form'));
+            /* Add "Make Offer" product tab on product single view */
+            add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'), 9, 1);
 
             /**
              * Add "Make Offer" button code parts - After shop loop item.
@@ -234,7 +241,10 @@ class Angelleye_Offers_For_Woocommerce {
      * @return void
      */
     public function angelleye_ofwc_after_add_to_cart_form() {
-        global $post;
+        global $post, $product;
+        if( 'yes' !== $product->get_meta('offers_for_woocommerce_enabled', true) ){
+            return;
+        }
 
         $parent_offer_id = (isset($_GET['offer-pid']) && $_GET['offer-pid'] != '') ? wc_clean($_GET['offer-pid']) : '';
 
@@ -332,47 +342,7 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
-     * Conditionally add the Make an Offer Markup to Single Products
-     *
-     * @since 1.4.12
-     *
-     * @return void
-     */
-    public function angelleye_ofwc_maybe_add_make_offer_to_single_product() {
-        global $product;
-
-        if ('yes' == $product->get_meta('offers_for_woocommerce_enabled', true)) {
-
-            /**
-             * Add "Make Offer" button code parts - Before add to cart.
-             */
-            add_action('woocommerce_before_add_to_cart_button', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
-            add_action('woocommerce_after_add_to_cart_form', array($this, 'angelleye_ofwc_after_add_to_cart_form'));
-
-            /**
-             * Add "Make Offer" button code parts - After add to cart.
-             */
-            add_action('woocommerce_after_add_to_cart_button', array($this, 'angelleye_ofwc_after_add_to_cart_button'));
-
-            /**
-             * Add "Make Offer" button code parts - After summary for products without price.
-             */
-            add_action('woocommerce_after_single_product_summary', array($this, 'angelleye_ofwc_woocommerce_after_single_product_summary'), 11);
-
-            /**
-             * Add "Lighbox Make Offer Form" before single product content.
-             */
-            add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_lightbox_make_offer_form'));
-
-            /**
-             * Add "Make Offer" product tab on product single view.
-             */
-            add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'), 9, 1);
-        }
-    }
-
-    /**
-     * Generates output of offer button.
+     * Generates output of offer button
      *
      * @param boolean $is_archive         Get archive page status.
      * @param string  $btn_position_class Get the button class.
@@ -516,8 +486,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function angelleye_ofwc_before_add_to_cart_button() {
         global $post;
         $_product = !empty($post->ID) ? wc_get_product($post->ID) : '';
-
-        if (!is_object($_product)) {
+        if (!is_object($_product) || 'yes' !== $_product->get_meta('offers_for_woocommerce_enabled', true)) {
             return;
         }
 
@@ -542,6 +511,10 @@ class Angelleye_Offers_For_Woocommerce {
      * @return void
      */
     public function angelleye_ofwc_after_add_to_cart_button() {
+        global $post, $product;
+        if( 'yes' !== $product->get_meta('offers_for_woocommerce_enabled', true) ){
+            return;
+        }
 
         global $post;
         $button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -564,6 +537,12 @@ class Angelleye_Offers_For_Woocommerce {
      * @return void
      */
     public function angelleye_ofwc_woocommerce_after_single_product_summary() {
+
+        global $product;
+
+        if( 'yes' !== $product->get_meta('offers_for_woocommerce_enabled', true) ){
+            return;
+        }
 
         $hidden_class = '';
         $button_options_display = get_option('offers_for_woocommerce_options_display');
@@ -606,7 +585,11 @@ class Angelleye_Offers_For_Woocommerce {
      * @return void
      */
     public function angelleye_ofwc_lightbox_make_offer_form() {
-        global $current_user, $post;
+        global $current_user, $post, $product;
+
+        if( 'yes' !== $product->get_meta('offers_for_woocommerce_enabled', true) ){
+            return;
+        }
 
         /**
          * Get offers options - general.
@@ -724,12 +707,14 @@ class Angelleye_Offers_For_Woocommerce {
      * @return mixed|void|null
      */
     public function angelleye_ofwc_add_custom_woocommerce_product_tab($tabs) {
-        global $post;
+        global $post, $product;
         global $current_user;
 
-        /**
-         * Get offers options - general
-         */
+        if( 'yes' !== $product->get_meta('offers_for_woocommerce_enabled', true) ){
+            return;
+        }
+
+        // get offers options - general
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         /**
