@@ -455,13 +455,13 @@ class Angelleye_Offers_For_Woocommerce {
                     $button = '<a href="' . esc_url($redirect_url) . '" id="offers-for-woocommerce-make-offer-button-id-' . esc_attr($post->ID) . '" class="offers-for-woocommerce-make-offer-button-catalog button alt ' . esc_attr($button_class) . ' ' . esc_attr($btn_position_class) . '" style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
                     $redirect_url = get_permalink(get_option('woocommerce_myaccount_page_id')) . '?ref=make-offer&backto=' . home_url(add_query_arg(array(), $wp->request));
-                    $button = '<a href="' . esc_url($redirect_url) . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . esc_attr($post->ID) . '" class="offers-for-woocommerce-make-offer-button-single-product ' . esc_attr($button_class) . '  ' . esc_attr($lightbox_class) . ' button alt ' . esc_attr($btn_position_class) . '" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
+                    $button = '<a href="' . esc_url($redirect_url) . '"><button type="button" id="offers-for-woocommerce-make-offer-button-id-' . esc_attr($post->ID) . '" class="offers-for-woocommerce-make-offer-button-single-product wp-element-button ' . esc_attr($button_class) . '  ' . esc_attr($lightbox_class) . ' button alt ' . esc_attr($btn_position_class) . '" style="' . $custom_styles_override . '">' . $button_title . '</button></a>';
                 }
             } else {
                 if ($is_archive) {
                     $button = '<a href="' . esc_url($permalink) . '" id="offers-for-woocommerce-make-offer-button-id-' . esc_attr($post->ID) . '" class="offers-for-woocommerce-make-offer-button-catalog button alt  ' . esc_attr($button_class) . ' ' . esc_attr($btn_position_class) . '" style="' . $custom_styles_override . '">' . $button_title . '</a>';
                 } else {
-                    $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . esc_attr($post->ID) . '" class="offers-for-woocommerce-make-offer-button-single-product ' . esc_attr($button_class) . ' ' . esc_attr($lightbox_class) . ' button alt ' . esc_attr($btn_position_class) . '" style="' . $custom_styles_override . '">' . $button_title . '</button>';
+                    $button = '<button type="button" id="offers-for-woocommerce-make-offer-button-id-' . esc_attr($post->ID) . '" class="offers-for-woocommerce-make-offer-button-single-product wp-element-button ' . esc_attr($button_class) . ' ' . esc_attr($lightbox_class) . ' button alt ' . esc_attr($btn_position_class) . '" style="' . $custom_styles_override . '">' . $button_title . '</button>';
                 }
             }
 
