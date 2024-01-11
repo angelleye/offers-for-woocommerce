@@ -68,6 +68,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 $log->add('MailChimp', 'MailChimp API Key not exist');
             }
         }
+	    return null;
     }
 
     /**

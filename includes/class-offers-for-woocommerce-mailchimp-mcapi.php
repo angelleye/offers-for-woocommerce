@@ -58,6 +58,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI {
             $this->timeout = $seconds;
             return true;
         }
+	    return null;
     }
 
     function getTimeout() {
