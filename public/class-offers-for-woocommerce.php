@@ -495,7 +495,7 @@ class Angelleye_Offers_For_Woocommerce {
     public function angelleye_ofwc_before_add_to_cart_button() {
         global $post;
 
-        $_product = !empty($post->ID) ? wc_get_product($post->ID) : ''
+        $_product = !empty($post->ID) ? wc_get_product($post->ID) : '';
         if (!is_object($_product) || 'yes' !== $_product->get_meta('offers_for_woocommerce_enabled', true)) {
             return;
         }
