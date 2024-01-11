@@ -1820,6 +1820,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $offer_final_offer = (!empty($_POST['offer_final_offer']) && $_POST['offer_final_offer'] == '1') ? '1' : '0';
         update_post_meta($post_id, 'offer_final_offer', $offer_final_offer);
 
+        $offer_single_use = (!empty($_POST['offer_single_use']) && $_POST['offer_single_use'] == '1') ? '1' : '0';
+        update_post_meta($post_id, 'offer_single_use', $offer_single_use);
+        
         // Save 'offer_expiration_date' post meta
         $offer_expire_date = !empty($_POST['offer_expiration_date_hidden']) ? wc_clean($_POST['offer_expiration_date_hidden']) : '';
         $offer_expiration_date_formatted = !empty($offer_expire_date) ? date("Y-m-d H:i", strtotime($offer_expire_date)) : '';
