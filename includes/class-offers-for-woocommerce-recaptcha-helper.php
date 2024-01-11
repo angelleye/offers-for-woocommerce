@@ -22,6 +22,8 @@ class AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper {
     }
 
     /**
+     * Display the recaptcha settings fields.
+     *
      * @since    1.2.0
      * @return string
      */
@@ -80,7 +82,11 @@ class AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper {
             'css' => 'min-width:355px;',
         );
 
-        
+        $fields[] = array(
+            'type' => 'hidden',
+            'id' => '_recaptcha_integration_nonce',
+            'value' => wp_create_nonce('_recaptcha_integration_nonce')
+        );
         
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
 

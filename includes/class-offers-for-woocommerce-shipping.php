@@ -6,8 +6,25 @@ if (!defined('ABSPATH')) {
 
 if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
 
+    /**
+     * This class define for extend WooCommerce shipping method
+     *
+     * @since       1.0.0
+     * @package     offers-for-woocommerce
+     * @subpackage  offers-for-woocommerce
+     * @author      Angell EYE <service@angelleye.com>
+     */
     class Angelleye_Offers_For_Woocommerce_Shipping_Method extends WC_Shipping_Method {
 
+        /**
+         * Constructor for the Shipping method extend.
+         *
+         * @access public
+         *
+         * @since 0.1.0
+         *
+         * @return void
+         */
         public function __construct() {
             $this->id = 'offer_for_woocommerce_shipping';
             $this->method_title = __('Offers for WooCommerce Shipping', 'offers-for-woocommerce');
@@ -24,6 +41,10 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
 
         /**
          * Initialise Gateway Settings Form Fields
+         *
+         * @since 0.1.0
+         *
+         * @return void
          */
         public function init_form_fields() {
             $this->form_fields = array(
@@ -37,6 +58,14 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             );
         }
 
+        /**
+         * Check product is available or not.
+         *
+         * @since 0.1.0
+         *
+         * @param object $packages Get the packages object.
+         * @return bool|mixed|null
+         */
         public function is_available($package) {
             $is_available = false;
             if ($this->is_offer_product_in_cart()) {
@@ -46,6 +75,14 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             return apply_filters('woocommerce_shipping_' . $this->id . '_is_available', $is_available, $package);
         }
 
+        /**
+         * Calculate the shipping rate.
+         *
+         * @since 0.1.0
+         *
+         * @param object $package Get the packages object.
+         * @return void
+         */
         public function calculate_shipping($package = Array()) {
             if ($this->is_offer_product_in_cart()) {
                 $total_shipping_cost = 0;
@@ -73,6 +110,13 @@ if (!class_exists('Angelleye_Offers_For_Woocommerce_Shipping_Method')) {
             }
         }
 
+        /**
+         * Check product is in cart or not.
+         *
+         * @since 0.1.0
+         *
+         * @return bool
+         */
         public function is_offer_product_in_cart() {
             $count = 0;$has_product = FALSE;
             foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {

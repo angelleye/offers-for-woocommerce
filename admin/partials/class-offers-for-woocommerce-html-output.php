@@ -15,6 +15,8 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
      * @param array $options Opens array to output
      * @since    1.0.0
      * @access   static
+     *
+     * @return void
      */
     public static function init($options = array()) {
 
@@ -45,7 +47,6 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                     $value['desc_tip'] = false;
                 }
 
-                // Custom attribute handling
                 $custom_attributes = array();
 
                 if (!empty($value['custom_attributes']) && is_array($value['custom_attributes'])) {
@@ -54,7 +55,6 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                     }
                 }
 
-                // Description handling
                 if (true === $value['desc_tip']) {
                     $description = '';
                     $tip = $value['desc'];
@@ -77,14 +77,11 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                 }
 
                 if ($tip && in_array($value['type'], array('checkbox'))) {
-
                     $tip = '<p class="description">' . $tip . '</p>';
                 }
 
-                // Switch based on type
                 switch ($value['type']) {
 
-                    // Section Titles
                     case 'title':
                         if (!empty($value['title'])) {
                             echo '<h3>' . esc_html($value['title']) . '</h3>';
@@ -95,12 +92,10 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         echo '<table class="form-table">' . "\n\n";
                         break;
 
-                    // Section Ends
                     case 'sectionend':
                         echo '</table>';
                         break;
 
-                    // Standard text inputs and subtypes like 'number'
                     case 'text':
                     case 'email':
                     case 'number':
@@ -116,7 +111,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                             $value['class'] .= 'colorpick';
                             $description .= '<div id="colorPickerDiv_' . esc_attr($value['id']) . '" class="colorpickdiv" style="z-index: 100;background:#eee;border:1px solid #ccc;position:absolute;display:none;"></div>';
                         }
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -135,11 +130,10 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         </tr><?php
                         break;
 
-                    // Textarea
                     case 'textarea':
 
                         $option_value = self::get_option($value['id'], $value['default']);
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -158,12 +152,11 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         </tr><?php
                         break;
 
-                    // Select boxes
                     case 'select' :
                     case 'multiselect' :
 
                         $option_value = self::get_option($value['id'], $value['default']);
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -183,7 +176,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                                                 ?>
                                             <option value="<?php echo esc_attr($key); ?>" <?php
                                             if (is_array($option_value)) {
-                                                selected(in_array($key, $option_value), true);
+                                                selected(in_array($key, $option_value));
                                             } else {
                                                 selected($option_value, $key);
                                             }
@@ -197,11 +190,10 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         </tr><?php
                         break;
 
-                    // Radio inputs
                     case 'radio' :
 
                         $option_value = self::get_option($value['id'], $value['default']);
-                        ?><tr valign="top">
+                        ?><tr style="vertical-align: top;">
                             <th scope="row" class="titledesc">
                                 <label for="<?php echo esc_attr($value['id']); ?>"><?php echo esc_html($value['title']); ?></label>
                                 <?php echo $tip; ?>
@@ -233,7 +225,6 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         </tr><?php
                         break;
 
-                    // Checkbox input
                     case 'checkbox' :
 
                         $option_value = self::get_option($value['id'], $value['default']);
@@ -257,7 +248,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
 
                         if (!isset($value['checkboxgroup']) || 'start' == $value['checkboxgroup']) {
                             ?>
-                            <tr valign="top" class="<?php echo esc_attr(implode(' ', $visbility_class)); ?>">
+                            <tr style="vertical-align: top;" class="<?php echo esc_attr(implode(' ', $visbility_class)); ?>">
                                 <th scope="row" class="titledesc"><?php echo esc_html($value['title']) ?></th>
                                 <td class="forminp forminp-checkbox">
                                     <fieldset>
@@ -298,7 +289,6 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         }
                         break;
 
-                    // Single page selects
                     case 'single_select_page' :
 
                         $args = array(
@@ -315,7 +305,7 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         if (isset($value['args'])) {
                             $args = wp_parse_args($value['args'], $args);
                         }
-                        ?><tr valign="top" class="single_select_page">
+                        ?><tr style="vertical-align: top;" class="single_select_page">
                             <th scope="row" class="titledesc"><?php echo esc_html($value['title']) ?> <?php echo $tip; ?></th>
                             <td class="forminp">
                                 <?php echo str_replace(' id=', " data-placeholder='" . __('Select a page&hellip;', 'paypal-ipn') . "' style='" . $value['css'] . "' class='" . $value['class'] . "' id=", wp_dropdown_pages($args)); ?> <?php echo $description; ?>
@@ -323,6 +313,27 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                         </tr><?php
                         break;
 
+                    // Hidden input
+                    case 'hidden' :
+                        $type = $value['type'];
+                        $option_value = !empty( $value['value'] ) ? esc_attr( $value['value'] ) : '';
+
+                        ?><tr valign="top">
+                            <th scope="row" class="titledesc">
+                            </th>
+                            <td class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
+                                <input
+                                    name="<?php echo esc_attr($value['id']); ?>"
+                                    id="<?php echo esc_attr($value['id']); ?>"
+                                    type="<?php echo esc_attr($type); ?>"
+                                    style="<?php echo esc_attr($value['css']); ?>"
+                                    value="<?php echo esc_attr($option_value); ?>"
+                                    class="<?php echo esc_attr($value['class']); ?>"
+                                    <?php echo implode(' ', $custom_attributes); ?>
+                                    />
+                            </td>
+                        </tr><?php
+                        break;
                     // Default: run an action
                     default:
                         break;
@@ -334,30 +345,23 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
     /**
      * Get a setting from the settings API.
      * @since    1.0.0
-     * @param mixed $option_name
-     * @return string
+     * @param mixed $option_name Get the option name.
+     * @param mixed $default Get the default value.
+     * @return array|false|mixed|string
      */
     public static function get_option($option_name, $default = '') {
-        // Array value
         if (strstr($option_name, '[')) {
 
             parse_str($option_name, $option_array);
 
-            // Option name is first key
             $option_name = current(array_keys($option_array));
 
-            // Get value
             $option_values = get_option($option_name, '');
 
             $key = key($option_array[$option_name]);
 
-            if (isset($option_values[$key])) {
-                $option_value = $option_values[$key];
-            } else {
-                $option_value = null;
-            }
+            $option_value=$option_values[$key] ?? null;
 
-            // Single value
         } else {
             $option_value = get_option($option_name, null);
         }
@@ -377,6 +381,9 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
      * Loops though the admin options array and outputs each field.
      *
      * @param array $options Opens array to output
+     *
+     * @since 2.3.22
+     *
      * @return bool
      */
     public static function save_fields($options) {
@@ -384,16 +391,13 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
             return false;
         }
 
-        // Options to update will be stored here
         $update_options = array();
 
-        // Loop options and get values to save
         foreach ($options as $value) {
             if (!isset($value['id']) || !isset($value['type'])) {
                 continue;
             }
 
-            // Get posted value
             if (strstr($value['id'], '[')) {
                 parse_str($value['id'], $option_name_array);
 
@@ -432,9 +436,8 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
             }
 
             if (!is_null($option_value)) {
-                // Check if option is an array
+
                 if ($option_name && $setting_name) {
-                    // Get old option value
                     if (!isset($update_options[$option_name])) {
                         $update_options[$option_name] = get_option($option_name, array());
                     }
@@ -452,7 +455,6 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
             }
         }
 
-        // Now save the options
         foreach ($update_options as $name => $value) {
             update_option($name, $value);
         }
