@@ -19,12 +19,6 @@ class WC_New_Offer_Email extends WC_Email {
      * @since 0.1.0
      */
     public function __construct() {
-        /**
-         * Set plugin slug
-         * @since	1.1.2
-         */
-
-
         // set ID, this simply needs to be a unique name
         $this->id = 'wc_new_offer';
 
@@ -39,16 +33,20 @@ class WC_New_Offer_Email extends WC_Email {
         $this->subject = __('[{site_title}] New Offer ({offer_number}) - {offer_date}', 'offers-for-woocommerce');
 
         // Set email template paths
+        $this->template_html_path = untrailingslashit(OFW_PLUGIN_URL) . '/public/includes/emails/';
+        $this->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/public/includes/emails/plain/';
         $this->template_html 	= 'woocommerce-new-offer.php';
         $this->template_plain 	= 'plain/woocommerce-new-offer.php';
-
+	    $this->placeholders   = array(
+		    '{offer_date}'              => '',
+		    '{offer_number}'            => '',
+	    );
         // Call parent constructor to load any other defaults not explicitly defined here
         parent::__construct();
 
         // Set the recipient
         $this->recipient = $this->get_option( 'recipient', get_option( 'admin_email' ) );
 
-        // Other settings
         $this->template_base = OFWC_PUBLIC_EMAIL_TEMPLATE_PATH;
     }
 
@@ -56,6 +54,9 @@ class WC_New_Offer_Email extends WC_Email {
      * Determine if the email should actually be sent and setup email merge variables
      *
      * @since 0.1.0
+     *
+     * @param array $offer_args Get the offer_args.
+     * @return void
      */
     public function trigger( $offer_args ) {
 
@@ -68,15 +69,11 @@ class WC_New_Offer_Email extends WC_Email {
 
         $this->recipient = apply_filters('aeofwc_seller_email_address', $this->recipient, $offer_args);
 
-        $this->find['offer_date']      = '{offer_date}';
-        $this->find['offer_number']    = '{offer_number}';
-
-        $this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( date( 'Y-m-d H:i:s') ));
-        $this->replace['offer_number'] = $this->offer_args['offer_id'];
+	    $this->placeholders['{offer_date}']   = date_i18n( wc_date_format(), strtotime( date( 'Y-m-d H:i:s') ));
+	    $this->placeholders['{offer_number}'] = $this->offer_args['offer_id'];
 
 	    do_action('angelleye_offer_for_woocommerce_before_email_send', $offer_args, $this );
 
-        // woohoo, send the email!
         $this->send( $this->get_recipient(), $this->get_subject(), $this->get_content(), $this->get_headers(), $this->get_attachments() );
     }
 
@@ -126,6 +123,8 @@ class WC_New_Offer_Email extends WC_Email {
      * Initialize Settings Form Fields
      *
      * @since 0.1.0
+     *
+     * @return void
      */
     public function init_form_fields() {
 
@@ -171,6 +170,6 @@ class WC_New_Offer_Email extends WC_Email {
             )
         );
     }
-} // end \WC_New_Offer_Email class
+}
 
 endif;

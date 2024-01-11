@@ -22,6 +22,8 @@ class AngellEYE_Offers_for_Woocommerce_Recaptcha_Helper {
     }
 
     /**
+     * Display the recaptcha settings fields.
+     *
      * @since    1.2.0
      * @return string
      */

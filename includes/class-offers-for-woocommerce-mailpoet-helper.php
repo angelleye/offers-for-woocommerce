@@ -19,20 +19,30 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
      */
     public $plugin_slug = null;
 
+    /**
+     * Constructor for the mailpoet.
+     *
+     * @access public
+     *
+     * @since 2.3.22
+     *
+     * @return void
+     */
     public function __construct() {
        
     }
 
     /**
      * @since    1.2.0
-     * @param type $posted
-     * @return type
+     *
+     * @param array $posted Get the offer posted data.
+     * @return false|void
      */
     public function ofw_mailpoet_handler($posted) {
         @ini_set( 'display_errors', '0' );
         error_reporting(0);
         if (!isset($posted) || empty($posted)) {
-            return;
+            return null;
         }
         $debug = (get_option('ofw_log_enable_mailpoet') == 'yes') ? 'yes' : 'no';
         if ('yes' == $debug) {
@@ -74,9 +84,12 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
                 $log->add('MailPoet', 'MailPoet List not selected');
             }
         }
+	    return null;
     }
 
     /**
+     * Display mailpoet settings fields
+     *
      * @since    1.2.0
      * @return string
      */
@@ -123,8 +136,11 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
     }
 
     /**
+     * Get List from MailPoet
+     *
      * @since    1.2.0
-     *  Get List from MailPoet
+     *
+     * @return mixed|void
      */
     public function angelleye_get_ofw_mailpoet_lists() {
         $mailpoet_lists_array = array();
@@ -135,7 +151,7 @@ class AngellEYE_Offers_for_Woocommerce_MailPoet_Helper {
         if (empty($mailpoet_lists_array) || get_option('ofw_mailpoet_force_refresh') == 'yes') {
 
             if (!( class_exists('WYSIJA') )) {
-                return;
+                return null;
             }
 
             unset($mailpoet_lists_array);
