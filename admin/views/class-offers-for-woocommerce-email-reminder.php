@@ -151,18 +151,18 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder {
 	public function get_time_in_sec( $trigger_time, $trigger_time_unit ){
 		switch ( $trigger_time_unit ) {
 			case 'minute':
-				return $trigger_time_in_secs = $trigger_time * 60;
+				$trigger_time_in_secs = $trigger_time * 60;
 				break;
 			case 'hour':
-				return $trigger_time_in_secs = $trigger_time * 60 * 60;
+				$trigger_time_in_secs = $trigger_time * 60 * 60;
 				break;
 			case 'day':
-				return $trigger_time_in_secs = $trigger_time * 60 * 60 * 24;
+				$trigger_time_in_secs = $trigger_time * 60 * 60 * 24;
 				break;
 			default :
-				return 0;
+				$trigger_time_in_secs = 0;
 		}
-		return 0;
+		return $trigger_time_in_secs;
 	}
 
 	/**

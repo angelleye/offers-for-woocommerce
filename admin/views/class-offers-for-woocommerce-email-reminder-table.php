@@ -114,5 +114,6 @@ class AngellEYE_Offers_for_Woocommerce_Email_reminder_table extends WP_List_Tabl
 
 				return $btn . $del_btn;
 		}
+		return null;
 	}
 }

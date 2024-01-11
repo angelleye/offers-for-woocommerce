@@ -80,6 +80,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 $log->add('MailChimp', 'MailChimp API Key not exist');
             }
         }
+	    return null;
     }
 
     /**
@@ -159,15 +160,14 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 $apikey = (isset($mailchimp_api_key)) ? $mailchimp_api_key : '';
                 $api = new AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI($apikey);
                 $retval = $api->lists();
-                if ($api->errorCode) {
-                    unset($mailchimp_lists);
-                    $mailchimp_lists['false'] = __("Unable to load MailChimp lists, check your API Key.", 'doation-button');
+	            unset($mailchimp_lists);
+	            if ($api->errorCode) {
+		            $mailchimp_lists['false'] = __("Unable to load MailChimp lists, check your API Key.", 'doation-button');
                     if ('yes' == $mailchimp_debug_log) {
                         $log->add('MailChimp', 'Unable to load MailChimp lists, check your API Key.');
                     }
                 } else {
-                    unset($mailchimp_lists);
-                    if (count($retval) == false) {
+		            if (count($retval) == false) {
                         if ('yes' == $mailchimp_debug_log) {
                             $log->add('MailChimp', 'You have not created any lists at MailChimp.');
                         }

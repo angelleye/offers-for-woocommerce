@@ -37,7 +37,10 @@ class WC_Countered_Offer_Email extends WC_Email {
         $this->template_plain_path = untrailingslashit(OFW_PLUGIN_URL) . '/admin/includes/emails/plain/';
         $this->template_html 	= 'woocommerce-offer-countered.php';
         $this->template_plain 	= 'plain/woocommerce-offer-countered.php';
-
+	    $this->placeholders   = array(
+		    '{offer_date}'              => '',
+		    '{offer_number}'            => '',
+	    );
         // Call parent constructor to load any other defaults not explicitly defined here
         parent::__construct();
 
@@ -66,11 +69,8 @@ class WC_Countered_Offer_Email extends WC_Email {
             return;
         }
 
-        $this->find['offer_date']      = '{offer_date}';
-        $this->find['offer_number']    = '{offer_number}';
-
-        $this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( date( 'Y-m-d H:i:s') ));
-        $this->replace['offer_number'] = $this->offer_args['offer_id'];
+	    $this->placeholders['{offer_date}']   = date_i18n( wc_date_format(), strtotime( date( 'Y-m-d H:i:s') ));
+	    $this->placeholders['{offer_number}'] = $this->offer_args['offer_id'];
 
 	    do_action('angelleye_offer_for_woocommerce_before_email_send', $offer_args, $this );
 
