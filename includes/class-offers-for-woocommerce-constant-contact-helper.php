@@ -24,6 +24,15 @@ if (!class_exists('ConstantContact')) {
     require_once OFFERS_FOR_WOOCOMMERCE_PLUGIN_DIR . '/includes/Ctct/ConstantContact.php';
 }
 
+/**
+ *
+ * This class defines all code necessary to ConstantContact functionality
+ *
+ * @since       1.0.0
+ * @package     offers-for-woocommerce
+ * @subpackage  offers-for-woocommerce
+ * @author      Angell EYE <service@angelleye.com>
+ */
 class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
 
     /**
@@ -34,14 +43,22 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
      */
     public $plugin_slug = null;
 
+    /**
+     * Constructor for the ConstantContact.
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         
     }
 
     /**
+     * Handle the constant contact functionality.
+     *
      * @since   1.2.0
-     * @param type $posted
-     * @return type
+     * @param array $posted Get offer data.
+     * @return void
      */
     public static function ofw_constantcontact_handler($posted) {
 
@@ -77,7 +94,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 $Contact->first_name = $first_name;
                 $Contact->last_name = $last_name;
                 $Contact->addList($cclistsid);
-                $NewContact = $ConstantContact->addContact($constantcontact_access_token, $Contact, false);
+                $NewContact = $ConstantContact->addContact($constantcontact_access_token, $Contact );
                 if ('yes' == $debug) {
                     $log->add('ConstantContact', 'ConstantContact new contact ' . $offer_email . ' added to selected contact list');
                 }
@@ -86,7 +103,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 $Contact->first_name = $first_name;
                 $Contact->last_name = $last_name;
                 $Contact->addList($cclistsid);
-                $new_contact = $ConstantContact->updateContact($constantcontact_access_token, $Contact, false);
+                $new_contact = $ConstantContact->updateContact($constantcontact_access_token, $Contact );
                 $log->add('ConstantContact', 'ConstantContact update contact ' . $offer_email . ' to selected contact list');
             }
         } else {
@@ -94,11 +111,14 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
                 $log->add('ConstantContact', 'Constant Contact API Key OR Constant Contact Access Token does not set');
             }
         }
+	    return null;
     }
 
     /**
+     * Display the constant contact settings fields.
+     *
      * @since   1.2.0
-     * @return string
+     * @return array
      */
     public function ofw_ccapi_setting_field() {
 
@@ -147,15 +167,22 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
             'desc' => sprintf(__('Log Constant Contact events, inside <code>%s</code>', 'offers-for-woocommerce'), OFFERS_FOR_WOOCOMMERCE_LOG_DIR)
         );
 
-
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
+
+        $fields[] = array(
+            'type' => 'hidden',
+            'id' => '_constantContact_integration_nonce',
+            'value' => wp_create_nonce('_constantContact_integration_nonce')
+        );
 
         return $fields;
     }
 
     /**
+     * Get the constant contact lists.
+     *
      * @since    1.2.0
-     * @return type
+     * @return array|mixed|void
      */
     public function angelleye_get_constantcontact_lists() {
         $constantcontact_lists = array();
@@ -194,6 +221,7 @@ class AngellEYE_Offers_for_Woocommerce_ConstantContact_Helper {
             }
             return $constantcontact_lists;
         }
+	    return null;
     }
 
 }

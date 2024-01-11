@@ -19,14 +19,26 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
      */
     public $plugin_slug = null;
 
+    /**
+     * Constructor for the Mailchimp.
+     *
+     * @access public
+     *
+     * @since 2.3.22
+     *
+     * @return void
+     */
     public function __construct() {
        
     }
 
     /**
+     * Handle the mailchimp functionality.
+     *
      * @since    1.2.0
-     * @param type $posted
-     * @return type
+     *
+     * @param array $posted Get the offer posted data.
+     * @return void
      */
     public function ofw_mailchimp_handler($posted) {
 
@@ -68,9 +80,12 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 $log->add('MailChimp', 'MailChimp API Key not exist');
             }
         }
+	    return null;
     }
 
     /**
+     * Display the mailchimp settings fields.
+     *
      * @since    1.2.0
      * @return string
      */
@@ -113,16 +128,25 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
             'default' => 'no',
             'desc' => sprintf(__('Log MailChimp events, inside <code>%s</code>', 'offers-for-woocommerce'), OFFERS_FOR_WOOCOMMERCE_LOG_DIR)
         );
-
-
+        
         $fields[] = array('type' => 'sectionend', 'id' => 'general_options');
+
+        $fields[] = array(
+            'type' => 'hidden',
+            'id' => '_ofw_mailChimp_integration_nonce',
+            'value' => wp_create_nonce('_ofw_mailChimp_integration_nonce')
+        );
 
         return $fields;
     }
 
     /**
-     *  @since    1.2.0
-     *  Get List from MailChimp
+     * Get List from MailChimp
+     *
+     * @since    1.2.0
+     *
+     * @param $apikey
+     * @return array|mixed
      */
     public function angelleye_get_ofw_mailchimp_lists($apikey) {
         $mailchimp_lists = array();
@@ -142,15 +166,14 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                 $apikey = (isset($mailchimp_api_key)) ? $mailchimp_api_key : '';
                 $api = new AngellEYE_Offers_for_Woocommerce_MailChimp_MCAPI($apikey);
                 $retval = $api->lists();
-                if ($api->errorCode) {
-                    unset($mailchimp_lists);
-                    $mailchimp_lists['false'] = __("Unable to load MailChimp lists, check your API Key.", 'doation-button');
+	            unset($mailchimp_lists);
+	            if ($api->errorCode) {
+		            $mailchimp_lists['false'] = __("Unable to load MailChimp lists, check your API Key.", 'doation-button');
                     if ('yes' == $mailchimp_debug_log) {
                         $log->add('MailChimp', 'Unable to load MailChimp lists, check your API Key.');
                     }
                 } else {
-                    unset($mailchimp_lists);
-                    if (count($retval) == false) {
+		            if (count($retval) == false) {
                         if ('yes' == $mailchimp_debug_log) {
                             $log->add('MailChimp', 'You have not created any lists at MailChimp.');
                         }
@@ -162,6 +185,9 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                     }
                     if ('yes' == $mailchimp_debug_log) {
                         $log->add('MailChimp', 'MailChimp Get List Success..');
+                    }
+                    if( empty($mailchimp_lists) ){
+                        $mailchimp_lists = array();
                     }
                     set_transient('ofw_mailchimp_mailinglist', serialize($mailchimp_lists), 86400);
                     update_option('ofw_mailchimp_force_refresh', 'no');

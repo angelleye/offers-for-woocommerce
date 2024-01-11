@@ -29,7 +29,7 @@ $payment_authorization = get_post_meta($offer_args['offer_id'], '_payment_author
 <br>
 <h2 style="text-align:center"><?php echo __('Offer ID:', 'offers-for-woocommerce') . ' ' . $offer_args['offer_id']; ?> (<?php printf('<time datetime="%s">%s</time>', date_i18n('c', time()), date_i18n(wc_date_format(), time())); ?>)</h2>
 
-<table cellspacing="0" cellpadding="6" style="width: 100%;">
+<table style="width: 100%; padding:6px; border-collapse: separate; border-spacing: 0px;">
     <thead>
         <tr>
             <th scope="col" style="text-align:left; background-color: #f2f2f2; border-bottom: 1px solid #ddd;"><?php _e('Product', 'offers-for-woocommerce'); ?></th>

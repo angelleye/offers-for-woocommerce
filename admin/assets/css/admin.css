@@ -9,7 +9,7 @@
 
 .type-woocommerce_offer td,
 .type-woocommerce_offer th {
-	box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1) inset;
+	box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
 }
 
 .type-woocommerce_offer td,
@@ -63,10 +63,10 @@
 transform: translateX(0px) translateY(3px);
 }
 
-.woocommerce-offer-post-status-grid-icon-div { padding-bottom:4px!important; margin-bottom:0px!important; }
+.woocommerce-offer-post-status-grid-icon-div { padding-bottom:4px!important; margin-bottom:0 !important; }
 tr.type-woocommerce_offer.status-completed-offer .woocommerce-offer-post-status-grid-icon-div { box-shadow:none!important; }
 
-i.woocommerce-offer-post-status-grid-icon { border:1px solid #222; border-radius:8px; padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
+i.woocommerce-offer-post-status-grid-icon { padding:1px 8px 2px 8px!important; margin-left:3px!important; font-size:12px!important; font-weight:normal; line-height:22px!important; cursor:default!important; opacity:.85; border:none!important; border-radius:3px!important; }
 i.woocommerce-offer-post-status-grid-icon.pending, i.woocommerce-offer-post-status-grid-icon.pending:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
 i.woocommerce-offer-post-status-grid-icon.accepted, i.woocommerce-offer-post-status-grid-icon.accepted:hover { background-color:transparent!important; color:#0074A2!important; border:1px solid #0074A2!important; }
 i.woocommerce-offer-post-status-grid-icon.on-hold, i.woocommerce-offer-post-status-grid-icon.on-hold:hover { background-color:transparent!important; color:#D54E21!important;  border:1px solid #D54E21!important; }
@@ -197,8 +197,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 #angelleye-woocommerce-offer-meta-comments .offer-comment-entry {
     float: left;
     width:99.3%;
-    margin:8px 0px 0px 0px;
-    background:#D7CAD2;
+    margin:8px 0 0 0;
     border-radius: 3px;
     line-height: 1.4em;
     font-size: 13px;
@@ -215,9 +214,9 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 }
 #angelleye-woocommerce-offer-meta-comments .offer-comment-entry:hover { background:#EFEFEF; }
 #angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner { padding:10px; }
-#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-date { float:left; padding:4px 8px; margin:0px 10px 4px 0px; border-radius: 3px; background:#FFF; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-date { float:left; padding:4px 8px; margin:0 10px 4px 0; border-radius: 3px; background:#FFF; }
 
-#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-content { float:left; padding:4px 0px 4px 0px; margin-bottom:10px; }
+#angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-content { float:left; padding:4px 0 4px 0; margin-bottom:10px; }
 #angelleye-woocommerce-offer-meta-comments .offer-comment-entry .offer-comment-entry-inner .offer-comment-content span { font-weight:bold!important; }
 
 #section_id_offer_addnote .woocommerce-offer-edit-addnote-inputs #angelleye-woocommerce-offers-ajax-addnote-text { width:100%; margin-bottom:6px; }
@@ -316,7 +315,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 .angelleye-col-container h5 {
     font-size: 14px !important;
     line-height: 22px !important;
-    margin:5px 0px 10px 0px;
+    margin:5px 0 10px 0;
     border: 1px solid #e5e5e5;
     padding:4px 6px 3px 6px;
     background: #fbfbfb;
@@ -368,7 +367,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 .offer-product-meta-image-wrap {
     float: left;
     width:90px;
-    margin:5px 15px 0px 0px!important;
+    margin:5px 15px 0 0 !important;
 }
 
 .offer-product-meta-image-wrap a img {
@@ -398,9 +397,6 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 
 #angelleye-offer-buyer-stats-toggle {
     text-decoration: none;
-    float: right;
-    position: relative;
-    font-size:12px;
     position: relative;
     float: right;
     font-size:11px;
@@ -454,10 +450,7 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 }
 .angelleye-input-group-addon
 {
-    padding-top: 6px;
-    padding-right: 12px;
-    padding-bottom: 6px;
-    padding-left: 12px;
+    padding: 6px 12px;
     font-size: 14px;
     font-weight: normal;
     line-height: 1;
@@ -465,36 +458,33 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
     text-align: center;
     background-color: #eeeeee;
     border-top-width: 1px;
-    border-right-width-value: 1px;
+    border-right-width: 1px;
     border-bottom-width: 1px;
-    border-left-width-value: 1px;
+    border-left-width: 1px;
     border-top-style: solid;
-    border-right-style-value: solid;
+    border-right-style: solid;
     border-bottom-style: solid;
-    border-left-style-value: solid;
+    border-left-style: solid;
     border-top-color: #cccccc;
-    border-right-color-value: #cccccc;
+    border-right-color: #cccccc;
     border-bottom-color: #cccccc;
-    border-left-color-value: #cccccc;
+    border-left-color: #cccccc;
     border-image-source: none;
     border-image-slice: 100% 100% 100% 100%;
     border-image-width: 1 1 1 1;
     border-image-outset: 0 0 0 0;
     border-image-repeat: stretch stretch;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-radius: 4px;
 }
 .angelleye-input-group .form-control:first-child, .angelleye-input-group-addon:first-child, .angelleye-input-group-btn:first-child > .btn, .angelleye-input-group-btn:first-child > .dropdown-toggle, .angelleye-input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle)
 {
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 .angelleye-input-group-addon:first-child
 {
-    border-right-width-value: 0px;
-    border-right-style-value: none;
+    border-right-width: 0;
+    border-right-style: none;
 }
 .angelleye-input-group
 {
@@ -509,8 +499,8 @@ body.wp-admin.post-type-woocommerce_offer .column-title {
 }
 .angelleye-input-group .form-control:last-child, .angelleye-input-group-addon:last-child, .angelleye-input-group-btn:last-child > .btn, .angelleye-input-group-btn:last-child > .dropdown-toggle, .angelleye-input-group-btn:first-child > .btn:not(:first-child)
 {
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
 /* end forms */
@@ -520,8 +510,8 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap label {padding-top: 5px!important;display: inline-block;}
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap input { width: 100%!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap input[type='text']:disabled,
-body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-price-per { border:1px solid #CCC!important; border-left:none!important; border-top-width: 1px!important; color:inherit!important; }
-body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-total {  border:1px solid #CCC!important; border-left:none!important; border-top-width:1px!important; background:#FFFFFF!important; cursor: not-allowed!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-price-per { border:1px solid #CCC!important; border-left:none!important; color:inherit!important; }
+body.wp-admin.post-type-woocommerce_offer form#post .offer-counter-offer-values-wrap #offer-total {  border:1px solid #CCC!important; border-left:none!important; background:#FFFFFF!important; cursor: not-allowed!important; }
 
 body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap { margin-bottom:20px!important; }
 body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-wrap label { padding-top:10px!important; }
@@ -534,10 +524,10 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer-original-meta-values-
 #angelleye-woocommerce-offer-meta-summary-expire-notice-msg {
     background:none!important;
     color:#444;
-    padding:0px;
+    padding:0;
     width:97.5%;
     margin:0 0 10px 0;
-    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
     border-left: 4px solid #DD3D36;
 }
 #angelleye-woocommerce-offer-meta-summary-notice-msg .aeofwc-notice-msg-inner,
@@ -636,7 +626,7 @@ body.wp-admin.post-type-woocommerce_offer form#post .offer_shipping {padding-top
 
 .angelleye-settings-description { font-style: italic; margin-top:3px;}
 
-body.wp-admin.post-php.post-type-woocommerce_offer #post-body-content { margin-bottom:0px!important; margin-top:0px!important; }
+body.wp-admin.post-php.post-type-woocommerce_offer #post-body-content { margin-bottom:0 !important; margin-top:0 !important; }
 
 body.post-type-woocommerce_offer td.column-title .row-title {
     word-wrap: break-word!important;

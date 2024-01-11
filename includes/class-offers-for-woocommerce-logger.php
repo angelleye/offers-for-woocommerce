@@ -21,6 +21,9 @@ class Angelleye_Offers_For_Woocommerce_Logger {
      * Constructor for the logger.
      *
      * @access public
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
     public function __construct() {
@@ -31,6 +34,9 @@ class Angelleye_Offers_For_Woocommerce_Logger {
      * Destructor.
      *
      * @access public
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
     public function __destruct() {
@@ -44,6 +50,9 @@ class Angelleye_Offers_For_Woocommerce_Logger {
      *
      * @access private
      * @param mixed $handle
+     *
+     * @since 2.3.22
+     *
      * @return bool success
      */
     private function open($handle) {
@@ -62,8 +71,11 @@ class Angelleye_Offers_For_Woocommerce_Logger {
      * Add a log entry to chosen file.
      *
      * @access public
-     * @param mixed $handle
-     * @param mixed $message
+     * @param mixed $handle Get the handle key.
+     * @param mixed $message Get the message.
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
     public function add($handle, $message) {
@@ -77,7 +89,10 @@ class Angelleye_Offers_For_Woocommerce_Logger {
      * Clear entries from chosen file.
      *
      * @access public
-     * @param mixed $handle
+     * @param mixed $handle get the file.
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
     public function clear($handle) {
@@ -90,7 +105,10 @@ class Angelleye_Offers_For_Woocommerce_Logger {
      * Get file path
      *
      * @access public
-     * @param mixed $handle
+     * @param mixed $handle Get the file handle key.
+     *
+     * @since 2.3.22
+     *
      * @return void
      */
     public function ofw_get_log_file_path($handle) {

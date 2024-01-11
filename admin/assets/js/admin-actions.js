@@ -1,154 +1,154 @@
 (function ( $ ) {
 	"use strict";
-
 	$(function () {
 
-		// Place your administration-specific JavaScript here
-		$(document).ready(function() {	
-			/* Hide Count for 'All' list */
-			//$("li.all").find("span.count").remove(); // not needed, CSS took care of it
+        /* Hide Count for 'All' list */
+        /*$("li.all").find("span.count").remove(); // not needed, CSS took care of it*/
 
-            // AJAX - Update Offer Status - Accepted Offer
-			$('.woocommerce-offer-post-action-link.woocommerce-offer-post-action-link-accept').click(function(){
-				var targetID = $(this).attr('data-target');
-				var data = {
-					'action': 'approveOfferFromGrid',
-					'targetID': targetID
-				};
-				
-				$.post(ajaxurl, data, function(response) {
-                                    
-                                        if(typeof(response) != "undefined" && response !== null && response != "") {
-                                            var myObject = JSON.parse(response);
+        /*AJAX - Update Offer Status - Accepted Offer*/
+        document.querySelectorAll('.woocommerce-offer-post-action-link.woocommerce-offer-post-action-link-accept').forEach((object) => {
+            object.addEventListener('click', function () {
 
-                                            var responseStatus = myObject['statusmsg'];
-                                            var responseStatusDetail = myObject['statusmsgDetail'];
+                var targetID = this.getAttribute('data-target');
+                var data = {
+                    'action': 'approveOfferFromGrid',
+                    'security': 'ofw_tool_enable_auto_accept_declineNonce',
+                    'targetID': targetID
+                };
 
-                                            if(responseStatus == 'failed-do_capture') {
-                                                alert(responseStatusDetail);
-                                                return false;
-                                            }
-                                        }
-                                        
-                            
-					$('tr.post-'+targetID+'.type-woocommerce_offer').addClass('status-accepted-offer');
-					$('tr.post-'+targetID+'.type-woocommerce_offer').removeClass('status-publish');
-					
-					var oldColumnDateVal = $('tr.post-'+targetID+'.type-woocommerce_offer td.column-date abbr').attr('title');
-					$('tr.post-'+targetID+'.type-woocommerce_offer .column-date').html("<abbr title='"+oldColumnDateVal+"'></abbr>Accepted");
-					
-					// modify post status icon css
-					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').removeClass('pending').removeClass('trash').removeClass('declined');
-					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').addClass('accepted');
-					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').attr('title', 'Offer Status: Accepted');
-					$('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').html('Accepted');
+                $.post(ajaxurl, data, function (response) {
 
-                    // modify action links on post
-                    $('#woocommerce-offer-post-action-link-manage-id-'+targetID+'').html('Manage Offer');
+                    if (typeof (response) !== "undefined" && response !== null && response !== "") {
+                        var myObject = JSON.parse(response);
 
-					var previousPendingCountBubbleValue = $('#woocommerce-offers-count .pending-count').html();
-					var newPendingCount = (previousPendingCountBubbleValue - 1);
-					$('#woocommerce-offers-count .pending-count').html(newPendingCount);
-					if(newPendingCount == 0)
-					{
-						$('#woocommerce-offers-count').fadeOut('slow');
-					}
-					
-					// remove accept action link
-					$('#woocommerce-offer-post-action-link-accept-id-'+targetID+'').parent('span').hide();
-					return true;
-				});
-				return false;
-			});
+                        var responseStatus = myObject['statusmsg'];
+                        var responseStatusDetail = myObject['statusmsgDetail'];
 
-           
-
-            // AJAX - Update Offer Status - Trash Offer
-            $('body.edit-php.post-type-woocommerce_offer .submitdelete').click(function(){
-
-                    if(!confirm('are you sure?'))
-                    {
-                            return false;					
+                        if (responseStatus === 'failed-do_capture') {
+                            alert(responseStatusDetail);
+                            return false;
+                        }
                     }
-            });
 
-            $('.woocommerce-offer-post-action-link.woocommerce-offer-post-action-link-decline').click(function () {
-                $('.ofw_send_coupon_declineOfferFromGrid').click();
-                m7_resize_thickbox();
-                var targetID = $(this).attr('data-target');
-                $("#offer-id").val(targetID);
+                    document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer').classList.add('status-accepted-offer');
+                    document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer').classList.remove('status-publish');
 
-            });
-            jQuery(window).resize(function () {
-                m7_resize_thickbox();
-            });
+                    var oldColumnDateVal = jQuery('tr.post-' + targetID + '.type-woocommerce_offer td.column-date abbr').attr('title');
+                    jQuery('tr.post-' + targetID + '.type-woocommerce_offer .column-date').html("<abbr title='" + oldColumnDateVal + "'></abbr>Accepted");
 
-            function m7_resize_thickbox() {
-                var TB_WIDTH = 547;
-                var TB_HEIGHT = 226;
-                jQuery(document).find('#TB_window').width(TB_WIDTH).height(TB_HEIGHT).css('margin-left', -TB_WIDTH / 2);
-            }
-            
-             // AJAX - Update Offer Status - Declined Offer
-            $(".ofw-decline-popup").click(function () {
+                    var oldColumnDateVal = document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer td.column-date abbr').getAttribute('title');
+                    document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer .column-date').innerHTML = '<abbr title="' + oldColumnDateVal + '"></abbr>Accepted';
 
-                var ofw_current_id = $(this).attr('id');
-                var targetID = $("#offer-id").val();
+                    /*modify post status icon css*/
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').classList.add('accepted');
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').classList.remove('pending', 'trash', 'declined');
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').title = 'Offer Status: Accepted';
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').innerHTML = 'Accepted';
 
-                if (ofw_current_id == 'decline_offer') {
-                         var data = {
-                            'action': 'declineOfferFromGrid',
-                            'targetID': targetID
-                         };
-                } else {
-                        var data = {
-                            'action': 'declineOfferFromGrid',
-                            'targetID': targetID,
-                            'coupon_code': $("#ofw_coupon_list").val()
-                        };
-                }                    
+                    /*modify action links on post*/
+                    document.querySelector('#woocommerce-offer-post-action-link-manage-id-' + targetID).innerHTML = 'Manage Offer';
 
-            // post it
-            $.post(ajaxurl, data, function(response) {
-
-                if($('tr.post-'+targetID+'.type-woocommerce_offer').hasClass('status-publish'))
-                {
-                    var previousPendingCountBubbleValue = $('#woocommerce-offers-count .pending-count').html();
+                    var previousPendingCountBubbleValue = document.querySelector('#woocommerce-offers-count .pending-count').innerHTML;
                     var newPendingCount = (previousPendingCountBubbleValue - 1);
-                    $('#woocommerce-offers-count .pending-count').html(newPendingCount);
-                    if(newPendingCount == 0)
-                    {
+                    document.querySelector('#woocommerce-offers-count .pending-count').innerHTML = newPendingCount;
+                    if (Number(newPendingCount) === 0) {
                         $('#woocommerce-offers-count').fadeOut('slow');
                     }
+
+                    /*remove accept action link*/
+                    $('#woocommerce-offer-post-action-link-accept-id-' + targetID + '').parent('span').hide();
+                    return true;
+                });
+                return false;
+            });
+        });
+
+
+        /*AJAX - Update Offer Status - Trash Offer*/
+        document.querySelectorAll('body.edit-php.post-type-woocommerce_offer .submitdelete').forEach((object) => {
+            object.addEventListener('click', function () {
+                if (!confirm('are you sure?')) {
+                    return false;
+                }
+            });
+        });
+        document.querySelectorAll('.woocommerce-offer-post-action-link.woocommerce-offer-post-action-link-decline').forEach((object) => {
+            object.addEventListener('click', function () {
+                jQuery('.ofw_send_coupon_declineOfferFromGrid').click();
+                m7_resize_thickbox();
+                var targetID = this.getAttribute('data-target');
+                document.getElementById('offer-id').value = targetID;
+            });
+        });
+
+        jQuery(window).resize(function () {
+            m7_resize_thickbox();
+        });
+
+        function m7_resize_thickbox() {
+            var TB_WIDTH = 547;
+            var TB_HEIGHT = 226;
+            jQuery(document).find('#TB_window').width(TB_WIDTH).height(TB_HEIGHT).css('margin-left', -TB_WIDTH / 2);
+        }
+
+        /*AJAX - Update Offer Status - Declined Offer*/
+        document.querySelectorAll('.ofw-decline-popup').forEach((object) => {
+            object.addEventListener('click', function () {
+                var ofw_current_id = this.getAttribute('id');
+                var targetID = document.getElementById('offer-id').value;
+                var coupon_nonce = document.getElementById('_offer_coupon_nonce').value;
+                if (ofw_current_id === 'decline_offer') {
+                    var data = {
+                        'action': 'declineOfferFromGrid',
+                        '_offer_coupon_nonce': coupon_nonce,
+                        'targetID': targetID
+                    };
+                } else {
+                    var data = {
+                        'action': 'declineOfferFromGrid',
+                        'targetID': targetID,
+                        '_offer_coupon_nonce': coupon_nonce,
+                        'coupon_code': document.getElementById('ofw_coupon_list').value
+                    };
                 }
 
-                $('tr.post-'+targetID+'.type-woocommerce_offer').addClass('status-declined-offer');
-                $('tr.post-'+targetID+'.type-woocommerce_offer').removeClass('status-accepted-offer');
-                $('tr.post-'+targetID+'.type-woocommerce_offer').removeClass('status-publish');
+                /*post it*/
+                $.post(ajaxurl, data, function (response) {
 
-                // modify post status icon css
-                $('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').removeClass('pending').removeClass('trash').removeClass('accepted');
-                $('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').addClass('declined');
-                $('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').attr('title', 'Offer Status: Declined');
-                $('#woocommerce-offer-post-status-grid-icon-id-'+targetID+' i').html('Declined');
+                    if (document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer').classList.contains('status-publish')) {
+                        var previousPendingCountBubbleValue = document.querySelector('#woocommerce-offers-count .pending-count').innerHTML;
+                        var newPendingCount = (previousPendingCountBubbleValue - 1);
+                        document.querySelector('#woocommerce-offers-count .pending-count').innerHTML = newPendingCount;
+                        if (newPendingCount === 0) {
+                            $('#woocommerce-offers-count').fadeOut('slow');
+                        }
+                    }
 
-                // modify action links on post
-                $('#woocommerce-offer-post-action-link-manage-id-'+targetID+'').html('Manage Offer');
+                    document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer').classList.add('status-declined-offer');
+                    document.querySelector('tr.post-' + targetID + '.type-woocommerce_offer').classList.remove('status-accepted-offer', 'status-publish');
 
-                // remove accept and decline action links
-                $('#woocommerce-offer-post-action-link-decline-id-'+targetID+'').parent('span').hide();
-                $('#woocommerce-offer-post-action-link-accept-id-'+targetID+'').parent('span').hide();
-                tb_remove();
-                return true;
+                    /*modify post status icon css*/
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').classList.remove('pending', 'trash', 'accepted');
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').classList.add('declined');
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').title = 'Offer Status: Declined';
+                    document.querySelector('#woocommerce-offer-post-status-grid-icon-id-' + targetID + ' i').innerHTML = 'Declined';
 
-                // remove the declined post
-                //$('tr.post-'+targetID+'.type-woocommerce_offer').slideToggle('slow');
-                return true;
+                    /*modify action links on post*/
+                    document.querySelector('#woocommerce-offer-post-action-link-manage-id-' + targetID).innerHTML = 'Manage Offer';
+
+                    /*remove accept and decline action links*/
+                    $('#woocommerce-offer-post-action-link-decline-id-' + targetID + '').parent('span').hide();
+                    $('#woocommerce-offer-post-action-link-accept-id-' + targetID + '').parent('span').hide();
+                    tb_remove();
+                    return true;
+
+                    /*remove the declined post*/
+                    /*$('tr.post-'+targetID+'.type-woocommerce_offer').slideToggle('slow');*/
+                    return true;
+                });
+                /*End Post*/
             });
-                    /*End Post*/
-                
-            });
-		});
+        });
 	});
 
 }(jQuery));
