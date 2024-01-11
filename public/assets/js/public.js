@@ -87,18 +87,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
             $('.ofwc_no_price_product .quantity, .ofwc_no_price_product .single_add_to_cart_button').remove();
 
             $(".variations_form").on("hide_variation", function () {
-                if ( document.getElementsByClassName('single_add_to_cart_button').classList.contains('disabled')) {
-                    document.getElementsByClassName('single_offer_button').classList.add('disabled');
+
+                if ($('.single_add_to_cart_button').hasClass('disabled')) {
+                    $('.single_offer_button').addClass('disabled');
                 } else {
-                    document.getElementsByClassName('single_offer_button').classList.remove('disabled');
+                    $('.single_offer_button').removeClass('disabled');
                 }
             });
 
             $(".variations_form").on("show_variation", function () {
-                if ( document.getElementsByClassName('single_add_to_cart_button').classList.contains('disabled')) {
-                    document.getElementsByClassName('single_offer_button').classList.add('disabled');
+                if ($('.single_add_to_cart_button').hasClass('disabled')) {
+                    $('.single_offer_button').addClass('disabled');
                 } else {
-                    document.getElementsByClassName('single_offer_button').classList.remove('disabled');
+                    $('.single_offer_button').removeClass('disabled');
                 }
             });
 
@@ -311,6 +312,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                     /* Recognise product type and Product price  : start */
                     var productType = document.querySelector('input[name="ofwc_hidden_price_type"]').value;
+                    var priceField = document.querySelector('.summary .price');
+                    var priceBlockField = document.querySelector('.wp-block-woocommerce-product-price .wc-block-components-product-price');
                     if (productType === 'variable') {
                         var variationPrice = document.querySelector('.woocommerce-variation-price .amount').textContent.replace(/ /g, '');
                         if (variationPrice === '') {
@@ -319,13 +322,29 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             offerProductPrice = variationPrice;
                         }
                     } else if (productType === 'simple') {
-                        offerProductPrice = document.querySelector('.summary  .price .amount').textContent;
+                        if( undefined !== priceField && null !== priceField ) {
+                            offerProductPrice = priceField.querySelector('.amount').textContent;
+                        } else if( undefined !== priceBlockField ) {
+                            offerProductPrice = priceBlockField.querySelector('.amount').textContent;
+                        }
                     } else if (productType === 'sale_product') {
-                        offerProductPrice = document.querySelector('.summary  .price ins').textContent;
+                        if( undefined !== priceField && null !== priceField) {
+                            offerProductPrice = priceField.querySelector('ins').textContent;
+                        } else if( undefined !== priceBlockField ) {
+                            offerProductPrice = priceBlockField.querySelector('ins').textContent;
+                        }
                     } else if (productType === 'grouped') {
-                        offerProductPrice = document.querySelector('.summary  .price .amount').textContent;
+                        if( undefined !== priceField && null !== priceField ) {
+                            offerProductPrice = priceField.querySelector('.amount').textContent;
+                        } else if( undefined !== priceBlockField ) {
+                            offerProductPrice = priceBlockField.querySelector('.amount').textContent;
+                        }
                     } else if (productType === 'external') {
-                        offerProductPrice = document.querySelector('.summary  .price .amount').textContent;
+                        if( undefined !== priceField && null !== priceField ) {
+                            offerProductPrice = priceField.querySelector('.amount').textContent;
+                        } else if( undefined !== priceBlockField ) {
+                            offerProductPrice = priceBlockField.querySelector('.amount').textContent;
+                        }
                     } else {
                         offerProductPrice = '';
                     }
