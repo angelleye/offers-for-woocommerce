@@ -160,3 +160,9 @@ if (is_admin() || ofwc_is_wcvendors_pro_active() || class_exists('Angelleye_Offe
     require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
     add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
 }
+
+add_action( 'before_woocommerce_init', function() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+} );
