@@ -96,7 +96,7 @@ class Angelleye_Offers_For_Woocommerce {
              */
             add_action('wp_ajax_new_offer_form_submit', array($this, 'new_offer_form_submit'));
             add_action('wp_ajax_nopriv_new_offer_form_submit', array($this, 'new_offer_form_submit'));
-            
+
             /* Add "Make Offer" button code parts - Before add to cart */
             add_action('woocommerce_before_add_to_cart_button', array($this, 'angelleye_ofwc_before_add_to_cart_button'));
             add_action('woocommerce_after_add_to_cart_form', array($this, 'angelleye_ofwc_after_add_to_cart_form'));
@@ -3400,10 +3400,13 @@ class Angelleye_Offers_For_Woocommerce {
 
         $product_price = (isset($actual_sales_price) && !empty($actual_sales_price)) ? $actual_sales_price : $actual_regular_price;
         $productData['offer_price'] = $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
-        $productData['user_offer_percentage'] = $user_offer_percentage = $this->ofwc_get_percentage($offer_price, $product_price);
+        $productData['user_offer_percentage'] = 0;
+        if ($product_price > 0) {
+            $productData['user_offer_percentage'] = $this->ofwc_get_percentage($offer_price, $product_price);
+        }
         $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
-        $productData['product_url'] = $product_url = $product->get_permalink();
-        $productData['offer_uid'] = $offer_uid = get_post_meta($offer_id, 'offer_uid', true);
+        $productData['product_url'] = $product->get_permalink();
+        $productData['offer_uid'] = get_post_meta($offer_id, 'offer_uid', true);
 
         return $productData;
     }
