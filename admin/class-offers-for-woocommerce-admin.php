@@ -2374,6 +2374,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 )
         );
 
+        add_settings_field(
+            'general_setting_enable_make_offer_button_on_cart_page', // ID
+            __('Enable Make Offer button on cart page', 'offers-for-woocommerce'), // Title
+            array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
+            'offers_for_woocommerce_general_settings', // Page
+            'general_settings', // Section
+            array(
+                'option_name' => 'offers_for_woocommerce_options_general',
+                'input_label' => 'general_setting_enable_make_offer_button_on_cart_page',
+                'input_required' => FALSE,
+                'description' => __('Check this option to display "Make Offer" button on cart page', 'offers-for-woocommerce'),
+            )
+        );
+
         /**
          * Add section - 'Display Settings'
          */

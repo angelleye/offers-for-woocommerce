@@ -157,6 +157,7 @@ if( !empty( $offer_single_use ) ) {
                     <input type="hidden" name="ofwc_minimum_offer_price" id="ofwc_minimum_offer_price" value="<?php echo $ofwc_minimum_offer_price; ?>">
                     <input type="hidden" name="ofwc_minimum_offer_price_type" id="ofwc_minimum_offer_price_type" value="<?php echo $ofwc_minimum_offer_price_type; ?>">
                     <input type="hidden" name="ofwc_hidden_price_type" id="ofwc_hidden_price_type" value="<?php echo $product_type; ?>">
+                    <input type="hidden" name="ofwc_hidden_is_cart_offer" id="ofwc_hidden_is_cart_offer" value="<?php echo !empty( $_GET['is_cart_offer'] ) ? esc_attr( $_GET['is_cart_offer'] ) : false; ?>">
                 <div class="woocommerce-make-offer-form-section">
                     <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
                         <input type="hidden" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" value="1" />

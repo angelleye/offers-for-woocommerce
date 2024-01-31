@@ -649,8 +649,8 @@
             /* Require login for offer button checkbox.*/
             if( document.getElementById('general_setting_enable_offers_only_logged_in_users') !== null ) {
                 if (document.getElementById('general_setting_enable_offers_only_logged_in_users').checked) {
-                    document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'block';
-                    document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'block';
+                    document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'table-row';
+                    document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'table-row';
                 } else {
                     document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').checked = false;
                     document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'none';
@@ -660,8 +660,8 @@
 
                 document.getElementById('general_setting_enable_offers_only_logged_in_users').addEventListener('click' ,function(){
                     if(this.checked) {
-                        document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'block';
-                        document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'block';
+                        document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'table-row';
+                        document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'table-row';
                     } else {
                         $("#general_setting_enable_offers_hide_untill_logged_in_users").attr('checked', false);
                         $("#general_setting_enable_offers_hide_untill_logged_in_users").closest('tr').hide();
