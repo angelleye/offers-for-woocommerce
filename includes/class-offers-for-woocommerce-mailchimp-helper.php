@@ -173,8 +173,7 @@ class AngellEYE_Offers_for_Woocommerce_MailChimp_Helper {
                         $log->add('MailChimp', 'Unable to load MailChimp lists, check your API Key.');
                     }
                 } else {
-                    unset($mailchimp_lists);
-                    if ( ! count( $retval ) ) {
+		            if (count($retval) == false) {
                         if ('yes' == $mailchimp_debug_log) {
                             $log->add('MailChimp', 'You have not created any lists at MailChimp.');
                         }

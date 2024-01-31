@@ -334,7 +334,6 @@ class AngellEYE_Offers_for_Woocommerce_Html_output {
                             </td>
                         </tr><?php
                         break;
-
                     // Default: run an action
                     default:
                         break;

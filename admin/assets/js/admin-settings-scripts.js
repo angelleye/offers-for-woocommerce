@@ -77,7 +77,6 @@
                             object.style.display = 'none';
                         });
                         document.getElementById('ofw-minimum-offer-price-target-where-type').removeAttribute('required');
-
                     }
 
                 });
@@ -212,8 +211,8 @@
             }
 
             /* AJAX - Bulk enable/disable tool */
-            if(document.getElementById('ofw_tool_minimun_offer_price_form') !== null) {
-                document.getElementById('ofw_tool_minimun_offer_price_form').addEventListener('submit', function () {
+            if(document.getElementById('ofw_tool_minimum_offer_price_form') !== null) {
+                document.getElementById('ofw_tool_minimum_offer_price_form').addEventListener('submit', function () {
                     /* show processing status */
                     document.getElementById('ofw-minimum-offer-price-tool-submit').setAttribute('disabled', 'disabled');
                     document.getElementById('ofw-minimum-offer-price-tool-submit').classList.remove('button-primary');
@@ -595,7 +594,7 @@
                     var actionTargetWhereProductType = document.getElementById('ofw-bulk-tool-target-where-product-type').value;
                     var actionTargetWherePriceValue = document.getElementById('ofw-bulk-tool-action-target-where-price-value').value;
                     var actionTargetWhereStockValue = document.getElementById('ofw-bulk-tool-target-where-stock-value').value;
-                    var _angelleye_auto_decline_nonce = document.querySelector('#_angelleye_auto_decline_nonce').value;
+                    var angelleye_auto_decline_nonce = document.getElementById('_angelleye_auto_decline_nonce').value;
 
                     var auto_accept_or_decline_enable = "";
                     var auto_accept_or_decline_percentage = "";
@@ -627,8 +626,8 @@
                         'actionTargetWherePriceValue': actionTargetWherePriceValue,
                         'actionTargetWhereStockValue': actionTargetWhereStockValue,
                         'ofw_meta_key_value': auto_accept_or_decline_enable,
-                        '_angelleye_auto_decline_nonce': _angelleye_auto_decline_nonce,
-                        'autoAcceptDeclinePercentage': auto_accept_or_decline_percentage
+                        'autoAcceptDeclinePercentage': auto_accept_or_decline_percentage,
+                        'auto_decline_nonce': angelleye_auto_decline_nonce,
                     };
 
                     /* post it */
@@ -650,8 +649,8 @@
             /* Require login for offer button checkbox.*/
             if( document.getElementById('general_setting_enable_offers_only_logged_in_users') !== null ) {
                 if (document.getElementById('general_setting_enable_offers_only_logged_in_users').checked) {
-                    document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'block';
-                    document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'block';
+                    document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'table-row';
+                    document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'table-row';
                 } else {
                     document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').checked = false;
                     document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'none';
@@ -661,8 +660,8 @@
 
                 document.getElementById('general_setting_enable_offers_only_logged_in_users').addEventListener('click' ,function(){
                     if(this.checked) {
-                        document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'block';
-                        document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'block';
+                        document.getElementById('general_setting_enable_offers_hide_untill_logged_in_users').closest('tr').style.display = 'table-row';
+                        document.getElementById('general_setting_allowed_roles').closest('tr').style.display = 'table-row';
                     } else {
                         $("#general_setting_enable_offers_hide_untill_logged_in_users").attr('checked', false);
                         $("#general_setting_enable_offers_hide_untill_logged_in_users").closest('tr').hide();

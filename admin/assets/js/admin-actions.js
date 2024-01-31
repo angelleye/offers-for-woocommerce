@@ -97,8 +97,7 @@
 
                 var ofw_current_id = this.getAttribute('id');
                 var targetID = document.getElementById('offer-id').value;
-                var coupon_nonce = document.getElementById("_offer_coupon_nonce").value;
-
+                var coupon_nonce = document.getElementById('_offer_coupon_nonce').value;
                 if (ofw_current_id === 'decline_offer') {
                     var data = {
                         'action': 'declineOfferFromGrid',

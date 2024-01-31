@@ -274,12 +274,8 @@
      *   I can set a percentage to make the minimum offer exactly $99 on all three.     
     */
     ?>
-    <form id="ofw_tool_minimun_offer_price_form" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
-	    <?php
-	    $adminToolSetMinimumOfferPriceNonce = wp_create_nonce('adminToolSetMinimumOfferPrice','adminToolSetMinimumOfferPriceNonce');
-
-	    ?>
-        <input type="hidden" id="adminToolSetMinimumOfferPriceNonce" value="<?php echo $adminToolSetMinimumOfferPriceNonce; ?>">
+    <form id="ofw_tool_minimum_offer_price_form" autocomplete="off" action="<?php echo admin_url('options-general.php?page=offers-for-woocommerce&tab=tools'); ?>" method="post">
+        <input type="hidden" id="adminToolSetMinimumOfferPriceNonce" value="<?php echo wp_create_nonce('adminToolSetMinimumOfferPrice'); ?>">
 
         <a name="ofwc-t1"></a>
         <div class="angelleye-offers-tools-wrap">
@@ -530,6 +526,7 @@
                                         <input required style="width:15%" type="number" name="ofw_email_frequency"
                                                min="0" id="ofw_email_frequency" class="ofw-ca-trigger-input"
                                                value="<?php echo !empty( $frequency_edit ) ? esc_attr( $frequency_edit ) : ''; ?>">
+                                        <label for="ofw_email_frequency_unit"></label>
                                         <select name="ofw_email_frequency_unit" id="ofw_email_frequency_unit" required>
                                             <?php
                                             $frequency_unit = !empty( $frequency_unit ) ? esc_attr( $frequency_unit ) : "";

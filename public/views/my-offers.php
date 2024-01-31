@@ -17,8 +17,20 @@ $customer_offers = get_posts(apply_filters('ofw_my_account_my_offers_query', arr
     'numberposts' => -1,
     'author' => get_current_user_id(),
     'post_type' => 'woocommerce_offer',
-    'post_status' => 'any'
-        )));
+    'post_status' => 'any',
+    'meta_query' => [
+        'relation' => 'OR',
+        [
+            'key' => '_is_cart_offer',
+            'compare' => 'NOT EXISTS'
+        ],
+        [
+            'key' => '_is_cart_offer',
+            'value' => '',
+            'compare' => '='
+        ]
+    ]
+)));
 
 if ($customer_offers) :
     ?>
