@@ -232,7 +232,7 @@ class Angelleye_Offers_For_Woocommerce {
              */
             add_action('woocommerce_order_status_processing', array($this, 'ofwc_woocommerce_checkout_order_processing'));
 
-            add_action( 'woocommerce_after_cart_item_name', [ $this, 'ofw_make_offer_button_on_cart' ], 10, 2 );
+            add_action( 'woocommerce_after_cart_item_name', [ $this, 'ofw_make_offer_button_on_cart' ], 10, 1 );
 
             if( $this->is_enable_make_offer_on_cart() ) {
                 add_action('woocommerce_account_cart-offers_endpoint', array($this, 'ofw_my_cart_offer_content'));
@@ -3813,14 +3813,26 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * Check make offer enable for cart page.
+     * IF enable then return true
+     * ELSE return false;
+     *
+     * @return bool
+     */
     public function is_enable_make_offer_on_cart() {
         $button_options_general = get_option('offers_for_woocommerce_options_general');
 
         return !empty( $button_options_general['general_setting_enable_make_offer_button_on_cart_page'] );
     }
 
-
-    public function ofw_make_offer_button_on_cart(  $cart_item, $cart_item_key ) {
+    /**
+     * Added make offer button on cart page.
+     *
+     * @param array $cart_item Get cart product item.
+     * @return void|null
+     */
+    public function ofw_make_offer_button_on_cart(  $cart_item ) {
 
         if( $this->is_enable_make_offer_on_cart() ) {
 
@@ -3935,9 +3947,15 @@ class Angelleye_Offers_For_Woocommerce {
         }
     }
 
+    /**
+     * WooCommerce my account page cart offer section content.
+     *
+     * @return void
+     */
     public function ofw_my_cart_offer_content() {
 
         try {
+
             include_once(OFW_PLUGIN_URL . 'public/views/my-cart-offers.php');
         } catch (Exception $ex) {
         }

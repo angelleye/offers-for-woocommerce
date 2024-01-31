@@ -922,6 +922,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $columns['offer_amount'] = __('Amount', 'offers-for-woocommerce');
         $columns['offer_price_per'] = __('Price Per', 'offers-for-woocommerce');
         $columns['offer_quantity'] = __('Quantity', 'offers-for-woocommerce');
+        $columns['is_cart_offer'] = __('Cart Offer', 'offers-for-woocommerce');
         return $columns;
     }
 
@@ -1003,6 +1004,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 }
                 $val = ($val != '') ? $val : '0';
                 echo wc_price($val, array('currency' => $offer_currency));
+                break;
+            case 'is_cart_offer':
+                $is_cart_offer = get_post_meta($post_id, '_is_cart_offer', true);
+
+                $is_cart_offer_class = !empty( $is_cart_offer ) ? 'dashicons-yes': 'dashicons-no';
+                $cart_offer_color = !empty( $is_cart_offer ) ? '#00a32a': '#d63638';
+                echo '<span class="dashicons '. esc_attr( $is_cart_offer_class ).'" style="color:'.esc_attr( $cart_offer_color ).'"></span>';
                 break;
         }
     }
@@ -2374,9 +2382,12 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                 )
         );
 
+        /**
+         * Add setting for Enable make offer button on cart page.
+         */
         add_settings_field(
             'general_setting_enable_make_offer_button_on_cart_page', // ID
-            __('Enable Make Offer button on cart page', 'offers-for-woocommerce'), // Title
+            __('Enable Make Offer Button on Cart Page', 'offers-for-woocommerce'), // Title
             array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
             'offers_for_woocommerce_general_settings', // Page
             'general_settings', // Section
