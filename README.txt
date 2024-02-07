@@ -119,6 +119,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 == Changelog ==
 
 = 3.0.1 - 02.07.2024 =
+* Feature - Add HPOS Compatibility. ([OFW-301](https://github.com/angelleye/paypal-woocommerce/pull/512))
 
 = 3.0.0 - 01.11.2024 =
 * Enhance - PHP code style improvement ([OFW-287](https://github.com/angelleye/offers-for-woocommerce/pull/501))
