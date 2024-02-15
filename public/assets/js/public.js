@@ -324,25 +324,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     } else if (productType === 'simple') {
                         if( undefined !== priceField && null !== priceField ) {
                             offerProductPrice = priceField.querySelector('.amount').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField  && null !== priceBlockField) {
                             offerProductPrice = priceBlockField.querySelector('.amount').textContent;
                         }
                     } else if (productType === 'sale_product') {
                         if( undefined !== priceField && null !== priceField) {
                             offerProductPrice = priceField.querySelector('ins').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField && null !== priceBlockField ) {
                             offerProductPrice = priceBlockField.querySelector('ins').textContent;
                         }
                     } else if (productType === 'grouped') {
                         if( undefined !== priceField && null !== priceField ) {
                             offerProductPrice = priceField.querySelector('.amount').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField && null !== priceBlockField) {
                             offerProductPrice = priceBlockField.querySelector('.amount').textContent;
                         }
                     } else if (productType === 'external') {
                         if( undefined !== priceField && null !== priceField ) {
                             offerProductPrice = priceField.querySelector('.amount').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField && null !== priceBlockField ) {
                             offerProductPrice = priceBlockField.querySelector('.amount').textContent;
                         }
                     } else {
