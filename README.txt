@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 6.4.3
-Stable tag: 3.0.2
+Tested up to: 6.5
+Stable tag: 3.0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.0.3 - 04.29.2024 =
+* Fix - Product Add-Ons Compatibility. ([OFW-289](https://github.com/angelleye/paypal-woocommerce/pull/514))
 
 = 3.0.2 - 02.15.2024 =
 * Fix - Resolved the submit offer issue. ([OFW-302](https://github.com/angelleye/paypal-woocommerce/pull/513))
