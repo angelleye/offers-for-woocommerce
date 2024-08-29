@@ -21,7 +21,7 @@ $payment_authorization = get_post_meta($offer_args['offer_id'], '_payment_author
 <p style="font-size: 16px;text-align: center;font-family: inherit;"><?php _e('To pay for this order please use the following link:', 'offers-for-woocommerce'); ?></p>
 <br>
 <?php if(empty($payment_authorization)) { ?>
-    <p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['product_url']; ?><?php echo (strpos($offer_args['product_url'], '?')) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Pay', 'offers-for-woocommerce'); ?></a></p>
+    <p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['product_url']; ?><?php echo (strpos($offer_args['product_url'], '?')) ? '&' : '?'; ?><?php echo '__aewcoapi=1&woocommerce-offer-id=' . $offer_args['offer_id'] . '&woocommerce-offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo apply_filters( 'aeofw_offer_pay_button_label', __('Click to Pay', 'offers-for-woocommerce'), 'open', $offer_args); ?></a></p>
 <?php } ?>
 <?php if (isset($offer_args['final_offer']) && $offer_args['final_offer'] == '1') {
     echo '<br><br><p style="font-size: 16px;text-align: center;font-family: inherit;"><strong>' . __('This is a final offer.', 'offers-for-woocommerce') . '</strong></p>';
@@ -29,7 +29,7 @@ $payment_authorization = get_post_meta($offer_args['offer_id'], '_payment_author
     <br><br>
     <p style="font-size: 16px;text-align: center;font-family: inherit;"><?php _e('To make a counter offer use the following link:', 'offers-for-woocommerce'); ?></p>
     <br>
-    <p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['product_url']; ?><?php echo (strpos($offer_args['product_url'], '?')) ? '&' : '?'; ?><?php echo 'aewcobtn=1&offer-pid=' . $offer_args['offer_id'] . '&offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo __('Click to Counter', 'offers-for-woocommerce'); ?></a></p>
+    <p style="text-align: center;"><a style="background-color: #008CBA;border: none;color: white;padding: 12px 20px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;" href="<?php echo $offer_args['product_url']; ?><?php echo (strpos($offer_args['product_url'], '?')) ? '&' : '?'; ?><?php echo 'aewcobtn=1&offer-pid=' . $offer_args['offer_id'] . '&offer-uid=' . $offer_args['offer_uid']; ?>"><?php echo apply_filters('aeofw_offer_counter_button_label', __('Click to Counter', 'offers-for-woocommerce'), 'open', $offer_args); ?></a></p>
 <?php } ?>
 
 <?php if (isset($offer_args['offer_expiration_date']) && $offer_args['offer_expiration_date']) {

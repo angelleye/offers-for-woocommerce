@@ -324,25 +324,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     } else if (productType === 'simple') {
                         if( undefined !== priceField && null !== priceField ) {
                             offerProductPrice = priceField.querySelector('.amount').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField  && null !== priceBlockField) {
                             offerProductPrice = priceBlockField.querySelector('.amount').textContent;
                         }
                     } else if (productType === 'sale_product') {
                         if( undefined !== priceField && null !== priceField) {
                             offerProductPrice = priceField.querySelector('ins').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField && null !== priceBlockField ) {
                             offerProductPrice = priceBlockField.querySelector('ins').textContent;
                         }
                     } else if (productType === 'grouped') {
                         if( undefined !== priceField && null !== priceField ) {
                             offerProductPrice = priceField.querySelector('.amount').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField && null !== priceBlockField) {
                             offerProductPrice = priceBlockField.querySelector('.amount').textContent;
                         }
                     } else if (productType === 'external') {
                         if( undefined !== priceField && null !== priceField ) {
                             offerProductPrice = priceField.querySelector('.amount').textContent;
-                        } else if( undefined !== priceBlockField ) {
+                        } else if( undefined !== priceBlockField && null !== priceBlockField ) {
                             offerProductPrice = priceBlockField.querySelector('.amount').textContent;
                         }
                     } else {
@@ -391,9 +391,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         post_data_array.push({name: 'offer_price_each', value: offerPriceEach});
                         post_data_array.push({name: 'join_our_mailing_list', value: join_our_mailing_list});
                         var product_addon_array_js = [];
-                        jQuery("div.product-addon").each(function (key, index) {
-                            var group_name = jQuery.trim(jQuery(this).find('h3.addon-name').text());
-                            var input_tag = jQuery(this).find(":input[name^='addon-']");
+                        jQuery("div.wc-pao-addon").each(function (key, index) {
+                            var group_name = jQuery.trim(jQuery(this).find('.wc-pao-addon-name').text());
+                            var input_tag = jQuery(this).find(".wc-pao-addon-field");
 
                             input_tag.each(function () {
                                 if (jQuery(this).is(':checkbox') || jQuery(this).is(':radio')) {
@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         });
                                     }
                                 }
-                                if (jQuery(this).hasClass('input-text addon addon-custom-price')) {
+                                if (jQuery(this).hasClass('wc-pao-addon-custom-price')) {
                                     if (jQuery(this).val() !== '') {
                                         var label_text = jQuery(this).parent().find('label').text();
                                         product_addon_array_js.push({
@@ -435,7 +435,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         });
                                     }
                                 }
-                                if (jQuery(this).hasClass('input-text addon addon-input_multiplier')) {
+                                if (jQuery(this).hasClass('wc-pao-addon-input-multiplier')) {
                                     if (jQuery(this).val() !== '') {
                                         var label_text = jQuery(this).parent().find('label').text();
                                         product_addon_array_js.push({
@@ -448,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         });
                                     }
                                 }
-                                if (jQuery(this).hasClass('addon addon-select')) {
+                                if (jQuery(this).hasClass('wc-pao-addon-select')) {
                                     if (jQuery(this).val() !== '') {
                                         var label_text = jQuery(this).find(":selected").text().substr(0, jQuery(this).find(":selected").text().indexOf('('));
                                         product_addon_array_js.push({
@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         });
                                     }
                                 }
-                                if (jQuery(this).hasClass('input-text addon addon-custom')) {
+                                if (jQuery(this).hasClass('wc-pao-addon-custom-text')) {
                                     if (jQuery(this).val() !== '') {
                                         var label_text = jQuery(this).parent().find('label').text();
                                         product_addon_array_js.push({
@@ -502,7 +502,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             data[field_pairs[i].name] = field_pairs[i].value;
                         }
 
-                        jQuery('.tmcp-field').each(function () {
+                        jQuery('.tmcp-field, wc-pao-addon-field').each(function () {
                             if (jQuery(this).is(':checkbox') || jQuery(this).is(':radio')) {
                                 if (jQuery(this).is(':checked')) {
                                     data[this.name] = this.value;

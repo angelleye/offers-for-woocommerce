@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 6.4.2
-Stable tag: 3.0.0
+Tested up to: 6.6.1
+Stable tag: 3.0.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,6 +118,18 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
+= 3.0.4 - 08.23.2024 =
+* Fix - Fixed the issue with the Bulk Updater tool. ([OFW-309](https://github.com/angelleye/paypal-woocommerce/pull/515))
+
+= 3.0.3 - 04.29.2024 =
+* Fix - Product Add-Ons Compatibility. ([OFW-289](https://github.com/angelleye/paypal-woocommerce/pull/514))
+
+= 3.0.2 - 02.15.2024 =
+* Fix - Resolved the submit offer issue. ([OFW-302](https://github.com/angelleye/paypal-woocommerce/pull/513))
+
+= 3.0.1 - 02.07.2024 =
+* Feature - Add HPOS Compatibility. ([OFW-301](https://github.com/angelleye/paypal-woocommerce/pull/512))
+
 = 3.0.0 - 01.11.2024 =
 * Enhance - PHP code style improvement ([OFW-287](https://github.com/angelleye/offers-for-woocommerce/pull/501))
 * Enhance - Deprecated functions errors ([OFW-286](https://github.com/angelleye/offers-for-woocommerce/pull/502))
@@ -176,7 +188,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * Feature - Adds hooks and Adjustment Text and Menu Related Changes. ([OFW-242](https://github.com/angelleye/offers-for-woocommerce/pull/484))
 
 = 2.3.11 - 18.10.2021 =
-* Feature - Adds Google reCAPTCHA V3 Integration. 
+* Feature - Adds Google reCAPTCHA V3 Integration.
 * Tweak - OFW button only display for simple and variable product. ([OFW-238](https://github.com/angelleye/offers-for-woocommerce/pull/482))
 * Fix - Resolves Subtotal Incorrect issue for Accepted Offer Email Notice. ([OFW-195](https://github.com/angelleye/offers-for-woocommerce/pull/483))
 

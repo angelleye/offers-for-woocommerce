@@ -306,7 +306,7 @@
                     /* show processing status */
                     if (this.value === 'category') {
                         document.querySelectorAll('.angelleye-offers-tools-bulk-action-section.ofwc-bulk-action-target-where-category').forEach((object) => {
-                            object.style.display = 'none';
+                            object.style.display = 'block';
                         });
                         document.getElementById('ofwc-bulk-action-target-where-category').setAttribute('required', 'required');
 

@@ -1,10 +1,11 @@
 <?php
+
 /**
  * @wordpress-plugin
  * Plugin Name:       Offers for WooCommerce
  * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce
  * Description:       Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily.
- * Version:           3.0.0
+ * Version:           3.0.4
  * Author:            Angell EYE
  * Author URI:        http://www.angelleye.com/
  * License:           GNU General Public License v3.0
@@ -13,10 +14,11 @@
  * Domain Path:       /languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
  * Requires at least: 5.5
- * Tested up to: 6.4.2
+ * Tested up to: 6.6.1
  * WC requires at least: 3.0.0
- * WC tested up to: 8.4.0
- *
+ * WC tested up to: 9.9.2
+ * Requires Plugins: woocommerce
+ */
 
 /**
  * Abort if called directly
@@ -160,3 +162,9 @@ if (is_admin() || ofwc_is_wcvendors_pro_active() || class_exists('Angelleye_Offe
     require_once(plugin_dir_path(__FILE__). 'admin/class-offers-for-woocommerce-admin.php');
     add_action('plugins_loaded', array('Angelleye_Offers_For_Woocommerce_Admin', 'get_instance'));
 }
+
+add_action( 'before_woocommerce_init', function() {
+    if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    }
+} );
