@@ -722,4 +722,37 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 });
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('common-click-to-pay').addEventListener('click', function () {
+            var checkboxes = document.querySelectorAll('.offer-checkbox:checked');
+            var urls = [];
+
+            checkboxes.forEach(function (checkbox)
+            {
+                var productUrl = checkbox.getAttribute('data-url');
+                var offerId = checkbox.getAttribute('data-offer-id');
+                var offerUid = checkbox.getAttribute('data-offer-uid');
+
+                var url = productUrl + (productUrl.indexOf('?') !== -1 ? '&' : '?') +
+                    '__aewcoapi=1&woocommerce-offer-id=' + offerId +
+                    '&woocommerce-offer-uid=' + offerUid;
+                urls.push(url);
+            });
+
+            if (urls.length > 0) {
+                function redirectToNext(index) {
+                    if (index < urls.length) {
+                        window.location.href = urls[index];
+                        setTimeout(function () {
+                            redirectToNext(index + 1);
+                        }, 2000);
+                    }
+                }
+                redirectToNext(0);
+            } else {
+                alert('Please select at least one offer.');
+            }
+        });
+    });
 }(jQuery));
