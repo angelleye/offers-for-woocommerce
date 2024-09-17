@@ -108,6 +108,7 @@ class Angelleye_Offers_For_Woocommerce {
             add_action('woocommerce_before_single_product', array($this, 'angelleye_ofwc_lightbox_make_offer_form'));
             /* Add "Make Offer" product tab on product single view */
             add_filter('woocommerce_product_tabs', array($this, 'angelleye_ofwc_add_custom_woocommerce_product_tab'), 9, 1);
+            add_filter('woocommerce_product_tabs', array($this, 'remove_woocommerce_product_tabs'), 98, 1);
 
             /**
              * Add "Make Offer" button code parts - After shop loop item.
@@ -232,6 +233,29 @@ class Angelleye_Offers_For_Woocommerce {
              */
             add_action('woocommerce_order_status_processing', array($this, 'ofwc_woocommerce_checkout_order_processing'));
         }
+    }
+
+    /**
+     * Remove custom WooCommerce product tabs conditionally.
+     *
+     * @since 3.0.5
+     *
+     * @param array $tabs The existing product tabs.
+     * @return array Modified tabs.
+     */
+    public function remove_woocommerce_product_tabs($tabs) {
+
+        if (!is_array($tabs)) {
+            $tabs = [];
+        }
+
+        global $product;
+
+        if ($product && $product->is_on_sale()) {
+            unset($tabs['tab_custom_ofwc_offer']);
+        }
+
+        return $tabs;
     }
 
     /**
