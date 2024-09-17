@@ -899,6 +899,13 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             global $wpdb;
             $clauses['join'] = "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
             $clauses['where'] .= $wpdb->prepare(" AND $wpdb->posts.post_type <> '%s'", 'woocommerce_offer');
+            if (strpos($clauses['where'], 'wp_posts_to_exclude_reviews.post_type') !== false) {
+                $clauses['where'] = str_replace(
+                    "{$wpdb->prefix}posts_to_exclude_reviews.post_type NOT IN ('product')",
+                    "1=1",
+                    $clauses['where']
+                );
+            }
             return $clauses;
         } else {
             return $clauses;
