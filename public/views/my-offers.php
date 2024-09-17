@@ -11,6 +11,7 @@ $my_offers_columns = apply_filters('ofw_my_account_my_offers_columns', array(
     'offer_quantity' => __('Quantity', 'offers-for-woocommerce'),
     'offer-status' => __('Status', 'offers-for-woocommerce'),
     'offer-action' => __('Action', 'offers-for-woocommerce'),
+    'offer_checkbox' => __('Select', 'offers-for-woocommerce'),
         ));
 
 $customer_offers = get_posts(apply_filters('ofw_my_account_my_offers_query', array(
@@ -195,6 +196,13 @@ if ($customer_offers) :
                                                     break;
                                             }
                                     }
+                                        break;
+                                    case 'offer_checkbox' :
+                                        if ($post_status === 'accepted-offer') {
+                                            $offer_url = $offer_args['product_url'] . (strpos($offer_args['product_url'], '?') ? '&' : '?') . '__aewcoapi=1&woocommerce-offer-id=' . esc_attr($post_id) . '&woocommerce-offer-uid=' . esc_attr($offer_args['offer_uid']); ?>
+                                            <input type="checkbox" class="offer-checkbox" name="offer_select[]" value="<?php echo esc_attr($post_id); ?>" data-url="<?php echo esc_url($offer_url); ?>" data-offer-id="<?php echo esc_attr($post_id); ?>" data-offer-uid="<?php echo esc_attr($offer_args['offer_uid']); ?>">
+                                        <?php }
+                                        break;
                                 }
                             }
                             ?>
@@ -206,6 +214,10 @@ if ($customer_offers) :
             ?>
         </tbody>
     </table>
+
+    <div class="pay-button-wrapper">
+        <button id="common-click-to-pay" class="button"><?php _e( 'Click to Pay', 'offers-for-woocommerce' ); ?></button>
+    </div>
 <?php else : ?>
     <h2 class="entry-title"><?php _e( 'No Offers found', 'offers-for-woocommerce' ); ?></h2>
 <?php endif;
