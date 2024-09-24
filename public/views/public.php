@@ -13,7 +13,7 @@
 ?>
 
 <!-- This file is used to markup the public facing aspect of the plugin. -->
-<div id="aeofwc-close-lightbox-link"><a href="javascript:void(0);">&times;</a></div>
+<div id="aeofwc-close-lightbox-link"><a href="javascript:void(0);" rel="nofollow" aria-hidden="true" role="button">&times;</a></div>
 <div id="tab_custom_ofwc_offer_tab_alt_message" class="tab_custom_ofwc_offer_tab_inner_content">
     <ul class="woocommerce-error aeofwc-woocommerce-error">
         <li><strong><?php echo __('Selection Required:', 'offers-for-woocommerce'); ?>&nbsp;</strong><?php echo apply_filters('aeofwc_offer_option_required', __('Select product options above before making new offer.', 'offers-for-woocommerce')); ?></li>
