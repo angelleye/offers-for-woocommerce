@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 6.6.1
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.0.7 - 09.24.2024 =
+* Enhance - SEO Performance Enhancement. ([OFW-311](https://github.com/angelleye/offers-for-woocommerce/pull/520))
 
 = 3.0.6 - 09.17.2024 =
 * Feature - Accepted Multiple offer added on cart option. ([OFW-299](https://github.com/angelleye/offers-for-woocommerce/pull/518))
