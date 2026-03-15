@@ -441,6 +441,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         $is_instock = $_product->is_in_stock();
+        $is_onsale = $_product->is_on_sale();
 
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
@@ -454,7 +455,7 @@ class Angelleye_Offers_For_Woocommerce {
             $is_display_offer_button = false;
         }
 
-        if ($custom_tab_options_offers['enabled'] == 'yes' && $is_display_offer_button && $is_instock && $custom_tab_options_offers['on_exit'] != 'yes') {
+        if ($custom_tab_options_offers['enabled'] == 'yes' && $is_display_offer_button && $is_instock && !$is_onsale && $custom_tab_options_offers['on_exit'] != 'yes') {
 
             $button_title = (isset($button_options_display['display_setting_custom_make_offer_btn_text']) && $button_options_display['display_setting_custom_make_offer_btn_text'] != '') ? __($button_options_display['display_setting_custom_make_offer_btn_text'], 'offers-for-woocommerce') : __('Make Offer', 'offers-for-woocommerce');
             $button_title = apply_filters('aeofwc_make_offer_button_label', $button_title);
