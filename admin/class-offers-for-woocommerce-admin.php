@@ -35,6 +35,26 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     protected $plugin_screen_hook_suffix = null;
 
     /**
+     * Build an admin edit URL for a WooCommerce order that works with both legacy storage and HPOS.
+     *
+     * @param int $order_id Order ID.
+     * @return string
+     */
+    private function ofwc_get_order_edit_url($order_id) {
+        $order_id = absint($order_id);
+
+        if (
+            function_exists('wc_get_container')
+            && class_exists('\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController')
+            && wc_get_container()->get(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController::class)->custom_orders_table_usage_is_enabled()
+        ) {
+            return admin_url('admin.php?page=wc-orders&action=edit&id=' . $order_id);
+        }
+
+        return admin_url('post.php?post=' . $order_id . '&action=edit');
+    }
+
+    /**
      * Initialize the plugin by loading admin scripts & styles and adding a settings page and menu
      * @since     0.1.0
      */
@@ -1667,19 +1687,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                         // Set order meta data array
 
-                        $offer_order_meta['Order ID'] = '<a href="post.php?post=' . $order_id . '&action=edit">' . '#' . $order_id . '</a>';
+                        $offer_order_meta['Order ID'] = '<a href="' . esc_url($this->ofwc_get_order_edit_url($order_id)) . '">#' . $order_id . '</a>';
 
                         // Get Order
-                        $order = new WC_Order($order_id);
-                        if ($order->post) {
-                            $offer_order_meta['Order Date'] = $order->post->post_date;
+                        $order = wc_get_order($order_id);
+                        if ($order) {
+                            $order_date = $order->get_date_created();
+                            $offer_order_meta['Order Date'] = $order_date ? $order_date->date_i18n('Y-m-d H:i:s') : '';
                             $offer_order_meta['Order Status'] = ucwords($order->get_status());
                         } else {
                             $offer_order_meta['Order ID'] .= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                         }
-
-                        $offer_order_meta['Order Date'] = $order->post->post_date;
-                        $offer_order_meta['Order Status'] = ucwords($order->get_status());
                     } else {
                         $offer_order_meta['Order ID'] = '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                     }
@@ -4736,7 +4754,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $woocommerce;
 
         // Get Order
-        $order = new WC_Order($order_id);
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
         // Get order items
         $order_items = $order->get_items();
         // Check for offer id
@@ -4763,7 +4784,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                     // Insert WP comment on related 'offer'
                     $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "</span> " . __('Completed', 'offers-for-woocommerce');
-                    $comment_text .= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
+                    $comment_text .= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="' . esc_url($this->ofwc_get_order_edit_url($order_id)) . '">#' . $order_id . '</a></p>';
 
                     $comment_data = array(
                         'comment_post_ID' => '',

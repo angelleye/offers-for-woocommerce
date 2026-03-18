@@ -3775,7 +3775,10 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function ofwc_woocommerce_checkout_order_processing( $order_id ) {
 
-        $order = new WC_Order($order_id);
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
         $order_items = $order->get_items();
 
         if( !empty( $order_items ) ) {
