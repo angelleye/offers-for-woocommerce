@@ -62,6 +62,13 @@ if (!defined('PAYPAL_FOR_WOOCOMMERCE_PUSH_NOTIFICATION_WEB_URL')) {
  */
 
 /**
+ * Shared plugin helper functions
+ *
+ * @since 0.1.0
+ */
+require_once(plugin_dir_path(__FILE__) . 'includes/angelleye-offers-for-woocommerce-function.php');
+
+/**
  * Require plugin class
  *
  * @since 0.1.0

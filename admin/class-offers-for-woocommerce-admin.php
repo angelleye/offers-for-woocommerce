@@ -747,11 +747,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if (!is_object($_product)) {
             return;
         }
-        if (version_compare(WC_VERSION, '3.0', '<')) {
-            $class_hidden = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
-        } else {
-            $class_hidden = ( $_product->get_type() == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
-        }
+        $class_hidden = ( ofwc_get_product_type($_product) == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
 
         print(
                 '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce ' . $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce"><span>' . __('Offers', 'offers-for-woocommerce') . '</span></a></li>'
@@ -1627,11 +1623,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                         $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
 
-                        if (version_compare(WC_VERSION, '3.0', '<')) {
-                            $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
-                        } else {
-                            $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_stock_quantity() : $_product->get_stock_quantity();
-                        }
+                        $_product_stock = ( $_product_variant_managing_stock ) ? ofwc_get_product_stock_quantity($_product_variant) : ofwc_get_product_stock_quantity($_product);
 
                         $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                         $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
@@ -1645,7 +1637,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $_product_regular_price = $_product->get_regular_price();
                         $_product_sale_price = $_product->get_sale_price();
                         $_product_managing_stock = $_product->managing_stock();
-                        $_product_stock = version_compare(WC_VERSION, '3.0', '<') ? $_product->get_total_stock() : $_product->get_stock_quantity();
+                        $_product_stock = ofwc_get_product_stock_quantity($_product);
                         $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                         $_product_backorders_allowed = $_product->backorders_allowed();
                         $_product_backorders_require_notification = $_product->backorders_require_notification();
@@ -1656,7 +1648,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
 
                     /* Products Addon and Offers Plugin meta check starts */
-                    $product_addon_id = version_compare(WC_VERSION, '3.0', '<') ? $_product->post->ID : $_product->get_id();
+                    $product_addon_id = ofwc_get_product_id($_product);
                     $_product_addons_data = get_post_meta($product_addon_id, '_product_addons', true);
                     /* Products Addon and Offers Plugin meta check end. */
 
@@ -4096,7 +4088,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function woocommerce_product_quick_edit_save_own($product) {
 
-        $post_id = version_compare(WC_VERSION, '3.0', '<') ? $product->id : $product->get_id();
+        $post_id = ofwc_get_product_id($product);
 
         $offers_for_woocommerce_enabled = (isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] == 'yes') ? 'yes' : 'no';
         $offers_for_woocommerce_auto_accept_enabled = (isset($_REQUEST['_offers_for_woocommerce_auto_accept_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] == 'yes' ) ? 'yes' : 'no';
@@ -4762,7 +4754,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $order_items = $order->get_items();
         // Check for offer id
         foreach ($order_items as $key => $value) {
-            $item_offer_id = wc_get_order_item_meta( $key, 'Offer ID',true );
+            $item_offer_id = is_object($value) && method_exists($value, 'get_meta') ? $value->get_meta('Offer ID', true) : wc_get_order_item_meta($key, 'Offer ID', true);
             /**
              * Update offer
              * Add postmeta value 'offer_order_id' for this order id
