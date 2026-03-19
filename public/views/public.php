@@ -65,14 +65,8 @@ if( !empty( $offer_single_use ) ) {
         <fieldset>
             <div class="make-offer-form-intro">
                 <?php
-                if(version_compare(WC_VERSION, '3.0', '<')){
-                    $product = get_product( $post->ID );
-                    $product_id = $product->id;
-                }
-                else{
-                    $product = wc_get_product( $post->ID );
-                    $product_id = $product->get_id();
-                }
+                $product = wc_get_product( $post->ID );
+                $product_id = $product && method_exists( $product, 'get_id' ) ? $product->get_id() : ( isset( $product->id ) ? $product->id : 0 );
                 /* Get Product type */
                 if( $product->is_type( 'variable' ) ){
                     $product_type = 'variable';

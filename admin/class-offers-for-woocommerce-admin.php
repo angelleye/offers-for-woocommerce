@@ -35,6 +35,26 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     protected $plugin_screen_hook_suffix = null;
 
     /**
+     * Build an admin edit URL for a WooCommerce order that works with both legacy storage and HPOS.
+     *
+     * @param int $order_id Order ID.
+     * @return string
+     */
+    private function ofwc_get_order_edit_url($order_id) {
+        $order_id = absint($order_id);
+
+        if (
+            function_exists('wc_get_container')
+            && class_exists('\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController')
+            && wc_get_container()->get(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController::class)->custom_orders_table_usage_is_enabled()
+        ) {
+            return admin_url('admin.php?page=wc-orders&action=edit&id=' . $order_id);
+        }
+
+        return admin_url('post.php?post=' . $order_id . '&action=edit');
+    }
+
+    /**
      * Initialize the plugin by loading admin scripts & styles and adding a settings page and menu
      * @since     0.1.0
      */
@@ -727,11 +747,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if (!is_object($_product)) {
             return;
         }
-        if (version_compare(WC_VERSION, '3.0', '<')) {
-            $class_hidden = ( isset($_product->product_type) && $_product->product_type == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
-        } else {
-            $class_hidden = ( $_product->get_type() == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
-        }
+        $class_hidden = ( ofwc_get_product_type($_product) == 'external' ) ? ' custom_tab_offers_for_woocommerce_hidden' : '';
 
         print(
                 '<li id="custom_tab_offers_for_woocommerce" class="custom_tab_offers_for_woocommerce ' . $class_hidden . '"><a href="#custom_tab_data_offers_for_woocommerce"><span>' . __('Offers', 'offers-for-woocommerce') . '</span></a></li>'
@@ -1607,11 +1623,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                         $_product_managing_stock = ( $_product_variant->managing_stock() ) ? $_product_variant->managing_stock() : $_product->managing_stock();
 
-                        if (version_compare(WC_VERSION, '3.0', '<')) {
-                            $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_total_stock() : $_product->get_total_stock();
-                        } else {
-                            $_product_stock = ( $_product_variant_managing_stock ) ? $_product_variant->get_stock_quantity() : $_product->get_stock_quantity();
-                        }
+                        $_product_stock = ( $_product_variant_managing_stock ) ? ofwc_get_product_stock_quantity($_product_variant) : ofwc_get_product_stock_quantity($_product);
 
                         $_product_in_stock = ( $_product_variant_managing_stock ) ? $_product_variant->has_enough_stock($postmeta['offer_quantity'][0]) : $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                         $_product_backorders_allowed = ( $_product_variant_managing_stock ) ? $_product_variant->backorders_allowed() : $_product->backorders_allowed();
@@ -1625,7 +1637,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                         $_product_regular_price = $_product->get_regular_price();
                         $_product_sale_price = $_product->get_sale_price();
                         $_product_managing_stock = $_product->managing_stock();
-                        $_product_stock = version_compare(WC_VERSION, '3.0', '<') ? $_product->get_total_stock() : $_product->get_stock_quantity();
+                        $_product_stock = ofwc_get_product_stock_quantity($_product);
                         $_product_in_stock = $_product->has_enough_stock($postmeta['offer_quantity'][0]);
                         $_product_backorders_allowed = $_product->backorders_allowed();
                         $_product_backorders_require_notification = $_product->backorders_require_notification();
@@ -1636,7 +1648,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     }
 
                     /* Products Addon and Offers Plugin meta check starts */
-                    $product_addon_id = version_compare(WC_VERSION, '3.0', '<') ? $_product->post->ID : $_product->get_id();
+                    $product_addon_id = ofwc_get_product_id($_product);
                     $_product_addons_data = get_post_meta($product_addon_id, '_product_addons', true);
                     /* Products Addon and Offers Plugin meta check end. */
 
@@ -1667,19 +1679,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                         // Set order meta data array
 
-                        $offer_order_meta['Order ID'] = '<a href="post.php?post=' . $order_id . '&action=edit">' . '#' . $order_id . '</a>';
+                        $offer_order_meta['Order ID'] = '<a href="' . esc_url($this->ofwc_get_order_edit_url($order_id)) . '">#' . $order_id . '</a>';
 
                         // Get Order
-                        $order = new WC_Order($order_id);
-                        if ($order->post) {
-                            $offer_order_meta['Order Date'] = $order->post->post_date;
+                        $order = wc_get_order($order_id);
+                        if ($order) {
+                            $order_date = $order->get_date_created();
+                            $offer_order_meta['Order Date'] = $order_date ? $order_date->date_i18n('Y-m-d H:i:s') : '';
                             $offer_order_meta['Order Status'] = ucwords($order->get_status());
                         } else {
                             $offer_order_meta['Order ID'] .= '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                         }
-
-                        $offer_order_meta['Order Date'] = $order->post->post_date;
-                        $offer_order_meta['Order Status'] = ucwords($order->get_status());
                     } else {
                         $offer_order_meta['Order ID'] = '<br /><small><strong>Notice: </strong>' . __('Order not found; may have been deleted', 'offers-for-woocommerce') . '</small>';
                     }
@@ -4078,7 +4088,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      */
     public function woocommerce_product_quick_edit_save_own($product) {
 
-        $post_id = version_compare(WC_VERSION, '3.0', '<') ? $product->id : $product->get_id();
+        $post_id = ofwc_get_product_id($product);
 
         $offers_for_woocommerce_enabled = (isset($_REQUEST['offers_for_woocommerce_enabled']) && $_REQUEST['offers_for_woocommerce_enabled'] == 'yes') ? 'yes' : 'no';
         $offers_for_woocommerce_auto_accept_enabled = (isset($_REQUEST['_offers_for_woocommerce_auto_accept_enabled']) && $_REQUEST['_offers_for_woocommerce_auto_accept_enabled'] == 'yes' ) ? 'yes' : 'no';
@@ -4736,12 +4746,15 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         global $woocommerce;
 
         // Get Order
-        $order = new WC_Order($order_id);
+        $order = wc_get_order($order_id);
+        if (!$order) {
+            return;
+        }
         // Get order items
         $order_items = $order->get_items();
         // Check for offer id
         foreach ($order_items as $key => $value) {
-            $item_offer_id = wc_get_order_item_meta( $key, 'Offer ID',true );
+            $item_offer_id = is_object($value) && method_exists($value, 'get_meta') ? $value->get_meta('Offer ID', true) : wc_get_order_item_meta($key, 'Offer ID', true);
             /**
              * Update offer
              * Add postmeta value 'offer_order_id' for this order id
@@ -4763,7 +4776,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
                     // Insert WP comment on related 'offer'
                     $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "</span> " . __('Completed', 'offers-for-woocommerce');
-                    $comment_text .= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="post.php?post=' . $order_id . '&action=edit">#' . $order_id . '</a></p>';
+                    $comment_text .= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="' . esc_url($this->ofwc_get_order_edit_url($order_id)) . '">#' . $order_id . '</a></p>';
 
                     $comment_data = array(
                         'comment_post_ID' => '',

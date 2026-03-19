@@ -1,5 +1,92 @@
 <?php
 
+if (!function_exists('ofwc_get_product_id')) {
+    /**
+     * Get a product ID using modern WooCommerce APIs with a legacy fallback.
+     *
+     * @param object $product WooCommerce product object.
+     * @return int
+     */
+    function ofwc_get_product_id( $product ) {
+        if ( ! is_object( $product ) ) {
+            return 0;
+        }
+
+        if ( method_exists( $product, 'get_id' ) ) {
+            return (int) $product->get_id();
+        }
+
+        if ( isset( $product->id ) ) {
+            return (int) $product->id;
+        }
+
+        if ( isset( $product->post ) && isset( $product->post->ID ) ) {
+            return (int) $product->post->ID;
+        }
+
+        return 0;
+    }
+}
+
+if (!function_exists('ofwc_get_product_type')) {
+    /**
+     * Get a product type using modern WooCommerce APIs with a legacy fallback.
+     *
+     * @param object $product WooCommerce product object.
+     * @return string
+     */
+    function ofwc_get_product_type( $product ) {
+        if ( ! is_object( $product ) ) {
+            return '';
+        }
+
+        if ( method_exists( $product, 'get_type' ) ) {
+            return (string) $product->get_type();
+        }
+
+        return isset( $product->product_type ) ? (string) $product->product_type : '';
+    }
+}
+
+if (!function_exists('ofwc_get_product_stock_quantity')) {
+    /**
+     * Get stock quantity using the current API with a legacy fallback.
+     *
+     * @param object $product WooCommerce product object.
+     * @return int|null
+     */
+    function ofwc_get_product_stock_quantity( $product ) {
+        if ( ! is_object( $product ) ) {
+            return null;
+        }
+
+        if ( method_exists( $product, 'get_stock_quantity' ) ) {
+            return $product->get_stock_quantity();
+        }
+
+        if ( method_exists( $product, 'get_total_stock' ) ) {
+            return $product->get_total_stock();
+        }
+
+        return null;
+    }
+}
+
+if (!function_exists('ofwc_get_myaccount_page_url')) {
+    /**
+     * Get the My Account page URL using WooCommerce's current helper with a fallback.
+     *
+     * @return string
+     */
+    function ofwc_get_myaccount_page_url() {
+        if ( function_exists( 'wc_get_page_permalink' ) ) {
+            return wc_get_page_permalink( 'myaccount' );
+        }
+
+        return get_permalink( get_option( 'woocommerce_myaccount_page_id' ) );
+    }
+}
+
 if (!function_exists('angelleye_get_vendor_dashboard_page_url')) {
     /**
      * Get vendor dashboard page url.
