@@ -578,7 +578,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             $ofw_adp = get_post_meta($postid, '_offers_for_woocommerce_auto_decline_percentage', true);
 	        $ofw_adp = ($ofw_adp) ? $ofw_adp : '';
 
-            $button_options_general = get_option('offers_for_woocommerce_options_general');
+            $button_options_general = ofwc_get_general_settings();
             if (isset($button_options_general['general_setting_enable_offers_by_default']) && $button_options_general['general_setting_enable_offers_by_default'] == '1') {
                 $ofw_enabled = 'yes';
             }
@@ -770,7 +770,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $post_meta_offers_enabled = get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true);
         $field_value = 'yes';
         $field_callback = ($post_meta_offers_enabled) ?: 'no';
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
         if ($pagenow == 'post-new.php' && isset($button_options_general['general_setting_enable_offers_by_default'])) {
             if ($button_options_general['general_setting_enable_offers_by_default'] == '1') {
                 $field_callback = 'yes';
@@ -1659,7 +1659,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     if ($current_status_value == 'publish') {
                         // get offers options - general
                         $default_expire_date = '';
-                        $options_general = get_option('offers_for_woocommerce_options_general');
+                        $options_general = ofwc_get_general_settings();
                         if (!empty($options_general['general_setting_default_expire_days'])) {
                             $current_time = date("Y-m-d H:i:s", current_time('timestamp', 0));
                             $default_expire_days = str_replace(",", "", $options_general['general_setting_default_expire_days']);
@@ -2079,9 +2079,10 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         );
 
         //check to see if present already
-        if (!get_option('offers_for_woocommerce_options_general')) {
+        if (!ofwc_get_general_settings()) {
             //option not found, add new
             add_option('offers_for_woocommerce_options_general', $offers_for_woocommerce_options_general);
+            ofwc_get_general_settings(true);
         }
 
         /**
@@ -2097,15 +2098,17 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         );
 
         //this will check for the setting after version update.
-        $admin_button_options_display = get_option('offers_for_woocommerce_options_display');
+        $admin_button_options_display = ofwc_get_display_settings();
         if (!isset($admin_button_options_display['display_setting_make_offer_button_position_single'])) {
             update_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
+            $admin_button_options_display = ofwc_get_display_settings(true);
         }
 
         //check to see if present already
-        if (!get_option('offers_for_woocommerce_options_display')) {
+        if (!ofwc_get_display_settings()) {
             //option not found, add new
             add_option('offers_for_woocommerce_options_display', $offers_for_woocommerce_options_display);
+            ofwc_get_display_settings(true);
         }
 
         $angelleye_displaySettingFormFieldPosition = array(
@@ -4399,7 +4402,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @return bool
      */
     public function ofw_is_anonymous_communication_enable() {
-        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        $offers_for_woocommerce_options_general = ofwc_get_general_settings();
         if (isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1) {
             return true;
         }
@@ -4447,7 +4450,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @return bool
      */
     public function ofw_is_show_pending_offer_enable() {
-        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        $offers_for_woocommerce_options_general = ofwc_get_general_settings();
         if (isset($offers_for_woocommerce_options_general['general_setting_show_pending_offer']) && $offers_for_woocommerce_options_general['general_setting_show_pending_offer'] == 1) {
             return true;
         }
@@ -4990,7 +4993,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         }
         wp_enqueue_script('wc-enhanced-select');
         wp_enqueue_style('woocommerce_admin_styles');
-        $button_display_options = get_option('offers_for_woocommerce_options_display');
+        $button_display_options = ofwc_get_display_settings();
         $button_display_position = get_option('angelleye_displaySettingFormFieldPosition');
         $user_string = '';
         $user_id = '';
