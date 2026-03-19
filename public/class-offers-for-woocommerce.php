@@ -1441,6 +1441,30 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['offer_product_price'] = !empty($post['offer_product_price']) ? wc_clean($post['offer_product_price']) : '';
             $formData['offer_total'] = !empty($post['offer_total']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($post['offer_total'])) : '';
 
+            $offer_product = wc_get_product($formData['orig_offer_product_id']);
+            if ($offer_product && $offer_product->is_type('variable')) {
+                $offer_variation_id = absint($formData['orig_offer_variation_id']);
+                $offer_variation = $offer_variation_id ? wc_get_product($offer_variation_id) : false;
+
+                if (
+                    !$offer_variation_id
+                    || !$offer_variation
+                    || !$offer_variation->is_type('variation')
+                    || absint($offer_variation->get_parent_id()) !== absint($formData['orig_offer_product_id'])
+                ) {
+                    if (is_ajax()) {
+                        echo json_encode(array(
+                            "statusmsg" => 'failed-custom',
+                            "statusmsgDetail" => __('Please choose a product variation before submitting your offer.', 'offers-for-woocommerce')
+                        ));
+                        exit;
+                    } else {
+                        $this->set_session('ofwpa_issue', __('Please choose a product variation before submitting your offer.', 'offers-for-woocommerce'));
+                        return false;
+                    }
+                }
+            }
+
             if ($this->is_recaptcha_enable()) {
                 $ofw_recaptcha_version = get_option('ofw_recaptcha_version', 'v2');
                 if ($ofw_recaptcha_version === 'v2') {

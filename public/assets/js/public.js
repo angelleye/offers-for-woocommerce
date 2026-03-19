@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                     e.preventDefault();
                     const variation_id = document.querySelector('input[name="variation_id"]');
-                    if (undefined !== variation_id && null !== variation_id && variation_id.value !== 0) {
+                    if (undefined !== variation_id && null !== variation_id && parseInt(variation_id.value, 10) > 0) {
                         offerVariationId = variation_id.value;
                     }
 
@@ -315,9 +315,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     var priceField = document.querySelector('.summary .price');
                     var priceBlockField = document.querySelector('.wp-block-woocommerce-product-price .wc-block-components-product-price');
                     if (productType === 'variable') {
-                        var variationPrice = document.querySelector('.woocommerce-variation-price .amount').textContent.replace(/ /g, '');
+                        if (parseInt(offerVariationId, 10) <= 0) {
+                            alert(offers_for_woocommerce_js_params.i18n_make_a_selection_text);
+                            return false;
+                        }
+
+                        var variationPriceElement = document.querySelector('.woocommerce-variation-price .amount');
+                        var variationPrice = variationPriceElement ? variationPriceElement.textContent.replace(/ /g, '') : '';
                         if (variationPrice === '') {
-                            offerProductPrice = document.querySelector('.summary .price .woocommerce-Price-amount').textContent;
+                            var fallbackPriceElement = document.querySelector('.summary .price .woocommerce-Price-amount');
+                            offerProductPrice = fallbackPriceElement ? fallbackPriceElement.textContent : '';
                         } else {
                             offerProductPrice = variationPrice;
                         }
