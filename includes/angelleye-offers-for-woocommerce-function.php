@@ -1,5 +1,47 @@
 <?php
 
+if (!function_exists('ofwc_get_general_settings')) {
+    /**
+     * Get general plugin settings with request-scoped memoization.
+     *
+     * @param bool $force_refresh Force a fresh read from the options table.
+     * @return array
+     */
+    function ofwc_get_general_settings( $force_refresh = false ) {
+        static $settings = null;
+
+        if ($force_refresh || null === $settings) {
+            $settings = get_option('offers_for_woocommerce_options_general', array());
+            if (!is_array($settings)) {
+                $settings = array();
+            }
+        }
+
+        return $settings;
+    }
+}
+
+if (!function_exists('ofwc_get_display_settings')) {
+    /**
+     * Get display plugin settings with request-scoped memoization.
+     *
+     * @param bool $force_refresh Force a fresh read from the options table.
+     * @return array
+     */
+    function ofwc_get_display_settings( $force_refresh = false ) {
+        static $settings = null;
+
+        if ($force_refresh || null === $settings) {
+            $settings = get_option('offers_for_woocommerce_options_display', array());
+            if (!is_array($settings)) {
+                $settings = array();
+            }
+        }
+
+        return $settings;
+    }
+}
+
 if (!function_exists('ofwc_get_product_id')) {
     /**
      * Get a product ID using modern WooCommerce APIs with a legacy fallback.
@@ -101,7 +143,7 @@ if (!function_exists('ofwc_product_allows_offers')) {
         }
 
         if ( null === $button_options_general ) {
-            $button_options_general = get_option( 'offers_for_woocommerce_options_general' );
+            $button_options_general = ofwc_get_general_settings();
         }
 
         $disable_offers_for_sale_items = ! empty( $button_options_general['general_setting_disabled_make_offer_on_product_sale'] );
@@ -111,6 +153,76 @@ if (!function_exists('ofwc_product_allows_offers')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('ofwc_current_user_can_submit_offers')) {
+    /**
+     * Check whether the current user is allowed to submit offers.
+     *
+     * @param array|null $button_options_general Optional general settings array.
+     * @return true|\WP_Error
+     */
+    function ofwc_current_user_can_submit_offers( $button_options_general = null ) {
+        if ( null === $button_options_general ) {
+            $button_options_general = ofwc_get_general_settings();
+        }
+
+        if ( ! empty( $button_options_general['general_setting_enable_offers_only_logged_in_users'] ) && ! is_user_logged_in() ) {
+            return new WP_Error( 'login_required', __( 'Please log in to submit an offer.', 'offers-for-woocommerce' ) );
+        }
+
+        if ( ! empty( $button_options_general['general_setting_allowed_roles'] ) ) {
+            if ( ! is_user_logged_in() ) {
+                return new WP_Error( 'role_not_allowed', __( 'You are not allowed to submit offers.', 'offers-for-woocommerce' ) );
+            }
+
+            $current_user = wp_get_current_user();
+            $user_roles   = ! empty( $current_user->roles ) ? (array) $current_user->roles : array();
+            $allowed      = array_intersect( $user_roles, (array) $button_options_general['general_setting_allowed_roles'] );
+
+            if ( empty( $allowed ) ) {
+                return new WP_Error( 'role_not_allowed', __( 'You are not allowed to submit offers.', 'offers-for-woocommerce' ) );
+            }
+        }
+
+        return true;
+    }
+}
+
+if (!function_exists('ofwc_is_supported_offer_product_type')) {
+    /**
+     * Check whether a product type supports offer submission.
+     *
+     * @param object $product WooCommerce product object.
+     * @return bool
+     */
+    function ofwc_is_supported_offer_product_type( $product ) {
+        $product_type = ofwc_get_product_type( $product );
+
+        return in_array( $product_type, array( 'simple', 'variable' ), true );
+    }
+}
+
+if (!function_exists('ofwc_get_required_offer_form_fields')) {
+    /**
+     * Get the required offer form fields from display settings.
+     *
+     * @param array|null $button_display_options Optional display settings array.
+     * @return array
+     */
+    function ofwc_get_required_offer_form_fields( $button_display_options = null ) {
+        if ( null === $button_display_options ) {
+            $button_display_options = ofwc_get_display_settings();
+        }
+
+        return array(
+            'offer_name'         => true,
+            'offer_email'        => true,
+            'offer_company_name' => ! empty( $button_display_options['display_setting_make_offer_form_field_offer_company_name'] ) && ! empty( $button_display_options['display_setting_make_offer_form_field_offer_company_name_required'] ),
+            'offer_phone'        => ! empty( $button_display_options['display_setting_make_offer_form_field_offer_phone'] ) && ! empty( $button_display_options['display_setting_make_offer_form_field_offer_phone_required'] ),
+            'offer_notes'        => ! empty( $button_display_options['display_setting_make_offer_form_field_offer_notes'] ) && ! empty( $button_display_options['display_setting_make_offer_form_field_offer_notes_required'] ),
+        );
     }
 }
 

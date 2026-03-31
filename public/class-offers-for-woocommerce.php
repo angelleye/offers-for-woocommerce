@@ -390,12 +390,12 @@ class Angelleye_Offers_For_Woocommerce {
         /**
          * Get offers options - general
          */
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
 
         /**
          * Get offers options - display
          */
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
 
         /**
          * Enable offers for only logged-in users
@@ -514,11 +514,11 @@ class Angelleye_Offers_For_Woocommerce {
             return;
         }
 
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
         $no_price_product_class = ( $_product->get_price() === '' ) ? 'ofwc_no_price_product' : '';
         $button_position = $button_options_display['display_setting_make_offer_button_position_single'];
         $is_on_right = ($button_position == 'right_of_add') ? 'ofwc-button-right-of-add-to-cart' : '';
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
 
         if ($button_options_display['display_setting_make_offer_button_position_single'] == 'before_add') {
             echo $this->angelleye_ofwc_offer_button_output(false, 'before_add_class');
@@ -541,7 +541,7 @@ class Angelleye_Offers_For_Woocommerce {
             return;
         }
 
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
 
         if ($button_options_display['display_setting_make_offer_button_position_single'] === 'default' || $button_options_display['display_setting_make_offer_button_position_single'] === 'right_of_add') {
             /* echo '<div class="angelleye-offers-clearfix"></div>'; */
@@ -569,7 +569,7 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         $hidden_class = '';
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
 
         if ($button_options_display['display_setting_make_offer_button_position_single'] != 'after_tabs') {
             $hidden_class = 'angelleye-ofwc-hidden';
@@ -591,8 +591,8 @@ class Angelleye_Offers_For_Woocommerce {
      */
     public function angelleye_ofwc_after_show_loop_item($post) {
 
-        /* $button_options_display = get_option('offers_for_woocommerce_options_display'); */
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        /* $button_options_display = ofwc_get_display_settings(); */
+        $button_options_general = ofwc_get_general_settings();
         $button_global_onoff_frontpage = ( $button_options_general && isset( $button_options_general['general_setting_enable_make_offer_btn_frontpage'] ) && $button_options_general['general_setting_enable_make_offer_btn_frontpage'] !== '') ? true : false;
         $button_global_onoff_catalog = ( $button_options_general && isset( $button_options_general['general_setting_enable_make_offer_btn_catalog'] ) && $button_options_general['general_setting_enable_make_offer_btn_catalog'] !== '') ? true : false;
 
@@ -618,12 +618,12 @@ class Angelleye_Offers_For_Woocommerce {
         /**
          * Get offers options - general.
          */
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
 
         /**
          * Get offers options - display.s
          */
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
 
         /**
          * Enable offers for only logged in users.
@@ -737,12 +737,12 @@ class Angelleye_Offers_For_Woocommerce {
         /**
          * Get offers options - general
          */
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
 
         /**
          * Get offers options - display
          */
-        $button_options_display = get_option('offers_for_woocommerce_options_display');
+        $button_options_display = ofwc_get_display_settings();
 
         /**
          * Enable offers for only logged in users
@@ -845,7 +845,7 @@ class Angelleye_Offers_For_Woocommerce {
         /**
          * Get offers options - general
          */
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
         $currency_symbol = get_woocommerce_currency_symbol();
 
         /**
@@ -990,7 +990,7 @@ class Angelleye_Offers_For_Woocommerce {
         /**
          * Get options for button display.
          */
-        $button_display_options = get_option('offers_for_woocommerce_options_display');
+        $button_display_options = ofwc_get_display_settings();
         $button_display_position = get_option('angelleye_displaySettingFormFieldPosition');
 
         $currency_symbol = get_woocommerce_currency_symbol();
@@ -1307,6 +1307,25 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Return a standardized offer submission validation failure.
+     *
+     * @param string $message Error message.
+     * @return false|void
+     */
+    private function ofwc_fail_offer_submission($message) {
+        if (is_ajax()) {
+            echo wp_json_encode(array(
+                'statusmsg' => 'failed-custom',
+                'statusmsgDetail' => $message,
+            ));
+            exit;
+        }
+
+        $this->set_session('ofwpa_issue', $message);
+        return false;
+    }
+
+    /**
      * Callback function of wp_ajax_new_offer_form_submit hook.
      *
      * @since 0.1.0
@@ -1407,8 +1426,18 @@ class Angelleye_Offers_For_Woocommerce {
          * Check if form was posted and select task accordingly.
          */
         if (isset($post["offer_product_id"]) && $post["offer_product_id"] !== '') {
+            $button_options_general = ofwc_get_general_settings();
+            $button_display_options = ofwc_get_display_settings();
+            $required_offer_fields = ofwc_get_required_offer_form_fields($button_display_options);
+
+            $current_user_offer_access = ofwc_current_user_can_submit_offers($button_options_general);
+            if (is_wp_error($current_user_offer_access)) {
+                return $this->ofwc_fail_offer_submission($current_user_offer_access->get_error_message());
+            }
 
             $payment_authorization = !empty($post['make_offer_payment_authorization']) ? $post['make_offer_payment_authorization'] : '';
+            $parent_post_id = isset($post['parent_offer_id']) ? absint($post['parent_offer_id']) : 0;
+            $is_counter_offer = $parent_post_id > 0;
 
             /**
              * Set postmeta original vars.
@@ -1429,17 +1458,68 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['offer_total'] = !empty($post['offer_total']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($post['offer_total'])) : '';
 
             $offer_product = wc_get_product($formData['orig_offer_product_id']);
-            if ($offer_product && !ofwc_product_allows_offers($offer_product)) {
-                if (is_ajax()) {
-                    echo json_encode(array(
-                        "statusmsg" => 'failed-custom',
-                        "statusmsgDetail" => __('Offers are not available for sale products.', 'offers-for-woocommerce')
-                    ));
-                    exit;
-                } else {
-                    $this->set_session('ofwpa_issue', __('Offers are not available for sale products.', 'offers-for-woocommerce'));
-                    return false;
+            if (!$offer_product) {
+                return $this->ofwc_fail_offer_submission(__('Error - Product Not Found; See shop manager for assistance', 'offers-for-woocommerce'));
+            }
+
+            if ('yes' !== $offer_product->get_meta('offers_for_woocommerce_enabled', true)) {
+                return $this->ofwc_fail_offer_submission(__('Offers are disabled for this product.', 'offers-for-woocommerce'));
+            }
+
+            if (!ofwc_product_allows_offers($offer_product, $button_options_general)) {
+                return $this->ofwc_fail_offer_submission(__('Offers are not available for sale products.', 'offers-for-woocommerce'));
+            }
+
+            if (!ofwc_is_supported_offer_product_type($offer_product)) {
+                return $this->ofwc_fail_offer_submission(__('Offers are only available for simple and variable products.', 'offers-for-woocommerce'));
+            }
+
+            if ($is_counter_offer) {
+                $parent_offer_name = get_post_meta($parent_post_id, 'offer_name', true);
+                $parent_offer_company_name = get_post_meta($parent_post_id, 'offer_company_name', true);
+                $parent_offer_phone = get_post_meta($parent_post_id, 'offer_phone', true);
+                $parent_offer_email = get_post_meta($parent_post_id, 'offer_email', true);
+
+                if (empty($formData['orig_offer_name']) && !empty($parent_offer_name)) {
+                    $formData['orig_offer_name'] = $parent_offer_name;
                 }
+                if (empty($formData['orig_offer_company_name']) && !empty($parent_offer_company_name)) {
+                    $formData['orig_offer_company_name'] = $parent_offer_company_name;
+                }
+                if (empty($formData['orig_offer_phone']) && !empty($parent_offer_phone)) {
+                    $formData['orig_offer_phone'] = $parent_offer_phone;
+                }
+                if (empty($formData['orig_offer_email']) && !empty($parent_offer_email)) {
+                    $formData['orig_offer_email'] = $parent_offer_email;
+                }
+            }
+
+            if (empty($formData['orig_offer_name'])) {
+                return $this->ofwc_fail_offer_submission(__('Please enter your name.', 'offers-for-woocommerce'));
+            }
+
+            if (empty($formData['orig_offer_email'])) {
+                return $this->ofwc_fail_offer_submission(__('Please enter your email address.', 'offers-for-woocommerce'));
+            }
+
+            if (!is_email($formData['orig_offer_email'])) {
+                return $this->ofwc_fail_offer_submission(__('Please enter a valid email address.', 'offers-for-woocommerce'));
+            }
+
+            if (!empty($required_offer_fields['offer_company_name']) && empty($formData['orig_offer_company_name'])) {
+                return $this->ofwc_fail_offer_submission(__('Please enter your company name.', 'offers-for-woocommerce'));
+            }
+
+            if (!empty($required_offer_fields['offer_phone']) && empty($formData['orig_offer_phone'])) {
+                if (empty($post['offer_phone'])) {
+                    return $this->ofwc_fail_offer_submission(__('Please enter your phone number.', 'offers-for-woocommerce'));
+                }
+
+                return $this->ofwc_fail_offer_submission(__('Please enter a valid phone number.', 'offers-for-woocommerce'));
+            }
+
+            if (!empty($required_offer_fields['offer_notes']) && empty($post['offer_notes'])) {
+                return $this->ofwc_fail_offer_submission(__('Please enter offer notes.', 'offers-for-woocommerce'));
             }
 
             if ($offer_product && $offer_product->is_type('variable')) {
@@ -1452,16 +1532,21 @@ class Angelleye_Offers_For_Woocommerce {
                     || !$offer_variation->is_type('variation')
                     || absint($offer_variation->get_parent_id()) !== absint($formData['orig_offer_product_id'])
                 ) {
-                    if (is_ajax()) {
-                        echo json_encode(array(
-                            "statusmsg" => 'failed-custom',
-                            "statusmsgDetail" => __('Please choose a product variation before submitting your offer.', 'offers-for-woocommerce')
-                        ));
-                        exit;
-                    } else {
-                        $this->set_session('ofwpa_issue', __('Please choose a product variation before submitting your offer.', 'offers-for-woocommerce'));
-                        return false;
-                    }
+                    return $this->ofwc_fail_offer_submission(__('Please choose a product variation before submitting your offer.', 'offers-for-woocommerce'));
+                }
+            }
+
+            $target_offer_product = !empty($offer_variation) ? $offer_variation : $offer_product;
+            $submitted_quantity = absint($formData['orig_offer_quantity']);
+
+            if ($target_offer_product->is_sold_individually() && 1 !== $submitted_quantity) {
+                return $this->ofwc_fail_offer_submission(__('This product must be submitted with a quantity of 1.', 'offers-for-woocommerce'));
+            }
+
+            if (!empty($button_options_general['general_setting_limit_offer_quantity_by_stock']) && !$target_offer_product->backorders_allowed()) {
+                $available_stock_quantity = ofwc_get_product_stock_quantity($target_offer_product);
+                if (null !== $available_stock_quantity && '' !== $available_stock_quantity && $submitted_quantity > (int) $available_stock_quantity) {
+                    return $this->ofwc_fail_offer_submission(__('The offer quantity exceeds the available stock.', 'offers-for-woocommerce'));
                 }
             }
 
@@ -1471,18 +1556,15 @@ class Angelleye_Offers_For_Woocommerce {
                     if (isset($post['g-recaptcha-response']) && !empty($post['g-recaptcha-response'])) {
                         $response = $this->recaptcha_verify_response($post['g-recaptcha-response']);
                         if (empty($response)) {
-                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                            exit;
+                            return $this->ofwc_fail_offer_submission(__('Please check the captcha.', 'offers-for-woocommerce'));
                         } else {
                             $response_array = json_decode($response, true);
                             if ($response_array['success'] !== true) {
-                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                                exit;
+                                return $this->ofwc_fail_offer_submission(__('Please check the captcha.', 'offers-for-woocommerce'));
                             }
                         }
                     } else {
-                        echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please check the captcha.', 'offers-for-woocommerce')));
-                        exit;
+                        return $this->ofwc_fail_offer_submission(__('Please check the captcha.', 'offers-for-woocommerce'));
                     }
                 } else {
                     if (isset($post['ofw_google']) && !empty($post['ofw_google'])) {
@@ -1491,21 +1573,20 @@ class Angelleye_Offers_For_Woocommerce {
                             'body' => array('secret' => $ofw_recaptcha_secret_key_v3, 'response' => $post['ofw_google'])
                         ));
                         if (is_wp_error($response_data)) {
-                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Google recaptcha verification Failed.', 'offers-for-woocommerce')));
-                            exit;
+                            return $this->ofwc_fail_offer_submission(__('Google recaptcha verification Failed.', 'offers-for-woocommerce'));
                         }
                         $body = wp_remote_retrieve_body($response_data);
                         if (!empty($body)) {
                             $response = json_decode($body);
                             if (!$response->success) {
-                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Google recaptcha verification Failed.', 'offers-for-woocommerce')));
-                                exit;
+                                return $this->ofwc_fail_offer_submission(__('Google recaptcha verification Failed.', 'offers-for-woocommerce'));
                             }
                             if ($response->score < 0.2) {
-                                echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Very likely a bot.', 'offers-for-woocommerce')));
-                                exit;
+                                return $this->ofwc_fail_offer_submission(__('Very likely a bot.', 'offers-for-woocommerce'));
                             }
                         }
+                    } else {
+                        return $this->ofwc_fail_offer_submission(__('Please check the captcha.', 'offers-for-woocommerce'));
                     }
                 }
             }
@@ -1515,25 +1596,14 @@ class Angelleye_Offers_For_Woocommerce {
              * check for valid offer quantity (not zero)
              */
             if (($formData['orig_offer_quantity'] === '' || $formData['orig_offer_quantity'] === 0)) {
-                if (is_ajax()) {
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Quantity\'', 'offers-for-woocommerce')));
-                    exit;
-                } else {
-                    return false;
-                }
+                return $this->ofwc_fail_offer_submission(__('Please enter a positive value for \'Offer Quantity\'', 'offers-for-woocommerce'));
             }
 
             /**
              * check for valid offer price (not zero).
              */
             if (($formData['orig_offer_price_per'] === '' || $formData['orig_offer_price_per'] === 0 || $formData['orig_offer_price_per'] === "0.00")) {
-                if (is_ajax()) {
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Please enter a positive value for \'Offer Amount\'', 'offers-for-woocommerce')));
-                    exit;
-                } else {
-                    $this->set_session('ofwpa_issue', 'Please enter a positive value for Offer Amount');
-                    return false;
-                }
+                return $this->ofwc_fail_offer_submission(__('Please enter a positive value for \'Offer Amount\'', 'offers-for-woocommerce'));
             }
 
             /**
@@ -1544,12 +1614,9 @@ class Angelleye_Offers_For_Woocommerce {
                 $return = $this->ofwc_minimum_offer($formData['orig_offer_product_id'], $formData['offer_product_price'], $formData['offer_total'], $formData['orig_offer_quantity']);
                 $symbol = get_woocommerce_currency_symbol();
                 if (is_array($return) && $return['status'] === 'failed' && $return['type'] === 'price') {
-                    echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Minimum Offer price is ' . $symbol . $return['minimum_offer_price'], 'offers-for-woocommerce')));
-                    exit;
+                    return $this->ofwc_fail_offer_submission(__('Minimum Offer price is ' . $symbol . $return['minimum_offer_price'], 'offers-for-woocommerce'));
                 } elseif (is_array($return) && $return['status'] === 'failed' && $return['type'] === 'percentage') {
-                    echo json_encode(array("statusmsg" => 'failed-custom',
-                        "statusmsgDetail" => __('Minimum Offer price must be ' . $return['percent'] . '%. For ' . $return['qty'] . ' quantity Minimum offer price is ' . wc_price($return['minimum_offer_price']), 'offers-for-woocommerce')));
-                    exit;
+                    return $this->ofwc_fail_offer_submission(__('Minimum Offer price must be ' . $return['percent'] . '%. For ' . $return['qty'] . ' quantity Minimum offer price is ' . wc_price($return['minimum_offer_price']), 'offers-for-woocommerce'));
                 }
             } else {
                 //echo "in else odder condition";
@@ -1652,14 +1719,10 @@ class Angelleye_Offers_For_Woocommerce {
                 if ((isset($parent_post_status) && $parent_post_status !== 'countered-offer') || ($post_parent_type !== 'woocommerce_offer') || ($parent_post_offer_uid !== $formData['parent_offer_uid'])) {
                     $offer = get_post($parent_post_id);
                     if (apply_filters('ofw_not_allow_invalid_offer_status', false, $offer)) {
-                        if (is_ajax()) {
-                            echo json_encode(array("statusmsg" => 'failed-custom', "statusmsgDetail" => __('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce')));
-                            exit;
-                        } else {
-                            $this->set_session('ofwpa_issue', 'Invalid Parent Offer Id; See shop manager for assistance');
-                            return false;
-                        }
+                        return $this->ofwc_fail_offer_submission(__('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
                     }
+
+                    return $this->ofwc_fail_offer_submission(__('Invalid Parent Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
                 }
 
                 $parent_post = array(
@@ -1888,7 +1951,7 @@ class Angelleye_Offers_For_Woocommerce {
              * Below code is work for Disabled email notification for admin user when offers is auto decline for product
              * Setting ->  General -> Disable Admin Email on Auto Decline Offer
              */
-            $button_options_general = get_option('offers_for_woocommerce_options_general');
+            $button_options_general = ofwc_get_general_settings();
 	        $option_for_admin_disable_email_auto_decline = isset($button_options_general['general_setting_admin_disable_email_auto_decline']) ? $button_options_general['general_setting_admin_disable_email_auto_decline'] : '';
             $offer_is_auto_decline = '';
             if ($option_for_admin_disable_email_auto_decline == '1') {
@@ -3032,7 +3095,7 @@ class Angelleye_Offers_For_Woocommerce {
             return $boolean;
         }
 
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
         if (!is_admin() && !empty(WC()->cart) && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
             foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
                 if (isset($values['woocommerce_offer_id']) && !empty($values['woocommerce_offer_id'])) {
@@ -3066,7 +3129,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @return bool
      */
     public function ofw_is_anonymous_communication_enable() {
-        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        $offers_for_woocommerce_options_general = ofwc_get_general_settings();
         if (isset($offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication']) && $offers_for_woocommerce_options_general['general_setting_enable_anonymous_communication'] == 1) {
             return true;
         }
@@ -3171,7 +3234,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @return bool
      */
     public function ofw_is_show_pending_offer_enable() {
-        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        $offers_for_woocommerce_options_general = ofwc_get_general_settings();
         if (isset($offers_for_woocommerce_options_general['general_setting_show_pending_offer']) && $offers_for_woocommerce_options_general['general_setting_show_pending_offer'] == 1) {
             return true;
         }
@@ -3311,7 +3374,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @return bool
      */
     public function ofw_is_highest_current_bid_enable() {
-        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        $offers_for_woocommerce_options_general = ofwc_get_general_settings();
         if (isset($offers_for_woocommerce_options_general['general_setting_show_highest_current_bid']) && $offers_for_woocommerce_options_general['general_setting_show_highest_current_bid'] === 1) {
             return true;
         }
@@ -3328,7 +3391,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @return mixed
      */
     public function ofwc_body_class($classes) {
-        $offers_for_woocommerce_options_general = get_option('offers_for_woocommerce_options_general');
+        $offers_for_woocommerce_options_general = ofwc_get_general_settings();
         if (isset($offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog']) && $offers_for_woocommerce_options_general['general_setting_enable_make_offer_btn_catalog'] === 1 && is_shop()) {
             $classes[] = 'ofwc-shop-page';
         }
@@ -3750,7 +3813,7 @@ class Angelleye_Offers_For_Woocommerce {
      * @return false|mixed
      */
     public function angelleye_ofw_remove_discount_calculation($boolean) {
-        $button_options_general = get_option('offers_for_woocommerce_options_general');
+        $button_options_general = ofwc_get_general_settings();
 
         if (!is_admin() && !empty(WC()->cart) && !WC()->cart->is_empty() && (isset($button_options_general['general_setting_disable_coupon']) && $button_options_general['general_setting_disable_coupon'] != '')) {
             foreach (WC()->cart->get_cart() as $cart_item_key => $values) {

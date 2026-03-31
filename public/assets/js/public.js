@@ -678,32 +678,42 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         });
 
-        /*offer quantity input keyup*/
-        $('#woocommerce-make-offer-form-quantity').keyup(function () {
-            updateTotal();
-        });
+        var offerQuantityField = $('#woocommerce-make-offer-form-quantity');
+        var offerPriceEachField = $('#woocommerce-make-offer-form-price-each');
+        var offerTotalField = $('#woocommerce-make-offer-form-total');
 
-        /*offer price each input keyup*/
-        $('#woocommerce-make-offer-form-price-each').keyup(function () {
-            updateTotal();
-        });
+        /*offer quantity input keyup*/
+        if (offerQuantityField.length && offerPriceEachField.length && offerTotalField.length) {
+            offerQuantityField.on('keyup', function () {
+                updateTotal();
+            });
+
+            /*offer price each input keyup*/
+            offerPriceEachField.on('keyup', function () {
+                updateTotal();
+            });
+        }
 
         /*Update totals*/
         var updateTotal = function () {
-            var input1 = $('#woocommerce-make-offer-form-quantity').autoNumerics('get');
-            var input2 = $('#woocommerce-make-offer-form-price-each').autoNumerics('get');
+            if (!offerQuantityField.length || !offerPriceEachField.length || !offerTotalField.length) {
+                return;
+            }
+
+            var input1 = offerQuantityField.autoNumerics('get');
+            var input2 = offerPriceEachField.autoNumerics('get');
             if (isNaN(input1) || isNaN(input2)) {
-                document.getElementById('woocommerce-make-offer-form-total').value = '';
+                offerTotalField.val('');
             } else {
                 var theTotal = (input1 * input2);
-                var currencySymbol = document.getElementById('woocommerce-make-offer-form-total').getAttribute('data-currency-symbol');
+                var currencySymbol = offerTotalField.attr('data-currency-symbol');
                 if (!currencySymbol) {
                     currencySymbol = '$';
                 }
 
-                $('#woocommerce-make-offer-form-total').autoNumerics('set', theTotal);
+                offerTotalField.autoNumerics('set', theTotal);
 
-                $('#woocommerce-make-offer-form-total').autoNumerics('update', {
+                offerTotalField.autoNumerics('update', {
                     aForm: false, /* Controls if default values are formatted on page ready (load) */
                     aSep: offers_for_woocommerce_js_params.ofw_public_js_thousand_separator, /* Thousand separator */
                     aDec: offers_for_woocommerce_js_params.ofw_public_js_decimal_separator, /* Decimal separator */
@@ -730,8 +740,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('common-click-to-pay').addEventListener('click', function () {
+    var commonClickToPay = document.getElementById('common-click-to-pay');
+    if (commonClickToPay) {
+        commonClickToPay.addEventListener('click', function () {
             var checkboxes = document.querySelectorAll('.offer-checkbox:checked');
             var urls = [];
 
@@ -761,5 +772,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 alert('Please select at least one offer.');
             }
         });
-    });
+    }
 }(jQuery));
