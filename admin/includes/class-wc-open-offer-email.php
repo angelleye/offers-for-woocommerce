@@ -13,6 +13,10 @@ if ( ! class_exists( 'WC_Open_Offer_Email' ) ) :
  * @extends WC_Email
  */
 class WC_Open_Offer_Email extends WC_Email {
+
+    public $template_html_path;
+    public $template_plain_path;
+
     /**
      * Set email defaults
      *
