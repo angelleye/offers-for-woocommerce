@@ -249,7 +249,7 @@ class Angelleye_Offers_For_Woocommerce {
 
         global $product;
 
-        if ($product && $product->is_on_sale()) {
+        if ($product && !ofwc_product_allows_offers($product)) {
             unset($tabs['tab_custom_ofwc_offer']);
         }
 
@@ -425,14 +425,13 @@ class Angelleye_Offers_For_Woocommerce {
             return null;
         }
 
-        if (isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] == 1 && $_product->is_on_sale()) {
+        if (!ofwc_product_allows_offers($_product, $button_options_general)) {
 	        return null;
         }
 
         $product_type = ofwc_get_product_type($_product);
 
         $is_instock = $_product->is_in_stock();
-
         $custom_tab_options_offers = array(
             'enabled' => get_post_meta($post->ID, 'offers_for_woocommerce_enabled', true),
             'on_exit' => get_post_meta($post->ID, 'offers_for_woocommerce_onexit_only', true),
@@ -658,6 +657,10 @@ class Angelleye_Offers_For_Woocommerce {
             return;
         }
 
+        if (!ofwc_product_allows_offers($_product, $button_options_general)) {
+            return;
+        }
+
         $product_type = ofwc_get_product_type($_product);
 
         $is_lightbox = (isset($button_options_display['display_setting_make_offer_form_display_type']) && $button_options_display['display_setting_make_offer_form_display_type'] === 'lightbox') ? true : false;
@@ -797,7 +800,7 @@ class Angelleye_Offers_For_Woocommerce {
             return $tabs;
         }
 
-        if (isset($button_options_general['general_setting_disabled_make_offer_on_product_sale']) && $button_options_general['general_setting_disabled_make_offer_on_product_sale'] === 1 && $_product->is_on_sale()) {
+        if (!ofwc_product_allows_offers($_product, $button_options_general)) {
             return $tabs;
         }
 
@@ -1426,6 +1429,19 @@ class Angelleye_Offers_For_Woocommerce {
             $formData['offer_total'] = !empty($post['offer_total']) ? Angelleye_Offers_For_Woocommerce_Admin::ofwc_format_localized_price(wc_clean($post['offer_total'])) : '';
 
             $offer_product = wc_get_product($formData['orig_offer_product_id']);
+            if ($offer_product && !ofwc_product_allows_offers($offer_product)) {
+                if (is_ajax()) {
+                    echo json_encode(array(
+                        "statusmsg" => 'failed-custom',
+                        "statusmsgDetail" => __('Offers are not available for sale products.', 'offers-for-woocommerce')
+                    ));
+                    exit;
+                } else {
+                    $this->set_session('ofwpa_issue', __('Offers are not available for sale products.', 'offers-for-woocommerce'));
+                    return false;
+                }
+            }
+
             if ($offer_product && $offer_product->is_type('variable')) {
                 $offer_variation_id = absint($formData['orig_offer_variation_id']);
                 $offer_variation = $offer_variation_id ? wc_get_product($offer_variation_id) : false;

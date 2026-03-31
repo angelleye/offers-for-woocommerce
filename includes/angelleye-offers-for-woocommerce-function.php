@@ -87,6 +87,33 @@ if (!function_exists('ofwc_get_myaccount_page_url')) {
     }
 }
 
+if (!function_exists('ofwc_product_allows_offers')) {
+    /**
+     * Check whether offers are allowed for a product under the current sale-product setting.
+     *
+     * @param object $product WooCommerce product object.
+     * @param array|null $button_options_general Optional general settings array.
+     * @return bool
+     */
+    function ofwc_product_allows_offers( $product, $button_options_general = null ) {
+        if ( ! is_object( $product ) ) {
+            return false;
+        }
+
+        if ( null === $button_options_general ) {
+            $button_options_general = get_option( 'offers_for_woocommerce_options_general' );
+        }
+
+        $disable_offers_for_sale_items = ! empty( $button_options_general['general_setting_disabled_make_offer_on_product_sale'] );
+
+        if ( $disable_offers_for_sale_items && method_exists( $product, 'is_on_sale' ) && $product->is_on_sale() ) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
 if (!function_exists('angelleye_get_vendor_dashboard_page_url')) {
     /**
      * Get vendor dashboard page url.
