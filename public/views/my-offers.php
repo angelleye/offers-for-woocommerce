@@ -71,14 +71,8 @@ if ($customer_offers) :
                                         break;
                                     case 'offer_product_title' :                                  
                                         if ($product_title) {
-                                            if(version_compare(WC_VERSION, '3.0', '<')){
-                                                $product_type = $product->product_type;
-                                                $pproduct_id  = $product->id;
-                                            } 
-                                            else{
-                                                $product_type = $product->get_type();
-                                                $pproduct_id  = $product->get_id();
-                                            }
+                                            $product_type = method_exists( $product, 'get_type' ) ? $product->get_type() : ( isset( $product->product_type ) ? $product->product_type : '' );
+                                            $pproduct_id  = method_exists( $product, 'get_id' ) ? $product->get_id() : ( isset( $product->id ) ? $product->id : 0 );
                                             if ($product_type == 'variation') {
                                                 $_product = new WC_Product_Variation($variant_id);
                                                 if(get_post_status($pproduct_id) == 'trash'){
