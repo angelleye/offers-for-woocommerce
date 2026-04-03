@@ -14,9 +14,9 @@
  * Domain Path:       /languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
  * Requires at least: 5.5
- * Tested up to: 6.6.1
+ * Tested up to: 6.9.4
  * WC requires at least: 3.0.0
- * WC tested up to: 9.9.2
+ * WC tested up to: 10.6.2
  * Requires Plugins: woocommerce
  */
 
