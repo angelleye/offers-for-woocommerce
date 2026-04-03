@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 6.6.1
-Stable tag: 3.0.7
+Stable tag: 3.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,12 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.1.0 - 04.03.2026 =
+* Enhance - HPOS compatibility and modern WooCommerce API refactoring for order edit URLs, order retrieval, and product handling. ([#521](https://github.com/angelleye/offers-for-woocommerce/pull/521))
+* Enhance - Normalized sale-product offer behavior across all entry points using a shared eligibility helper. ([#522](https://github.com/angelleye/offers-for-woocommerce/pull/522))
+* Enhance - Server-side enforcement of offer submission settings including user role gating, product eligibility, required fields, stock limits, and reCAPTCHA validation. ([#523](https://github.com/angelleye/offers-for-woocommerce/pull/523))
+* Fix - Resolved PHP 8.2+ deprecation notices for dynamic properties in all email notification classes. ([#524](https://github.com/angelleye/offers-for-woocommerce/pull/524))
 
 = 3.0.7 - 09.24.2024 =
 * Enhance - SEO Performance Enhancement. ([OFW-311](https://github.com/angelleye/offers-for-woocommerce/pull/520))
