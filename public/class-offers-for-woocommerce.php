@@ -206,6 +206,8 @@ class Angelleye_Offers_For_Woocommerce {
              */
             add_filter('wc_aelia_cs_selected_currency', array($this, 'wc_aelia_cs_selected_currency'), 99, 1);
             add_action('wp_loaded', array($this, 'ofw_changed_currency'), 10);
+            add_filter('wmc_get_current_currency', array($this, 'wmc_force_offer_currency'), 99, 1);
+            add_filter('wmc_is_change_price', array($this, 'wmc_skip_conversion_for_offer_items'), 99, 3);
             add_action('before_add_offer_to_cart', array($this, 'before_add_offer_to_cart'), 10, 1);
             add_filter('rp_wcdpd_process_cart_discounts', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
             add_filter('rp_wcdpd_process_product_pricing', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
@@ -1822,7 +1824,8 @@ class Angelleye_Offers_For_Woocommerce {
                         $newPostMetaData['meta_value'] = $v;
                         add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
                     }
-                    add_post_meta($newPostMetaData['post_id'], 'offer_currency', get_woocommerce_currency());
+                    $offer_currency = apply_filters('angelleye_ofw_offer_currency', get_woocommerce_currency(), $parent_post_id);
+                    add_post_meta($newPostMetaData['post_id'], 'offer_currency', $offer_currency);
 
                     /**
                      * Insert WP comment.
@@ -2285,6 +2288,7 @@ class Angelleye_Offers_For_Woocommerce {
             $product_meta['woocommerce_offer_id'] = $offer->ID;
             $product_meta['woocommerce_offer_quantity'] = $offer_meta['offer_quantity'][0];
             $product_meta['woocommerce_offer_price_per'] = $offer_meta['offer_price_per'][0];
+            $product_meta['woocommerce_offer_currency'] = get_post_meta($offer->ID, 'offer_currency', true);
 
             $found = false;
 
@@ -3752,6 +3756,49 @@ class Angelleye_Offers_For_Woocommerce {
                 }
             }
         }
+    }
+
+    /**
+     * Force WooCommerce Multi Currency (VillaTheme) to the offer's currency when the cart holds an offer item.
+     *
+     * @param string $current_currency Currency code VillaTheme would otherwise use.
+     * @return string
+     */
+    public function wmc_force_offer_currency($current_currency) {
+        if (!did_action('wp_loaded') || !isset(WC()->cart) || sizeof(WC()->cart->get_cart()) === 0) {
+            return $current_currency;
+        }
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            if (!empty($cart_item['woocommerce_offer_id'])) {
+                $offer_currency = !empty($cart_item['woocommerce_offer_currency'])
+                    ? $cart_item['woocommerce_offer_currency']
+                    : get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
+                if (!empty($offer_currency)) {
+                    return $offer_currency;
+                }
+            }
+        }
+        return $current_currency;
+    }
+
+    /**
+     * Prevent VillaTheme Multi Currency from re-converting offer cart items — their price is already in the offer's currency.
+     *
+     * @param bool  $is_change_price Whether VillaTheme should convert.
+     * @param mixed $price
+     * @param mixed $currency
+     * @return bool
+     */
+    public function wmc_skip_conversion_for_offer_items($is_change_price, $price = null, $currency = null) {
+        if (!did_action('wp_loaded') || !isset(WC()->cart) || sizeof(WC()->cart->get_cart()) === 0) {
+            return $is_change_price;
+        }
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            if (!empty($cart_item['woocommerce_offer_id'])) {
+                return false;
+            }
+        }
+        return $is_change_price;
     }
 
     /**
