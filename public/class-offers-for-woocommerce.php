@@ -2275,8 +2275,18 @@ class Angelleye_Offers_For_Woocommerce {
 
             $product_meta['woocommerce_offer_id'] = $offer->ID;
             $product_meta['woocommerce_offer_quantity'] = $offer_meta['offer_quantity'][0];
-            $product_meta['woocommerce_offer_price_per'] = $offer_meta['offer_price_per'][0];
-            $product_meta['woocommerce_offer_currency'] = get_post_meta($offer->ID, 'offer_currency', true);
+            $offer_currency = get_post_meta($offer->ID, 'offer_currency', true);
+            $product_meta['woocommerce_offer_currency'] = $offer_currency;
+
+            $cart_price = (float) $offer_meta['offer_price_per'][0];
+            $base_currency = get_option('woocommerce_currency');
+            if (!empty($offer_currency) && !empty($base_currency) && $offer_currency !== $base_currency) {
+                $converted = apply_filters('angelleye_ofw_offer_price_in_base_currency', null, $cart_price, $offer_currency);
+                if ($converted !== null && is_numeric($converted)) {
+                    $cart_price = (float) $converted;
+                }
+            }
+            $product_meta['woocommerce_offer_price_per'] = $cart_price;
 
             $found = false;
 
@@ -2496,6 +2506,9 @@ class Angelleye_Offers_For_Woocommerce {
         }
         if (array_key_exists('woocommerce_offer_price_per', $values)) {
             $item['woocommerce_offer_price_per'] = $values['woocommerce_offer_price_per'];
+        }
+        if (array_key_exists('woocommerce_offer_currency', $values)) {
+            $item['woocommerce_offer_currency'] = $values['woocommerce_offer_currency'];
         }
         return $item;
     }

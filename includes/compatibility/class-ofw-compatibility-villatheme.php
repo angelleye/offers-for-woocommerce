@@ -19,10 +19,18 @@ if (!class_exists('OFW_Compatibility_Villatheme')) {
 
         public function register_hooks() {
             add_filter('angelleye_ofw_convert_product_price', array($this, 'convert_product_price'), 10, 3);
-            add_filter('wmc_get_current_currency', array($this, 'force_offer_currency'), 99, 1);
-            add_filter('wmc_product_get_price_condition', array($this, 'skip_conversion_for_offer_products'), 99, 3);
+            add_filter('angelleye_ofw_offer_price_in_base_currency', array($this, 'offer_price_in_base_currency'), 10, 3);
         }
 
+        /**
+         * Convert a base-currency amount to the target currency. Used to display the
+         * product regular price in the offer's currency on emails and admin panels.
+         *
+         * Bypasses wmc_get_price() because it short-circuits in admin context.
+         * Replicates VillaTheme's internal conversion math
+         * (frontend/price.php:128 — $price * rate) while accepting either a base
+         * or already-converted input by first normalizing to base.
+         */
         public function convert_product_price($converted, $price, $currency) {
             if ($converted !== null) {
                 return $converted;
@@ -55,50 +63,28 @@ if (!class_exists('OFW_Compatibility_Villatheme')) {
             return $base_price * $target_rate;
         }
 
-        public function force_offer_currency($current_currency) {
-            if (!did_action('wp_loaded') || !isset(WC()->cart) || sizeof(WC()->cart->get_cart()) === 0) {
-                return $current_currency;
+        /**
+         * Convert an offer amount (in offer currency) to the store's base currency.
+         * Stored alongside the offer so the cart can set a base-currency price and
+         * let VillaTheme handle display conversion naturally.
+         */
+        public function offer_price_in_base_currency($base, $price, $currency) {
+            if ($base !== null) {
+                return $base;
             }
-            foreach (WC()->cart->get_cart() as $cart_item) {
-                if (empty($cart_item['woocommerce_offer_id'])) {
-                    continue;
-                }
-                $offer_currency = !empty($cart_item['woocommerce_offer_currency'])
-                    ? $cart_item['woocommerce_offer_currency']
-                    : get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
-                if (!empty($offer_currency)) {
-                    return $offer_currency;
-                }
+            if (!class_exists('WOOMULTI_CURRENCY_Data') || !$price || !$currency) {
+                return $base;
             }
-            return $current_currency;
-        }
-
-        public function skip_conversion_for_offer_products($condition, $price, $product) {
-            if (!$condition) {
-                return $condition;
+            $settings = WOOMULTI_CURRENCY_Data::get_ins();
+            $currencies = $settings->get_list_currencies();
+            if (empty($currencies[$currency]['rate'])) {
+                return $base;
             }
-            if (!is_object($product) || !method_exists($product, 'get_id')) {
-                return $condition;
+            $rate = (float) $currencies[$currency]['rate'];
+            if ($rate <= 0) {
+                return $base;
             }
-            if (!did_action('wp_loaded') || !isset(WC()->cart) || sizeof(WC()->cart->get_cart()) === 0) {
-                return $condition;
-            }
-            $product_id = $product->get_id();
-            foreach (WC()->cart->get_cart() as $cart_item) {
-                if (empty($cart_item['woocommerce_offer_id']) || empty($cart_item['woocommerce_offer_price_per'])) {
-                    continue;
-                }
-                $offer_product_id = !empty($cart_item['variation_id'])
-                    ? (int) $cart_item['variation_id']
-                    : (int) $cart_item['product_id'];
-                if ($offer_product_id !== (int) $product_id) {
-                    continue;
-                }
-                if (abs((float) $price - (float) $cart_item['woocommerce_offer_price_per']) < 0.0001) {
-                    return false;
-                }
-            }
-            return $condition;
+            return (float) $price / $rate;
         }
     }
 }
