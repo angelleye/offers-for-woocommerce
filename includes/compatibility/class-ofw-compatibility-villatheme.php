@@ -27,7 +27,19 @@ if (!class_exists('OFW_Compatibility_Villatheme')) {
             if ($converted !== null) {
                 return $converted;
             }
-            return wmc_get_price($price, $currency);
+            if (!class_exists('WOOMULTI_CURRENCY_Data')) {
+                return $price;
+            }
+            $settings = WOOMULTI_CURRENCY_Data::get_ins();
+            $currencies = $settings->get_list_currencies();
+            if (empty($currencies[$currency]['rate'])) {
+                return $price;
+            }
+            $rate = (float) $currencies[$currency]['rate'];
+            if ($rate <= 0 || $rate == 1.0) {
+                return $price;
+            }
+            return (float) $price * $rate;
         }
 
         public function force_offer_currency($current_currency) {
