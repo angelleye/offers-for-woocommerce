@@ -273,30 +273,8 @@ if (!function_exists('angelleye_ofw_get_product_price_multi_currency')) {
         if (empty($price) || empty($currency)) {
             return $price;
         }
-
         $converted = apply_filters('angelleye_ofw_convert_product_price', null, $price, $currency);
-        if ($converted !== null) {
-            return $converted;
-        }
-
-        if (class_exists('WC_Aelia_CurrencyPrices_Manager')) {
-            $woocommerce_currency = get_woocommerce_currency();
-            if (empty($woocommerce_currency)) {
-                return $price;
-            }
-            try {
-                $aelia_manager = new WC_Aelia_CurrencyPrices_Manager();
-                return $aelia_manager->convert_from_base($price, $currency, $woocommerce_currency);
-            } catch (Exception $ex) {
-                return $price;
-            }
-        }
-
-        if (function_exists('wmc_get_price')) {
-            return wmc_get_price($price, $currency);
-        }
-
-        return $price;
+        return ($converted !== null) ? $converted : $price;
     }
 
 }
