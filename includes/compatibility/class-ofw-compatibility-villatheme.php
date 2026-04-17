@@ -20,7 +20,7 @@ if (!class_exists('OFW_Compatibility_Villatheme')) {
         public function register_hooks() {
             add_filter('angelleye_ofw_convert_product_price', array($this, 'convert_product_price'), 10, 3);
             add_filter('wmc_get_current_currency', array($this, 'force_offer_currency'), 99, 1);
-            add_filter('wmc_is_change_price', array($this, 'skip_conversion_for_offer_items'), 99, 3);
+            add_filter('wmc_product_get_price_condition', array($this, 'skip_conversion_for_offer_products'), 99, 3);
         }
 
         public function convert_product_price($converted, $price, $currency) {
@@ -35,11 +35,24 @@ if (!class_exists('OFW_Compatibility_Villatheme')) {
             if (empty($currencies[$currency]['rate'])) {
                 return $price;
             }
-            $rate = (float) $currencies[$currency]['rate'];
-            if ($rate <= 0 || $rate == 1.0) {
+            $target_rate = (float) $currencies[$currency]['rate'];
+            if ($target_rate <= 0) {
                 return $price;
             }
-            return (float) $price * $rate;
+
+            $vt_skipped = (bool) apply_filters('wmc_get_price_condition', is_admin() && !wp_doing_ajax());
+            if ($vt_skipped) {
+                $base_price = (float) $price;
+            } else {
+                $current = $settings->get_current_currency();
+                $current_rate = !empty($currencies[$current]['rate']) ? (float) $currencies[$current]['rate'] : 1.0;
+                if ($current_rate <= 0) {
+                    return $price;
+                }
+                $base_price = (float) $price / $current_rate;
+            }
+
+            return $base_price * $target_rate;
         }
 
         public function force_offer_currency($current_currency) {
@@ -60,16 +73,32 @@ if (!class_exists('OFW_Compatibility_Villatheme')) {
             return $current_currency;
         }
 
-        public function skip_conversion_for_offer_items($is_change_price, $price = null, $currency = null) {
-            if (!did_action('wp_loaded') || !isset(WC()->cart) || sizeof(WC()->cart->get_cart()) === 0) {
-                return $is_change_price;
+        public function skip_conversion_for_offer_products($condition, $price, $product) {
+            if (!$condition) {
+                return $condition;
             }
+            if (!is_object($product) || !method_exists($product, 'get_id')) {
+                return $condition;
+            }
+            if (!did_action('wp_loaded') || !isset(WC()->cart) || sizeof(WC()->cart->get_cart()) === 0) {
+                return $condition;
+            }
+            $product_id = $product->get_id();
             foreach (WC()->cart->get_cart() as $cart_item) {
-                if (!empty($cart_item['woocommerce_offer_id'])) {
+                if (empty($cart_item['woocommerce_offer_id']) || empty($cart_item['woocommerce_offer_price_per'])) {
+                    continue;
+                }
+                $offer_product_id = !empty($cart_item['variation_id'])
+                    ? (int) $cart_item['variation_id']
+                    : (int) $cart_item['product_id'];
+                if ($offer_product_id !== (int) $product_id) {
+                    continue;
+                }
+                if (abs((float) $price - (float) $cart_item['woocommerce_offer_price_per']) < 0.0001) {
                     return false;
                 }
             }
-            return $is_change_price;
+            return $condition;
         }
     }
 }
