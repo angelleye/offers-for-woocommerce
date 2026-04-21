@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 6.9.4
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,14 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.1.1 - 04.21.2026 =
+* Feature - Added compatibility with VillaTheme WooCommerce Multi Currency plugin. [#525](https://github.com/angelleye/offers-for-woocommerce/pull/525)
+* Enhance - Refactored third-party multi-currency integrations into a dedicated `includes/compatibility/` module with an abstract base class and auto-loader so new plugins can be supported by adding a single file.
+* Enhance - New public filter hooks for extensibility: `angelleye_ofw_convert_product_price`, `angelleye_ofw_offer_price_in_base_currency`, `angelleye_ofw_offer_currency`, and `angelleye_ofw_compatibility_classes`.
+* Fix - Resolved wrong amount charged at checkout for offers accepted in a currency different from the store's base currency.
+* Fix - Regular price now displays in the correct converted amount on accepted-offer emails and the admin offer details panel when a multi-currency plugin is active.
+* Fix - Counter Offer / Price Each / Shipping / Total input fields on the admin offer details page no longer render incorrect values (e.g. 1500 appearing as 2)
 
 = 3.1.0 - 04.03.2026 =
 * Enhance - HPOS compatibility and modern WooCommerce API refactoring for order edit URLs, order retrieval, and product handling. ([#521](https://github.com/angelleye/offers-for-woocommerce/pull/521))
