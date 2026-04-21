@@ -76,6 +76,13 @@ require_once(plugin_dir_path(__FILE__) . 'includes/angelleye-offers-for-woocomme
 require_once(plugin_dir_path(__FILE__) . 'public/class-offers-for-woocommerce.php');
 
 /**
+ * Third-party plugin compatibility modules (Aelia, VillaTheme, etc.).
+ * Each module self-registers when its target plugin is active.
+ */
+require_once(plugin_dir_path(__FILE__) . 'includes/compatibility/class-ofw-compatibility-loader.php');
+add_action('plugins_loaded', array('OFW_Compatibility_Loader', 'load'), 20);
+
+/**
  * Load plugin text domain
  */
 add_action('plugins_loaded', 'angelleye_ofwc_load_plugin_textdomain');

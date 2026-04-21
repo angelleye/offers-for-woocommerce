@@ -45,15 +45,6 @@ class Angelleye_Offers_For_Woocommerce {
     protected static $instance = null;
 
     /**
-     * Check is notice set.
-     *
-     * @since 0.1.0
-     *
-     * @var bool
-     */
-    public $is_notice_set = false;
-
-    /**
      * Initialize the plugin by setting localization and loading public scripts
      * and styles.
      *
@@ -202,10 +193,9 @@ class Angelleye_Offers_For_Woocommerce {
             add_filter('woocommerce_endpoint_offers_title', array($this, 'ofw_woocommerce_endpoint_offers_title'), 10, 2);
 
             /**
-             * Set Offer currency when offer product in the cart.
+             * Third-party plugin compatibility (Aelia, VillaTheme, etc.) is registered via
+             * the OFW_Compatibility_Loader — see includes/compatibility/.
              */
-            add_filter('wc_aelia_cs_selected_currency', array($this, 'wc_aelia_cs_selected_currency'), 99, 1);
-            add_action('wp_loaded', array($this, 'ofw_changed_currency'), 10);
             add_action('before_add_offer_to_cart', array($this, 'before_add_offer_to_cart'), 10, 1);
             add_filter('rp_wcdpd_process_cart_discounts', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
             add_filter('rp_wcdpd_process_product_pricing', array($this, 'angelleye_ofw_remove_discount_calculation'), 10, 1);
@@ -1822,7 +1812,8 @@ class Angelleye_Offers_For_Woocommerce {
                         $newPostMetaData['meta_value'] = $v;
                         add_post_meta($newPostMetaData['post_id'], $newPostMetaData['meta_key'], $newPostMetaData['meta_value']);
                     }
-                    add_post_meta($newPostMetaData['post_id'], 'offer_currency', get_woocommerce_currency());
+                    $offer_currency = apply_filters('angelleye_ofw_offer_currency', get_woocommerce_currency(), $parent_post_id);
+                    add_post_meta($newPostMetaData['post_id'], 'offer_currency', $offer_currency);
 
                     /**
                      * Insert WP comment.
@@ -2284,7 +2275,18 @@ class Angelleye_Offers_For_Woocommerce {
 
             $product_meta['woocommerce_offer_id'] = $offer->ID;
             $product_meta['woocommerce_offer_quantity'] = $offer_meta['offer_quantity'][0];
-            $product_meta['woocommerce_offer_price_per'] = $offer_meta['offer_price_per'][0];
+            $offer_currency = get_post_meta($offer->ID, 'offer_currency', true);
+            $product_meta['woocommerce_offer_currency'] = $offer_currency;
+
+            $cart_price = (float) $offer_meta['offer_price_per'][0];
+            $base_currency = get_option('woocommerce_currency');
+            if (!empty($offer_currency) && !empty($base_currency) && $offer_currency !== $base_currency) {
+                $converted = apply_filters('angelleye_ofw_offer_price_in_base_currency', null, $cart_price, $offer_currency);
+                if ($converted !== null && is_numeric($converted)) {
+                    $cart_price = (float) $converted;
+                }
+            }
+            $product_meta['woocommerce_offer_price_per'] = $cart_price;
 
             $found = false;
 
@@ -2504,6 +2506,9 @@ class Angelleye_Offers_For_Woocommerce {
         }
         if (array_key_exists('woocommerce_offer_price_per', $values)) {
             $item['woocommerce_offer_price_per'] = $values['woocommerce_offer_price_per'];
+        }
+        if (array_key_exists('woocommerce_offer_currency', $values)) {
+            $item['woocommerce_offer_currency'] = $values['woocommerce_offer_currency'];
         }
         return $item;
     }
@@ -3685,73 +3690,6 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         return $title;
-    }
-
-    /**
-     * WC gets the angelleye selected currency.
-     *
-     * @param  string $aelia_currency Get the selected currency.
-     *
-     * @since 2.3.22
-     *
-     * @return mixed
-     */
-    public function wc_aelia_cs_selected_currency($aelia_currency) {
-
-        if (did_action('wp_loaded') && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
-            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-
-                if (isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
-                    $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
-
-                    if (!empty($offer_currency)) {
-                        if ($aelia_currency !== $offer_currency && $this->is_notice_set === false) {
-                            $this->is_notice_set = true;
-                            wc_clear_notices();
-                            $message = apply_filters('ofw_aelia_notice', sprintf(__('Aelia Currency Switcher is temporarily disabled as the cart contains an offer product linked to %s currency.', 'offers-for-woocommerce'), $offer_currency), $offer_currency);
-                            wc_add_notice($message, 'notice');
-                        }
-
-                        $user_id = get_current_user_id();
-
-                        if (!empty($user_id)) {
-                            update_user_meta($user_id, 'aelia_cs_selected_currency', $offer_currency);
-                        }
-
-                        return $offer_currency;
-                    }
-                }
-            }
-        }
-        return $aelia_currency;
-    }
-
-    /**
-     * WC update the cookie on currency change.
-     *
-     * @since 2.3.22
-     *
-     * @return void
-     */
-    public function ofw_changed_currency() {
-
-        if (did_action('wp_loaded') && isset(WC()->cart) && sizeof(WC()->cart->get_cart()) > 0) {
-            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-                if (isset($cart_item['woocommerce_offer_id']) && !empty($cart_item['woocommerce_offer_id'])) {
-                    $offer_currency = get_post_meta($cart_item['woocommerce_offer_id'], 'offer_currency', true);
-
-                    if (!empty($offer_currency)) {
-                        $_POST['aelia_cs_currency'] = $offer_currency;
-                        $user_id = get_current_user_id();
-
-                        if (!empty($user_id)) {
-                            update_user_meta($user_id, 'aelia_cs_selected_currency', $offer_currency);
-                            wc_setcookie('aelia_cs_selected_currency', $offer_currency);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
