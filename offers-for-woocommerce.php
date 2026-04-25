@@ -83,6 +83,19 @@ require_once(plugin_dir_path(__FILE__) . 'includes/compatibility/class-ofw-compa
 add_action('plugins_loaded', array('OFW_Compatibility_Loader', 'load'), 20);
 
 /**
+ * Shared AngellEYE push-notifications class. Self-contained — copy the file as-is
+ * into other AngellEYE plugins; the class_exists guard ensures only one copy loads.
+ */
+require_once(plugin_dir_path(__FILE__) . 'includes/notifications/class-angelleye-push-notifications.php');
+add_action('plugins_loaded', function () {
+    if (is_admin() && class_exists('AngellEYE_Push_Notifications')) {
+        (new AngellEYE_Push_Notifications(array(
+            'plugin_slug' => 'offers-for-woocommerce',
+        )))->register();
+    }
+}, 25);
+
+/**
  * Load plugin text domain
  */
 add_action('plugins_loaded', 'angelleye_ofwc_load_plugin_textdomain');
