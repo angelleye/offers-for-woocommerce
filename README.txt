@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 6.9.4
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,10 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.1.2 - 04.25.2026 =
+* Fix - Make Offer button no longer overlaps the Add to Cart button on the single product page; layout now flows inline on desktop/tablet and stacks vertically on mobile. ([#526](https://github.com/angelleye/offers-for-woocommerce/pull/526))
+* Enhance - Reduced the plugin-notification HTTP request timeout from 45s to 5s so a slow or unresponsive notification endpoint no longer hangs the WordPress admin UI. ([#527](https://github.com/angelleye/offers-for-woocommerce/pull/527))
 
 = 3.1.1 - 04.21.2026 =
 * Feature - Added compatibility with VillaTheme WooCommerce Multi Currency plugin. [#525](https://github.com/angelleye/offers-for-woocommerce/pull/525)
