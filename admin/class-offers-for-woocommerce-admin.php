@@ -4902,7 +4902,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         $api_url .= '&action=angelleye_get_plugin_notification';
         $request = wp_remote_post($api_url, array(
             'method' => 'POST',
-            'timeout' => 45,
+            'timeout' => 5,
             'redirection' => 5,
             'httpversion' => '1.0',
             'blocking' => true,
