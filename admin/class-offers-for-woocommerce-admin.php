@@ -469,8 +469,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
          */
         add_action('trashed_post', array($this, 'ofw_before_offers_trash_action'), 10, 1);
 
-        add_action('wp_ajax_angelleye_offers_for_woocommerce_adismiss_notice', array($this, 'angelleye_offers_for_woocommerce_adismiss_notice'), 10);
-        add_action('admin_notices', array($this, 'angelleye_offers_for_woocommerce_display_push_notification'), 10);
         add_action('angelleye_offer_for_woocommerce_admin_add_offer', array($this, 'angelleye_offer_for_woocommerce_admin_add_offer'), 10, 1);
         add_action('admin_action_editpost', array($this, 'angelleye_offer_for_woocommerce_admin_save_offer'), 10);
         add_action('angelleye_display_extra_product_details', array($this, 'angelleye_offer_for_woocommerce_display_product_extra_details'), 10, 1);
@@ -4860,106 +4858,6 @@ class Angelleye_Offers_For_Woocommerce_Admin {
     public static function ofwc_format_localized_price($value) {
         $newVal = str_replace(wc_get_price_thousand_separator(), '', strval($value));
         return str_replace(wc_get_price_decimal_separator(), '.', strval($newVal));
-    }
-
-    /**
-     * Add Notification message with format.
-     *
-     * @since 0.1.0
-     *
-     * @return void
-     */
-    public function angelleye_offers_for_woocommerce_display_push_notification() {
-        global $current_user;
-        $user_id = $current_user->ID;
-        if (false === ( $response = get_transient('angelleye_offers_push_notification_result') )) {
-            $response = $this->angelleye_get_push_notifications();
-            if (is_object($response)) {
-                set_transient('angelleye_offers_push_notification_result', $response, 12 * HOUR_IN_SECONDS);
-            }
-        }
-        if (is_object($response)) {
-            foreach ($response->data as $key => $response_data) {
-                if (!get_user_meta($user_id, $response_data->id)) {
-                    $this->angelleye_display_push_notification($response_data);
-                }
-            }
-        }
-    }
-
-    /**
-     * Display push notification message.
-     *
-     * @since 0.1.0
-     *
-     * @return false|mixed
-     */
-    public function angelleye_get_push_notifications() {
-        $args = array(
-            'plugin_name' => 'offers-for-woocommerce',
-        );
-        $api_url = PAYPAL_FOR_WOOCOMMERCE_PUSH_NOTIFICATION_WEB_URL . '?Wordpress_Plugin_Notification_Sender';
-        $api_url .= '&action=angelleye_get_plugin_notification';
-        $request = wp_remote_post($api_url, array(
-            'method' => 'POST',
-            'timeout' => 5,
-            'redirection' => 5,
-            'httpversion' => '1.0',
-            'blocking' => true,
-            'headers' => array('user-agent' => 'AngellEYE'),
-            'body' => $args,
-            'cookies' => array(),
-            'sslverify' => false
-        ));
-        if (is_wp_error($request) or wp_remote_retrieve_response_code($request) != 200) {
-            return false;
-        }
-        if ($request != '') {
-            $response = json_decode(wp_remote_retrieve_body($request));
-        } else {
-            $response = false;
-        }
-        return $response;
-    }
-
-    /**
-     * Preparing message in html format.
-     *
-     * @since 0.1.0
-     *
-     * @param object $response_data Get the response object.
-     * @return void
-     */
-    public function angelleye_display_push_notification($response_data) {
-        echo '<div class="notice notice-success angelleye-notice" style="display:none;" id="' . $response_data->id . '">'
-        . '<div class="angelleye-notice-logo-push"><span> <img alt="company-logo" src="' . $response_data->ans_company_logo . '"> </span></div>'
-        . '<div class="angelleye-notice-message">'
-        . '<h3>' . $response_data->ans_message_title . '</h3>'
-        . '<div class="angelleye-notice-message-inner">'
-        . '<p>' . $response_data->ans_message_description . '</p>'
-        . '<div class="angelleye-notice-action"><a target="_blank" href="' . $response_data->ans_button_url . '" class="button button-primary">' . $response_data->ans_button_label . '</a></div>'
-        . '</div>'
-        . '</div>'
-        . '<div class="angelleye-notice-cta">'
-        . '<button class="angelleye-notice-dismiss angelleye-dismiss-welcome" data-msg="' . $response_data->id . '">Dismiss</button>'
-        . '</div>'
-        . '</div>';
-    }
-
-    /**
-     * Dismiss the offer for the WooCommerce notice message.
-     *
-     * @since 0.1.0
-     *
-     * @return void
-     */
-    public function angelleye_offers_for_woocommerce_adismiss_notice() {
-        global $current_user;
-        $user_id = $current_user->ID;
-        if (!empty($_POST['action']) && $_POST['action'] == 'angelleye_offers_for_woocommerce_adismiss_notice') {
-            add_user_meta($user_id, wc_clean($_POST['data']), 'true', true);
-            wp_send_json_success();
-        }
     }
 
     /**
