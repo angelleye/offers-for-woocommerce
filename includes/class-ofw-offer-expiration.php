@@ -14,13 +14,19 @@
  *     survives into the order-placement step.
  *
  * Expiration honors what the admin chose in the "Offer Expires" field
- * (stored as `Y-m-d H:i` in the site timezone):
+ * (stored as a naive `Y-m-d H:i` string the admin meant in site-local
+ * wall-clock time):
+ *   - Converted to GMT via WP core's get_gmt_from_date() so the result
+ *     is correct regardless of the server's PHP timezone (common
+ *     mismatch on managed hosting that runs PHP in UTC while the site
+ *     is configured for a regional timezone).
  *   - If a specific time was chosen, that exact minute is the cut-off.
  *   - If no time was chosen (date-only or `00:00` midnight), the cut-off
  *     is end-of-day so the offer remains valid for the calendar day the
  *     customer was promised in the email.
- * Earlier code paths always rolled forward to 23:59:59, silently extending
- * time-specific offers by up to a day — this module replaces that.
+ * Earlier code paths used `strtotime()` + `current_time('timestamp')`,
+ * which only happened to align when PHP's TZ matched the site's. This
+ * module makes the rule correct by construction.
  *
  * @package Angelleye_Offers_For_Woocommerce
  * @since   3.1.3
@@ -90,16 +96,24 @@ if (!class_exists('OFW_Offer_Expiration')) {
                 return false;
             }
 
-            return $cutoff <= current_time('timestamp', 0);
+            // Both sides are real (UTC) Unix timestamps, so the comparison
+            // is timezone-correct regardless of PHP's default timezone.
+            return $cutoff <= time();
         }
 
         /**
-         * Site-local Unix timestamp at which the offer becomes invalid. False
+         * Real (UTC) Unix timestamp at which the offer becomes invalid. False
          * when the offer has no expiration set.
          *
-         * Admins can enter either a date or a date+time. A date-only entry
-         * (or an explicit midnight) extends the cut-off to end-of-day so
-         * the customer gets the full calendar day promised in the email.
+         * The admin enters a naive `Y-m-d H:i` value in the "Offer Expires"
+         * field that they mean as site-local wall-clock time. We hand it to
+         * get_gmt_from_date() — the WP core helper that knows the site
+         * timezone (timezone_string or gmt_offset) — so the conversion is
+         * correct even when the server's PHP timezone differs from the
+         * WordPress one (common on managed hosting that runs PHP in UTC).
+         *
+         * A date-only entry or an explicit midnight is promoted to end-of-day
+         * so the customer gets the full calendar day promised in the email.
          * Any other time is honored exactly.
          *
          * @param int $offer_id
@@ -111,17 +125,55 @@ if (!class_exists('OFW_Offer_Expiration')) {
                 return false;
             }
 
-            $parsed = strtotime($raw);
-            if (!$parsed) {
+            $normalized = self::normalize_to_mysql(trim($raw));
+            if (!$normalized) {
                 return false;
             }
 
-            // Date-only input or midnight → expire at end of that calendar day.
-            if ((int) date('H', $parsed) === 0 && (int) date('i', $parsed) === 0 && (int) date('s', $parsed) === 0) {
-                return strtotime(date('Y-m-d 23:59:59', $parsed));
+            // Date-only or midnight → end of that calendar day in site TZ.
+            if (substr($normalized, 11) === '00:00:00') {
+                $normalized = substr($normalized, 0, 10) . ' 23:59:59';
             }
 
-            return $parsed;
+            // get_gmt_from_date() converts a site-local datetime string to
+            // its GMT equivalent. The trailing ' UTC' tells strtotime to read
+            // the result as UTC, yielding a real Unix timestamp.
+            $gmt_mysql = get_gmt_from_date($normalized, 'Y-m-d H:i:s');
+            $timestamp = strtotime($gmt_mysql . ' UTC');
+
+            return $timestamp ? $timestamp : false;
+        }
+
+        /**
+         * Coerce the stored value to a canonical `Y-m-d H:i:s` string so
+         * get_gmt_from_date() (which is regex-strict) accepts it.
+         *
+         * Returns false when the value doesn't look like a datetime at all.
+         *
+         * @param string $value
+         * @return string|false
+         */
+        private static function normalize_to_mysql($value) {
+            if (preg_match('/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/', $value)) {
+                return $value;
+            }
+            if (preg_match('/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})$/', $value, $m)) {
+                return $m[1] . ' ' . $m[2] . ':00';
+            }
+            if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+                return $value . ' 00:00:00';
+            }
+
+            // Fallback for legacy or unexpected formats: parse permissively
+            // with strtotime() and re-emit in canonical form. PHP's TZ here
+            // affects only the string-to-timestamp step; the resulting
+            // canonical string is what get_gmt_from_date() will then
+            // re-interpret in the site timezone.
+            $ts = strtotime($value);
+            if (!$ts) {
+                return false;
+            }
+            return gmdate('Y-m-d H:i:s', $ts);
         }
 
         /**
