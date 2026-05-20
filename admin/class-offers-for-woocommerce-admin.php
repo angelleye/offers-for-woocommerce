@@ -1454,21 +1454,20 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         if ("edit-woocommerce_offer" == $screen->id) {
             global $wpdb;
 
-            $target_now_date = date("Y-m-d H:i:s", current_time('timestamp', 0));
-
-            $expired_offers = $wpdb->get_results($wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE `meta_key` = '%s' AND `meta_value` <> ''", 'offer_expiration_date'), 'ARRAY_A');
-            if (($expired_offers) && !empty($expired_offers)) {
-                foreach ($expired_offers as $v) {
-                    $offer_expire_date_formatted = date("Y-m-d 23:59:59", strtotime($v['meta_value']));
-                    if ($offer_expire_date_formatted <= $target_now_date) {
-                        $post_status = get_post_status($v['post_id']);
-                        if ($post_status && $post_status != 'trash') {
-                            $target_post = array(
-                                'ID' => $v['post_id'],
-                                'post_status' => 'expired-offer'
-                            );
-                            wp_update_post($target_post);
-                        }
+            // Defer the cut-off rule to the central helper so this legacy
+            // fallback stays in lockstep with cron / cart / checkout.
+            $expired_offers = $wpdb->get_col($wpdb->prepare("SELECT post_id FROM $wpdb->postmeta WHERE `meta_key` = %s AND `meta_value` <> ''", 'offer_expiration_date'));
+            if (!empty($expired_offers) && class_exists('OFW_Offer_Expiration')) {
+                foreach ($expired_offers as $post_id) {
+                    if (!OFW_Offer_Expiration::is_expired($post_id)) {
+                        continue;
+                    }
+                    $post_status = get_post_status($post_id);
+                    if ($post_status && $post_status != 'trash') {
+                        wp_update_post(array(
+                            'ID' => (int) $post_id,
+                            'post_status' => 'expired-offer',
+                        ));
                     }
                 }
             }

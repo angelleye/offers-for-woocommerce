@@ -13,9 +13,14 @@
  *   - Checkout validation produces a hard error if an expired offer somehow
  *     survives into the order-placement step.
  *
- * Expiration uses end-of-day semantics (23:59:59 in the site timezone) to stay
- * consistent with the legacy admin sweep and the email-link handler — a single
- * cut-off avoids merchants seeing different behavior in different code paths.
+ * Expiration honors what the admin chose in the "Offer Expires" field
+ * (stored as `Y-m-d H:i` in the site timezone):
+ *   - If a specific time was chosen, that exact minute is the cut-off.
+ *   - If no time was chosen (date-only or `00:00` midnight), the cut-off
+ *     is end-of-day so the offer remains valid for the calendar day the
+ *     customer was promised in the email.
+ * Earlier code paths always rolled forward to 23:59:59, silently extending
+ * time-specific offers by up to a day — this module replaces that.
  *
  * @package Angelleye_Offers_For_Woocommerce
  * @since   3.1.3
@@ -89,9 +94,13 @@ if (!class_exists('OFW_Offer_Expiration')) {
         }
 
         /**
-         * Site-local Unix timestamp at which the offer becomes invalid (inclusive
-         * of the calendar day stored in meta). False when the offer has no
-         * expiration set.
+         * Site-local Unix timestamp at which the offer becomes invalid. False
+         * when the offer has no expiration set.
+         *
+         * Admins can enter either a date or a date+time. A date-only entry
+         * (or an explicit midnight) extends the cut-off to end-of-day so
+         * the customer gets the full calendar day promised in the email.
+         * Any other time is honored exactly.
          *
          * @param int $offer_id
          * @return int|false
@@ -107,7 +116,12 @@ if (!class_exists('OFW_Offer_Expiration')) {
                 return false;
             }
 
-            return strtotime(date('Y-m-d 23:59:59', $parsed));
+            // Date-only input or midnight → expire at end of that calendar day.
+            if ((int) date('H', $parsed) === 0 && (int) date('i', $parsed) === 0 && (int) date('s', $parsed) === 0) {
+                return strtotime(date('Y-m-d 23:59:59', $parsed));
+            }
+
+            return $parsed;
         }
 
         /**
@@ -117,10 +131,8 @@ if (!class_exists('OFW_Offer_Expiration')) {
         public static function sweep_expired_offers() {
             global $wpdb;
 
-            $now_mysql = current_time('mysql');
-
-            $rows = $wpdb->get_results($wpdb->prepare(
-                "SELECT pm.post_id, pm.meta_value
+            $post_ids = $wpdb->get_col($wpdb->prepare(
+                "SELECT pm.post_id
                    FROM {$wpdb->postmeta} pm
                    INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
                   WHERE pm.meta_key = %s
@@ -130,29 +142,26 @@ if (!class_exists('OFW_Offer_Expiration')) {
                 self::META_KEY,
                 self::OFFER_POST_TYPE,
                 self::EXPIRED_STATUS
-            ), ARRAY_A);
+            ));
 
-            if (empty($rows)) {
+            if (empty($post_ids)) {
                 return;
             }
 
-            foreach ($rows as $row) {
-                $parsed = strtotime($row['meta_value']);
-                if (!$parsed) {
-                    continue;
-                }
-
-                $cutoff_mysql = date('Y-m-d 23:59:59', $parsed);
-                if ($cutoff_mysql > $now_mysql) {
+            // Delegate the cut-off rule to is_expired() so there is exactly
+            // one place that decides whether an offer has expired.
+            foreach ($post_ids as $post_id) {
+                $post_id = (int) $post_id;
+                if (!self::is_expired($post_id)) {
                     continue;
                 }
 
                 wp_update_post(array(
-                    'ID'          => (int) $row['post_id'],
+                    'ID'          => $post_id,
                     'post_status' => self::EXPIRED_STATUS,
                 ));
 
-                do_action('ofw_offer_expired', (int) $row['post_id']);
+                do_action('ofw_offer_expired', $post_id);
             }
         }
 
