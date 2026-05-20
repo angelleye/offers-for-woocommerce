@@ -2148,12 +2148,6 @@ class Angelleye_Offers_For_Woocommerce {
             $offer_uid = get_post_meta($offer->ID, 'orig_offer_uid', true);
 
             /**
-             * Check offer expiration date.
-             */
-            $expiration_date = get_post_meta($offer->ID, 'offer_expiration_date', true);
-            $expiration_date_formatted = ($expiration_date) ? date("Y-m-d 23:59:59", strtotime($expiration_date)) : false;
-
-            /**
              * Invalid Offer Id
              */
             if ($offer == '') {
@@ -2165,11 +2159,10 @@ class Angelleye_Offers_For_Woocommerce {
 
                 error_log("1572");
                 $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'));
-            } elseif (($expiration_date_formatted) && ($expiration_date_formatted <= (date("Y-m-d H:i:s", current_time('timestamp', 0))) )) {
+            } elseif (class_exists('OFW_Offer_Expiration') && OFW_Offer_Expiration::is_expired($offer->ID)) {
                 /**
-                 * If offer counter 'offer_expiration_date' is past
+                 * Offer past its `offer_expiration_date` — central helper owns the rule.
                  */
-
                 $request_error = true;
                 $this->send_api_response(__('Offer has expired; You can submit a new offer using the form below.', 'offers-for-woocommerce'));
             } else {
@@ -2587,9 +2580,15 @@ class Angelleye_Offers_For_Woocommerce {
 
                     /**
                      * Error - Offer Not Accepted/Countered.
+                     *
+                     * Filter defaults to true here (matching the email-link handler) so
+                     * an offer that has been flipped to `expired-offer` status cannot slip
+                     * through checkout. The admin-created-open-offer callback at
+                     * ofw_not_allow_invalid_offer_status() returns false only for that
+                     * specific case, preserving its existing behavior.
                      */
                     if ($offer->post_status != 'accepted-offer' && $offer->post_status != 'countered-offer' && $offer->post_status != 'buyercountered-offer') {
-                        if (apply_filters('ofw_not_allow_invalid_offer_status', false, $offer)) {
+                        if (apply_filters('ofw_not_allow_invalid_offer_status', true, $offer)) {
                             error_log("1836");
                             $request_error = true;
                             $this->send_api_response(__('Invalid Offer Status or Expired Offer Id; See shop manager for assistance', 'offers-for-woocommerce'), '0');
