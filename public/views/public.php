@@ -151,6 +151,32 @@ if( !empty( $offer_single_use ) ) {
                     <input type="hidden" name="ofwc_minimum_offer_price" id="ofwc_minimum_offer_price" value="<?php echo $ofwc_minimum_offer_price; ?>">
                     <input type="hidden" name="ofwc_minimum_offer_price_type" id="ofwc_minimum_offer_price_type" value="<?php echo $ofwc_minimum_offer_price_type; ?>">
                     <input type="hidden" name="ofwc_hidden_price_type" id="ofwc_hidden_price_type" value="<?php echo $product_type; ?>">
+                <?php
+                /**
+                 * Original price row.
+                 *
+                 * $product->get_price_html() runs through WC's full price filter
+                 * chain (woocommerce_product_get_price, wc_price, etc.), so
+                 * Aelia Currency Switcher and VillaTheme Multi Currency — both
+                 * registered via includes/compatibility/ — produce a properly
+                 * converted display here automatically. No plugin-specific
+                 * branching needed.
+                 *
+                 * For variable products this shows the price range on initial
+                 * render; public.js refreshes the value on show_variation using
+                 * the variation object's price_html (also currency-filtered).
+                 */
+                $ofwc_original_price_html = ($product instanceof WC_Product) ? $product->get_price_html() : '';
+                $ofwc_original_price_html = apply_filters('aeofwc_offer_form_original_price_html', $ofwc_original_price_html, $product, $is_counter_offer);
+                if (!empty($ofwc_original_price_html)) :
+                ?>
+                <div class="woocommerce-make-offer-form-section ofwc-original-price-row">
+                    <div class="woocommerce-make-offer-form-part-full">
+                        <label class="woocommerce-make-offer-form-label"><?php echo apply_filters('aeofwc_offer_form_label_original_price', __('Original Price', 'offers-for-woocommerce'), $is_counter_offer); ?></label>
+                        <div class="ofwc-original-price-value"><?php echo $ofwc_original_price_html; ?></div>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="woocommerce-make-offer-form-section">
                     <?php if(isset($is_sold_individually) && $is_sold_individually ) { ?>
                         <input type="hidden" name="offer_quantity" id="woocommerce-make-offer-form-quantity" data-m-dec="0" data-l-zero="deny" data-a-form="false" required="required" value="1" />
