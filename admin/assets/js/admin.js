@@ -1,5 +1,19 @@
 (function ( $ ) {
     "use strict";
+
+    /**
+     * Capture xdsoft's $.fn.datetimepicker at script-load time and re-expose
+     * it under a plugin-scoped name. Other plugins or themes (notably the
+     * jQuery UI Timepicker Addon) also register $.fn.datetimepicker; whichever
+     * loads last wins, which previously caused a different — and broken —
+     * picker UI to appear on some sites. Calling our own alias guarantees the
+     * picker the plugin bundles is the one that opens, regardless of what
+     * else is on the page.
+     */
+    if (typeof $.fn.datetimepicker === 'function' && typeof $.fn.ofwDatetimepicker !== 'function') {
+        $.fn.ofwDatetimepicker = $.fn.datetimepicker;
+    }
+
     $(function () {
         let offer_price_per = document.getElementById('offer-price-per');
 
@@ -19,15 +33,21 @@
          * @since   1.0.1
          */
         var currentDate = new Date();
-        $('.datepicker').datetimepicker({
-            minDate: currentDate,
-            format: 'M d, Y H:i'
-        });
+        var $ofwDatepicker = $('.ofw-offer-expiration-datepicker');
+        if ($ofwDatepicker.length && typeof $.fn.ofwDatetimepicker === 'function') {
+            $ofwDatepicker.ofwDatetimepicker({
+                minDate: currentDate,
+                format: 'M d, Y H:i'
+            });
+        }
 
         var meta_box_offers_submit = document.getElementById('meta-box-offers-submit');
         if( undefined !== meta_box_offers_submit && meta_box_offers_submit !== null ){
             meta_box_offers_submit.addEventListener('click' ,function(){
-                var theDate = new Date(Date.parse(jQuery('.datepicker').datetimepicker('getValue')));
+                if (!$ofwDatepicker.length || typeof $.fn.ofwDatetimepicker !== 'function') {
+                    return;
+                }
+                var theDate = new Date(Date.parse($ofwDatepicker.ofwDatetimepicker('getValue')));
                 if (theDate === 'Invalid Date') {
                     offer_expiration_date.value = '';
                 }

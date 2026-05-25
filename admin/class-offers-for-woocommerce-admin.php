@@ -2892,15 +2892,18 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-confirm-min', plugins_url('assets/js/jquery.confirm.min.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
         }
         if ("woocommerce_offer" == $screen->id && is_admin()) {
-            // Jquery datepicker.js
-            wp_enqueue_script('jquery-ui');
-            wp_enqueue_script('jquery-ui-datepicker');
-            wp_enqueue_script('timepicker', plugins_url('assets/js/jquery.datetimepicker.full.min.js', __FILE__), array('jquery'), '1.2');
+            // xdsoft DateTimePicker — the picker the plugin ships and is
+            // tested against. Do NOT enqueue jquery-ui-datepicker here; it
+            // pulls in libraries (e.g. Trent Richardson's Timepicker Addon
+            // via other plugins) that also register $.fn.datetimepicker and
+            // override ours. admin.js depends on this handle so it is
+            // guaranteed to load first.
+            wp_enqueue_script('ofw-datetimepicker', plugins_url('assets/js/jquery.datetimepicker.full.min.js', __FILE__), array('jquery'), '1.2');
             // autoNumeric js
             wp_enqueue_script('offers-for-woocommerce-angelleye-offers-jquery-auto-numeric', plugins_url('../public/assets/js/autoNumeric.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
 
             // admin scripts
-            wp_enqueue_script('offers-for-woocommerce-admin-script', plugins_url('assets/js/admin.js', __FILE__), array('jquery'), Angelleye_Offers_For_Woocommerce::VERSION);
+            wp_enqueue_script('offers-for-woocommerce-admin-script', plugins_url('assets/js/admin.js', __FILE__), array('jquery', 'ofw-datetimepicker'), Angelleye_Offers_For_Woocommerce::VERSION);
             global $post, $wpdb;
             $ofw_offer_expiration_date_show = 'false';
             $expiration_date = get_post_meta($post->ID, 'offer_expiration_date', true);
