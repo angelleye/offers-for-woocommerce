@@ -2436,6 +2436,8 @@ class Angelleye_Offers_For_Woocommerce {
                  */
                 if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
                     $value['data']->set_price($value['woocommerce_offer_price_per']);
+                    $value['data']->set_regular_price( $value['woocommerce_offer_price_per'] );
+                    $value['data']->set_sale_price( '' );
                     $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
                 }
             }
