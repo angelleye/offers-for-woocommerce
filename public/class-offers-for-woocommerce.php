@@ -45,6 +45,21 @@ class Angelleye_Offers_For_Woocommerce {
     protected static $instance = null;
 
     /**
+     * Map of offer cart-item product object IDs to their accepted offer price.
+     *
+     * Populated in my_woocommerce_before_calculate_totals() and consumed by
+     * force_offer_price_filter() / force_offer_sale_price_filter() so the
+     * accepted offer price stays authoritative during cart/checkout
+     * calculation even when another plugin filters the price at read time
+     * (e.g. GVM Price Test forcing woocommerce_product_get_price).
+     *
+     * @since 3.0.0
+     *
+     * @var array
+     */
+    protected $offer_price_map = array();
+
+    /**
      * Initialize the plugin by setting localization and loading public scripts
      * and styles.
      *
@@ -2427,6 +2442,13 @@ class Angelleye_Offers_For_Woocommerce {
         global $woocommerce;
 
         /**
+         * Reset the offer price map on every recalculation so it never holds
+         * stale entries (cart contents and their product object IDs can change
+         * between calls).
+         */
+        $this->offer_price_map = array();
+
+        /**
          * Loop cart contents to find offers -- force price to offer price per.
          */
         foreach ($cart_object->cart_contents as $key => $value) {
@@ -2439,8 +2461,37 @@ class Angelleye_Offers_For_Woocommerce {
                     $value['data']->set_regular_price( $value['woocommerce_offer_price_per'] );
                     $value['data']->set_sale_price( '' );
                     $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+
+                    /**
+                     * The setters above only store props; WooCommerce reads the
+                     * price back through woocommerce_product_get_price (view
+                     * context) when it calculates totals. Other plugins (e.g. GVM
+                     * Price Test) can be hooked there and override our value.
+                     * Track this product object so force_offer_price_filter() can
+                     * re-assert the offer price at the end of that filter chain.
+                     */
+                    if (function_exists('spl_object_id')) {
+                        $this->offer_price_map[spl_object_id($value['data'])] = $value['woocommerce_offer_price_per'];
+                    }
                 }
             }
+        }
+
+        /**
+         * Re-assert the accepted offer price after any third-party price filters.
+         *
+         * Registered at PHP_INT_MAX so it runs last in the filter chain; scoped by
+         * product object id so only offer cart items are affected (catalog/shop
+         * pricing is untouched). WordPress de-duplicates identical callbacks, so
+         * re-registering on repeated recalculations is harmless.
+         */
+        if (!empty($this->offer_price_map)) {
+            add_filter('woocommerce_product_get_price', array($this, 'force_offer_price_filter'), PHP_INT_MAX, 2);
+            add_filter('woocommerce_product_get_regular_price', array($this, 'force_offer_price_filter'), PHP_INT_MAX, 2);
+            add_filter('woocommerce_product_get_sale_price', array($this, 'force_offer_sale_price_filter'), PHP_INT_MAX, 2);
+            add_filter('woocommerce_product_variation_get_price', array($this, 'force_offer_price_filter'), PHP_INT_MAX, 2);
+            add_filter('woocommerce_product_variation_get_regular_price', array($this, 'force_offer_price_filter'), PHP_INT_MAX, 2);
+            add_filter('woocommerce_product_variation_get_sale_price', array($this, 'force_offer_sale_price_filter'), PHP_INT_MAX, 2);
         }
 
         $showerror = false;
@@ -2479,6 +2530,55 @@ class Angelleye_Offers_For_Woocommerce {
                 wc_add_notice($message, $message_type);
             }
         }
+    }
+
+    /**
+     * Force the accepted offer price for offer cart-item products.
+     *
+     * Hooked at PHP_INT_MAX on woocommerce_product_get_price /
+     * woocommerce_product_get_regular_price (and their variation equivalents) so
+     * it runs after any other plugin that filters the price (e.g. GVM Price
+     * Test). Only product objects recorded in $this->offer_price_map during
+     * my_woocommerce_before_calculate_totals() are affected, so catalog and shop
+     * pricing for non-offer items is left untouched.
+     *
+     * @param string|float $price   Price coming through the filter chain.
+     * @param WC_Product   $product Product being priced.
+     *
+     * @since 3.0.0
+     *
+     * @return string|float
+     */
+    public function force_offer_price_filter($price, $product) {
+        if (($product instanceof WC_Product) && function_exists('spl_object_id')) {
+            $object_id = spl_object_id($product);
+            if (isset($this->offer_price_map[$object_id])) {
+                return $this->offer_price_map[$object_id];
+            }
+        }
+        return $price;
+    }
+
+    /**
+     * Force an empty sale price for offer cart-item products.
+     *
+     * Keeps WC_Product::is_on_sale() false for offer items so no leftover
+     * "on sale" styling appears even if another plugin filters the sale price.
+     *
+     * @param string|float $sale_price Sale price coming through the filter chain.
+     * @param WC_Product   $product    Product being priced.
+     *
+     * @since 3.0.0
+     *
+     * @return string|float
+     */
+    public function force_offer_sale_price_filter($sale_price, $product) {
+        if (($product instanceof WC_Product) && function_exists('spl_object_id')) {
+            if (isset($this->offer_price_map[spl_object_id($product)])) {
+                return '';
+            }
+        }
+        return $sale_price;
     }
 
     /**
