@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var string
      */
-    const VERSION = '3.1.3';
+    const VERSION = '3.1.4';
 
     /**
      * Unique pluginidentifier
@@ -51,7 +51,6 @@ class Angelleye_Offers_For_Woocommerce {
      * force_offer_price_filter() / force_offer_sale_price_filter() so the
      * accepted offer price stays authoritative during cart/checkout
      * calculation even when another plugin filters the price at read time
-     * (e.g. GVM Price Test forcing woocommerce_product_get_price).
      *
      * @since 3.0.0
      *
@@ -2465,8 +2464,8 @@ class Angelleye_Offers_For_Woocommerce {
                     /**
                      * The setters above only store props; WooCommerce reads the
                      * price back through woocommerce_product_get_price (view
-                     * context) when it calculates totals. Other plugins (e.g. GVM
-                     * Price Test) can be hooked there and override our value.
+                     * context) when it calculates totals. Other plugins
+                     * can be hooked there and override our value.
                      * Track this product object so force_offer_price_filter() can
                      * re-assert the offer price at the end of that filter chain.
                      */
@@ -2537,8 +2536,8 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * Hooked at PHP_INT_MAX on woocommerce_product_get_price /
      * woocommerce_product_get_regular_price (and their variation equivalents) so
-     * it runs after any other plugin that filters the price (e.g. GVM Price
-     * Test). Only product objects recorded in $this->offer_price_map during
+     * it runs after any other plugin that filters the price.
+     * Only product objects recorded in $this->offer_price_map during
      * my_woocommerce_before_calculate_totals() are affected, so catalog and shop
      * pricing for non-offer items is left untouched.
      *
