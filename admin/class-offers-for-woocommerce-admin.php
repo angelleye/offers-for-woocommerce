@@ -2379,6 +2379,62 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         );
 
         add_settings_field(
+                'general_setting_global_auto_accept_enabled', // ID
+                __('Enable Global Auto Accept', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_global_auto_accept_enabled',
+                    'description' => __('Automatically accept qualifying offers on every product. This is only applied to products that do not have their own Auto Accept setting enabled.', 'offers-for-woocommerce'),
+                )
+        );
+
+        add_settings_field(
+                'general_setting_global_auto_accept_percentage', // ID
+                __('Global Auto Accept Percentage', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_text'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_global_auto_accept_percentage',
+                    'description' => __('Offers at or above this percentage of the product price are accepted automatically. Enter a number from 1 to 100.', 'offers-for-woocommerce'),
+                )
+        );
+
+        add_settings_field(
+                'general_setting_global_auto_decline_enabled', // ID
+                __('Enable Global Auto Decline', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_global_auto_decline_enabled',
+                    'description' => __('Automatically decline qualifying offers on every product. This is only applied to products that do not have their own Auto Decline setting enabled.', 'offers-for-woocommerce'),
+                )
+        );
+
+        add_settings_field(
+                'general_setting_global_auto_decline_percentage', // ID
+                __('Global Auto Decline Percentage', 'offers-for-woocommerce'), // Title
+                array($this, 'offers_for_woocommerce_options_page_output_input_text'), // Callback
+                'offers_for_woocommerce_general_settings', // Page
+                'general_settings', // Section
+                array(
+                    'option_name' => 'offers_for_woocommerce_options_general',
+                    'input_required' => FALSE,
+                    'input_label' => 'general_setting_global_auto_decline_percentage',
+                    'description' => __('Offers at or below this percentage of the product price are declined automatically. Enter a number from 1 to 100.', 'offers-for-woocommerce'),
+                )
+        );
+
+        add_settings_field(
                 'general_setting_disabled_make_offer_on_product_sale', // ID
                 __('Disable for Sale Items', 'offers-for-woocommerce'), // Title
                 array($this, 'offers_for_woocommerce_options_page_output_input_checkbox'), // Callback TEXT input
