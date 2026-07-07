@@ -2944,6 +2944,9 @@ class Angelleye_Offers_For_Woocommerce {
         if ($enabled === 'yes') {
             return $enabled; // Product-level setting present - respect it.
         }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $enabled; // Product opted out of the global settings.
+        }
         $settings = ofwc_get_general_settings();
         return !empty($settings['general_setting_global_auto_accept_enabled']) ? 'yes' : $enabled;
     }
@@ -2966,6 +2969,9 @@ class Angelleye_Offers_For_Woocommerce {
         $product_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_enabled', true);
         if ($product_enabled === 'yes') {
             return $percentage; // Product-level setting present - use its percentage.
+        }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $percentage; // Product opted out of the global settings.
         }
         $settings = ofwc_get_general_settings();
         if (!empty($settings['general_setting_global_auto_accept_enabled'])
@@ -2993,6 +2999,9 @@ class Angelleye_Offers_For_Woocommerce {
         if ($enabled === 'yes') {
             return $enabled; // Product-level setting present - respect it.
         }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $enabled; // Product opted out of the global settings.
+        }
         $settings = ofwc_get_general_settings();
         return !empty($settings['general_setting_global_auto_decline_enabled']) ? 'yes' : $enabled;
     }
@@ -3015,6 +3024,9 @@ class Angelleye_Offers_For_Woocommerce {
         if ($product_enabled === 'yes') {
             return $percentage; // Product-level setting present - use its percentage.
         }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $percentage; // Product opted out of the global settings.
+        }
         $settings = ofwc_get_general_settings();
         if (!empty($settings['general_setting_global_auto_decline_enabled'])
             && isset($settings['general_setting_global_auto_decline_percentage'])
@@ -3022,6 +3034,19 @@ class Angelleye_Offers_For_Woocommerce {
             return $settings['general_setting_global_auto_decline_percentage'];
         }
         return $percentage;
+    }
+
+    /**
+     * Whether a product is excluded from the store-wide global auto
+     * accept/decline settings via its per-product "Ignore Global Auto
+     * Accept/Decline" option.
+     *
+     * @param int $product_id Product ID.
+     *
+     * @return bool
+     */
+    public function ofw_product_ignores_global_auto_settings($product_id) {
+        return get_post_meta($product_id, '_offers_for_woocommerce_ignore_global_auto_settings', true) === 'yes';
     }
 
     /**
