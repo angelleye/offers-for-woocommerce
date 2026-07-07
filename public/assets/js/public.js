@@ -95,11 +95,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
             });
 
-            $(".variations_form").on("show_variation", function () {
+            $(".variations_form").on("show_variation", function (event, variation) {
                 if ($('.single_add_to_cart_button').hasClass('disabled')) {
                     $('.single_offer_button').addClass('disabled');
                 } else {
                     $('.single_offer_button').removeClass('disabled');
+                }
+                // Refresh the Original Price display in the Make Offer form
+                // with the selected variation's price. WC builds price_html via
+                // the same filter chain Aelia / VillaTheme hook into, so the
+                // currency is correct without any plugin-specific code here.
+                if (variation && typeof variation.price_html !== 'undefined' && variation.price_html !== '') {
+                    $('.ofwc-original-price-value').html(variation.price_html);
                 }
             });
 

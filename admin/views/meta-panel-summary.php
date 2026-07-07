@@ -329,7 +329,7 @@
                         } else {
                             $expiry_date_formated = '';
                         } ?>
-                        <input type="text" name="offer_expiration_date" class="datepicker" id="offer-expiration-date" value="<?php echo $expiry_date_formated; ?>" autocomplete="off">
+                        <input type="text" name="offer_expiration_date" class="ofw-offer-expiration-datepicker" id="offer-expiration-date" value="<?php echo $expiry_date_formated; ?>" autocomplete="off">
                         <input type="hidden" name="offer_expiration_date_hidden" id="offer_expiration_date_hidden" value="" />
                     </div>
 

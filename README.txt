@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 6.9.4
-Stable tag: 3.1.2
+Tested up to: 7.0
+Stable tag: 3.1.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,18 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.1.5 =
+* Feature - Added store-wide Global Auto Accept and Global Auto Decline settings (with percentages) on the General settings tab, applied automatically to products that do not have their own auto accept/decline configured. Includes a per-product "Ignore Global Auto Accept/Decline" option to exclude individual products. ([#534](https://github.com/angelleye/offers-for-woocommerce/pull/534))
+
+= 3.1.4 - 06.08.2026 =
+* Fix - Offer items in the cart now display the agreed offer price cleanly, without the original strikethrough price or "Sale" badge appearing next to it. ([#532](https://github.com/angelleye/offers-for-woocommerce/pull/532))
+* Fix - The accepted offer price is now respected at checkout even when other plugins (such as price testing or dynamic pricing tools) try to change product prices on the fly, so customers are always charged the price they agreed to. ([#533](https://github.com/angelleye/offers-for-woocommerce/pull/533))
+
+= 3.1.3 - 05.25.2026 =
+* Fix - Expired offer links can no longer be used at checkout. Offers now expire automatically on schedule, and the cart will remove or block them so they can't be purchased at the discounted price after expiration. ([#529](https://github.com/angelleye/offers-for-woocommerce/pull/529))
+* Fix - The "Offer Expires" date picker on the admin offer page now opens reliably even when other plugins on the site use a similar date/time picker. ([#530](https://github.com/angelleye/offers-for-woocommerce/pull/530))
+* Feature - Added an "Original Price" row to the Make Offer form so shoppers can see the product's listed price while entering their offer. The price updates automatically when a variation is selected and is hidden for price-on-request products. ([#531](https://github.com/angelleye/offers-for-woocommerce/pull/531))
 
 = 3.1.2 - 04.25.2026 =
 * Fix - Make Offer button no longer overlaps the Add to Cart button on the single product page; layout now flows inline on desktop/tablet and stacks vertically on mobile. ([#526](https://github.com/angelleye/offers-for-woocommerce/pull/526))

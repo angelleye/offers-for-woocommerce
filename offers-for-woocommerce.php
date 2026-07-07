@@ -5,7 +5,7 @@
  * Plugin Name:       Offers for WooCommerce
  * Plugin URI:        http://www.angelleye.com/product/offers-for-woocommerce
  * Description:       Accept offers for products on your website.  Respond with accept, deny, or counter-offer, and manage all active offers/counters easily.
- * Version:           3.1.2.1
+ * Version:           3.1.5
  * Author:            Angell EYE
  * Author URI:        http://www.angelleye.com/
  * License:           GNU General Public License v3.0
@@ -14,7 +14,7 @@
  * Domain Path:       /languages/
  * GitHub Plugin URI: https://github.com/angelleye/offers-for-woocommerce
  * Requires at least: 5.5
- * Tested up to: 6.9.4
+ * Tested up to: 7.0
  * WC requires at least: 3.0.0
  * WC tested up to: 10.7.0
  * Requires Plugins: woocommerce
@@ -83,6 +83,13 @@ require_once(plugin_dir_path(__FILE__) . 'includes/compatibility/class-ofw-compa
 add_action('plugins_loaded', array('OFW_Compatibility_Loader', 'load'), 20);
 
 /**
+ * Offer expiration enforcement (cron sweep + cart/checkout guards).
+ * Self-contained module — owns its own hook registration.
+ */
+require_once(plugin_dir_path(__FILE__) . 'includes/class-ofw-offer-expiration.php');
+OFW_Offer_Expiration::register();
+
+/**
  * Shared AngellEYE push-notifications class. Self-contained — copy the file as-is
  * into other AngellEYE plugins; the class_exists guard ensures only one copy loads.
  */
@@ -118,8 +125,10 @@ function angelleye_ofwc_load_plugin_textdomain() {
  * @since 0.1.0
  */
 register_activation_hook(__FILE__, array('Angelleye_Offers_For_Woocommerce', 'activate'));
+register_activation_hook(__FILE__, array('OFW_Offer_Expiration', 'activate'));
 
 register_deactivation_hook(__FILE__, array('Angelleye_Offers_For_Woocommerce', 'deactivate'));
+register_deactivation_hook(__FILE__, array('OFW_Offer_Expiration', 'deactivate'));
 
 /**
  * Plugins Loaded init
