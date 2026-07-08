@@ -118,8 +118,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 == Changelog ==
 
-= 3.1.5 =
+= 3.1.5 - 07.08.2026 =
 * Feature - Added store-wide Global Auto Accept and Global Auto Decline settings (with percentages) on the General settings tab, applied automatically to products that do not have their own auto accept/decline configured. Includes a per-product "Ignore Global Auto Accept/Decline" option to exclude individual products. ([#534](https://github.com/angelleye/offers-for-woocommerce/pull/534))
+* Fix - Corrected the admin email suppression check when submitting a new offer so admin notifications are handled consistently. ([#534](https://github.com/angelleye/offers-for-woocommerce/pull/534))
 
 = 3.1.4 - 06.08.2026 =
 * Fix - Offer items in the cart now display the agreed offer price cleanly, without the original strikethrough price or "Sale" badge appearing next to it. ([#532](https://github.com/angelleye/offers-for-woocommerce/pull/532))
