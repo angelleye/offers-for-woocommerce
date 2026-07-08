@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var string
      */
-    const VERSION = '3.1.4';
+    const VERSION = '3.1.5';
 
     /**
      * Unique pluginidentifier
@@ -167,6 +167,17 @@ class Angelleye_Offers_For_Woocommerce {
              */
             add_action('woocommerce_before_checkout_process', array($this, 'ae_ofwc_woocommerce_before_checkout_process'));
             add_action('auto_accept_auto_decline_handler', array($this, 'ofwc_auto_accept_auto_decline_handler'), 10, 4);
+
+            /**
+             * Global auto accept/decline fallback.
+             * Applies the store-wide setting only when a product has no
+             * product-level auto accept/decline configured.
+             */
+            add_filter('aeofw_auto_accept_enabled', array($this, 'ofw_global_auto_accept_enabled'), 10, 4);
+            add_filter('aeofw_auto_accept_percentage', array($this, 'ofw_global_auto_accept_percentage'), 10, 4);
+            add_filter('aeofw_auto_decline_enabled', array($this, 'ofw_global_auto_decline_enabled'), 10, 4);
+            add_filter('aeofw_auto_decline_percentage', array($this, 'ofw_global_auto_decline_percentage'), 10, 4);
+
             add_action('init', array($this, 'ofw_create_required_files'), 0);
             add_action('woocommerce_make_offer_form_end', array($this, 'woocommerce_make_offer_form_end_own'), 10, 1);
             add_action('woocommerce_after_offer_submit', array($this, 'ofw_mailing_list_handler'), 10, 2);
@@ -1965,8 +1976,19 @@ class Angelleye_Offers_For_Woocommerce {
                 $user_offer_percentage = $productData['user_offer_percentage'];
                 $product_url = $productData['product_url'];
                 $offer_uid = $productData['offer_uid'];
+
+                /**
+                 * Respect the same auto decline filters used in
+                 * ofwc_auto_accept_auto_decline_handler() so that when auto
+                 * decline is forced globally the admin "new offer" email is
+                 * suppressed too.
+                 */
+                $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
+                $post_meta_auto_decline_enabled = apply_filters('aeofw_auto_decline_enabled', $post_meta_auto_decline_enabled, $product_id, $variant_id, $offer_id);
+
                 if (isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled == 'yes') {
                     $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+                    $auto_decline_percentage = apply_filters('aeofw_auto_decline_percentage', $auto_decline_percentage, $product_id, $variant_id, $offer_id);
                     if (isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage)) {
                         if ((int) $auto_decline_percentage >= (int) $user_offer_percentage) {
                             $offer_is_auto_decline = 'yes';
@@ -2915,6 +2937,27 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofwc_auto_accept_auto_decline_handler($offer_id, $product_id, $variant_id, $emails) {
         $post_meta_auto_accept_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_enabled', true);
         $post_meta_auto_decline_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
+
+        /**
+         * Filters to force auto accept/decline regardless of the per-product setting.
+         *
+         * Return the string 'yes' to enable (or '' / anything else to leave disabled).
+         * These make it possible to apply auto accept/decline to every product at
+         * once - including products added in the future - without toggling each one.
+         *
+         * Example - auto accept/decline on all products:
+         *   add_filter( 'aeofw_auto_accept_enabled', '__return_yes_string' );  // see note below
+         *
+         * @param string $enabled     Current value ('yes' when enabled on the product).
+         * @param int    $product_id  Product ID the offer was made on.
+         * @param int    $variant_id  Variation ID (0 when not a variation).
+         * @param int    $offer_id    Offer post ID.
+         *
+         * @since 1.2.0
+         */
+        $post_meta_auto_accept_enabled  = apply_filters('aeofw_auto_accept_enabled', $post_meta_auto_accept_enabled, $product_id, $variant_id, $offer_id);
+        $post_meta_auto_decline_enabled = apply_filters('aeofw_auto_decline_enabled', $post_meta_auto_decline_enabled, $product_id, $variant_id, $offer_id);
+
         $productData = $this->ofwc_get_product_detail($offer_id, $product_id, $variant_id);
         $offer_price = $productData['offer_price'];
         $user_offer_percentage = $productData['user_offer_percentage'];
@@ -2924,6 +2967,20 @@ class Angelleye_Offers_For_Woocommerce {
         if (isset($post_meta_auto_accept_enabled) && $post_meta_auto_accept_enabled === 'yes') {
 
             $auto_accept_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_percentage', true);
+
+            /**
+             * Filter the auto accept threshold percentage. Combined with
+             * 'aeofw_auto_accept_enabled' this lets a global default be set for
+             * every product. Offers at or above this percentage of the price are
+             * accepted automatically.
+             *
+             * @param string|int $auto_accept_percentage Current threshold.
+             * @param int        $product_id             Product ID.
+             * @param int        $variant_id             Variation ID (0 when none).
+             * @param int        $offer_id               Offer post ID.
+             */
+            $auto_accept_percentage = apply_filters('aeofw_auto_accept_percentage', $auto_accept_percentage, $product_id, $variant_id, $offer_id);
+
             if (isset($offer_price) && !empty($offer_price) && isset($auto_accept_percentage) && !empty($auto_accept_percentage)) {
 
                 if ((int) $auto_accept_percentage <= (int) $user_offer_percentage) {
@@ -2943,6 +3000,20 @@ class Angelleye_Offers_For_Woocommerce {
         if (isset($post_meta_auto_decline_enabled) && $post_meta_auto_decline_enabled === 'yes') {
 
             $auto_decline_percentage = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_percentage', true);
+
+            /**
+             * Filter the auto decline threshold percentage. Combined with
+             * 'aeofw_auto_decline_enabled' this lets a global default be set for
+             * every product. Offers at or below this percentage of the price are
+             * declined automatically.
+             *
+             * @param string|int $auto_decline_percentage Current threshold.
+             * @param int        $product_id              Product ID.
+             * @param int        $variant_id              Variation ID (0 when none).
+             * @param int        $offer_id                Offer post ID.
+             */
+            $auto_decline_percentage = apply_filters('aeofw_auto_decline_percentage', $auto_decline_percentage, $product_id, $variant_id, $offer_id);
+
             if (isset($offer_price) && !empty($offer_price) && isset($auto_decline_percentage) && !empty($auto_decline_percentage)) {
                 if ((int) $auto_decline_percentage >= (int) $user_offer_percentage) {
                     do_action('ofw_before_auto_decline_offer', $offer_id, $product_id, $variant_id, $emails);
@@ -2953,6 +3024,129 @@ class Angelleye_Offers_For_Woocommerce {
             }
         }
 	    return null;
+    }
+
+    /**
+     * Global auto accept - enabled fallback.
+     *
+     * Applies the store-wide "Enable Global Auto Accept" setting only when the
+     * product itself has NOT enabled auto accept. A product-level setting always
+     * takes precedence over the global default.
+     *
+     * @param string $enabled    Per-product value ('yes' when enabled on the product).
+     * @param int    $product_id Product ID.
+     * @param int    $variant_id Variation ID (0 when none).
+     * @param int    $offer_id   Offer post ID.
+     *
+     * @return string 'yes' when auto accept should run, otherwise the original value.
+     */
+    public function ofw_global_auto_accept_enabled($enabled, $product_id, $variant_id, $offer_id) {
+        if ($enabled === 'yes') {
+            return $enabled; // Product-level setting present - respect it.
+        }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $enabled; // Product opted out of the global settings.
+        }
+        $settings = ofwc_get_general_settings();
+        return !empty($settings['general_setting_global_auto_accept_enabled']) ? 'yes' : $enabled;
+    }
+
+    /**
+     * Global auto accept - percentage fallback.
+     *
+     * Supplies the store-wide auto accept percentage when the product itself has
+     * not enabled auto accept. When the product has its own auto accept enabled,
+     * its percentage is used unchanged.
+     *
+     * @param string|int $percentage Per-product percentage.
+     * @param int        $product_id Product ID.
+     * @param int        $variant_id Variation ID (0 when none).
+     * @param int        $offer_id   Offer post ID.
+     *
+     * @return string|int
+     */
+    public function ofw_global_auto_accept_percentage($percentage, $product_id, $variant_id, $offer_id) {
+        $product_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_accept_enabled', true);
+        if ($product_enabled === 'yes') {
+            return $percentage; // Product-level setting present - use its percentage.
+        }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $percentage; // Product opted out of the global settings.
+        }
+        $settings = ofwc_get_general_settings();
+        if (!empty($settings['general_setting_global_auto_accept_enabled'])
+            && isset($settings['general_setting_global_auto_accept_percentage'])
+            && $settings['general_setting_global_auto_accept_percentage'] !== '') {
+            return $settings['general_setting_global_auto_accept_percentage'];
+        }
+        return $percentage;
+    }
+
+    /**
+     * Global auto decline - enabled fallback.
+     *
+     * Applies the store-wide "Enable Global Auto Decline" setting only when the
+     * product itself has NOT enabled auto decline.
+     *
+     * @param string $enabled    Per-product value ('yes' when enabled on the product).
+     * @param int    $product_id Product ID.
+     * @param int    $variant_id Variation ID (0 when none).
+     * @param int    $offer_id   Offer post ID.
+     *
+     * @return string 'yes' when auto decline should run, otherwise the original value.
+     */
+    public function ofw_global_auto_decline_enabled($enabled, $product_id, $variant_id, $offer_id) {
+        if ($enabled === 'yes') {
+            return $enabled; // Product-level setting present - respect it.
+        }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $enabled; // Product opted out of the global settings.
+        }
+        $settings = ofwc_get_general_settings();
+        return !empty($settings['general_setting_global_auto_decline_enabled']) ? 'yes' : $enabled;
+    }
+
+    /**
+     * Global auto decline - percentage fallback.
+     *
+     * Supplies the store-wide auto decline percentage when the product itself has
+     * not enabled auto decline.
+     *
+     * @param string|int $percentage Per-product percentage.
+     * @param int        $product_id Product ID.
+     * @param int        $variant_id Variation ID (0 when none).
+     * @param int        $offer_id   Offer post ID.
+     *
+     * @return string|int
+     */
+    public function ofw_global_auto_decline_percentage($percentage, $product_id, $variant_id, $offer_id) {
+        $product_enabled = get_post_meta($product_id, '_offers_for_woocommerce_auto_decline_enabled', true);
+        if ($product_enabled === 'yes') {
+            return $percentage; // Product-level setting present - use its percentage.
+        }
+        if ($this->ofw_product_ignores_global_auto_settings($product_id)) {
+            return $percentage; // Product opted out of the global settings.
+        }
+        $settings = ofwc_get_general_settings();
+        if (!empty($settings['general_setting_global_auto_decline_enabled'])
+            && isset($settings['general_setting_global_auto_decline_percentage'])
+            && $settings['general_setting_global_auto_decline_percentage'] !== '') {
+            return $settings['general_setting_global_auto_decline_percentage'];
+        }
+        return $percentage;
+    }
+
+    /**
+     * Whether a product is excluded from the store-wide global auto
+     * accept/decline settings via its per-product "Ignore Global Auto
+     * Accept/Decline" option.
+     *
+     * @param int $product_id Product ID.
+     *
+     * @return bool
+     */
+    public function ofw_product_ignores_global_auto_settings($product_id) {
+        return get_post_meta($product_id, '_offers_for_woocommerce_ignore_global_auto_settings', true) === 'yes';
     }
 
     /**
