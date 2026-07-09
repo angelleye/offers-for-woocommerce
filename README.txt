@@ -120,6 +120,7 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 
 = 3.1.6 =
 * Tweak - Auto-accepted offers no longer redirect the buyer to the cart; the offer is accepted and the buyer receives the standard acceptance email, matching the manual-accept flow. (Legacy add-to-cart behavior can be restored via the aeofw_auto_accept_add_to_cart_redirect filter.) ([#535](https://github.com/angelleye/offers-for-woocommerce/pull/535))
+* Tweak - Clarified the Global Auto Accept and Global Auto Decline percentage field descriptions with worked examples so the thresholds (percentage of the product price) are easy to set correctly. ([#535](https://github.com/angelleye/offers-for-woocommerce/pull/535))
 
 = 3.1.5 - 07.08.2026 =
 * Feature - Added store-wide Global Auto Accept and Global Auto Decline settings (with percentages) on the General settings tab, applied automatically to products that do not have their own auto accept/decline configured. Includes a per-product "Ignore Global Auto Accept/Decline" option to exclude individual products. ([#534](https://github.com/angelleye/offers-for-woocommerce/pull/534))
