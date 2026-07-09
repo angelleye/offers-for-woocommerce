@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
 Tested up to: 7.0
-Stable tag: 3.1.5
+Stable tag: 3.1.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,9 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.1.6 =
+* Tweak - Auto-accepted offers no longer redirect the buyer to the cart; the offer is accepted and the buyer receives the standard acceptance email, matching the manual-accept flow. (Legacy add-to-cart behavior can be restored via the aeofw_auto_accept_add_to_cart_redirect filter.) ([#535](https://github.com/angelleye/offers-for-woocommerce/pull/535))
 
 = 3.1.5 - 07.08.2026 =
 * Feature - Added store-wide Global Auto Accept and Global Auto Decline settings (with percentages) on the General settings tab, applied automatically to products that do not have their own auto accept/decline configured. Includes a per-product "Ignore Global Auto Accept/Decline" option to exclude individual products. ([#534](https://github.com/angelleye/offers-for-woocommerce/pull/534))
