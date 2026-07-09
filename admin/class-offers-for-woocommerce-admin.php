@@ -2411,7 +2411,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'option_name' => 'offers_for_woocommerce_options_general',
                     'input_required' => FALSE,
                     'input_label' => 'general_setting_global_auto_accept_percentage',
-                    'description' => __('Offers at or above this percentage of the product price are accepted automatically. Enter a number from 1 to 100.', 'offers-for-woocommerce'),
+                    'description' => __('Enter the offer amount as a percentage of the product price. Offers at or above this percentage are accepted automatically. Example: 90 automatically accepts any offer that is 90% of the price or more (up to 10% off) &mdash; so on a $100 product, offers of $90 or more are accepted. Enter a number from 1 to 100.', 'offers-for-woocommerce'),
                 )
         );
 
@@ -2439,7 +2439,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
                     'option_name' => 'offers_for_woocommerce_options_general',
                     'input_required' => FALSE,
                     'input_label' => 'general_setting_global_auto_decline_percentage',
-                    'description' => __('Offers at or below this percentage of the product price are declined automatically. Enter a number from 1 to 100.', 'offers-for-woocommerce'),
+                    'description' => __('Enter the offer amount as a percentage of the product price. Offers at or below this percentage are declined automatically. Example: 70 automatically declines any offer that is 70% of the price or less (more than 30% off) &mdash; so on a $100 product, offers of $70 or less are declined. Enter a number from 1 to 100.', 'offers-for-woocommerce'),
                 )
         );
 

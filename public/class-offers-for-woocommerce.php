@@ -24,7 +24,7 @@ class Angelleye_Offers_For_Woocommerce {
      *
      * @var string
      */
-    const VERSION = '3.1.5';
+    const VERSION = '3.1.6';
 
     /**
      * Unique pluginidentifier
@@ -2988,11 +2988,36 @@ class Angelleye_Offers_For_Woocommerce {
                     do_action('ofw_before_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
                     $this->ofw_auto_approve_offer($offer_id, $emails );
                     do_action('ofw_after_auto_approve_offer', $offer_id, $product_id, $variant_id, $emails);
-                    $link_insert = ( strpos($product_url, '?') ) ? '&' : '?';
-                    $redirect = $product_url . $link_insert . '__aewcoapi=1&woocommerce-offer-id=' . $offer_id . '&woocommerce-offer-uid=' . $offer_uid;
-                    echo json_encode(array("statusmsg" => 'accepted-offer', 'redirect' => $redirect));
-                    exit;
-                    //return true;
+
+                    /**
+                     * By default an auto-accepted offer does NOT redirect the buyer
+                     * to add the item to the cart. The offer is marked accepted and
+                     * the buyer is sent the standard "Accepted Offer" email (handled
+                     * by ofw_auto_approve_offer() above), matching the manual-accept
+                     * flow - the buyer simply receives their confirmation email.
+                     *
+                     * Return true from this filter to restore the legacy behavior of
+                     * immediately redirecting the buyer to the cart with the accepted
+                     * offer applied.
+                     *
+                     * @param bool $redirect_to_cart Whether to redirect to the cart.
+                     * @param int  $offer_id         Offer post ID.
+                     * @param int  $product_id       Product ID.
+                     * @param int  $variant_id       Variation ID (0 when none).
+                     */
+                    if (apply_filters('aeofw_auto_accept_add_to_cart_redirect', false, $offer_id, $product_id, $variant_id)) {
+                        $link_insert = ( strpos($product_url, '?') ) ? '&' : '?';
+                        $redirect = $product_url . $link_insert . '__aewcoapi=1&woocommerce-offer-id=' . $offer_id . '&woocommerce-offer-uid=' . $offer_uid;
+                        echo json_encode(array("statusmsg" => 'accepted-offer', 'redirect' => $redirect));
+                        exit;
+                    }
+
+                    /**
+                     * Fall through so new_offer_form_submit() sends the standard
+                     * 'success' response and the buyer sees the normal
+                     * "offer submitted" confirmation (no cart redirect).
+                     */
+                    return;
                 }
             }
         }
