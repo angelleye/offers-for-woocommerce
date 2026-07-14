@@ -3823,24 +3823,52 @@ class Angelleye_Offers_For_Woocommerce {
     public function ofwc_get_product_detail($offer_id, $product_id, $variant_id) {
 
         $productData = array();
-        if (isset($variant_id) && !empty($variant_id)) {
-            $variable_product = new WC_Product_Variation($variant_id);
-            $actual_regular_price = (isset($variable_product->regular_price) && !empty($variable_product->regular_price) ) ? $variable_product->regular_price : 0;
-            $actual_sales_price = $variable_product->sale_price;
-        } else {
-            $actual_regular_price = get_post_meta($product_id, '_regular_price', true);
-            $actual_sales_price = get_post_meta($product_id, '_sale_price', true);
-            $actual_regular_price = (isset($actual_regular_price) && !empty($actual_regular_price) ) ? $actual_regular_price : 0;
+
+        $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
+
+        /**
+         * Base the auto accept/decline decision on the live, filtered price.
+         * get_price() runs the woocommerce_product_get_price (and, for
+         * variations, woocommerce_product_variation_get_price) filter, so
+         * dynamic pricing plugins - scheduled price decay, category discounts,
+         * etc. - are respected and the decision matches the price the buyer
+         * actually saw. The accepted offer price still wins at checkout via the
+         * separate cart/checkout handling.
+         */
+        $product_price = ( $product ) ? (float) $product->get_price() : 0;
+
+        /**
+         * Fall back to the price stored in the product settings when the active
+         * price is unavailable (e.g. price-on-request products whose get_price()
+         * is empty), preserving the previous behavior in that case.
+         */
+        if ($product_price <= 0) {
+            if ($variant_id && $product) {
+                $product_price = (float) $product->get_regular_price();
+            } else {
+                $actual_regular_price = get_post_meta($product_id, '_regular_price', true);
+                $actual_sales_price = get_post_meta($product_id, '_sale_price', true);
+                $product_price = (!empty($actual_sales_price)) ? (float) $actual_sales_price : (float) $actual_regular_price;
+            }
         }
 
-        $product_price = (isset($actual_sales_price) && !empty($actual_sales_price)) ? $actual_sales_price : $actual_regular_price;
+        /**
+         * Allow the price the offer is measured against for the auto
+         * accept/decline decision to be overridden.
+         *
+         * @param float $product_price Price used to calculate the offer percentage.
+         * @param int   $product_id    Product ID.
+         * @param int   $variant_id    Variation ID (0 when none).
+         * @param int   $offer_id      Offer post ID.
+         */
+        $product_price = (float) apply_filters('aeofw_auto_decision_product_price', $product_price, $product_id, $variant_id, $offer_id);
+
         $productData['offer_price'] = $offer_price = get_post_meta($offer_id, 'offer_price_per', true);
         $productData['user_offer_percentage'] = 0;
         if ($product_price > 0) {
             $productData['user_offer_percentage'] = $this->ofwc_get_percentage($offer_price, $product_price);
         }
-        $product = ( $variant_id ) ? wc_get_product($variant_id) : wc_get_product($product_id);
-        $productData['product_url'] = $product->get_permalink();
+        $productData['product_url'] = $product ? $product->get_permalink() : '';
         $productData['offer_uid'] = get_post_meta($offer_id, 'offer_uid', true);
 
         return $productData;
