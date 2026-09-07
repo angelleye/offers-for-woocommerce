@@ -32,6 +32,17 @@ $product_price = angelleye_ofw_get_product_price_multi_currency($offer_args['pro
 	$decline_url = dokan_get_navigation_url('woocommerce_offer/decline/' . $offer_args['offer_id']);
 	$offer_edit_page_url = trim(dokan_get_navigation_url('woocommerce_offer/?action=edit&id=' . $offer_args['offer_id']),'/');
 
+	/**
+	 * Accepting or declining from these buttons is a state change, so the Dokan add-on
+	 * requires proof the request was intentional. A nonce is unusable here: it is tied to a
+	 * session and expires long before a vendor may open the email. The add-on accepts a
+	 * signed, offer- and action-bound token instead.
+	 */
+	if ( function_exists( 'ofwc_dokan_add_offer_action_token' ) ) {
+		$accept_url  = ofwc_dokan_add_offer_action_token( $accept_url, $offer_args['offer_id'], 'accept' );
+		$decline_url = ofwc_dokan_add_offer_action_token( $decline_url, $offer_args['offer_id'], 'decline' );
+	}
+
 	printf('<div style="text-align: center;">
 <p style="font-size: 16px;text-align: center;font-family: inherit;">
 <strong>' . __('New offer submitted on', 'offers-for-woocommerce') . ' %s.</strong><br />' .
