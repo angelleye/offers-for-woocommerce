@@ -18,6 +18,13 @@ class WC_Open_Offer_Email extends WC_Email {
     public $template_plain_path;
 
     /**
+     * Arguments of the offer being emailed, set by trigger().
+     *
+     * @var array
+     */
+    public $offer_args = array();
+
+    /**
      * Set email defaults
      *
      * @since 0.1.0
