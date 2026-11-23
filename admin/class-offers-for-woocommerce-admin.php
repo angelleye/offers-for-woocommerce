@@ -451,11 +451,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         add_action('after_delete_post', array($this, 'ofw_before_product_trash_action'), 10, 1);
         add_action('untrashed_post', array($this, 'ofw_before_product_untrash_action'), 10, 1);
         add_action('admin_head', array($this, 'ofwc_custom_style'));
-        /**
-         * Action - woocommerce_order_status_completed
-         * @since   0.1.0
-         */
-        add_action('woocommerce_order_status_completed', array($this, 'ofwc_woocommerce_checkout_order_processed'));
+        // Offers are completed by OFW_Offer_Completion as soon as the order is paid.
 
         /**
          * END - custom functions
@@ -4832,71 +4828,8 @@ class Angelleye_Offers_For_Woocommerce_Admin {
      * @return void
      */
     public function ofwc_woocommerce_checkout_order_processed($order_id) {
-        global $woocommerce;
-
-        // Get Order
-        $order = wc_get_order($order_id);
-        if (!$order) {
-            return;
-        }
-        // Get order items
-        $order_items = $order->get_items();
-        // Check for offer id
-        foreach ($order_items as $key => $value) {
-            $item_offer_id = is_object($value) && method_exists($value, 'get_meta') ? $value->get_meta('Offer ID', true) : wc_get_order_item_meta($key, 'Offer ID', true);
-            /**
-             * Update offer
-             * Add postmeta value 'offer_order_id' for this order id
-             * Set offer post status to 'completed-offer'
-             */
-            if ($item_offer_id > 0) {
-                // Update offer post args
-                $offer_data = array();
-                $offer_data['ID'] = $item_offer_id;
-                $offer_data['post_status'] = 'completed-offer';
-
-                // Update offer
-                $offer_id = wp_update_post($offer_data);
-
-                // Check for offer post id
-                if ($offer_id != 0) {
-                    // Add 'offer_order_id' postmeta to offer post
-                    add_post_meta($item_offer_id, 'offer_order_id', $order_id, true);
-
-                    // Insert WP comment on related 'offer'
-                    $comment_text = "<span>" . __('Updated - Status:', 'offers-for-woocommerce') . "</span> " . __('Completed', 'offers-for-woocommerce');
-                    $comment_text .= '<p>' . __('Related Order', 'offers-for-woocommerce') . ': ' . '<a href="' . esc_url($this->ofwc_get_order_edit_url($order_id)) . '">#' . $order_id . '</a></p>';
-
-                    $comment_data = array(
-                        'comment_post_ID' => '',
-                        'comment_author' => 'admin',
-                        'comment_author_email' => '',
-                        'comment_author_url' => '',
-                        'comment_content' => $comment_text,
-                        'comment_type' => 'offers-history',
-                        'comment_parent' => 0,
-                        'user_id' => 1,
-                        'comment_author_IP' => '127.0.0.1',
-                        'comment_agent' => '',
-                        'comment_date' => date("Y-m-d H:i:s", current_time('timestamp' )),
-                        'comment_approved' => 'post-trashed',
-                    );
-                    $new_comment_id = wp_insert_comment($comment_data);
-
-                    // insert comment meta
-                    if ($new_comment_id) {
-                        add_comment_meta($new_comment_id, 'angelleye_woocommerce_offer_id', $item_offer_id, true);
-                        add_comment_meta($new_comment_id, 'offer_status', '4', true);
-                    }
-
-                    if( !function_exists('ofw_manage_offer_single_use')) {
-                        require_once( OFW_PLUGIN_URL.'/includes/angelleye-functions.php' );
-                    }
-
-                    ofw_manage_offer_single_use($item_offer_id);
-                }
-            }
-        }
+        // Kept for code that calls it directly; completion now lives in OFW_Offer_Completion.
+        OFW_Offer_Completion::complete_offers_for_order($order_id);
     }
 
     /**

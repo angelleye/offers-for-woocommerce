@@ -90,6 +90,12 @@ require_once(plugin_dir_path(__FILE__) . 'includes/class-ofw-offer-expiration.ph
 OFW_Offer_Expiration::register();
 
 /**
+ * Offer completion: completes an offer as soon as its order is paid.
+ */
+require_once(plugin_dir_path(__FILE__) . 'includes/class-ofw-offer-completion.php');
+OFW_Offer_Completion::register();
+
+/**
  * Shared AngellEYE push-notifications class. Self-contained — copy the file as-is
  * into other AngellEYE plugins; the class_exists guard ensures only one copy loads.
  */
