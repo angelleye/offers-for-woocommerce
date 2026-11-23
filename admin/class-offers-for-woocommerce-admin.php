@@ -1849,7 +1849,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         
         // Save 'offer_expiration_date' post meta
         $offer_expire_date = !empty($_POST['offer_expiration_date_hidden']) ? wc_clean($_POST['offer_expiration_date_hidden']) : '';
-        $offer_expiration_date_formatted = !empty($offer_expire_date) ? date("Y-m-d H:i", strtotime($offer_expire_date)) : '';
+        // strtotime() returns false for anything it can't parse, and date() would turn that into 1970-01-01.
+        $offer_expire_timestamp = !empty($offer_expire_date) ? strtotime($offer_expire_date) : false;
+        $offer_expiration_date_formatted = $offer_expire_timestamp ? date("Y-m-d H:i", $offer_expire_timestamp) : '';
 
         update_post_meta($post_id, 'offer_expiration_date', $offer_expiration_date_formatted);
 
@@ -1980,7 +1982,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $offer_args['offer_email'] = $offer_email;
 
-        $offer_args['offer_expiration_date'] = ($offer_expire_date) ? $offer_expire_date : FALSE;
+        $offer_args['offer_expiration_date'] = ($offer_expiration_date_formatted) ? $offer_expiration_date_formatted : FALSE;
 
         if ($variant_id) {
             if ($product->get_sku()) {

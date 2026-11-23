@@ -2481,7 +2481,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $value['data']->set_price($value['woocommerce_offer_price_per']);
                     $value['data']->set_regular_price( $value['woocommerce_offer_price_per'] );
                     $value['data']->set_sale_price( '' );
-                    $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                    $this->set_offer_cart_item_quantity($cart_object, $key, $value);
 
                     /**
                      * The setters above only store props; WooCommerce reads the
@@ -2536,7 +2536,7 @@ class Angelleye_Offers_For_Woocommerce {
                          */
                         if ($value['woocommerce_offer_quantity'] != $_POST['cart'][$key]['qty']) {
                             $showerror = true;
-                            $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                            $this->set_offer_cart_item_quantity($cart_object, $key, $value);
                         }
                     }
                 }
@@ -4040,6 +4040,36 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Keep an offer cart item at the offer quantity.
+     *
+     * Only calls set_quantity() when the quantity differs. set_quantity() fires
+     * woocommerce_after_cart_item_quantity_update, and plugins that recalculate
+     * totals there (e.g. Dokan Pro vendor discounts) run
+     * woocommerce_before_calculate_totals again, which calls back into this
+     * plugin. Setting the quantity unconditionally looped until PHP ran out of
+     * memory.
+     *
+     * @param WC_Cart $cart      Cart.
+     * @param string  $key       Cart item key.
+     * @param array   $cart_item Cart item.
+     *
+     * @return void
+     */
+    private function set_offer_cart_item_quantity($cart, $key, $cart_item) {
+        if (!$cart || !isset($cart_item['woocommerce_offer_quantity'])) {
+            return;
+        }
+
+        $current = isset($cart->cart_contents[$key]['quantity']) ? $cart->cart_contents[$key]['quantity'] : null;
+
+        if (null !== $current && wc_stock_amount($current) == wc_stock_amount($cart_item['woocommerce_offer_quantity'])) {
+            return;
+        }
+
+        $cart->set_quantity($key, $cart_item['woocommerce_offer_quantity'], false);
+    }
+
+    /**
      * Set the offer price and quantity in the WC cart.
      *
      * @since 2.3.22
@@ -4051,7 +4081,7 @@ class Angelleye_Offers_For_Woocommerce {
             if (isset($value['woocommerce_offer_id']) && get_post_status($value['woocommerce_offer_id'])) {
                 if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
                     $value['data']->set_price($value['woocommerce_offer_price_per']);
-                    WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                    $this->set_offer_cart_item_quantity(WC()->cart, $key, $value);
                 }
             }
         }

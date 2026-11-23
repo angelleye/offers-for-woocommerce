@@ -47,13 +47,11 @@
                 if (!$ofwDatepicker.length || typeof $.fn.ofwDatetimepicker !== 'function') {
                     return;
                 }
-                var theDate = new Date(Date.parse($ofwDatepicker.ofwDatetimepicker('getValue')));
-                if (theDate === 'Invalid Date') {
-                    offer_expiration_date.value = '';
-                }
-                else{
-                    offer_expiration_date.value = customDateFormat(theDate);
-                }
+                // An empty field means no expiration. getValue() has nothing to parse then, and the
+                // resulting Invalid Date must not be sent: it was saved as 1970-01-01 and expired the offer.
+                var pickedValue = $.trim($ofwDatepicker.val());
+                var theDate = pickedValue ? new Date(Date.parse($ofwDatepicker.ofwDatetimepicker('getValue'))) : null;
+                offer_expiration_date.value = (theDate && !isNaN(theDate.getTime())) ? customDateFormat(theDate) : '';
             });
 
         }
