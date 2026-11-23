@@ -2978,7 +2978,25 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ((isset($expiration_date) && !empty($expiration_date)) && ( strtotime($expiration_date) < strtotime("today") )) {
                 $ofw_offer_expiration_date_show = 'true';
             }
+            /**
+             * The offer the buyer is waiting on an answer to: their counter offer, or the
+             * original offer while it is pending. A counter offer that repeats it is an accept.
+             */
+            $ofw_buyer_offer = null;
+            $ofw_offer_status = get_post_status($post->ID);
+            if ('buyercountered-offer' === $ofw_offer_status) {
+                $ofw_buyer_offer = array(
+                    'quantity'  => get_post_meta($post->ID, 'offer_buyer_counter_quantity', true),
+                    'price_per' => get_post_meta($post->ID, 'offer_buyer_counter_price_per', true),
+                );
+            } elseif ('publish' === $ofw_offer_status) {
+                $ofw_buyer_offer = array(
+                    'quantity'  => get_post_meta($post->ID, 'offer_quantity', true),
+                    'price_per' => get_post_meta($post->ID, 'offer_price_per', true),
+                );
+            }
             wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param', array(
+                'ofw_buyer_offer' => $ofw_buyer_offer,
                 'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show,
                 'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
                 'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),

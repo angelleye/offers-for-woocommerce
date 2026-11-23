@@ -342,6 +342,10 @@
                         <div class="aeofwc-notice-msg-inner"><?php echo __('Expiration date has passed.', 'offers-for-woocommerce'); ?></div>
                     </div>
 
+                    <div id="angelleye-woocommerce-offer-meta-summary-same-counter-notice-msg" class="angelleye-hidden">
+                        <div class="aeofwc-notice-msg-inner"><?php echo esc_html__('This counter offer is the same as the buyer\'s offer. Choose Accepted Offer instead, or change the quantity or price.', 'offers-for-woocommerce'); ?></div>
+                    </div>
+
                     <div class="woocommerce-offer-edit-submit-btn-wrap">
                         <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
                             <input name="submit" id="submit" class="button button-completed-offer" value="<?php echo __('Completed Offer', 'offers-for-woocommerce'); ?>" type="submit" disabled="disabled">
