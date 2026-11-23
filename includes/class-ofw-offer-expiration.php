@@ -45,12 +45,15 @@ if (!class_exists('OFW_Offer_Expiration')) {
         const EXPIRED_STATUS     = 'expired-offer';
         const OFFER_POST_TYPE    = 'woocommerce_offer';
         const NOTICE_GROUP       = 'ofw_expired_offer';
+        const EPOCH_REPAIR_OPTION = 'ofw_epoch_expiration_repaired';
 
         /**
          * Wire runtime hooks. Called once from the plugin bootstrap.
          */
         public static function register() {
             add_action(self::CRON_HOOK, array(__CLASS__, 'sweep_expired_offers'));
+
+            add_action('init', array(__CLASS__, 'repair_epoch_expiration_dates'));
 
             // WC fires this on cart, checkout, and AJAX cart updates — the right
             // place to keep cart contents in sync with offer validity.
@@ -174,6 +177,38 @@ if (!class_exists('OFW_Offer_Expiration')) {
                 return false;
             }
             return gmdate('Y-m-d H:i:s', $ts);
+        }
+
+        /**
+         * Clear expiration dates that were saved as 1970-01-01.
+         *
+         * Saving an offer in wp-admin with an empty "Offer Expires" field stored
+         * `1970-01-01 00:00`: the field's Invalid Date reached strtotime(), which
+         * failed, and date() turned the failure into the Unix epoch. Those offers
+         * were meant to have no expiration but read as long expired. A real
+         * expiration can't be in 1970, so the value is cleared once.
+         *
+         * Offers the hourly sweep has already moved to `expired-offer` keep that
+         * status; the previous one isn't recorded.
+         */
+        public static function repair_epoch_expiration_dates() {
+            if (get_option(self::EPOCH_REPAIR_OPTION)) {
+                return;
+            }
+
+            global $wpdb;
+
+            $offer_ids = $wpdb->get_col($wpdb->prepare(
+                "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value LIKE %s",
+                self::META_KEY,
+                $wpdb->esc_like('1970-01-01') . '%'
+            ));
+
+            foreach ($offer_ids as $offer_id) {
+                update_post_meta((int) $offer_id, self::META_KEY, '');
+            }
+
+            update_option(self::EPOCH_REPAIR_OPTION, time(), true);
         }
 
         /**

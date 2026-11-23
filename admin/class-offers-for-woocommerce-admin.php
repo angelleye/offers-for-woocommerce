@@ -1849,7 +1849,9 @@ class Angelleye_Offers_For_Woocommerce_Admin {
         
         // Save 'offer_expiration_date' post meta
         $offer_expire_date = !empty($_POST['offer_expiration_date_hidden']) ? wc_clean($_POST['offer_expiration_date_hidden']) : '';
-        $offer_expiration_date_formatted = !empty($offer_expire_date) ? date("Y-m-d H:i", strtotime($offer_expire_date)) : '';
+        // strtotime() returns false for anything it can't parse, and date() would turn that into 1970-01-01.
+        $offer_expire_timestamp = !empty($offer_expire_date) ? strtotime($offer_expire_date) : false;
+        $offer_expiration_date_formatted = $offer_expire_timestamp ? date("Y-m-d H:i", $offer_expire_timestamp) : '';
 
         update_post_meta($post_id, 'offer_expiration_date', $offer_expiration_date_formatted);
 
@@ -1980,7 +1982,7 @@ class Angelleye_Offers_For_Woocommerce_Admin {
 
         $offer_args['offer_email'] = $offer_email;
 
-        $offer_args['offer_expiration_date'] = ($offer_expire_date) ? $offer_expire_date : FALSE;
+        $offer_args['offer_expiration_date'] = ($offer_expiration_date_formatted) ? $offer_expiration_date_formatted : FALSE;
 
         if ($variant_id) {
             if ($product->get_sku()) {
@@ -2976,7 +2978,25 @@ class Angelleye_Offers_For_Woocommerce_Admin {
             if ((isset($expiration_date) && !empty($expiration_date)) && ( strtotime($expiration_date) < strtotime("today") )) {
                 $ofw_offer_expiration_date_show = 'true';
             }
+            /**
+             * The offer the buyer is waiting on an answer to: their counter offer, or the
+             * original offer while it is pending. A counter offer that repeats it is an accept.
+             */
+            $ofw_buyer_offer = null;
+            $ofw_offer_status = get_post_status($post->ID);
+            if ('buyercountered-offer' === $ofw_offer_status) {
+                $ofw_buyer_offer = array(
+                    'quantity'  => get_post_meta($post->ID, 'offer_buyer_counter_quantity', true),
+                    'price_per' => get_post_meta($post->ID, 'offer_buyer_counter_price_per', true),
+                );
+            } elseif ('publish' === $ofw_offer_status) {
+                $ofw_buyer_offer = array(
+                    'quantity'  => get_post_meta($post->ID, 'offer_quantity', true),
+                    'price_per' => get_post_meta($post->ID, 'offer_price_per', true),
+                );
+            }
             wp_localize_script('offers-for-woocommerce-admin-script', 'ofw_param', array(
+                'ofw_buyer_offer' => $ofw_buyer_offer,
                 'ofw_offer_expiration_date_show' => $ofw_offer_expiration_date_show,
                 'ofw_admin_js_currency_position' => get_option('woocommerce_currency_pos'),
                 'ofw_admin_js_thousand_separator' => wc_get_price_thousand_separator(),

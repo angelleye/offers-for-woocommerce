@@ -47,13 +47,11 @@
                 if (!$ofwDatepicker.length || typeof $.fn.ofwDatetimepicker !== 'function') {
                     return;
                 }
-                var theDate = new Date(Date.parse($ofwDatepicker.ofwDatetimepicker('getValue')));
-                if (theDate === 'Invalid Date') {
-                    offer_expiration_date.value = '';
-                }
-                else{
-                    offer_expiration_date.value = customDateFormat(theDate);
-                }
+                // An empty field means no expiration. getValue() has nothing to parse then, and the
+                // resulting Invalid Date must not be sent: it was saved as 1970-01-01 and expired the offer.
+                var pickedValue = $.trim($ofwDatepicker.val());
+                var theDate = pickedValue ? new Date(Date.parse($ofwDatepicker.ofwDatetimepicker('getValue'))) : null;
+                offer_expiration_date.value = (theDate && !isNaN(theDate.getTime())) ? customDateFormat(theDate) : '';
             });
 
         }
@@ -172,8 +170,22 @@
         /*Submit post*/
         var offer_post = document.querySelector('body.wp-admin.post-php.post-type-woocommerce_offer #post');
         if(undefined !== offer_post && offer_post !== null){
-            offer_post.addEventListener( 'submit', function (){
+            offer_post.addEventListener( 'submit', function (event){
                 var offerCheckMinValuesPassed = true;
+                var sameCounterNotice = document.getElementById('angelleye-woocommerce-offer-meta-summary-same-counter-notice-msg');
+
+                if (sameCounterNotice) {
+                    sameCounterNotice.classList.add('angelleye-hidden');
+                }
+
+                if (ofwCounterRepeatsBuyerOffer()) {
+                    event.preventDefault();
+                    if (sameCounterNotice) {
+                        sameCounterNotice.classList.remove('angelleye-hidden');
+                        sameCounterNotice.scrollIntoView({block: 'center'});
+                    }
+                    return;
+                }
 
                 if ( $('#offer-price-per').autoNumerics('get') === '0') {
                     $('#offer-price-per').autoNumerics('set', '');
@@ -191,9 +203,50 @@
                 }
 
                 if( offerCheckMinValuesPassed === false ) {
+                    // `return false` doesn't cancel a submit added with addEventListener.
+                    event.preventDefault();
                     return false;
                 }
             });
+        }
+
+        /**
+         * Whether the form counters with exactly the offer the buyer is waiting on, which
+         * would ask the buyer to accept their own offer. A counter that adds shipping
+         * changes the total, so it is allowed.
+         */
+        function ofwCounterRepeatsBuyerOffer() {
+            var buyerOffer = ofw_param.ofw_buyer_offer;
+
+            if (!buyerOffer || $('#woocommerce_offer_post_status').val() !== 'countered-offer') {
+                return false;
+            }
+
+            var decimals = parseInt(ofw_param.ofw_admin_js_number_of_decimals, 10);
+            decimals = isNaN(decimals) ? 2 : decimals;
+
+            var readNumber = function (selector) {
+                var $field = $(selector);
+                var value;
+                try {
+                    value = $field.autoNumerics('get');
+                } catch (err) {
+                    value = $field.val();
+                }
+                return parseFloat(value);
+            };
+
+            var quantity = parseFloat($('#offer-quantity').val());
+            var pricePer = readNumber('#offer-price-per');
+            var shipping = $('#ofwc_enable_shipping').is(':checked') ? readNumber('#offer_shipping_cost') : 0;
+
+            if (isNaN(quantity) || isNaN(pricePer)) {
+                return false;
+            }
+
+            return quantity === parseFloat(buyerOffer.quantity)
+                && pricePer.toFixed(decimals) === parseFloat(buyerOffer.price_per).toFixed(decimals)
+                && !(shipping > 0);
         }
 
         /*AJAX - Add Offer Note*/

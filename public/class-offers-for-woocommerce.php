@@ -245,6 +245,11 @@ class Angelleye_Offers_For_Woocommerce {
              * @since 2.3.23
              */
             add_action('woocommerce_order_status_processing', array($this, 'ofwc_woocommerce_checkout_order_processing'));
+
+            /**
+             * Record the offer on the order item, for both the classic and the block checkout.
+             */
+            add_action('woocommerce_checkout_create_order_line_item', array($this, 'ofw_add_offer_id_to_order_item'), 10, 4);
         }
     }
 
@@ -2481,7 +2486,7 @@ class Angelleye_Offers_For_Woocommerce {
                     $value['data']->set_price($value['woocommerce_offer_price_per']);
                     $value['data']->set_regular_price( $value['woocommerce_offer_price_per'] );
                     $value['data']->set_sale_price( '' );
-                    $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                    $this->set_offer_cart_item_quantity($cart_object, $key, $value);
 
                     /**
                      * The setters above only store props; WooCommerce reads the
@@ -2536,7 +2541,7 @@ class Angelleye_Offers_For_Woocommerce {
                          */
                         if ($value['woocommerce_offer_quantity'] != $_POST['cart'][$key]['qty']) {
                             $showerror = true;
-                            $woocommerce->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                            $this->set_offer_cart_item_quantity($cart_object, $key, $value);
                         }
                     }
                 }
@@ -4040,6 +4045,36 @@ class Angelleye_Offers_For_Woocommerce {
     }
 
     /**
+     * Keep an offer cart item at the offer quantity.
+     *
+     * Only calls set_quantity() when the quantity differs. set_quantity() fires
+     * woocommerce_after_cart_item_quantity_update, and plugins that recalculate
+     * totals there (e.g. Dokan Pro vendor discounts) run
+     * woocommerce_before_calculate_totals again, which calls back into this
+     * plugin. Setting the quantity unconditionally looped until PHP ran out of
+     * memory.
+     *
+     * @param WC_Cart $cart      Cart.
+     * @param string  $key       Cart item key.
+     * @param array   $cart_item Cart item.
+     *
+     * @return void
+     */
+    private function set_offer_cart_item_quantity($cart, $key, $cart_item) {
+        if (!$cart || !isset($cart_item['woocommerce_offer_quantity'])) {
+            return;
+        }
+
+        $current = isset($cart->cart_contents[$key]['quantity']) ? $cart->cart_contents[$key]['quantity'] : null;
+
+        if (null !== $current && wc_stock_amount($current) == wc_stock_amount($cart_item['woocommerce_offer_quantity'])) {
+            return;
+        }
+
+        $cart->set_quantity($key, $cart_item['woocommerce_offer_quantity'], false);
+    }
+
+    /**
      * Set the offer price and quantity in the WC cart.
      *
      * @since 2.3.22
@@ -4051,7 +4086,7 @@ class Angelleye_Offers_For_Woocommerce {
             if (isset($value['woocommerce_offer_id']) && get_post_status($value['woocommerce_offer_id'])) {
                 if (isset($value['woocommerce_offer_price_per']) && $value['woocommerce_offer_price_per'] != '') {
                     $value['data']->set_price($value['woocommerce_offer_price_per']);
-                    WC()->cart->set_quantity($key, $value['woocommerce_offer_quantity'], false);
+                    $this->set_offer_cart_item_quantity(WC()->cart, $key, $value);
                 }
             }
         }
@@ -4135,6 +4170,35 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         return $price;
+    }
+
+    /**
+     * Copy the offer ID from the cart item onto the order item.
+     *
+     * The offer ID is passed to WC_Cart::add_to_cart() as variation data, which
+     * WooCommerce turns into the order item's "Offer ID" meta. For variable
+     * products WooCommerce rebuilds that array from the product's attributes,
+     * so the entry is dropped and the order never records the offer; the offer
+     * then stays open after it has been paid for. The cart item keeps
+     * `woocommerce_offer_id`, so the meta is added from there when missing.
+     *
+     * @param WC_Order_Item_Product $item          Order item being created.
+     * @param string                $cart_item_key Cart item key.
+     * @param array                 $values        Cart item.
+     * @param WC_Order              $order         Order.
+     *
+     * @return void
+     */
+    public function ofw_add_offer_id_to_order_item($item, $cart_item_key, $values, $order) {
+        if (empty($values['woocommerce_offer_id']) || !$item instanceof WC_Order_Item_Product) {
+            return;
+        }
+
+        if ('' !== (string) $item->get_meta('Offer ID', true)) {
+            return;
+        }
+
+        $item->add_meta_data('Offer ID', absint($values['woocommerce_offer_id']), true);
     }
 
     /**
