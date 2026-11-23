@@ -245,6 +245,11 @@ class Angelleye_Offers_For_Woocommerce {
              * @since 2.3.23
              */
             add_action('woocommerce_order_status_processing', array($this, 'ofwc_woocommerce_checkout_order_processing'));
+
+            /**
+             * Record the offer on the order item, for both the classic and the block checkout.
+             */
+            add_action('woocommerce_checkout_create_order_line_item', array($this, 'ofw_add_offer_id_to_order_item'), 10, 4);
         }
     }
 
@@ -4165,6 +4170,35 @@ class Angelleye_Offers_For_Woocommerce {
         }
 
         return $price;
+    }
+
+    /**
+     * Copy the offer ID from the cart item onto the order item.
+     *
+     * The offer ID is passed to WC_Cart::add_to_cart() as variation data, which
+     * WooCommerce turns into the order item's "Offer ID" meta. For variable
+     * products WooCommerce rebuilds that array from the product's attributes,
+     * so the entry is dropped and the order never records the offer; the offer
+     * then stays open after it has been paid for. The cart item keeps
+     * `woocommerce_offer_id`, so the meta is added from there when missing.
+     *
+     * @param WC_Order_Item_Product $item          Order item being created.
+     * @param string                $cart_item_key Cart item key.
+     * @param array                 $values        Cart item.
+     * @param WC_Order              $order         Order.
+     *
+     * @return void
+     */
+    public function ofw_add_offer_id_to_order_item($item, $cart_item_key, $values, $order) {
+        if (empty($values['woocommerce_offer_id']) || !$item instanceof WC_Order_Item_Product) {
+            return;
+        }
+
+        if ('' !== (string) $item->get_meta('Offer ID', true)) {
+            return;
+        }
+
+        $item->add_meta_data('Offer ID', absint($values['woocommerce_offer_id']), true);
     }
 
     /**
