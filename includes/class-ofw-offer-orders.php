@@ -9,9 +9,8 @@
  *     screens. The offer itself only stores `offer_order_id` once an order
  *     has completed it.
  *   - The offer behind an order item. On the wp-admin and Dokan order screens
- *     the raw "Offer ID" meta row is hidden and a line such as "Bought from
- *     offer #123 · Completed" is shown under the item, linked for users who
- *     can manage the offer. Buyer-facing views and emails show "Offer: #123".
+ *     the raw "Offer ID" meta row is hidden and "Bought from offer #123" is
+ *     shown under the item, linked for users who can manage the offer. Buyer-facing views and emails show "Offer: #123".
  *     The wp-admin orders list gets an "Offer" column.
  *
  * @package Angelleye_Offers_For_Woocommerce
@@ -169,27 +168,6 @@ if (!class_exists('OFW_Offer_Orders')) {
         }
 
         /**
-         * Label for an offer status.
-         *
-         * @param string $status Offer post status.
-         * @return string
-         */
-        public static function status_label($status) {
-            $labels = array(
-                'publish'              => __('Pending', 'offers-for-woocommerce'),
-                'accepted-offer'       => __('Accepted', 'offers-for-woocommerce'),
-                'countered-offer'      => __('Countered', 'offers-for-woocommerce'),
-                'buyercountered-offer' => __('Buyer Countered', 'offers-for-woocommerce'),
-                'declined-offer'       => __('Declined', 'offers-for-woocommerce'),
-                'completed-offer'      => __('Completed', 'offers-for-woocommerce'),
-                'on-hold-offer'        => __('On Hold', 'offers-for-woocommerce'),
-                'expired-offer'        => __('Expired', 'offers-for-woocommerce'),
-            );
-
-            return isset($labels[$status]) ? $labels[$status] : '';
-        }
-
-        /**
          * Hide the raw "Offer ID" row on the order screens; render_item_offer() shows it instead.
          *
          * @param array $hidden Hidden item meta keys.
@@ -220,7 +198,6 @@ if (!class_exists('OFW_Offer_Orders')) {
 
             $url    = self::get_offer_url($offer_id, $item);
             $number = '#' . $offer_id;
-            $status = self::OFFER_POST_TYPE === get_post_type($offer_id) ? self::status_label(get_post_status($offer_id)) : '';
             ?>
             <div class="ofw-order-item-offer" style="align-items:center;display:flex;flex-wrap:wrap;font-size:12px;gap:6px;line-height:1.5;margin:6px 0 0;">
                 <span class="ofw-order-item-offer__label" style="color:#757575;"><?php echo esc_html__('Bought from offer', 'offers-for-woocommerce'); ?></span>
@@ -228,9 +205,6 @@ if (!class_exists('OFW_Offer_Orders')) {
                     <a class="ofw-order-item-offer__number" href="<?php echo esc_url($url); ?>" style="color:var(--dokan-link-color, #2271b1);font-weight:600;text-decoration:underline;"><?php echo esc_html($number); ?></a>
                 <?php } else { ?>
                     <span class="ofw-order-item-offer__number" style="font-weight:600;"><?php echo esc_html($number); ?></span>
-                <?php } ?>
-                <?php if ($status) { ?>
-                    <span class="ofw-order-item-offer__status" style="background:#f0f0f1;border-radius:999px;color:#50575e;padding:0 8px;"><?php echo esc_html($status); ?></span>
                 <?php } ?>
             </div>
             <?php
