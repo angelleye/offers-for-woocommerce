@@ -96,6 +96,12 @@ require_once(plugin_dir_path(__FILE__) . 'includes/class-ofw-offer-completion.ph
 OFW_Offer_Completion::register();
 
 /**
+ * Offer and order links: the orders placed for an offer, and the offer behind an order.
+ */
+require_once(plugin_dir_path(__FILE__) . 'includes/class-ofw-offer-orders.php');
+OFW_Offer_Orders::register();
+
+/**
  * Shared AngellEYE push-notifications class. Self-contained — copy the file as-is
  * into other AngellEYE plugins; the class_exists guard ensures only one copy loads.
  */
