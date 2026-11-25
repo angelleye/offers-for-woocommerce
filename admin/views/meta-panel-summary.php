@@ -359,7 +359,33 @@
                         <a class="submitdelete deletion" href="<?php echo get_delete_post_link( $post->ID );?>"><?php echo __('Move to Trash', 'offers-for-woocommerce'); ?></a>
                     </div>
 
-                    <?php if( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
+                    <?php
+                    // Every order placed for the offer, whatever its status; the offer only records the order that completed it.
+                    $ofw_offer_orders = class_exists('OFW_Offer_Orders') ? OFW_Offer_Orders::get_orders($post->ID) : array();
+                    $ofw_completing_order_id = isset($postmeta['offer_order_id'][0]) ? absint($postmeta['offer_order_id'][0]) : 0;
+                    ?>
+                    <?php if ( ! empty( $ofw_offer_orders ) ) { ?>
+                        <div class="offer-order-meta">
+                            <h5><?php echo esc_html__('Related Orders', 'offers-for-woocommerce'); ?></h5>
+                            <dl class="ofw-offer-orders">
+                                <?php foreach ( $ofw_offer_orders as $ofw_order ) { ?>
+                                    <dt>
+                                        <a href="<?php echo esc_url( $ofw_order->get_edit_order_url() ); ?>">#<?php echo esc_html( $ofw_order->get_order_number() ); ?></a>
+                                        &ndash; <?php echo esc_html( wc_get_order_status_name( $ofw_order->get_status() ) ); ?>
+                                        &ndash; <?php echo wp_kses_post( $ofw_order->get_formatted_order_total() ); ?>
+                                        <?php if ( $ofw_order->get_date_created() ) { ?>
+                                            &ndash; <?php echo esc_html( $ofw_order->get_date_created()->date_i18n( get_option( 'date_format' ) ) ); ?>
+                                        <?php } ?>
+                                        <?php if ( $ofw_order->get_parent_id() ) { ?>
+                                            <small>(<?php echo esc_html( sprintf( __( 'sub-order of #%s', 'offers-for-woocommerce' ), $ofw_order->get_parent_id() ) ); ?>)</small>
+                                        <?php } elseif ( $ofw_completing_order_id === $ofw_order->get_id() ) { ?>
+                                            <small>(<?php echo esc_html__( 'completed this offer', 'offers-for-woocommerce' ); ?>)</small>
+                                        <?php } ?>
+                                    </dt>
+                                <?php } ?>
+                            </dl>
+                        </div>
+                    <?php } elseif( isset( $current_status_value ) && $current_status_value == 'completed-offer' ) { ?>
                         <div class="offer-order-meta">
                             <h5><?php echo __('Related Orders', 'offers-for-woocommerce'); ?></h5>
                             <?php if( isset( $offer_order_meta ) ) { ?>

@@ -81,6 +81,11 @@ if (!class_exists('OFW_Offer_Completion')) {
                     continue;
                 }
 
+                // Dokan sub-orders copy the parent's items; the parent order completes the offer.
+                if (class_exists('OFW_Offer_Orders') && OFW_Offer_Orders::is_sub_order_of_offer_order($order, $offer_id)) {
+                    continue;
+                }
+
                 $updated = wp_update_post(array(
                     'ID'          => $offer_id,
                     'post_status' => self::COMPLETED_STATUS,
