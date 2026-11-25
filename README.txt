@@ -3,8 +3,8 @@ Contributors: angelleye
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T962XWAC2HHZN
 Tags: woocommerce, offers, negotiation
 Requires at least: 5.5
-Tested up to: 7.0
-Stable tag: 3.1.6
+Tested up to: 7.1
+Stable tag: 3.1.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -117,6 +117,16 @@ Automatic updates should work great for you.  As always, though, we recommend ba
 * [Additional Plugin Tools](https://www.angelleye.com/offers-for-woocommerce-user-guide/#section-6)
 
 == Changelog ==
+
+= 3.1.7 - 11.25.2026 =
+* Fix - Offers no longer expire as soon as they are countered in wp-admin with Offer Expires left empty. Offers already saved with a "Jan 01, 1970" expiration date are repaired on update. ([#539](https://github.com/angelleye/offers-for-woocommerce/pull/539))
+* Fix - Resolves an out-of-memory error when a buyer opens the pay link for a countered offer on stores where another plugin recalculates the cart when quantities change, such as Dokan Pro with WooCommerce Subscriptions. ([#539](https://github.com/angelleye/offers-for-woocommerce/pull/539))
+* Fix - Orders for variable products now record the offer they came from, so the offer can be completed. ([#539](https://github.com/angelleye/offers-for-woocommerce/pull/539))
+* Fix - Stops a counter offer that repeats the buyer's own offer, and makes the zero-price check stop the form. ([#539](https://github.com/angelleye/offers-for-woocommerce/pull/539))
+* Fix - Marks an offer Completed as soon as its order is paid (Processing or Completed), including orders WooCommerce completes on its own, such as virtual products and payment gateway callbacks. ([#540](https://github.com/angelleye/offers-for-woocommerce/pull/540))
+* Feature - Shows "Bought from offer #123" under the item on the order screen, linked to the offer, adds an Offer column to the orders list, and lists every order placed for an offer under Related Orders on the offer screen. ([#541](https://github.com/angelleye/offers-for-woocommerce/pull/541))
+* Fix - Removes the PHP 8.2+ "Creation of dynamic property" deprecation notices from the offer emails. ([#538](https://github.com/angelleye/offers-for-woocommerce/pull/538))
+* Tweak - Signs the accept and decline links in the New Offer email for the Offers for WooCommerce - Dokan add-on. ([#537](https://github.com/angelleye/offers-for-woocommerce/pull/537))
 
 = 3.1.6 - 07.31.2026 =
 * Fix - Auto accept/decline now measures the offer against the live, filtered product price (via woocommerce_product_get_price) instead of the price stored in the product settings, so decisions respect dynamic pricing plugins such as scheduled price decay and category discounts. ([#535](https://github.com/angelleye/offers-for-woocommerce/pull/535))
